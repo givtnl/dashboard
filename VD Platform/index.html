@@ -1,212 +1,27 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-	<link rel="stylesheet" href="css/style.css">
-	<link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
-	<meta name="description" content="chart created using amCharts live editor" />
-
-		<!-- amCharts javascript sources -->
-		<script type="text/javascript" src="http://www.amcharts.com/lib/3/amcharts.js"></script>
-		<script type="text/javascript" src="http://www.amcharts.com/lib/3/pie.js"></script>
-
-		<!-- amCharts javascript code -->
-		<script type="text/javascript">
-			AmCharts.makeChart("chartdiv",
-				{
-					"type": "pie",
-					"balloonText": "[[title]]<br><span style='font-size:14px'><b>[[value]]</b> ([[percents]]%)</span>",
-					"innerRadius": "70%",
-					"colors": [
-						"#5A5387",
-						"#41C98E",
-						"#4D98CF"
-					],
-					"labelColorField": "#2E2957",
-					"outlineThickness": 9,
-					"titleField": "category",
-					"valueField": "column-1",
-					"fontSize": 12,
-					"allLabels": [],
-					"balloon": {},
-					"legend": {
-						"enabled": false,
-						"align": "center",
-						"markerType": "circle"
-					},
-					"titles": [],
-					"dataProvider": [
-						{
-							"category": "Kerk",
-							"column-1": "76"
-						},
-						{
-							"category": "Diaconaal",
-							"column-1": "22"
-						},
-						{
-							"category": "Zending",
-							"column-1": "2"
-						}
-					],
-					labelsEnabled: true,
-  autoMargins: false,
-  marginTop: 0,
-  marginBottom: 0,
-  marginLeft: 0,
-  marginRight: 0,
-  pullOutRadius: 0
-				}
-
-			);
-		</script>
+    <meta charset="UTF-8">
+    <title>Platform</title>
 </head>
 <body>
-	<header>
-		<h1>Kerk: "Lorem Ipsum"</h1>
-		<div class="options">
-			<div class="search">
-			  <span class="fa fa-search"></span>
-			  <input type="text" class="rounded-input"/>
-			</div>
-			<img src="img/notifications.png"/>
-			<img src="img/settings.png"/>
-		</div>
-	</header>
-	<nav>
-		<ul>
-			<li><a class="active" href="index.html"><img src="img/dashboard.png"/>Dashboard</a></li>
-			<li><a href="collectes.html"><img src="img/collecte.png"/>Collectes</a></li>
-			<li><a href="balans.html"><img src="img/balans.png"/>Balans</a></li>
-			<li><a href="resultaat.html"><img src="img/resultaat.png"/>Resultaat</a></li>
-			<li><a href="troubleshoot.html"><img src="img/troubleshoot.png"/>Troubleshoot</a></li>
-			<li><img class="logo" src="img/logo.png"/></li>
-		</ul>
-	</nav>
-	<main>
-		<section>
-			<table class="dashboard-table" style="width:100%">
-				<tr>
-					<td class="title">Collectes</td>
-					<td class="title">&euro; 28.052,55</td> 
-				</tr>
-				<tr>
-					<td>Kerk</td>
-					<td>&euro; 21.382,10</td> 
-				</tr>
-				<tr>
-					<td>Diaconaal</td>
-					<td>&euro; 6.196,65</td> 
-				</tr>
-				<tr>
-					<td>Zendingswerk</td>
-					<td>&euro; 1.384,80</td> 
-				</tr>
-				<tr>
-					<td class="title">Nieuw</td>
-					<td class="title">+</td> 
-				</tr>
-			</table>
-		</section>
-		<section>
-			<table class="dashboard-table" style="width:100%">
-				<tr>
-					<td class="title">In Process</td>
-					<td class="title">&euro; 10.435,50</td> 
-				</tr>
-				<tr>
-					<td>Krediet</td>
-					<td>&euro; 4.457,60</td> 
-				</tr>
-				<tr>
-					<td>Geincasseerd</td>
-					<td>&euro; 2.348,35</td> 
-				</tr>
-				<tr>
-					<td>In Behandeling</td>
-					<td>&euro; 5.978,90</td> 
-				</tr>
-				<tr>
-					<td class="title">Meer</td>
-					<td class="title">+</td> 
-				</tr>
-			</table>
-		</section>
-		<section>
-			<table class="dashboard-table" style="width:100%">
-				<tr>
-					<td class="title">Voltooid</td>
-					<td class="title">&euro; 34.218,25</td> 
-				</tr>
-				<tr>
-					<td>2016</td>
-					<td>&euro; 17.613,05</td> 
-				</tr>
-				<tr>
-					<td>2015</td>
-					<td>&euro; 16.201,70</td> 
-				</tr>
-				<tr>
-					<td>Totaal</td>
-					<td>&euro; 34.218,25</td> 
-				</tr>
-				<tr>
-					<td class="title">Laatste Nota</td>
-					<td class="title">Mei</td> 
-				</tr>
-			</table> 
-		</section>
-		<section>
-			<span class="title">Opbrengst Collectes</span>
-			<div id="chartdiv" style="width: 100%; height: 400px; background-color: #FFFFFF;" ></div>
-		</section>
-		<section>
-			<table class="dashboard-table" style="width:100%">
-				<tr>
-					<td style="text-align:left;" class="title" colspan="2">Juni 01 - Nu</td>
-				</tr>
-				<tr>
-					<td>&euro; 4.650,35</td>
-					<td>+ 4,8 %</td> 
-				</tr>
-				<tr>
-					<td>427 Gevers</td>
-					<td>+ 8,9 %</td> 
-				</tr>
-			</table>
-		</section>
-		<section>
-			<svg style="margin:0 auto;display:block;" width="77px" height="77px" viewBox="19 19 77 77" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-				<circle id=“kerk” stroke="#2E2957" stroke-width="1" fill="#5A5387" fill-rule="evenodd" cx="57.5" cy="57.5" r="37.5"></circle>
-			</svg>
-			<table class="dashboard-table" style="width:100%">
-				<tr>
-					<td>Naam</td>
-					<td>Lorem Ipsum</td> 
-				</tr>
-				<tr>
-					<td>Organisatie</td>
-					<td>Kerk</td> 
-				</tr>
-				<tr>
-					<td>Locatie</td>
-					<td>Dui Aliquam</td> 
-				</tr>
-				<tr>
-					<td>Givt aanbieder sinds</td>
-					<td>12/09/2015</td> 
-				</tr>
-				<tr>
-					<td>Beacons in gebruik</td>
-					<td>16</td> 
-				</tr>
-				<tr>
-					<td>Beacons gekocht</td>
-					<td>22</td> 
-				</tr>
-			</table> 
-
-		</section>
-	</main>
-	
+<!-- nav + coll. menu -->
+<nav>
+    <b>Overzicht</b>
+    <ul>
+        <li>Overzicht</li>
+        <li>Collectes</li>
+        <li>Balans</li>
+        <li>Resultaat</li>
+    </ul>
+</nav>
+<!-- main with cards (1 col) with x rows -->
+<section>
+    <article>Test</article>
+    <article>Test</article>
+    <article>Test</article>
+    <article>Test</article>
+</section>
+<!-- footer with centered givt logo -->
 </body>
 </html>
