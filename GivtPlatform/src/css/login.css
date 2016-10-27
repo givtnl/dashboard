@@ -1,14 +1,4 @@
-*,body,html{
-    padding:0;
-    margin: 0;
-    list-style-type: none;
-    font-size: 16px;
-    font-family: sans-serif;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    background: #F5F5F5;
-}
+
 @font-face {
     font-family: 'Avenir LT Std 85 Heavy';
     font-style: normal;
