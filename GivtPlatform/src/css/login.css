@@ -22,7 +22,7 @@
 
 main{
     width: 100%;
-    font-size: 2em;
+    font-size: 1.2em;
     max-width: 500px;
     margin: 0 auto;
 }
@@ -55,7 +55,7 @@ section{
 button{
     background: #41C98E;
     border: 1px solid #41C98E;
-    font-family: Avenir-Heavy;
+    font-family: 'Avenir LT Std 35 Light';
     font-size: 1em;
     color: #FFFFFF;
     text-align: center;
@@ -87,7 +87,7 @@ input[required]{
 input{
     border:1px solid #E0E0E6;
     margin-bottom: 26px;
-    font-family: Avenir-Light;
+    font-family: 'Avenir LT Std 35 Light';
     color:#2E2957;
     font-size: 1em;
     border-radius: 0;
@@ -115,7 +115,7 @@ label{
     margin-left: 15px;
     color: #e0e0e6;
     opacity:1;
-    font-family: Avenir-Light;
+    font-family: 'Avenir LT Std 35 Light';
     font-size: 1em;
 
 
