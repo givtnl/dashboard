@@ -22,13 +22,28 @@ export class Login{
     }
 
     loggedIn(msg){
-        this.cookieMonster.createCookie("access_token", msg.access_token, msg.expires_in / 60 / 60 / 24);
-        console.log(msg);
-        location.reload();
+        if(msg.access_token){
+            this.cookieMonster.createCookie("access_token", msg.access_token, msg.expires_in / 60 / 60 / 24);
+            location.reload();
+        }
+        else{
+            if(msg.error){
+                if(document.getElementById("loginError"))
+                    document.getElementById("loginError").innerHTML = "";
+                this.errorText = msg.error;
+                var node = document.createElement("span");
+                var textNode = document.createTextNode(this.errorText);
+                node.appendChild(textNode);
+                node.className = "error";
+                node.id = "loginError";
+                document.getElementById("login").appendChild(node);
+            }
+        }
     }
 
 
     login(){
+
         this.api.login(this.email, this.password);
     }
 }

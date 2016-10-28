@@ -36,7 +36,10 @@ export class WebApi{
                     eventAggr.publish(new LoginEvent(JSON.parse(json)));
                 }
             } else{
-                return this.statusText;
+                var json = oReq.responseText;
+                if(json != ""){
+                    eventAggr.publish(new LoginEvent(JSON.parse(json)));
+                }
             }
         }
     }

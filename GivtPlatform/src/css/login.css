@@ -132,4 +132,11 @@ input[type="email"], input[type="password"]{
     width:100%;
 }
 
+.error{
+    font-size: 1em;
+    margin-top: 20px;
+    font-family: 'Avenir LT Std 35 Light';
+    color: red;
+}
+
 
