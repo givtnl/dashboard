@@ -22,7 +22,7 @@ body,html{
 }
 
 @font-face {
-font-family: 'Avenir LT Std 95 Black';
+font-family: 'Avenir_Black';
 font-style: normal;
 font-weight: normal;
 src: local('Avenir LT Std 95 Black'), url('/fonts/AvenirLTStd-Black.otf') format('woff');
@@ -30,7 +30,7 @@ src: local('Avenir LT Std 95 Black'), url('/fonts/AvenirLTStd-Black.otf') format
 
 
 @font-face {
-font-family: 'Avenir LT Std 45 Book';
+font-family: 'Avenir_Book';
 font-style: normal;
 font-weight: normal;
 src: local('Avenir LT Std 45 Book'), url('/fonts/AvenirLTStd-Book.otf') format('woff');
@@ -38,7 +38,7 @@ src: local('Avenir LT Std 45 Book'), url('/fonts/AvenirLTStd-Book.otf') format('
 
 
 @font-face {
-font-family: 'Avenir LT Std 85 Heavy';
+font-family: 'Avenir_Heavy';
 font-style: normal;
 font-weight: normal;
 src: local('Avenir LT Std 85 Heavy'), url('/fonts/AvenirLTStd-Heavy.otf') format('woff');
@@ -46,7 +46,7 @@ src: local('Avenir LT Std 85 Heavy'), url('/fonts/AvenirLTStd-Heavy.otf') format
 
 
 @font-face {
-font-family: 'Avenir LT Std 35 Light';
+font-family: 'Avenir_Light';
 font-style: normal;
 font-weight: normal;
 src: local('Avenir LT Std 35 Light'), url('/fonts/AvenirLTStd-Light.otf') format('woff');
@@ -54,7 +54,7 @@ src: local('Avenir LT Std 35 Light'), url('/fonts/AvenirLTStd-Light.otf') format
 
 
 @font-face {
-font-family: 'Avenir LT Std 65 Medium';
+font-family: 'Avenir_Medium';
 font-style: normal;
 font-weight: normal;
 src: local('Avenir LT Std 65 Medium'), url('/fonts/AvenirLTStd-Medium.otf') format('woff');
@@ -62,7 +62,7 @@ src: local('Avenir LT Std 65 Medium'), url('/fonts/AvenirLTStd-Medium.otf') form
 
 
 @font-face {
-font-family: 'Avenir LT Std 55 Roman';
+font-family: 'Avenir_Roman';
 font-style: normal;
 font-weight: normal;
 src: local('Avenir LT Std 55 Roman'), url('/fonts/AvenirLTStd-Roman.otf') format('woff');
@@ -70,7 +70,7 @@ src: local('Avenir LT Std 55 Roman'), url('/fonts/AvenirLTStd-Roman.otf') format
 
 
 @font-face {
-font-family: 'Avenir LT Std 95 Black Oblique';
+font-family: 'Avenir_Black_Oblique';
 font-style: normal;
 font-weight: normal;
 src: local('Avenir LT Std 95 Black Oblique'), url('/fonts/AvenirLTStd-BlackOblique.otf') format('woff');
@@ -78,7 +78,7 @@ src: local('Avenir LT Std 95 Black Oblique'), url('/fonts/AvenirLTStd-BlackObliq
 
 
 @font-face {
-font-family: 'Avenir LT Std 45 Book Oblique';
+font-family: 'Avenir_Book_Oblique';
 font-style: normal;
 font-weight: normal;
 src: local('Avenir LT Std 45 Book Oblique'), url('/fonts/AvenirLTStd-BookOblique.otf') format('woff');
@@ -86,7 +86,7 @@ src: local('Avenir LT Std 45 Book Oblique'), url('/fonts/AvenirLTStd-BookOblique
 
 
 @font-face {
-font-family: 'Avenir LT Std 85 Heavy Oblique';
+font-family: 'Avenir_Heavy_Oblique';
 font-style: normal;
 font-weight: normal;
 src: local('Avenir LT Std 85 Heavy Oblique'), url('/fonts/AvenirLTStd-HeavyOblique.otf') format('woff');
@@ -94,7 +94,7 @@ src: local('Avenir LT Std 85 Heavy Oblique'), url('/fonts/AvenirLTStd-HeavyObliq
 
 
 @font-face {
-font-family: 'Avenir LT Std 35 Light Oblique';
+font-family: 'Avenir_Light_Oblique';
 font-style: normal;
 font-weight: normal;
 src: local('Avenir LT Std 35 Light Oblique'), url('/fonts/AvenirLTStd-LightOblique.otf') format('woff');

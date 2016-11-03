@@ -5,14 +5,14 @@
             <h1>De Pijler</h1>
             <ul>
                 <li><a class="menu-active" href="">Overzicht</a></li>
-                <li><a href="">Collectes</a></li>
-                <li><a href="">Balans</a></li>
-                <li><a href="">Resultaat</a></li>
+                <li><a route-href="route:services">Diensten</a></li>
+                <li><a href="">Inzicht</a></li>
+                <li><a href="">Statistieken</a></li>
             </ul>
             <span class="menu-settings">Instellingen</span>
         </div>
     </nav>
-    <section>
+    <section class="section-dashboard">
 
         <article>
             <div>
@@ -25,20 +25,28 @@
             <div>
                 <p class="card-title">Deze maand</p>
                 <p class="card-subtitle">Oktober 2016 - 4 collectes</p>
-                <p class="card-subtitle">€ <span class="fat-emphasis">2840,50</span></p>
+                <p class="card-subtitle">€ <span class="fat-emphasis" innerhtml.bind="monthAmount"></span></p>
                 <p class="card-subtitle">gegeven</p>
             </div>
             </article>
+        <article>
+            <div>
+                <p class="card-title">Laatste sunday</p>
+                <p class="card-subtitle">Oktober 2016 - 4 collectes</p>
+                <p class="card-subtitle">€ <span class="fat-emphasis" innerhtml.bind="dayAmount"></span></p>
+                <p class="card-subtitle">gegeven</p>
+            </div>
+        </article>
             <article>
                 <div>
                     <p class="card-title">Gevers</p>
                     <p class="card-subtitle">Oktober 2016 - 4 collectes</p>
-                    <p class="card-subtitle"><span class="fat-emphasis">649</span></p>
+                    <p class="card-subtitle"><span class="fat-emphasis" innerhtml.bind="usercount"></span></p>
                     <p class="card-subtitle">gevers</p>
                 </div>
             </article>
             <article >
-                <div  class="wistjedat">
+                <div class="wistjedat">
                     <p class="card-title">Wist je dat?</p>
                     <p class="card-subtitle">Kerkgangers het meeste geven
                         aan het einde van de dienst?</p>

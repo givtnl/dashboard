@@ -25,7 +25,7 @@ nav ul > li > a {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
-    font-family: Avenir-Light;
+    font-family: "Avenir_Light";
     text-decoration: none;
     color:white;
 
@@ -42,7 +42,7 @@ nav ul > li > a:hover{
 
 .menu-active{
     border-bottom:6px solid #41C98E;
-    font-family: Avenir-Medium;
+    font-family: "Avenir_Medium";
 }
   li{
       -webkit-column-break-inside: avoid;
@@ -52,13 +52,13 @@ nav ul > li > a:hover{
 nav h1 {
     margin:0px;
     display: inline-block;
-    font-family: Avenir-Medium;
+    font-family: "Avenir_Medium";
     font-size:32px;
 }
 
 .menu-settings{
     margin-bottom:5px;
-    font-family: Avenir-Light;
+    font-family: "Avenir_Light";
     display:inline-block;
 }
 
@@ -79,7 +79,7 @@ nav ul { ... min-height:50px; } /* < add */
     align-items: center;
 }
 
-section{
+.section-dashboard{
     max-width:1024px;
     margin:20px auto;
     -webkit-column-count:3;
@@ -89,14 +89,14 @@ section{
     -moz-column-gap:0;
     column-gap:0;
 }
-section article{
+.section-dashboard article{
     -webkit-column-break-inside: avoid;
     page-break-inside: avoid;
     break-inside: avoid;
     padding: 5px;
     box-sizing: border-box;
 }
-section article div{
+.section-dashboard article div{
     padding:15px;
     box-sizing: border-box;
 
@@ -121,19 +121,19 @@ section article div{
 }
 
 
-section article div p{
+.section-dashboard article div p{
     margin:0;
     margin-bottom:5px;
 }
 
 .card-title{
-    font-family: Avenir-Heavy;
+    font-family: "Avenir_Heavy";
     font-size:18px;
     color:#2C2B57;
 }
 
 .card-subtitle{
-    font-family: Avenir-Roman;
+    font-family: "Avenir_Roman";
     font-size:13px;
     color:#2C2B57;
 
@@ -143,7 +143,7 @@ section article div p{
     font-size:40px;
 }
 
-.wistjedat{
+.section-dashboard article .wistjedat{
     height:120px !important;
     background-color:#3480C7;
     min-height: 0;
@@ -151,4 +151,84 @@ section article div p{
 }
 .wistjedat p{
     color:white;
+}
+
+
+.section-services{
+    max-width:1024px;
+    margin:0 auto;
+    background-color:red;
+    height: 50px;
+}
+/* tables */
+.services-table{
+    width:100%;
+    margin:0;
+    padding:0 ;
+    border-spacing: 0;
+}
+
+.services-table tr{
+    text-align: left;
+    border: 5px solid black;
+}
+
+.services-table tr td {
+    border: 1px solid black;
+}
+
+.table-row-monthly{
+    background-color: #E3E2E7;
+    height:60px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.table-row-monthly th:first-child{
+    padding-left:30px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.table-row-monthly th:last-child{
+    padding-right:30px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+@media only screen and (max-width: 500px) {
+    /* For mobile phones: */
+    .section-dashboard.section-dashboard {
+        -webkit-column-count:1;
+        -moz-column-count:1;
+        column-count:1;
+        margin-top:55px;
+    }
+
+    nav {
+        position: fixed;
+        top:0;
+    }
+
+    nav ul {
+        display: none;
+    }
+
+    nav .menu-settings {
+        display: none;
+    }
+
+    nav h1 {
+        margin:0 auto;
+        padding: 15px 0;
+        font-size: 18px;
+    }
+
+
+
+
+
 }
