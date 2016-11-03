@@ -16,8 +16,12 @@ export class App {
             ])
         }else{
             config.map([
-                {route : '', moduleId: 'dashboard', title: 'Dashboard'}
+                {route : '', moduleId: 'dashboard', title: 'Dashboard'},
+                {route : 'services', moduleId: 'services', title: 'Diensten',name:'services'}
+
             ])
         }
+        this.router = router;
+
     }
 }
