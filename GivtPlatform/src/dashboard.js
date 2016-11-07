@@ -45,9 +45,8 @@ export class DashBoard {
     fetchDailyGivts() {
         var date = new Date();
         var day = date.getUTCDay();
-        //var lastsunday = date.getUTCDate();
-        var lastSunday = new Date(date - day*1000*60*60*24);
-        var lastSundayDate = lastSunday.getUTCMonth()+1 + "-" + lastSunday.getUTCDate() + "-" + lastSunday.getUTCFullYear();
+        this.lastSunday = new Date(date - day*1000*60*60*24);
+        var lastSundayDate = this.lastSunday.getUTCMonth()+1 + "-" + this.lastSunday.getUTCDate() + "-" + this.lastSunday.getUTCFullYear();
         var DateBegin =  lastSundayDate + " 00:00:00";
         var DateEnd = lastSundayDate + " 23:59:59";
 
