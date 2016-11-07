@@ -10,17 +10,36 @@ export class DashBoard {
 
     constructor(WebApi) {
         this.webapi = WebApi;
-
+        this.fetchInstanceTitle();
+        this.instanceTitle = ".....";
         this.usercount = 0;
         this.monthAmount = 0;
         this.dayAmount = 0;
         this.fetchMonthlyGivts();
         this.fetchDailyGivts();
         this.fetchUsers();
+        var d = new Date();
+        var month = new Array();
+        month[0] = "January";
+        month[1] = "February";
+        month[2] = "March";
+        month[3] = "April";
+        month[4] = "May";
+        month[5] = "June";
+        month[6] = "July";
+        month[7] = "August";
+        month[8] = "September";
+        month[9] = "October";
+        month[10] = "November";
+        month[11] = "December";
+        this.monthText = month[d.getMonth()] + " " + d.getFullYear();
+        this.lastSundayDay = this.lastSunday.getUTCDate();
 
-     //   setInterval(function(){
-      //      this.fetchGivts();
-    //      }.bind(this),3000);
+    fetchInstanceTitle(){
+        this.webapi.getSecure("OrgAdminView/org")
+            .then(function (response){
+                this.instanceTitle = response;
+            }.bind(this));
     }
 
     fetchDailyGivts() {

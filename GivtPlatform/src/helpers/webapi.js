@@ -30,8 +30,13 @@ export class WebApi{
         return new Promise(function(resolve,reject){
             oReq.onreadystatechange = function() {
                 if(oReq.readyState == 4 && oReq.status == 200) {
-                    temp = JSON.parse(oReq.responseText);
-                    resolve(temp);
+                    try{
+                        temp = JSON.parse(oReq.responseText);
+                        resolve(temp);
+                    }
+                    catch(err){
+                        resolve(oReq.responseText);
+                    }
                 }
             }
         });

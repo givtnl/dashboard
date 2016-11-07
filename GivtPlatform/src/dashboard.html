@@ -2,7 +2,7 @@
     <require from="./css/dashboard.css"></require>
     <nav>
         <div class="menu-wrapper">
-            <h1>De Pijler</h1>
+            <h1><span innerhtml.bind="instanceTitle"></span></h1>
             <ul>
                 <li><a class="menu-active" href="">Overzicht</a></li>
                 <li><a route-href="route:services">Diensten</a></li>
@@ -16,7 +16,7 @@
 
         <article>
             <div>
-                <p class="card-title">16 oktober 2016</p>
+                <p class="card-title"><span innerhtml.bind="monthText"></span></p>
                 <p class="card-subtitle">3 collectes</p>
                 <img src="testgraph.png" alt="">
             </div>
@@ -24,15 +24,15 @@
         <article>
             <div>
                 <p class="card-title">Deze maand</p>
-                <p class="card-subtitle">Oktober 2016 - 4 collectes</p>
+                <p class="card-subtitle"><span innerhtml.bind="monthText"></span></p>
                 <p class="card-subtitle">€ <span class="fat-emphasis" innerhtml.bind="monthAmount"></span></p>
                 <p class="card-subtitle">gegeven</p>
             </div>
             </article>
         <article>
             <div>
-                <p class="card-title">Laatste sunday</p>
-                <p class="card-subtitle">Oktober 2016 - 4 collectes</p>
+                <p class="card-title">Laatste zondag</p>
+                <p class="card-subtitle"><span innerhtml.bind="lastSundayDay"></span> <span innerhtml.bind="monthText"></span></p>
                 <p class="card-subtitle">€ <span class="fat-emphasis" innerhtml.bind="dayAmount"></span></p>
                 <p class="card-subtitle">gegeven</p>
             </div>
@@ -40,7 +40,7 @@
             <article>
                 <div>
                     <p class="card-title">Gevers</p>
-                    <p class="card-subtitle">Oktober 2016 - 4 collectes</p>
+                    <p class="card-subtitle"><span innerhtml.bind="monthText"></span></p>
                     <p class="card-subtitle"><span class="fat-emphasis" innerhtml.bind="usercount"></span></p>
                     <p class="card-subtitle">gevers</p>
                 </div>
