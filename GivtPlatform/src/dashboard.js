@@ -34,6 +34,14 @@ export class DashBoard {
         month[11] = "December";
         this.monthText = month[d.getMonth()] + " " + d.getFullYear();
         this.lastSundayDay = this.lastSunday.getUTCDate();
+        var that = this;
+        setInterval(function(){
+            return that.fetchMonthlyGivts();
+        },3000);
+        setInterval(function(){
+            return that.fetchDailyGivts();
+        },3000);
+    }
 
     fetchInstanceTitle(){
         this.webapi.getSecure("OrgAdminView/org")
@@ -63,13 +71,6 @@ export class DashBoard {
     }
 
     fetchMonthlyGivts() {
-        /* TODO
-            - Givts van deze maand
-            - Givts van deze dag
-            - Op bedragen rek. houden met CultureInfo!
-
-         */
-
         var date = new Date();
         var month = date.getUTCMonth()+1;
         var year = date.getFullYear();
@@ -88,12 +89,6 @@ export class DashBoard {
     }
 
     fetchUsers(){
-        /* TODO
-
-         - Unieke gevers van deze maand
-         - Unieke gevers van deze dag
-         */
-
         this.webapi.getSecure("OrgAdminView/Users/")
             .then(function (response) {
                 this.usercount = response;
