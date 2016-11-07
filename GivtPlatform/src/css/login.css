@@ -55,7 +55,7 @@ section{
 button{
     background: #41C98E;
     border: 1px solid #41C98E;
-    font-family: 'Avenir LT Std 35 Light';
+    font-family: 'Avenir_Light';
     font-size: 1em;
     color: #FFFFFF;
     text-align: center;
@@ -87,7 +87,7 @@ input[required]{
 input{
     border:1px solid #E0E0E6;
     margin-bottom: 26px;
-    font-family: 'Avenir LT Std 35 Light';
+    font-family: 'Avenir_Light';
     color:#2E2957;
     font-size: 1em;
     border-radius: 0;
@@ -115,7 +115,7 @@ label{
     margin-left: 15px;
     color: #e0e0e6;
     opacity:1;
-    font-family: 'Avenir LT Std 35 Light';
+    font-family: 'Avenir_Light';
     font-size: 1em;
 
 
@@ -135,7 +135,7 @@ input[type="email"], input[type="password"]{
 .error{
     font-size: 1em;
     margin-top: 20px;
-    font-family: 'Avenir LT Std 35 Light';
+    font-family: 'Avenir_Light';
     color: red;
 }
 
