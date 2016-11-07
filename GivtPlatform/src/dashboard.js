@@ -1,6 +1,6 @@
 import {WebApi} from './helpers/webapi';
 import {UserManager} from './helpers/UserManager';
-
+import {GoogleCharts} from './helpers/googleCharts';
 
 export class DashBoard {
     static inject() {
@@ -43,6 +43,8 @@ export class DashBoard {
         setInterval(function(){
             return that.fetchDailyGivts();
         },3000);
+
+        this.chart = new GoogleCharts();
     }
 
     fetchInstanceTitle(){
@@ -65,7 +67,7 @@ export class DashBoard {
             .then(function (response){
                 this.dayAmount = 0;
                 for(var prop in response){
-                    this.dayAmount = response[prop].Amount + this.dayAmount;
+                    this.dayAmount = (response[prop].Amount + this.dayAmount).toLocaleString(navigator.language);
                 }
                 //this.dayAmount = this.dayAmount.toFixed(2);
             }.bind(this));
@@ -85,7 +87,7 @@ export class DashBoard {
                 for(var prop in response){
                     this.monthAmount = response[prop].Amount + this.monthAmount;
                 }
-                this.monthAmount = this.monthAmount.toFixed(2);
+                this.monthAmount = this.monthAmount.toLocaleString(navigator.language, {minimumFractionDigits: 2});
             }.bind(this));
     }
 
