@@ -1,15 +1,17 @@
 import {WebApi} from './helpers/webapi';
+import {UserManager} from './helpers/UserManager';
 
 
 export class DashBoard {
     static inject() {
-        return [WebApi]
+        return [WebApi, UserManager]
     }
 
 
 
-    constructor(WebApi) {
+    constructor(WebApi, userManager) {
         this.webapi = WebApi;
+        this.userManager = userManager;
         this.fetchInstanceTitle();
         this.instanceTitle = ".....";
         this.usercount = 0;
@@ -59,7 +61,6 @@ export class DashBoard {
         var DateEnd = lastSundayDate + " 23:59:59";
 
         var params = "DateBegin=" + DateBegin + "&DateEnd=" + DateEnd + "&Status=" + "0";
-        console.log(params);
         this.webapi.getSecure("OrgAdminView/Givts/?"+params)
             .then(function (response){
                 this.dayAmount = 0;
@@ -93,6 +94,11 @@ export class DashBoard {
             .then(function (response) {
                 this.usercount = response;
             }.bind(this));
+    }
+
+    btnLogOut(){
+        console.log("logging out");
+        this.userManager.logOut();
     }
 }
 

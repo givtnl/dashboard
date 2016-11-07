@@ -2,11 +2,13 @@ import {WebApi} from './helpers/webapi';
 import {EventAggregator} from 'aurelia-event-aggregator';
 import {LoginEvent} from './helpers/messages';
 import {CookieMonster} from './helpers/cookiemonster';
+import {UserManager} from './helpers/UserManager';
 
 export class Login{
-    static  inject(){ return [WebApi, EventAggregator, CookieMonster]};
-    constructor(api, ea, cookieMonster){
+    static  inject(){ return [WebApi, EventAggregator, CookieMonster, UserManager]};
+    constructor(api, ea, cookieMonster, userManager){
         this.stayLoggedIn = "Blijf ingelogd";
+        this.userManager = userManager;
         this.api = api;
         this.email = "debug@nfcollect.com";
         this.password = "Test123";
@@ -43,7 +45,6 @@ export class Login{
 
 
     login(){
-
-        this.api.login(this.email, this.password);
+        this.userManager.login(this.email, this.password);
     }
 }

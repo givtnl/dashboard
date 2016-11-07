@@ -40,50 +40,5 @@ export class WebApi{
                 }
             }
         });
-
-
-
-
-
-    }
-
-    get(url, params) {
-        var oReq = new XMLHttpRequest();
-        oReq.open("POST", "https://givtapidebug.azurewebsites.net/api/" + url);
-        oReq.setRequestHeader("Content-type","application/json");
-        var params = JSON.parse(params);
-        return {
-            then : function(callback){
-                callback(27);
-            }
-        }
-        oReq.onreadystatechange = function() {
-            if(oReq.readyState == 4 && oReq.status == 200) {
-                return JSON.parse(oReq.responseText);
-            }
-        }
-        oReq.send(params);
-    }
-
-    login(email, password){
-        var oReq = new XMLHttpRequest();
-        var eventAggr = this.ea;
-        oReq.open("POST", "https://givtapidebug.azurewebsites.net/oauth2/token");
-        oReq.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-        var params = "grant_type=password&userName="+email+"&password="+password;
-        oReq.send(params);
-        oReq.onload = function() {
-            if(oReq.status >= 200 && oReq.status <300) {
-                var json = oReq.responseText;
-                if(json != ""){
-                    eventAggr.publish(new LoginEvent(JSON.parse(json)));
-                }
-            } else{
-                var json = oReq.responseText;
-                if(json != ""){
-                    eventAggr.publish(new LoginEvent(JSON.parse(json)));
-                }
-            }
-        }
     }
 }
