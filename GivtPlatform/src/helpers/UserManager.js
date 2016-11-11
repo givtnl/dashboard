@@ -16,7 +16,7 @@ export class UserManager{
     login(email, password){
         var oReq = new XMLHttpRequest();
         var eventAggr = this.ea;
-        oReq.open("POST", "http://localhost:1699/oauth2/token");
+        oReq.open("POST", "https://givtapidebug.azurewebsites.net/oauth2/token");
         oReq.setRequestHeader("Content-type","application/x-www-form-urlencoded");
         var params = "grant_type=password&userName="+email+"&password="+password;
         oReq.send(params);

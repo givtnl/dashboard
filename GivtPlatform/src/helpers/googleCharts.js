@@ -36,7 +36,7 @@ export class GoogleCharts{
                     chartArea: {'width': '100%', 'height': '80%'},
                     colors: ['#42C98E','#F4BF63','#4F98CF'],
                     legend: {position: 'none'},
-                    pieHole: 0.80,
+                    pieHole: 0.85,
                     pieSliceText: 'label',
                     pieStartAngle: 0,
                     pieSliceTextStyle:{color: 'black', fontName: 'arial', fontSize: 10},
