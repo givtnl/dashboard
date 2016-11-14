@@ -25,7 +25,7 @@ body,html{
 font-family: 'Avenir_Black';
 font-style: normal;
 font-weight: normal;
-src: local('Avenir LT Std 95 Black'), url('/fonts/AvenirLTStd-Black.otf') format('woff');
+src: local('Avenir LT Std 95 Black'), url('/fonts/AvenirLTStd-Black.otf');
 }
 
 
@@ -33,7 +33,7 @@ src: local('Avenir LT Std 95 Black'), url('/fonts/AvenirLTStd-Black.otf') format
 font-family: 'Avenir_Book';
 font-style: normal;
 font-weight: normal;
-src: local('Avenir LT Std 45 Book'), url('/fonts/AvenirLTStd-Book.otf') format('woff');
+src: local('Avenir LT Std 45 Book'), url('/fonts/AvenirLTStd-Book.otf');
 }
 
 
@@ -41,7 +41,7 @@ src: local('Avenir LT Std 45 Book'), url('/fonts/AvenirLTStd-Book.otf') format('
 font-family: 'Avenir_Heavy';
 font-style: normal;
 font-weight: normal;
-src: local('Avenir LT Std 85 Heavy'), url('/fonts/AvenirLTStd-Heavy.otf') format('woff');
+src: local('Avenir LT Std 85 Heavy'), url('/fonts/AvenirLTStd-Heavy.otf');
 }
 
 
@@ -49,7 +49,7 @@ src: local('Avenir LT Std 85 Heavy'), url('/fonts/AvenirLTStd-Heavy.otf') format
 font-family: 'Avenir_Light';
 font-style: normal;
 font-weight: normal;
-src: local('Avenir LT Std 35 Light'), url('/fonts/AvenirLTStd-Light.otf') format('woff');
+src: local('Avenir LT Std 35 Light'), url('/fonts/AvenirLTStd-Light.otf');
 }
 
 
@@ -57,7 +57,7 @@ src: local('Avenir LT Std 35 Light'), url('/fonts/AvenirLTStd-Light.otf') format
 font-family: 'Avenir_Medium';
 font-style: normal;
 font-weight: normal;
-src: local('Avenir LT Std 65 Medium'), url('/fonts/AvenirLTStd-Medium.otf') format('woff');
+src: local('Avenir LT Std 65 Medium'), url('/fonts/AvenirLTStd-Medium.otf');
 }
 
 
@@ -65,7 +65,7 @@ src: local('Avenir LT Std 65 Medium'), url('/fonts/AvenirLTStd-Medium.otf') form
 font-family: 'Avenir_Roman';
 font-style: normal;
 font-weight: normal;
-src: local('Avenir LT Std 55 Roman'), url('/fonts/AvenirLTStd-Roman.otf') format('woff');
+src: local('Avenir LT Std 55 Roman'), url('/fonts/AvenirLTStd-Roman.otf');
 }
 
 
@@ -73,7 +73,7 @@ src: local('Avenir LT Std 55 Roman'), url('/fonts/AvenirLTStd-Roman.otf') format
 font-family: 'Avenir_Black_Oblique';
 font-style: normal;
 font-weight: normal;
-src: local('Avenir LT Std 95 Black Oblique'), url('/fonts/AvenirLTStd-BlackOblique.otf') format('woff');
+src: local('Avenir LT Std 95 Black Oblique'), url('/fonts/AvenirLTStd-BlackOblique.otf');
 }
 
 
@@ -81,7 +81,7 @@ src: local('Avenir LT Std 95 Black Oblique'), url('/fonts/AvenirLTStd-BlackObliq
 font-family: 'Avenir_Book_Oblique';
 font-style: normal;
 font-weight: normal;
-src: local('Avenir LT Std 45 Book Oblique'), url('/fonts/AvenirLTStd-BookOblique.otf') format('woff');
+src: local('Avenir LT Std 45 Book Oblique'), url('/fonts/AvenirLTStd-BookOblique.otf');
 }
 
 
@@ -89,7 +89,7 @@ src: local('Avenir LT Std 45 Book Oblique'), url('/fonts/AvenirLTStd-BookOblique
 font-family: 'Avenir_Heavy_Oblique';
 font-style: normal;
 font-weight: normal;
-src: local('Avenir LT Std 85 Heavy Oblique'), url('/fonts/AvenirLTStd-HeavyOblique.otf') format('woff');
+src: local('Avenir LT Std 85 Heavy Oblique'), url('/fonts/AvenirLTStd-HeavyOblique.otf');
 }
 
 
@@ -97,7 +97,7 @@ src: local('Avenir LT Std 85 Heavy Oblique'), url('/fonts/AvenirLTStd-HeavyObliq
 font-family: 'Avenir_Light_Oblique';
 font-style: normal;
 font-weight: normal;
-src: local('Avenir LT Std 35 Light Oblique'), url('/fonts/AvenirLTStd-LightOblique.otf') format('woff');
+src: local('Avenir LT Std 35 Light Oblique'), url('/fonts/AvenirLTStd-LightOblique.otf');
 }
 
 
@@ -105,7 +105,7 @@ src: local('Avenir LT Std 35 Light Oblique'), url('/fonts/AvenirLTStd-LightObliq
 font-family: 'Avenir LT Std 65 Medium Oblique';
 font-style: normal;
 font-weight: normal;
-src: local('Avenir LT Std 65 Medium Oblique'), url('/fonts/AvenirLTStd-MediumOblique.otf') format('woff');
+src: local('Avenir LT Std 65 Medium Oblique'), url('/fonts/AvenirLTStd-MediumOblique.otf');
 }
 
 
@@ -113,6 +113,6 @@ src: local('Avenir LT Std 65 Medium Oblique'), url('/fonts/AvenirLTStd-MediumObl
 font-family: 'Avenir LT Std 55 Oblique';
 font-style: normal;
 font-weight: normal;
-src: local('Avenir LT Std 55 Oblique'), url('/fonts/AvenirLTStd-Oblique.otf') format('woff');
+src: local('Avenir LT Std 55 Oblique'), url('/fonts/AvenirLTStd-Oblique.otf');
 }
 
