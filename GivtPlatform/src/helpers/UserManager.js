@@ -1,20 +1,22 @@
 import {EventAggregator} from 'aurelia-event-aggregator';
 import {LoginEvent} from './messages';
 import {Router} from 'aurelia-router';
+import env from '../environment';
 
 export class UserManager{
-    static inject() {return [EventAggregator, Router]};
+    static inject() {return [EventAggregator, Router, env]};
 
-    constructor(ea, router){
+    constructor(ea, router, env){
         this.ea = ea;
         this.myRouter = router;
+        this.env = env;
     }
 
 
     login(email, password){
         var oReq = new XMLHttpRequest();
         var eventAggr = this.ea;
-        oReq.open("POST", "https://givtapidebug.azurewebsites.net/oauth2/token");
+        oReq.open("POST", env.apiLink + "oauth2/token");
         oReq.setRequestHeader("Content-type","application/x-www-form-urlencoded");
         var params = "grant_type=password&userName="+email+"&password="+password;
         oReq.send(params);

@@ -1,12 +1,13 @@
 import {EventAggregator} from 'aurelia-event-aggregator';
 import {LoginEvent} from './messages';
+import env from '../environment';
 
 export class WebApi{
-    static inject() {return [EventAggregator]};
+    static inject() {return [EventAggregator, env]};
 
-    constructor(ea, cookieMonster){
+    constructor(ea, env){
         this.ea = ea;
-        this.cookieMonster = cookieMonster;
+        this.env = env;
     };
 
     getSecure(url, params){
@@ -16,7 +17,7 @@ export class WebApi{
         if(sessionStorage.access_token)
             var bearer = sessionStorage.access_token;
         var oReq = new XMLHttpRequest();
-        oReq.open("GET", "https://givtapidebug.azurewebsites.net/api/" + url);
+        oReq.open("GET", env.apiLink + "api/" + url);
         oReq.setRequestHeader("Content-type","text/plain");
         oReq.setRequestHeader("Authorization", "Bearer " + bearer);
         if(params){
