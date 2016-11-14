@@ -10,11 +10,7 @@ export class GoogleCharts{
         scriptElement.src = this.scriptURL;
         scriptElement.onload = () => {
             // do anything you need to do here, or call a VM method
-            console.log("loaded");
-
-            console.log("started loading");
             google.charts.load("visualization", "1", {packages:["corechart"]});
-            console.log("loaded the visualization");
             google.charts.setOnLoadCallback(drawChart);
             function drawChart() {
                 var dataTable = new google.visualization.DataTable();
@@ -46,8 +42,6 @@ export class GoogleCharts{
                 var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
                 chart.draw(dataTable, options);
             }
-
-            console.log("loaded google charts");
         };
 
         this.scriptElementInHead = document.querySelector('head').appendChild(scriptElement);
