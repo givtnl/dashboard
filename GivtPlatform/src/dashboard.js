@@ -67,9 +67,9 @@ export class DashBoard {
             .then(function (response){
                 this.dayAmount = 0;
                 for(var prop in response){
-                    this.dayAmount = (response[prop].Amount + this.dayAmount).toLocaleString(navigator.language);
+                    this.dayAmount = (response[prop].Amount + this.dayAmount);
                 }
-                //this.dayAmount = this.dayAmount.toFixed(2);
+                this.dayAmount = this.dayAmount.toLocaleString(navigator.language, {minimumFractionDigits: 2});
             }.bind(this));
     }
 
