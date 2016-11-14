@@ -1,21 +1,17 @@
 import {WebApi} from './helpers/webapi';
 import {EventAggregator} from 'aurelia-event-aggregator';
 import {LoginEvent} from './helpers/messages';
-import {CookieMonster} from './helpers/cookiemonster';
 import {UserManager} from './helpers/UserManager';
 
 export class Login{
-    static  inject(){ return [WebApi, EventAggregator, CookieMonster, UserManager]};
-    constructor(api, ea, cookieMonster, userManager){
+    static  inject(){ return [WebApi, EventAggregator, UserManager]};
+    constructor(api, ea, userManager){
         this.stayLoggedIn = "Blijf ingelogd";
         this.userManager = userManager;
         this.api = api;
-        this.email = "debug@nfcollect.com";
-        this.password = "Test123";
         this.staylogged = false;
         this.legit = false;
         this.ea = ea;
-        this.cookieMonster = cookieMonster;
 
         ea.subscribe(LoginEvent, msg =>
         {
@@ -25,7 +21,11 @@ export class Login{
 
     loggedIn(msg){
         if(msg.access_token){
-            this.cookieMonster.createCookie("access_token", msg.access_token, msg.expires_in / 60 / 60 / 24);
+            if(this.staylogged){
+                localStorage.access_token = msg.access_token;
+            }else{
+                sessionStorage.access_token = msg.access_token;
+            }
             location.reload();
         }
         else{

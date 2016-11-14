@@ -1,9 +1,8 @@
 import {EventAggregator} from 'aurelia-event-aggregator';
 import {LoginEvent} from './messages';
-import {CookieMonster} from './cookiemonster';
 
 export class WebApi{
-    static inject() {return [EventAggregator, CookieMonster]};
+    static inject() {return [EventAggregator]};
 
     constructor(ea, cookieMonster){
         this.ea = ea;
@@ -12,7 +11,10 @@ export class WebApi{
 
     getSecure(url, params){
         var eventAggr = this.ea;
-        var bearer = this.cookieMonster.getCookie("access_token");
+        if(localStorage.access_token)
+            var bearer = localStorage.access_token;
+        if(sessionStorage.access_token)
+            var bearer = sessionStorage.access_token;
         var oReq = new XMLHttpRequest();
         oReq.open("GET", "https://givtapidebug.azurewebsites.net/api/" + url);
         oReq.setRequestHeader("Content-type","text/plain");

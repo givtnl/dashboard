@@ -1,14 +1,12 @@
 import {EventAggregator} from 'aurelia-event-aggregator';
 import {LoginEvent} from './messages';
-import {CookieMonster} from './cookiemonster';
 import {Router} from 'aurelia-router';
 
 export class UserManager{
-    static inject() {return [EventAggregator, CookieMonster, Router]};
+    static inject() {return [EventAggregator, Router]};
 
-    constructor(ea, cookieMonster, router){
+    constructor(ea, router){
         this.ea = ea;
-        this.cookieMonster = cookieMonster;
         this.myRouter = router;
     }
 
@@ -32,12 +30,13 @@ export class UserManager{
                     eventAggr.publish(new LoginEvent(JSON.parse(json)));
                 }
             }
-        }
+        }.bind(this);
     }
 
     logOut(){
         console.log("logged out now");
-        this.cookieMonster.delete_cookie("access_token");
+        localStorage.clear();
+        sessionStorage.clear();
         this.myRouter.navigate("");
         location.reload();
     }

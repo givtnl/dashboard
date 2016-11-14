@@ -1,16 +1,11 @@
-import {CookieMonster} from './helpers/cookiemonster';
-
 export class App {
-    static inject () {return [CookieMonster]}
 
-    constructor(cookieMonster){
-        this.cookieMonster = cookieMonster;
+    constructor(){
     }
 
     configureRouter(config, router){
         config.title = 'Givt Platform';
-
-        if(!this.cookieMonster.getCookie("access_token")){
+        if(!localStorage.access_token && !sessionStorage.access_token){
             config.map([
                 {route : '', moduleId: 'login', title: 'Login'}
             ])
