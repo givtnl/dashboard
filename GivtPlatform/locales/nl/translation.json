@@ -1,0 +1,20 @@
+{
+    "Menu_Overview": "Overzicht",
+    "Menu_Services": "Diensten",
+    "Menu_Insights": "Inzicht",
+    "Menu_Statistics": "Statistieken",
+    "Menu_Settings": "Instellingen",
+    "Text_ThisMonth": "Deze maand",
+    "Text_Collectes": "collectes",
+    "Text_DidYouKnow": "Wist je dat?",
+    "Text_DidYouKnowAnswer": "Kerkgangers het meeste geven aan het einde van de dienst?",
+    "Text_Givers": "Gevers",
+    "Text_Collected": "opgehaald",
+    "Text_Given": "gegeven",
+    "Text_LastSunday": "Laatste zondag",
+    "Text_Logout": "Uitloggen",
+    "Placeholder_Email": "E-mailadres",
+    "Placeholder_Password": "Wachtwoord",
+    "Text_StayLoggedIn": "Blijf ingelogd",
+    "Text_Login": "Inloggen"
+}
