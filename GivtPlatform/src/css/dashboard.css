@@ -240,6 +240,7 @@ nav ul { ... min-height:50px; } /* < add */
     nav {
         position: fixed;
         top:0;
+        z-index: 1337;
     }
 
     nav ul {
