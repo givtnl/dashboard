@@ -117,4 +117,10 @@ input[type="email"], input[type="password"]{
     color: red;
 }
 
+@media only screen and (max-width: 500px) {
+    .logo {
+        width: 80%;
+    }
+}
+
 
