@@ -11,10 +11,10 @@
     "Text_Givers": "Gevers",
     "Text_Collected": "opgehaald",
     "Text_Given": "gegeven",
-    "Text_LastSunday": "Laatste zondag",
+    "Text_LastSunday": "Afgelopen zondag",
     "Text_Logout": "Uitloggen",
     "Placeholder_Email": "E-mailadres",
     "Placeholder_Password": "Wachtwoord",
-    "Text_StayLoggedIn": "Blijf ingelogd",
+    "Text_StayLoggedIn": "Ingelogd blijven",
     "Text_Login": "Inloggen"
 }
