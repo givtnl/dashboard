@@ -30,11 +30,13 @@ export class Login{
         }
         else{
             if(msg.error){
-                if(document.getElementById("loginError"))
-                    document.getElementById("loginError").innerHTML = "";
+                if(document.getElementById("loginError")){
+                    document.getElementById("loginError").innerHTML = "Verkeerd wachtwoord/gebruikersnaam, probeer opnieuw.";
+                    return;
+                }
                 this.errorText = msg.error;
                 var node = document.createElement("span");
-                var textNode = document.createTextNode(this.errorText);
+                var textNode = document.createTextNode("Verkeerd wachtwoord/gebruikersnaam, probeer opnieuw.");
                 node.appendChild(textNode);
                 node.className = "error";
                 node.id = "loginError";
@@ -46,5 +48,6 @@ export class Login{
 
     login(){
         this.userManager.login(this.email, this.password);
+        document.getElementById("loginError").innerHTML = "";
     }
 }

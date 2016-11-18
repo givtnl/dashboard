@@ -40,6 +40,10 @@ button{
     padding:10px 0;
 
 }
+
+button:active{
+    background: gray;
+}
 form{
     background:white;
 }
@@ -115,6 +119,7 @@ input[type="email"], input[type="password"]{
     margin-top: 20px;
     font-family: 'Avenir_Light';
     color: red;
+    text-align: center;
 }
 
 @media only screen and (max-width: 500px) {
