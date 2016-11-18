@@ -4,7 +4,7 @@
         <div class="menu-wrapper">
             <h1><span innerhtml.bind="instanceTitle"></span></h1>
             <ul>
-                <li><a class="menu-active" href="">Overzicht</a></li>
+                <li><a class="menu-active" href="" t="Menu_Overview">Overzicht</a></li>
             </ul>
             <span class="menu-settings" click.delegate="btnLogOut()">
                 <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -24,7 +24,7 @@
                        </g>
                    </g>
                 </svg>
-            <span>Uitloggen</span></span>
+            <span t="Text_Logout"></span></span>
         </div>
     </nav>
     <section class="section-dashboard">
@@ -36,39 +36,39 @@
                     <div id="donutchart"></div>
                     <div id="test">
                         <span>€ <span innerhtml.bind="dayAmount"></span></span>
-                        <p>opgehaald</p>
+                        <p t="Text_Collected">opgehaald</p>
                     </div>
                 </div>
             </div>
         </article>
         <article>
             <div>
-                <p class="card-title">Deze maand</p>
+                <p class="card-title" t="Text_ThisMonth">Deze maand</p>
                 <p class="card-subtitle"><span innerhtml.bind="monthText"></span></p>
                 <p class="card-subtitle">€ <span class="fat-emphasis" innerhtml.bind="monthAmount"></span></p>
-                <p class="card-subtitle">gegeven</p>
+                <p class="card-subtitle" t="Text_Given">gegeven</p>
             </div>
             </article>
         <article>
             <div>
-                <p class="card-title">Laatste zondag</p>
+                <p class="card-title" t="Text_LastSunday">Laatste zondag</p>
                 <p class="card-subtitle"><span innerhtml.bind="lastSundayDay"></span> <span innerhtml.bind="monthText"></span></p>
                 <p class="card-subtitle">€ <span class="fat-emphasis" innerhtml.bind="dayAmount"></span></p>
-                <p class="card-subtitle">gegeven</p>
+                <p class="card-subtitle" t="Text_Given">gegeven</p>
             </div>
         </article>
             <article>
                 <div>
-                    <p class="card-title">Gevers</p>
+                    <p class="card-title" t="Text_Givers">Gevers</p>
                     <p class="card-subtitle"><span innerhtml.bind="monthText"></span></p>
                     <p class="card-subtitle"><span class="fat-emphasis" innerhtml.bind="usercount"></span></p>
-                    <p class="card-subtitle">gevers</p>
+                    <p class="card-subtitle" t="Text_Givers" >gevers</p>
                 </div>
             </article>
             <article >
                 <div class="wistjedat">
-                    <p class="card-title">Wist je dat?</p>
-                    <p class="card-subtitle">Hier in de toekomst meer features komen?</p>
+                    <p class="card-title" t="Text_DidYouKnow">Wist je dat?</p>
+                    <p class="card-subtitle" t="Text_DidYouKnowAnswer">Hier in de toekomst meer features komen?</p>
                 </div>
             </article>
     </section>

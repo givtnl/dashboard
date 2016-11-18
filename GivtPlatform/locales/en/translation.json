@@ -1,0 +1,20 @@
+{
+  "Menu_Overview": "Overview",
+  "Menu_Services": "Services",
+  "Menu_Insights": "Insights",
+  "Menu_Statistics": "Statistics",
+  "Menu_Settings": "Settings",
+  "Text_ThisMonth": "This month",
+  "Text_Collectes": "Offerings",
+  "Text_DidYouKnow": "Did you know?",
+  "Text_DidYouKnowAnswer": "That people give more at the end of the service?",
+  "Text_Givers": "Givers",
+  "Text_Collected": "collected",
+  "Text_Given": "given",
+  "Text_LastSunday": "Last Sunday",
+  "Text_Logout": "Log out",
+  "Placeholder_Email": "Email address",
+  "Placeholder_Password": "Password",
+  "Text_StayLoggedIn": "Stay logged in",
+  "Text_Login": "Log in"
+}

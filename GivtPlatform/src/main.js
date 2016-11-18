@@ -1,4 +1,5 @@
 import environment from './environment';
+import Backend from 'i18next-xhr-backend';
 
 //Configure Bluebird Promises.
 //Note: You may want to use environment-specific configuration.
@@ -20,6 +21,21 @@ export function configure(aurelia) {
   if (environment.testing) {
     aurelia.use.plugin('aurelia-testing');
   }
+
+  aurelia.use.plugin('aurelia-i18n', (instance) => {
+    // register backend plugin
+    instance.i18next.use(Backend);
+
+    return instance.setup({
+      backend: {
+        loadPath: './locales/{{lng}}/{{ns}}.json',
+      },
+      lng : 'nl',
+      attributes : ['t','i18n'],
+      fallbackLng : 'nl',
+      debug : false
+    });
+  });
 
   aurelia.start().then(() => aurelia.setRoot());
 }

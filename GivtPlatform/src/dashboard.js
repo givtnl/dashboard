@@ -1,15 +1,21 @@
 import {WebApi} from './helpers/webapi';
 import {UserManager} from './helpers/UserManager';
 import {GoogleCharts} from './helpers/googleCharts';
+import {I18N} from 'aurelia-i18n';
 
 export class DashBoard {
     static inject() {
-        return [WebApi, UserManager]
+        return [WebApi, UserManager,I18N]
     }
 
 
 
-    constructor(WebApi, userManager) {
+    constructor(WebApi, userManager,I18N) {
+        this.i18n = I18N;
+
+        console.log(navigator.language);
+
+        this.i18n.setLocale(navigator.language);
         this.webapi = WebApi;
         this.userManager = userManager;
         this.fetchInstanceTitle();
