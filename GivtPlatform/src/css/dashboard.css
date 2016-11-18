@@ -247,8 +247,16 @@ nav ul { ... min-height:50px; } /* < add */
         display: none;
     }
 
-    nav .menu-settings {
+    .menu-wrapper{
+        padding-left:68px;
+    }
+
+    .menu-settings span{
         display: none;
+    }
+
+    .menu-settings svg{
+        display: block;
     }
 
     nav h1 {
@@ -256,9 +264,4 @@ nav ul { ... min-height:50px; } /* < add */
         padding: 15px 0;
         font-size: 18px;
     }
-
-
-
-
-
 }
