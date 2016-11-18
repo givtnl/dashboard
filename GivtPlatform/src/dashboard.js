@@ -10,8 +10,6 @@ export class DashBoard {
 
 
     constructor(WebApi, userManager) {
-        this.hamburgerColor = "#C0BFCC";
-        this.cssToggleMenu = {display: 'none'};
         this.webapi = WebApi;
         this.userManager = userManager;
         this.fetchInstanceTitle();
@@ -47,11 +45,6 @@ export class DashBoard {
         },3000);
 
         this.chart = new GoogleCharts();
-    }
-
-    toggleMenu(){
-        this.cssToggleMenu = this.cssToggleMenu.display === 'none' ? {display : 'block'} : {display : 'none'};
-        this.hamburgerColor = this.hamburgerColor === "#C0BFCC" ? "#FFFFFF" : "#C0BFCC";
     }
 
     fetchInstanceTitle(){

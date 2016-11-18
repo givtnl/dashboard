@@ -2,32 +2,9 @@
     <require from="./css/dashboard.css"></require>
     <nav>
         <div class="menu-wrapper">
-            <svg click.delegate="toggleMenu()" class="hamburger-menu" width="24px" height="18px" viewBox="0 0 24 18" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                <!-- Generator: Sketch 41 (35326) - http://www.bohemiancoding.com/sketch -->
-                <title>Menu-icon</title>
-                <desc>Created with Sketch.</desc>
-                <defs></defs>
-                <g id="Icons-wit/C0BFCC" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                    <g id="Menu" transform="translate(0.000000, -3.000000)">
-                        <g id="Menu-icon">
-                            <rect id="Rectangle-5" x="0" y="0" width="24" height="24"></rect>
-                            <path d="M0,3 L24,3 L24,7 L0,7 L0,3 Z M0,10 L24,10 L24,14 L0,14 L0,10 Z M0,17 L24,17 L24,21 L0,21 L0,17 Z" id="Menu" fill=${hamburgerColor}></path>
-                        </g>
-                    </g>
-                </g>
-            </svg>
             <h1><span innerhtml.bind="instanceTitle"></span></h1>
-            <svg class="settings-menu" width="23px" height="24px" viewBox="285 18 23 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                <!-- Generator: Sketch 40.3 (33839) - http://www.bohemiancoding.com/sketch -->
-                <desc>Created with Sketch.</desc>
-                <defs></defs>
-                <path d="M293.505744,38.5313231 L294.378721,42 L298.433056,42 L299.288087,38.5372916 C300.435314,38.1570751 301.480514,37.556106 302.372337,36.7852731 L305.78461,37.7555786 L307.811777,34.2444214 L305.299645,31.8294468 C305.422726,31.2387287 305.487391,30.6268483 305.487391,30 C305.487391,29.3795417 305.424038,28.7737477 305.303391,28.1886247 L307.811777,25.7555786 L305.78461,22.2444214 L302.386628,23.2271049 C301.493873,22.4522234 300.446576,21.8479157 299.296536,21.4655131 L298.433056,18 L294.378721,18 L293.52593,21.4619665 C292.374577,21.8432181 291.325928,22.446795 290.431872,23.2212752 L287.027168,22.2444214 L285,25.7555786 L287.512602,28.1682993 C287.389216,28.7597149 287.324386,29.3723544 287.324386,30 C287.324386,30.6238403 287.388432,31.232856 287.510364,31.8209415 L285,34.2444214 L287.027168,37.7555786 L290.423369,36.771349 C291.314054,37.5448386 292.35867,38.1485001 293.505744,38.5313231 Z M296.405889,35 C299.192319,35 301.451168,32.7614237 301.451168,30 C301.451168,27.2385763 299.192319,25 296.405889,25 C293.619458,25 291.360609,27.2385763 291.360609,30 C291.360609,32.7614237 293.619458,35 296.405889,35 Z" id="Combined-Shape" stroke="none" fill="#C0BFCC " fill-rule="evenodd"></path>
-            </svg>
-            <ul css.bind="cssToggleMenu">
+            <ul>
                 <li><a class="menu-active" href="">Overzicht</a></li>
-                <li><a class="" href="">Inzicht</a></li>
-                <li><a class="" href="">Diensten</a></li>
-                <li><a class="" href="">Statistieken</a></li>
             </ul>
             <span class="menu-settings" click.delegate="btnLogOut()">
                 <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
