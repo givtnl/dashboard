@@ -18,7 +18,7 @@
             <input class="block input-full-width" value.bind="email" type="email" placeholder="E-mailadres" required>
             <input class="block input-full-width" value.bind="password" type="password" placeholder="Wachtwoord" required>
             <input type="checkbox" id="stay-loggedin" checked.bind="staylogged"> <label for="stay-loggedin">${stayLoggedIn}</label>
-            <button class="block input-full-width" type="button" click.delegate="login()">Inloggen</button>
+            <button class="block input-full-width" type="submit" click.delegate="login()">Inloggen</button>
         </form>
     </section>
     </main>
