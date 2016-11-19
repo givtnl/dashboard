@@ -1,6 +1,6 @@
 import {EventAggregator} from 'aurelia-event-aggregator';
-import {LoginEvent} from './messages';
 import env from '../environment';
+import {LogoutEvent} from './messages';
 
 export class WebApi{
     static inject() {return [EventAggregator, env]};
@@ -39,6 +39,11 @@ export class WebApi{
                     }
                     catch(err){
                         resolve(oReq.responseText);
+                    }
+                }
+                else{
+                    if(oReq.status == 401){
+                        eventAggr.publish(new LogoutEvent("Bearer not valid"));
                     }
                 }
             }

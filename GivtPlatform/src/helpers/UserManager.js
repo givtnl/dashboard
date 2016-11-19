@@ -1,5 +1,6 @@
 import {EventAggregator} from 'aurelia-event-aggregator';
 import {LoginEvent} from './messages';
+import {LogoutEvent} from './messages';
 import {Router} from 'aurelia-router';
 import env from '../environment';
 
@@ -10,6 +11,10 @@ export class UserManager{
         this.ea = ea;
         this.myRouter = router;
         this.env = env;
+        this.ea.subscribe(LogoutEvent, msg =>
+        {
+            this.logOut();
+        });
     }
 
 

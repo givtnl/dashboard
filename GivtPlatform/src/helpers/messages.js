@@ -3,3 +3,9 @@ export class LoginEvent {
         this.msg = msg;
     }
 }
+
+export class LogoutEvent {
+    constructor(msg){
+        this.msg = msg;
+    }
+}
