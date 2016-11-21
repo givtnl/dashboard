@@ -9,7 +9,9 @@ export class Login{
     static  inject(){ return [WebApi, EventAggregator, UserManager,I18N]};
     constructor(api, ea, userManager,I18N){
         this.i18n = I18N;
-        this.i18n.setLocale(navigator.language);
+        console.log(navigator.language.substring(0,2));
+
+        this.i18n.setLocale("nl");
 
         this.stayLoggedIn = "Blijf ingelogd";
         this.userManager = userManager;

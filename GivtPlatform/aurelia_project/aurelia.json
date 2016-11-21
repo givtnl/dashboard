@@ -120,6 +120,11 @@
             "path": "../scripts/text"
           },
           {
+            "name": "intl",
+            "path": "../node_modules/intl/dist",
+            "main": "Intl.min"
+          },
+          {
             "name": "aurelia-templating-resources",
             "path": "../node_modules/aurelia-templating-resources/dist/amd",
             "main": "aurelia-templating-resources"
