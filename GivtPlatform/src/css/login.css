@@ -22,6 +22,15 @@ section{
     width: auto;
 }
 
+.pass-eye{
+    float: right;
+    padding: 10px;
+    margin-top: -68px;
+    margin-right: -10px;
+    position: relative;
+    cursor: pointer;
+}
+
 .logo{
     margin: 2em auto;
     display: block;

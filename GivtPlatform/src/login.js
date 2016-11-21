@@ -10,7 +10,7 @@ export class Login{
     constructor(api, ea, userManager,I18N){
         this.i18n = I18N;
         this.i18n.setLocale(navigator.language);
-
+        this.eyeColor = "#BCB9C9";
         this.stayLoggedIn = "Blijf ingelogd";
         this.userManager = userManager;
         this.api = api;
@@ -24,18 +24,18 @@ export class Login{
         });
     }
 
-    loggedIn(msg){
-        if(msg.access_token){
-            if(this.staylogged){
+    loggedIn(msg) {
+        if (msg.access_token) {
+            if (this.staylogged) {
                 localStorage.access_token = msg.access_token;
-            }else{
+            } else {
                 sessionStorage.access_token = msg.access_token;
             }
             location.reload();
         }
-        else{
-            if(msg.error){
-                if(document.getElementById("loginError")){
+        else {
+            if (msg.error) {
+                if (document.getElementById("loginError")) {
                     document.getElementById("loginError").innerHTML = "Verkeerd wachtwoord/gebruikersnaam, probeer opnieuw.";
                     return;
                 }
@@ -50,9 +50,21 @@ export class Login{
         }
     }
 
-
     login(){
         this.userManager.login(this.email, this.password);
         document.getElementById("loginError").innerHTML = "";
+    }
+
+    changepassview(){
+        var x = document.getElementById("pass");
+        console.log(x.type);
+        if(x.type === "text"){
+            x.type = "password";
+            this.eyeColor = "#BCB9C9";
+        }
+        else{
+            x.type = "text";
+            this.eyeColor = "#41C98E";
+        }
     }
 }
