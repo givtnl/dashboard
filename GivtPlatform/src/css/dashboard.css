@@ -228,6 +228,20 @@ nav ul { ... min-height:50px; } /* < add */
     color:#2C2B57;
 }
 
+@media only screen and (max-width: 800px) {
+    .section-dashboard.section-dashboard {
+        -webkit-column-count:2;
+        -moz-column-count:2;
+        column-count:2;
+        margin-top:55px;
+    }
+
+    nav ul {
+        display: block;
+        max-width: 250px;
+    }
+}
+
 @media only screen and (max-width: 500px) {
     /* For mobile phones: */
     .section-dashboard.section-dashboard {
