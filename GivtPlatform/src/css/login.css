@@ -46,6 +46,9 @@ section{
     display: flex;
     height: 100%;
 }
+.pass-eye:hover{
+    cursor: pointer;
+}
 .password-box svg{
     align-self:center;
 }
