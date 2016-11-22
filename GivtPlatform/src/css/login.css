@@ -79,14 +79,18 @@ form{
 .block{
     display: block;
 }
-input[type="checkbox"]{
-    /* Rectangle 5: */
-    background: #FFFFFF;
-    border: 1px solid #2C2B57;
-    -webkit-border-radius:0;
-    -moz-border-radius:0;
-    border-radius:0;
-    font-size: x-large;
+input[type="checkbox"] {
+    display:none;
+}
+input[type="checkbox"] + label span {
+    display:inline-block;
+    width:24px;
+    height:24px;
+    background:url(unchecked.png);
+    cursor:pointer;
+}
+input[type="checkbox"]:checked + label span {
+    background:url(checked.png);
 }
 
 input[required]{
@@ -121,15 +125,14 @@ input:-ms-input-placeholder { /* Internet Explorer 10-11 */
     color:    #BCB9C9;
 }
 
-label{
+.label--logged-in{
     background-color:white;
     margin-left: 15px;
     color: #BCB9C9;
     opacity:1;
     font-family: 'Avenir_Light';
     font-size: 1em;
-
-
+    vertical-align: top;
 }
 
 input[type=checkbox]:checked + label{
@@ -145,11 +148,16 @@ input[type="email"], input[type="password"]{
 }
 
 .error{
-    font-size: 1em;
+    font-size: 15px;
     margin-top: 20px;
     font-family: 'Avenir_Light';
-    color: red;
+    color: #D43D4C;
     text-align: center;
+    display:block;
+}
+#errorList{
+    max-width: 350px;
+    margin: 0 auto;
 }
 
 input[type="email"]{

@@ -25,10 +25,11 @@
                     <path d="M288.945312,187.8125 L288.90625,187.757812 C288.90625,187.757812 285.5,182.664062 281,182.664062 C276.5,182.664062 273.054688,187.8125 273.054688,187.8125 C272.984375,187.929688 272.984375,188.070312 273.054688,188.1875 C273.054688,188.1875 276.5,193.335938 281,193.335938 C285.5,193.335938 288.945312,188.1875 288.945312,188.1875 C289.015625,188.070312 289.015625,187.929688 288.945312,187.8125 L288.945312,187.8125 Z M281,191 C279.335938,191 278,189.664062 278,188 C278,186.351562 279.335938,185 281,185 C282.648438,185 284,186.351562 284,188 C284,189.664062 282.648438,191 281,191 L281,191 Z" id="eye" stroke="none" fill="${eyeColor}" fill-rule="evenodd"></path>
                 </svg>
             </span></div>
-            <input type="checkbox" id="stay-loggedin" checked.bind="staylogged"> <label for="stay-loggedin" t="Text_StayLoggedIn"></label>
+            <input type="checkbox" id="stay-loggedin" checked.bind="staylogged"><label for="stay-loggedin"><span></span></label> <label class="label--logged-in" for="stay-loggedin" t="Text_StayLoggedIn"></label>
             <button class="block input-full-width" type="submit" click.delegate="login()" t="Text_Login">Inloggen</button>
         </form>
     </section>
+        <div id="errorList"></div>
     </main>
 
 </template>
