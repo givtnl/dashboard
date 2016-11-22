@@ -46,7 +46,9 @@ export class DashBoard {
         setInterval(function(){
             return that.fetchDailyGivts();
         },3000);
-
+        setInterval(function(){
+            return that.fetchUsers();
+        },3000);
         this.chart = new GoogleCharts();
     }
 
