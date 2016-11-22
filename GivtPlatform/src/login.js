@@ -46,7 +46,7 @@ export class Login{
                 node.appendChild(textNode);
                 node.className = "error";
                 node.id = "loginError";
-                document.getElementById("login").appendChild(node);
+                document.getElementById("errorList").appendChild(node);
             }
         }
     }
