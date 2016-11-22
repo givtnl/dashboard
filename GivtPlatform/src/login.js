@@ -9,7 +9,6 @@ export class Login{
     static  inject(){ return [WebApi, EventAggregator, UserManager,I18N]};
     constructor(api, ea, userManager,I18N){
         this.i18n = I18N;
-        this.i18n.setLocale(navigator.language);
         this.eyeColor = "#BCB9C9";
         this.stayLoggedIn = "Blijf ingelogd";
         this.userManager = userManager;
@@ -17,6 +16,8 @@ export class Login{
         this.staylogged = false;
         this.legit = false;
         this.ea = ea;
+
+        this.errorMessage = this.i18n.i18next.t("Error_WrongEmailOrPassword");
 
         ea.subscribe(LoginEvent, msg =>
         {
@@ -36,12 +37,12 @@ export class Login{
         else {
             if (msg.error) {
                 if (document.getElementById("loginError")) {
-                    document.getElementById("loginError").innerHTML = "Verkeerd wachtwoord/gebruikersnaam, probeer opnieuw.";
+                    document.getElementById("loginError").innerHTML = this.errorMessage;
                     return;
                 }
                 this.errorText = msg.error;
                 var node = document.createElement("span");
-                var textNode = document.createTextNode("Verkeerd wachtwoord/gebruikersnaam, probeer opnieuw.");
+                var textNode = document.createTextNode(this.errorMessage);
                 node.appendChild(textNode);
                 node.className = "error";
                 node.id = "loginError";

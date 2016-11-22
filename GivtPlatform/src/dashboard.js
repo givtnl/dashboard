@@ -12,7 +12,6 @@ export class DashBoard {
 
     constructor(WebApi, userManager,I18N) {
         this.i18n = I18N;
-        this.i18n.setLocale(navigator.language.substring(0,2));
         this.webapi = WebApi;
         this.userManager = userManager;
         this.fetchInstanceTitle();
