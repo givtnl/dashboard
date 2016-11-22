@@ -42,7 +42,7 @@ section{
 button{
     background: #41C98E;
     border: 1px solid #41C98E;
-    font-family: 'Avenir_Light';
+    font-family: 'Avenir_Medium';
     font-size: 1em;
     color: #FFFFFF;
     text-align: center;
@@ -133,7 +133,11 @@ input[type="email"], input[type="password"]{
 
 @media only screen and (max-width: 500px) {
     .logo {
-        width: 80%;
+        width: 23%;
+        margin: 0px auto;
+        margin-top: 30px;
+        padding: 0;
+        height : 3em;
     }
 }
 
