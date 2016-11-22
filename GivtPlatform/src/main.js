@@ -30,7 +30,7 @@ export function configure(aurelia) {
       backend: {
         loadPath: './locales/{{lng}}/{{ns}}.json',
       },
-      lng : 'nl',
+      lng : navigator.language.substring(0,2),
       attributes : ['t','i18n'],
       fallbackLng : 'nl',
       debug : false
