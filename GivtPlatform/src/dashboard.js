@@ -2,6 +2,7 @@ import {WebApi} from './helpers/webapi';
 import {UserManager} from './helpers/UserManager';
 import {GoogleCharts} from './helpers/googleCharts';
 import {I18N} from 'aurelia-i18n';
+import {Intl} from 'intl';
 
 export class DashBoard {
     static inject() {
@@ -11,6 +12,7 @@ export class DashBoard {
 
 
     constructor(WebApi, userManager,I18N) {
+        this.isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
         this.i18n = I18N;
         this.webapi = WebApi;
         this.userManager = userManager;
@@ -66,6 +68,7 @@ export class DashBoard {
         var DateBegin =  lastSundayDate + " 00:00:00";
         var DateEnd = lastSundayDate + " 23:59:59";
 
+
         var params = "DateBegin=" + DateBegin + "&DateEnd=" + DateEnd + "&Status=" + "0";
         this.webapi.getSecure("OrgAdminView/Givts/?"+params)
             .then(function (response){
@@ -73,9 +76,10 @@ export class DashBoard {
                 for(var prop in response){
                     this.dayAmount = (response[prop].Amount + this.dayAmount);
                 }
-                this.dayAmount = this.dayAmount.toLocaleString(navigator.language, {minimumFractionDigits: 2});
+                this.dayAmount = this.isSafari ? this.dayAmount.toFixed(2) : this.dayAmount.toLocaleString(navigator.language,{minimumFractionDigits: 2});
             }.bind(this));
     }
+
 
     fetchMonthlyGivts() {
         var date = new Date();
@@ -91,7 +95,7 @@ export class DashBoard {
                 for(var prop in response){
                     this.monthAmount = response[prop].Amount + this.monthAmount;
                 }
-                this.monthAmount = this.monthAmount.toLocaleString(navigator.language, {minimumFractionDigits: 2});
+                this.monthAmount = this.isSafari ? this.monthAmount.toFixed(2) : this.monthAmount.toLocaleString(navigator.language,{minimumFractionDigits: 2});
             }.bind(this));
     }
 
