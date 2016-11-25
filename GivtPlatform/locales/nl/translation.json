@@ -17,5 +17,6 @@
     "Placeholder_Password": "Wachtwoord",
     "Text_StayLoggedIn": "Ingelogd blijven",
     "Text_Login": "Inloggen",
-    "Error_WrongEmailOrPassword": "Verkeerd wachtwoord/gebruikersnaam, probeer opnieuw."
+    "Error_WrongEmailOrPassword": "Verkeerd wachtwoord of gebruikersnaam, probeer opnieuw.",
+    "Text_GiversLowercase": "gevers"
 }

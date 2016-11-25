@@ -17,5 +17,6 @@
   "Placeholder_Password": "Password",
   "Text_StayLoggedIn": "Stay logged in",
   "Text_Login": "Log in",
-  "Error_WrongEmailOrPassword": "Wrong email address/password, please try again."
+  "Error_WrongEmailOrPassword": "Wrong e-mail address or password, please try again.",
+  "Text_GiversLowercase": "givers"
 }
