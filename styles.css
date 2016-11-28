@@ -1,3 +1,23 @@
+@font-face {
+    font-family: 'Avenir_Black';
+    src: url('./fonts/AvenirLTStd-black.otf');
+}
+
+@font-face {
+    font-family: 'Avenir_Light';
+    src: url('./fonts/AvenirLTStd-Light.otf');
+}
+
 body{
     background: #F5F5F5;
+}
+
+.start-logo{
+    display: block;
+    max-width: 300px;
+    margin: 200px auto;
+}
+
+.startscreen-wrapper{
+    width: 100%;
 }
