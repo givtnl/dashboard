@@ -24,11 +24,9 @@ export class LoginComponent  {
             this.error_message = "Vul de velden in";
             return;
         }
-        this.userService.login(this.userName, this.password)
+        this.userService.login(this.userName, this.password, this.stayloggedin)
             .then(resp => {
-                if(resp){
-                    console.log("logged in!");
-                }
+                console.log(resp);
             },
                 error => this.error_message = "Verkeerd wachtwoord, probeer opnieuw"
             );
