@@ -34,6 +34,13 @@ export class UserService {
                 { headers }
             )
             .toPromise()
-            .then(res => res.json());
+            .then(res => {
+                if(res.json().access_token){
+                    localStorage.setItem('access_token', res.json().access_token);
+                }
+                else{
+                    return;
+                }
+            })
     }
 }

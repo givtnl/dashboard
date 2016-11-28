@@ -14,10 +14,19 @@ export class LoginComponent  {
     }
 
     login(){
+        this.error_message = "";
+        if(!this.userName || !this.password){
+            this.error_message = "Vul de velden in";
+            return;
+        }
         this.userService.login(this.userName, this.password)
-            .then(data => {
-                console.log(data);
-            });
+            .then(resp => {
+                if(resp){
+                    console.log("logged in!");
+                }
+            },
+                error => this.error_message = "Verkeerd wachtwoord, probeer opnieuw"
+            );
     }
 
 }
