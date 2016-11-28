@@ -76,7 +76,7 @@ input[type="checkbox"] + label span {
     display:inline-block;
     width:24px;
     height:24px;
-    background:url(unchecked.png);
+    background:url(images/unchecked.png);
     cursor:pointer;
     image-rendering: optimizeSpeed;             /* STOP SMOOTHING, GIVE ME SPEED  */
     image-rendering: -moz-crisp-edges;          /* Firefox                        */
@@ -87,7 +87,7 @@ input[type="checkbox"] + label span {
     -ms-interpolation-mode: nearest-neighbor;   /* IE8+                           */
 }
 input[type="checkbox"]:checked + label span {
-    background:url(checked.png);
+    background:url(images/checked.png);
     image-rendering: optimizeSpeed;             /* STOP SMOOTHING, GIVE ME SPEED  */
     image-rendering: -moz-crisp-edges;          /* Firefox                        */
     image-rendering: -o-crisp-edges;            /* Opera                          */

@@ -9,8 +9,13 @@ import { UserService } from '../Services/user.service';
 })
 export class LoginComponent  {
 
+    passwordHidden: boolean;
+    eyeColor:string;
+
     constructor(private userService: UserService){
         this.userService = userService;
+        this.passwordHidden = true;
+        this.eyeColor = "#2E2957"
     }
 
     login(){
@@ -29,4 +34,14 @@ export class LoginComponent  {
             );
     }
 
+    showPass(){
+        if(this.passwordHidden){
+            this.passwordHidden = false;
+            document.getElementById("")
+            console.log("aight");
+        }else{
+            this.passwordHidden = true;
+            console.log("nope");
+        }
+    }
 }
