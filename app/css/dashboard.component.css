@@ -1,0 +1,134 @@
+.section-dashboard article{
+    -webkit-column-break-inside: avoid;
+    page-break-inside: avoid;
+    break-inside: avoid;
+    padding: 5px;
+    box-sizing: border-box;
+}
+.section-dashboard article > div{
+    padding:15px;
+    box-sizing: border-box;
+
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flex;
+    display: flex;
+
+    width: auto;
+    min-height: 200px;
+    background-color:white;
+    border: 1px solid #E3E2E7;
+    border-radius: 2px;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+
+    -webkit-flex-flow: column;
+    -moz-flex-flow: column;
+    -ms-flex-flow: column;
+    flex-flow: column;
+}
+
+
+.section-dashboard article div p{
+    margin:0;
+    margin-bottom:5px;
+}
+
+.card-title{
+    font-family: "Avenir_Heavy";
+    font-size:18px;
+    color:#2C2B57;
+}
+
+.card-subtitle{
+    font-family: "Avenir_Roman";
+    font-size:13px;
+    color:#2C2B57;
+
+}
+
+.fat-emphasis{
+    font-size:40px;
+}
+
+.section-dashboard article .wistjedat{
+    height:120px !important;
+    background-color:#3480C7;
+    min-height: 0;
+    color:white !important;
+}
+.wistjedat p{
+    color:white;
+}
+
+
+.section-services{
+    max-width:1024px;
+    margin:0 auto;
+    background-color:red;
+    height: 50px;
+}
+/* tables */
+.services-table{
+    width:100%;
+    margin:0;
+    padding:0 ;
+    border-spacing: 0;
+}
+
+.services-table tr{
+    text-align: left;
+    border: 5px solid black;
+}
+
+.services-table tr td {
+    border: 1px solid black;
+}
+
+.table-row-monthly{
+    background-color: #E3E2E7;
+    height:60px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.table-row-monthly th:first-child{
+    padding-left:30px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.table-row-monthly th:last-child{
+    padding-right:30px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+#h{
+    position:relative;
+    display:block;
+}
+#test{
+    position: absolute;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    margin:0 auto;
+    width:100%;
+    height:100%;
+    top:0;
+    left:0;
+    flex-direction:column;
+}
+#test p {
+    font-family: Avenir_Light;
+}
+#test span{
+    font-size:26px;
+    font-family: Avenir_Medium;
+    color:#2C2B57;
+}

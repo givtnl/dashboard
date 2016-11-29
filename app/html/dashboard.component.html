@@ -1,0 +1,11 @@
+<my-navigation></my-navigation>
+<section class="section-dashboard">
+    <article *ngFor="let card of cards">
+        <div>
+            <p class="card-title">{{card.title}}</p>
+            <p class="card-subtitle"><span>{{card.subtitle}}</span></p>
+            <p class="card-subtitle"><span class="fat-emphasis">{{card.value}}</span></p>
+            <p class="card-subtitle">{{card.footer}}</p>
+        </div>
+    </article>
+</section>
