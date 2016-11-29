@@ -8,6 +8,8 @@ import { LoginComponent } from 'app/components/login.component';
 import { AppComponent }  from './app.component';
 import { AppRoutingModule } from "./app.routing";
 import { UserService } from "./Services/user.service";
+import {LoggedInGuard} from "./guards/logged-in.guard";
+import {LoginComponentGuard} from "./guards/login.component.guard";
 
 @NgModule({
     imports:      [ BrowserModule, AppRoutingModule, HttpModule, FormsModule ],
