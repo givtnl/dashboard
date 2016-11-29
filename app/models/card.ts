@@ -3,4 +3,4 @@ export class Card {
     subtitle : string,
     value: string,
     footer: string
-}
+};
