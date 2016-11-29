@@ -45,6 +45,7 @@ export class UserService {
             .toPromise()
             .then(res => {
                 if(res.json().access_token){
+                    this.loggedIn = true;
                     if(stayloggedin){
                         localStorage.setItem('access_token', res.json().access_token);
                     }else{
