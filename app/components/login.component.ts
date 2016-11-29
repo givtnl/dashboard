@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 
-import { UserService } from '../Services/user.service';
+import { UserService } from '../services/user.service';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'login',
@@ -22,8 +23,7 @@ export class LoginComponent  {
     button_text: string = "inloggen";
     stayloggedin_text: string = "ingelogd blijven";
 
-    constructor(private userService: UserService){
-        this.userService = userService;
+    constructor(private userService: UserService, private router: Router){
         this.passwordHidden = true;
         this.eyeColor = "#BCB9C9";
     }
@@ -36,9 +36,7 @@ export class LoginComponent  {
         }
         this.userService.login(this.userName, this.password, this.stay_loggedin)
             .then(resp => {
-                //event emitter and route navigating
-                console.log(resp);
-                console.log("you are logged in.");
+                this.router.navigate(['/dashboard']);
             },
                 error => this.error_message = "Verkeerd wachtwoord of username, probeer opnieuw"//multilingual
             );
