@@ -1,14 +1,17 @@
-/**
- * Created by bjorn_ss08m1t on 11/24/2016.
- */
 import { NgModule }             from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { LoggedInGuard } from './guards/logged-in.guard';
 
 import { LoginComponent }   from './components/login.component';
+import { NavigationComponent } from "./components/navigation.component";
+import {LoginComponentGuard} from "./guards/login.component.guard";
+import {DashboardComponent} from "./components/dashboard.component";
 
 const routes: Routes = [
-    { path: '', component: LoginComponent, pathMatch: 'full' },
-    { path: 'login',  component: LoginComponent }
+    { path: '', component: LoginComponent, pathMatch: 'full', canActivate: [LoginComponentGuard] },
+    { path: 'dashboard', component: DashboardComponent, canActivate: [LoggedInGuard] },
+    { path: 'login',  component: LoginComponent, canActivate: [LoginComponentGuard] },
+    { path: '**', component: LoginComponent, pathMatch: 'full', canActivate: [LoginComponentGuard] }
 ];
 @NgModule({
     imports: [ RouterModule.forRoot(routes) ],
