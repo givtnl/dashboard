@@ -1,10 +1,9 @@
 import { NgModule }      from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpModule} from "@angular/http";
+import {HttpModule, Http} from "@angular/http";
 import {FormsModule} from "@angular/forms";
 
 import { LoginComponent } from 'app/components/login.component';
-
 import { AppComponent }  from './app.component';
 import { AppRoutingModule } from "./app.routing";
 import { UserService } from "./services/user.service";
@@ -15,8 +14,18 @@ import {LoginComponentGuard} from "./guards/login.component.guard";
 import {ApiClientService} from "./services/api-client.service";
 import {DashboardComponent} from "./components/dashboard.component";
 
+import {TranslateModule, TranslateLoader, TranslateStaticLoader} from 'ng2-translate';
+
+export function createTranslateLoader(http: Http) {
+    return new TranslateStaticLoader(http, './assets/i18n', '.json');
+}
+
 @NgModule({
-    imports:      [ BrowserModule, AppRoutingModule, HttpModule, FormsModule, AppRoutingModule ],
+    imports:      [ BrowserModule, AppRoutingModule, HttpModule, FormsModule, AppRoutingModule, TranslateModule.forRoot({
+        provide: TranslateLoader,
+        useFactory: (createTranslateLoader),
+        deps: [Http]
+    })],
     declarations: [ AppComponent, LoginComponent, NavigationComponent, DashboardComponent ],
     bootstrap:    [ AppComponent ],
     providers: [ UserService, ApiClientService, LoggedInGuard, LoginComponentGuard ]

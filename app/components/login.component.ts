@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-
-import { UserService } from '../services/user.service';
+import { UserService } from '../Services/user.service';
 import { Router } from '@angular/router';
+import {TranslateService} from 'ng2-translate';
 
 @Component({
     selector: 'login',
@@ -9,36 +9,33 @@ import { Router } from '@angular/router';
     styleUrls: ['./app/css/login.component.css']
 })
 export class LoginComponent  {
-
     passwordHidden: boolean;
     eyeColor: string;
     userName: string;
     password: string;
     stay_loggedin: boolean;
-
-    //Setting ready for mulitlingual
     error_message: string;
-    email_placeholder: string = "Email adres";
-    password_placeholder: string = "Wachtwoord";
-    button_text: string = "inloggen";
-    stayloggedin_text: string = "ingelogd blijven";
 
-    constructor(private userService: UserService, private router: Router){
+    translate: TranslateService;
+    constructor(private userService: UserService, private router: Router, translate:TranslateService){
+        this.userService = userService;
         this.passwordHidden = true;
         this.eyeColor = "#BCB9C9";
+        this.translate = translate;
+
     }
 
     login(){
         this.error_message = "";
         if(!this.userName || !this.password){
-            this.error_message = "Vul de velden in"; //multilingual
+            this.translate.get("Error_FillAllFieldsIn").subscribe(value => {this.error_message = value;})
             return;
         }
         this.userService.login(this.userName, this.password, this.stay_loggedin)
             .then(resp => {
                 this.router.navigate(['/dashboard']);
             },
-                error => this.error_message = "Verkeerd wachtwoord of username, probeer opnieuw"//multilingual
+                error => this.translate.get("Error_WrongEmailOrPassword").subscribe(value => {this.error_message = value;})
             );
     }
 
