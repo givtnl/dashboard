@@ -18,6 +18,11 @@
     src: url('./fonts/AvenirLTStd-Heavy.otf');
 }
 
+@font-face {
+    font-family: 'Avenir_Medium';
+    src: url('./fonts/AvenirLTStd-Medium.otf');
+}
+
 body{
     background: #F5F5F5;
     margin: 0;
