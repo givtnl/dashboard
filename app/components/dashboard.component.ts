@@ -12,6 +12,7 @@ import { ApiClientService } from "../services/api-client.service";
 export class DashboardComponent implements OnInit{
     cards: Card[] = [];
     lastSundayCard: Card = new Card();
+    thisMonthCard: Card = new Card();
     isSafari: boolean;
 
     constructor(private apiService: ApiClientService){
@@ -19,12 +20,32 @@ export class DashboardComponent implements OnInit{
     }
 
     ngOnInit() : void{
-        //collect sum of last sunday
-        //still have to collect the date of the last sunday
-        //cards will come ...
-
-        //last sunday card
         this.fetchLastSundayGivts();
+        this.fetchThisMonthGivts();
+    }
+
+    fetchThisMonthGivts(){
+        let date = new Date();
+        let month = date.getUTCMonth()+1;
+        let year = date.getFullYear();
+        let dateBegin = month + "-01-" + year;
+        let dateEnd = month+1 + "-01-" + year;
+        let params = "DateBegin=" + dateBegin + "&DateEnd=" + dateEnd + "&Status=" + "0";
+
+        this.apiService.getData("OrgAdminView/Givts/?"+params)
+            .then(resp =>
+            {
+                let collectSum = 0;
+                for(let givt in resp){
+                    collectSum = collectSum + resp[givt].Amount;
+                }
+                this.thisMonthCard.value = "€ " + (this.isSafari ? collectSum.toFixed(2) : collectSum.toLocaleString(navigator.language,{minimumFractionDigits: 2}));
+                this.thisMonthCard.title = "this month"; //mulitlingual
+                let datePipe = new DatePipe();
+                this.thisMonthCard.subtitle = datePipe.transform(date, 'MMMM yyyy');
+                this.thisMonthCard.footer = "given"; // mulitlingual
+                this.cards.push(this.thisMonthCard);
+            });
     }
 
     fetchLastSundayGivts(){
@@ -42,13 +63,11 @@ export class DashboardComponent implements OnInit{
                 for(let givt in resp){
                     collectSum = collectSum + resp[givt].Amount;
                 }
-                this.lastSundayCard.value = "€ " + (this.isSafari ? collectSum.toFixed(2) : collectSum.toLocaleString(navigator.language,{minimumFractionDigits: 2}));/*this.isSafari ? this.dayAmount.toFixed(2) : this.dayAmount.toLocaleString(navigator.language,{minimumFractionDigits: 2});*/
-                this.lastSundayCard.title = "last sunday";
+                this.lastSundayCard.value = "€ " + (this.isSafari ? collectSum.toFixed(2) : collectSum.toLocaleString(navigator.language,{minimumFractionDigits: 2}));
+                this.lastSundayCard.title = "last sunday"; // multilingual
                 let datePipe = new DatePipe();
                 this.lastSundayCard.subtitle = datePipe.transform(lastSundayDate, 'dd MMMM yyyy');
-                //this.lastSundayCard.subtitle = lastSundayDate;
-                this.lastSundayCard.footer = "given";
-
+                this.lastSundayCard.footer = "given"; //mulitlingual
                 this.cards.push(this.lastSundayCard);
             });
     }
