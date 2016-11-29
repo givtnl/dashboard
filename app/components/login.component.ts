@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { UserService } from '../Services/user.service';
+import { UserService } from '../services/user.service';
 import { Router } from '@angular/router';
 import {TranslateService} from 'ng2-translate';
 
