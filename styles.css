@@ -8,8 +8,20 @@
     src: url('./fonts/AvenirLTStd-Light.otf');
 }
 
+@font-face {
+    font-family: 'Avenir_Roman';
+    src: url('./fonts/AvenirLTStd-Roman.otf');
+}
+
+@font-face {
+    font-family: 'Avenir_Heavy';
+    src: url('./fonts/AvenirLTStd-Heavy.otf');
+}
+
 body{
     background: #F5F5F5;
+    margin: 0;
+    padding: 0;
 }
 
 .start-logo{
