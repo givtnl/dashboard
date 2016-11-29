@@ -34,7 +34,6 @@ export class UserService {
         //set to string
         let body = urlSearchParams.toString();
 
-
         //do the http call
         return this.http
             .post(
@@ -63,5 +62,9 @@ export class UserService {
         sessionStorage.clear();
         localStorage.clear();
         this.loggedIn = false;
+    }
+
+    getAccessToken(){
+        return localStorage.getItem('access_token') || sessionStorage.getItem('access_token');
     }
 }
