@@ -16,10 +16,15 @@ export class DashboardComponent implements OnInit{
     isSafari: boolean;
     scriptURL:string;
 
+    //maybe a new donutcard model?
+    donutCard: boolean = false;
+    donutCardValue: string;
+    donutcardTitle: string;
+    donutcardFooter: string;
+
     constructor(private apiService: ApiClientService){
         this.isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
       //  this.GoogleCharts = new GoogleCharts();
-        this.googleCharts();
     }
 
     ngOnInit() : void{
@@ -27,15 +32,21 @@ export class DashboardComponent implements OnInit{
         this.fetchThisMonthGivts();
     }
 
-    googleCharts(){
-        console.log("test");
+    googleCharts(title: string, footer: string, value: string){
+        //cdn
         this.scriptURL = "https://www.gstatic.com/charts/loader.js";
-
         var scriptElement = document.createElement('script');
 
-        scriptElement.src = this.scriptURL;
+
+        //activate the donutcard
+        this.donutCard = true;
+        //make donutchart from the lastsundayvalue
+        this.donutCardValue = value;
+        this.donutcardFooter = footer;
+        this.donutcardTitle = title;
+
+            scriptElement.src = this.scriptURL;
         scriptElement.onload = () => {
-            // do anything you need to do here, or call a VM method
             google.charts.load("visualization", "1", {packages:["corechart"]});
             google.charts.setOnLoadCallback(drawChart);
             function drawChart() {
@@ -46,9 +57,6 @@ export class DashboardComponent implements OnInit{
                 dataTable.addColumn({type: 'string', role: 'tooltip'});
                 dataTable.addRows([
                     ['', 90,'€ 456 goedgekeurd!']
-                    /*
-                     ['', 8, '€ 128 in verwerking'],
-                     ['', 2, '€ 20 ingehouden']*/
                 ]);
 
                 var options = {
@@ -126,6 +134,9 @@ export class DashboardComponent implements OnInit{
                 let datePipe = new DatePipe();
                 this.lastSundayCard.subtitle = datePipe.transform(lastSundayDate, 'dd MMMM yyyy');
                 this.lastSundayCard.footer = "given"; //mulitlingual
+
+                this.googleCharts(this.lastSundayCard.subtitle, this.lastSundayCard.footer, this.lastSundayCard.value);
+
                 this.cards.push(this.lastSundayCard);
             });
     }

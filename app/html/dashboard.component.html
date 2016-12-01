@@ -1,11 +1,12 @@
 <my-navigation></my-navigation>
 <section class="section-dashboard">
-    <article>
+    <article *ngIf="donutCard">
         <div id="h">
+            <p class="card-title">{{donutcardTitle}}</p>
             <div id="donutchart"></div>
             <div id="test">
-                <span>€ 555,50</span>
-                <p t="Text_Collected">opgehaald</p>
+                <span>{{donutCardValue}}</span>
+                <p t="Text_Collected">{{donutcardFooter}}</p>
             </div>
         </div>
     </article>
@@ -15,7 +16,6 @@
             <p class="card-subtitle"><span>{{card.subtitle}}</span></p>
             <p class="card-subtitle"><span class="fat-emphasis">{{card.value}}</span></p>
             <p class="card-subtitle">{{card.footer}}</p>
-
         </div>
     </article>
 
