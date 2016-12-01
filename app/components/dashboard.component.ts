@@ -14,14 +14,65 @@ export class DashboardComponent implements OnInit{
     lastSundayCard: Card = new Card();
     thisMonthCard: Card = new Card();
     isSafari: boolean;
+    scriptURL:string;
 
     constructor(private apiService: ApiClientService){
         this.isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+      //  this.GoogleCharts = new GoogleCharts();
+        this.googleCharts();
     }
 
     ngOnInit() : void{
         this.fetchLastSundayGivts();
         this.fetchThisMonthGivts();
+    }
+
+    googleCharts(){
+        console.log("test");
+        this.scriptURL = "https://www.gstatic.com/charts/loader.js";
+
+        var scriptElement = document.createElement('script');
+
+        scriptElement.src = this.scriptURL;
+        scriptElement.onload = () => {
+            // do anything you need to do here, or call a VM method
+            google.charts.load("visualization", "1", {packages:["corechart"]});
+            google.charts.setOnLoadCallback(drawChart);
+            function drawChart() {
+                var dataTable = new google.visualization.DataTable();
+                dataTable.addColumn('string', 'Bedrag');
+                dataTable.addColumn('number', 'Euro');
+                // A column for custom tooltip content
+                dataTable.addColumn({type: 'string', role: 'tooltip'});
+                dataTable.addRows([
+                    ['', 90,'€ 456 goedgekeurd!']
+                    /*
+                     ['', 8, '€ 128 in verwerking'],
+                     ['', 2, '€ 20 ingehouden']*/
+                ]);
+
+                var options = {
+                    pieSliceBorderColor: 'transparent',
+                    width: 280,
+                    height: 280,
+                    chartArea: {'width': '100%', 'height': '80%'},
+                    colors: ['#42C98E','#F4BF63','#4F98CF'],
+                    legend: {position: 'none'},
+                    pieHole: 0.85,
+                    pieSliceText: 'label',
+                    pieStartAngle: 0,
+                    pieSliceTextStyle:{color: 'black', fontName: 'arial', fontSize: 10},
+                    backgroundColor: 'transparent'
+                };
+
+                var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
+                chart.draw(dataTable, options);
+                var container = document.getElementById("donutchart").firstChild.firstChild;
+                container.style.width = "100%";
+            }
+        };
+
+        document.querySelector('head').appendChild(scriptElement);
     }
 
     fetchThisMonthGivts(){
