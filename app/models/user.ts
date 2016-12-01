@@ -1,4 +1,4 @@
 export class User {
-    UserId : string,
-    Roles : string[]
+    UserId : string;
+    Roles : string[];
 }
