@@ -13,6 +13,7 @@ export class DashboardComponent implements OnInit{
     cards: Card[] = [];
     lastSundayCard: Card = new Card();
     thisMonthCard: Card = new Card();
+    thisMonthGiversCard: Card = new Card();
     isSafari: boolean;
     scriptURL:string;
 
@@ -30,6 +31,7 @@ export class DashboardComponent implements OnInit{
     ngOnInit() : void{
         this.fetchLastSundayGivts();
         this.fetchThisMonthGivts();
+        this.fetchThisMonthGivers();
     }
 
     googleCharts(title: string, footer: string, value: string){
@@ -81,6 +83,34 @@ export class DashboardComponent implements OnInit{
         };
 
         document.querySelector('head').appendChild(scriptElement);
+    }
+
+    fetchThisMonthGivers(){
+        let date = new Date();
+        let month = date.getUTCMonth()+1;
+        let year = date.getFullYear();
+        let secondYear = date.getFullYear();
+        let nextMonth = month + 1;
+        if(month == 12){
+            secondYear = date.getFullYear()+1;
+            nextMonth = 1;
+        }
+
+        let dateBegin = month + "-01-" + year;
+        let dateEnd = nextMonth + "-01-" + secondYear;
+        let params = "DateBegin=" + dateBegin + "&DateEnd=" + dateEnd + "&Status=" + "0";
+
+        this.apiService.getData("OrgAdminView/Users/?"+params)
+            .then(resp =>
+            {
+                console.log(resp);
+                this.thisMonthGiversCard.value = resp;
+                this.thisMonthGiversCard.title = "Givers"; //mulitlingual
+                let datePipe = new DatePipe();
+                this.thisMonthGiversCard.subtitle = datePipe.transform(date, 'MMMM yyyy');
+                this.thisMonthGiversCard.footer = "givers"; // mulitlingual
+                this.cards.push(this.thisMonthGiversCard);
+            });
     }
 
     fetchThisMonthGivts(){
