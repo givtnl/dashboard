@@ -27,9 +27,10 @@ export class DashboardComponent implements OnInit{
     fetchThisMonthGivts(){
         let date = new Date();
         let month = date.getUTCMonth()+1;
+        let nextMonth = month == 12 ? 1 : month +1;
         let year = date.getFullYear();
         let dateBegin = month + "-01-" + year;
-        let dateEnd = month+1 + "-01-" + year;
+        let dateEnd = nextMonth + "-01-" + year;
         let params = "DateBegin=" + dateBegin + "&DateEnd=" + dateEnd + "&Status=" + "0";
 
         this.apiService.getData("OrgAdminView/Givts/?"+params)
