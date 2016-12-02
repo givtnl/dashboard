@@ -21,7 +21,7 @@ nav ul li a.active{
 
 nav ul > li{
     display: inline-block;
-    width: 500px;
+    width: 120px;
 }
 nav ul > li > a {
     border-bottom:6px solid transparent;

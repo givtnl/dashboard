@@ -15,6 +15,7 @@ import {ApiClientService} from "./services/api-client.service";
 import {DashboardComponent} from "./components/dashboard.component";
 
 import {TranslateModule, TranslateLoader, TranslateStaticLoader} from 'ng2-translate';
+import {CollectsComponent} from "./components/collects.component";
 
 export function createTranslateLoader(http: Http) {
     return new TranslateStaticLoader(http, './assets/i18n', '.json');
@@ -26,7 +27,7 @@ export function createTranslateLoader(http: Http) {
         useFactory: (createTranslateLoader),
         deps: [Http]
     })],
-    declarations: [ AppComponent, LoginComponent, NavigationComponent, DashboardComponent ],
+    declarations: [ AppComponent, LoginComponent, NavigationComponent, DashboardComponent, CollectsComponent ],
     bootstrap:    [ AppComponent ],
     providers: [ UserService, ApiClientService, LoggedInGuard, LoginComponentGuard ]
 })
