@@ -143,3 +143,22 @@
     font-family: Avenir_Medium;
     color:#2C2B57;
 }
+
+@media only screen and (max-width: 830px) {
+    .section-dashboard.section-dashboard {
+        -webkit-column-count:2;
+        -moz-column-count:2;
+        column-count:2;
+        margin-top:55px;
+    }
+}
+
+@media only screen and (max-width: 500px) {
+    /* For mobile phones: */
+    .section-dashboard.section-dashboard {
+        -webkit-column-count: 1;
+        -moz-column-count: 1;
+        column-count: 1;
+        margin-top: 55px;
+    }
+}
