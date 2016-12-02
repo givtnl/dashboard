@@ -3,6 +3,7 @@ import { DatePipe } from '@angular/common';
 
 import { Card } from '../models/card';
 import { ApiClientService } from "../services/api-client.service";
+import {TranslateService} from "ng2-translate";
 
 @Component({
     selector: 'my-dashboard',
@@ -16,6 +17,7 @@ export class DashboardComponent implements OnInit{
     thisMonthGiversCard: Card = new Card();
     isSafari: boolean;
     scriptURL: string;
+    translate: TranslateService;
 
     //maybe a new donutcard model?
     donutCard: boolean = false;
@@ -23,7 +25,8 @@ export class DashboardComponent implements OnInit{
     donutcardTitle: string;
     donutcardFooter: string;
 
-    constructor(private apiService: ApiClientService){
+    constructor(private apiService: ApiClientService,  translate:TranslateService){
+        this.translate = translate;
         this.isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
     }
 
@@ -111,10 +114,10 @@ export class DashboardComponent implements OnInit{
             .then(resp =>
             {
                 this.thisMonthGiversCard.value = resp;
-                this.thisMonthGiversCard.title = "Givers"; //mulitlingual
+                this.translate.get("Text_Givers").subscribe(value => { this.thisMonthGiversCard.title = value;});
                 let datePipe = new DatePipe();
                 this.thisMonthGiversCard.subtitle = datePipe.transform(date, 'MMMM yyyy');
-                this.thisMonthGiversCard.footer = "givers"; // mulitlingual
+                this.translate.get("Text_Givers").subscribe(value => { this.thisMonthGiversCard.footer = value;});
                 let cardIsInCards = false;
                 for(let i in this.cards){
                     if(this.cards[i].title === this.thisMonthGiversCard.title){
@@ -150,10 +153,10 @@ export class DashboardComponent implements OnInit{
                     collectSum = collectSum + resp[givt].Amount;
                 }
                 this.thisMonthCard.value = "€ " + (this.isSafari ? collectSum.toFixed(2) : collectSum.toLocaleString(navigator.language,{minimumFractionDigits: 2}));
-                this.thisMonthCard.title = "this month"; //mulitlingual
+                this.translate.get("Text_ThisMonth").subscribe(value => { this.thisMonthCard.title = value;});
+                this.translate.get("Text_Given").subscribe(value => { this.thisMonthCard.footer = value;});
                 let datePipe = new DatePipe();
                 this.thisMonthCard.subtitle = datePipe.transform(date, 'MMMM yyyy');
-                this.thisMonthCard.footer = "given"; // mulitlingual
                 let cardIsInCards = false;
                 for(let i in this.cards){
                     if(this.cards[i].title === this.thisMonthCard.title){
@@ -182,13 +185,11 @@ export class DashboardComponent implements OnInit{
                     collectSum = collectSum + resp[givt].Amount;
                 }
                 this.lastSundayCard.value = "€ " + (this.isSafari ? collectSum.toFixed(2) : collectSum.toLocaleString(navigator.language,{minimumFractionDigits: 2}));
-                this.lastSundayCard.title = "last sunday"; // multilingual
+                this.translate.get("Text_LastSunday").subscribe(value => { this.lastSundayCard.title = value;});
+                this.translate.get("Text_Given").subscribe(value => { this.lastSundayCard.footer = value;});
                 let datePipe = new DatePipe();
                 this.lastSundayCard.subtitle = datePipe.transform(lastSundayDate, 'dd MMMM yyyy');
-                this.lastSundayCard.footer = "given"; //mulitlingual
-
                 this.googleCharts(this.lastSundayCard.subtitle, this.lastSundayCard.footer, this.lastSundayCard.value);
-
                 this.cards.push(this.lastSundayCard);
             });
     }
