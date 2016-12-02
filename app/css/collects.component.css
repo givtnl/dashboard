@@ -8,11 +8,23 @@
     margin: 30px 0;
     font-family: 'Avenir_Black';
     font-size:18px;
+    color: #2C2B57;
 }
 
 .section-collects h3{
     font-family: 'Avenir_Roman';
     font-size:18px;
     margin: 0 0 30px 0 ;
+    color: #2C2B57;
 
+}
+
+.collets-pickdate{
+    display: flex;
+    justify-content: space-between;
+}
+
+.collets-pickdate .input-date{
+    width: 380px;
+    display: block;
 }
