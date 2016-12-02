@@ -15,7 +15,7 @@ export class DashboardComponent implements OnInit{
     thisMonthCard: Card = new Card();
     thisMonthGiversCard: Card = new Card();
     isSafari: boolean;
-    scriptURL:string;
+    scriptURL: string;
 
     //maybe a new donutcard model?
     donutCard: boolean = false;
@@ -25,13 +25,20 @@ export class DashboardComponent implements OnInit{
 
     constructor(private apiService: ApiClientService){
         this.isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
-      //  this.GoogleCharts = new GoogleCharts();
     }
 
     ngOnInit() : void{
         this.fetchLastSundayGivts();
         this.fetchThisMonthGivts();
         this.fetchThisMonthGivers();
+        this.fetchDataContinuously(3000);
+    }
+
+    fetchDataContinuously(interval: number){
+        setInterval(() => {
+            this.fetchThisMonthGivts();
+            this.fetchThisMonthGivers();
+        }, interval);
     }
 
     googleCharts(title: string, footer: string, value: string){
@@ -103,13 +110,20 @@ export class DashboardComponent implements OnInit{
         this.apiService.getData("OrgAdminView/Users/?"+params)
             .then(resp =>
             {
-                console.log(resp);
                 this.thisMonthGiversCard.value = resp;
                 this.thisMonthGiversCard.title = "Givers"; //mulitlingual
                 let datePipe = new DatePipe();
                 this.thisMonthGiversCard.subtitle = datePipe.transform(date, 'MMMM yyyy');
                 this.thisMonthGiversCard.footer = "givers"; // mulitlingual
-                this.cards.push(this.thisMonthGiversCard);
+                let cardIsInCards = false;
+                for(let i in this.cards){
+                    if(this.cards[i].title === this.thisMonthGiversCard.title){
+                        cardIsInCards = true;
+                    }
+                }
+                if(!cardIsInCards){
+                    this.cards.push(this.thisMonthGiversCard);
+                }
             });
     }
 
@@ -140,7 +154,15 @@ export class DashboardComponent implements OnInit{
                 let datePipe = new DatePipe();
                 this.thisMonthCard.subtitle = datePipe.transform(date, 'MMMM yyyy');
                 this.thisMonthCard.footer = "given"; // mulitlingual
-                this.cards.push(this.thisMonthCard);
+                let cardIsInCards = false;
+                for(let i in this.cards){
+                    if(this.cards[i].title === this.thisMonthCard.title){
+                        cardIsInCards = true;
+                    }
+                }
+                if(!cardIsInCards){
+                    this.cards.push(this.thisMonthCard);
+                }
             });
     }
 
