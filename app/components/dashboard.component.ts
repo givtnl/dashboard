@@ -117,7 +117,7 @@ export class DashboardComponent implements OnInit{
                 this.translate.get("Text_Givers").subscribe(value => { this.thisMonthGiversCard.title = value;});
                 let datePipe = new DatePipe();
                 this.thisMonthGiversCard.subtitle = datePipe.transform(date, 'MMMM yyyy');
-                this.translate.get("Text_Givers").subscribe(value => { this.thisMonthGiversCard.footer = value;});
+                this.translate.get("Text_GiversLowercase").subscribe(value => { this.thisMonthGiversCard.footer = value;});
                 let cardIsInCards = false;
                 for(let i in this.cards){
                     if(this.cards[i].title === this.thisMonthGiversCard.title){
