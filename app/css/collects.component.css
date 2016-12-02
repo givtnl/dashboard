@@ -1,0 +1,18 @@
+.section-collects{
+    width: 800px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.section-collects h2{
+    margin: 30px 0;
+    font-family: 'Avenir_Black';
+    font-size:18px;
+}
+
+.section-collects h3{
+    font-family: 'Avenir_Roman';
+    font-size:18px;
+    margin: 0 0 30px 0 ;
+
+}
