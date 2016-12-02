@@ -188,7 +188,7 @@ export class DashboardComponent implements OnInit{
                 this.translate.get("Text_LastSunday").subscribe(value => { this.lastSundayCard.title = value;});
                 this.translate.get("Text_Given").subscribe(value => { this.lastSundayCard.footer = value;});
                 let datePipe = new DatePipe();
-                this.lastSundayCard.subtitle = datePipe.transform(lastSundayDate, 'dd MMMM yyyy');
+                this.lastSundayCard.subtitle = datePipe.transform(lastSunday.getUTCMonth()+1 + "/" + lastSunday.getUTCDate() + "/" + lastSunday.getUTCFullYear(), 'dd MMMM yyyy');
                 this.googleCharts(this.lastSundayCard.subtitle, this.lastSundayCard.footer, this.lastSundayCard.value);
                 this.cards.push(this.lastSundayCard);
             });
