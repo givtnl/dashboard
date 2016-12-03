@@ -13,13 +13,14 @@ export class AppComponent  {
     //supported languages todo: add languages you wish to support
     translate.addLangs(["nl","en"]);
 
+    let languages = translate.getLangs();
     let browserLanguage = navigator.language.substr(0,2);
-    if(browserLanguage in translate.getLangs()){
-      translate.use(browserLanguage);
-    } else {
-      //fallbacklanguage
-      translate.use('nl');
+    for(let lang in languages){
+      if(languages[lang] === browserLanguage){
+        translate.use(languages[lang]);
+      }else{
+        translate.use("nl");
+      }
     }
-
   }
 }
