@@ -19,12 +19,16 @@
 
 }
 
-.collets-pickdate{
+.collects-pickdate{
     display: flex;
     justify-content: space-between;
 }
 
-.collets-pickdate .input-date{
+.input-date{
     width: 380px;
     display: block;
+}
+
+.ui-inputtext{
+    padding: 8px 16px;
 }
