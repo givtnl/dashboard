@@ -28,7 +28,7 @@ export class LoginComponent  {
     login(){
         this.error_message = "";
         if(!this.userName || !this.password){
-            this.translate.get("Error_FillAllFieldsIn").subscribe(value => {this.error_message = value;})
+            this.translate.get("Error_FillAllFieldsIn").subscribe(value => {this.error_message = value;});
             return;
         }
         this.userService.login(this.userName, this.password, this.stay_loggedin)

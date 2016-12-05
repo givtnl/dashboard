@@ -2,8 +2,8 @@
     <div class="menu-wrapper">
         <h1><span>{{instance_title}}</span></h1>
         <ul>
-            <li><a routerLink="/dashboard" routerLinkActive="active">Overzicht</a></li>
-            <li><a routerLink="/collects" routerLinkActive="active">Collectes</a></li>
+            <li><a routerLink="/dashboard" routerLinkActive="active">{{text_dashboard}}</a></li>
+            <li><a routerLink="/collects" routerLinkActive="active">{{text_collects}}</a></li>
         </ul>
         <span class="menu-settings" (click)="logout()">
                 <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -20,6 +20,6 @@
                        </g>
                    </g>
                 </svg>
-            <span>{{logout_text}}</span></span>
+            <span>{{text_logout}}</span></span>
     </div>
 </nav>

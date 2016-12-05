@@ -1,18 +1,27 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import { UserService } from 'app/services/user.service';
 import {Router} from "@angular/router";
+import {TranslateService} from "ng2-translate";
 
 @Component({
     selector: 'my-navigation',
     templateUrl: '../html/navigation.component.html',
     styleUrls: ['../css/navigation.component.css']
 })
-export class NavigationComponent  {
+export class NavigationComponent implements OnInit {
     instance_title: string;
 
-    //multilingual
-    logout_text: string = "uitloggen";
+    text_dashboard: string;
+    text_collects: string;
+    text_logout: string;
+
+    constructor(private userService: UserService, private router: Router, private translate:TranslateService, private apiService:ApiClientService){
+        this.instance_title = "...";
+        this.translate.get("Menu_Overview").subscribe(value => {this.text_dashboard = value;})
+        this.translate.get("Menu_Collectes").subscribe(value => {this.text_collects = value;})
+        this.translate.get("Text_Logout").subscribe(value => {this.text_logout = value;})
+    }
 
     constructor(private userService: UserService, private router: Router){
         this.instance_title = "Demo kerk";
