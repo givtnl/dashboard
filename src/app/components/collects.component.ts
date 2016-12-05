@@ -14,6 +14,7 @@ export class CollectsComponent implements OnInit {
     calendarModule: CalendarModule;
     dateBegin: Date;
     dateEnd: Date;
+    value: number = 0;
 
 
     constructor(private apiService: ApiClientService, translate: TranslateService,calendarModule: CalendarModule) {
@@ -25,5 +26,30 @@ export class CollectsComponent implements OnInit {
 
     ngOnInit(): void {
 
+    }
+
+    fetchCollect(){
+        var dateBegin = this.formatDate(this.dateBegin);
+        var dateEnd = this.formatDate(this.dateEnd);
+        let params = "DateBegin=" + dateBegin + "&DateEnd=" + dateEnd + "&Status=" + "0";
+
+        this.apiService.getData("OrgAdminView/Givts/?"+params)
+            .then(resp =>
+            {
+                let collectSum = 0;
+                for(let givt in resp){
+                    collectSum = collectSum + resp[givt].Amount;
+                }
+                console.log(collectSum);
+                this.value = collectSum;
+            });
+    }
+
+    formatDate(d){
+        return [d.getMonth()+1,
+            d.getDate(),
+            d.getFullYear()].join('/')+' '+
+        [d.getHours(),
+            d.getMinutes()].join(':');
     }
 }
