@@ -1,7 +1,6 @@
 .section-collects{
     width: 800px;
     margin: 0 auto;
-    text-align: center;
 }
 
 .section-collects h2{
@@ -9,6 +8,7 @@
     font-family: 'Avenir_Black';
     font-size:18px;
     color: #2C2B57;
+    text-align: center;
 }
 
 .section-collects h3{
@@ -16,15 +16,35 @@
     font-size:18px;
     margin: 0 0 30px 0 ;
     color: #2C2B57;
+    text-align:center;
 
 }
 
-.collets-pickdate{
+.collects-pickdate{
     display: flex;
     justify-content: space-between;
 }
 
-.collets-pickdate .input-date{
+.input-date{
     width: 380px;
     display: block;
+}
+
+.search-collect{
+    padding: 8px 22px;
+    box-sizing: border-box;
+    margin: 28px 0;
+    color:white;
+    font-family: 'Avenir_Black';
+    background-color:#2C2B57;
+    border:0;
+    font-size: 18px;
+    display: block;
+    margin-left:auto;
+
+}
+
+.show-collect{
+    font-size:28px;
+    font-family: 'Avenir_Roman';
 }

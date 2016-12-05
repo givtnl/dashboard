@@ -2,7 +2,12 @@
 <section class="section-collects">
     <h2>{{"Text_Collectes_Title" | translate}}</h2>
     <h3>{{"Text_Collectes_Subtitle" | translate}}</h3>
-    <section class="collets-pickdate">
-        <input class="input-date" type="date" name="BeginDate" />  <input class="input-date" type="date" name="EndDate" />
+    <section class="collects-pickdate">
+        <p-calendar [inputStyle]="{'width':'380px','padding': '8px 16px', 'box-sizing':'border-box','border-radius':'0'}" [(ngModel)]="dateBegin" showTime="showTime" dateFormat="dd/mm/yy"></p-calendar>
+        <p-calendar [inputStyle]="{'width':'380px','padding': '8px 16px', 'box-sizing':'border-box','border-radius':'0'}" [(ngModel)]="dateEnd" showTime="showTime"></p-calendar>
+    </section>
+    <button (click)="fetchCollect()" class="search-collect">Zoek</button>
+    <section class="show-collect">
+        <p>€ {{value}}</p>
     </section>
 </section>
