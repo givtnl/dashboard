@@ -3,6 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { UserService } from 'app/services/user.service';
 import {Router} from "@angular/router";
 import {TranslateService} from "ng2-translate";
+import {ApiClientService} from "../services/api-client.service";
+
 
 @Component({
     selector: 'my-navigation',
@@ -23,8 +25,12 @@ export class NavigationComponent implements OnInit {
         this.translate.get("Text_Logout").subscribe(value => {this.text_logout = value;})
     }
 
-    constructor(private userService: UserService, private router: Router){
-        this.instance_title = "Demo kerk";
+    ngOnInit(){
+        this.apiService.getData('OrgAdminView/Org')
+            .then(res => {
+                console.log(res);
+                this.instance_title = res;
+        })
     }
 
     logout(){
