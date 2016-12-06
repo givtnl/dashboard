@@ -21,7 +21,7 @@ export class DashboardComponent implements OnInit{
 
     //maybe a new donutcard model?
     donutCard: boolean = false;
-    donutCardValue: string;
+    donutcardValue: string;
     donutcardTitle: string;
     donutcardFooter: string;
 
@@ -53,7 +53,7 @@ export class DashboardComponent implements OnInit{
         //activate the donutcard
         this.donutCard = true;
         //make donutchart from the lastsundayvalue
-        this.donutCardValue = value;
+        this.donutcardValue = value;
         this.donutcardFooter = footer;
         this.donutcardTitle = title;
 
@@ -113,7 +113,7 @@ export class DashboardComponent implements OnInit{
         this.apiService.getData("OrgAdminView/Users/?"+params)
             .then(resp =>
             {
-                this.thisMonthGiversCard.value = resp;
+                this.thisMonthGiversCard.value = "<span class='fat-emphasis'>" + resp + "</span>";
                 this.translate.get("Text_Givers").subscribe(value => { this.thisMonthGiversCard.title = value;});
                 let datePipe = new DatePipe();
                 this.thisMonthGiversCard.subtitle = datePipe.transform(date, 'MMMM yyyy');
@@ -152,7 +152,7 @@ export class DashboardComponent implements OnInit{
                 for(let givt in resp){
                     collectSum = collectSum + resp[givt].Amount;
                 }
-                this.thisMonthCard.value = "€ " + (this.isSafari ? collectSum.toFixed(2) : collectSum.toLocaleString(navigator.language,{minimumFractionDigits: 2}));
+                this.thisMonthCard.value = "€ " + "<span class='fat-emphasis'>" + (this.isSafari ? collectSum.toFixed(2) : collectSum.toLocaleString(navigator.language,{minimumFractionDigits: 2})) + "</span>";
                 this.translate.get("Text_ThisMonth").subscribe(value => { this.thisMonthCard.title = value;});
                 this.translate.get("Text_Given").subscribe(value => { this.thisMonthCard.footer = value;});
                 let datePipe = new DatePipe();
@@ -184,12 +184,12 @@ export class DashboardComponent implements OnInit{
                 for(let givt in resp){
                     collectSum = collectSum + resp[givt].Amount;
                 }
-                this.lastSundayCard.value = "€ " + (this.isSafari ? collectSum.toFixed(2) : collectSum.toLocaleString(navigator.language,{minimumFractionDigits: 2}));
+                this.lastSundayCard.value = "€ "+ "<span class='fat-emphasis'>" + (this.isSafari ? collectSum.toFixed(2) : collectSum.toLocaleString(navigator.language,{minimumFractionDigits: 2})) + "</span>";
                 this.translate.get("Text_LastSunday").subscribe(value => { this.lastSundayCard.title = value;});
                 this.translate.get("Text_Given").subscribe(value => { this.lastSundayCard.footer = value;});
                 let datePipe = new DatePipe();
                 this.lastSundayCard.subtitle = datePipe.transform(lastSunday.getUTCMonth()+1 + "/" + lastSunday.getUTCDate() + "/" + lastSunday.getUTCFullYear(), 'dd MMMM yyyy');
-                this.googleCharts(this.lastSundayCard.subtitle, this.lastSundayCard.footer, this.lastSundayCard.value);
+                this.googleCharts(this.lastSundayCard.subtitle, this.lastSundayCard.footer, "€ " + (this.isSafari ? collectSum.toFixed(2) : collectSum.toLocaleString(navigator.language,{minimumFractionDigits: 2})));
                 this.cards.push(this.lastSundayCard);
             });
     }

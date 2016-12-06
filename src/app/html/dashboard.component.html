@@ -5,7 +5,7 @@
             <p class="card-title">{{donutcardTitle}}</p>
             <div id="donutchart"></div>
             <div id="test">
-                <span>{{donutCardValue}}</span>
+                <span [innerHTML]="donutcardValue"></span>
                 <p t="Text_Collected">{{donutcardFooter}}</p>
             </div>
         </div>
@@ -14,7 +14,7 @@
         <div>
             <p class="card-title">{{card.title}}</p>
             <p class="card-subtitle"><span>{{card.subtitle}}</span></p>
-            <p class="card-subtitle"><span class="fat-emphasis">{{card.value}}</span></p>
+            <p class="card-subtitle" [innerHTML]="card.value"></p>
             <p class="card-subtitle">{{card.footer}}</p>
         </div>
     </article>
