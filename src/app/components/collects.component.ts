@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 import { ApiClientService } from "app/services/api-client.service";
 import { TranslateService } from "ng2-translate";
@@ -8,24 +8,23 @@ import {CalendarModule} from "primeng/primeng";
     templateUrl: '../html/collects.component.html',
     styleUrls: ['../css/collects.component.css']
 })
-export class CollectsComponent implements OnInit {
+export class CollectsComponent{
     translate: TranslateService;
     text: string;
     calendarModule: CalendarModule;
     dateBegin: Date;
     dateEnd: Date;
     value: number = 0;
-
+    dateBeginTime : number;
+    maxDate: Date;
 
     constructor(private apiService: ApiClientService, translate: TranslateService,calendarModule: CalendarModule) {
         this.translate = translate;
         this.apiService = apiService;
         this.text = "dit zijn de collectes";
         this.calendarModule = new CalendarModule();
-    }
-
-    ngOnInit(): void {
-
+        this.dateBeginTime = 5000;
+        this.maxDate = new Date();
     }
 
     fetchCollect(){
@@ -43,6 +42,22 @@ export class CollectsComponent implements OnInit {
                 console.log(collectSum);
                 this.value = collectSum;
             });
+    }
+
+    onDateBeginChange(date){
+        if(this.dateEnd && this.dateEnd.getTime() <= this.dateBegin.getTime()){
+            this.dateEnd = new Date(this.dateBegin.getTime() + 0.5*60*60*1000);
+        }else if(!this.dateEnd){
+            this.dateEnd = new Date(this.dateBegin.getTime() + 0.5*60*60*1000);
+        }
+    }
+
+    onDateEndChange(date){
+        if(this.dateBegin && this.dateEnd.getTime() <= this.dateBegin.getTime()){
+            this.dateBegin = new Date(this.dateEnd.getTime() - 0.5*60*60*1000);
+        }else if(!this.dateBegin) {
+            this.dateBegin = new Date(this.dateEnd.getTime() - 0.5*60*60*1000);
+        }
     }
 
     formatDate(d){
