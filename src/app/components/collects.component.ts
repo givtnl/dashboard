@@ -21,11 +21,13 @@ export class CollectsComponent{
     dateBeginRange: Date;
     dateEndRange: Date;
     sameDate: boolean;
-    
+    isSafari: boolean;
+
     dateRange: Date;
     timeRange: string;
 
     constructor(private apiService: ApiClientService, translate: TranslateService,calendarModule: CalendarModule) {
+        this.isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
         this.translate = translate;
         this.apiService = apiService;
         this.text = "dit zijn de collectes";
@@ -47,7 +49,8 @@ export class CollectsComponent{
                     for(let givt in resp){
                         collectSum = collectSum + resp[givt].Amount;
                     }
-                    this.value = collectSum;
+                    //this.value = collectSum;
+                    this.value = "€ " + (this.isSafari ? collectSum.toFixed(2) : collectSum.toLocaleString(navigator.language,{minimumFractionDigits: 2}));
                     this.dateBeginRange = new Date(this.dateBegin.getTime());
                     this.dateEndRange = new Date(this.dateEnd.getTime());
                     this.sameDate = (this.dateBeginRange.getDate() === this.dateEndRange.getDate());
