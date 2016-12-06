@@ -20,6 +20,7 @@ export class CollectsComponent{
     isVisible: boolean= false;
     dateBeginRange: Date;
     dateEndRange: Date;
+    sameDate: boolean;
     
     dateRange: Date;
     timeRange: string;
@@ -46,10 +47,10 @@ export class CollectsComponent{
                     for(let givt in resp){
                         collectSum = collectSum + resp[givt].Amount;
                     }
-                    console.log(collectSum);
                     this.value = collectSum;
-                    this.dateBeginRange = this.dateBegin;
-                    this.dateEndRange = this.dateEnd;
+                    this.dateBeginRange = new Date(this.dateBegin.getTime());
+                    this.dateEndRange = new Date(this.dateEnd.getTime());
+                    this.sameDate = (this.dateBeginRange.getDate() === this.dateEndRange.getDate());
                     this.isVisible = true;  
                 });
         }
