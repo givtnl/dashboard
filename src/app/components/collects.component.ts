@@ -35,22 +35,25 @@ export class CollectsComponent implements OnInit {
     }
 
     fetchCollect(){
-        var dateBegin = this.formatDate(this.dateBegin);
-        var dateEnd = this.formatDate(this.dateEnd);
-        let params = "DateBegin=" + dateBegin + "&DateEnd=" + dateEnd + "&Status=" + "0";
+        if(this.dateBegin !== undefined && this.dateEnd !== undefined){
+            var dateBegin = this.formatDate(this.dateBegin);
+            var dateEnd = this.formatDate(this.dateEnd);
+            let params = "DateBegin=" + dateBegin + "&DateEnd=" + dateEnd + "&Status=" + "0";
 
-        this.apiService.getData("OrgAdminView/Givts/?"+params)
-            .then(resp =>
-            {
-                let collectSum = 0;
-                for(let givt in resp){
-                    collectSum = collectSum + resp[givt].Amount;
-                }
-                console.log(collectSum);
-                this.value = collectSum;
-                this.dateBeginRange = this.dateBegin;
-                this.dateEndRange = this.dateEnd;
-            });
+            this.apiService.getData("OrgAdminView/Givts/?"+params)
+                .then(resp =>
+                {
+                    let collectSum = 0;
+                    for(let givt in resp){
+                        collectSum = collectSum + resp[givt].Amount;
+                    }
+                    console.log(collectSum);
+                    this.value = collectSum;
+                    this.dateBeginRange = this.dateBegin;
+                    this.dateEndRange = this.dateEnd;
+                });
+        }
+
     }
 
     formatDate(d){
