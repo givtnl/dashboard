@@ -10,7 +10,7 @@
     </section>
 <hr class="collect-hr"/>
 <section class="section-collects">
-    <section class="show-collect">
+    <section *ngIf="isVisible" class="show-collect">
         <time>
             <span class="date">{{ dateBeginRange | date:'d MMMM y'  }} - {{ dateEndRange | date:'d MMMM y'  }}</span>
             <span class="time">{{ dateBeginRange | date:'shortTime'  }} - {{ dateEndRange | date:'shortTime'  }}</span>

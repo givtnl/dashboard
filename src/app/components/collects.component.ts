@@ -15,7 +15,7 @@ export class CollectsComponent implements OnInit {
     dateBegin: Date;
     dateEnd: Date;
     value: number = 0;
-
+    isVisible: boolean= false;
     dateBeginRange: Date;
     dateEndRange: Date;
 
@@ -51,6 +51,7 @@ export class CollectsComponent implements OnInit {
                     this.value = collectSum;
                     this.dateBeginRange = this.dateBegin;
                     this.dateEndRange = this.dateEnd;
+                    this.isVisible = true;  
                 });
         }
 
