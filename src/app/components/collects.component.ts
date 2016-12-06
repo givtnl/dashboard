@@ -16,6 +16,12 @@ export class CollectsComponent implements OnInit {
     dateEnd: Date;
     value: number = 0;
 
+    dateBeginRange: Date;
+    dateEndRange: Date;
+
+    dateRange: Date;
+    timeRange: string;
+
 
     constructor(private apiService: ApiClientService, translate: TranslateService,calendarModule: CalendarModule) {
         this.translate = translate;
@@ -42,6 +48,8 @@ export class CollectsComponent implements OnInit {
                 }
                 console.log(collectSum);
                 this.value = collectSum;
+                this.dateBeginRange = this.dateBegin;
+                this.dateEndRange = this.dateEnd;
             });
     }
 
