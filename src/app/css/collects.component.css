@@ -41,10 +41,17 @@
     font-size: 18px;
     display: block;
     margin-left:auto;
+    transition: background-color 0.5s;
+    cursor:pointer;
 
 }
 
+.search-collect:hover{
+    background-color: #C0BFCC;
+}
+
 .show-collect{
-    font-size:28px;
-    font-family: 'Avenir_Roman';
+    font-size:16px;
+    font-family: 'Avenir_Heavy';
+    color: #2C2B57;
 }
