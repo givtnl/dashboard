@@ -3,8 +3,8 @@
     <h2>{{"Text_Collectes_Title" | translate}}</h2>
     <h3>{{"Text_Collectes_Subtitle" | translate}}</h3>
     <section class="collects-pickdate">
-        <p-calendar [inputStyle]="{'width':'380px','padding': '8px 16px', 'box-sizing':'border-box','border-radius':'0'}" [(ngModel)]="dateBegin" (ngModelChange)="onDateBeginChange($event)" showTime="showTime" dateFormat="dd/mm/yy" [locale]="nl"></p-calendar>
-        <p-calendar [inputStyle]="{'width':'380px','padding': '8px 16px', 'box-sizing':'border-box','border-radius':'0'}" [(ngModel)]="dateEnd"  (ngModelChange)="onDateEndChange($event)" [(minDate)]="dateBegin" showTime="showTime" dateFormat="dd/mm/yy"></p-calendar>
+        <p-calendar [inputStyle]="{'width':'380px','padding': '8px 16px', 'box-sizing':'border-box','border-radius':'0','background':'white url(images/calendar.svg)','background-repeat':'no-repeat','background-position-x':'98%','background-position-y':'50%'}" [(ngModel)]="dateBegin" (ngModelChange)="onDateBeginChange($event)" showTime="showTime" dateFormat="dd/mm/yy" [locale]="nl" [inputStyleClass]="special"></p-calendar>
+        <p-calendar [inputStyle]="{'width':'380px','padding': '8px 16px', 'box-sizing':'border-box','border-radius':'0','background':'white url(images/calendar.svg)','background-repeat':'no-repeat','background-position-x':'98%','background-position-y':'50%'}" [(ngModel)]="dateEnd"  (ngModelChange)="onDateEndChange($event)" [(minDate)]="dateBegin" showTime="showTime" dateFormat="dd/mm/yy"></p-calendar>
     </section>
     <button (click)="fetchCollect()" class="search-collect">{{"Text_Collectes_FilterButton" | translate}}</button>
     </section>
