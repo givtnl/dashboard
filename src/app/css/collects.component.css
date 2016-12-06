@@ -41,12 +41,11 @@
     font-size: 18px;
     display: block;
     margin-left:auto;
-    transition: background-color 0.5s;
     cursor:pointer;
 
 }
 
-.search-collect:hover{
+.search-collect:active{
     background-color: #C0BFCC;
 }
 
