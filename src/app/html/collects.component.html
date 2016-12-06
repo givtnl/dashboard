@@ -7,7 +7,14 @@
         <p-calendar [inputStyle]="{'width':'380px','padding': '8px 16px', 'box-sizing':'border-box','border-radius':'0'}" [(ngModel)]="dateEnd" showTime="showTime"></p-calendar>
     </section>
     <button (click)="fetchCollect()" class="search-collect">Zoek</button>
+    </section>
+<hr class="collect-hr"/>
+<section class="section-collects">
     <section class="show-collect">
-        <p>€ {{value}}</p>
+        <time>
+            <span class="date">{{ dateBeginRange | date:'d MMMM y'  }} - {{ dateEndRange | date:'d MMMM y'  }}</span>
+            <span class="time">{{ dateBeginRange | date:'shortTime'  }} - {{ dateEndRange | date:'shortTime'  }}</span>
+        </time>
+        <span>€ {{value}}</span>
     </section>
 </section>

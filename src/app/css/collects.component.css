@@ -33,7 +33,7 @@
 .search-collect{
     padding: 8px 22px;
     box-sizing: border-box;
-    margin: 28px 0;
+    margin: 40px 0;
     color:white;
     font-family: 'Avenir_Black';
     background-color:#2C2B57;
@@ -54,4 +54,23 @@
     font-size:16px;
     font-family: 'Avenir_Heavy';
     color: #2C2B57;
+    display: flex;
+    justify-content: space-between;
+    margin: 24px 0;
+    align-items: center;
+}
+
+.show-collect span{
+    display: block;
+}
+
+.show-collect .time{
+    font-family:"Avenir_Roman";
+    font-size:12px;
+}
+
+.collect-hr{
+    border:0;
+    border-bottom: 1px solid #E3E2E7;
+    max-width: 960px;
 }
