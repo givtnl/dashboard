@@ -12,8 +12,8 @@ export class CollectsComponent{
     translate: TranslateService;
     text: string;
     calendarModule: CalendarModule;
-    dateBegin: Date;
-    dateEnd: Date;
+    dateBegin: Date = null;
+    dateEnd: Date =null;
     value: number = 0;
     dateBeginTime : number;
     maxDate: Date;
@@ -35,7 +35,7 @@ export class CollectsComponent{
     }
 
     fetchCollect(){
-        if(this.dateBegin !== undefined && this.dateEnd !== undefined){
+        if(this.dateBegin !== null && this.dateEnd !== null){
             var dateBegin = this.formatDate(this.dateBegin);
             var dateEnd = this.formatDate(this.dateEnd);
             let params = "DateBegin=" + dateBegin + "&DateEnd=" + dateEnd + "&Status=" + "0";
@@ -51,7 +51,7 @@ export class CollectsComponent{
                     this.dateBeginRange = new Date(this.dateBegin.getTime());
                     this.dateEndRange = new Date(this.dateEnd.getTime());
                     this.sameDate = (this.dateBeginRange.getDate() === this.dateEndRange.getDate());
-                    this.isVisible = true;  
+                    this.isVisible = true;
                 });
         }
 
