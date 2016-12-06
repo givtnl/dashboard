@@ -38,4 +38,21 @@ body{
 .startscreen-wrapper{
     width: 100%;
 }
+.date-picker-input{
+    width: 380px;
+    padding: 8px 16px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    border-radius:0;
+    background: white url(images/calendar.svg);
+    background-repeat: no-repeat;
+    background-position-x: 98%;
+    background-position-y: 50%;
+    font-family: 'Avenir_Black';
+    font-size:18px;
+    color:#2C2B57;
+}
+
+
 
