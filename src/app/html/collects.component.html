@@ -14,7 +14,7 @@
         <time>
             <span *ngIf="!sameDate" class="date">{{ dateBeginRange.string }} - {{ dateEndRange.string }}</span>
             <span *ngIf="sameDate" class="date">{{ dateBeginRange.string }}</span>
-            <span class="time">{{ dateBeginRange | date:'HH:mm'  }} - {{ dateEndRange | date:'HH:mm'  }}</span>
+            <span class="time">{{ dateBeginRange.time }} - {{ dateEndRange.time  }}</span>
         </time>
         <span>{{value}}</span>
     </section>

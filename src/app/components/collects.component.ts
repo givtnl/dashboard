@@ -118,7 +118,8 @@ export class CollectsComponent implements OnInit{
                     this.sameDate = (this.dateBeginRange.getDate() === this.dateEndRange.getDate());
                     this.dateBeginRange.string = datePipe.transform(this.dateBeginRange, 'd MMMM y');
                     this.dateEndRange.string = datePipe.transform(this.dateEndRange, 'd MMMM y');
-
+                    this.dateBeginRange.time = datePipe.transform(this.dateBegin, 'shortTime');
+                    this.dateEndRange.time = datePipe.transform(this.dateEnd,'shortTime');
                     this.isVisible = true;
                 });
         }
