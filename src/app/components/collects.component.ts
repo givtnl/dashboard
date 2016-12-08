@@ -110,6 +110,7 @@ export class CollectsComponent implements OnInit{
                         collectSum = collectSum + resp[givt].Amount;
                     }
                     this.value = "€ " + (this.isSafari ? collectSum.toFixed(2) : collectSum.toLocaleString(navigator.language,{minimumFractionDigits: 2}));
+                    //noinspection TypeScriptValidateTypes
                     let datePipe = new DatePipe();
 
                     this.dateBeginRange = new Date(this.dateBegin.getTime());
@@ -141,10 +142,10 @@ export class CollectsComponent implements OnInit{
     }
 
     formatDate(d){
-        return [d.getMonth()+1,
-            d.getDate(),
-            d.getFullYear()].join('/')+' '+
-        [d.getHours(),
-            d.getMinutes()].join(':');
+        return [d.getUTCMonth()+1,
+            d.getUTCDate(),
+            d.getUTCFullYear()].join('/')+' '+
+        [d.getUTCHours(),
+            d.getUTCMinutes()].join(':');
     }
 }
