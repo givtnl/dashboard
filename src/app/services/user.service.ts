@@ -2,13 +2,14 @@ import { Injectable } from '@angular/core';
 import { Http, Headers, URLSearchParams } from '@angular/http';
 
 import 'rxjs/add/operator/toPromise'; //to support toPromise
+import { environment } from '../../environments/environment';
 
 import { User } from '../models/user';
 
 @Injectable()
 export class UserService {
     //this has to become environment variable in story 2461
-    private apiUrl = 'https://givtapidebug.azurewebsites.net/oauth2/token';
+    private apiUrl = environment.apiUrl + '/oauth2/token';
 
     constructor(private http: Http){
         if(localStorage.getItem('access_token'))
