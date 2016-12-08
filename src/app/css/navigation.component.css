@@ -7,7 +7,7 @@ nav{
 }
 
 nav ul {
-    margin: 0;
+    margin: 0 0 0 2em;
     list-style-type: none;
     display: inline-block;
     padding:0;
@@ -51,6 +51,9 @@ nav h1 {
     display: inline-block;
     font-family: "Avenir_Black";
     font-size:32px;
+    font-weight: normal;
+    max-width: 400px;
+    min-width: 200px;
 }
 
 .menu-settings{
@@ -59,11 +62,11 @@ nav h1 {
     display:inline-block;
     cursor: pointer;
     color:#C0BFCC;
+    margin-left: auto;
 }
 .menu-settings svg{
     vertical-align: bottom;
 }
-nav ul { ... min-height:50px; } /* < add */
 
 .menu-wrapper{
     margin: 0 auto;
@@ -72,7 +75,7 @@ nav ul { ... min-height:50px; } /* < add */
     display: -moz-flex;
     display: -ms-flex;
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     padding:0 42px;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
