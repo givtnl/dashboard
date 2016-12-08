@@ -22,7 +22,7 @@
 
 }
 
-.collects-pickdate{
+.collects-pickdate {
     display: flex;
     justify-content: space-between;
 }
@@ -44,7 +44,6 @@
     display: block;
     margin-left:auto;
     cursor:pointer;
-
 }
 
 .search-collect:active{

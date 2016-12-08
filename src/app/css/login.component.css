@@ -170,6 +170,7 @@ input[type="email"]{
 
 button[type="submit"]{
     margin-top:29px;
+    cursor:pointer;
 }
 
 @media only screen and (max-width: 500px) {

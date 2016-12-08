@@ -29,6 +29,10 @@ body{
     padding: 0;
 }
 
+h1 {
+    font-weight: normal;
+}
+
 .start-logo{
     display: block;
     max-width: 300px;
@@ -38,6 +42,7 @@ body{
 .startscreen-wrapper{
     width: 100%;
 }
+
 .date-picker-input{
     width: 380px;
     padding: 8px 16px;
@@ -52,9 +57,8 @@ body{
     font-family: 'Avenir_Heavy';
     font-size:18px;
     color:#2C2B57;
+    cursor:pointer;
 }
-
-
 
 .fat-emphasis{
     font-size:40px;

@@ -79,6 +79,9 @@ export class CollectsComponent implements OnInit{
         this.calendarModule = new CalendarModule();
         this.dateBeginTime = 5000;
         this.maxDate = new Date();
+        this.dateBegin = new Date();
+        this.dateEnd = new Date();
+        this.dateBegin.setHours(6,0,0);
     }
 
     fetchCollect(){
