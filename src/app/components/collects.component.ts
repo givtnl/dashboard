@@ -1,4 +1,6 @@
 import { Component,OnInit } from '@angular/core';
+import { DatePipe } from '@angular/common';
+
 
 import { ApiClientService } from "app/services/api-client.service";
 import { TranslateService } from "ng2-translate";
@@ -18,8 +20,8 @@ export class CollectsComponent implements OnInit{
     dateBeginTime : number;
     maxDate: Date;
     isVisible: boolean= false;
-    dateBeginRange: Date;
-    dateEndRange: Date;
+    dateBeginRange: any;
+    dateEndRange: any;
     sameDate: boolean;
     isSafari: boolean;
 
@@ -107,11 +109,15 @@ export class CollectsComponent implements OnInit{
                     for(let givt in resp){
                         collectSum = collectSum + resp[givt].Amount;
                     }
-                    //this.value = collectSum;
                     this.value = "€ " + (this.isSafari ? collectSum.toFixed(2) : collectSum.toLocaleString(navigator.language,{minimumFractionDigits: 2}));
+                    let datePipe = new DatePipe();
+
                     this.dateBeginRange = new Date(this.dateBegin.getTime());
                     this.dateEndRange = new Date(this.dateEnd.getTime());
                     this.sameDate = (this.dateBeginRange.getDate() === this.dateEndRange.getDate());
+                    this.dateBeginRange.string = datePipe.transform(this.dateBeginRange, 'd MMMM y');
+                    this.dateEndRange.string = datePipe.transform(this.dateEndRange, 'd MMMM y');
+
                     this.isVisible = true;
                 });
         }

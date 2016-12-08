@@ -12,8 +12,8 @@
 <section class="section-collects">
     <section *ngIf="isVisible" class="show-collect">
         <time>
-            <span *ngIf="!sameDate" class="date">{{ dateBeginRange | date:'d MMMM y'  }} - {{ dateEndRange | date:'d MMMM y'  }}</span>
-            <span *ngIf="sameDate" class="date">{{ dateBeginRange | date:'d MMMM y'  }}</span>
+            <span *ngIf="!sameDate" class="date">{{ dateBeginRange.string }} - {{ dateEndRange.string }}</span>
+            <span *ngIf="sameDate" class="date">{{ dateBeginRange.string }}</span>
             <span class="time">{{ dateBeginRange | date:'HH:mm'  }} - {{ dateEndRange | date:'HH:mm'  }}</span>
         </time>
         <span>{{value}}</span>
