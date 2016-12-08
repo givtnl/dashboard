@@ -52,8 +52,7 @@ h1 {
     border-radius:0;
     background: white url(images/calendar.svg);
     background-repeat: no-repeat;
-    background-position-x: 98%;
-    background-position-y: 50%;
+    background-position: 98% 50%;
     font-family: 'Avenir_Heavy';
     font-size:18px;
     color:#2C2B57;
