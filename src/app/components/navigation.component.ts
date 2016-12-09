@@ -4,6 +4,7 @@ import { UserService } from 'app/services/user.service';
 import {Router} from "@angular/router";
 import {TranslateService} from "ng2-translate";
 import {ApiClientService} from "../services/api-client.service";
+import {DataService} from "../services/data.service";
 
 
 @Component({
@@ -13,29 +14,22 @@ import {ApiClientService} from "../services/api-client.service";
 })
 export class NavigationComponent implements OnInit {
     instance_title: string;
+    dataService: DataService;
+    constructor(private userService: UserService, private router: Router, private translate:TranslateService, dataService: DataService){
+        this.dataService = dataService;
 
-    text_dashboard: string;
-    text_collects: string;
-    text_logout: string;
-
-    constructor(private userService: UserService, private router: Router, private translate:TranslateService, private apiService:ApiClientService){
-        //this.instance_title = "...";
-        this.apiService.getData('OrgAdminView/Org')
-            .then(res => {
-                //console.log(res);
-                this.instance_title = res;
-        })
-        this.translate.get("Menu_Overview").subscribe(value => {this.text_dashboard = value;})
-        this.translate.get("Menu_Collectes").subscribe(value => {this.text_collects = value;})
-        this.translate.get("Text_Logout").subscribe(value => {this.text_logout = value;})
+        let that = this;
+        if(this.dataService.instanceTitle){
+            this.instance_title = this.dataService.instanceTitle;
+        }else{
+            this.dataService.getInstanceTitle().then(function (value) {
+                that.instance_title = value;
+            })
+        }
     }
 
     ngOnInit(){
-        /*this.apiService.getData('OrgAdminView/Org')
-            .then(res => {
-                console.log(res);
-                this.instance_title = res;
-        })*/
+
     }
 
     logout(){

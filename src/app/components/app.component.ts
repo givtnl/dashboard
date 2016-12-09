@@ -1,14 +1,17 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 
 import {TranslateService} from 'ng2-translate';
+import {DataService} from "../services/data.service";
 @Component({
   selector: 'app-root',
   templateUrl: '../html/app.component.html'
 })
 export class AppComponent  {
-  constructor(translate: TranslateService) {
-    // this language will be used as a fallback when a translation isn't found in the current language
-    //translate.setDefaultLang('nl');
+
+  dataService: DataService;
+
+  constructor(translate: TranslateService,dataService: DataService) {
+    this.dataService = dataService;
 
     //supported languages todo: add languages you wish to support
     translate.addLangs(["nl","en"]);

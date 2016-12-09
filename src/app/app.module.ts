@@ -17,6 +17,7 @@ import {DashboardComponent} from "./components/dashboard.component";
 import {TranslateModule, TranslateLoader, TranslateStaticLoader} from 'ng2-translate';
 import {CollectsComponent} from "./components/collects.component";
 import {CalendarModule} from "primeng/primeng";
+import {DataService} from "./services/data.service";
 
 export function createTranslateLoader(http: Http) {
   return new TranslateStaticLoader(http, './assets/i18n', '.json');
@@ -30,6 +31,6 @@ export function createTranslateLoader(http: Http) {
   }),CalendarModule],
   declarations: [ AppComponent, LoginComponent, NavigationComponent, DashboardComponent, CollectsComponent ],
   bootstrap:    [ AppComponent ],
-  providers: [ UserService, ApiClientService, LoggedInGuard, LoginComponentGuard ]
+  providers: [ UserService, ApiClientService, LoggedInGuard, LoginComponentGuard,DataService ]
 })
 export class AppModule { }
