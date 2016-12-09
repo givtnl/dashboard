@@ -18,13 +18,12 @@ export class NavigationComponent implements OnInit {
     constructor(private userService: UserService, private router: Router, private translate:TranslateService, dataService: DataService){
         this.dataService = dataService;
 
-        let that = this;
         if(this.dataService.instanceTitle){
             this.instance_title = this.dataService.instanceTitle;
         }else{
             this.dataService.getInstanceTitle().then(function (value) {
-                that.instance_title = value;
-            })
+                this.instance_title = value;
+            }.bind(this))
         }
     }
 
