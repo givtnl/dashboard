@@ -19,18 +19,23 @@ export class NavigationComponent implements OnInit {
     text_logout: string;
 
     constructor(private userService: UserService, private router: Router, private translate:TranslateService, private apiService:ApiClientService){
-        this.instance_title = "...";
+        //this.instance_title = "...";
+        this.apiService.getData('OrgAdminView/Org')
+            .then(res => {
+                //console.log(res);
+                this.instance_title = res;
+        })
         this.translate.get("Menu_Overview").subscribe(value => {this.text_dashboard = value;})
         this.translate.get("Menu_Collectes").subscribe(value => {this.text_collects = value;})
         this.translate.get("Text_Logout").subscribe(value => {this.text_logout = value;})
     }
 
     ngOnInit(){
-        this.apiService.getData('OrgAdminView/Org')
+        /*this.apiService.getData('OrgAdminView/Org')
             .then(res => {
                 console.log(res);
                 this.instance_title = res;
-        })
+        })*/
     }
 
     logout(){
