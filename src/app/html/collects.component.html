@@ -8,12 +8,13 @@
     </section>
     <button (click)="fetchCollect()" class="search-collect">{{"Text_Collectes_FilterButton" | translate}}</button>
     <input type="text" placeholder="Collecte naam" [(ngModel)]="collectName"/>
-    <button (click)="saveCollect()" class="search-collect">Opslaan</button>
+    <button (click)="saveCollect()" class="search-collect" [disabled]="!this.collectName || this.collectName.length == 0">Opslaan</button>
     </section>
 <hr class="collect-hr"/>
 <section class="section-collects">
     <section *ngIf="isVisible" class="show-collect">
         <time>
+            <span *ngIf="collectTitle" class="collect-title">{{collectTitle}}</span>
             <span *ngIf="!sameDate" class="date">{{ dateBeginRange.string }} - {{ dateEndRange.string }}</span>
             <span *ngIf="sameDate" class="date">{{ dateBeginRange.string }}</span>
             <span class="time">{{ dateBeginRange.time }} - {{ dateEndRange.time  }}</span>

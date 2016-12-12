@@ -112,3 +112,12 @@ input[type="text"]{
     font-family: Avenir_Medium;
     padding: 10px;
 }
+
+button:disabled{
+    background: gray;
+    cursor: auto;
+}
+
+.collect-title{
+    font-size: 30px;
+}

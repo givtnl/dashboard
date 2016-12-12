@@ -27,6 +27,7 @@ export class CollectsComponent implements OnInit{
     isSafari: boolean;
     savedCollects: Collection[] = [];
     collectName: string;
+    collectTitle: string;
 
     en: any = {
         firstDayOfWeek: 0,
@@ -116,6 +117,7 @@ export class CollectsComponent implements OnInit{
         this.dateBegin = new Date(collect.BeginDate);
         this.dateEnd  = new Date(collect.EndDate);
         this.fetchCollect();
+        this.collectTitle = collect.Name;
     }
 
     saveCollect(){
@@ -125,7 +127,10 @@ export class CollectsComponent implements OnInit{
         newCollect.Name = this.collectName;
 
         this.apiService.postData("OrgAdminView/Collect", newCollect)
-            .then(this.fetchSavedCollects())
+            .then(resp => {
+                this.fetchSavedCollects();
+                this.collectName = "";
+            })
             .catch(err => console.log(err));
         setTimeout(this.fetchSavedCollects(), 1000);
     }
@@ -140,6 +145,7 @@ export class CollectsComponent implements OnInit{
     }
 
     fetchCollect(){
+        this.collectTitle = null;
         if(this.dateBegin !== null && this.dateEnd !== null){
             var dateBegin = this.formatDate(this.dateBegin);
             var dateEnd = this.formatDate(this.dateEnd);
