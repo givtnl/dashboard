@@ -7,6 +7,8 @@
         <p-calendar readonlyInput="readonlyInput" inputStyleClass="date-picker-input" [(ngModel)]="dateEnd"  (ngModelChange)="onDateEndChange($event)" [(minDate)]="dateBegin" showTime="showTime" dateFormat="dd/mm/yy" [locale]="locale"></p-calendar>
     </section>
     <button (click)="fetchCollect()" class="search-collect">{{"Text_Collectes_FilterButton" | translate}}</button>
+    <input type="text" placeholder="Collecte naam" [(ngModel)]="collectName"/>
+    <button (click)="saveCollect()" class="search-collect">Opslaan</button>
     </section>
 <hr class="collect-hr"/>
 <section class="section-collects">
@@ -18,4 +20,21 @@
         </time>
         <span>{{value}}</span>
     </section>
+</section>
+<hr *ngIf="isVisible" class="collect-hr"/>
+<section class="collects-list">
+    <table *ngIf="savedCollects.length > 0">
+        <thead>
+            <td>Collecte naam</td>
+            <td>Collecte start</td>
+            <td>Collecte einde</td>
+            <td></td>
+        </thead>
+        <tr *ngFor="let collect of savedCollects">
+            <td><a (click)="selectCollect(collect)">{{collect.Name}}</a></td>
+            <td>{{collect.BeginDateString}}</td>
+            <td>{{collect.EndDateString}}</td>
+            <td><a (click)="deleteCollect(collect.Id)">verwijder</a></td>
+        </tr>
+    </table>
 </section>

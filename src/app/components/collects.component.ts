@@ -5,6 +5,7 @@ import { DatePipe } from '@angular/common';
 import { ApiClientService } from "app/services/api-client.service";
 import { TranslateService } from "ng2-translate";
 import {CalendarModule} from "primeng/primeng";
+import {Collection} from "../models/collection";
 @Component({
     selector: 'my-collects',
     templateUrl: '../html/collects.component.html',
@@ -24,6 +25,8 @@ export class CollectsComponent implements OnInit{
     dateEndRange: any;
     sameDate: boolean;
     isSafari: boolean;
+    savedCollects: Collection[] = [];
+    collectName: string;
 
     en: any = {
         firstDayOfWeek: 0,
@@ -67,7 +70,7 @@ export class CollectsComponent implements OnInit{
 
     ngOnInit(){
         console.log(this.translate.currentLang);
-
+        this.fetchSavedCollects();
     }
 
     constructor(private apiService: ApiClientService, translate: TranslateService,calendarModule: CalendarModule) {
@@ -94,6 +97,46 @@ export class CollectsComponent implements OnInit{
         this.dateBegin = new Date();
         this.dateEnd = new Date();
         this.dateBegin.setHours(6,0,0);
+    }
+
+    fetchSavedCollects(){
+        let datePipe = new DatePipe();
+        this.apiService.getData("OrgAdminView/Collect")
+            .then(resp => {
+                this.savedCollects = resp;
+                for(let i in this.savedCollects){
+                    this.savedCollects[i].BeginDateString = datePipe.transform(this.savedCollects[i].BeginDate, 'short');
+                    this.savedCollects[i].EndDateString = datePipe.transform(this.savedCollects[i].EndDate, 'short');
+                }
+                console.log(this.savedCollects);
+            })
+    }
+
+    selectCollect(collect: Collection){
+        this.dateBegin = new Date(collect.BeginDate);
+        this.dateEnd  = new Date(collect.EndDate);
+        this.fetchCollect();
+    }
+
+    saveCollect(){
+        let newCollect = new Collection();
+        newCollect.BeginDate = this.dateBegin;
+        newCollect.EndDate = this.dateEnd;
+        newCollect.Name = this.collectName;
+
+        this.apiService.postData("OrgAdminView/Collect", newCollect)
+            .then(this.fetchSavedCollects())
+            .catch(err => console.log(err));
+        setTimeout(this.fetchSavedCollects(), 1000);
+    }
+
+    deleteCollect(id: number){
+        this.apiService.delete("OrgAdminView/Collect/" + id)
+            .then(resp => {
+                console.log(resp);
+                this.fetchSavedCollects();
+            })
+            .catch(err => console.log(err));
     }
 
     fetchCollect(){

@@ -75,3 +75,40 @@
     max-width: 960px;
 }
 
+
+/*new lines!!!!!!!! */
+
+.collects-list{
+    margin: 0 auto;
+    display: block;
+    width: 800px;
+}
+
+.collects-list > table > thead{
+    font-family: Avenir_Heavy;
+    width: 100%;
+}
+
+.collects-list > table{
+    font-family: Avenir_Light;
+    width: 100%;
+}
+
+.collects-list tr{
+    height: 50px;
+    vertical-align: center;
+}
+
+.collects-list a {
+    padding: 15px 0;
+    font-family: Avenir_Medium;
+}
+
+.collects-list a:hover {
+    cursor: pointer;
+}
+
+input[type="text"]{
+    font-family: Avenir_Medium;
+    padding: 10px;
+}
