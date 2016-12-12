@@ -5,13 +5,14 @@ import { environment } from '../../environments/environment';
 
 import 'rxjs/add/operator/toPromise';
 import {UserService} from "./user.service";
+import {Router} from "@angular/router";
 
 @Injectable()
 export class ApiClientService {
     //this has to become environment variable in story 2461
     private apiUrl = environment.apiUrl + '/api/';
 
-    constructor(private http: Http, private userService: UserService){
+    constructor(private http: Http, private userService: UserService, private router: Router){
 
     }
 
@@ -38,6 +39,10 @@ export class ApiClientService {
                     return res.json();
                 } catch (e) {
                     return res._body;
+                }
+            }).catch(err =>  {
+                if(err.status === 403){
+                    this.router.navigate(['unauthorized']);
                 }
             })
     }

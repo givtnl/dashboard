@@ -18,6 +18,7 @@ import {TranslateModule, TranslateLoader, TranslateStaticLoader} from 'ng2-trans
 import {CollectsComponent} from "./components/collects.component";
 import {CalendarModule} from "primeng/primeng";
 import {DataService} from "./services/data.service";
+import {UnAuthorizeComponent} from "./components/unauthorized.component";
 
 export function createTranslateLoader(http: Http) {
   return new TranslateStaticLoader(http, './assets/i18n', '.json');
@@ -29,7 +30,7 @@ export function createTranslateLoader(http: Http) {
     useFactory: (createTranslateLoader),
     deps: [Http]
   }),CalendarModule],
-  declarations: [ AppComponent, LoginComponent, NavigationComponent, DashboardComponent, CollectsComponent ],
+  declarations: [ AppComponent, LoginComponent, NavigationComponent, DashboardComponent, CollectsComponent, UnAuthorizeComponent ],
   bootstrap:    [ AppComponent ],
   providers: [ UserService, ApiClientService, LoggedInGuard, LoginComponentGuard,DataService ]
 })
