@@ -16,6 +16,8 @@
             <span *ngIf="!sameDate" class="date">{{ dateBeginRange.string }} - {{ dateEndRange.string }}</span>
             <span *ngIf="sameDate" class="date">{{ dateBeginRange.string }}</span>
             <span class="time">{{ dateBeginRange.time }} - {{ dateEndRange.time  }}</span>
+            <span>{{givtServiceCost}}</span>
+            <span>{{paymentProviderTransactionCost}}</span>
         </time>
         <span>{{value}}</span>
         <button (click)="saveCollect()" class="search-collect save-collect" [disabled]="!this.collectName || this.collectName.length == 0">Opslaan</button>

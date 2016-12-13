@@ -29,6 +29,10 @@ export class CollectsComponent implements OnInit{
     collectName: string;
     collectTitle: string;
 
+    //costs
+    givtServiceCost: string;
+    paymentProviderTransactionCost: string;
+
     en: any = {
         firstDayOfWeek: 0,
         dayNames: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
@@ -157,6 +161,8 @@ export class CollectsComponent implements OnInit{
             this.apiService.getData("OrgAdminView/Givts/?"+params)
                 .then(resp =>
                 {
+                    this.givtServiceCost = "Givtservice kosten : € " + (this.isSafari ? (resp.TotalAmount * resp.GivtCostPerTransaction).toFixed(2) : (resp.TotalAmount * resp.GivtCostPerTransaction).toLocaleString(navigator.language,{minimumFractionDigits: 2}));
+                    this.paymentProviderTransactionCost = "Transactie kosten : € " + (this.isSafari ? (resp.TransactionCount * resp.PayProvCostPerTransaction).toFixed(2) : (resp.TransactionCount * resp.PayProvCostPerTransaction).toLocaleString(navigator.language,{minimumFractionDigits: 2}));
                     let collectSum = resp.TotalAmount;
                     this.value = "€ " + (this.isSafari ? collectSum.toFixed(2) : collectSum.toLocaleString(navigator.language,{minimumFractionDigits: 2}));
                     //noinspection TypeScriptValidateTypes
