@@ -129,7 +129,9 @@ button:disabled{
 }
 
 .collection-buttons{
-    display: none;
+    opacity: 0;
+    transition: 0.4s;
+
 }
 
 .collects-list .show-collect{
@@ -150,10 +152,10 @@ button:disabled{
 }
 
 .collects-list .show-collect:hover .collection-buttons{
-    display: block;
+    opacity:1;
 }
 
-.collection-buttons button{
+.collection-buttons button, .costs{
     border:0;
     background-color: #2C2B57;
     color:white;
