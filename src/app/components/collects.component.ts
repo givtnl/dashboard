@@ -28,6 +28,7 @@ export class CollectsComponent implements OnInit{
     savedCollects: Collection[] = [];
     collectName: string;
     collectTitle: string;
+    showCosts: boolean = false;
 
     //costs
     givtServiceCost: string;
@@ -152,6 +153,7 @@ export class CollectsComponent implements OnInit{
     }
 
     fetchCollect(){
+        this.showCosts = false;
         this.collectTitle = null;
         if(this.dateBegin !== null && this.dateEnd !== null){
             var dateBegin = this.formatDate(this.dateBegin);

@@ -16,12 +16,13 @@
             <span *ngIf="!sameDate" class="date">{{ dateBeginRange.string }} - {{ dateEndRange.string }}</span>
             <span *ngIf="sameDate" class="date">{{ dateBeginRange.string }}</span>
             <span class="time">{{ dateBeginRange.time }} - {{ dateEndRange.time  }}</span>
-            <span>{{givtServiceCost}}</span>
-            <span>{{paymentProviderTransactionCost}}</span>
+            <span *ngIf="showCosts">
+                <span>{{givtServiceCost}}</span>
+                <span>{{paymentProviderTransactionCost}}</span>
+            </span>
         </time>
         <span>{{value}}</span>
-        <button class="costs"><i class="fa fa-list-alt fa-lg" aria-hidden="true"></i></button>
-
+        <button class="costs" (click)="showCosts = !showCosts"><i class="fa fa-list-alt fa-lg" aria-hidden="true"></i></button>
         <button (click)="saveCollect()" class="search-collect save-collect" [disabled]="!this.collectName || this.collectName.length == 0">Opslaan</button>
     </section>
 </section>
