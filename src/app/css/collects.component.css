@@ -129,7 +129,24 @@ button:disabled{
 }
 
 .collection-buttons{
-    display: block;
+    display: none;
+}
+
+.collects-list .show-collect{
+    border-top: 1px solid transparent;
+    border-bottom: 1px solid transparent;
+    padding-left:10px;
+    padding-right:10px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    transition: 0.4s;
+}
+
+.collects-list .show-collect:hover{
+    /*background-color: #FFFFFF;*/
+    border-top: 1px solid #2C2B57;
+    border-bottom: 1px solid #2C2B57;
 }
 
 .collects-list .show-collect:hover .collection-buttons{
