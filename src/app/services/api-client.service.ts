@@ -13,16 +13,14 @@ export class ApiClientService {
     //this has to become environment variable in story 2461
     private apiUrl = environment.apiUrl + '/api/';
     dataService: DataService;
-    accessToken : string;
 
     constructor(private http: Http, private userService: UserService, private router: Router, dataService: DataService){
         this.dataService = dataService;
-        this.accessToken = this.dataService.getData("accessToken");
     }
 
     delete(path: string){
         let headers = new Headers();
-        headers.append('authorization', 'Bearer '+ this.accessToken);
+        headers.append('authorization', 'Bearer '+ this.dataService.getData("accessToken"));
 
         return this.http
             .delete(
@@ -43,7 +41,7 @@ export class ApiClientService {
         //Set the headers
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
-        headers.append('authorization', 'Bearer '+ this.accessToken);
+        headers.append('authorization', 'Bearer '+ this.dataService.getData("accessToken"));
 
         return this.http
             .post(
@@ -68,7 +66,7 @@ export class ApiClientService {
     getData(path: string){
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
-        headers.append('authorization', 'Bearer '+ this.accessToken);
+        headers.append('authorization', 'Bearer '+ this.dataService.getData("accessToken"));
 
         //do the http call
         return this.http
