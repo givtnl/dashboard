@@ -1,22 +1,19 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import { Http, Headers, URLSearchParams } from '@angular/http';
 
 import 'rxjs/add/operator/toPromise'; //to support toPromise
 import { environment } from '../../environments/environment';
 
 import { User } from '../models/user';
+import { DataService } from "./data.service";
 
 @Injectable()
 export class UserService {
     //this has to become environment variable in story 2461
     private apiUrl = environment.apiUrl + '/oauth2/token';
 
-    constructor(private http: Http){
-        if(localStorage.getItem('access_token'))
-            this.loggedIn = !!localStorage.getItem('access_token');
-        else if(sessionStorage.getItem('access_token'))
-            this.loggedIn = !!sessionStorage.getItem('access_token');
-        console.log(this.loggedIn);
+    constructor(private dataService: DataService, private http: Http){
+        this.loggedIn = !!dataService.getData("accessToken");
     }
 
     loggedIn: boolean = false;
@@ -46,12 +43,7 @@ export class UserService {
             .then(res => {
                 if(res.json().access_token){
                     this.loggedIn = true;
-                    if(stayloggedin){
-                        localStorage.setItem('access_token', res.json().access_token);
-                    }else{
-                        sessionStorage.setItem('access_token', res.json().access_token);
-                    }
-                    return true;
+                    this.dataService.writeData("accessToken", res.json().access_token, stayloggedin)
                 }
                 else{
                     return false;
@@ -60,9 +52,8 @@ export class UserService {
     }
 
     logout(){
-        sessionStorage.clear();
-        localStorage.clear();
         this.loggedIn = false;
+        this.dataService.clearAll();
     }
 
     getAccessToken(){

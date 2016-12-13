@@ -15,20 +15,24 @@ import {DataService} from "../services/data.service";
 export class NavigationComponent implements OnInit {
     instance_title: string;
     dataService: DataService;
-    constructor(private userService: UserService, private router: Router, private translate:TranslateService, dataService: DataService){
-        this.dataService = dataService;
 
-        if(this.dataService.instanceTitle){
-            this.instance_title = this.dataService.instanceTitle;
-        }else{
-            this.dataService.getInstanceTitle().then(function (value) {
-                this.instance_title = value;
-            }.bind(this))
-        }
+    constructor(private userService: UserService, private router: Router, private translate:TranslateService, dataService: DataService, private apiService : ApiClientService){
+        this.dataService = dataService;
     }
 
     ngOnInit(){
-
+        let title = this.dataService.getData("instanceTitle")
+        if(!title)
+        return this.apiService.getData('OrgAdminView/Org')
+            .then(res => {
+                this.instance_title = res;
+                this.dataService.writeData("instanceTitle", res);
+                return res;
+            }).catch(
+            )
+        else{
+                this.instance_title = title;
+        }
     }
 
     logout(){

@@ -6,23 +6,23 @@ import { environment } from '../../environments/environment';
 import 'rxjs/add/operator/toPromise';
 import {UserService} from "./user.service";
 import {Router} from "@angular/router";
+import {DataService} from "./data.service";
 
 @Injectable()
 export class ApiClientService {
     //this has to become environment variable in story 2461
     private apiUrl = environment.apiUrl + '/api/';
+    dataService: DataService;
+    accessToken : string;
 
-    constructor(private http: Http, private userService: UserService, private router: Router){
-
+    constructor(private http: Http, private userService: UserService, private router: Router, dataService: DataService){
+        this.dataService = dataService;
+        this.accessToken = this.dataService.getData("accessToken");
     }
 
     delete(path: string){
-        let accessToken = this.userService.getAccessToken();
-        if(!accessToken){
-            return;
-        }
         let headers = new Headers();
-        headers.append('authorization', 'Bearer '+ accessToken);
+        headers.append('authorization', 'Bearer '+ this.accessToken);
 
         return this.http
             .delete(
@@ -33,22 +33,17 @@ export class ApiClientService {
             .then(res => {
                 return res;
             }).catch(
-                err => console.log(err);
+                err => console.log(err)
             )
     }
 
     postData(path: string, body: any){
-        let accessToken = this.userService.getAccessToken();
-        if(!accessToken){
-            return;
-        }
-
         let json = JSON.stringify(body);
 
         //Set the headers
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
-        headers.append('authorization', 'Bearer '+ accessToken);
+        headers.append('authorization', 'Bearer '+ this.accessToken);
 
         return this.http
             .post(
@@ -71,15 +66,9 @@ export class ApiClientService {
     }
 
     getData(path: string){
-        //check for token
-        let accessToken = this.userService.getAccessToken();
-        if(!accessToken){
-            return;
-        }
-        //Set the headers
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
-        headers.append('authorization', 'Bearer '+ accessToken);
+        headers.append('authorization', 'Bearer '+ this.accessToken);
 
         //do the http call
         return this.http
