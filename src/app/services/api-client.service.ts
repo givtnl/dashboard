@@ -19,6 +19,9 @@ export class ApiClientService {
     }
 
     delete(path: string){
+        if(!this.dataService.getData("accessToken")){
+            return;
+        }
         let headers = new Headers();
         headers.append('authorization', 'Bearer '+ this.dataService.getData("accessToken"));
 
@@ -36,6 +39,9 @@ export class ApiClientService {
     }
 
     postData(path: string, body: any){
+        if(!this.dataService.getData("accessToken")){
+            return;
+        }
         let json = JSON.stringify(body);
 
         //Set the headers
@@ -64,6 +70,9 @@ export class ApiClientService {
     }
 
     getData(path: string){
+        if(!this.dataService.getData("accessToken")){
+            return;
+        }
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
         headers.append('authorization', 'Bearer '+ this.dataService.getData("accessToken"));

@@ -156,10 +156,7 @@ export class CollectsComponent implements OnInit{
             this.apiService.getData("OrgAdminView/Givts/?"+params)
                 .then(resp =>
                 {
-                    let collectSum = 0;
-                    for(let givt in resp){
-                        collectSum = collectSum + resp[givt].Amount;
-                    }
+                    let collectSum = resp.TotalAmount;
                     this.value = "€ " + (this.isSafari ? collectSum.toFixed(2) : collectSum.toLocaleString(navigator.language,{minimumFractionDigits: 2}));
                     //noinspection TypeScriptValidateTypes
                     let datePipe = new DatePipe();

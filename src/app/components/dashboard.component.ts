@@ -148,10 +148,7 @@ export class DashboardComponent implements OnInit{
         this.apiService.getData("OrgAdminView/Givts/?"+params)
             .then(resp =>
             {
-                let collectSum = 0;
-                for(let givt in resp){
-                    collectSum = collectSum + resp[givt].Amount;
-                }
+                let collectSum = resp.TotalAmount;
                 this.thisMonthCard.value = "€ " + "<span class='fat-emphasis'>" + (this.isSafari ? collectSum.toFixed(2) : collectSum.toLocaleString(navigator.language,{minimumFractionDigits: 2})) + "</span>";
                 this.translate.get("Text_ThisMonth").subscribe(value => { this.thisMonthCard.title = value;});
                 this.translate.get("Text_Given").subscribe(value => { this.thisMonthCard.footer = value;});
@@ -180,10 +177,7 @@ export class DashboardComponent implements OnInit{
         this.apiService.getData("OrgAdminView/Givts/?DateBegin="+dateBegin+"&DateEnd="+dateEnd)
             .then(resp =>
             {
-                let collectSum = 0;
-                for(let givt in resp){
-                    collectSum = collectSum + resp[givt].Amount;
-                }
+                let collectSum = resp.TotalAmount;
                 this.lastSundayCard.value = "€ "+ "<span class='fat-emphasis'>" + (this.isSafari ? collectSum.toFixed(2) : collectSum.toLocaleString(navigator.language,{minimumFractionDigits: 2})) + "</span>";
                 this.translate.get("Text_LastSunday").subscribe(value => { this.lastSundayCard.title = value;});
                 this.translate.get("Text_Given").subscribe(value => { this.lastSundayCard.footer = value;});
