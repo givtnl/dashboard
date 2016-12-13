@@ -10,7 +10,6 @@ export class DataService {
     }
 
     writeData(key:string, data:string, local:boolean = false){
-        console.log("writing data: " + key);
         if(local){
             localStorage.setItem(key, data);
             this.dataDictionary.Add(key, data);
@@ -21,10 +20,8 @@ export class DataService {
     }
 
     getData(key: string){
-        console.log("reading data: " + key);
         if(this.dataDictionary.Item(key))
         {
-            console.log("fetched data in dictionary : " + this.dataDictionary.Item(key));
             return this.dataDictionary.Item(key);
         }
         else if(localStorage.getItem(key)){
