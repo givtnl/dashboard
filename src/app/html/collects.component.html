@@ -8,7 +8,7 @@
     </section>
     <button (click)="fetchCollect()" class="search-collect">{{"Text_Collectes_FilterButton" | translate}}</button>
     </section>
-<hr class="collect-hr"/>
+<hr class="collect-hr" id="test"/>
 <section class="section-collects">
     <section *ngIf="isVisible" class="show-collect">
         <time>
@@ -20,6 +20,8 @@
             <span>{{paymentProviderTransactionCost}}</span>
         </time>
         <span>{{value}}</span>
+        <button class="costs"><i class="fa fa-list-alt fa-lg" aria-hidden="true"></i></button>
+
         <button (click)="saveCollect()" class="search-collect save-collect" [disabled]="!this.collectName || this.collectName.length == 0">Opslaan</button>
     </section>
 </section>
