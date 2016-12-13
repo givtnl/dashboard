@@ -105,8 +105,13 @@ export class CollectsComponent implements OnInit{
             .then(resp => {
                 this.savedCollects = resp;
                 for(let i in this.savedCollects){
-                    this.savedCollects[i].BeginDateString = datePipe.transform(this.savedCollects[i].BeginDate, 'short');
-                    this.savedCollects[i].EndDateString = datePipe.transform(this.savedCollects[i].EndDate, 'short');
+                    this.savedCollects[i].BeginDateString = datePipe.transform(this.savedCollects[i].BeginDate, 'd MMMM y');
+                    this.savedCollects[i].EndDateString = datePipe.transform(this.savedCollects[i].EndDate, 'd MMMM y');
+
+                    this.savedCollects[i].BeginTimeString = datePipe.transform(this.savedCollects[i].BeginDate, 'shortTime');
+                    this.savedCollects[i].EndTimeString = datePipe.transform(this.savedCollects[i].EndDate, 'shortTime');
+
+
                 }
             })
     }
@@ -127,7 +132,7 @@ export class CollectsComponent implements OnInit{
         this.apiService.postData("OrgAdminView/Collect", newCollect)
             .then(resp => {
                 this.fetchSavedCollects();
-                this.collectName = "";
+                //this.collectName = "";
             })
             .catch(err => console.log(err));
         setTimeout(this.fetchSavedCollects(), 1000);

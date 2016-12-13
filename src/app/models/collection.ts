@@ -8,4 +8,6 @@ export class Collection{
     EndDate: Date;
     BeginDateString: string;
     EndDateString: string;
+    BeginTimeString: string;
+    EndTimeString: string;
 }

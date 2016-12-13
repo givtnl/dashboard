@@ -3,7 +3,7 @@
     margin: 0 auto;
 }
 
-.section-collects h2{
+h2{
     margin: 30px 0;
     font-family: 'Avenir_Black';
     font-size:18px;
@@ -12,7 +12,7 @@
     font-weight: normal;
 }
 
-.section-collects h3{
+h3{
     font-family: 'Avenir_Roman';
     font-size:18px;
     margin: 0 0 30px 0 ;
@@ -56,7 +56,6 @@
     color: #2C2B57;
     display: flex;
     justify-content: space-between;
-    margin: 24px 0;
     align-items: center;
 }
 
@@ -73,10 +72,12 @@
     border:0;
     border-bottom: 1px solid #E3E2E7;
     max-width: 960px;
+    margin: 30px auto;
 }
 
-
-/*new lines!!!!!!!! */
+.save-collect{
+    margin:0;
+}
 
 .collects-list{
     margin: 0 auto;
@@ -84,40 +85,64 @@
     width: 800px;
 }
 
-.collects-list > table > thead{
-    font-family: Avenir_Heavy;
-    width: 100%;
-}
-
-.collects-list > table{
-    font-family: Avenir_Light;
-    width: 100%;
-}
-
-.collects-list tr{
-    height: 50px;
-    vertical-align: center;
-}
-
-.collects-list a {
-    padding: 15px 0;
-    font-family: Avenir_Medium;
-}
-
-.collects-list a:hover {
-    cursor: pointer;
-}
-
-input[type="text"]{
-    font-family: Avenir_Medium;
-    padding: 10px;
-}
-
 button:disabled{
     background: gray;
     cursor: auto;
 }
-
-.collect-title{
-    font-size: 30px;
+.input-collect-title{
+    font-family: 'Avenir_Heavy';
+    font-size:16px;
+    color: #2C2B57;
+    padding: 10px;
+    box-sizing: border-box;
+    border:1px solid #E3E2E7;
+    margin-bottom: 8px;
+    cursor:pointer;
 }
+
+.input-collect-title:hover{
+    background: white url(images/pencil.svg);
+    background-position: 95% 50%;
+    background-repeat:no-repeat;
+
+}
+
+::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+    font-family: 'Avenir_Light';
+}
+::-moz-placeholder { /* Firefox 19+ */
+    font-family: 'Avenir_Light';
+}
+:-ms-input-placeholder { /* IE 10+ */
+    font-family: 'Avenir_Light';
+}
+:-moz-placeholder { /* Firefox 18- */
+    font-family: 'Avenir_Light';
+}
+
+.collects-list .show-collect{
+    padding: 20px 0;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    margin-bottom: 20px;
+}
+
+.collection-buttons{
+    display: block;
+}
+
+.collects-list .show-collect:hover .collection-buttons{
+    display: block;
+}
+
+.collection-buttons button{
+    border:0;
+    background-color: #2C2B57;
+    color:white;
+    width: 40px;
+    height: 40px;
+    cursor:pointer;
+    margin-left: 15px;
+}
+
