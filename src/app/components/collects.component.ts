@@ -70,7 +70,6 @@ export class CollectsComponent implements OnInit{
     timeRange: string;
 
     ngOnInit(){
-        console.log(this.translate.currentLang);
         this.fetchSavedCollects();
     }
 
@@ -109,7 +108,6 @@ export class CollectsComponent implements OnInit{
                     this.savedCollects[i].BeginDateString = datePipe.transform(this.savedCollects[i].BeginDate, 'short');
                     this.savedCollects[i].EndDateString = datePipe.transform(this.savedCollects[i].EndDate, 'short');
                 }
-                console.log(this.savedCollects);
             })
     }
 
@@ -138,7 +136,6 @@ export class CollectsComponent implements OnInit{
     deleteCollect(id: number){
         this.apiService.delete("OrgAdminView/Collect/" + id)
             .then(resp => {
-                console.log(resp);
                 this.fetchSavedCollects();
             })
             .catch(err => console.log(err));
