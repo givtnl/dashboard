@@ -28,6 +28,7 @@ export class CollectsComponent implements OnInit{
     savedCollects: Collection[] = [];
     collectName: string;
     collectTitle: string;
+    collectId: number;
     showCosts: boolean = false;
 
     //costs
@@ -109,7 +110,6 @@ export class CollectsComponent implements OnInit{
         this.apiService.getData("OrgAdminView/Collect")
             .then(resp => {
                 this.savedCollects = resp;
-                console.log(resp);
                 for(let i in this.savedCollects){
                     this.savedCollects[i].BeginDate = new Date(this.savedCollects[i].BeginDate + " UTC");
                     this.savedCollects[i].EndDate = new Date(this.savedCollects[i].EndDate + " UTC");
@@ -126,7 +126,8 @@ export class CollectsComponent implements OnInit{
         this.dateBegin = new Date(collect.BeginDate);
         this.dateEnd  = new Date(collect.EndDate);
         this.fetchCollect();
-        this.collectTitle = collect.Name;
+        this.collectId = collect.Id;
+        this.collectName = collect.Name;
     }
 
     saveCollect(){
@@ -147,6 +148,7 @@ export class CollectsComponent implements OnInit{
     deleteCollect(id: number){
         this.apiService.delete("OrgAdminView/Collect/" + id)
             .then(resp => {
+                this.isVisible = false;
                 this.fetchSavedCollects();
             })
             .catch(err => console.log(err));
@@ -163,8 +165,8 @@ export class CollectsComponent implements OnInit{
             this.apiService.getData("OrgAdminView/Givts/?"+params)
                 .then(resp =>
                 {
-                    this.givtServiceCost = "Givtservice kosten : € " + (this.isSafari ? (resp.TotalAmount * resp.GivtCostPerTransaction).toFixed(2) : (resp.TotalAmount * resp.GivtCostPerTransaction).toLocaleString(navigator.language,{minimumFractionDigits: 2}));
-                    this.paymentProviderTransactionCost = "Transactie kosten : € " + (this.isSafari ? (resp.TransactionCount * resp.PayProvCostPerTransaction).toFixed(2) : (resp.TransactionCount * resp.PayProvCostPerTransaction).toLocaleString(navigator.language,{minimumFractionDigits: 2}));
+                    this.givtServiceCost = "€ " + (this.isSafari ? (resp.TotalAmount * resp.GivtCostPerTransaction).toFixed(2) : (resp.TotalAmount * resp.GivtCostPerTransaction).toLocaleString(navigator.language,{minimumFractionDigits: 2,maximumFractionDigits:2}));
+                    this.paymentProviderTransactionCost = "€ " + (this.isSafari ? (resp.TransactionCount * resp.PayProvCostPerTransaction).toFixed(2) : (resp.TransactionCount * resp.PayProvCostPerTransaction).toLocaleString(navigator.language,{minimumFractionDigits: 2}));
                     let collectSum = resp.TotalAmount;
                     this.value = "€ " + (this.isSafari ? collectSum.toFixed(2) : collectSum.toLocaleString(navigator.language,{minimumFractionDigits: 2}));
                     //noinspection TypeScriptValidateTypes

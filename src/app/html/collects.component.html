@@ -8,40 +8,79 @@
     </section>
     <button (click)="fetchCollect()" class="search-collect">{{"Text_Collectes_FilterButton" | translate}}</button>
     </section>
-<hr class="collect-hr" id="test"/>
-<section class="section-collects">
-    <section *ngIf="isVisible" class="show-collect">
+<hr *ngIf="isVisible" class="collect-hr"/>
+<section class="section-collects" *ngIf="isVisible">
+    <section  class="show-collect">
         <time>
             <input placeholder="Collecte naam" type="text"  value="{{collectTitle}}" class="input-collect-title" [(ngModel)]="collectName"/>
             <span *ngIf="!sameDate" class="date">{{ dateBeginRange.string }} - {{ dateEndRange.string }}</span>
             <span *ngIf="sameDate" class="date">{{ dateBeginRange.string }}</span>
             <span class="time">{{ dateBeginRange.time }} - {{ dateEndRange.time  }}</span>
             <span *ngIf="showCosts">
-                <span>{{givtServiceCost}}</span>
-                <span>{{paymentProviderTransactionCost}}</span>
+
             </span>
         </time>
         <span>{{value}}</span>
-        <button class="costs" (click)="showCosts = !showCosts"><i class="fa fa-list-alt fa-lg" aria-hidden="true"></i></button>
-        <button (click)="saveCollect()" class="search-collect save-collect" [disabled]="!this.collectName || this.collectName.length == 0">Opslaan</button>
-    </section>
-</section>
-<hr *ngIf="isVisible" class="collect-hr"/>
-<h2>Opgeslagen collectes</h2>
-<h3 *ngIf="savedCollects.length == 0">Er zijn nog geen opgeslagen collectes.</h3>
-
-<section class="collects-list" *ngIf="savedCollects.length > 0">
-    <section *ngFor="let collect of savedCollects" class="show-collect">
-        <time>
-            <span class="date">{{collect.Name}}</span>
-            <span *ngIf="collect.BeginDateString == collect.EndDateString" class="date">{{collect.BeginDateString}}</span>
-            <span *ngIf="collect.BeginDateString != collect.EndDateString" class="date">{{collect.BeginDateString}} - {{collect.EndDateString}}</span>
-            <span class="time">{{collect.BeginTimeString}} - {{collect.EndTimeString}}</span>
-        </time>
         <div class="collection-buttons">
-            <button><i class="fa fa-pie-chart fa-lg" aria-hidden="true"></i></button>
-            <button (click)="selectCollect(collect)"><i class="fa fa-eye fa-lg" aria-hidden="true"></i></button>
-            <button (click)="deleteCollect(collect.Id)"><i class="fa fa-trash-o fa-lg" aria-hidden="true"></i></button>
+            <button class="icon" (click)="showCosts = !showCosts"><i class="fa fa-refresh fa-lg" aria-hidden="true"></i></button>
+            <button class="icon" (click)="deleteCollect(collectId)"><i class="fa fa-trash-o fa-lg" aria-hidden="true"></i></button>
+            <button (click)="saveCollect()" class="search-collect save-collect" [disabled]="!this.collectName || this.collectName.length == 0">Opslaan</button>
         </div>
+
     </section>
+    <div class="withholding-overview" *ngIf="showCosts">
+            <h2>Overzicht inhoudingen</h2>
+            <button class="close-button" (click)="showCosts = !showCosts"><i class="fa fa-close fa-2x" aria-hidden="true"></i></button>
+        <div class="withholding-stats">
+            <div class="stat-comp"><p class="collected">{{value}}</p></div>
+            <div class="stat-comp">
+                <table>
+                    <tr>
+                        <td><i class="fa fa-circle givt-green" aria-hidden="true"></i></td>
+                        <td>Givt service</td>
+                        <td>{{givtServiceCost}}</td>
+                        <td><div class="tooltip"><i class="fa fa-info-circle fa-lg " aria-hidden="true"></i>
+                            <span class="green tooltiptext">{{value}} maal <b>4,5% kosten per donatie</b>.<hr/><b>{{givtServiceCost}}</b></span>
+                        </div></td>
+                    </tr>
+                    <tr>
+                        <td><i class="fa fa-circle givt-blue" aria-hidden="true"></i></td>
+                        <td>Transactiekosten</td>
+                        <td>{{paymentProviderTransactionCost}}</td>
+                        <td><div class="tooltip"><i class="fa fa-info-circle fa-lg " aria-hidden="true"></i>
+                            <span class="blue tooltiptext">(...) aantal transacties maal <b>€ 0,08 transactiekosten</b>. (...) nieuwe gebruikers maal (<b>4x€ 0,125</b>) <b>mandaatkosten</b>.<hr/><b>{{paymentProviderTransactionCost}}</b></span>
+                        </div></td>
+                    </tr>
+                    <tr>
+                        <td><i class="fa fa-circle givt-orange" aria-hidden="true"></i></td>
+                        <td>Storneringskosten</td>
+                        <td>€ 0,00</td>
+                        <td><div class="tooltip"><i class="fa fa-info-circle fa-lg " aria-hidden="true"></i>
+                            <span class="orange tooltiptext">(..) storneringen maal € 0,18 type 1. (..) storneringen maal € 1,20 type 2. + (debet bedragen)<hr/>€ 0,00</span>
+                        </div></td>
+                    </tr>
+                </table>
+            </div>
+            <!--
+            <span>{{givtServiceCost}}</span>
+            <span>{{paymentProviderTransactionCost}}</span>-->
+        </div>
+    </div>
+</section>
+<section class="saved-collects">
+    <h2>Opgeslagen collectes</h2>
+    <h3 *ngIf="savedCollects.length == 0">Er zijn nog geen opgeslagen collectes.</h3>
+
+    <section class="collects-list" *ngIf="savedCollects.length > 0">
+        <section *ngFor="let collect of savedCollects" class="show-collect" (click)="selectCollect(collect)">
+            <time>
+                <span class="date">{{collect.Name}}</span>
+                <span *ngIf="collect.BeginDateString == collect.EndDateString" class="date">{{collect.BeginDateString}}</span>
+                <span *ngIf="collect.BeginDateString != collect.EndDateString" class="date">{{collect.BeginDateString}} - {{collect.EndDateString}}</span>
+                <span class="time">{{collect.BeginTimeString}} - {{collect.EndTimeString}}</span>
+            </time>
+                <div class="arrow-right"></div>
+        </section>
+</section>
+
 </section>
