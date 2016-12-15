@@ -23,6 +23,10 @@
     src: url('./fonts/AvenirLTStd-Medium.otf');
 }
 
+html,body,.container{
+    height: 100%;
+}
+
 body{
     background: #F5F5F5;
     margin: 0;
@@ -62,5 +66,11 @@ h1 {
 
 .fat-emphasis{
     font-size:40px;
+}
+
+my-collects{
+    display: flex;
+    flex-flow: column;
+    height: 100%;
 }
 
