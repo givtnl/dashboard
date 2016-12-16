@@ -32,35 +32,114 @@
             <h2>Overzicht inhoudingen</h2>
             <button class="close-button" (click)="showCosts = !showCosts"><i class="fa fa-close fa-2x" aria-hidden="true"></i></button>
         <div class="withholding-stats">
-            <div class="stat-comp"><p class="collected">{{value}}</p></div>
             <div class="stat-comp">
-                <table>
-                    <tr>
-                        <td><i class="fa fa-circle givt-green" aria-hidden="true"></i></td>
-                        <td>Givt service</td>
-                        <td>{{givtServiceCost}}</td>
-                        <td><div class="tooltip"><i class="fa fa-info-circle fa-lg " aria-hidden="true"></i>
-                            <span class="green tooltiptext">{{value}} maal <b>4,5% kosten per donatie</b>.<hr/><b>{{givtServiceCost}}</b></span>
-                        </div></td>
-                    </tr>
-                    <tr>
+                <table class="table-stats" border="0">
+
+                    <tr (click)="selectRow(1)" class="row" [class.active-row]="1 == activeRow">
                         <td><i class="fa fa-circle givt-blue" aria-hidden="true"></i></td>
                         <td>Transactiekosten</td>
                         <td>{{paymentProviderTransactionCost}}</td>
-                        <td><div class="tooltip"><i class="fa fa-info-circle fa-lg " aria-hidden="true"></i>
+                        <!--<td><div class="tooltip"><i class="fa fa-info-circle fa-lg " aria-hidden="true"></i>
                             <span class="blue tooltiptext">(...) aantal transacties maal <b>€ 0,08 transactiekosten</b>. (...) nieuwe gebruikers maal (<b>4x€ 0,125</b>) <b>mandaatkosten</b>.<hr/><b>{{paymentProviderTransactionCost}}</b></span>
-                        </div></td>
+                        </div></td>-->
                     </tr>
-                    <tr>
+                    <tr (click)="selectRow(2)" class="row" [class.active-row]="2 == activeRow">
                         <td><i class="fa fa-circle givt-orange" aria-hidden="true"></i></td>
                         <td>Storneringskosten</td>
                         <td>€ 0,00</td>
+                        <!--
                         <td><div class="tooltip"><i class="fa fa-info-circle fa-lg " aria-hidden="true"></i>
                             <span class="orange tooltiptext">(..) storneringen maal € 0,18 type 1. (..) storneringen maal € 1,20 type 2. + (debet bedragen)<hr/>€ 0,00</span>
-                        </div></td>
+                        </div></td>-->
+                    </tr>
+                    <tr (click)="selectRow(3)" class="row" [class.active-row]="3 == activeRow">
+                        <td><i class="fa fa-circle givt-green" aria-hidden="true"></i></td>
+                        <td>Givt service</td>
+                        <td>{{givtServiceCost}}</td>
+                        <!-- <td><div class="tooltip"><i class="fa fa-info-circle fa-lg " aria-hidden="true"></i>
+                             <span class="green tooltiptext">{{value}} maal <b>4,5% kosten per donatie</b>.<hr/><b>{{givtServiceCost}}</b></span>
+                         </div></td>-->
                     </tr>
                 </table>
             </div>
+            <div class="stat-calc" *ngIf="1 == activeRow">
+                <table>
+                    <tr>
+                        <td>Mandaatkosten</td>
+                        <td class="column-spacing-30"></td>
+                        <td>€ 4</td>
+                        <td class="column-spacing-40"></td>
+                        <td>32 nieuwe gebruikers (1e 4x 0,125)</td>
+                    </tr>
+                    <tr>
+                        <td>Transactiekosten</td>
+                        <td class="column-spacing-30"></td>
+                        <td>€ 6</td>
+                        <td class="column-spacing-40"></td>
+                        <td>75 transacties x 0,08</td>
+                    </tr>
+                    <tr>
+                        <td>Totaal</td>
+                        <td class="column-spacing-30"></td>
+                        <td>€ 10</td>
+                        <td class="column-spacing-40"></td>
+                        <td class="more-info tooltip">meer info
+                            <span class="green tooltiptext">
+                                Hier kunnen we meer informatie geven over de kosten.
+                            </span>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="stat-calc" *ngIf="2 == activeRow">
+                <table>
+                    <tr>
+                        <td>Storneringskosten type 1</td>
+                        <td class="column-spacing-30"></td>
+                        <td>€ 3,96</td>
+                        <td class="column-spacing-40"></td>
+                        <td>22 voor executiedatum x e 0,18</td>
+                    </tr>
+                    <tr>
+                        <td>Storneringskosten type 2</td>
+                        <td class="column-spacing-30"></td>
+                        <td>€ 16,04</td>
+                        <td class="column-spacing-40"></td>
+                        <td class="big-cell">3 na executiedatum x 1,20 = 3,60x 0,08<br/>3 van totaal € 12,44</td>
+                    </tr>
+                    <tr>
+                        <td>Totaal</td>
+                        <td class="column-spacing-30"></td>
+                        <td>€ 20</td>
+                        <td class="column-spacing-40"></td>
+                        <td class="more-info tooltip">meer info
+                            <span class="green tooltiptext">
+                                Hier kunnen we meer informatie geven over de kosten.
+                            </span>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+
+            <div class="stat-calc" *ngIf="3 == activeRow">
+                <table>
+                    <tr>
+                        <td>Givt service fee</td>
+                        <td class="column-spacing-30"></td>
+                        <td>€ 15</td>
+                        <td class="column-spacing-40"></td>
+                        <td class="more-info tooltip">meer info
+                            <span class="green tooltiptext">
+                                Hier kunnen we meer informatie geven over de kosten.
+                            </span>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+
             <!--
             <span>{{givtServiceCost}}</span>
             <span>{{paymentProviderTransactionCost}}</span>-->

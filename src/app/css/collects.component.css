@@ -214,25 +214,94 @@ button:disabled{
 }
 
 .withholding-stats .stat-comp{
-    width: 360px;
+    width: 310px;
     text-align: center;
 }
 
 .withholding-stats .stat-comp table{
     text-align: left;
     width:100%;
+    border-spacing: 0;
 }
 
 .withholding-stats .stat-comp table tr td{
-    padding:8px;
+    height: 40px;
+    vertical-align: middle;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
 }
+
+.table-stats tr:hover td, .active-row td{
+    background-color: #e9e8ec;
+    font-family:'Avenir_Heavy';
+}
+
+.table-stats .row:after{
+    border-bottom: 20px solid transparent;
+    border-left: 15px solid transparent;
+    border-top: 20px solid transparent;
+    height: 0;
+    width: 0;
+    float:left;
+    content: '';
+}
+
+.table-stats .row:hover:after,.table-stats .active-row:after{
+    border-left-color: #e9e8ec;
+}
+
+.withholding-stats .stat-comp table tr td:nth-child(1){
+    width: 45px;
+    text-align: center;
+    box-sizing: border-box;
+}
+
 .withholding-stats .stat-comp table tr td:nth-child(3){
+    width: 80px;
     text-align: right;
 }
 
+.withholding-stats .stat-calc{
+    flex: 1 0 auto;
+    /*background-color: fuchsia;*/
+    padding: 15px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    opacity: 1;
+    font-family: 'Avenir_Roman';
+    font-size: 16px;
+}
+
+.stat-calc table{
+    border-spacing: 0;
+}
+
+.stat-calc tr td{
+    padding:5px 0;
+    box-sizing: border-box;
+}
+
+.stat-calc tr:nth-child(2) td:nth-child(1),.stat-calc tr:nth-child(2) td:nth-child(2),.stat-calc tr:nth-child(2) td:nth-child(3){
+    border-bottom: 2px solid #2C2B57;
+}
+
+.stat-calc td:nth-child(5){
+    font-size:14px;
+}
+
+.stat-calc tr:last-child{
+    font-family: 'Avenir_Heavy';
+}
+
+.column-spacing-30{
+    width: 30px;
+}
+
+.column-spacing-40{
+    width: 40px;
+}
 
 .withholding-stats i{
     color:#2C2B57;
@@ -275,8 +344,8 @@ button:disabled{
     padding: 5px 0;
     position: absolute;
     z-index: 1;
-    top: -5px;
-    left: 150%;
+    top: 0;
+    left: 120%;
 }
 
 .tooltip .tooltiptext::after {
@@ -320,3 +389,11 @@ button:disabled{
     border-color: transparent #F4B03c transparent transparent;
 }
 
+.more-info{
+    color:#06B26B;
+    cursor: pointer;
+}
+
+.stat-calc tr .big-cell{
+    padding:0;
+}

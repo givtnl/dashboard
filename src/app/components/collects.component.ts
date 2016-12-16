@@ -31,6 +31,8 @@ export class CollectsComponent implements OnInit{
     collectId: number;
     showCosts: boolean = false;
 
+    activeRow: number = 1;
+
     //costs
     givtServiceCost: string;
     paymentProviderTransactionCost: string;
@@ -103,6 +105,10 @@ export class CollectsComponent implements OnInit{
         this.dateBegin = new Date();
         this.dateEnd = new Date();
         this.dateBegin.setHours(6,0,0);
+    }
+
+    selectRow(row){
+        this.activeRow = row;
     }
 
     fetchSavedCollects(){
