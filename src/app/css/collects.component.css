@@ -186,7 +186,8 @@ button:disabled{
     font-size:16px;
     text-align: left;
     color: #2C2B57;
-    padding: 25px 0 72px 0;
+    min-height:210px;
+    padding: 25px 0;
 }
 
 .withholding-overview h2{
