@@ -236,6 +236,7 @@ button:disabled{
 .table-stats tr:hover td, .active-row td{
     background-color: #e9e8ec;
     font-family:'Avenir_Heavy';
+    cursor: pointer;
 }
 
 .table-stats .row:after{
@@ -246,6 +247,8 @@ button:disabled{
     width: 0;
     float:left;
     content: '';
+    cursor: pointer;
+
 }
 
 .table-stats .row:hover:after,.table-stats .active-row:after{
@@ -397,4 +400,12 @@ button:disabled{
 
 .stat-calc tr .big-cell{
     padding:0;
+}
+
+.delete-btn svg{
+    margin-top:3px;
+}
+
+.collection-buttons .fill-green{
+    background-color: #41c98e;
 }

@@ -22,8 +22,24 @@
         </time>
         <span>{{value}}</span>
         <div class="collection-buttons">
-            <button class="icon" (click)="showCosts = !showCosts"><i class="fa fa-refresh fa-lg" aria-hidden="true"></i></button>
-            <button class="icon" (click)="deleteCollect(collectId)"><i class="fa fa-trash-o fa-lg" aria-hidden="true"></i></button>
+            <button class="icon" [class.fill-green]="showCosts == true" (click)="showCosts = !showCosts">
+
+                <svg width="23px" height="23px" viewBox="8 8 23 23" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                    <!-- Generator: Sketch 40.3 (33839) - http://www.bohemiancoding.com/sketch -->
+                    <desc>Created with Sketch.</desc>
+                    <defs></defs>
+                    <path  d="M9.00761688,21.0025814 C9.53265354,26.5888828 14.2352667,30.9603199 19.9588837,30.9603199 C22.6363805,30.9603199 25.090446,30.0036964 26.9979399,28.4135896 L19.5869317,21.0025814 L9.00761688,21.0025814 Z M9,19.0025814 C9.45855668,13.6859391 13.6990295,9.4505879 19.0179464,9 L19.0179464,19.0018685 C19.0177045,19.0021045 19.0174628,19.0023406 19.0172212,19.0025769 L9,19.0025814 Z M28.4121534,26.9993761 C30.0022602,25.0918822 30.9588837,22.6378167 30.9588837,19.9603199 C30.9588837,14.2424422 26.5962091,9.54352172 21.0179464,9.01064508 L21.0179464,19.5461063 C21.0179464,19.5653854 21.0174008,19.5845372 21.0163242,19.6035469 L28.4121534,26.9993761 Z" id="Combined-Shape" stroke="none" fill="#FFFFFF " fill-rule="evenodd"></path>
+                </svg>
+            </button>
+            <button class="icon delete-btn" (click)="deleteCollect(collectId)">
+                <svg  width="21px" height="23px" viewBox="9 9 21 23" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                    <!-- Generator: Sketch 40.3 (33839) - http://www.bohemiancoding.com/sketch -->
+                    <desc>Created with Sketch.</desc>
+                    <defs></defs>
+                    <path d="M10.1148951,11 C10.1148951,11 9.59091014,11 9.59090909,12 C9.59090909,13 10.1148951,13 10.1148951,13 L28.9305595,13 C28.9305595,13 29.4545455,13 29.4545455,12 C29.4545455,11 28.9305595,11 28.9305595,11 L10.1148951,11 L10.1148951,11 Z M10.6089257,15 L28.381653,15 L26.2907439,31 L12.6998348,31 L10.6089257,15 Z" id="editor-trash-delete-recycle-bin-glyph" stroke="none" fill="#FFFFFF " fill-rule="evenodd"></path>
+                    <path d="M22,11.5 C22,10.1192881 20.8807119,9 19.5,9 C18.1192881,9 17,10.1192881 17,11.5 C17,12.8807119 22,12.8807119 22,11.5 Z" id="Oval-5" stroke="none" fill="#FFFFFF " fill-rule="evenodd"></path>
+                </svg>
+            </button>
             <button (click)="saveCollect()" class="search-collect save-collect" [disabled]="!this.collectName || this.collectName.length == 0">Opslaan</button>
         </div>
 
