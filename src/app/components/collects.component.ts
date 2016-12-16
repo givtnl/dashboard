@@ -31,6 +31,10 @@ export class CollectsComponent implements OnInit{
     collectId: number;
     showCosts: boolean = false;
 
+    transactionCount: string;
+    costPerTransaction: number;
+    mandateCount: number;
+    costPerMandate: number;
     activeRow: number = 1;
 
     //costs
@@ -171,6 +175,13 @@ export class CollectsComponent implements OnInit{
             this.apiService.getData("OrgAdminView/Givts/?"+params)
                 .then(resp =>
                 {
+                    console.log(resp);
+                    this.transactionCount = resp.TransactionCount;
+                    this.costPerTransaction = resp.PayProvCostPerTransaction;
+
+                    this.mandateCount = resp.PayProvMandateCost.MandateCostCount;
+                    this.costPerMandate = resp.PayProvMandateCost.MandateCostAmount;
+
                     this.givtServiceCost = "€ " + (this.isSafari ? (resp.TotalAmount * resp.GivtCostPerTransaction).toFixed(2) : (resp.TotalAmount * resp.GivtCostPerTransaction).toLocaleString(navigator.language,{minimumFractionDigits: 2,maximumFractionDigits:2}));
                     this.paymentProviderTransactionCost = "€ " + (this.isSafari ? (resp.TransactionCount * resp.PayProvCostPerTransaction).toFixed(2) : (resp.TransactionCount * resp.PayProvCostPerTransaction).toLocaleString(navigator.language,{minimumFractionDigits: 2}));
                     let collectSum = resp.TotalAmount;
