@@ -7,6 +7,12 @@
     display: flex;
 }
 
+.collection-buttons > span{
+    margin-right:14px;
+    align-self: center;
+    font-size: 26px;
+}
+
 .collection-buttons button{
     display: inline-block;
     background-color: #2C2B57;
@@ -187,7 +193,7 @@ button:disabled{
     text-align: left;
     color: #2C2B57;
     min-height:210px;
-    padding: 25px 0;
+   padding-top: 10px;
 }
 
 .withholding-overview h2{
@@ -279,14 +285,15 @@ button:disabled{
 
 .withholding-stats .stat-calc{
     flex: 1 0 auto;
-    /*background-color: fuchsia;*/
-    padding: 15px;
+    align-self: flex-start;
+    padding: 0 15px;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     opacity: 1;
     font-family: 'Avenir_Roman';
     font-size: 16px;
+    margin-top: 4px;
 }
 
 .stat-calc table{
