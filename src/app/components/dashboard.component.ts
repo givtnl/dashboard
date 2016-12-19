@@ -108,7 +108,7 @@ export class DashboardComponent implements OnInit{
 
         let dateBegin = month + "-01-" + year;
         let dateEnd = nextMonth + "-01-" + secondYear;
-        let params = "DateBegin=" + dateBegin + "&DateEnd=" + dateEnd + "&Status=" + "0";
+        let params = "DateBegin=" + dateBegin + "&DateEnd=" + dateEnd;
 
         this.apiService.getData("OrgAdminView/Users/?"+params)
             .then(resp =>
@@ -143,11 +143,12 @@ export class DashboardComponent implements OnInit{
 
         let dateBegin = month + "-01-" + year;
         let dateEnd = nextMonth + "-01-" + secondYear;
-        let params = "DateBegin=" + dateBegin + "&DateEnd=" + dateEnd + "&Status=" + "0";
+        let params = "DateBegin=" + dateBegin + "&DateEnd=" + dateEnd;
 
         this.apiService.getData("OrgAdminView/Givts/?"+params)
             .then(resp =>
             {
+                console.log(resp);
                 let collectSum = resp.TotalAmount;
                 this.thisMonthCard.value = "€ " + "<span class='fat-emphasis'>" + (this.isSafari ? collectSum.toFixed(2) : collectSum.toLocaleString(navigator.language,{minimumFractionDigits: 2})) + "</span>";
                 this.translate.get("Text_ThisMonth").subscribe(value => { this.thisMonthCard.title = value;});

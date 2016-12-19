@@ -64,7 +64,7 @@
                     <tr (click)="selectRow(1)" class="row" [class.active-row]="1 == activeRow">
                         <td><i class="fa fa-circle givt-blue" aria-hidden="true"></i></td>
                         <td>{{"Text_Transaction_Fee" | translate}}</td>
-                        <td>€ {{mandateCount * costPerMandate + transactionCount * costPerTransaction}}</td>
+                        <td>{{transactionCosts}}</td>
                         <!--<td><div class="tooltip"><i class="fa fa-info-circle fa-lg " aria-hidden="true"></i>
                             <span class="blue tooltiptext">(...) aantal transacties maal <b>€ 0,08 transactiekosten</b>. (...) nieuwe gebruikers maal (<b>4x€ 0,125</b>) <b>mandaatkosten</b>.<hr/><b>{{paymentProviderTransactionCost}}</b></span>
                         </div></td>-->
@@ -72,7 +72,7 @@
                     <tr (click)="selectRow(2)" class="row" [class.active-row]="2 == activeRow">
                         <td><i class="fa fa-circle givt-orange" aria-hidden="true"></i></td>
                         <td>{{"Text_Stornering_Fee" | translate}}</td>
-                        <td>€ 0,00</td>
+                        <td>{{totalRTransactionCost}}</td>
                         <!--
                         <td><div class="tooltip"><i class="fa fa-info-circle fa-lg " aria-hidden="true"></i>
                             <span class="orange tooltiptext">(..) storneringen maal € 0,18 type 1. (..) storneringen maal € 1,20 type 2. + (debet bedragen)<hr/>€ 0,00</span>
@@ -93,21 +93,21 @@
                     <tr>
                         <td>{{ "Text_Transaction_Fee_Mandate" | translate}}</td>
                         <td class="column-spacing-30"></td>
-                        <td>€ {{mandateCount * costPerMandate}}</td>
+                        <td>{{mandateCosts}}</td>
                         <td class="column-spacing-40"></td>
                         <td>{{ Text_Info_Mandate }}</td>
                     </tr>
                     <tr>
                         <td>{{"Text_Transaction_Fee_Transaction" | translate }}</td>
                         <td class="column-spacing-30"></td>
-                        <td>€ {{transactionCount * costPerTransaction}}</td>
+                        <td>{{transactionCost}}</td>
                         <td class="column-spacing-40"></td>
                         <td>{{Text_Info_Transaction}}</td>
                     </tr>
                     <tr>
                         <td>{{"Text_Fee_Total" | translate}}</td>
                         <td class="column-spacing-30"></td>
-                        <td>€ {{mandateCount * costPerMandate + transactionCount * costPerTransaction}}</td>
+                        <td>{{transactionCosts}}</td>
                         <td class="column-spacing-40"></td>
                         <td class="more-info tooltip">{{"Text_Deduction_InfoButton" | translate}}
                             <span class="green tooltiptext">
@@ -123,21 +123,21 @@
                     <tr>
                         <td>{{"Text_Deduction_Type1" | translate}}</td>
                         <td class="column-spacing-30"></td>
-                        <td>€ 0</td>
+                        <td>{{RTransactionCostType1}}</td>
                         <td class="column-spacing-40"></td>
-                        <td>{{Text_Info_Type1}}</td>
+                        <td>{{Text_Info_Type1}} <br />{{Total_Stornation}}</td>
                     </tr>
                     <tr>
                         <td>{{"Text_Deduction_Type2" | translate}}</td>
                         <td class="column-spacing-30"></td>
-                        <td>€ 0</td>
+                        <td>{{RTransactionCostType2}}</td>
                         <td class="column-spacing-40"></td>
-                        <td class="big-cell">{{Text_Info_Type2}}</td>
+                        <td class="big-cell">{{Text_Info_Type2}}<br />{{Total_Stornation2}}</td>
                     </tr>
                     <tr>
                         <td>{{"Text_Fee_Total" | translate}}</td>
                         <td class="column-spacing-30"></td>
-                        <td>€ 0</td>
+                        <td>{{totalRTransactionCost}}</td>
                         <td class="column-spacing-40"></td>
                         <td class="more-info tooltip">{{"Text_Deduction_InfoButton" | translate}}
                             <span class="green tooltiptext">
