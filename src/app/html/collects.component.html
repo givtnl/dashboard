@@ -12,7 +12,7 @@
 <section class="section-collects" *ngIf="isVisible">
     <section  class="show-collect">
         <time>
-            <input placeholder="Collecte naam" type="text"  value="{{collectTitle}}" class="input-collect-title" [(ngModel)]="collectName"/>
+            <input [attr.placeholder]="'Placeholder_Offering_Name' | translate" type="text"  value="{{collectTitle}}" class="input-collect-title" [(ngModel)]="collectName"/>
             <span *ngIf="!sameDate" class="date">{{ dateBeginRange.string }} - {{ dateEndRange.string }}</span>
             <span *ngIf="sameDate" class="date">{{ dateBeginRange.string }}</span>
             <span class="time">{{ dateBeginRange.time }} - {{ dateEndRange.time  }}</span>
@@ -40,14 +40,14 @@
                     <path d="M22,11.5 C22,10.1192881 20.8807119,9 19.5,9 C18.1192881,9 17,10.1192881 17,11.5 C17,12.8807119 22,12.8807119 22,11.5 Z" id="Oval-5" stroke="none" fill="#FFFFFF " fill-rule="evenodd"></path>
                 </svg>
             </button>
-            <button (click)="saveCollect()" class="search-collect save-collect" [disabled]="!this.collectName || this.collectName.length == 0">Opslaan</button>
+            <button (click)="saveCollect()" class="search-collect save-collect" [disabled]="!this.collectName || this.collectName.length == 0">{{"Text_Collectes_SaveButton" | translate}}</button>
         </div>
 
     </section>
     <div class="withholding-overview" *ngIf="showCosts">
-            <h2>Overzicht inhoudingen</h2>
+            <h2>{{"Text_OverviewDeduction" | translate}}</h2>
             <button class="close-button" (click)="showCosts = !showCosts">
-                Sluiten <svg width="19px" height="19px" viewBox="944 525 19 19" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                {{"Text_Deduction_CloseButton" | translate}} <svg width="19px" height="19px" viewBox="944 525 19 19" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                     <!-- Generator: Sketch 40.3 (33839) - http://www.bohemiancoding.com/sketch -->
                     <desc>Created with Sketch.</desc>
                     <defs></defs>
@@ -62,7 +62,7 @@
 
                     <tr (click)="selectRow(1)" class="row" [class.active-row]="1 == activeRow">
                         <td><i class="fa fa-circle givt-blue" aria-hidden="true"></i></td>
-                        <td>Transactiekosten</td>
+                        <td>{{"Text_Transaction_Fee" | translate}}</td>
                         <td>€ {{mandateCount * costPerMandate + transactionCount * costPerTransaction}}</td>
                         <!--<td><div class="tooltip"><i class="fa fa-info-circle fa-lg " aria-hidden="true"></i>
                             <span class="blue tooltiptext">(...) aantal transacties maal <b>€ 0,08 transactiekosten</b>. (...) nieuwe gebruikers maal (<b>4x€ 0,125</b>) <b>mandaatkosten</b>.<hr/><b>{{paymentProviderTransactionCost}}</b></span>
@@ -70,7 +70,7 @@
                     </tr>
                     <tr (click)="selectRow(2)" class="row" [class.active-row]="2 == activeRow">
                         <td><i class="fa fa-circle givt-orange" aria-hidden="true"></i></td>
-                        <td>Storneringskosten</td>
+                        <td>{{"Text_Stornering_Fee" | translate}}</td>
                         <td>€ 0,00</td>
                         <!--
                         <td><div class="tooltip"><i class="fa fa-info-circle fa-lg " aria-hidden="true"></i>
@@ -79,7 +79,7 @@
                     </tr>
                     <tr (click)="selectRow(3)" class="row" [class.active-row]="3 == activeRow">
                         <td><i class="fa fa-circle givt-green" aria-hidden="true"></i></td>
-                        <td>Givt service</td>
+                        <td>{{"Text_Givt_Fee" | translate}}</td>
                         <td>{{givtServiceCost}}</td>
                         <!-- <td><div class="tooltip"><i class="fa fa-info-circle fa-lg " aria-hidden="true"></i>
                              <span class="green tooltiptext">{{value}} maal <b>4,5% kosten per donatie</b>.<hr/><b>{{givtServiceCost}}</b></span>
@@ -90,27 +90,27 @@
             <div class="stat-calc" *ngIf="1 == activeRow">
                 <table>
                     <tr>
-                        <td>Mandaatkosten</td>
+                        <td>{{ "Text_Transaction_Fee_Mandate" | translate}}</td>
                         <td class="column-spacing-30"></td>
                         <td>€ {{mandateCount * costPerMandate}}</td>
                         <td class="column-spacing-40"></td>
-                        <td>{{mandateCount}} nieuwe gebruikers (1e 4x {{costPerMandate}})</td>
+                        <td>{{ Text_Info_Mandate }}</td>
                     </tr>
                     <tr>
-                        <td>Transactiekosten</td>
+                        <td>{{"Text_Transaction_Fee_Transaction" | translate }}</td>
                         <td class="column-spacing-30"></td>
                         <td>€ {{transactionCount * costPerTransaction}}</td>
                         <td class="column-spacing-40"></td>
-                        <td>{{transactionCount}} transacties x {{costPerTransaction}}</td>
+                        <td>{{Text_Info_Transaction}}</td>
                     </tr>
                     <tr>
-                        <td>Totaal</td>
+                        <td>{{"Text_Fee_Total" | translate}}</td>
                         <td class="column-spacing-30"></td>
                         <td>€ {{mandateCount * costPerMandate + transactionCount * costPerTransaction}}</td>
                         <td class="column-spacing-40"></td>
-                        <td class="more-info tooltip">meer info
+                        <td class="more-info tooltip">{{"Text_Deduction_InfoButton" | translate}}
                             <span class="green tooltiptext">
-                                Hier kunnen we meer informatie geven over de kosten.
+                                {{"Text_Deduction_InfoButton" | translate }}
                             </span>
                         </td>
                     </tr>
@@ -120,27 +120,27 @@
             <div class="stat-calc" *ngIf="2 == activeRow">
                 <table>
                     <tr>
-                        <td>Storneringskosten type 1</td>
+                        <td>{{"Text_Deduction_Type1" | translate}}</td>
                         <td class="column-spacing-30"></td>
-                        <td>€ 3,96</td>
+                        <td>€ 0</td>
                         <td class="column-spacing-40"></td>
-                        <td>22 voor executiedatum x e 0,18</td>
+                        <td>{{Text_Info_Type1}}</td>
                     </tr>
                     <tr>
-                        <td>Storneringskosten type 2</td>
+                        <td>{{"Text_Deduction_Type2" | translate}}</td>
                         <td class="column-spacing-30"></td>
-                        <td>€ 16,04</td>
+                        <td>€ 0</td>
                         <td class="column-spacing-40"></td>
-                        <td class="big-cell">3 na executiedatum x 1,20 = 3,60x 0,08<br/>3 van totaal € 12,44</td>
+                        <td class="big-cell">{{Text_Info_Type2}}</td>
                     </tr>
                     <tr>
-                        <td>Totaal</td>
+                        <td>{{"Text_Fee_Total" | translate}}</td>
                         <td class="column-spacing-30"></td>
-                        <td>€ 20</td>
+                        <td>€ 0</td>
                         <td class="column-spacing-40"></td>
-                        <td class="more-info tooltip">meer info
+                        <td class="more-info tooltip">{{"Text_Deduction_InfoButton" | translate}}
                             <span class="green tooltiptext">
-                                Hier kunnen we meer informatie geven over de kosten.
+                                {{"Text_Deduction_InfoButton" | translate }}
                             </span>
                         </td>
                     </tr>
@@ -155,9 +155,9 @@
                         <td class="column-spacing-30"></td>
                         <td>{{givtServiceCost}}</td>
                         <td class="column-spacing-40"></td>
-                        <td class="more-info tooltip">meer info
+                        <td class="more-info tooltip">{{"Text_Deduction_InfoButton" | translate }}
                             <span class="green tooltiptext">
-                                Hier kunnen we meer informatie geven over de kosten.
+                                {{"Text_Deduction_InfoButton" | translate }}
                             </span>
                         </td>
                     </tr>
@@ -172,8 +172,8 @@
     </div>
 </section>
 <section class="saved-collects">
-    <h2>Opgeslagen collectes</h2>
-    <h3 *ngIf="savedCollects.length == 0">Er zijn nog geen opgeslagen collectes.</h3>
+    <h2>{{"Text_Saved_collectes" | translate}}</h2>
+    <h3 *ngIf="savedCollects.length == 0">{{"Text_NoSavedCollectes" | translate}}</h3>
 
     <section class="collects-list" *ngIf="savedCollects.length > 0">
         <section *ngFor="let collect of savedCollects" class="show-collect" (click)="selectCollect(collect)">

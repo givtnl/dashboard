@@ -37,6 +37,11 @@ export class CollectsComponent implements OnInit{
     costPerMandate: number;
     activeRow: number = 1;
 
+    Text_Info_Mandate: string;
+    Text_Info_Transaction: string;
+    Text_Info_Type1: string;
+    Text_Info_Type2: string;
+
     //costs
     givtServiceCost: string;
     paymentProviderTransactionCost: string;
@@ -196,6 +201,23 @@ export class CollectsComponent implements OnInit{
                     this.dateEndRange.string = datePipe.transform(this.dateEndRange, 'd MMMM y');
                     this.dateBeginRange.time = datePipe.transform(this.dateBegin, 'shortTime');
                     this.dateEndRange.time = datePipe.transform(this.dateEnd,'shortTime');
+
+                    this.translate.get('Text_Info_Mandate', {0: this.mandateCount,1: this.costPerMandate}).subscribe((res: string) => {
+                        this.Text_Info_Mandate = res;
+                    });
+
+                    this.translate.get('Text_Info_Transaction', {0: this.transactionCount,1: this.costPerTransaction}).subscribe((res: string) => {
+                        this.Text_Info_Transaction = res;
+                    });
+
+                    this.translate.get('Text_Info_Type1', {0: 0,1: 0}).subscribe((res: string) => {
+                        this.Text_Info_Type1 = res;
+                    });
+
+                    this.translate.get('Text_Info_Type2', {0: 0,1: 0,2:0}).subscribe((res: string) => {
+                        this.Text_Info_Type2 = res;
+                    });
+
                     this.isVisible = true;
                 });
         }
