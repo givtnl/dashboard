@@ -31,21 +31,23 @@ body{
     background: #F5F5F5;
     margin: 0;
     padding: 0;
-    overflow: scroll;
+    overflow-y: scroll;
 }
 
 h1 {
     font-weight: normal;
 }
 
-.start-logo{
-    display: block;
-    max-width: 300px;
-    margin: 200px auto;
+.start-logo-wrapper{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding-top:200px;
+    box-sizing: border-box;
 }
 
-.startscreen-wrapper{
-    width: 100%;
+.start-logo{
+    width: 350px;
 }
 
 .date-picker-input{
@@ -62,6 +64,10 @@ h1 {
     font-size:18px;
     color:#2C2B57;
     cursor:pointer;
+}
+
+.date-picker-input:focus{
+    background-image: url(images/calendar-green.svg);
 }
 
 .fat-emphasis{

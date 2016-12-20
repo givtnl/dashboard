@@ -31,6 +31,8 @@ export class CollectsComponent implements OnInit{
     collectId: number = null;
     showCosts: boolean = false;
 
+    SearchButtonGreen: boolean = false;
+
     transactionCount: string;
     costPerTransaction: number;
     mandateCount: number;
@@ -152,6 +154,10 @@ export class CollectsComponent implements OnInit{
     }
 
     selectCollect(collect: Collection){
+        this.SearchButtonGreen = false;
+
+        this.collectId = null;
+
         this.dateBegin = new Date(collect.BeginDate);
         this.dateEnd  = new Date(collect.EndDate);
         this.fetchCollect();
@@ -161,6 +167,7 @@ export class CollectsComponent implements OnInit{
     }
 
     saveCollect(){
+        this.SearchButtonGreen = false;
         let newCollect = new Collection();
         newCollect.BeginDate = this.dateBegin;
         newCollect.EndDate = this.dateEnd;
@@ -178,6 +185,7 @@ export class CollectsComponent implements OnInit{
     }
 
     deleteCollect(id: number){
+        this.SearchButtonGreen = false;
         if(id == undefined) return;
         this.apiService.delete("OrgAdminView/Collect/" + id)
             .then(resp => {

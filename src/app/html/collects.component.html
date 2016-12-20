@@ -6,7 +6,7 @@
         <p-calendar readonlyInput="readonlyInput" inputStyleClass="date-picker-input" [(ngModel)]="dateBegin" (ngModelChange)="onDateBeginChange($event)" showTime="showTime" dateFormat="dd/mm/yy" [locale]="locale"></p-calendar><span class="till">{{"Text_TotEnMet" | translate}}</span>
         <p-calendar readonlyInput="readonlyInput" inputStyleClass="date-picker-input" [(ngModel)]="dateEnd"  (ngModelChange)="onDateEndChange($event)" [(minDate)]="dateBegin" showTime="showTime" dateFormat="dd/mm/yy" [locale]="locale"></p-calendar>
     </section>
-    <button (click)="fetchCollect()" class="search-collect">{{"Text_Collectes_FilterButton" | translate}}</button>
+    <button [class.green-button]="SearchButtonGreen" (click)="fetchCollect();SearchButtonGreen = true;" class="search-collect">{{"Text_Collectes_FilterButton" | translate}}</button>
     </section>
 <hr *ngIf="isVisible" class="collect-hr"/>
 <section class="section-collects" *ngIf="isVisible">
@@ -60,7 +60,7 @@
                     <path d="M22,11.5 C22,10.1192881 20.8807119,9 19.5,9 C18.1192881,9 17,10.1192881 17,11.5 C17,12.8807119 22,12.8807119 22,11.5 Z" id="Oval-5" stroke="none" fill="#FFFFFF " fill-rule="evenodd"></path>
                 </svg>
             </button>
-            <button (click)="saveCollect()" class="search-collect save-collect" [disabled]="!this.collectName || this.collectName.length == 0">{{"Text_Collectes_SaveButton" | translate}}</button>
+            <button (click)="saveCollect()" class="search-collect save-collect" [disabled]="!this.collectName || this.collectName.length == 0 || this.collectId != null">{{"Text_Collectes_SaveButton" | translate}}</button>
         </div>
 
     </section>
@@ -206,7 +206,7 @@
                 <span *ngIf="collect.BeginDateString != collect.EndDateString" class="date">{{collect.BeginDateString}} - {{collect.EndDateString}}</span>
                 <span class="time">{{collect.BeginTimeString}} - {{collect.EndTimeString}}</span>
             </time>
-                <div class="arrow-right"></div>
+                <div class="arrow-right" [class.green-arrow]="collectId == collect.Id"></div>
         </section>
 </section>
 

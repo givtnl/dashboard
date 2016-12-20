@@ -22,6 +22,7 @@
     height: 41px;
     margin-left:20px;
     cursor:pointer;
+    transition: 0.3s;
 }
 
 .collection-buttons .icon{
@@ -72,13 +73,14 @@ h3{
     display: block;
     margin-left:auto;
     cursor:pointer;
+    transition: 0.3s;
 }
 
 .search-collect:active{
     background-color: #C0BFCC;
 }
 
-.search-collect:focus{
+.search-collect:focus,.green-button{
     background-color: #41c98e;
 }
 
@@ -121,7 +123,7 @@ h3{
 
 button:disabled{
     background: #BCB9C8 !important;
-    cursor: auto;
+    cursor: not-allowed !important;
 }
 .input-collect-title{
     font-family: 'Avenir_Heavy';
@@ -130,26 +132,24 @@ button:disabled{
     padding: 10px;
     box-sizing: border-box;
     background-color: transparent;
-    /*
-        /*  */
      border: 1px solid transparent;
-
     margin-bottom: 8px;
     cursor:pointer;
-
     margin-left:-10px;
+    background-position: 95% 50%;
+    background-repeat:no-repeat;
+    transition: 0.3s;
 }
 
 .input-collect-title:hover{
-    background: transparent url(images/pencil.svg);
-    background-position: 95% 50%;
-    background-repeat:no-repeat;
-    border:1px solid #E3E2E7;
+    background-image: url(images/pencil.svg);
 
+    border:1px solid #E3E2E7;
 }
 
 .input-collect-title:focus{
     background-color: white;
+    background-image: url(images/pencil-green.svg);
 
 }
 
@@ -189,7 +189,8 @@ button:disabled{
 }
 
 .collects-list .show-collect:hover .arrow-right{
-    border-left-color: #41C98E;
+ border-left-color: #2E2957;
+
 }
 
 .saved-collects{
@@ -203,6 +204,7 @@ button:disabled{
     border-top: 13px solid transparent;
     border-bottom: 13px solid transparent;
     border-left: 18px solid #BCB9C8;
+    transition: 0.3s;
 }
 
 .withholding-overview{
@@ -455,4 +457,8 @@ button:disabled{
     font-family: 'Avenir_Heavy';
     font-size:16px;
     color: #2C2B57;
+}
+
+.green-arrow{
+    border-left-color: #41c98e !important;
 }
