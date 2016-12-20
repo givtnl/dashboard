@@ -7,6 +7,7 @@
     -webkit-column-gap:0;
     -moz-column-gap:0;
     column-gap:0;
+    position: relative;
 }
 
 .section-dashboard article{

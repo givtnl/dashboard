@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,Injectable } from '@angular/core';
 import { DatePipe } from '@angular/common';
-
+import 'rxjs/add/operator/toPromise';
+import {Observable} from 'rxjs/Observable';
+import 'rxjs/add/observable/forkJoin';
 import { Card } from '../models/card';
 import { ApiClientService } from "app/services/api-client.service";
 import {TranslateService} from "ng2-translate";
@@ -19,6 +21,9 @@ export class DashboardComponent implements OnInit{
     scriptURL: string;
     translate: TranslateService;
 
+    ShowLoadingAnimation = false;
+
+
     //maybe a new donutcard model?
     donutCard: boolean = false;
     donutcardValue: string;
@@ -28,13 +33,23 @@ export class DashboardComponent implements OnInit{
     constructor(private apiService: ApiClientService,  translate:TranslateService){
         this.translate = translate;
         this.isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+        this.ShowLoadingAnimation = true;
+
     }
 
     ngOnInit() : void{
-        this.fetchLastSundayGivts();
-        this.fetchThisMonthGivts();
-        this.fetchThisMonthGivers();
-        this.fetchDataContinuously(3000);
+        Promise.all(
+            [this.waitALittle(2000),this.fetchLastSundayGivts(),this.fetchThisMonthGivts(),this.fetchThisMonthGivers()]
+        ).then(()=>{
+            this.ShowLoadingAnimation = false;
+            this.fetchDataContinuously(3000);
+        })
+    }
+
+    waitALittle(ms: number){
+        return new Promise((resolve, reject) => {
+            setTimeout(resolve, ms);
+        });
     }
 
     fetchDataContinuously(interval: number){
@@ -110,7 +125,7 @@ export class DashboardComponent implements OnInit{
         let dateEnd = nextMonth + "-01-" + secondYear;
         let params = "DateBegin=" + dateBegin + "&DateEnd=" + dateEnd;
 
-        this.apiService.getData("OrgAdminView/Users/?"+params)
+        return this.apiService.getData("OrgAdminView/Users/?"+params)
             .then(resp =>
             {
                 this.thisMonthGiversCard.value = "<span class='fat-emphasis'>" + resp + "</span>";
@@ -127,6 +142,7 @@ export class DashboardComponent implements OnInit{
                 if(!cardIsInCards){
                     this.cards.push(this.thisMonthGiversCard);
                 }
+
             });
     }
 
@@ -145,10 +161,10 @@ export class DashboardComponent implements OnInit{
         let dateEnd = nextMonth + "-01-" + secondYear;
         let params = "DateBegin=" + dateBegin + "&DateEnd=" + dateEnd;
 
-        this.apiService.getData("OrgAdminView/Givts/?"+params)
+        return this.apiService.getData("OrgAdminView/Givts/?"+params)
             .then(resp =>
             {
-                console.log(resp);
+              //  console.log(resp);
                 let collectSum = resp.TotalAmount;
                 this.thisMonthCard.value = "€ " + "<span class='fat-emphasis'>" + (this.isSafari ? collectSum.toFixed(2) : collectSum.toLocaleString(navigator.language,{minimumFractionDigits: 2})) + "</span>";
                 this.translate.get("Text_ThisMonth").subscribe(value => { this.thisMonthCard.title = value;});
@@ -164,6 +180,7 @@ export class DashboardComponent implements OnInit{
                 if(!cardIsInCards){
                     this.cards.push(this.thisMonthCard);
                 }
+                //return new Promise().then( ()=> {return "ok";}).catch (() => { return "error";});
             });
     }
 
@@ -175,7 +192,7 @@ export class DashboardComponent implements OnInit{
         let dateBegin =  lastSundayDate + " 00:00:00";
         let dateEnd = lastSundayDate + " 23:59:59";
 
-        this.apiService.getData("OrgAdminView/Givts/?DateBegin="+dateBegin+"&DateEnd="+dateEnd)
+        return this.apiService.getData("OrgAdminView/Givts/?DateBegin="+dateBegin+"&DateEnd="+dateEnd)
             .then(resp =>
             {
                 let collectSum = resp.TotalAmount;

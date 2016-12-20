@@ -10,7 +10,27 @@
     </section>
 <hr *ngIf="isVisible" class="collect-hr"/>
 <section class="section-collects" *ngIf="isVisible">
+    <div class="loading-wrapper" [ngClass]="{'show-loading-animation': ShowLoadingAnimation }">
+        <div class="windows8">
+            <div class="wBall" id="wBall_1">
+                <div class="wInnerBall"></div>
+            </div>
+            <div class="wBall" id="wBall_2">
+                <div class="wInnerBall"></div>
+            </div>
+            <div class="wBall" id="wBall_3">
+                <div class="wInnerBall"></div>
+            </div>
+            <div class="wBall" id="wBall_4">
+                <div class="wInnerBall"></div>
+            </div>
+            <div class="wBall" id="wBall_5">
+                <div class="wInnerBall"></div>
+            </div>
+        </div>
+    </div>
     <section  class="show-collect">
+
         <time>
             <input [attr.placeholder]="'Placeholder_Offering_Name' | translate" type="text"  value="{{collectTitle}}" class="input-collect-title" [(ngModel)]="collectName"/>
             <span *ngIf="!sameDate" class="date">{{ dateBeginRange.string }} - {{ dateEndRange.string }}</span>
@@ -45,6 +65,9 @@
         </div>
 
     </section>
+
+
+
     <div class="withholding-overview" *ngIf="showCosts">
             <h2>{{"Text_OverviewDeduction" | translate}}</h2>
             <button class="close-button" (click)="showCosts = !showCosts">

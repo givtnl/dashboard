@@ -1,6 +1,7 @@
 .section-collects{
     width: 900px;
     margin: 0 auto;
+    position: relative;
 }
 
 .collection-buttons{
@@ -85,6 +86,7 @@ h3{
     justify-content: space-between;
     align-items: center;
     padding: 30px 0;
+    position: relative;
 }
 
 .show-collect span{
@@ -309,6 +311,10 @@ button:disabled{
     border-bottom: 2px solid #2C2B57;
 }
 
+.statc-calc tr td:nth-child(3){
+    text-align: right;
+}
+
 .stat-calc td:nth-child(5){
     font-size:14px;
 }
@@ -427,3 +433,4 @@ button:disabled{
 .collection-buttons .fill-green{
     background-color: #41c98e;
 }
+

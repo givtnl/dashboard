@@ -17,17 +17,18 @@ export class CollectsComponent implements OnInit{
     calendarModule: CalendarModule;
     dateBegin: Date = null;
     dateEnd: Date =null;
-    value: number = 0;
+    value: string = "";
     dateBeginTime : number;
     maxDate: Date;
     isVisible: boolean= false;
     dateBeginRange: any;
     dateEndRange: any;
+
     sameDate: boolean;
     isSafari: boolean;
     savedCollects: Collection[] = [];
-    collectName: string;
-    collectTitle: string;
+    collectName: string = null;
+    collectTitle: string = null;
     collectId: number;
     showCosts: boolean = false;
 
@@ -56,6 +57,9 @@ export class CollectsComponent implements OnInit{
     //costs
     givtServiceCost: string;
     paymentProviderTransactionCost: string;
+
+
+    ShowLoadingAnimation = false;
 
     en: any = {
         firstDayOfWeek: 0,
@@ -166,6 +170,8 @@ export class CollectsComponent implements OnInit{
             .then(resp => {
                 this.fetchSavedCollects();
                 //this.collectName = "";
+                console.log("saved collect");
+                console.log(this.savedCollects[this.savedCollects.length-1]);
             })
             .catch(err => console.log(err));
         setTimeout(this.fetchSavedCollects(), 1000);
@@ -181,12 +187,25 @@ export class CollectsComponent implements OnInit{
     }
 
     fetchCollect(){
+        this.ShowLoadingAnimation = true;
         this.showCosts = false;
         this.collectTitle = null;
         if(this.dateBegin !== null && this.dateEnd !== null){
             var dateBegin = this.formatDate(this.dateBegin);
             var dateEnd = this.formatDate(this.dateEnd);
             let params = "DateBegin=" + dateBegin + "&DateEnd=" + dateEnd;
+
+            let datePipe = new DatePipe();
+
+            this.dateBeginRange = new Date(this.dateBegin.getTime());
+            this.dateEndRange = new Date(this.dateEnd.getTime());
+            this.sameDate = (this.dateBeginRange.getDate() === this.dateEndRange.getDate());
+            this.dateBeginRange.string = datePipe.transform(this.dateBeginRange, 'd MMMM y');
+            this.dateEndRange.string = datePipe.transform(this.dateEndRange, 'd MMMM y');
+            this.dateBeginRange.time = datePipe.transform(this.dateBegin, 'shortTime');
+            this.dateEndRange.time = datePipe.transform(this.dateEnd,'shortTime');
+
+            this.isVisible = true;
 
             this.apiService.getData("OrgAdminView/Givts/?"+params)
                 .then(resp =>
@@ -219,15 +238,7 @@ export class CollectsComponent implements OnInit{
                     this.mandateCosts = "€ " + (this.isSafari ? (this.mandateCount * this.costPerMandate).toFixed(2) : (this.mandateCount * this.costPerMandate).toLocaleString(navigator.language,{minimumFractionDigits: 2,maximumFractionDigits:2}));
                     this.transactionCostsDetail = "€ " + (this.isSafari ? (this.transactionCount * this.costPerTransaction).toFixed(2) : (this.transactionCount * this.costPerTransaction).toLocaleString(navigator.language,{minimumFractionDigits: 2,maximumFractionDigits:2}));
                     //noinspection TypeScriptValidateTypes
-                    let datePipe = new DatePipe();
 
-                    this.dateBeginRange = new Date(this.dateBegin.getTime());
-                    this.dateEndRange = new Date(this.dateEnd.getTime());
-                    this.sameDate = (this.dateBeginRange.getDate() === this.dateEndRange.getDate());
-                    this.dateBeginRange.string = datePipe.transform(this.dateBeginRange, 'd MMMM y');
-                    this.dateEndRange.string = datePipe.transform(this.dateEndRange, 'd MMMM y');
-                    this.dateBeginRange.time = datePipe.transform(this.dateBegin, 'shortTime');
-                    this.dateEndRange.time = datePipe.transform(this.dateEnd,'shortTime');
 
                     this.translate.get('Text_Info_Mandate', {0: this.mandateCount,1: (this.isSafari ? (this.costPerMandate).toFixed(3) : (this.costPerMandate).toLocaleString(navigator.language,{minimumFractionDigits: 3,maximumFractionDigits:3}))}).subscribe((res: string) => {
                         this.Text_Info_Mandate = res;
@@ -244,8 +255,7 @@ export class CollectsComponent implements OnInit{
                     this.translate.get('Text_Info_Type2', {0: this.countRTransactionType2,1: (this.isSafari ? (1.20).toFixed(2) : (1.20).toLocaleString(navigator.language,{minimumFractionDigits: 2,maximumFractionDigits:2}))}).subscribe((res: string) => {
                         this.Text_Info_Type2 = res;
                     });
-
-                    this.isVisible = true;
+                    this.ShowLoadingAnimation = false;
                 });
         }
 

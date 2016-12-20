@@ -76,7 +76,6 @@ export class ApiClientService {
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
         headers.append('authorization', 'Bearer '+ this.dataService.getData("accessToken"));
-        console.log(this.apiUrl + path);
 
         //do the http call
         return this.http
