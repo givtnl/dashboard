@@ -434,3 +434,9 @@ button:disabled{
     background-color: #41c98e;
 }
 
+.till{
+    align-self:center;
+    font-family: 'Avenir_Heavy';
+    font-size:16px;
+    color: #2C2B57;
+}

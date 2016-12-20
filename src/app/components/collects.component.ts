@@ -158,6 +158,7 @@ export class CollectsComponent implements OnInit{
         this.fetchCollect();
         this.collectId = collect.Id;
         this.collectName = collect.Name;
+        window.scrollTo(0,0);
     }
 
     saveCollect(){
@@ -178,10 +179,12 @@ export class CollectsComponent implements OnInit{
     }
 
     deleteCollect(id: number){
+        if(id == undefined) return;
         this.apiService.delete("OrgAdminView/Collect/" + id)
             .then(resp => {
                 this.isVisible = false;
                 this.fetchSavedCollects();
+                this.collectId = undefined;
             })
             .catch(err => console.log(err));
     }
