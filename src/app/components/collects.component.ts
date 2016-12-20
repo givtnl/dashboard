@@ -28,8 +28,7 @@ export class CollectsComponent implements OnInit{
     isSafari: boolean;
     savedCollects: Collection[] = [];
     collectName: string = null;
-    collectTitle: string = null;
-    collectId: number;
+    collectId: number = null;
     showCosts: boolean = false;
 
     transactionCount: string;
@@ -137,7 +136,7 @@ export class CollectsComponent implements OnInit{
 
     fetchSavedCollects(){
         let datePipe = new DatePipe();
-        this.apiService.getData("OrgAdminView/Collect")
+        return this.apiService.getData("OrgAdminView/Collect")
             .then(resp => {
                 this.savedCollects = resp;
                 for(let i in this.savedCollects){
@@ -169,10 +168,10 @@ export class CollectsComponent implements OnInit{
 
         this.apiService.postData("OrgAdminView/Collect", newCollect)
             .then(resp => {
-                this.fetchSavedCollects();
-                //this.collectName = "";
-                console.log("saved collect");
-                console.log(this.savedCollects[this.savedCollects.length-1]);
+                this.fetchSavedCollects().then(() => {
+                    this.collectId = this.savedCollects[this.savedCollects.length-1].Id;
+                });
+
             })
             .catch(err => console.log(err));
         setTimeout(this.fetchSavedCollects(), 1000);
@@ -184,17 +183,15 @@ export class CollectsComponent implements OnInit{
             .then(resp => {
                 this.isVisible = false;
                 this.fetchSavedCollects();
-                this.collectId = undefined;
+                this.collectId = null;
             })
             .catch(err => console.log(err));
     }
 
     fetchCollect(){
         this.collectName = "";
-        this.collectTitle = "";
         this.ShowLoadingAnimation = true;
         this.showCosts = false;
-        this.collectTitle = null;
         if(this.dateBegin !== null && this.dateEnd !== null){
             var dateBegin = this.formatDate(this.dateBegin);
             var dateEnd = this.formatDate(this.dateEnd);
