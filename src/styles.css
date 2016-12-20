@@ -1,3 +1,11 @@
+*:focus {
+    outline: none !important;
+}
+
+.ui-inputtext.ui-state-focus{
+    box-shadow: 0 0 0 transparent !important;
+}
+
 @font-face {
     font-family: 'Avenir_Black';
     src: url('./fonts/AvenirLTStd-black.otf');
