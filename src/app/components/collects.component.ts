@@ -190,6 +190,8 @@ export class CollectsComponent implements OnInit{
     }
 
     fetchCollect(){
+        this.collectName = "";
+        this.collectTitle = "";
         this.ShowLoadingAnimation = true;
         this.showCosts = false;
         this.collectTitle = null;
