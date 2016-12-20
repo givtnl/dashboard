@@ -215,7 +215,6 @@ export class CollectsComponent implements OnInit{
             this.apiService.getData("OrgAdminView/Givts/?"+params)
                 .then(resp =>
                 {
-                    console.log(resp);
                     this.transactionCount = resp.TransactionCount;
                     this.costPerTransaction = resp.PayProvCostPerTransaction;
 
