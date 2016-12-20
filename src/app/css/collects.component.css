@@ -78,6 +78,10 @@ h3{
     background-color: #C0BFCC;
 }
 
+.search-collect:focus{
+    background-color: #41c98e;
+}
+
 .show-collect{
     font-size:16px;
     font-family: 'Avenir_Heavy';
@@ -125,15 +129,27 @@ button:disabled{
     color: #2C2B57;
     padding: 10px;
     box-sizing: border-box;
-    border:1px solid #E3E2E7;
+    background-color: transparent;
+    /*
+        /*  */
+     border: 1px solid transparent;
+
     margin-bottom: 8px;
     cursor:pointer;
+
+    margin-left:-10px;
 }
 
 .input-collect-title:hover{
-    background: white url(images/pencil.svg);
+    background: transparent url(images/pencil.svg);
     background-position: 95% 50%;
     background-repeat:no-repeat;
+    border:1px solid #E3E2E7;
+
+}
+
+.input-collect-title:focus{
+    background-color: white;
 
 }
 
