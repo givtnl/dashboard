@@ -35,14 +35,15 @@
     "Text_Transaction_Fee_Transaction": "Transaction fee",
     "Text_Fee_Total": "Total",
     "Text_Deduction_InfoButton": "More info",
-    "Text_Info_Mandate": "{{0}} new users (first 4x) x € {{1}}",
-    "Text_Info_Transaction": "{{0}} transactions x € {{1}}",
+    "Text_Info_Mandate": "{{0}} new users (first 4x) x €{{1}}",
+    "Text_Info_Transaction": "{{0}} transactions x €{{1}}",
     "Text_Deduction_Type1": "Storno fee type 1",
     "Text_Deduction_Type2": "Storno fee type 2",
-    "Text_Info_Type1": "{{0}} before execution date x € {{1}}",
-    "Text_Info_Type2": "{{0}} after execution date x € {{1}}",
+    "Text_Info_Type1": "{{0}} before execution date x €{{1}}",
+    "Text_Info_Type2": "{{0}} after execution date x €{{1}} = €{{2}}",
     "Text_NoSavedCollectes": "There are no saved offerings.",
     "Text_Fee_GivtFee": "Givt service fee",
     "Placeholder_Offering_Name": "Offering name",
-    "Text_Info_Total_Stornos": "Total of storno's = € {{0}}"
+    "Text_Info_Total_Stornos": "Total of storno's = €{{0}}",
+    "Text_TotEnMet": "till"
 }

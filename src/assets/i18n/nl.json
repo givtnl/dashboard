@@ -40,9 +40,10 @@
     "Text_Deduction_Type1": "Storneringskosten type 1",
     "Text_Deduction_Type2": "Storneringskosten type 2",
     "Text_Info_Type1": "{{0}} voor executiedatum x € {{1}}",
-    "Text_Info_Type2": "{{0}} na executiedatum x € {{1}}",
+    "Text_Info_Type2": "{{0}} na executiedatum x € {{1}} = € {{2}}",
     "Text_NoSavedCollectes": "Er zijn nog geen opgeslagen collectes.",
     "Text_Fee_GivtFee": "Givt servicekosten",
     "Placeholder_Offering_Name": "Collectenaam",
-    "Text_Info_Total_Stornos": "Totaal aan storneringen = € {{0}}"
+    "Text_Info_Total_Stornos": "Totaal aan storneringen = € {{0}}",
+    "Text_TotEnMet": "t/m"
 }
