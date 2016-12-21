@@ -142,8 +142,8 @@ export class CollectsComponent implements OnInit{
             .then(resp => {
                 this.savedCollects = resp;
                 for(let i in this.savedCollects){
-                    this.savedCollects[i].BeginDate = new Date(this.savedCollects[i].BeginDate + " UTC");
-                    this.savedCollects[i].EndDate = new Date(this.savedCollects[i].EndDate + " UTC");
+                    this.savedCollects[i].BeginDate = new Date(this.savedCollects[i].BeginDate);
+                    this.savedCollects[i].EndDate = new Date(this.savedCollects[i].EndDate);
                     
                     this.savedCollects[i].BeginDateString = datePipe.transform(this.savedCollects[i].BeginDate, 'd MMMM y');
                     this.savedCollects[i].EndDateString = datePipe.transform(this.savedCollects[i].EndDate, 'd MMMM y');
