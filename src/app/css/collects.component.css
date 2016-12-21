@@ -382,7 +382,7 @@ button:disabled{
 
 .tooltip .tooltiptext {
     visibility: hidden;
-    width: 230px;
+    width: 320px;
     /*background-color: black;*/
     color: #fff;
     border-radius: 6px;
