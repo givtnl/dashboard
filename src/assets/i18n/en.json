@@ -40,7 +40,7 @@
     "Text_Deduction_Type1": "Storno fee type 1",
     "Text_Deduction_Type2": "Storno fee type 2",
     "Text_Info_Type1": "{{0}} before execution date x €{{1}}",
-    "Text_Info_Type2": "{{0}} after execution date x €{{1}} = €{{2}}",
+    "Text_Info_Type2": "{{0}} after execution date x €{{1}}",
     "Text_NoSavedCollectes": "There are no saved offerings.",
     "Text_Fee_GivtFee": "Givt service fee",
     "Placeholder_Offering_Name": "Offering name",
