@@ -385,13 +385,15 @@ button:disabled{
     width: 230px;
     /*background-color: black;*/
     color: #fff;
-    text-align: center;
     border-radius: 6px;
-    padding: 5px 0;
     position: absolute;
     z-index: 1;
     top: 0;
     left: 120%;
+    padding: 8px 12px;
+    box-sizing: border-box;
+    text-align: left;
+    font-family: 'Avenir_Roman';
 }
 
 .tooltip .tooltiptext::after {
