@@ -110,15 +110,15 @@ my-collects{
 
 .windows8 {
     position: relative;
-    width: 78px;
-    height:78px;
+    width: 50px;
+    height:50px;
     margin:auto;
 }
 
 .windows8 .wBall {
     position: absolute;
-    width: 74px;
-    height: 74px;
+    width: 50px;
+    height: 50px;
     opacity: 0;
     transform: rotate(225deg);
     -o-transform: rotate(225deg);
