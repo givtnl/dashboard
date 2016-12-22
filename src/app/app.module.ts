@@ -19,6 +19,7 @@ import {CollectsComponent} from "./components/collects.component";
 import {CalendarModule} from "primeng/primeng";
 import {DataService} from "./services/data.service";
 import {UnAuthorizeComponent} from "./components/unauthorized.component";
+import {ReversePipe} from "./pipes/reverse.pipe";
 
 export function createTranslateLoader(http: Http) {
   return new TranslateStaticLoader(http, './assets/i18n', '.json');
@@ -30,7 +31,7 @@ export function createTranslateLoader(http: Http) {
     useFactory: (createTranslateLoader),
     deps: [Http]
   }),CalendarModule],
-  declarations: [ AppComponent, LoginComponent, NavigationComponent, DashboardComponent, CollectsComponent, UnAuthorizeComponent ],
+  declarations: [ AppComponent, LoginComponent, NavigationComponent, DashboardComponent, CollectsComponent, UnAuthorizeComponent, ReversePipe ],
   bootstrap:    [ AppComponent ],
   providers: [ UserService, ApiClientService, LoggedInGuard, LoginComponentGuard,DataService ]
 })

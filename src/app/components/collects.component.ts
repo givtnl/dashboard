@@ -1,7 +1,6 @@
 import { Component,OnInit } from '@angular/core';
 import { DatePipe } from '@angular/common';
 
-
 import { ApiClientService } from "app/services/api-client.service";
 import { TranslateService } from "ng2-translate";
 import {CalendarModule} from "primeng/primeng";
@@ -11,6 +10,7 @@ import {Collection} from "../models/collection";
     templateUrl: '../html/collects.component.html',
     styleUrls: ['../css/collects.component.css']
 })
+
 export class CollectsComponent implements OnInit{
     translate: TranslateService;
     text: string;

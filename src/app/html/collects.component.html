@@ -186,11 +186,6 @@
                     </tr>
                 </table>
             </div>
-
-
-            <!--
-            <span>{{givtServiceCost}}</span>
-            <span>{{paymentProviderTransactionCost}}</span>-->
         </div>
     </div>
 </section>
@@ -199,14 +194,14 @@
     <h3 *ngIf="savedCollects.length == 0">{{"Text_NoSavedCollectes" | translate}}</h3>
 
     <section class="collects-list" *ngIf="savedCollects.length > 0">
-        <section *ngFor="let collect of savedCollects" class="show-collect" (click)="selectCollect(collect)">
+        <section *ngFor="let collect of savedCollects | reverse" class="show-collect" (click)="selectCollect(collect)">
             <time>
                 <span class="date">{{collect.Name}}</span>
                 <span *ngIf="collect.BeginDateString == collect.EndDateString" class="date">{{collect.BeginDateString}}</span>
                 <span *ngIf="collect.BeginDateString != collect.EndDateString" class="date">{{collect.BeginDateString}} - {{collect.EndDateString}}</span>
                 <span class="time">{{collect.BeginTimeString}} - {{collect.EndTimeString}}</span>
             </time>
-                <div class="arrow-right" [class.green-arrow]="collectId == collect.Id"></div>
+            <div class="arrow-right" [class.green-arrow]="collectId == collect.Id"></div>
         </section>
 </section>
 
