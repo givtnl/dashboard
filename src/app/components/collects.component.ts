@@ -102,6 +102,8 @@ export class CollectsComponent implements OnInit{
     dateRange: Date;
     timeRange: string;
 
+    inputTitleLength: number;
+
     ngOnInit(){
         this.fetchSavedCollects();
     }
@@ -154,6 +156,7 @@ export class CollectsComponent implements OnInit{
     }
 
     selectCollect(collect: Collection){
+        this.inputTitleLength = collect.Name.length-2;
         this.SearchButtonGreen = false;
 
         this.collectId = null;
