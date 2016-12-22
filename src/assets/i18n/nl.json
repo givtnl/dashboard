@@ -17,7 +17,7 @@
     "Placeholder_Password": "Wachtwoord",
     "Text_StayLoggedIn": "Ingelogd blijven",
     "Text_Login": "Inloggen",
-    "Error_WrongEmailOrPassword": "Helaas, er is een verkeerd wachtwoord of verkeerde gebruikersnaam ingevoerd. Probeer opnieuw.",
+    "Error_WrongEmailOrPassword": "Helaas, er is een verkeerd wachtwoord en/of verkeerde gebruikersnaam ingevoerd. Probeer het nog eens.",
     "Text_GiversLowercase": "gevers",
     "Text_Collectes_Title": "Welke collecte wil je weergeven?",
     "Text_Collectes_Subtitle": "Selecteer hier de datum en tijd van de collecte om te zien wat er gegeven is.",
@@ -46,7 +46,7 @@
     "Placeholder_Offering_Name": "Collectenaam",
     "Text_Info_Total_Stornos": "Totaal aan storneringen = € {{0}}",
     "Text_TotEnMet": "t/m",
-    "Text_TransactionCost_MoreInfo": "Dit zijn de kosten die SlimPay in rekening brengt voor het aangaan van machtigingen door gevers en voor het verwerken van de transacties. De kosten voor een machtiging liggen op 50 cent. Deze verrekent Givt over de eerste vier keer dat de gever Givt gebruikt. Hierdoor worden deze kosten zo eerlijk mogelijk verdeeld over de verschillende situaties waarin de gever Givt gebruikt.",
+    "Text_TransactionCost_MoreInfo": "Dit zijn de kosten die SlimPay in rekening brengt voor het aangaan van machtigingen door gevers en voor het verwerken van de transacties. De kosten voor een machtiging liggen op 50 cent. Deze verrekent Givt over de eerste vier keer dat de gever Givt gebruikt. Zo worden de kosten eerlijk verdeeld over verschillende situaties waarin er met Givt wordt gegeven.",
     "Text_GivtServiceFee_MoreInfo": "Dit zijn de kosten die vanuit Givt in rekening worden gebracht voor het verlenen van de service.",
-    "Text_Stornos_MoreInfo": "Dit zijn kosten die SlimPay in rekening brengt voor bedragen die gevers ingetrokken hebben na het geven plus de bedragen die zij daadwerkelijk ingetrokken hebben. Type 1 betekent dat de gever het heeft teruggetrokken voordat het geld bij hem of haar was afgeschreven. Type 2 betekent dat de gever de gift heeft teruggetrokken nadat dit al afgeschreven was. Storneringskosten en gestorneerde bedragen van type 2 worden dus vrijwel altijd verrekend op collecteopbrengsten van een andere datum, dan waarop de gever de gift gedaan had."
+    "Text_Stornos_MoreInfo": "Deze kostenpost bestaat uit (a plus b):\na de bedragen die gevers ingetrokken hebben\nb de kosten die SlimPay hiervoor in rekening brengt.\n\nType 1 betekent dat de gever het heeft teruggetrokken voordat het geld bij hem of haar was afgeschreven. Type 2 betekent dat de gever de gift heeft teruggetrokken nadat deze al afgeschreven was. Storneringskosten en gestorneerde bedragen van type 2 worden vrijwel altijd verrekend op collecteopbrengsten van een andere datum dan waarop de gever de gift gedaan heeft."
 }
