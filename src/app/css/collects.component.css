@@ -134,8 +134,7 @@ button:disabled{
     background-color: transparent;
     cursor:pointer;
     margin-left:-10px;
-    background-position: 95% 50%;
-    background-repeat:no-repeat;
+
     transition: 0.3s;
     position: relative;
 }
@@ -152,45 +151,24 @@ button:disabled{
     transition: 0.3s;
     width: 100%;
     cursor: pointer;
-
+    background-position: 95% 50%;
+    background-repeat:no-repeat;
 }
 
-.pencil{
-    position: absolute;
-    margin-left:10px;
-    display: inline-block !important;
-    width:20px;
-    height: 20px;
-    align-self: center;
-    right:10px;
-    transition: 0.3s;
-    cursor: default;
-
-}
-
-.pencil:hover{
+.input-collect-title input:hover {
     background-image: url(images/pencil.svg);
-
-}
-
-
-.input-collect-title:hover input + .pencil{
-    background-image: url(images/pencil.svg);
-}
-
-.input-collect-title input:hover{
     border:1px solid #E3E2E7;
+
 }
 
 .input-collect-title input:focus{
+    background-image: url(images/pencil-green.svg);
     background-color: white;
     border:1px solid #E3E2E7;
-    cursor: text;
-
 
 }
 
-.input-collect-title input:focus + .pencil{
+.input-collect-title input:focus{
     background-image: url(images/pencil-green.svg);
 
 }
