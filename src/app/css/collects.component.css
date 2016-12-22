@@ -134,9 +134,7 @@ button:disabled{
     background-color: transparent;
     cursor:pointer;
     margin-left:-10px;
-
     transition: 0.3s;
-    position: relative;
 }
 
 .input-collect-title input{
@@ -165,11 +163,7 @@ button:disabled{
     background-image: url(images/pencil-green.svg);
     background-color: white;
     border:1px solid #E3E2E7;
-
-}
-
-.input-collect-title input:focus{
-    background-image: url(images/pencil-green.svg);
+    cursor:text;
 
 }
 
