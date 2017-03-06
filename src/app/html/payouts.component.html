@@ -1,0 +1,9 @@
+<my-navigation></my-navigation>
+<h2>Overzicht van uitbetalingen</h2>
+<table cellpadding="20px">
+    <tr *ngFor="let collect of payouts | reverse" class="show-collect">
+        <td class="date">Totaal uitbetaald € {{collect.TotalPaid}}</td>
+        <td class="date">van {{collect.BeginDate}}</td>
+        <td class="date">tot {{collect.EndDate}}</td>
+    </tr>
+</table>

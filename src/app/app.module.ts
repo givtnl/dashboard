@@ -13,6 +13,7 @@ import {LoggedInGuard} from "./guards/logged-in.guard";
 import {LoginComponentGuard} from "./guards/login.component.guard";
 import {ApiClientService} from "app/services/api-client.service";
 import {DashboardComponent} from "./components/dashboard.component";
+import {PayoutsComponent} from "./components/payouts.component";
 
 import {TranslateModule, TranslateLoader, TranslateStaticLoader} from 'ng2-translate';
 import {CollectsComponent} from "./components/collects.component";
@@ -31,7 +32,7 @@ export function createTranslateLoader(http: Http) {
     useFactory: (createTranslateLoader),
     deps: [Http]
   }),CalendarModule],
-  declarations: [ AppComponent, LoginComponent, NavigationComponent, DashboardComponent, CollectsComponent, UnAuthorizeComponent, ReversePipe ],
+  declarations: [ AppComponent, LoginComponent, NavigationComponent, DashboardComponent, CollectsComponent, UnAuthorizeComponent, ReversePipe, PayoutsComponent ],
   bootstrap:    [ AppComponent ],
   providers: [ UserService, ApiClientService, LoggedInGuard, LoginComponentGuard,DataService ]
 })
