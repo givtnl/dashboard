@@ -12,7 +12,7 @@
             </time>
             <div class="collection-buttons">
                 <span>{{value}}</span>
-                <button class="icon" [class.fill-green]="payout.hidden == true" (click)="payout.hidden = !payout.hidden">
+                <button class="icon" [class.fill-green]="payout.hidden == false" (click)="openPayout(payout)">
                     <svg width="23px" height="23px" viewBox="8 8 23 23" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                         <!-- Generator: Sketch 40.3 (33839) - http://www.bohemiancoding.com/sketch -->
                         <desc>Created with Sketch.</desc>
@@ -23,9 +23,9 @@
             </div>
         </section>
         <section class="white-bg">
-            <div class="withholding-overview center-me" *ngIf="payout.hidden">
+            <div class="withholding-overview center-me" *ngIf="!payout.hidden">
                 <h2>{{"Text_OverviewDeduction" | translate}}</h2>
-                <button class="close-button" (click)="payout.hidden = !payout.hidden">
+                <button class="close-button" (click)="closePayout(payout)">
                     {{"Text_Deduction_CloseButton" | translate}} <svg width="19px" height="19px" viewBox="944 525 19 19" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                     <!-- Generator: Sketch 40.3 (33839) - http://www.bohemiancoding.com/sketch -->
                     <desc>Created with Sketch.</desc>
@@ -39,53 +39,43 @@
                     <div class="stat-comp">
                         <table class="table-stats" border="0">
 
-                            <tr (click)="selectRow(1)" class="row" [class.active-row]="1 == activeRow">
+                            <tr (click)="selectRow(payout, 1)" class="row" [class.active-row]="1 == payout.activeRow">
                                 <td><i class="fa fa-circle givt-blue" aria-hidden="true"></i></td>
                                 <td>{{"Text_Transaction_Fee" | translate}}</td>
-                                <td>{{transactionCosts}}</td>
-                                <!--<td><div class="tooltip"><i class="fa fa-info-circle fa-lg " aria-hidden="true"></i>
-                                    <span class="blue tooltiptext">(...) aantal transacties maal <b>€ 0,08 transactiekosten</b>. (...) nieuwe gebruikers maal (<b>4x€ 0,125</b>) <b>mandaatkosten</b>.<hr/><b>{{paymentProviderTransactionCost}}</b></span>
-                                </div></td>-->
+                                <td>{{payout.TotalTransactionCost}}</td>
                             </tr>
-                            <tr (click)="selectRow(2)" class="row" [class.active-row]="2 == activeRow">
+                            <tr (click)="selectRow(payout, 2)" class="row" [class.active-row]="2 == payout.activeRow">
                                 <td><i class="fa fa-circle givt-orange" aria-hidden="true"></i></td>
                                 <td>{{"Text_Stornering_Fee" | translate}}</td>
                                 <td>{{totalRTransactionCost}}</td>
-                                <!--
-                                <td><div class="tooltip"><i class="fa fa-info-circle fa-lg " aria-hidden="true"></i>
-                                    <span class="orange tooltiptext">(..) storneringen maal € 0,18 type 1. (..) storneringen maal € 1,20 type 2. + (debet bedragen)<hr/>€ 0,00</span>
-                                </div></td>-->
                             </tr>
-                            <tr (click)="selectRow(3)" class="row" [class.active-row]="3 == activeRow">
+                            <tr (click)="selectRow(payout, 3)" class="row" [class.active-row]="3 == payout.activeRow">
                                 <td><i class="fa fa-circle givt-green" aria-hidden="true"></i></td>
                                 <td>{{"Text_Givt_Fee" | translate}}</td>
                                 <td>{{givtServiceCost}}</td>
-                                <!-- <td><div class="tooltip"><i class="fa fa-info-circle fa-lg " aria-hidden="true"></i>
-                                     <span class="green tooltiptext">{{value}} maal <b>4,5% kosten per donatie</b>.<hr/><b>{{givtServiceCost}}</b></span>
-                                 </div></td>-->
                             </tr>
                         </table>
                     </div>
-                    <div class="stat-calc" *ngIf="1 == activeRow">
+                    <div class="stat-calc" *ngIf="1 == payout.activeRow">
                         <table>
                             <tr>
                                 <td>{{ "Text_Transaction_Fee_Mandate" | translate}}</td>
                                 <td class="column-spacing-30"></td>
-                                <td>{{mandateCosts}}</td>
+                                <td>{{payout.MandateCost}}</td>
                                 <td class="column-spacing-40"></td>
                                 <td>{{ Text_Info_Mandate }}</td>
                             </tr>
                             <tr>
                                 <td>{{"Text_Transaction_Fee_Transaction" | translate }}</td>
                                 <td class="column-spacing-30"></td>
-                                <td>{{transactionCost}}</td>
+                                <td>{{payout.TransactionCost}}</td>
                                 <td class="column-spacing-40"></td>
                                 <td>{{Text_Info_Transaction}}</td>
                             </tr>
                             <tr>
                                 <td>{{"Text_Fee_Total" | translate}}</td>
                                 <td class="column-spacing-30"></td>
-                                <td>{{transactionCosts}}</td>
+                                <td>{{payout.TotalTransactionCost}}</td>
                                 <td class="column-spacing-40"></td>
                                 <td class="more-info tooltip">{{"Text_Deduction_InfoButton" | translate}}
                                     <span class="green tooltiptext">
@@ -96,7 +86,7 @@
                         </table>
                     </div>
 
-                    <div class="stat-calc" *ngIf="2 == activeRow">
+                    <div class="stat-calc" *ngIf="2 == payout.activeRow">
                         <table>
                             <tr>
                                 <td>{{"Text_Deduction_Type1" | translate}}</td>
@@ -127,7 +117,7 @@
                     </div>
 
 
-                    <div class="stat-calc" *ngIf="3 == activeRow">
+                    <div class="stat-calc" *ngIf="3 == payout.activeRow">
                         <table>
                             <tr>
                                 <td>{{"Text_Fee_Total" | translate}}</td>
