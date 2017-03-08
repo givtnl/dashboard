@@ -1,4 +1,5 @@
 import { Component,OnInit } from '@angular/core';
+import { DatePipe } from '@angular/common';
 
 import { ApiClientService } from "app/services/api-client.service";
 import {Payout} from "../models/payout";

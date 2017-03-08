@@ -1,4 +1,4 @@
-import { NgModule }      from '@angular/core';
+import { NgModule, LOCALE_ID }      from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import {HttpModule, Http} from "@angular/http";
 import {FormsModule} from "@angular/forms";
@@ -34,6 +34,6 @@ export function createTranslateLoader(http: Http) {
   }),CalendarModule],
   declarations: [ AppComponent, LoginComponent, NavigationComponent, DashboardComponent, CollectsComponent, UnAuthorizeComponent, ReversePipe, PayoutsComponent ],
   bootstrap:    [ AppComponent ],
-  providers: [ UserService, ApiClientService, LoggedInGuard, LoginComponentGuard,DataService ]
+  providers: [ UserService, ApiClientService, LoggedInGuard, LoginComponentGuard,DataService, { provide: LOCALE_ID, useValue: "nl-BE" }  ]
 })
 export class AppModule { }

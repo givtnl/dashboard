@@ -1,9 +1,156 @@
 <my-navigation></my-navigation>
-<h2>Overzicht van uitbetalingen</h2>
-<table cellpadding="20px">
-    <tr *ngFor="let collect of payouts | reverse" class="show-collect">
-        <td class="date">Totaal uitbetaald € {{collect.TotalPaid}}</td>
-        <td class="date">van {{collect.BeginDate}}</td>
-        <td class="date">tot {{collect.EndDate}}</td>
-    </tr>
-</table>
+<section class="section-collects">
+    <h2>Overzicht van uitbetalingen</h2>
+    <hr class="collect-hr"/>
+    <table cellpadding="20px">
+        <tr *ngFor="let payout of payouts | reverse" class="show-collect">
+            <td class="date">Totaal uitbetaald € {{payout.TotalPaid}}</td>
+            <td class="date">{{payout.BeginDate}} - {{payout.EndDate}}</td>
+        </tr>
+    </table>
+</section>
+    <section *ngFor="let payout of payouts | reverse">
+        <section class="show-collect center-me" >
+            <time>
+                <span class="date">{{payout.BeginDate | date:'d'}}/{{payout.BeginDate | date:'MMMM'}}/{{payout.BeginDate | date:'y'}} - {{payout.EndDate}}</span>
+                <span class="time">Weeknummer</span>
+                <span *ngIf="showCosts"></span>
+            </time>
+            <div class="collection-buttons">
+                <span>{{value}}</span>
+                <button class="icon" [class.fill-green]="showCosts == true" (click)="showCosts = !showCosts">
+                    <svg width="23px" height="23px" viewBox="8 8 23 23" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                        <!-- Generator: Sketch 40.3 (33839) - http://www.bohemiancoding.com/sketch -->
+                        <desc>Created with Sketch.</desc>
+                        <defs></defs>
+                        <path  d="M9.00761688,21.0025814 C9.53265354,26.5888828 14.2352667,30.9603199 19.9588837,30.9603199 C22.6363805,30.9603199 25.090446,30.0036964 26.9979399,28.4135896 L19.5869317,21.0025814 L9.00761688,21.0025814 Z M9,19.0025814 C9.45855668,13.6859391 13.6990295,9.4505879 19.0179464,9 L19.0179464,19.0018685 C19.0177045,19.0021045 19.0174628,19.0023406 19.0172212,19.0025769 L9,19.0025814 Z M28.4121534,26.9993761 C30.0022602,25.0918822 30.9588837,22.6378167 30.9588837,19.9603199 C30.9588837,14.2424422 26.5962091,9.54352172 21.0179464,9.01064508 L21.0179464,19.5461063 C21.0179464,19.5653854 21.0174008,19.5845372 21.0163242,19.6035469 L28.4121534,26.9993761 Z" id="Combined-Shape" stroke="none" fill="#FFFFFF " fill-rule="evenodd"></path>
+                    </svg>
+                </button>
+            </div>
+        </section>
+        <section class="white-bg">
+            <div class="withholding-overview center-me" *ngIf="showCosts">
+                <h2>{{"Text_OverviewDeduction" | translate}}</h2>
+                <button class="close-button" (click)="showCosts = !showCosts">
+                    {{"Text_Deduction_CloseButton" | translate}} <svg width="19px" height="19px" viewBox="944 525 19 19" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                    <!-- Generator: Sketch 40.3 (33839) - http://www.bohemiancoding.com/sketch -->
+                    <desc>Created with Sketch.</desc>
+                    <defs></defs>
+                    <g id="1477510223_icon-close-round" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(944.000000, 525.000000)">
+                        <path d="M18.154652,15.6902032 L11.8313314,9.36688256 L18.154652,3.04356195 C18.8373382,2.36087573 18.8373382,1.26179933 18.154652,0.579113112 C17.4719658,-0.10357311 16.3728894,-0.10357311 15.6902032,0.579113112 L9.36688256,6.90243371 L3.04356195,0.579113112 C2.36087573,-0.10357311 1.26179933,-0.10357311 0.579113112,0.579113112 C-0.10357311,1.26179933 -0.10357311,2.36087573 0.579113112,3.04356195 L6.90243371,9.36688256 L0.579113112,15.6902032 C-0.10357311,16.3728894 -0.10357311,17.4719658 0.579113112,18.154652 C1.26179933,18.8373382 2.36087573,18.8373382 3.04356195,18.154652 L9.36688256,11.8313314 L15.6902032,18.154652 C16.3728894,18.8373382 17.4719658,18.8373382 18.154652,18.154652 C18.8324965,17.4719658 18.8324965,16.3680476 18.154652,15.6902032 L18.154652,15.6902032 Z" id="Shape" fill="#2C2B57 "></path>
+                    </g>
+                </svg>
+                </button>
+                <div class="withholding-stats">
+                    <div class="stat-comp">
+                        <table class="table-stats" border="0">
+
+                            <tr (click)="selectRow(1)" class="row" [class.active-row]="1 == activeRow">
+                                <td><i class="fa fa-circle givt-blue" aria-hidden="true"></i></td>
+                                <td>{{"Text_Transaction_Fee" | translate}}</td>
+                                <td>{{transactionCosts}}</td>
+                                <!--<td><div class="tooltip"><i class="fa fa-info-circle fa-lg " aria-hidden="true"></i>
+                                    <span class="blue tooltiptext">(...) aantal transacties maal <b>€ 0,08 transactiekosten</b>. (...) nieuwe gebruikers maal (<b>4x€ 0,125</b>) <b>mandaatkosten</b>.<hr/><b>{{paymentProviderTransactionCost}}</b></span>
+                                </div></td>-->
+                            </tr>
+                            <tr (click)="selectRow(2)" class="row" [class.active-row]="2 == activeRow">
+                                <td><i class="fa fa-circle givt-orange" aria-hidden="true"></i></td>
+                                <td>{{"Text_Stornering_Fee" | translate}}</td>
+                                <td>{{totalRTransactionCost}}</td>
+                                <!--
+                                <td><div class="tooltip"><i class="fa fa-info-circle fa-lg " aria-hidden="true"></i>
+                                    <span class="orange tooltiptext">(..) storneringen maal € 0,18 type 1. (..) storneringen maal € 1,20 type 2. + (debet bedragen)<hr/>€ 0,00</span>
+                                </div></td>-->
+                            </tr>
+                            <tr (click)="selectRow(3)" class="row" [class.active-row]="3 == activeRow">
+                                <td><i class="fa fa-circle givt-green" aria-hidden="true"></i></td>
+                                <td>{{"Text_Givt_Fee" | translate}}</td>
+                                <td>{{givtServiceCost}}</td>
+                                <!-- <td><div class="tooltip"><i class="fa fa-info-circle fa-lg " aria-hidden="true"></i>
+                                     <span class="green tooltiptext">{{value}} maal <b>4,5% kosten per donatie</b>.<hr/><b>{{givtServiceCost}}</b></span>
+                                 </div></td>-->
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="stat-calc" *ngIf="1 == activeRow">
+                        <table>
+                            <tr>
+                                <td>{{ "Text_Transaction_Fee_Mandate" | translate}}</td>
+                                <td class="column-spacing-30"></td>
+                                <td>{{mandateCosts}}</td>
+                                <td class="column-spacing-40"></td>
+                                <td>{{ Text_Info_Mandate }}</td>
+                            </tr>
+                            <tr>
+                                <td>{{"Text_Transaction_Fee_Transaction" | translate }}</td>
+                                <td class="column-spacing-30"></td>
+                                <td>{{transactionCost}}</td>
+                                <td class="column-spacing-40"></td>
+                                <td>{{Text_Info_Transaction}}</td>
+                            </tr>
+                            <tr>
+                                <td>{{"Text_Fee_Total" | translate}}</td>
+                                <td class="column-spacing-30"></td>
+                                <td>{{transactionCosts}}</td>
+                                <td class="column-spacing-40"></td>
+                                <td class="more-info tooltip">{{"Text_Deduction_InfoButton" | translate}}
+                                    <span class="green tooltiptext">
+                                 {{"Text_TransactionCost_MoreInfo" | translate }}
+                            </span>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div class="stat-calc" *ngIf="2 == activeRow">
+                        <table>
+                            <tr>
+                                <td>{{"Text_Deduction_Type1" | translate}}</td>
+                                <td class="column-spacing-30"></td>
+                                <td>{{RTransactionCostType1}}</td>
+                                <td class="column-spacing-40"></td>
+                                <td>{{Text_Info_Type1}} <br />{{Total_Stornation}}</td>
+                            </tr>
+                            <tr>
+                                <td>{{"Text_Deduction_Type2" | translate}}</td>
+                                <td class="column-spacing-30"></td>
+                                <td>{{RTransactionCostType2}}</td>
+                                <td class="column-spacing-40"></td>
+                                <td class="big-cell">{{Text_Info_Type2}}<br />{{Total_Stornation2}}</td>
+                            </tr>
+                            <tr>
+                                <td>{{"Text_Fee_Total" | translate}}</td>
+                                <td class="column-spacing-30"></td>
+                                <td>{{totalRTransactionCost}}</td>
+                                <td class="column-spacing-40"></td>
+                                <td class="more-info tooltip">{{"Text_Deduction_InfoButton" | translate}}
+                                    <span class="green tooltiptext" [innerHTML]="'Text_Stornos_MoreInfo' | translate">
+
+                            </span>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+
+
+                    <div class="stat-calc" *ngIf="3 == activeRow">
+                        <table>
+                            <tr>
+                                <td>{{"Text_Fee_Total" | translate}}</td>
+                                <td class="column-spacing-30"></td>
+                                <td>{{givtServiceCost}}</td>
+                                <td class="column-spacing-40"></td>
+                                <td class="more-info tooltip">{{"Text_Deduction_InfoButton" | translate }}
+                                    <span class="green tooltiptext">
+                                {{"Text_GivtServiceFee_MoreInfo" | translate }}
+                            </span>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </section>
+
