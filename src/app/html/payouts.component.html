@@ -2,23 +2,17 @@
 <section class="section-collects">
     <h2>Overzicht van uitbetalingen</h2>
     <hr class="collect-hr"/>
-    <table cellpadding="20px">
-        <tr *ngFor="let payout of payouts | reverse" class="show-collect">
-            <td class="date">Totaal uitbetaald € {{payout.TotalPaid}}</td>
-            <td class="date">{{payout.BeginDate}} - {{payout.EndDate}}</td>
-        </tr>
-    </table>
 </section>
     <section *ngFor="let payout of payouts | reverse">
         <section class="show-collect center-me" >
             <time>
-                <span class="date">{{payout.BeginDate | date:'d'}}/{{payout.BeginDate | date:'MMMM'}}/{{payout.BeginDate | date:'y'}} - {{payout.EndDate}}</span>
+                <span class="date">{{payout.BeginDate}} - {{payout.EndDate}}</span>
                 <span class="time">Weeknummer</span>
                 <span *ngIf="showCosts"></span>
             </time>
             <div class="collection-buttons">
                 <span>{{value}}</span>
-                <button class="icon" [class.fill-green]="showCosts == true" (click)="showCosts = !showCosts">
+                <button class="icon" [class.fill-green]="payout.hidden == true" (click)="payout.hidden = !payout.hidden">
                     <svg width="23px" height="23px" viewBox="8 8 23 23" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                         <!-- Generator: Sketch 40.3 (33839) - http://www.bohemiancoding.com/sketch -->
                         <desc>Created with Sketch.</desc>
@@ -29,9 +23,9 @@
             </div>
         </section>
         <section class="white-bg">
-            <div class="withholding-overview center-me" *ngIf="showCosts">
+            <div class="withholding-overview center-me" *ngIf="payout.hidden">
                 <h2>{{"Text_OverviewDeduction" | translate}}</h2>
-                <button class="close-button" (click)="showCosts = !showCosts">
+                <button class="close-button" (click)="payout.hidden = !payout.hidden">
                     {{"Text_Deduction_CloseButton" | translate}} <svg width="19px" height="19px" viewBox="944 525 19 19" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                     <!-- Generator: Sketch 40.3 (33839) - http://www.bohemiancoding.com/sketch -->
                     <desc>Created with Sketch.</desc>
