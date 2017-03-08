@@ -12,4 +12,5 @@ export class Payout{
     RTransactionT1Amount: string;
     RTransactionT2Count: string;
     RTransactionT2Amount: string;
+    GivtServiceFee: string;
 }

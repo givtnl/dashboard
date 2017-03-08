@@ -16,6 +16,8 @@ export class PayoutsComponent implements OnInit{
 
     transactionCost = 0.08;
     mandateCost = 0.125;
+    R1Cost = 0.18;
+    R2Cost = 1.20;
 
 
     constructor(private apiService: ApiClientService) {
@@ -38,6 +40,14 @@ export class PayoutsComponent implements OnInit{
                     x.TransactionCost =  this.displayValue(x.TransactionCount * this.transactionCost);
                     x.MandateCost =  this.displayValue(x.MandateCostCount * this.mandateCost);
                     x.TotalTransactionCost = this.displayValue(x.TransactionCount * this.transactionCost + x.MandateCostCount * this.mandateCost);
+
+                    x.StornoT1 = this.displayValue(x.RTransactionT1Count * this.R1Cost);
+                    x.StornoT2 = this.displayValue(x.RTransactionT2Count * this.R2Cost);
+                    x.TotalStorno = this.displayValue(x.RTransactionT1Count * this.R1Cost + x.RTransactionT2Count * this.R2Cost);
+
+                    x.TotalGivtFee = this.displayValue(x.GivtServiceFee);
+
+
                     x.activeRow = 1;
                 }
             });
