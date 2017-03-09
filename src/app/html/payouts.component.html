@@ -1,17 +1,16 @@
 <my-navigation></my-navigation>
 <section class="section-collects">
-    <h2>Overzicht van uitbetalingen</h2>
+    <h2>{{"Payout_OverviewPayouts" | translate}}</h2>
     <hr class="collect-hr"/>
 </section>
     <section *ngFor="let payout of payouts | reverse">
         <section class="show-collect center-me" >
             <time>
                 <span class="date">{{payout.BeginDate}} - {{payout.EndDate}}</span>
-                <span class="time">Weeknummer</span>
                 <span *ngIf="showCosts"></span>
             </time>
             <div class="collection-buttons">
-                <span>{{value}}</span>
+                <span class="total-payed">{{"Payout_TotalPayedOut" | translate}} <span id="big">{{payout.TotalPaidText}}</span></span>
                 <button class="icon" [class.fill-green]="payout.hidden == false" (click)="openPayout(payout)">
                     <svg width="23px" height="23px" viewBox="8 8 23 23" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                         <!-- Generator: Sketch 40.3 (33839) - http://www.bohemiancoding.com/sketch -->
@@ -24,7 +23,7 @@
         </section>
         <section class="white-bg">
             <div class="withholding-overview center-me" *ngIf="!payout.hidden">
-                <h2>{{"Text_OverviewDeduction" | translate}}</h2>
+                <h2 class="black" style="font-size: 20px">{{"Payout_Overview" | translate}}</h2>
                 <button class="close-button" (click)="closePayout(payout)">
                     {{"Text_Deduction_CloseButton" | translate}} <svg width="19px" height="19px" viewBox="944 525 19 19" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                     <!-- Generator: Sketch 40.3 (33839) - http://www.bohemiancoding.com/sketch -->
@@ -35,8 +34,20 @@
                     </g>
                 </svg>
                 </button>
+                <table class="table-stats center-me overview-payout" border="0">
+                <tr>
+                    <td>{{"Payout_CommittedAmount" | translate}}</td>
+                    <td>{{payout.Admitted}}</td>
+                </tr>
+                <tr>
+                    <td>{{"Payout_Withholdings" | translate}}</td>
+                    <td>{{payout.WithholdAmount}}</td>
+                </tr>
+                </table>
                 <div class="withholding-stats">
+
                     <div class="stat-comp">
+
                         <table class="table-stats" border="0">
 
                             <tr (click)="selectRow(payout, 1)" class="row" [class.active-row]="1 == payout.activeRow">
@@ -56,21 +67,28 @@
                             </tr>
                         </table>
                     </div>
-                    <div class="stat-calc" *ngIf="1 == payout.activeRow">
+                    <div class="stat-calc alt-stat" *ngIf="1 == payout.activeRow">
                         <table>
                             <tr>
                                 <td>{{ "Text_Transaction_Fee_Mandate" | translate}}</td>
                                 <td class="column-spacing-30"></td>
                                 <td>{{payout.MandateCost}}</td>
                                 <td class="column-spacing-40"></td>
-                                <td>{{ Text_Info_Mandate }}</td>
+                                <td>{{ payout.Text_Info_Mandate }}</td>
                             </tr>
                             <tr>
-                                <td>{{"Text_Transaction_Fee_Transaction" | translate }}</td>
+                            <td>{{"Text_Transaction_Fee_Transaction" | translate }}</td>
+                            <td class="column-spacing-30"></td>
+                            <td>{{payout.TransactionCost}}</td>
+                            <td class="column-spacing-40"></td>
+                            <td>{{ payout.Text_Info_Transaction}}</td>
+                        </tr>
+                            <tr>
+                                <td>{{"Payout_PayoutCosts" | translate }}</td>
                                 <td class="column-spacing-30"></td>
-                                <td>{{payout.TransactionCost}}</td>
+                                <td>{{payout.PayoutCost}}</td>
                                 <td class="column-spacing-40"></td>
-                                <td>{{Text_Info_Transaction}}</td>
+                                <td></td>
                             </tr>
                             <tr>
                                 <td>{{"Text_Fee_Total" | translate}}</td>
@@ -93,14 +111,14 @@
                                 <td class="column-spacing-30"></td>
                                 <td>{{payout.StornoT1}}</td>
                                 <td class="column-spacing-40"></td>
-                                <td>{{Text_Info_Type1}} <br />{{Total_Stornation}}</td>
+                                <td>{{payout.Text_Info_Type1}} <br />{{payout.Total_Stornation}}</td>
                             </tr>
                             <tr>
                                 <td>{{"Text_Deduction_Type2" | translate}}</td>
                                 <td class="column-spacing-30"></td>
                                 <td>{{payout.StornoT2}}</td>
                                 <td class="column-spacing-40"></td>
-                                <td class="big-cell">{{Text_Info_Type2}}<br />{{Total_Stornation2}}</td>
+                                <td class="big-cell">{{payout.Text_Info_Type2}}<br />{{payout.Total_Stornation2}}</td>
                             </tr>
                             <tr>
                                 <td>{{"Text_Fee_Total" | translate}}</td>
@@ -133,6 +151,12 @@
                         </table>
                     </div>
                 </div>
+                <table class="table-stats center-me overview-payout last-row" border="0">
+                    <tr class="black">
+                        <td>{{"Payout_PayedOutAmount" | translate}}</td>
+                        <td style="font-size:26px;">{{payout.TotalPaidText}}</td>
+                    </tr>
+                </table>
             </div>
         </section>
 
