@@ -8,7 +8,7 @@ import {TranslateService} from 'ng2-translate';
     templateUrl: '../html/forgotpassword.component.html',
     styleUrls: ['../css/forgotpassword.component.css']
 })
-export class LoginComponent  {
+export class ForgotPasswordComponent  {
     passwordHidden: boolean;
     eyeColor: string;
     userName: string;

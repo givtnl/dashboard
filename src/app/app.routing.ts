@@ -9,11 +9,13 @@ import {DashboardComponent} from "./components/dashboard.component";
 import {CollectsComponent} from "./components/collects.component";
 import {PayoutsComponent} from "./components/payouts.component";
 import {UnAuthorizeComponent} from "./components/unauthorized.component";
+import {ForgotPasswordComponent} from "./components/forgotpassword.component";
 
 const routes: Routes = [
     { path: '', component: LoginComponent, pathMatch: 'full', canActivate: [LoginComponentGuard] },
     { path: 'dashboard', component: DashboardComponent, canActivate: [LoggedInGuard] },
     { path: 'login',  component: LoginComponent, canActivate: [LoginComponentGuard] },
+    { path: 'forgotpassword',  component: ForgotPasswordComponent, canActivate: [LoginComponentGuard] },
     { path: 'collects', component: CollectsComponent, canActivate: [LoggedInGuard]},
     { path: 'payouts', component: PayoutsComponent, canActivate: [LoggedInGuard]},
     { path: 'unauthorized', component: UnAuthorizeComponent },
