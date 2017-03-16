@@ -59,4 +59,25 @@ export class UserService {
     getAccessToken(){
         return localStorage.getItem('access_token') || sessionStorage.getItem('access_token');
     }
+
+    requestNewPass(email){
+        let headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        return this.http.post(environment.apiUrl + '/api/Users/ForgotPassword', "\""+email+"\"", { headers })
+            .toPromise()
+            .then(res=>{
+                return res;
+            });
+    }
+
+    saveNewPass(email, token, newPass){
+        let headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        var x = {"userID":email, "passwordToken":token,"newPassword":newPass}
+        return this.http.post(environment.apiUrl + '/api/Users/ResetPassword', x, { headers })
+            .toPromise()
+            .then(res=>{
+                return res;
+            });
+    }
 }

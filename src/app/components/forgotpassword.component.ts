@@ -15,10 +15,15 @@ export class ForgotPasswordComponent  implements OnInit{
     password: string;
     stay_loggedin: boolean;
     error_message: string;
+
+    /*  booleans for flow  */
     email_given: boolean = false;
     saved : boolean = false;
     no_email_given : boolean = false;
-    email : string;
+    /*  ------  */
+
+    email: string;
+    token: string;
 
 
     translate: TranslateService;
@@ -30,42 +35,42 @@ export class ForgotPasswordComponent  implements OnInit{
     }
 
     ngOnInit(){
-        console.log("i'm initialized.");
         this.route
             .queryParams
             .subscribe(params => {
-                console.log(params);
                 if(params.email){
                     this.email_given = true;
                     this.email = params.email;
                 }else{
                     this.no_email_given = true;
                 }
+                if(params.code){
+                    this.token = params.code;
+                }
                 this.queryParams = params;
             });
     }
 
     requestPass(){
-        this.error_message = "";
-        if(!this.userName || !this.password){
-            this.translate.get("Error_FillAllFieldsIn").subscribe(value => {this.error_message = value;});
-            return;
-        }else{
-            this.email_given = false;
-            this.saved = true;
-        }
-        /*this.userService.login(this.userName, this.password, this.stay_loggedin)
+        this.userService.requestNewPass(this.userName)
             .then(resp => {
-                    this.router.navigate(['/dashboard']);
-                },
-                error => this.translate.get("Error_WrongEmailOrPassword").subscribe(value => {this.error_message = value;})
-            );*/
+                if(resp.ok == true)
+                {
+                    console.log('email requested');
+                }
+            });
     }
 
     save(){
-        this.saved = true;
-        this.email_given = false;
-        this.no_email_given = false;
+        this.userService.saveNewPass(this.email, this.token, this.password)
+            .then(res => {
+                if(res.ok)
+                {
+                    this.saved = true;
+                    this.email_given = false;
+                    this.no_email_given = false;
+                }
+            })
     }
 
     showPass(){
