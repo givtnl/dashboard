@@ -22,6 +22,8 @@ import {DataService} from "./services/data.service";
 import {UnAuthorizeComponent} from "./components/unauthorized.component";
 import {ReversePipe} from "./pipes/reverse.pipe";
 import {ForgotPasswordComponent} from "./components/forgotpassword.component";
+import {HashLocationStrategy, Location, LocationStrategy} from '@angular/common';
+
 
 export function createTranslateLoader(http: Http) {
   return new TranslateStaticLoader(http, './assets/i18n', '.json');
@@ -35,6 +37,6 @@ export function createTranslateLoader(http: Http) {
   }),CalendarModule],
   declarations: [ AppComponent, LoginComponent, ForgotPasswordComponent , NavigationComponent, DashboardComponent, CollectsComponent, UnAuthorizeComponent, ReversePipe, PayoutsComponent ],
   bootstrap:    [ AppComponent ],
-  providers: [ UserService, ApiClientService, LoggedInGuard, LoginComponentGuard,DataService, { provide: LOCALE_ID, useValue: "nl-BE" }  ]
+  providers: [ UserService, ApiClientService, LoggedInGuard, LoginComponentGuard,DataService, { provide: LOCALE_ID, useValue: "nl-BE" }, {provide: LocationStrategy, useClass: HashLocationStrategy}  ]
 })
 export class AppModule { }
