@@ -73,7 +73,9 @@ export class ForgotPasswordComponent  implements OnInit{
                 {
                     this.resetNav();
                     this.email_sent = true;
-                    this.error_message = "Uw nieuw wachtwoord werd aangevraagd.";
+                    this.translate.get('PW_RequestedPW').subscribe((res: string) => {
+                        this.error_message = res;
+                    });
                 }
             });
     }
