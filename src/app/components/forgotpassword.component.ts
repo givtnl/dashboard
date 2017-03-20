@@ -21,10 +21,13 @@ export class ForgotPasswordComponent  implements OnInit{
     saved : boolean = false;
     no_email_given : boolean = false;
     wrong: boolean = false;
+    email_sent: boolean = false;
     /*  ------  */
 
     email: string;
     token: string;
+
+    mobile: boolean;
 
 
     translate: TranslateService;
@@ -36,6 +39,8 @@ export class ForgotPasswordComponent  implements OnInit{
     }
 
     ngOnInit(){
+        this.mobile =  /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        this.resetNav();
         this.route
             .queryParams
             .subscribe(params => {
@@ -57,10 +62,8 @@ export class ForgotPasswordComponent  implements OnInit{
             .then(resp => {
                 if(resp.ok == true)
                 {
-                    this.saved = false;
-                    this.email_given = false;
-                    this.no_email_given = false;
-                    this.wrong = true;
+                    this.resetNav();
+                    this.email_sent = true;
                     this.error_message = "Uw nieuw wachtwoord werd aangevraagd.";
                 }
             });
@@ -70,23 +73,17 @@ export class ForgotPasswordComponent  implements OnInit{
         this.error_message = null;
         this.userService.saveNewPass(this.email, this.token, this.password)
             .then(res => {
+                this.resetNav();
                 if(res.ok)
                 {
                     console.log(res);
                     this.saved = true;
-                    this.email_given = false;
-                    this.no_email_given = false;
                 }else{
-                    this.saved = false;
-                    this.email_given = false;
-                    this.no_email_given = false;
                     this.wrong = true;
                 }
             })
             .catch(err =>{
-                this.saved = false;
-                this.email_given = false;
-                this.no_email_given = false;
+                this.resetNav();
                 this.wrong = true;
                 this.error_message = err._body;
                 console.log(err);
@@ -98,6 +95,7 @@ export class ForgotPasswordComponent  implements OnInit{
         this.route
             .queryParams
             .subscribe(params => {
+                this.resetNav();
                 if(params.email){
                     this.email_given = true;
                     this.email = params.email;
@@ -121,6 +119,14 @@ export class ForgotPasswordComponent  implements OnInit{
             document.getElementById("pass").type = "password";
             this.eyeColor = "#BCB9C9";
         }
+    }
+
+    resetNav(){
+        this.saved = false;
+        this.email_given = false;
+        this.no_email_given = false;
+        this.wrong = false;
+        this.email_sent = false;
     }
 }
 
