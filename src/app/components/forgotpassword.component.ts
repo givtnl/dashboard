@@ -61,6 +61,11 @@ export class ForgotPasswordComponent  implements OnInit{
 
     requestPass(){
         this.disabled = true;
+        if(!this.userName)
+        {
+            this.disabled = false;
+            return;
+        }
         this.userService.requestNewPass(this.userName)
             .then(resp => {
                 this.disabled = false;
