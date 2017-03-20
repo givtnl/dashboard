@@ -24,6 +24,8 @@ export class ForgotPasswordComponent  implements OnInit{
     email_sent: boolean = false;
     /*  ------  */
 
+    disabled : boolean = false;
+
     email: string;
     token: string;
 
@@ -58,8 +60,10 @@ export class ForgotPasswordComponent  implements OnInit{
     }
 
     requestPass(){
+        this.disabled = true;
         this.userService.requestNewPass(this.userName)
             .then(resp => {
+                this.disabled = false;
                 if(resp.ok == true)
                 {
                     this.resetNav();
@@ -70,9 +74,11 @@ export class ForgotPasswordComponent  implements OnInit{
     }
 
     save(){
+        this.disabled = true;
         this.error_message = null;
         this.userService.saveNewPass(this.email, this.token, this.password)
             .then(res => {
+                this.disabled = false;
                 this.resetNav();
                 if(res.ok)
                 {
@@ -83,6 +89,7 @@ export class ForgotPasswordComponent  implements OnInit{
                 }
             })
             .catch(err =>{
+                this.disabled = false;
                 this.resetNav();
                 this.wrong = true;
                 this.error_message = err._body;
