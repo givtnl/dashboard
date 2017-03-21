@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import { UserService } from 'app/services/user.service';
 import {Router, ActivatedRoute} from '@angular/router';
 import {TranslateService} from 'ng2-translate';
@@ -6,7 +6,8 @@ import {TranslateService} from 'ng2-translate';
 @Component({
     selector: 'forgotpassword',
     templateUrl: '../html/forgotpassword.component.html',
-    styleUrls: ['../css/forgotpassword.component.css']
+    styleUrls: ['../css/forgotpassword.component.css'],
+    encapsulation: ViewEncapsulation.None
 })
 export class ForgotPasswordComponent  implements OnInit{
     passwordHidden: boolean;
