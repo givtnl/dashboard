@@ -6,8 +6,7 @@ import {TranslateService} from 'ng2-translate';
 @Component({
     selector: 'forgotpassword',
     templateUrl: '../html/forgotpassword.component.html',
-    styleUrls: ['../css/forgotpassword.component.css'],
-    encapsulation: ViewEncapsulation.None
+    styleUrls: ['../css/forgotpassword.component.css']
 })
 export class ForgotPasswordComponent  implements OnInit{
     passwordHidden: boolean;
