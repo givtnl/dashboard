@@ -42,7 +42,7 @@ export class PayoutsComponent implements OnInit{
                     x.TotalPaidText = this.displayValue(x.TotalPaid);
                     x.TransactionCost =  this.displayValue(x.TransactionCount * this.transactionCost);
                     x.MandateCost =  this.displayValue(x.MandateCostCount * this.mandateCost);
-                    x.TotalTransactionCost = this.displayValue(x.TransactionCount * this.transactionCost + x.MandateCostCount * this.mandateCost);
+                    x.TotalTransactionCost = this.displayValue(x.TransactionCount * this.transactionCost + x.MandateCostCount * this.mandateCost + 0.18);
 
                     x.StornoT1 = this.displayValue(x.RTransactionT1Count * this.R1Cost + x.RTransactionT1Amount);
                     x.StornoT2 = this.displayValue(x.RTransactionT2Count * this.R2Cost + x.RTransactionT2Amount);
@@ -76,7 +76,7 @@ export class PayoutsComponent implements OnInit{
                     });
 
                     x._storno = ((x.RTransactionT1Count * this.R1Cost) + x.RTransactionT1Amount) + ((x.RTransactionT2Count * this.R2Cost) + x.RTransactionT2Amount);
-                    x._transaction = x.TransactionCount * this.transactionCost + x.MandateCostCount * this.mandateCost;
+                    x._transaction = x.TransactionCount * this.transactionCost + x.MandateCostCount * this.mandateCost + 0.18;
                     x.WithholdAmount = this.displayValue(x._storno + x._transaction + x.GivtServiceFee);
 
                     x.Admitted = this.displayValue((x._storno + x._transaction + x.GivtServiceFee) + x.TotalPaid);
