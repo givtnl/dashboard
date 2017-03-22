@@ -55,6 +55,9 @@ export class ForgotPasswordComponent  implements OnInit{
                 if(params.code){
                     this.token = params.code;
                 }
+                if(params.e){
+                    this.userName = params.e;
+                }
                 this.queryParams = params;
             });
     }

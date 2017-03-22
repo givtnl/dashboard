@@ -50,4 +50,9 @@ export class LoginComponent  {
             this.eyeColor = "#BCB9C9";
         }
     }
+
+    forgotPW()
+    {
+        this.router.navigate(['/forgotpassword'],  { queryParams: { e: this.userName }});
+    }
 }
