@@ -22,6 +22,7 @@ export class ForgotPasswordComponent  implements OnInit{
     no_email_given : boolean = false;
     wrong: boolean = false;
     email_sent: boolean = false;
+    coming_from_app: boolean = false;
     /*  ------  */
 
     disabled : boolean = false;
@@ -57,6 +58,9 @@ export class ForgotPasswordComponent  implements OnInit{
                 }
                 if(params.e){
                     this.userName = params.e;
+                }
+                if(params.app){
+                    this.coming_from_app = params.app;
                 }
                 this.queryParams = params;
             });
