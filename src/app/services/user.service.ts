@@ -63,7 +63,7 @@ export class UserService {
     requestNewPass(email){
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
-        return this.http.post(environment.apiUrl + '/api/Users/ForgotPassword', "\""+email+"\"", { headers })
+        return this.http.post(environment.apiUrl + '/api/Users/ForgotPassword?dashboard=true', "\""+email+"\"", { headers })
             .toPromise()
             .then(res=>{
                 return res;
