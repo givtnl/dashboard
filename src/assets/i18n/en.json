@@ -65,11 +65,12 @@
     "PW_OpenApp": "Open Givt app",
     "PW_SavedDashboardText": "Your password has been saved, go back to the dashboard to log in.",
     "PW_SavedAppText": "Your password has been saved, go back to the app to log in.",
-    "PW_MakeAPassword": "Enter a new password.",
+    "PW_MakeAPassword": "Enter a new password",
     "PW_PWPolicy": "The password should contain at least 7 characters including a capital and a digit.",
     "PW_Save": "Save",
     "PW_PlaceholderPW": "New password",
     "PW_GoBack": "Go back",
     "PW_ForgotPassword": "Forgot password?",
-    "PW_RequestedPW": "Check your inbox to reset your password."
+    "PW_RequestedPW": "Check your inbox to reset your password.",
+    "PW_Saved": "Your password has been saved. You can now login into the app with your new credentials."
 }
