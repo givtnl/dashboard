@@ -60,7 +60,7 @@ export class ForgotPasswordComponent  implements OnInit{
                     this.userName = params.e;
                 }
                 if(params.app){
-                    this.coming_from_app = params.app;
+                    this.coming_from_app = (params.app === "true");
                 }
                 this.queryParams = params;
             });
