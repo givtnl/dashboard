@@ -1,3 +1,163 @@
-/**
- * Created by Lennie on 28/03/2017.
- */
+.section-collects{
+    width: 900px;
+    margin: 0 auto;
+    position: relative;
+}
+
+.collect-hr{
+    border:0;
+    border-bottom: 1px solid #E3E2E7;
+    width: 940px;
+    margin: 0 auto;
+}
+
+h2{
+    margin: 0;
+    font-family: 'Avenir_Black';
+    font-size:18px;
+    color: #2C2B57;
+    text-align: center;
+    font-weight: normal;
+    padding: 25px 0;
+    box-sizing: border-box;
+}
+h3{
+    font-family: 'Avenir_Roman';
+    font-size:18px;
+    margin: 0 0 30px 0 ;
+    color: #2C2B57;
+    text-align:center;
+    font-weight: normal;
+
+}
+
+.search-org{
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.search-org input{
+    background: white;
+    border: 1px solid #E3E2E7;
+    outline:0;
+    font-family: Avenir_Heavy;
+    font-size: 16px;
+    padding: 0 12px;
+    box-sizing: border-box;
+    height: 40px;
+    width: 380px;
+
+}
+
+.search-org button{
+    background-color: #2C2B57;
+    font-family: Avenir_Black;
+    font-size: 18px;
+    height: 40px;
+    border: 0;
+    color:white;
+    padding: 0 30px;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+.search-content{
+    display: inline-block;
+    position: relative;
+}
+
+.search-results{
+    text-align: left;
+    position: absolute;
+    display: inline-block;
+    left: 0;
+    width: 100%;
+}
+
+.search-results ul{
+    list-style-type: none;
+    padding:0;
+    margin:0;
+}
+
+.search-results ul li {
+    font-family: Avenir_Roman;
+    color: #2C2B57;
+    font-size: 16px;
+    background: white;
+    border: 1px solid #E3E2E7;
+    border-top:0;
+    height: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0 12px;
+    cursor: pointer;
+}
+
+.flex-section{
+    display: flex;
+    flex-direction: row;
+}
+
+.flex-section article{
+    width: 50%;
+}
+
+.table{
+    font-family: Avenir_Roman;
+    color: #2C2B57;
+    font-size: 16px;
+}
+
+.table tr td{
+    padding-top:10px;
+    padding-bottom: 10px;
+}
+
+.table tr td:first-child{
+    font-family: Avenir_Black;
+    padding-right: 30px;
+}
+
+.select-list{
+    min-width: 250px;
+    font-family: Avenir_Roman;
+    font-size: 16px;
+    color: #2C2B57;
+    padding: 12px 6px;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+
+.disabled {
+    background: gray !important;
+}
+
+.warning {
+    color: red !important;
+}
+
+.buttons{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.buttons button{
+    margin-bottom: 20px;
+    background-color: #2C2B57;
+    color:white;
+    font-family: Avenir_Black;
+    font-size: 18px;
+    text-align: center;
+    width: 300px;
+    height: 50px;
+    border:0;
+    align-self: center;
+    cursor: pointer;
+}
+
+.buttons button:last-child{
+    margin-bottom: 0;
+}

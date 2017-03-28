@@ -1,0 +1,78 @@
+<my-navigation></my-navigation>
+<section class="section-collects">
+    <h2>{{title}}</h2>
+    <h3>{{subtitle}}</h3>
+    <div class="search-org">
+        <div class="search-content">
+            <input [(ngModel)]="search" (ngModelChange)="change($event)" type="text">
+            <div class="search-results" *ngIf="filteredOrganisations">
+                <ul>
+                    <li *ngFor="let i of filteredOrganisations" (click)="select(i)">{{i.name}}, {{i.city}}</li>
+                </ul>
+            </div>
+
+        </div>
+        <button (click)="searchOrg()" type="submit" [class.disabled]="disabled">{{searchBtn}}</button>
+    </div>
+    <hr class="collect-hr"/>
+    <div *ngIf="selectedOrganisation">
+        <h2>De Pijler</h2>
+        <section class="flex-section">
+            <article>
+                <table class="table">
+                    <tr>
+                        <td [class.warning]="!selectedOrganisation.name">Naam</td>
+                        <td>{{selectedOrganisation.name}}</td>
+                    </tr>
+                    <tr>
+                        <td [class.warning]="!selectedOrganisation.street">Straat</td>
+                        <td>{{selectedOrganisation.street}}</td>
+                    </tr>
+                    <tr>
+                        <td [class.warning]="!selectedOrganisation.city">Stad</td>
+                        <td>{{selectedOrganisation.city}}</td>
+                    </tr>
+                    <tr>
+                        <td [class.warning]="!selectedOrganisation.zipcode">Postcode</td>
+                        <td>{{selectedOrganisation.zipcode}}</td>
+                    </tr>
+                    <tr>
+                        <td [class.warning]="!selectedOrganisation.country">Land</td>
+                        <td>{{selectedOrganisation.country}}</td>
+                    </tr>
+                    <tr>
+                        <td [class.warning]="selectedOrganisation.contacts.length == 0">Contactpersoon</td>
+                        <td>
+                            <span *ngIf="selectedOrganisation.contacts.length == 1">{{selectedOrganisation.contacts[0].name}}</span>
+                            <select class="select-list" *ngIf="selectedOrganisation.contacts.length > 1">
+                                <option *ngFor="let s of selectedOrganisation.contacts" value="">{{s.name}}</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td [class.warning]="!selectedOrganisation.email">Email</td>
+                        <td>{{selectedOrganisation.email}}</td>
+                    </tr>
+                    <tr>
+                        <td [class.warning]="!selectedOrganisation.telephone">Telefoon</td>
+                        <td>{{selectedOrganisation.telephone}}</td>
+                    </tr>
+                    <tr>
+                        <td [class.warning]="!selectedOrganisation.iban">IBAN</td>
+                        <td>{{selectedOrganisation.iban}}</td>
+                    </tr>
+                    <tr>
+                        <td>Aangesloten sinds</td>
+                        <td>{{selectedOrganisation.name}}</td>
+                    </tr>
+                </table>
+            </article>
+            <article class="buttons">
+                <button>Vervolledig gegevens in CRM</button>
+                <button>Mandaat aanvragen</button>
+                <button>Kerk registreren</button>
+            </article>
+        </section>
+    </div>
+
+</section>

@@ -23,6 +23,9 @@ import {UnAuthorizeComponent} from "./components/unauthorized.component";
 import {ReversePipe} from "./pipes/reverse.pipe";
 import {ForgotPasswordComponent} from "./components/forgotpassword.component";
 import {HashLocationStrategy, Location, LocationStrategy} from '@angular/common';
+import {MandateComponent} from "./components/mandate.component";
+
+import { Ng2CompleterModule } from "ng2-completer";
 
 
 export function createTranslateLoader(http: Http) {
@@ -30,12 +33,12 @@ export function createTranslateLoader(http: Http) {
 }
 
 @NgModule({
-  imports:      [ BrowserModule, AppRoutingModule, HttpModule, FormsModule, AppRoutingModule, TranslateModule.forRoot({
+  imports:      [ BrowserModule,Ng2CompleterModule,  AppRoutingModule, HttpModule, FormsModule, AppRoutingModule, TranslateModule.forRoot({
     provide: TranslateLoader,
     useFactory: (createTranslateLoader),
     deps: [Http]
   }),CalendarModule],
-  declarations: [ AppComponent, LoginComponent, ForgotPasswordComponent , NavigationComponent, DashboardComponent, CollectsComponent, UnAuthorizeComponent, ReversePipe, PayoutsComponent ],
+  declarations: [ AppComponent, MandateComponent,  LoginComponent, ForgotPasswordComponent , NavigationComponent, DashboardComponent, CollectsComponent, UnAuthorizeComponent, ReversePipe, PayoutsComponent ],
   bootstrap:    [ AppComponent ],
   providers: [ UserService, ApiClientService, LoggedInGuard, LoginComponentGuard,DataService, { provide: LOCALE_ID, useValue: "nl-BE" }, {provide: LocationStrategy, useClass: HashLocationStrategy}  ]
 })
