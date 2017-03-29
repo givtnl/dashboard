@@ -16,7 +16,7 @@
     </div>
     <hr class="collect-hr"/>
     <div *ngIf="selectedOrganisation">
-        <h2>De Pijler</h2>
+        <h2>{{selectedOrganisation.name}}</h2>
         <section class="flex-section">
             <article>
                 <table class="table">
@@ -68,9 +68,9 @@
                 </table>
             </article>
             <article class="buttons">
-                <button>Vervolledig gegevens in CRM</button>
-                <button>Mandaat aanvragen</button>
-                <button>Kerk registreren</button>
+                <button >Vervolledig gegevens in CRM</button>
+                <button [class.disabled]="!this.selectedContact" (click)="registerMandate()">Mandaat aanvragen</button>
+                <button [class.disabled]="!this.SlimPayLink" (click)="registerOrganisation()" >Kerk registreren</button>
             </article>
         </section>
     </div>

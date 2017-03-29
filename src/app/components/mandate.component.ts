@@ -8,6 +8,8 @@ import {Router, ActivatedRoute} from '@angular/router';
 import {TranslateService} from 'ng2-translate';
 import { CompleterService, CompleterData } from 'ng2-completer';
 import {Organisation} from "../models/organisation";
+import { ApiClientService } from "app/services/api-client.service";
+
 
 
 @Component({
@@ -32,16 +34,22 @@ export class MandateComponent implements OnInit{
     organisations: Organisation[] = new Array();
     filteredOrganisations;
     selectedOrganisation;
+    selectedContact;
+    contacts;
+    SlimPayLink;
+    CRMId : string;
 
+    urlGetCompanies: string = "https://app.teamleader.eu/api/getCompanies.php?api_group=50213&amount=10&pageno=0&searchby=";
+    urlContactsByCompany : string = "https://app.teamleader.eu/api/getContactsByCompany.php?api_group=50213&company_id=";
+    urlContactById : string = "https://app.teamleader.eu/api/getContact.php?api_group=50213&contact_id=";
 
-    apiUrl: string = "https://app.teamleader.eu/api/getCompanies.php?api_group=50213&api_secret=xD0PjX72gIzSUtj02BFIoTVtNOTT1Tdpm44wS2pZAOHk8Rb1iGzxqlR4ZANRjR6wL1TtT8ikNQuLxwCG323jdLe3bRKlyGHaxqthoCr1jMDG86c2Y6b2HgVJXwUm3smqJGyX9PPisjOrfRj3NlWlrHUf4FrXXEewbCkah0iA9XReF08ibUussexmKPaxkeTlG4lOUueU&amount=10&pageno=0&searchby=";
-    apiUrl2 : string = "https://app.teamleader.eu/api/getContactsByCompany.php?api_group=50213&api_secret=xD0PjX72gIzSUtj02BFIoTVtNOTT1Tdpm44wS2pZAOHk8Rb1iGzxqlR4ZANRjR6wL1TtT8ikNQuLxwCG323jdLe3bRKlyGHaxqthoCr1jMDG86c2Y6b2HgVJXwUm3smqJGyX9PPisjOrfRj3NlWlrHUf4FrXXEewbCkah0iA9XReF08ibUussexmKPaxkeTlG4lOUueU&company_id=";
     constructor(
         private userService: UserService,
         private router: Router,
         translate: TranslateService,
         private route: ActivatedRoute,
-        private http: Http
+        private http: Http,
+        private apiClient: ApiClientService
     )
     {
         for(let i = 0; i <5; i++)
@@ -65,18 +73,26 @@ export class MandateComponent implements OnInit{
     */
         this.disabled = true;
         this.searchBtn = "Laden...";
-        console.log("hello");
         let headers = new Headers({'Content-Type':'application/json'});
+        headers.append('Access-Control-Allow-Origin', '*');
+        headers.append('Access-Control-Allow-Methods','*');
+        headers.append('Access-Control-Allow-Headers','Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type');
         let options = new RequestOptions({headers:headers});
-        this.http.post(this.apiUrl + this.search, null, options)
-            .toPromise()
+
+
+        this.apiClient.getData("Admin/ThirdPartyToken?type=Teamleader")
             .then(data => {
-                this.filteredOrganisations = JSON.parse(data._body);
-                this.showFiltered = true;
-                this.searchBtn = "Zoeken";
-                this.disabled = false;
-            })
-            .catch(err => console.log(err));
+                this.CRMId = data.Teamleader;
+                console.log(this.CRMId);
+                this.apiClient.postData("Admin/CorsTunnelGet", {url : this.urlGetCompanies + this.search + "&api_secret=" + this.CRMId,body : "{}", headers: {}})
+                    .then(d => {
+                        this.filteredOrganisations = d;
+                        this.showFiltered = true;
+                        this.searchBtn = "Zoeken";
+                        this.disabled = false;
+                    })
+                    .catch(err => console.log(err));
+            });
 
     }
 
@@ -88,6 +104,7 @@ export class MandateComponent implements OnInit{
     }
 
     select(i){
+        this.selectedContact = null;
         console.log(i);
         this.searchBtn = "Laden...";
         this.disabled = true;
@@ -96,17 +113,76 @@ export class MandateComponent implements OnInit{
         this.selectedOrganisation.contacts = [];
         this.search = "";
         this.change();
-        let headers = new Headers({'Content-Type':'application/json'});
-        let options = new RequestOptions({headers:headers});
-        this.http.post(this.apiUrl2 + this.selectedOrganisation.id, null, options)
-            .toPromise()
+
+        this.apiClient.postData("Admin/CorsTunnelGet", {url: this.urlContactsByCompany + this.selectedOrganisation.id + "&api_secret=" + this.CRMId, body : "{}", headers: {}})
             .then(data => {
-                console.log(JSON.parse(data._body));
-                let contacts = JSON.parse(data._body);
-                this.selectedOrganisation.contacts = contacts;
+                this.selectedOrganisation.contacts = data;
                 this.disabled = false;
                 this.searchBtn = "Zoeken";
+
+                for(let i = 0; i < this.selectedOrganisation.contacts.length; i++)
+                {
+                    this.apiClient.postData("Admin/CorsTunnelGet", {url: this.urlContactById + this.selectedOrganisation.contacts[i].id + "&api_secret=" + this.CRMId, body : "{}", headers: {}})
+                        .then(d => {
+                            console.log(d);
+                            console.log(d.custom_fields['92267']);
+                            if(d.custom_fields['92267'] == "1"){
+                                console.log("hoera");
+                                this.selectedContact = d;
+
+
+                            } else {
+                                console.log("geen heoera");
+                            }
+
+                        });
+                }
+
+
+
+            });
+    }
+
+    registerMandate(){
+        if(!this.selectedOrganisation || !this.selectedContact){
+            return;
+        }
+        let o = this.selectedOrganisation;
+        let c = this.selectedContact;
+        let mandate = {
+            Mandate : {
+                Signatory : {
+                    email : o.email,
+                    familyName : c.surname,
+                    givenName : c.forename,
+                    companyName: o.name,
+                    telephone : c.telephone,
+                    bankAccount : {
+                        iban: o.iban
+                    },
+                    billingAddress : {
+                        city : o.city,
+                        country : o.country,
+                        postalCode : o.zipcode,
+                        street1 : o.street,
+                        street2 : "", //empty
+                    }
+
+                }
+            },
+            CrmId : this.selectedOrganisation.id.toString()
+        };
+
+        this.apiClient.postData("Mandate/Org", mandate )
+            .then(spl => {
+                this.SlimPayLink = spl;
             })
+
+    }
+
+    registerOrganisation(){
+        if(!this.SlimPayLink) return;
+        console.log(this.SlimPayLink);
     }
 
 }

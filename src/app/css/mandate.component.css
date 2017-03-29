@@ -132,6 +132,7 @@ h3{
 
 .disabled {
     background: gray !important;
+    cursor: not-allowed !important;
 }
 
 .warning {
