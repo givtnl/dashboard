@@ -39,7 +39,7 @@ export class MandateComponent implements OnInit{
     SlimPayLink;
     CRMId : string;
 
-    urlGetCompanies: string = "https://app.teamleader.eu/api/getCompanies.php?api_group=50213&amount=10&pageno=0&searchby=";
+    urlGetCompanies: string = "https://app.teamleader.eu/api/getCompanies.php?api_group=50213&amount=10&selected_customfields=92583&pageno=0&searchby=";
     urlContactsByCompany : string = "https://app.teamleader.eu/api/getContactsByCompany.php?api_group=50213&company_id=";
     urlContactById : string = "https://app.teamleader.eu/api/getContact.php?api_group=50213&contact_id=";
 
@@ -156,7 +156,8 @@ export class MandateComponent implements OnInit{
                     familyName : c.surname,
                     givenName : c.forename,
                     companyName: o.name,
-                    telephone : c.telephone,
+                    //telephone : c.telephone,
+                    telephone : "+31612345678",
                     bankAccount : {
                         iban: o.iban
                     },
@@ -172,7 +173,7 @@ export class MandateComponent implements OnInit{
             },
             CrmId : this.selectedOrganisation.id.toString()
         };
-
+        console.log(JSON.stringify(mandate));
         this.apiClient.postData("Mandate/Org", mandate )
             .then(spl => {
                 this.SlimPayLink = spl;
@@ -182,7 +183,24 @@ export class MandateComponent implements OnInit{
 
     registerOrganisation(){
         if(!this.SlimPayLink) return;
+        if(!this.selectedOrganisation || !this.selectedContact ) return;
+        if(!this.selectedOrganisation.cf_value_92583) return;
         console.log(this.SlimPayLink);
+        //todo: send mail to organisations with this link
+        let o = this.selectedOrganisation;
+        let c = this.selectedContact;
+        console.log(o);
+        console.log(c);
+        let email = {
+            Email : "lenniestockman@hotmail.com", //c.email
+            Admin : c.forename + " " + c.surname,
+            Organisation : o.name,
+            Amount : this.selectedOrganisation.cf_value_92583,
+            Link : this.SlimPayLink,
+        };
+
+        this.apiClient.postData("Organisation/SendMandateMail", email)
+            .then(d => console.log(d));
     }
 
 }
