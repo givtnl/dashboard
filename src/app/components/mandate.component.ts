@@ -239,7 +239,30 @@ export class MandateComponent implements OnInit{
 
     registerOrganisation()
     {
-        //todo : registreer organisatie
+        if(!this.selectedOrganisation || !this.selectedContact){
+            return;
+        }
+        let o = this.selectedOrganisation;
+        let c = this.selectedContact;
+        let organisation = {
+            Organisation : {
+                Name: o.cf_value_93168,
+                Address: o.street,
+                City: o.city,
+                PostalCode: o.zipcode,
+                Country: o.country,
+                TelNr: o.telephone,
+                Accounts: [
+                    {
+                        Number: o.iban, //iban
+                        Primary: true,
+                        Active: true
+                    }
+                ]
+            },
+            CrmId : this.selectedOrganisation.id.toString()
+        };
+        console.log(organisation);
     }
 
     openCRM(){
