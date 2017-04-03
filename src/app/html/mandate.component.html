@@ -76,7 +76,7 @@
                 </table>
             </article>
             <article class="buttons">
-                <button >Vervolledig gegevens in CRM</button>
+                <button (click)="openCRM()" >Vervolledig gegevens in CRM</button>
                 <button [class.disabled]="!this.selectedContact || this.selectedOrganisation.mandate_status" (click)="registerMandate()">Mandaat aanvragen</button>
                 <button [class.disabled]="!this.selectedOrganisation.mandate_status || this.incassoStatus" (click)="startIncasso()">Start incasso</button>
                 <button [class.disabled]="" (click)="registerOrganisation()" >Kerk registreren</button>

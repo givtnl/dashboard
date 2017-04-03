@@ -262,10 +262,14 @@ export class MandateComponent implements OnInit{
             },
             CrmId : this.selectedOrganisation.id.toString()
         };
-        console.log(organisation);
+        console.log(JSON.stringify(organisation));
+        this.apiClient.postData("Organisation", organisation)
+            .then(res => console.log(res));
     }
 
     openCRM(){
-        //open url https://app.teamleader.eu/company_detail.php?id=9666395
+        let url = "https://app.teamleader.eu/company_detail.php?id=";
+        if(this.selectedOrganisation)
+         window.location.href = url + this.selectedOrganisation.id;
     }
 }
