@@ -14,9 +14,11 @@ export class UserService {
 
     constructor(private dataService: DataService, private http: Http){
         this.loggedIn = !!dataService.getData("accessToken");
+        this.roles = dataService.getData("roles");
     }
 
     loggedIn: boolean = false;
+    roles: string = "";
     user: User = new User();
 
     login(username: string, password: string, stayloggedin: boolean = false){
@@ -42,8 +44,10 @@ export class UserService {
             .toPromise()
             .then(res => {
                 if(res.json().access_token){
+                    console.log(res);
                     this.loggedIn = true;
-                    this.dataService.writeData("accessToken", res.json().access_token, stayloggedin)
+                    this.dataService.writeData("accessToken", res.json().access_token, stayloggedin);
+                    this.dataService.writeData("roles", res.json().AccessRoles, false);
                 }
                 else{
                     return false;

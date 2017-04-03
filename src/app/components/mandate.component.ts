@@ -26,7 +26,7 @@ export class MandateComponent implements OnInit{
     showFiltered: boolean = false;
     search: string = "";
 
-    title: string = "Regeel mandaat voor een organisatie";
+    title: string = "Regel mandaat voor een organisatie";
     subtitle: string = "Zoek een organisatie bij naam om een mandaat te regelen.";
     searchBtn: string = "Zoeken";
     disabled: boolean = false;

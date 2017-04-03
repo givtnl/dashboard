@@ -16,23 +16,28 @@ export class NavigationComponent implements OnInit {
     instance_title: string;
     dataService: DataService;
 
+    showMandateLink = false;
+
     constructor(private userService: UserService, private router: Router, private translate:TranslateService, dataService: DataService, private apiService : ApiClientService){
         this.dataService = dataService;
     }
 
     ngOnInit(){
-        let title = this.dataService.getData("instanceTitle")
-        if(!title)
-        return this.apiService.getData('OrgAdminView/Org')
-            .then(res => {
-                this.instance_title = res;
-                this.dataService.writeData("instanceTitle", res);
-                return res;
-            }).catch(
-            )
+        let title = this.dataService.getData("instanceTitle");
+        if(!title){
+            return this.apiService.getData('OrgAdminView/Org')
+                .then(res => {
+                    this.instance_title = res;
+                    this.dataService.writeData("instanceTitle", res);
+                    return res;
+                }).catch(err => console.log(err));
+        }
         else{
                 this.instance_title = title;
         }
+
+        if(!!this.dataService.getData("roles"))
+            this.showMandateLink = this.dataService.getData("roles").includes("Admin");
     }
 
     logout(){

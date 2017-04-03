@@ -26,6 +26,7 @@ import {HashLocationStrategy, Location, LocationStrategy} from '@angular/common'
 import {MandateComponent} from "./components/mandate.component";
 
 import { Ng2CompleterModule } from "ng2-completer";
+import {AdminGuard} from "./guards/admin.guard";
 
 
 export function createTranslateLoader(http: Http) {
@@ -40,6 +41,6 @@ export function createTranslateLoader(http: Http) {
   }),CalendarModule],
   declarations: [ AppComponent, MandateComponent,  LoginComponent, ForgotPasswordComponent , NavigationComponent, DashboardComponent, CollectsComponent, UnAuthorizeComponent, ReversePipe, PayoutsComponent ],
   bootstrap:    [ AppComponent ],
-  providers: [ UserService, ApiClientService, LoggedInGuard, LoginComponentGuard,DataService, { provide: LOCALE_ID, useValue: "nl-BE" }, {provide: LocationStrategy, useClass: HashLocationStrategy}  ]
+  providers: [ UserService, ApiClientService, AdminGuard, LoggedInGuard, LoginComponentGuard,DataService, { provide: LOCALE_ID, useValue: "nl-BE" }, {provide: LocationStrategy, useClass: HashLocationStrategy}  ]
 })
 export class AppModule { }
