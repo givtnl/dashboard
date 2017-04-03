@@ -25,6 +25,10 @@
                         <td>{{selectedOrganisation.name}}</td>
                     </tr>
                     <tr>
+                        <td [class.warning]="!selectedOrganisation.name">Naam in app</td>
+                        <td>{{selectedOrganisation.cf_value_93168}}</td>
+                    </tr>
+                    <tr>
                         <td [class.warning]="!selectedOrganisation.street">Straat</td>
                         <td>{{selectedOrganisation.street}}</td>
                     </tr>
@@ -63,14 +67,18 @@
                     </tr>
                     <tr>
                         <td>Aangesloten sinds</td>
-                        <td>{{selectedOrganisation.name}}</td>
+                        <td>{{selectedOrganisation.date_added}}</td>
+                    </tr>
+                    <tr >
+                        <td>Mandaatstatus</td>
+                        <td *ngIf="selectedOrganisation.mandate_status">{{selectedOrganisation.mandate_status.PayProvMandateStatus}}</td>
                     </tr>
                 </table>
             </article>
             <article class="buttons">
                 <button >Vervolledig gegevens in CRM</button>
-                <button [class.disabled]="!this.selectedContact" (click)="registerMandate()">Mandaat aanvragen</button>
-                <button [class.disabled]="!this.SlimPayLink" (click)="registerOrganisation()" >Kerk registreren</button>
+                <button [class.disabled]="!this.selectedContact || this.selectedOrganisation.mandate_status.PayProvMandateStatus == 'closed.completed'" (click)="registerMandate()">Mandaat aanvragen</button>
+                <button [class.disabled]="" (click)="registerOrganisation()" >Kerk registreren</button>
             </article>
         </section>
     </div>
