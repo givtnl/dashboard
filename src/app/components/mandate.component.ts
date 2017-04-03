@@ -37,7 +37,7 @@ export class MandateComponent implements OnInit{
     contacts;
     SlimPayLink;
     CRMKey : string;
-
+    incassoStatus: string = "Laden...";
     urlGetCompanies: string = "https://app.teamleader.eu/api/getCompanies.php?api_group=50213&amount=10&selected_customfields=92583,93168&pageno=0&searchby=";
     urlContactsByCompany : string = "https://app.teamleader.eu/api/getContactsByCompany.php?api_group=50213&company_id=";
     urlContactById : string = "https://app.teamleader.eu/api/getContact.php?api_group=50213&contact_id=";
@@ -66,15 +66,7 @@ export class MandateComponent implements OnInit{
         this.apiClient.getData("Admin/ThirdPartyToken?type=Teamleader")
             .then(data => {
                 this.CRMKey = data.Teamleader;
-
-                this.apiClient.postData("Admin/CorsTunnelGet", {url : this.urlGetCompanies + this.search + "&api_secret=" + this.CRMKey,body : "{}", headers: {}})
-                    .then(d => {
-                        this.filteredOrganisations = d;
-                        this.showFiltered = true;
-                        this.searchBtn = "Zoeken";
-                        this.disabled = false;
-                    })
-                    .catch(err => console.log(err));
+                this.getCompanies();
             });
 
     }
@@ -86,6 +78,86 @@ export class MandateComponent implements OnInit{
         }
     }
 
+    getCompanies(){
+        this.apiClient.postData("Admin/CorsTunnelGet", {url : this.urlGetCompanies + this.search + "&api_secret=" + this.CRMKey,body : "{}", headers: {}})
+            .then(d => {
+                this.filteredOrganisations = d;
+                this.showFiltered = true;
+                this.searchBtn = "Zoeken";
+                this.disabled = false;
+            })
+            .catch(err => {
+                this.searchBtn = "Zoeken";
+                this.disabled = false;
+            });
+    }
+
+     getMandateStatus(){
+        this.apiClient.getData("Mandate/Org/" + this.selectedOrganisation.id)
+            .then(res => {
+                console.log(res);
+                this.selectedOrganisation.mandate_status = res;
+            })
+            .catch(err => {
+                this.searchBtn = "Zoeken";
+                this.disabled = false;
+            });
+    }
+
+    getContacts(){
+        this.apiClient.postData("Admin/CorsTunnelGet", {url: this.urlContactsByCompany + this.selectedOrganisation.id + "&api_secret=" + this.CRMKey, body : "{}", headers: {}})
+            .then(data => {
+                this.selectedOrganisation.contacts = data;
+                this.disabled = false;
+                this.searchBtn = "Zoeken";
+                for(let i = 0; i < this.selectedOrganisation.contacts.length; i++)
+                {
+                    //this.getContactInfo(i);
+                    if (this.isContactAdmin(i))
+                        break;
+                }
+            })
+            .catch(err => {
+                this.disabled = false;
+                this.searchBtn = "Zoeken";
+            });
+    }
+
+    isContactAdmin(i){
+        return this.apiClient.postData("Admin/CorsTunnelGet", {url: this.urlContactById + this.selectedOrganisation.contacts[i].id + "&api_secret=" + this.CRMKey, body : "{}", headers: {}})
+            .then(d => {
+                console.log(d);
+                if(d.custom_fields['92267'] == "1"){
+                    this.selectedContact = d;
+                    return true;
+                }
+                return false;
+            });
+    }
+
+    startIncasso(){
+        if(this.selectedOrganisation.mandate_status.PayProvMandateStatus == "closed.completed"){
+            let body = {
+                    Amount: this.selectedOrganisation.cf_value_92583,
+                    CrmId: this.selectedOrganisation.id
+            };
+            console.log(body);
+            this.apiClient.postData("Organisation/StartupFee", body)
+                .then(res => {
+                    console.log(res);
+                })
+                .catch(err => console.log(err))
+        }
+    }
+
+    checkIncassoStatus(){
+        if(this.selectedOrganisation.id){
+            this.apiClient.getData("Debit/Org/" + this.selectedOrganisation.id)
+                .then(data => this.incassoStatus = data)
+                .catch(err => console.log(err));
+        }
+    }
+
     select(i){
         this.selectedContact = null;
         console.log(i);
@@ -94,41 +166,15 @@ export class MandateComponent implements OnInit{
 
         this.selectedOrganisation = i;
         this.selectedOrganisation.contacts = [];
-        this.selectedOrganisation.mandate_status = "";
+        this.selectedOrganisation.mandate_status = false;
+        this.incassoStatus = "Laden...";
         this.search = "";
         this.change();
 
-        this.apiClient.getData("Mandate/Org/" + this.selectedOrganisation.id)
-            .then(res => {
-                console.log("crm mandaat status");
-                console.log(res);
-                this.selectedOrganisation.mandate_status = res;
-            });
+        this.getMandateStatus();
+        this.getContacts();
+        this.checkIncassoStatus();
 
-        this.apiClient.postData("Admin/CorsTunnelGet", {url: this.urlContactsByCompany + this.selectedOrganisation.id + "&api_secret=" + this.CRMKey, body : "{}", headers: {}})
-            .then(data => {
-                this.selectedOrganisation.contacts = data;
-                this.disabled = false;
-                this.searchBtn = "Zoeken";
-
-                for(let i = 0; i < this.selectedOrganisation.contacts.length; i++)
-                {
-                    this.apiClient.postData("Admin/CorsTunnelGet", {url: this.urlContactById + this.selectedOrganisation.contacts[i].id + "&api_secret=" + this.CRMKey, body : "{}", headers: {}})
-                        .then(d => {
-                            console.log(d);
-                            console.log(d.custom_fields['92267']);
-                            if(d.custom_fields['92267'] == "1"){
-                                console.log("hoera");
-                                this.selectedContact = d;
-                            } else {
-                                console.log("geen heoera");
-                            }
-                        });
-                }
-
-
-
-            });
     }
 
     registerMandate(){
@@ -196,4 +242,7 @@ export class MandateComponent implements OnInit{
         //todo : registreer organisatie
     }
 
+    openCRM(){
+        //open url https://app.teamleader.eu/company_detail.php?id=9666395
+    }
 }

@@ -45,13 +45,9 @@
                         <td>{{selectedOrganisation.country}}</td>
                     </tr>
                     <tr>
-                        <td [class.warning]="selectedOrganisation.contacts.length == 0">Contactpersoon</td>
-                        <td>
-                            <span *ngIf="selectedOrganisation.contacts.length == 1">{{selectedOrganisation.contacts[0].name}}</span>
-                            <select class="select-list" *ngIf="selectedOrganisation.contacts.length > 1">
-                                <option *ngFor="let s of selectedOrganisation.contacts" value="">{{s.name}}</option>
-                            </select>
-                        </td>
+                        <td [class.warning]="!selectedContact">Admin</td>
+                        <td *ngIf="!selectedContact">Geen admin gevonden!</td>
+                        <td *ngIf="selectedContact">{{selectedContact.forename}} {{selectedContact.surname}}</td>
                     </tr>
                     <tr>
                         <td [class.warning]="!selectedOrganisation.email">Email</td>
@@ -73,11 +69,16 @@
                         <td>Mandaatstatus</td>
                         <td *ngIf="selectedOrganisation.mandate_status">{{selectedOrganisation.mandate_status.PayProvMandateStatus}}</td>
                     </tr>
+                    <tr >
+                        <td>Incassostatus</td>
+                        <td>{{incassoStatus}}</td>
+                    </tr>
                 </table>
             </article>
             <article class="buttons">
                 <button >Vervolledig gegevens in CRM</button>
-                <button [class.disabled]="!this.selectedContact || this.selectedOrganisation.mandate_status.PayProvMandateStatus == 'closed.completed'" (click)="registerMandate()">Mandaat aanvragen</button>
+                <button [class.disabled]="!this.selectedContact || this.selectedOrganisation.mandate_status" (click)="registerMandate()">Mandaat aanvragen</button>
+                <button [class.disabled]="!this.selectedOrganisation.mandate_status || this.incassoStatus" (click)="startIncasso()">Start incasso</button>
                 <button [class.disabled]="" (click)="registerOrganisation()" >Kerk registreren</button>
             </article>
         </section>
