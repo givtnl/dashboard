@@ -1,7 +1,7 @@
 /**
  * Created by Lennie on 28/03/2017.
  */
-import {Component, OnInit, ViewEncapsulation} from '@angular/core';
+import {Component, OnInit, ViewEncapsulation, isDevMode} from '@angular/core';
 import {HttpModule, Http, Headers, RequestOptions} from '@angular/http';
 import { UserService } from 'app/services/user.service';
 import {Router, ActivatedRoute} from '@angular/router';
@@ -9,7 +9,7 @@ import {TranslateService} from 'ng2-translate';
 import { CompleterService, CompleterData } from 'ng2-completer';
 import {Organisation} from "../models/organisation";
 import { ApiClientService } from "app/services/api-client.service";
-
+import { environment } from "../../environments/environment";
 
 
 @Component({
@@ -48,7 +48,7 @@ export class MandateComponent implements OnInit{
         translate: TranslateService,
         private route: ActivatedRoute,
         private http: Http,
-        private apiClient: ApiClientService
+        private apiClient: ApiClientService,
     )
     {
     }
@@ -112,7 +112,6 @@ export class MandateComponent implements OnInit{
                 this.searchBtn = "Zoeken";
                 for(let i = 0; i < this.selectedOrganisation.contacts.length; i++)
                 {
-                    //this.getContactInfo(i);
                     if (this.isContactAdmin(i))
                         break;
                 }
@@ -190,8 +189,7 @@ export class MandateComponent implements OnInit{
                     familyName : c.surname,
                     givenName : c.forename,
                     companyName: o.name,
-                    //telephone : c.telephone,
-                    telephone : "+31612345678",
+                    telephone : c.telephone,
                     bankAccount : {
                         iban: o.iban
                     },
@@ -225,14 +223,15 @@ export class MandateComponent implements OnInit{
         let c = this.selectedContact;
         console.log(o);
         console.log(c);
+
         let email = {
-            Email : "lenniestockman@hotmail.com", //c.email
+            Email : isDevMode ? "debug@nfcollect.com" : c.email,
             Admin : c.forename + " " + c.surname,
             Organisation : o.name,
             Amount : this.selectedOrganisation.cf_value_92583,
             Link : this.SlimPayLink,
         };
-
+        console.log(email);
         this.apiClient.postData("Organisation/SendMandateMail", email)
             .then(d => console.log(d));
     }
