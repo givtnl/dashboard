@@ -48,7 +48,7 @@
     "Text_TotEnMet": "t/m",
     "Text_TransactionCost_MoreInfo": "Dit zijn de kosten die SlimPay in rekening brengt voor het aangaan van machtigingen door gevers en voor het verwerken van de transacties. De kosten voor een machtiging liggen op 50 cent. Deze verrekent Givt over de eerste vier keer dat de gever Givt gebruikt. Zo worden de kosten eerlijk verdeeld over verschillende situaties waarin er met Givt wordt gegeven.",
     "Text_GivtServiceFee_MoreInfo": "Dit zijn de kosten die vanuit Givt in rekening worden gebracht voor het verlenen van de service.",
-    "Text_Stornos_MoreInfo": "Deze kostenpost bestaat uit (a plus b):\n<br/>a de bedragen die gevers ingetrokken hebben\n<br/>b de kosten die SlimPay hiervoor in rekening brengt.\n<br/><br/>\nType 1 betekent dat de gever het bedrag heeft teruggetrokken voordat het is afgeschreven, of dat de transactie is afgewezen door de bank of processor. Type 2 betekent dat de gever de gift heeft teruggetrokken nadat deze al was afgeschreven, of door de bank van de gever is teruggedraaid. Storneringskosten en gestorneerde bedragen van type 2 worden vrijwel altijd verrekend op collecteopbrengsten van een andere datum dan waarop de gever de gift gedaan heeft.",
+    "Text_Stornos_MoreInfo": "Deze kostenpost bestaat uit de kosten die SlimPay voor storneringen in rekening brengt.\n<br/><br/>\nType 1 betekent dat de gever het bedrag heeft teruggetrokken voordat het is afgeschreven, of dat de transactie is afgewezen door de bank of processor. Type 2 betekent dat de gever de gift heeft teruggetrokken nadat deze al was afgeschreven, of door de bank van de gever is teruggedraaid. Storneringskosten van type 2 worden vrijwel altijd verrekend op collecteopbrengsten van een andere datum dan waarop de gever de gift gedaan heeft.",
     "Payout_PayoutCosts": "Uitbetalingskosten",
     "Payout_Title": "Uitbetalingen",
     "Payout_OverviewPayouts": "Overzicht van uitbetalingen",
@@ -56,7 +56,7 @@
     "Payout_Overview": "Overzicht",
     "Payout_CommittedAmount": "Toegezegd bedrag",
     "Payout_Withholdings": "Inhoudingen",
-    "Payout_PayedOutAmount": "Uitbetaald bedrag:",
+    "Payout_PayedOutAmount": "Uitbetaald bedrag",
     "PW_EnterEmail": "Vul hier je e-mailadres in, dan sturen wij een e-mail waarmee je een nieuw wachtwoord kunt aanmaken.",
     "PW_UnknownEmail": "Oeps, er gaat iets mis. Dit e-mailadres komt ons niet bekend voor. Heb je misschien een ander e-mailadres opgegeven?",
     "PW_Send": "Verstuur",
@@ -72,5 +72,12 @@
     "PW_GoBack": "Keer terug",
     "PW_ForgotPassword": "Wachtwoord vergeten?",
     "PW_RequestedPW": "Er werd een mail verstuurd naar je e-mailadres om je wachtwoord opnieuw in te stellen.",
-    "PW_Saved": "Je wachtwoord werd opgeslagen. Je kan nu opnieuw inloggen met je nieuw wachtwoord."
+    "PW_Saved": "Je wachtwoord werd opgeslagen. Je kan nu opnieuw inloggen met je nieuw wachtwoord.",
+    "Text_Reversals_MoreInfo": "Deze kostenpost bestaat uit bedragen die gevers ingetrokken hebben.",
+    "Text_Reversals": "Gestorneerde bedragen",
+    "BTW_EXCL": "Totaal excl. btw",
+    "BTW_PERCENT": "btw (21%)",
+    "BTW_INCL": "Totaal incl. btw",
+    "Stornos": "storneringen",
+    "TotalWithholdings": "Totaal inhoudingen"
 }

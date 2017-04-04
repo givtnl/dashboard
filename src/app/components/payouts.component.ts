@@ -1,3 +1,4 @@
+///<reference path="../models/payout.ts"/>
 import { Component,OnInit } from '@angular/core';
 import { DatePipe } from '@angular/common';
 
@@ -34,23 +35,51 @@ export class PayoutsComponent implements OnInit{
             .then(resp =>
             {
                 this.payouts = resp;
+                console.log(this.payouts);
                 for(let i in this.payouts){
                     let x = this.payouts[i];
                     x.BeginDate = datepipe.transform(this.payouts[i].BeginDate, "d MMMM y");
                     x.EndDate = datepipe.transform(this.payouts[i].EndDate, "d MMMM y");
+
+                    x.Mandaatkosten = x.MandateCostCount * this.mandateCost;
+                    x.Transactiekosten = x.TransactionCount * this.transactionCost;
+                    x.Uitbetalingskosten = 0.18;
+                    x.T_Total_Excl = x.Mandaatkosten + x.Transactiekosten + x.Uitbetalingskosten;
+                    x.T_BTW = x.MandateTaxes + x.TransactionTaxes + x.PayoutCostTaxes;
+                    x.T_Total_Incl = x.T_Total_Excl + x.T_BTW;
+
+                    x.SK_Total_Incl = x.RTransactionT1Cost + x.RTransactionT2Cost + x.RTransactionTaxes;
+                    x.G_Total_Incl = x.GivtServiceFee + x.GivtServiceFeeTaxes;
+
+                    //tr fee + storno fee + givt fee + storno bedragen
+                    x.TotaalInhoudingen = x.T_Total_Incl + x.SK_Total_Incl + x.G_Total_Incl + x.RTransactionAmount;
+
+                    x.ToegezegdBedrag = x.TotaalInhoudingen + x.TotalPaid;
+
+                    x.Mandaatkosten = this.displayValue(x.Mandaatkosten);
+                    x.Transactiekosten = this.displayValue(x.Transactiekosten);
+                    x.Uitbetalingskosten = this.displayValue(x.Uitbetalingskosten);
+                    x.T_Total_Excl = this.displayValue(x.T_Total_Excl);
+                    x.T_BTW = this.displayValue(x.T_BTW);
+                    x.T_Total_Incl = this.displayValue(x.T_Total_Incl);
+
+                    x.StorneringsKostenT1 = this.displayValue(x.RTransactionT1Cost);
+                    x.StorneringsKostenT2 = this.displayValue(x.RTransactionT2Cost);
+                    x.SK_Total_Excl = this.displayValue(x.RTransactionT1Cost + x.RTransactionT2Cost);
+                    x.SK_BTW = this.displayValue(x.RTransactionTaxes);
+                    x.SK_Total_Incl = this.displayValue(x.SK_Total_Incl);
+
+                    x.G_Total_Excl = this.displayValue(x.GivtServiceFee);
+                    x.G_BTW = this.displayValue(x.GivtServiceFeeTaxes);
+                    x.G_Total_Incl = this.displayValue(x.G_Total_Incl);
+
+                    x.GestorneerdeBedragen = this.displayValue(x.RTransactionAmount);
+                    x.TotaalInhoudingen = this.displayValue(x.TotaalInhoudingen);
+                    x.ToegezegdBedrag = this.displayValue(x.ToegezegdBedrag);
+
+
                     x.hidden = true;
                     x.TotalPaidText = this.displayValue(x.TotalPaid);
-                    x.TransactionCost =  this.displayValue(x.TransactionCount * this.transactionCost);
-                    x.MandateCost =  this.displayValue(x.MandateCostCount * this.mandateCost);
-                    x.TotalTransactionCost = this.displayValue(x.TransactionCount * this.transactionCost + x.MandateCostCount * this.mandateCost + 0.18);
-
-                    x.StornoT1 = this.displayValue(x.RTransactionT1Count * this.R1Cost + x.RTransactionT1Amount);
-                    x.StornoT2 = this.displayValue(x.RTransactionT2Count * this.R2Cost + x.RTransactionT2Amount);
-                    x.TotalStorno = this.displayValue(( (x.RTransactionT1Count * this.R1Cost) + x.RTransactionT1Amount) + ((x.RTransactionT2Count * this.R2Cost) + x.RTransactionT2Amount));
-
-                    x.TotalGivtFee = this.displayValue(x.GivtServiceFee);
-
-                    x.PayoutCost = this.displayValue(0.18);
 
                     this.translate.get('Text_Info_Mandate', {0: x.MandateCostCount,1: (this.isSafari ? (this.mandateCost).toFixed(3) : (this.mandateCost).toLocaleString(navigator.language,{minimumFractionDigits: 3,maximumFractionDigits:3}))}).subscribe((res: string) => {
                         x.Text_Info_Mandate = res;
@@ -68,19 +97,6 @@ export class PayoutsComponent implements OnInit{
                         x.Text_Info_Type2 = res;
                     });
 
-                    this.translate.get('Text_Info_Total_Stornos', {0: (this.isSafari ? (x.RTransactionT2Amount).toFixed(2) : (x.RTransactionT2Amount).toLocaleString(navigator.language,{minimumFractionDigits: 2,maximumFractionDigits:2}))}).subscribe((res: string) => {
-                        x.Total_Stornation2 = res;
-                    });
-                    this.translate.get('Text_Info_Total_Stornos', {0: (this.isSafari ? (x.RTransactionT1Amount).toFixed(2) : (x.RTransactionT1Amount).toLocaleString(navigator.language,{minimumFractionDigits: 2,maximumFractionDigits:2}))}).subscribe((res: string) => {
-                        x.Total_Stornation = res;
-                    });
-
-                    x._storno = ((x.RTransactionT1Count * this.R1Cost) + x.RTransactionT1Amount) + ((x.RTransactionT2Count * this.R2Cost) + x.RTransactionT2Amount);
-                    x._transaction = x.TransactionCount * this.transactionCost + x.MandateCostCount * this.mandateCost + 0.18;
-                    x.WithholdAmount = this.displayValue(x._storno + x._transaction + x.GivtServiceFee);
-
-                    x.Admitted = this.displayValue((x._storno + x._transaction + x.GivtServiceFee) + x.TotalPaid);
-
                     x.activeRow = 1;
                 }
             });
@@ -88,6 +104,7 @@ export class PayoutsComponent implements OnInit{
 
     displayValue(x)
     {
+        console.log(x);
         return "€ " + (this.isSafari ? (x).toFixed(2) : (x).toLocaleString(navigator.language,{minimumFractionDigits: 2,maximumFractionDigits:2}));
     }
 

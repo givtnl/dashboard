@@ -37,11 +37,11 @@
                 <table class="table-stats center-me overview-payout" border="0">
                 <tr>
                     <td>{{"Payout_CommittedAmount" | translate}}</td>
-                    <td>{{payout.Admitted}}</td>
+                    <td>{{payout.ToegezegdBedrag}}</td>
                 </tr>
                 <tr>
                     <td>{{"Payout_Withholdings" | translate}}</td>
-                    <td>{{payout.WithholdAmount}}</td>
+                    <td></td>
                 </tr>
                 </table>
                 <div class="withholding-stats">
@@ -53,17 +53,22 @@
                             <tr (click)="selectRow(payout, 1)" class="row" [class.active-row]="1 == payout.activeRow">
                                 <td><i class="fa fa-circle givt-blue" aria-hidden="true"></i></td>
                                 <td>{{"Text_Transaction_Fee" | translate}}</td>
-                                <td>{{payout.TotalTransactionCost}}</td>
+                                <td>{{payout.T_Total_Incl}}</td>
                             </tr>
                             <tr (click)="selectRow(payout, 2)" class="row" [class.active-row]="2 == payout.activeRow">
                                 <td><i class="fa fa-circle givt-orange" aria-hidden="true"></i></td>
                                 <td>{{"Text_Stornering_Fee" | translate}}</td>
-                                <td>{{payout.TotalStorno}}</td>
+                                <td>{{payout.SK_Total_Incl}}</td>
                             </tr>
                             <tr (click)="selectRow(payout, 3)" class="row" [class.active-row]="3 == payout.activeRow">
                                 <td><i class="fa fa-circle givt-green" aria-hidden="true"></i></td>
                                 <td>{{"Text_Givt_Fee" | translate}}</td>
-                                <td>{{payout.TotalGivtFee}}</td>
+                                <td>{{payout.G_Total_Incl}}</td>
+                            </tr>
+                            <tr (click)="selectRow(payout, 4)" class="row" [class.active-row]="4 == payout.activeRow">
+                                <td><i class="fa fa-circle givt-darkorange" aria-hidden="true"></i></td>
+                                <td>{{"Text_Reversals" | translate}}</td>
+                                <td>{{payout.GestorneerdeBedragen}}</td>
                             </tr>
                         </table>
                     </div>
@@ -72,28 +77,44 @@
                             <tr>
                                 <td>{{ "Text_Transaction_Fee_Mandate" | translate}}</td>
                                 <td class="column-spacing-30"></td>
-                                <td>{{payout.MandateCost}}</td>
+                                <td>{{payout.Mandaatkosten}}</td>
                                 <td class="column-spacing-40"></td>
                                 <td>{{ payout.Text_Info_Mandate }}</td>
                             </tr>
                             <tr>
                             <td>{{"Text_Transaction_Fee_Transaction" | translate }}</td>
                             <td class="column-spacing-30"></td>
-                            <td>{{payout.TransactionCost}}</td>
+                            <td>{{payout.Transactiekosten}}</td>
                             <td class="column-spacing-40"></td>
                             <td>{{ payout.Text_Info_Transaction}}</td>
                         </tr>
-                            <tr>
+                            <tr class="border-bottom">
                                 <td>{{"Payout_PayoutCosts" | translate }}</td>
                                 <td class="column-spacing-30"></td>
-                                <td>{{payout.PayoutCost}}</td>
+                                <td>{{payout.Uitbetalingskosten}}</td>
                                 <td class="column-spacing-40"></td>
                                 <td></td>
                             </tr>
                             <tr>
-                                <td>{{"Text_Fee_Total" | translate}}</td>
+                                <td class="heavy">{{ "BTW_EXCL" | translate }}</td>
                                 <td class="column-spacing-30"></td>
-                                <td>{{payout.TotalTransactionCost}}</td>
+                                <td class="heavy">{{payout.T_Total_Excl}}</td>
+                                <td class="column-spacing-40"></td>
+                                <td class="more-info tooltip">
+                                </td>
+                            </tr>
+                            <tr class="border-bottom">
+                                <td class="heavy">{{"BTW_PERCENT" | translate}}</td>
+                                <td class="column-spacing-30"></td>
+                                <td class="heavy">{{payout.T_BTW}} </td>
+                                <td class="column-spacing-40"></td>
+                                <td class="more-info tooltip">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="heavy total">{{"BTW_INCL" | translate}}</td>
+                                <td class="column-spacing-30"></td>
+                                <td class="heavy total">{{payout.T_Total_Incl}}</td>
                                 <td class="column-spacing-40"></td>
                                 <td class="more-info tooltip">{{"Text_Deduction_InfoButton" | translate}}
                                     <span class="green tooltiptext">
@@ -109,21 +130,37 @@
                             <tr>
                                 <td>{{"Text_Deduction_Type1" | translate}}</td>
                                 <td class="column-spacing-30"></td>
-                                <td>{{payout.StornoT1}}</td>
+                                <td>{{payout.StorneringsKostenT1}}</td>
                                 <td class="column-spacing-40"></td>
-                                <td>{{payout.Text_Info_Type1}} <br />{{payout.Total_Stornation}}</td>
+                                <td>{{payout.Text_Info_Type1}}</td>
                             </tr>
-                            <tr>
+                            <tr class="border-bottom">
                                 <td>{{"Text_Deduction_Type2" | translate}}</td>
                                 <td class="column-spacing-30"></td>
-                                <td>{{payout.StornoT2}}</td>
+                                <td>{{payout.StorneringsKostenT2}}</td>
                                 <td class="column-spacing-40"></td>
-                                <td class="big-cell">{{payout.Text_Info_Type2}}<br />{{payout.Total_Stornation2}}</td>
+                                <td class="big-cell">{{payout.Text_Info_Type2}}</td>
                             </tr>
                             <tr>
-                                <td>{{"Text_Fee_Total" | translate}}</td>
+                                <td class="heavy">{{ "BTW_EXCL" | translate }}</td>
                                 <td class="column-spacing-30"></td>
-                                <td>{{payout.TotalStorno}}</td>
+                                <td class="heavy">{{payout.SK_Total_Excl}}</td>
+                                <td class="column-spacing-40"></td>
+                                <td class="more-info tooltip">
+                                </td>
+                            </tr>
+                            <tr class="border-bottom">
+                                <td class="heavy">{{"BTW_PERCENT" | translate}}</td>
+                                <td class="column-spacing-30"></td>
+                                <td class="heavy">{{payout.SK_BTW}}</td>
+                                <td class="column-spacing-40"></td>
+                                <td class="more-info tooltip">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="heavy total">{{"BTW_INCL" | translate}}</td>
+                                <td class="column-spacing-30"></td>
+                                <td class="heavy total">{{payout.SK_Total_Incl}}</td>
                                 <td class="column-spacing-40"></td>
                                 <td class="more-info tooltip">{{"Text_Deduction_InfoButton" | translate}}
                                     <span class="green tooltiptext" [innerHTML]="'Text_Stornos_MoreInfo' | translate">
@@ -138,9 +175,25 @@
                     <div class="stat-calc" *ngIf="3 == payout.activeRow">
                         <table>
                             <tr>
-                                <td>{{"Text_Fee_Total" | translate}}</td>
+                                <td class="heavy">{{ "BTW_EXCL" | translate }}</td>
                                 <td class="column-spacing-30"></td>
-                                <td>{{payout.TotalGivtFee}}</td>
+                                <td class="heavy">{{payout.G_Total_Excl}}</td>
+                                <td class="column-spacing-40"></td>
+                                <td class="more-info tooltip">
+                                </td>
+                            </tr>
+                            <tr class="border-bottom">
+                                <td class="heavy">{{"BTW_PERCENT" | translate}}</td>
+                                <td class="column-spacing-30"></td>
+                                <td class="heavy">{{payout.G_BTW}}</td>
+                                <td class="column-spacing-40"></td>
+                                <td class="more-info tooltip">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="heavy total">{{"BTW_INCL" | translate}}</td>
+                                <td class="column-spacing-30"></td>
+                                <td class="heavy total">{{payout.G_Total_Incl}}</td>
                                 <td class="column-spacing-40"></td>
                                 <td class="more-info tooltip">{{"Text_Deduction_InfoButton" | translate }}
                                     <span class="green tooltiptext">
@@ -150,8 +203,35 @@
                             </tr>
                         </table>
                     </div>
+
+                    <div class="stat-calc" *ngIf="4 == payout.activeRow">
+                        <table>
+                            <tr>
+                                <td class="heavy total">{{"Text_Fee_Total" | translate}}</td>
+                                <td class="column-spacing-30"></td>
+                                <td class="heavy total">{{payout.GestorneerdeBedragen}}</td>
+                                <td class="column-spacing-40"></td>
+                                <td>{{ payout.RTransactionT1Count + payout.RTransactionT2Count}} {{"Stornos" | translate}}</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td class="column-spacing-30"></td>
+                                <td></td>
+                                <td class="column-spacing-40"></td>
+                                <td class="more-info tooltip">{{"Text_Deduction_InfoButton" | translate}}
+                                    <span class="green tooltiptext">
+                                {{"Text_Reversals_MoreInfo" | translate }}
+                            </span>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
                 </div>
                 <table class="table-stats center-me overview-payout last-row" border="0">
+                    <tr class="heavy">
+                        <td>{{"TotalWithholdings" | translate}}</td>
+                        <td style="font-size:26px;">{{payout.TotaalInhoudingen}}</td>
+                    </tr>
                     <tr class="black">
                         <td>{{"Payout_PayedOutAmount" | translate}}</td>
                         <td style="font-size:26px;">{{payout.TotalPaidText}}</td>
