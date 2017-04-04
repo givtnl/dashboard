@@ -24,18 +24,6 @@ export class NavigationComponent implements OnInit {
 
     ngOnInit(){
         let title = this.dataService.getData("instanceTitle");
-        if(!title){
-            return this.apiService.getData('OrgAdminView/Org')
-                .then(res => {
-                    this.instance_title = res;
-                    this.dataService.writeData("instanceTitle", res);
-                    return res;
-                }).catch(err => console.log(err));
-        }
-        else{
-                this.instance_title = title;
-        }
-
         if(!!this.dataService.getData("roles")){
             let x = JSON.parse(this.dataService.getData("roles"));
             if(x.indexOf("Admin") > -1){
@@ -43,6 +31,17 @@ export class NavigationComponent implements OnInit {
             }
         }
 
+        if(!title){
+            return this.apiService.getData('OrgAdminView/Org')
+                .then(res => {
+                    this.instance_title = res;
+                    this.dataService.writeData("instanceTitle", res);
+                  //  return res;
+                }).catch(err => console.log(err));
+        }
+        else{
+                this.instance_title = title;
+        }
     }
 
     logout(){
