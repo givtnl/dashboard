@@ -35,7 +35,6 @@ export class PayoutsComponent implements OnInit{
             .then(resp =>
             {
                 this.payouts = resp;
-                console.log(this.payouts);
                 for(let i in this.payouts){
                     let x = this.payouts[i];
                     x.BeginDate = datepipe.transform(this.payouts[i].BeginDate, "d MMMM y");
@@ -104,7 +103,6 @@ export class PayoutsComponent implements OnInit{
 
     displayValue(x)
     {
-        console.log(x);
         return "€ " + (this.isSafari ? (x).toFixed(2) : (x).toLocaleString(navigator.language,{minimumFractionDigits: 2,maximumFractionDigits:2}));
     }
 
@@ -114,7 +112,6 @@ export class PayoutsComponent implements OnInit{
             this.payouts[i].hidden = true;
         }
         x.hidden = !x.hidden;
-        console.log(x);
     }
 
     closePayout(x){

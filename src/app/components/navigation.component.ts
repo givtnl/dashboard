@@ -36,8 +36,13 @@ export class NavigationComponent implements OnInit {
                 this.instance_title = title;
         }
 
-        if(!!this.dataService.getData("roles"))
-            this.showMandateLink = this.dataService.getData("roles").includes("Admin");
+        if(!!this.dataService.getData("roles")){
+            let x = JSON.parse(this.dataService.getData("roles"));
+            if(x.indexOf("Admin") > -1){
+                this.showMandateLink = true;
+            }
+        }
+
     }
 
     logout(){

@@ -46,7 +46,7 @@ export class UserService {
                 if(res.json().access_token){
                     this.loggedIn = true;
                     this.dataService.writeData("accessToken", res.json().access_token);
-                    this.dataService.writeData("roles", res.json().AccessRoles);
+                    this.dataService.writeData("roles", JSON.stringify(res.json().AccessRoles.split(',')));
                 }
                 else{
                     return false;
