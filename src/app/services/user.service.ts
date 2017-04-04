@@ -21,7 +21,7 @@ export class UserService {
     roles: string = "";
     user: User = new User();
 
-    login(username: string, password: string, stayloggedin: boolean = false){
+    login(username: string, password: string){
         //Set the headers
         let headers = new Headers();
         headers.append('Content-Type', 'application/x-www-form-urlencoded');
@@ -44,10 +44,9 @@ export class UserService {
             .toPromise()
             .then(res => {
                 if(res.json().access_token){
-                    console.log(res);
                     this.loggedIn = true;
-                    this.dataService.writeData("accessToken", res.json().access_token, stayloggedin);
-                    this.dataService.writeData("roles", res.json().AccessRoles, false);
+                    this.dataService.writeData("accessToken", res.json().access_token);
+                    this.dataService.writeData("roles", res.json().AccessRoles);
                 }
                 else{
                     return false;

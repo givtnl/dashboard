@@ -72,33 +72,6 @@ form{
 .block{
     display: block;
 }
-input[type="checkbox"] {
-    display:none;
-}
-input[type="checkbox"] + label span {
-    display:inline-block;
-    width:24px;
-    height:24px;
-    background:url(images/unchecked.png);
-    cursor:pointer;
-    image-rendering: optimizeSpeed;
-    image-rendering: -moz-crisp-edges;
-    image-rendering: -o-crisp-edges;
-    image-rendering: -webkit-optimize-contrast;
-    image-rendering: pixelated;
-    image-rendering: optimize-contrast;
-    -ms-interpolation-mode: nearest-neighbor;
-}
-input[type="checkbox"]:checked + label span {
-    background:url(images/checked.png);
-    image-rendering: optimizeSpeed;
-    image-rendering: -moz-crisp-edges;
-    image-rendering: -o-crisp-edges;
-    image-rendering: -webkit-optimize-contrast;
-    image-rendering: pixelated;
-    image-rendering: optimize-contrast;
-    -ms-interpolation-mode: nearest-neighbor;
-}
 
 input[required]{
     padding: 10px 0 10px 13px;

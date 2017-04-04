@@ -13,7 +13,6 @@ export class LoginComponent  {
     eyeColor: string;
     userName: string;
     password: string;
-    stay_loggedin: boolean;
     error_message: string;
 
     translate: TranslateService;
@@ -31,7 +30,7 @@ export class LoginComponent  {
             this.translate.get("Error_FillAllFieldsIn").subscribe(value => {this.error_message = value;});
             return;
         }
-        this.userService.login(this.userName, this.password, this.stay_loggedin)
+        this.userService.login(this.userName, this.password)
             .then(resp => {
                 this.router.navigate(['/dashboard']);
             },
