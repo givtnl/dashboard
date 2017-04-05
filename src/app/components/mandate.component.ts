@@ -185,7 +185,7 @@ export class MandateComponent implements OnInit{
         }
 
         let email = {
-            Email : o.cf_value_93495,
+            Email : isDevMode ? "support@givtapp.net" : o.cf_value_93495,
             Admin : o.cf_value_93769 + " " + o.cf_value_93485,
             Organisation : o.name,
             Amount : this.selectedOrganisation.cf_value_92583,
