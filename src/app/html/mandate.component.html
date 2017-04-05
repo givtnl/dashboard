@@ -45,9 +45,11 @@
                         <td>{{selectedOrganisation.country}}</td>
                     </tr>
                     <tr>
-                        <td [class.warning]="!selectedContact">Admin</td>
-                        <td *ngIf="!selectedContact">Geen admin gevonden!</td>
-                        <td *ngIf="selectedContact">{{selectedContact.forename}} {{selectedContact.surname}}</td>
+                        <td [class.warning]="!selectedOrganisation.cf_value_93495">Admin</td>
+                        <td *ngIf="!selectedOrganisation.cf_value_93495">Geen admin gevonden!</td>
+                        <td *ngIf="selectedOrganisation.cf_value_93495">
+                            {{selectedOrganisation.cf_value_93495}}<br/>
+                            {{selectedOrganisation.cf_value_93769 + " " + selectedOrganisation.cf_value_93485}}</td>
                     </tr>
                     <tr>
                         <td [class.warning]="!selectedOrganisation.email">Email</td>
@@ -77,7 +79,7 @@
             </article>
             <article class="buttons">
                 <button (click)="openCRM()" >Vervolledig gegevens in CRM</button>
-                <button [class.disabled]="!this.selectedContact || this.selectedOrganisation.mandate_status" (click)="registerMandate()">Mandaat aanvragen</button>
+                <button [class.disabled]="this.selectedOrganisation.mandate_status" (click)="registerMandate()">Mandaat aanvragen</button>
                 <button [class.disabled]="!this.selectedOrganisation.mandate_status || this.incassoStatus" (click)="startIncasso()">Start incasso</button>
                 <button [class.disabled]="" (click)="registerOrganisation()" >Kerk registreren</button>
             </article>

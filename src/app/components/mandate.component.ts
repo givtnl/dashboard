@@ -33,14 +33,10 @@ export class MandateComponent implements OnInit{
 
     filteredOrganisations;
     selectedOrganisation;
-    selectedContact;
-    contacts;
     SlimPayLink;
     CRMKey : string;
     incassoStatus: string = "Laden...";
-    urlGetCompanies: string = "https://app.teamleader.eu/api/getCompanies.php?api_group=50213&amount=10&selected_customfields=92583,93168&pageno=0&searchby=";
-    urlContactsByCompany : string = "https://app.teamleader.eu/api/getContactsByCompany.php?api_group=50213&company_id=";
-    urlContactById : string = "https://app.teamleader.eu/api/getContact.php?api_group=50213&contact_id=";
+    urlGetCompanies: string = "https://app.teamleader.eu/api/getCompanies.php?api_group=50213&amount=10&selected_customfields=92583,93168,93495,93485,93494,93485,93769&pageno=0&searchby=";
 
     constructor(
         private userService: UserService,
@@ -95,42 +91,11 @@ export class MandateComponent implements OnInit{
      getMandateStatus(){
         this.apiClient.getData("Mandate/Org/" + this.selectedOrganisation.id)
             .then(res => {
-                console.log(res);
                 this.selectedOrganisation.mandate_status = res;
             })
             .catch(err => {
                 this.searchBtn = "Zoeken";
                 this.disabled = false;
-            });
-    }
-
-    getContacts(){
-        this.apiClient.postData("Admin/CorsTunnelGet", {url: this.urlContactsByCompany + this.selectedOrganisation.id + "&api_secret=" + this.CRMKey, body : "{}", headers: {}})
-            .then(data => {
-                this.selectedOrganisation.contacts = data;
-                this.disabled = false;
-                this.searchBtn = "Zoeken";
-                for(let i = 0; i < this.selectedOrganisation.contacts.length; i++)
-                {
-                    if (this.isContactAdmin(i))
-                        break;
-                }
-            })
-            .catch(err => {
-                this.disabled = false;
-                this.searchBtn = "Zoeken";
-            });
-    }
-
-    isContactAdmin(i){
-        return this.apiClient.postData("Admin/CorsTunnelGet", {url: this.urlContactById + this.selectedOrganisation.contacts[i].id + "&api_secret=" + this.CRMKey, body : "{}", headers: {}})
-            .then(d => {
-                console.log(d);
-                if(d.custom_fields['92267'] == "1"){
-                    this.selectedContact = d;
-                    return true;
-                }
-                return false;
             });
     }
 
@@ -158,38 +123,35 @@ export class MandateComponent implements OnInit{
     }
 
     select(i){
-        this.selectedContact = null;
         console.log(i);
         this.searchBtn = "Laden...";
         this.disabled = true;
-
         this.selectedOrganisation = i;
-        this.selectedOrganisation.contacts = [];
         this.selectedOrganisation.mandate_status = false;
         this.incassoStatus = "Laden...";
         this.search = "";
         this.change();
-
         this.getMandateStatus();
-        this.getContacts();
         this.checkIncassoStatus();
-
     }
 
     registerMandate(){
-        if(!this.selectedOrganisation || !this.selectedContact){
+        if(!this.selectedOrganisation){
             return;
         }
         let o = this.selectedOrganisation;
-        let c = this.selectedContact;
+        if(!o.cf_value_93495 || !o.cf_value_93485 || !o.cf_value_93769 || !o.cf_value_93494){
+            alert("Niet alle velden zijn ingevuld voor de admin van de organisatie!");
+            return;
+        }
         let mandate = {
             Mandate : {
                 Signatory : {
-                    email : o.email,
-                    familyName : c.surname,
-                    givenName : c.forename,
+                    email :  o.cf_value_93495,
+                    familyName : o.cf_value_93485,
+                    givenName :  o.cf_value_93769,
                     companyName: o.name,
-                    telephone : c.telephone,
+                    telephone : o.cf_value_93494,
                     bankAccount : {
                         iban: o.iban
                     },
@@ -215,18 +177,16 @@ export class MandateComponent implements OnInit{
 
     sendMandateMail(){
         if(!this.SlimPayLink) return;
-        if(!this.selectedOrganisation || !this.selectedContact ) return;
-        if(!this.selectedOrganisation.cf_value_92583) return;
-        console.log(this.SlimPayLink);
+        if(!this.selectedOrganisation) return;
 
         let o = this.selectedOrganisation;
-        let c = this.selectedContact;
-        console.log(o);
-        console.log(c);
+        if(!o.cf_value_92583 || !o.cf_value_93495 || !o.cf_value_93769 || !o.cf_value_93485){
+            alert("Email, administrator naam en bedrag van kosten moeten ingevuld zijn om een mandaat te kunnen aanmaken.");
+        }
 
         let email = {
-            Email : isDevMode ? "debug@nfcollect.com" : c.email,
-            Admin : c.forename + " " + c.surname,
+            Email : isDevMode ? "lenniestockman@hotmail.com" : o.cf_value_93495,
+            Admin : o.cf_value_93769 + " " + o.cf_value_93485,
             Organisation : o.name,
             Amount : this.selectedOrganisation.cf_value_92583,
             Link : this.SlimPayLink,
@@ -238,11 +198,10 @@ export class MandateComponent implements OnInit{
 
     registerOrganisation()
     {
-        if(!this.selectedOrganisation || !this.selectedContact){
+        if(!this.selectedOrganisation){
             return;
         }
         let o = this.selectedOrganisation;
-        let c = this.selectedContact;
         let organisation = {
             Organisation : {
                 Name: o.cf_value_93168,
