@@ -1,7 +1,7 @@
 /**
  * Created by Lennie on 28/03/2017.
  */
-import {Component, OnInit, ViewEncapsulation, isDevMode} from '@angular/core';
+import {Component, OnInit, ViewEncapsulation, isDevMode, enableProdMode} from '@angular/core';
 import {HttpModule, Http, Headers, RequestOptions} from '@angular/http';
 import { UserService } from 'app/services/user.service';
 import {Router, ActivatedRoute} from '@angular/router';
@@ -193,7 +193,7 @@ export class MandateComponent implements OnInit{
         }
 
         let email = {
-            Email : isDevMode ? "support@givtapp.net" : o.cf_value_93495,
+            Email : environment.production ? o.cf_value_93495 : "support@givtapp.net",
             Admin : o.cf_value_93769 + " " + o.cf_value_93485,
             Organisation : o.name,
             Amount : this.selectedOrganisation.cf_value_92583,
