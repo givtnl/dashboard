@@ -100,7 +100,11 @@ export class MandateComponent implements OnInit{
     }
 
     startIncasso(){
-        if(this.selectedOrganisation.mandate_status.PayProvMandateStatus == "closed.completed"){
+         if(!this.selectedOrganisation.mandate_status) {
+             alert("Kan mandaatstatus niet checken, probeer later opnieuw.");
+             return;
+         }
+        if(this.selectedOrganisation.mandate_status.PayProvMandateStatus == "closed.completed" && !this.incassoStatus){
             let body = {
                     Amount: this.selectedOrganisation.cf_value_92583,
                     CrmId: this.selectedOrganisation.id
@@ -113,6 +117,8 @@ export class MandateComponent implements OnInit{
                 })
                 .catch(err => console.log(err))
         }
+
+        if(this.incassoStatus) alert("Incassoproces is al opgestart.");
     }
 
     checkIncassoStatus(){

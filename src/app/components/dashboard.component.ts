@@ -23,7 +23,7 @@ export class DashboardComponent implements OnInit{
 
     ShowLoadingAnimation = false;
 
-
+    euro = !navigator.language.includes('en') ? "€ " : "€";
     //maybe a new donutcard model?
     donutCard: boolean = false;
     donutcardValue: string;
@@ -166,7 +166,7 @@ export class DashboardComponent implements OnInit{
             {
               //  console.log(resp);
                 let collectSum = resp.TotalAmount;
-                this.thisMonthCard.value = "€ " + "<span class='fat-emphasis'>" + (this.isSafari ? collectSum.toFixed(2) : collectSum.toLocaleString(navigator.language,{minimumFractionDigits: 2})) + "</span>";
+                this.thisMonthCard.value = this.euro + "<span class='fat-emphasis'>" + (this.isSafari ? collectSum.toFixed(2) : collectSum.toLocaleString(navigator.language,{minimumFractionDigits: 2})) + "</span>";
                 this.translate.get("Text_ThisMonth").subscribe(value => { this.thisMonthCard.title = value;});
                 this.translate.get("Text_Given").subscribe(value => { this.thisMonthCard.footer = value;});
                 let datePipe = new DatePipe();
@@ -196,12 +196,12 @@ export class DashboardComponent implements OnInit{
             .then(resp =>
             {
                 let collectSum = resp.TotalAmount;
-                this.lastSundayCard.value = "€ "+ "<span class='fat-emphasis'>" + (this.isSafari ? collectSum.toFixed(2) : collectSum.toLocaleString(navigator.language,{minimumFractionDigits: 2})) + "</span>";
+                this.lastSundayCard.value = this.euro+ "<span class='fat-emphasis'>" + (this.isSafari ? collectSum.toFixed(2) : collectSum.toLocaleString(navigator.language,{minimumFractionDigits: 2})) + "</span>";
                 this.translate.get("Text_LastSunday").subscribe(value => { this.lastSundayCard.title = value;});
                 this.translate.get("Text_Given").subscribe(value => { this.lastSundayCard.footer = value;});
                 let datePipe = new DatePipe();
                 this.lastSundayCard.subtitle = datePipe.transform(lastSunday.getUTCMonth()+1 + "/" + lastSunday.getUTCDate() + "/" + lastSunday.getUTCFullYear(), 'dd MMMM yyyy');
-                this.googleCharts(this.lastSundayCard.subtitle, this.lastSundayCard.footer, "€ " + (this.isSafari ? collectSum.toFixed(2) : collectSum.toLocaleString(navigator.language,{minimumFractionDigits: 2})));
+                this.googleCharts(this.lastSundayCard.subtitle, this.lastSundayCard.footer, this.euro + (this.isSafari ? collectSum.toFixed(2) : collectSum.toLocaleString(navigator.language,{minimumFractionDigits: 2})));
                 this.cards.push(this.lastSundayCard);
             });
     }
