@@ -109,6 +109,7 @@ export class MandateComponent implements OnInit{
             this.apiClient.postData("Organisation/StartupFee", body)
                 .then(res => {
                     console.log(res);
+                    alert("Incassoproces is gestart.");
                 })
                 .catch(err => console.log(err))
         }
@@ -171,6 +172,7 @@ export class MandateComponent implements OnInit{
             .then(spl => {
                 this.SlimPayLink = spl;
                 this.sendMandateMail();
+
             })
 
     }
@@ -193,7 +195,7 @@ export class MandateComponent implements OnInit{
         };
         console.log(email);
         this.apiClient.postData("Organisation/SendMandateMail", email)
-            .then(d => console.log(d));
+            .then(d => { alert("Mandaat is verzonden."); console.log(d); });
     }
 
     registerOrganisation()
@@ -222,7 +224,7 @@ export class MandateComponent implements OnInit{
         };
         console.log(JSON.stringify(organisation));
         this.apiClient.postData("Organisation", organisation)
-            .then(res => console.log(res));
+            .then(res => { alert("Gelukt!"); console.log(res) });
     }
 
     openCRM(){
