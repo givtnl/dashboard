@@ -36,7 +36,7 @@ export class MandateComponent implements OnInit{
     SlimPayLink;
     CRMKey : string;
     incassoStatus: string = "Laden...";
-    urlGetCompanies: string = "https://app.teamleader.eu/api/getCompanies.php?api_group=50213&amount=10&selected_customfields=92583,93168,93495,93485,93494,93485,93769&pageno=0&searchby=";
+    urlGetCompanies: string = "https://app.teamleader.eu/api/getCompanies.php?api_group=50213&amount=10&selected_customfields=92583,95707,93537,93168,93495,93485,93494,93485,95707,93769&pageno=0&searchby=";
 
     constructor(
         private userService: UserService,
@@ -157,10 +157,10 @@ export class MandateComponent implements OnInit{
                     email :  o.cf_value_93495,
                     familyName : o.cf_value_93485,
                     givenName :  o.cf_value_93769,
-                    companyName: o.name,
+                    companyName: o.cf_value_95707,
                     telephone : o.cf_value_93494,
                     bankAccount : {
-                        iban: o.iban
+                        iban: o.cf_value_93537
                     },
                     billingAddress : {
                         city : o.city,
@@ -220,7 +220,7 @@ export class MandateComponent implements OnInit{
                 TelNr: o.telephone,
                 Accounts: [
                     {
-                        Number: o.iban, //iban
+                        Number: o.cf_value_93537, //iban
                         Primary: true,
                         Active: true
                     }
