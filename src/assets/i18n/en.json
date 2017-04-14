@@ -80,5 +80,5 @@
     "BTW_INCL": "Total incl. VAT",
     "Stornos": "storno's",
     "TotalWithholdings": "Total deductions",
-    "Error_LockedOut": "You have been locked out for 5 minutes due to multiple times a wrong password. Please try again later."
+    "Error_LockedOut": "You have been locked out for 15 minutes due to multiple times a wrong password. Please try again later."
 }
