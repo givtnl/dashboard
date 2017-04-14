@@ -34,7 +34,17 @@ export class LoginComponent  {
             .then(resp => {
                 this.router.navigate(['/dashboard']);
             },
-                error => this.translate.get("Error_WrongEmailOrPassword").subscribe(value => {this.error_message = value;})
+            error => {
+                if(JSON.parse(error._body).error_description == "LockedOut")
+                {
+                    this.translate.get("Error_LockedOut")
+                        .subscribe(value => {this.error_message = value;})
+                }else
+                {
+                    this.translate.get("Error_WrongEmailOrPassword")
+                        .subscribe(value => {this.error_message = value;})
+                }
+            }
             );
     }
 

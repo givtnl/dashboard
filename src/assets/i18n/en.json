@@ -79,5 +79,6 @@
     "BTW_PERCENT": "VAT (21%)",
     "BTW_INCL": "Total incl. VAT",
     "Stornos": "storno's",
-    "TotalWithholdings": "Total deductions"
+    "TotalWithholdings": "Total deductions",
+    "Error_LockedOut": "You have been locked out for 5 minutes due to multiple times a wrong password. Please try again later."
 }
