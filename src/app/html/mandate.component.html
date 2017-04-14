@@ -29,6 +29,51 @@
                         <td>{{selectedOrganisation.cf_value_93168}}</td>
                     </tr>
                     <tr>
+                        <td>Aangesloten sinds</td>
+                        <td>{{selectedOrganisation.date_added}}</td>
+                    </tr>
+                    <tr >
+                        <td>Mandaatstatus</td>
+                        <td *ngIf="selectedOrganisation.mandate_status">{{selectedOrganisation.mandate_status.PayProvMandateStatus}}</td>
+                    </tr>
+                    <tr >
+                        <td>Incassostatus</td>
+                        <td>{{incassoStatus}}</td>
+                    </tr>
+                </table>
+            </article>
+        </section>
+        <section class="flex-section">
+            <article>
+                <table class="table">
+                    <tr>
+                        <th colspan="2">Mandaatgegevens</th>
+                    </tr>
+                    <tr>
+                        <td [class.warning]="!selectedOrganisation.cf_value_93485">Familienaam</td>
+                        <td>{{selectedOrganisation.cf_value_93485}}</td>
+                    </tr>
+                    <tr>
+                        <td [class.warning]="!selectedOrganisation.cf_value_93769">Voornaam</td>
+                        <td>{{selectedOrganisation.cf_value_93769}}</td>
+                    </tr>
+                    <tr>
+                        <td [class.warning]="!selectedOrganisation.cf_value_93495">Email</td>
+                        <td>{{selectedOrganisation.cf_value_93495}}</td>
+                    </tr>
+                    <tr>
+                        <td [class.warning]="!selectedOrganisation.cf_value_95707">Bedrijfsnaam</td>
+                        <td>{{selectedOrganisation.cf_value_95707}}</td>
+                    </tr>
+                    <tr>
+                        <td [class.warning]="!selectedOrganisation.cf_value_93494">GSM nr</td>
+                        <td>{{selectedOrganisation.cf_value_93494}}</td>
+                    </tr>
+                    <tr>
+                        <td [class.warning]="!selectedOrganisation.cf_value_93537">Gemachtigd IBAN</td>
+                        <td>{{selectedOrganisation.cf_value_93537}}</td>
+                    </tr>
+                    <tr>
                         <td [class.warning]="!selectedOrganisation.street">Straat</td>
                         <td>{{selectedOrganisation.street}}</td>
                     </tr>
@@ -43,37 +88,6 @@
                     <tr>
                         <td [class.warning]="!selectedOrganisation.country">Land</td>
                         <td>{{selectedOrganisation.country}}</td>
-                    </tr>
-                    <tr>
-                        <td [class.warning]="!selectedOrganisation.cf_value_93495">Admin</td>
-                        <td *ngIf="!selectedOrganisation.cf_value_93495">Geen admin gevonden!</td>
-                        <td *ngIf="selectedOrganisation.cf_value_93495">
-                            {{selectedOrganisation.cf_value_93495}}<br/>
-                            {{selectedOrganisation.cf_value_93769 + " " + selectedOrganisation.cf_value_93485}}</td>
-                    </tr>
-                    <tr>
-                        <td [class.warning]="!selectedOrganisation.cf_value_93495">Email</td>
-                        <td>{{selectedOrganisation.cf_value_93495}}</td>
-                    </tr>
-                    <tr>
-                        <td [class.warning]="!selectedOrganisation.cf_value_93494">Telefoon</td>
-                        <td>{{selectedOrganisation.cf_value_93494}}</td>
-                    </tr>
-                    <tr>
-                        <td [class.warning]="!selectedOrganisation.cf_value_93537">IBAN</td>
-                        <td>{{selectedOrganisation.cf_value_93537}}</td>
-                    </tr>
-                    <tr>
-                        <td>Aangesloten sinds</td>
-                        <td>{{selectedOrganisation.date_added}}</td>
-                    </tr>
-                    <tr >
-                        <td>Mandaatstatus</td>
-                        <td *ngIf="selectedOrganisation.mandate_status">{{selectedOrganisation.mandate_status.PayProvMandateStatus}}</td>
-                    </tr>
-                    <tr >
-                        <td>Incassostatus</td>
-                        <td>{{incassoStatus}}</td>
                     </tr>
                 </table>
             </article>
