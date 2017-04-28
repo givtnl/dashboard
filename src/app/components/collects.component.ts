@@ -55,6 +55,9 @@ export class CollectsComponent implements OnInit{
     Text_Info_Type1: string;
     Text_Info_Type2: string;
 
+    multipleCollects: boolean = false;
+    multipleCollectsId: string;
+
     //costs
     givtServiceCost: string;
     paymentProviderTransactionCost: string;
@@ -151,7 +154,12 @@ export class CollectsComponent implements OnInit{
                     this.savedCollects[i].EndDateString = datePipe.transform(this.savedCollects[i].EndDate, 'd MMMM y');
                     this.savedCollects[i].BeginTimeString = datePipe.transform(this.savedCollects[i].BeginDate, 'shortTime');
                     this.savedCollects[i].EndTimeString = datePipe.transform(this.savedCollects[i].EndDate, 'shortTime');
+                    if(this.savedCollects[i].CollectId)
+                        this.savedCollects[i].MultipleCollects = true;
+                    else
+                        this.savedCollects[i].MultipleCollects = false;
                 }
+                console.log(this.savedCollects);
             })
     }
 
@@ -163,6 +171,8 @@ export class CollectsComponent implements OnInit{
 
         this.dateBegin = new Date(collect.BeginDate);
         this.dateEnd  = new Date(collect.EndDate);
+        this.multipleCollects = collect.MultipleCollects;
+        this.multipleCollectsId = collect.CollectId;
         this.fetchCollect();
         this.collectId = collect.Id;
         this.collectName = collect.Name;
@@ -175,7 +185,7 @@ export class CollectsComponent implements OnInit{
         newCollect.BeginDate = this.dateBegin;
         newCollect.EndDate = this.dateEnd;
         newCollect.Name = this.collectName;
-
+        newCollect.CollectId = this.multipleCollectsId;
         this.apiService.postData("OrgAdminView/Collect", newCollect)
             .then(resp => {
                 this.fetchSavedCollects().then(() => {
@@ -206,7 +216,11 @@ export class CollectsComponent implements OnInit{
         if(this.dateBegin !== null && this.dateEnd !== null){
             var dateBegin = this.formatDate(this.dateBegin);
             var dateEnd = this.formatDate(this.dateEnd);
-            let params = "DateBegin=" + dateBegin + "&DateEnd=" + dateEnd;
+            if(this.multipleCollects){
+                let params = "DateBegin=" + dateBegin + "&DateEnd=" + dateEnd + "&CollectId=" + this.multipleCollectsId;
+            }else{
+                let params = "DateBegin=" + dateBegin + "&DateEnd=" + dateEnd;
+            }
 
             let datePipe = new DatePipe();
 

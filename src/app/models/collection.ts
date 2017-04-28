@@ -10,4 +10,6 @@ export class Collection{
     EndDateString: string;
     BeginTimeString: string;
     EndTimeString: string;
+    CollectId: string;
+    MultipleCollects: boolean;
 }

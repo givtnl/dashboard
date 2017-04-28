@@ -6,6 +6,15 @@
         <p-calendar readonlyInput="readonlyInput" inputStyleClass="date-picker-input" [(ngModel)]="dateBegin" (ngModelChange)="onDateBeginChange($event)" showTime="showTime" dateFormat="dd/mm/yy" [locale]="locale"></p-calendar><span class="till">{{"Text_TotEnMet" | translate}}</span>
         <p-calendar readonlyInput="readonlyInput" inputStyleClass="date-picker-input" [(ngModel)]="dateEnd"  (ngModelChange)="onDateEndChange($event)" [(minDate)]="dateBegin" showTime="showTime" dateFormat="dd/mm/yy" [locale]="locale"></p-calendar>
     </section>
+    <section class="multiple-collects">
+        <input type="checkbox" name="isActive"  [(ngModel)]="multipleCollects">
+        Meerdere collectes?
+        <select *ngIf="multipleCollects" [(ngModel)]="multipleCollectsId">
+            <option value="1">Collecte 1</option>
+            <option value="2">Collecte 2</option>
+            <option value="3">Collecte 3</option>
+        </select>
+    </section>
     <button [class.green-button]="SearchButtonGreen" (click)="fetchCollect();SearchButtonGreen = true;collectId = null;collectName = null;" class="search-collect">{{"Text_Collectes_FilterButton" | translate}}</button>
     </section>
 <hr *ngIf="isVisible" class="collect-hr"/>

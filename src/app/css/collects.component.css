@@ -478,3 +478,7 @@ button:disabled{
 .green-arrow{
     border-left-color: #41c98e !important;
 }
+
+.multiple-collects{
+    font-family: Avenir_Light;
+}
