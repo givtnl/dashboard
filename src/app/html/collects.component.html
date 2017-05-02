@@ -104,15 +104,6 @@
                             <span class="blue tooltiptext">(...) aantal transacties maal <b>€ 0,08 transactiekosten</b>. (...) nieuwe gebruikers maal (<b>4x€ 0,125</b>) <b>mandaatkosten</b>.<hr/><b>{{paymentProviderTransactionCost}}</b></span>
                         </div></td>-->
                     </tr>
-                    <tr (click)="selectRow(2)" class="row" [class.active-row]="2 == activeRow">
-                        <td><i class="fa fa-circle givt-orange" aria-hidden="true"></i></td>
-                        <td>{{"Text_Stornering_Fee" | translate}}</td>
-                        <td>{{totalRTransactionCost}}</td>
-                        <!--
-                        <td><div class="tooltip"><i class="fa fa-info-circle fa-lg " aria-hidden="true"></i>
-                            <span class="orange tooltiptext">(..) storneringen maal € 0,18 type 1. (..) storneringen maal € 1,20 type 2. + (debet bedragen)<hr/>€ 0,00</span>
-                        </div></td>-->
-                    </tr>
                     <tr (click)="selectRow(3)" class="row" [class.active-row]="3 == activeRow">
                         <td><i class="fa fa-circle givt-green" aria-hidden="true"></i></td>
                         <td>{{"Text_Givt_Fee" | translate}}</td>

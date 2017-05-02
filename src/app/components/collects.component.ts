@@ -255,14 +255,6 @@ export class CollectsComponent implements OnInit{
                     let collectSum = resp.TotalAmount;
                     this.value = euro + (this.isSafari ? collectSum.toFixed(2) : collectSum.toLocaleString(navigator.language,{minimumFractionDigits: 2}));
 
-                    this.RTransactionCostType1 = euro + (this.isSafari ? (resp.RTransactionCost.CountRTransaction * 0.18  + resp.RTransactionCost.AmountRTransaction).toFixed(2) : (resp.RTransactionCost.CountRTransaction * 0.18 + resp.RTransactionCost.AmountRTransaction).toLocaleString(navigator.language,{minimumFractionDigits: 2,maximumFractionDigits:2}));
-                    this.RTransactionCostType2 = euro + (this.isSafari ? (resp.RTransactionType2Cost.CountRTransactionType2 * 1.20 + resp.RTransactionType2Cost.AmountRTransactionType2).toFixed(2) : (resp.RTransactionType2Cost.CountRTransactionType2 * 1.20 + resp.RTransactionType2Cost.AmountRTransactionType2).toLocaleString(navigator.language,{minimumFractionDigits: 2,maximumFractionDigits:2}));
-                    this.totalRTransactionCost = euro + (this.isSafari ? (resp.RTransactionCost.CountRTransaction * 0.18 + resp.RTransactionType2Cost.CountRTransactionType2 * 1.20 + resp.RTransactionType2Cost.AmountRTransactionType2 + resp.RTransactionCost.AmountRTransaction).toFixed(2) : (resp.RTransactionCost.CountRTransaction * 0.18 + resp.RTransactionType2Cost.CountRTransactionType2 * 1.20 + resp.RTransactionType2Cost.AmountRTransactionType2 + resp.RTransactionCost.AmountRTransaction).toLocaleString(navigator.language,{minimumFractionDigits: 2,maximumFractionDigits:2}));
-                    this.countRTransactionType1 = resp.RTransactionCost.CountRTransaction;
-                    this.countRTransactionType2 = resp.RTransactionType2Cost.CountRTransactionType2;
-                    this.translate.get('Text_Info_Total_Stornos', {0: (this.isSafari ? (resp.RTransactionType2Cost.AmountRTransactionType2).toFixed(2) : (resp.RTransactionType2Cost.AmountRTransactionType2).toLocaleString(navigator.language,{minimumFractionDigits: 2,maximumFractionDigits:2}))}).subscribe((res: string) => {
-                        this.Total_Stornation2 = res;
-                    });
                     this.translate.get('Text_Info_Total_Stornos', {0: (this.isSafari ? (resp.RTransactionCost.AmountRTransaction).toFixed(2) : (resp.RTransactionCost.AmountRTransaction).toLocaleString(navigator.language,{minimumFractionDigits: 2,maximumFractionDigits:2}))}).subscribe((res: string) => {
                         this.Total_Stornation = res;
                     });
