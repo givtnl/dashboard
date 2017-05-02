@@ -185,7 +185,10 @@ export class CollectsComponent implements OnInit{
         newCollect.BeginDate = this.dateBegin;
         newCollect.EndDate = this.dateEnd;
         newCollect.Name = this.collectName;
-        newCollect.CollectId = this.multipleCollectsId;
+        if(this.multipleCollects)
+        {
+            newCollect.CollectId = this.multipleCollectsId;
+        }
         this.apiService.postData("OrgAdminView/Collect", newCollect)
             .then(resp => {
                 this.fetchSavedCollects().then(() => {
