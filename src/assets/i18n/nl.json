@@ -80,5 +80,6 @@
     "BTW_INCL": "Totaal incl. btw",
     "Stornos": "storneringen",
     "TotalWithholdings": "Totaal inhoudingen",
-    "Error_LockedOut": "Je hebt meerdere malen een verkeerd wachtwoord geprobeerd en bent hierdoor geblokkeerd voor 15 minuten. Probeer het later opnieuw."
+    "Error_LockedOut": "Er is meerdere malen geprobeerd in te loggen met verkeerde inloggegevens. Wegens veiligheidsredenen is het account tijdelijk geblokkeerd. Probeer het later nog een keer.",
+    "All": "Alle"
 }
