@@ -166,7 +166,7 @@ export class CollectsComponent implements OnInit{
                         this.savedCollects[i].MultipleCollects = false;
                     }
                 }
-                console.log(this.savedCollects);
+
             })
     }
 
@@ -184,7 +184,7 @@ export class CollectsComponent implements OnInit{
         this.collectId = collect.Id;
         this.collectName = collect.Name;
         window.scrollTo(0,0);
-        console.log(collect);
+
     }
 
     saveCollect(){
