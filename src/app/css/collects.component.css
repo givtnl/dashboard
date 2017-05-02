@@ -265,7 +265,36 @@ button:disabled{
 .withholding-stats .stat-comp{
     width: 310px;
     text-align: center;
+    align-self: baseline;
 }
+
+.heavy{
+    font-family: Avenir_Heavy !important;
+}
+.last-row{
+    border-top: #2E2957 2px solid;
+    margin-top: 15px;
+}
+.last-row tr td{
+    padding: 10px 0 10px 0;
+}
+
+.stat-calc tr td:nth-child(3){
+    text-align: right !important;
+}
+
+.stat-calc tr td:nth-child(1){
+    min-width: 200px;
+}
+
+.border-bottom td:nth-child(-n+3){
+    border-bottom: 2px solid #D9D8DC !important;
+}
+
+.total{
+    font-size: 18px;
+}
+
 
 .withholding-stats .stat-comp table{
     text-align: left;

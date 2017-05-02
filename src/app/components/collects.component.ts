@@ -50,6 +50,12 @@ export class CollectsComponent implements OnInit{
     Total_Stornation2: string;
     transactionCost: string;
 
+    Total_T_M_EXCL: string;
+    Total_T_M_VAT: string;
+    Total_T_M_INCL: string;
+    Total_G_VAT: string;
+    Total_G_INCL: string;
+
     Text_Info_Mandate: string;
     Text_Info_Transaction: string;
     Text_Info_Type1: string;
@@ -252,7 +258,10 @@ export class CollectsComponent implements OnInit{
                     this.mandateCount = resp.PayProvMandateCost.MandateCostCount;
                     this.costPerMandate = resp.PayProvMandateCost.MandateCostAmount;
 
-                    this.givtServiceCost = euro + (this.isSafari ? (resp.TotalAmount * resp.GivtCostPerTransaction).toFixed(2) : (resp.TotalAmount * resp.GivtCostPerTransaction).toLocaleString(navigator.language,{minimumFractionDigits: 2,maximumFractionDigits:2}));
+                    let givtServiceCost = resp.TotalAmount * resp.GivtCostPerTransaction;
+                    this.givtServiceCost = euro + (this.isSafari ? (givtServiceCost).toFixed(2) : (givtServiceCost).toLocaleString(navigator.language,{minimumFractionDigits: 2,maximumFractionDigits:2}));
+                    this.Total_G_VAT = this.displayValue(givtServiceCost * 0.21);
+                    this.Total_G_INCL = this.displayValue(givtServiceCost * 1.21);
                     this.paymentProviderTransactionCost = euro + (this.isSafari ? (resp.TransactionCount * resp.PayProvCostPerTransaction).toFixed(2) : (resp.TransactionCount * resp.PayProvCostPerTransaction).toLocaleString(navigator.language,{minimumFractionDigits: 2}));
                     let collectSum = resp.TotalAmount;
                     this.value = euro + (this.isSafari ? collectSum.toFixed(2) : collectSum.toLocaleString(navigator.language,{minimumFractionDigits: 2}));
@@ -260,6 +269,15 @@ export class CollectsComponent implements OnInit{
                     this.translate.get('Text_Info_Total_Stornos', {0: (this.isSafari ? (resp.RTransactionCost.AmountRTransaction).toFixed(2) : (resp.RTransactionCost.AmountRTransaction).toLocaleString(navigator.language,{minimumFractionDigits: 2,maximumFractionDigits:2}))}).subscribe((res: string) => {
                         this.Total_Stornation = res;
                     });
+                    let T_Cost = this.transactionCount * this.costPerTransaction;
+                    let M_Cost = this.mandateCount * this.costPerMandate;
+                    let Total_T_M_EXCL = T_Cost + M_Cost;
+                    let Total_T_M_VAT = (T_Cost + M_Cost) * 0.21;
+                    let Total_T_M_INCL = Total_T_M_EXCL + Total_T_M_VAT;
+                    this.Total_T_M_EXCL = this.displayValue(Total_T_M_EXCL);
+                    this.Total_T_M_VAT = this.displayValue(Total_T_M_VAT);
+                    this.Total_T_M_INCL = this.displayValue(Total_T_M_INCL);
+
                     this.transactionCost = euro + (this.isSafari ? (this.transactionCount * this.costPerTransaction).toFixed(2) : (this.transactionCount * this.costPerTransaction).toLocaleString(navigator.language,{minimumFractionDigits: 2,maximumFractionDigits:2}));
                     this.transactionCosts =  euro + (this.isSafari ? (this.mandateCount * this.costPerMandate + this.transactionCount * this.costPerTransaction).toFixed(2) : (this.mandateCount * this.costPerMandate + this.transactionCount * this.costPerTransaction).toLocaleString(navigator.language,{minimumFractionDigits: 2,maximumFractionDigits:2}));
                     this.mandateCosts = euro + (this.isSafari ? (this.mandateCount * this.costPerMandate).toFixed(2) : (this.mandateCount * this.costPerMandate).toLocaleString(navigator.language,{minimumFractionDigits: 2,maximumFractionDigits:2}));
@@ -286,6 +304,14 @@ export class CollectsComponent implements OnInit{
                 });
         }
 
+    }
+
+    displayValue(x)
+    {
+        let euro =  "€";
+        if(!navigator.language.includes('en'))
+            euro += " ";
+        return euro + (this.isSafari ? (x).toFixed(2) : (x).toLocaleString(navigator.language,{minimumFractionDigits: 2,maximumFractionDigits:2}));
     }
 
     onDateBeginChange(date){
