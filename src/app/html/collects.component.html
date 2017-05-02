@@ -37,7 +37,7 @@
             </div>
             <div class="choose_collecte">
                 <span style="display:inline-block;">Collecte</span>
-                <input class="input__checkbox--collecte" type="radio" id="0" name="collecte" [checked]="this.multipleCollectsId == null || this.multipleCollectsId == '0'"><label (click)="filterCollect(0)" class="label--collecte" for="0">Alle</label>
+                <input class="input__checkbox--collecte" type="radio" id="0" name="collecte" [checked]="this.multipleCollectsId == null || this.multipleCollectsId == '0'"><label (click)="filterCollect(0)" class="label--collecte" for="0">{{"All" | translate }}</label>
                 <input class="input__checkbox--collecte" type="radio" id="1" name="collecte" [checked]="this.multipleCollectsId == '1'"><label (click)="filterCollect(1)" class="label--collecte" for="1">1</label>
                 <input class="input__checkbox--collecte" type="radio" id="2" name="collecte" [checked]="this.multipleCollectsId == '2'"><label (click)="filterCollect(2)" class="label--collecte" for="2">2</label>
                 <input class="input__checkbox--collecte" type="radio" id="3" name="collecte" [checked]="this.multipleCollectsId == '3'"><label (click)="filterCollect(3)" class="label--collecte" for="3">3</label>
@@ -195,10 +195,7 @@
                         <td class="column-spacing-30"></td>
                         <td class="heavy">{{givtServiceCost}}</td>
                         <td class="column-spacing-40"></td>
-                        <td class="more-info tooltip">{{"Text_Deduction_InfoButton" | translate }}
-                            <span class="green tooltiptext">
-                                {{"Text_GivtServiceFee_MoreInfo" | translate }}
-                            </span>
+                        <td class="more-info tooltip">
                         </td>
                     </tr>
                     <tr class="border-bottom">
