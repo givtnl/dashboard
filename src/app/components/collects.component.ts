@@ -1,4 +1,4 @@
-import { Component,OnInit } from '@angular/core';
+import { Component,OnInit, Attribute } from '@angular/core';
 import { DatePipe } from '@angular/common';
 
 import { ApiClientService } from "app/services/api-client.service";
@@ -105,7 +105,7 @@ export class CollectsComponent implements OnInit{
     dateRange: Date;
     timeRange: string;
 
-    inputTitleLength: number;
+    inputTitleLength: number = 1;
 
     ngOnInit(){
         this.fetchSavedCollects();
@@ -154,10 +154,11 @@ export class CollectsComponent implements OnInit{
                     this.savedCollects[i].EndDateString = datePipe.transform(this.savedCollects[i].EndDate, 'd MMMM y');
                     this.savedCollects[i].BeginTimeString = datePipe.transform(this.savedCollects[i].BeginDate, 'shortTime');
                     this.savedCollects[i].EndTimeString = datePipe.transform(this.savedCollects[i].EndDate, 'shortTime');
-                    if(this.savedCollects[i].CollectId)
+                    if(this.savedCollects[i].CollectId) {
                         this.savedCollects[i].MultipleCollects = true;
-                    else
+                    } else {
                         this.savedCollects[i].MultipleCollects = false;
+                    }
                 }
                 console.log(this.savedCollects);
             })
@@ -173,10 +174,11 @@ export class CollectsComponent implements OnInit{
         this.dateEnd  = new Date(collect.EndDate);
         this.multipleCollects = collect.MultipleCollects;
         this.multipleCollectsId = collect.CollectId;
-        this.fetchCollect();
+        this.filterCollect(this.multipleCollectsId);
         this.collectId = collect.Id;
         this.collectName = collect.Name;
         window.scrollTo(0,0);
+        console.log(collect);
     }
 
     saveCollect(){
@@ -213,16 +215,16 @@ export class CollectsComponent implements OnInit{
     }
 
     fetchCollect(){
-        this.collectName = "";
         this.ShowLoadingAnimation = true;
         this.showCosts = false;
         if(this.dateBegin !== null && this.dateEnd !== null){
             var dateBegin = this.formatDate(this.dateBegin);
             var dateEnd = this.formatDate(this.dateEnd);
+            let params;
             if(this.multipleCollects){
-                let params = "DateBegin=" + dateBegin + "&DateEnd=" + dateEnd + "&CollectId=" + this.multipleCollectsId;
+                params = "DateBegin=" + dateBegin + "&DateEnd=" + dateEnd + "&CollectId=" + this.multipleCollectsId;
             }else{
-                let params = "DateBegin=" + dateBegin + "&DateEnd=" + dateEnd;
+                params = "DateBegin=" + dateBegin + "&DateEnd=" + dateEnd;
             }
 
             let datePipe = new DatePipe();
@@ -309,4 +311,15 @@ export class CollectsComponent implements OnInit{
         [d.getUTCHours(),
             d.getUTCMinutes()].join(':');
     }
+
+    filterCollect(collectId){
+        if(collectId == "0" || collectId == null){
+            this.multipleCollects = false;
+        } else {
+            this.multipleCollects = true;
+            this.multipleCollectsId = collectId;
+        }
+        this.fetchCollect();
+    }
+
 }
