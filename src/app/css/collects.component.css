@@ -482,3 +482,49 @@ button:disabled{
 .multiple-collects{
     font-family: Avenir_Light;
 }
+
+.select__collect{
+    padding: 10px;
+    margin:10px 0 15px 0;
+    min-width: 120px;
+    color: #2C2B57;
+    font-family: Avenir_Heavy;
+    background-color: white;
+    border: 1px solid #E3E2E7;
+    margin-left: -10px;
+}
+
+.select__collect option{
+    border:none;
+}
+
+.choose_collecte{
+    padding:10px 0;
+}
+
+.input__checkbox--collecte{
+    display: none;
+}
+
+.label--collecte{
+    color:white;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 100%;
+}
+
+.input__checkbox--collecte + .label--collecte{
+    margin-right: 7px;
+    background: #2C2B57;
+    height: 35px;
+    width: 35px;
+    padding: 0 0 0 0;
+}
+
+.input__checkbox--collecte:checked + .label--collecte{
+    height: 35px;
+    width: 35px;
+    padding: 0 0 0 0px;
+    background: #41c98e;
+}
