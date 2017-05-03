@@ -151,6 +151,11 @@ export class CollectsComponent implements OnInit{
         let datePipe = new DatePipe();
         return this.apiService.getData("OrgAdminView/Collect")
             .then(resp => {
+                console.log(resp);
+                if(resp == undefined){
+                    this.savedCollects = [];
+                    return;
+                }
                 this.savedCollects = resp;
                 for(let i in this.savedCollects){
                     this.savedCollects[i].BeginDate = new Date(this.savedCollects[i].BeginDate);
