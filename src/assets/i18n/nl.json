@@ -81,5 +81,6 @@
     "Stornos": "storneringen",
     "TotalWithholdings": "Totaal inhoudingen",
     "Error_LockedOut": "Er is meerdere malen geprobeerd in te loggen met verkeerde inloggegevens. Wegens veiligheidsredenen is het account tijdelijk geblokkeerd. Probeer het later nog een keer.",
-    "All": "Alle"
+    "All": "Alle",
+    "Collection": "Collecte"
 }

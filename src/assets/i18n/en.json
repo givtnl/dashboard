@@ -81,5 +81,6 @@
     "Stornos": "storno's",
     "TotalWithholdings": "Total deductions",
     "Error_LockedOut": "There have been too many attempts at logging in. Due to security reasons your account has been temporarily blocked. Please try again later.",
-    "All": "All"
+    "All": "All",
+    "Collection": "Collection"
 }

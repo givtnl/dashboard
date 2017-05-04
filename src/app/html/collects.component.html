@@ -36,7 +36,7 @@
                 <input maxlength="50" *ngIf="collectId == null" name="bjorn" [attr.placeholder]="'Placeholder_Offering_Name' | translate" type="text"  [(ngModel)]="collectName"/>
             </div>
             <div class="choose_collecte">
-                <span style="display:inline-block;">Collecte</span>
+                <span style="display:inline-block;">{{"Collection" | translate}}</span>
                 <input class="input__checkbox--collecte" type="radio" id="0" name="collecte" [checked]="this.multipleCollectsId == null || this.multipleCollectsId == '0'"><label (click)="filterCollect(0);collectId = null;collectName = null;multipleCollectsId = '0'" class="label--collecte" for="0">{{"All" | translate }}</label>
                 <input class="input__checkbox--collecte" type="radio" id="1" name="collecte" [checked]="this.multipleCollectsId == '1'"><label (click)="filterCollect(1);collectId = null;collectName = null;" class="label--collecte" for="1">1</label>
                 <input class="input__checkbox--collecte" type="radio" id="2" name="collecte" [checked]="this.multipleCollectsId == '2'"><label (click)="filterCollect(2);collectId = null;collectName = null;" class="label--collecte" for="2">2</label>
