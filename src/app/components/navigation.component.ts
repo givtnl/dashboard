@@ -17,12 +17,13 @@ export class NavigationComponent implements OnInit {
     dataService: DataService;
 
     showMandateLink = false;
+    isChrome = !!window['chrome'];
 
-    constructor(private userService: UserService, private router: Router, private translate:TranslateService, dataService: DataService, private apiService : ApiClientService){
+    constructor(private userService: UserService, private router: Router, private translate: TranslateService, dataService: DataService, private apiService: ApiClientService) {
         this.dataService = dataService;
     }
 
-    ngOnInit(){
+    ngOnInit() {
         let title = this.dataService.getData("instanceTitle");
         if(!!this.dataService.getData("roles")){
             let x = JSON.parse(this.dataService.getData("roles"));
