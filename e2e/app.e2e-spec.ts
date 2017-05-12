@@ -1,10 +1,10 @@
-import { AngularTestPage } from './app.po';
+import { GivtPlatformPage } from './app.po';
 
-describe('angular-test App', function() {
-  let page: AngularTestPage;
+describe('givtplatform App', () => {
+  let page: GivtPlatformPage;
 
   beforeEach(() => {
-    page = new AngularTestPage();
+    page = new GivtPlatformPage();
   });
 
   it('should display message saying app works', () => {

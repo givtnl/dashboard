@@ -1,4 +1,3 @@
-///<reference path="../models/payout.ts"/>
 import { Component,OnInit } from '@angular/core';
 import { DatePipe } from '@angular/common';
 
@@ -23,22 +22,21 @@ export class PayoutsComponent implements OnInit{
     translate: TranslateService;
 
 
-    constructor(private apiService: ApiClientService,translate: TranslateService) {
+    constructor(private apiService: ApiClientService,translate: TranslateService, private datePipe: DatePipe) {
         this.isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
         this.translate = translate;
 
     }
 
     ngOnInit(){
-        let datepipe = new DatePipe();
         this.apiService.getData("OrgAdminView/Payouts")
             .then(resp =>
             {
                 this.payouts = resp;
                 for(let i in this.payouts){
                     let x = this.payouts[i];
-                    x.BeginDate = datepipe.transform(this.payouts[i].BeginDate, "d MMMM y");
-                    x.EndDate = datepipe.transform(this.payouts[i].EndDate, "d MMMM y");
+                    x.BeginDate = this.datePipe.transform(new Date(this.payouts[i].BeginDate), "d MMMM y");
+                    x.EndDate = this.datePipe.transform(new Date(this.payouts[i].EndDate), "d MMMM y");
 
                     x.Mandaatkosten = x.MandateCostCount * this.mandateCost;
                     x.Transactiekosten = x.TransactionCount * this.transactionCost;

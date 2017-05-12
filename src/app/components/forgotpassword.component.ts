@@ -1,7 +1,15 @@
+/**
+ * @param params.email
+ * @param params.code
+ * @param params.e
+ * @param params.app
+ */
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import { UserService } from 'app/services/user.service';
 import {Router, ActivatedRoute} from '@angular/router';
 import {TranslateService} from 'ng2-translate';
+
+declare var params: any;
 
 @Component({
     selector: 'forgotpassword',
@@ -23,6 +31,7 @@ export class ForgotPasswordComponent  implements OnInit{
     wrong: boolean = false;
     email_sent: boolean = false;
     coming_from_app: boolean = false;
+    queryParams: any;
     /*  ------  */
 
     disabled : boolean = false;
@@ -133,11 +142,11 @@ export class ForgotPasswordComponent  implements OnInit{
     showPass(){
         if(this.passwordHidden){
             this.passwordHidden = false;
-            document.getElementById("pass").type = "text";
+            (<HTMLInputElement>document.getElementById("pass")).type = "text";
             this.eyeColor = "#41C98E";
         }else{
             this.passwordHidden = true;
-            document.getElementById("pass").type = "password";
+            (<HTMLInputElement>document.getElementById("pass")).type = "password";
             this.eyeColor = "#BCB9C9";
         }
     }

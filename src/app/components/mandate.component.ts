@@ -6,7 +6,6 @@ import {HttpModule, Http, Headers, RequestOptions} from '@angular/http';
 import { UserService } from 'app/services/user.service';
 import {Router, ActivatedRoute} from '@angular/router';
 import {TranslateService} from 'ng2-translate';
-import { CompleterService, CompleterData } from 'ng2-completer';
 import {Organisation} from "../models/organisation";
 import { ApiClientService } from "app/services/api-client.service";
 import { environment } from "../../environments/environment";

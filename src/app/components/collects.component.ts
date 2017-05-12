@@ -1,6 +1,7 @@
-import { Component,OnInit, Attribute } from '@angular/core';
+import {Component, OnInit, Attribute, ViewEncapsulation} from '@angular/core';
 import { DatePipe } from '@angular/common';
-
+import {BrowserModule} from '@angular/platform-browser';
+//import { BrowserAnimationsModule } from '@angular/animations';
 import { ApiClientService } from "app/services/api-client.service";
 import { TranslateService } from "ng2-translate";
 import {CalendarModule} from "primeng/primeng";
@@ -8,7 +9,8 @@ import {Collection} from "../models/collection";
 @Component({
     selector: 'my-collects',
     templateUrl: '../html/collects.component.html',
-    styleUrls: ['../css/collects.component.css']
+    styleUrls: ['../css/collects.component.css'],
+    encapsulation: ViewEncapsulation.None
 })
 
 export class CollectsComponent implements OnInit{
@@ -16,7 +18,7 @@ export class CollectsComponent implements OnInit{
     text: string;
     calendarModule: CalendarModule;
     dateBegin: Date = null;
-    dateEnd: Date =null;
+    dateEnd: Date = null;
     value: string = "";
     dateBeginTime : number;
     maxDate: Date;
@@ -33,7 +35,7 @@ export class CollectsComponent implements OnInit{
 
     SearchButtonGreen: boolean = false;
 
-    transactionCount: string;
+    transactionCount: number;
     costPerTransaction: number;
     mandateCount: number;
     costPerMandate: number;
@@ -117,7 +119,7 @@ export class CollectsComponent implements OnInit{
         this.fetchSavedCollects();
     }
 
-    constructor(private apiService: ApiClientService, translate: TranslateService,calendarModule: CalendarModule) {
+    constructor(private apiService: ApiClientService, translate: TranslateService,calendarModule: CalendarModule, private datePipe: DatePipe) {
         this.locale = this.nl;
 
         this.isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
@@ -148,7 +150,6 @@ export class CollectsComponent implements OnInit{
     }
 
     fetchSavedCollects(){
-        let datePipe = new DatePipe();
         return this.apiService.getData("OrgAdminView/Collect")
             .then(resp => {
                 if(resp == undefined){
@@ -157,13 +158,13 @@ export class CollectsComponent implements OnInit{
                 }
                 this.savedCollects = resp;
                 for(let i in this.savedCollects){
-                    this.savedCollects[i].BeginDate = new Date(this.savedCollects[i].BeginDate);
-                    this.savedCollects[i].EndDate = new Date(this.savedCollects[i].EndDate);
+                    this.savedCollects[i].BeginDate = this.savedCollects[i].BeginDate;
+                    this.savedCollects[i].EndDate = this.savedCollects[i].EndDate;
                     
-                    this.savedCollects[i].BeginDateString = datePipe.transform(this.savedCollects[i].BeginDate, 'd MMMM y');
-                    this.savedCollects[i].EndDateString = datePipe.transform(this.savedCollects[i].EndDate, 'd MMMM y');
-                    this.savedCollects[i].BeginTimeString = datePipe.transform(this.savedCollects[i].BeginDate, 'shortTime');
-                    this.savedCollects[i].EndTimeString = datePipe.transform(this.savedCollects[i].EndDate, 'shortTime');
+                    this.savedCollects[i].BeginDateString = this.datePipe.transform(this.savedCollects[i].BeginDate, 'd MMMM y');
+                    this.savedCollects[i].EndDateString = this.datePipe.transform(this.savedCollects[i].EndDate, 'd MMMM y');
+                    this.savedCollects[i].BeginTimeString = this.datePipe.transform(this.savedCollects[i].BeginDate, 'shortTime');
+                    this.savedCollects[i].EndTimeString = this.datePipe.transform(this.savedCollects[i].EndDate, 'shortTime');
                     if(this.savedCollects[i].CollectId) {
                         this.savedCollects[i].MultipleCollects = true;
                     } else {
@@ -179,9 +180,8 @@ export class CollectsComponent implements OnInit{
         this.SearchButtonGreen = false;
 
         this.collectId = null;
-
-        this.dateBegin = new Date(collect.BeginDate);
-        this.dateEnd  = new Date(collect.EndDate);
+        this.dateBegin = collect.BeginDate;
+        this.dateEnd  = collect.EndDate;
         this.multipleCollects = collect.MultipleCollects;
         this.multipleCollectsId = collect.CollectId;
         this.filterCollect(this.multipleCollectsId);
@@ -237,15 +237,15 @@ export class CollectsComponent implements OnInit{
                 params = "DateBegin=" + dateBegin + "&DateEnd=" + dateEnd;
             }
 
-            let datePipe = new DatePipe();
-
-            this.dateBeginRange = new Date(this.dateBegin.getTime());
-            this.dateEndRange = new Date(this.dateEnd.getTime());
-            this.sameDate = (this.dateBeginRange.getDate() === this.dateEndRange.getDate());
-            this.dateBeginRange.string = datePipe.transform(this.dateBeginRange, 'd MMMM y');
-            this.dateEndRange.string = datePipe.transform(this.dateEndRange, 'd MMMM y');
-            this.dateBeginRange.time = datePipe.transform(this.dateBegin, 'shortTime');
-            this.dateEndRange.time = datePipe.transform(this.dateEnd,'shortTime');
+            let beginTime = new Date(this.dateBegin.valueOf()).getTime();
+            let endTime = new Date(this.dateEnd.valueOf()).getTime();
+            this.sameDate = ( new Date(this.dateBeginRange).getDate() ===  new Date(this.dateEndRange).getDate());
+            this.dateBeginRange = new Object();
+            this.dateEndRange = new Object();
+            this.dateBeginRange.string = this.datePipe.transform(this.dateBegin, 'd MMMM y');
+            this.dateEndRange.string = this.datePipe.transform(this.dateEnd, 'd MMMM y');
+            this.dateBeginRange.time = this.datePipe.transform(beginTime, 'shortTime');
+            this.dateEndRange.time = this.datePipe.transform(endTime,'shortTime');
 
             this.isVisible = true;
 
@@ -273,21 +273,19 @@ export class CollectsComponent implements OnInit{
                     this.translate.get('Text_Info_Total_Stornos', {0: (this.isSafari ? (resp.RTransactionCost.AmountRTransaction).toFixed(2) : (resp.RTransactionCost.AmountRTransaction).toLocaleString(navigator.language,{minimumFractionDigits: 2,maximumFractionDigits:2}))}).subscribe((res: string) => {
                         this.Total_Stornation = res;
                     });
-                    let T_Cost = this.transactionCount * this.costPerTransaction;
+                    let T_Cost = +this.transactionCount * +this.costPerTransaction;
                     let M_Cost = this.mandateCount * this.costPerMandate;
-                    let Total_T_M_EXCL = T_Cost + M_Cost;
+                    let Total_T_M_EXCL = +T_Cost + +M_Cost;
                     let Total_T_M_VAT = (T_Cost + M_Cost) * 0.21;
                     let Total_T_M_INCL = Total_T_M_EXCL + Total_T_M_VAT;
                     this.Total_T_M_EXCL = this.displayValue(Total_T_M_EXCL);
                     this.Total_T_M_VAT = this.displayValue(Total_T_M_VAT);
                     this.Total_T_M_INCL = this.displayValue(Total_T_M_INCL);
 
-                    this.transactionCost = euro + (this.isSafari ? (this.transactionCount * this.costPerTransaction).toFixed(2) : (this.transactionCount * this.costPerTransaction).toLocaleString(navigator.language,{minimumFractionDigits: 2,maximumFractionDigits:2}));
+                    this.transactionCost = euro + (this.isSafari ? (+this.transactionCount * +this.costPerTransaction).toFixed(2) : (+this.transactionCount * +this.costPerTransaction).toLocaleString(navigator.language,{minimumFractionDigits: 2,maximumFractionDigits:2}));
                     this.transactionCosts =  euro + (this.isSafari ? (this.mandateCount * this.costPerMandate + this.transactionCount * this.costPerTransaction).toFixed(2) : (this.mandateCount * this.costPerMandate + this.transactionCount * this.costPerTransaction).toLocaleString(navigator.language,{minimumFractionDigits: 2,maximumFractionDigits:2}));
                     this.mandateCosts = euro + (this.isSafari ? (this.mandateCount * this.costPerMandate).toFixed(2) : (this.mandateCount * this.costPerMandate).toLocaleString(navigator.language,{minimumFractionDigits: 2,maximumFractionDigits:2}));
                     this.transactionCostsDetail = euro + (this.isSafari ? (this.transactionCount * this.costPerTransaction).toFixed(2) : (this.transactionCount * this.costPerTransaction).toLocaleString(navigator.language,{minimumFractionDigits: 2,maximumFractionDigits:2}));
-                    //noinspection TypeScriptValidateTypes
-
 
                     this.translate.get('Text_Info_Mandate', {0: this.mandateCount,1: (this.isSafari ? (this.costPerMandate).toFixed(3) : (this.costPerMandate).toLocaleString(navigator.language,{minimumFractionDigits: 3,maximumFractionDigits:3}))}).subscribe((res: string) => {
                         this.Text_Info_Mandate = res;
@@ -335,6 +333,7 @@ export class CollectsComponent implements OnInit{
     }
 
     formatDate(d){
+        d = new Date(d);
         return [d.getUTCMonth()+1,
             d.getUTCDate(),
             d.getUTCFullYear()].join('/')+' '+

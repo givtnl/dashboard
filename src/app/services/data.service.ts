@@ -79,6 +79,8 @@ export class Dictionary<T> {
     }
 
     public Values(): string[] {
-        return Object.values(this.items);
+        return Object.keys(this.items).map(function(key) {
+            return this.items[key];
+        });
     }
 }

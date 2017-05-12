@@ -154,13 +154,13 @@ button:disabled{
 }
 
 .input-collect-title input:hover {
-    background-image: url(images/pencil.svg);
+    background-image: url(/src/images/pencil.svg);
     border:1px solid #E3E2E7;
 
 }
 
 .input-collect-title input:focus{
-    background-image: url(images/pencil-green.svg);
+    background-image: url(/src/images/pencil-green.svg);
     background-color: white;
     border:1px solid #E3E2E7;
     cursor:text;

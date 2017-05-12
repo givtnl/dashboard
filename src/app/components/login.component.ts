@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { UserService } from 'app/services/user.service';
 import { Router } from '@angular/router';
-import {TranslateService} from 'ng2-translate';
+import {TranslateService} from "ng2-translate";
+import {UserService} from "../services/user.service";
 
 @Component({
     selector: 'login',
@@ -15,13 +15,10 @@ export class LoginComponent  {
     password: string;
     error_message: string;
 
-    translate: TranslateService;
-    constructor(private userService: UserService, private router: Router, translate:TranslateService){
-        this.userService = userService;
+    constructor(private userService: UserService, private router: Router, private translate:TranslateService){
         this.passwordHidden = true;
         this.eyeColor = "#BCB9C9";
-        this.translate = translate;
-
+        console.log("logging in.");
     }
 
     login(){
@@ -51,11 +48,11 @@ export class LoginComponent  {
     showPass(){
         if(this.passwordHidden){
             this.passwordHidden = false;
-            document.getElementById("pass").type = "text";
+            (<HTMLInputElement>document.getElementById("pass")).type = "text";
             this.eyeColor = "#41C98E";
         }else{
             this.passwordHidden = true;
-            document.getElementById("pass").type = "password";
+            (<HTMLInputElement>document.getElementById("pass")).type = "password";
             this.eyeColor = "#BCB9C9";
         }
     }

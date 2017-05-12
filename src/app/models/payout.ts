@@ -3,8 +3,8 @@
  */
 export class Payout{
     dtExecuted: Date;
-    BeginDate: Date;
-    EndDate: Date;
+    BeginDate: string;
+    EndDate: string;
     TransactionCount: number;
     TotalPaid: string;
     MandateCostCount: number;
@@ -41,4 +41,10 @@ export class Payout{
     GestorneerdeBedragen: any;
     TotaalInhoudingen: any;
     ToegezegdBedrag: any;
+    hidden: boolean;
+    Text_Info_Mandate: string;
+    Text_Info_Transaction: string;
+    Text_Info_Type1: string;
+    Text_Info_Type2: string;
+    activeRow: number;
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit,Injectable } from '@angular/core';
+ import { Component, OnInit,Injectable } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import 'rxjs/add/operator/toPromise';
 import {Observable} from 'rxjs/Observable';
@@ -7,6 +7,7 @@ import { Card } from '../models/card';
 import { ApiClientService } from "app/services/api-client.service";
 import {TranslateService} from "ng2-translate";
 
+ declare var google: any;
 @Component({
     selector: 'my-dashboard',
     templateUrl: '../html/dashboard.component.html',
@@ -30,7 +31,7 @@ export class DashboardComponent implements OnInit{
     donutcardTitle: string;
     donutcardFooter: string;
 
-    constructor(private apiService: ApiClientService,  translate:TranslateService){
+    constructor(private apiService: ApiClientService,  translate:TranslateService, private datePipe: DatePipe){
         this.translate = translate;
         this.isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
         this.ShowLoadingAnimation = true;
@@ -102,7 +103,7 @@ export class DashboardComponent implements OnInit{
 
                 var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
                 chart.draw(dataTable, options);
-                var container = document.getElementById("donutchart").firstChild.firstChild;
+                var container = <HTMLDivElement>document.getElementById("donutchart").firstChild.firstChild;
                 container.style.width = "100%";
             }
         };
@@ -130,8 +131,7 @@ export class DashboardComponent implements OnInit{
             {
                 this.thisMonthGiversCard.value = "<span class='fat-emphasis'>" + resp + "</span>";
                 this.translate.get("Text_Givers").subscribe(value => { this.thisMonthGiversCard.title = value;});
-                let datePipe = new DatePipe();
-                this.thisMonthGiversCard.subtitle = datePipe.transform(date, 'MMMM yyyy');
+                this.thisMonthGiversCard.subtitle = this.datePipe.transform(date, 'MMMM yyyy');
                 this.translate.get("Text_GiversLowercase").subscribe(value => { this.thisMonthGiversCard.footer = value;});
                 let cardIsInCards = false;
                 for(let i in this.cards){
@@ -164,13 +164,11 @@ export class DashboardComponent implements OnInit{
         return this.apiService.getData("OrgAdminView/Givts/?"+params)
             .then(resp =>
             {
-              //  console.log(resp);
                 let collectSum = resp.TotalAmount;
                 this.thisMonthCard.value = this.euro + "<span class='fat-emphasis'>" + (this.isSafari ? collectSum.toFixed(2) : collectSum.toLocaleString(navigator.language,{minimumFractionDigits: 2})) + "</span>";
                 this.translate.get("Text_ThisMonth").subscribe(value => { this.thisMonthCard.title = value;});
                 this.translate.get("Text_Given").subscribe(value => { this.thisMonthCard.footer = value;});
-                let datePipe = new DatePipe();
-                this.thisMonthCard.subtitle = datePipe.transform(date, 'MMMM yyyy');
+                this.thisMonthCard.subtitle = this.datePipe.transform(date, 'dd MMMM yyyy');
                 let cardIsInCards = false;
                 for(let i in this.cards){
                     if(this.cards[i].title === this.thisMonthCard.title){
@@ -187,7 +185,7 @@ export class DashboardComponent implements OnInit{
     fetchLastSundayGivts(){
         let date = new Date();
         let day = date.getUTCDay();
-        let lastSunday = new Date(date - day*1000*60*60*24);
+        let lastSunday = new Date(date.valueOf() - day*1000*60*60*24);
         let lastSundayDate = lastSunday.getUTCMonth()+1 + "-" + lastSunday.getUTCDate() + "-" + lastSunday.getUTCFullYear();
         let dateBegin =  lastSundayDate + " 00:00:00";
         let dateEnd = lastSundayDate + " 23:59:59";
@@ -199,8 +197,7 @@ export class DashboardComponent implements OnInit{
                 this.lastSundayCard.value = this.euro+ "<span class='fat-emphasis'>" + (this.isSafari ? collectSum.toFixed(2) : collectSum.toLocaleString(navigator.language,{minimumFractionDigits: 2})) + "</span>";
                 this.translate.get("Text_LastSunday").subscribe(value => { this.lastSundayCard.title = value;});
                 this.translate.get("Text_Given").subscribe(value => { this.lastSundayCard.footer = value;});
-                let datePipe = new DatePipe();
-                this.lastSundayCard.subtitle = datePipe.transform(lastSunday.getUTCMonth()+1 + "/" + lastSunday.getUTCDate() + "/" + lastSunday.getUTCFullYear(), 'dd MMMM yyyy');
+                this.lastSundayCard.subtitle = this.datePipe.transform(lastSunday.getUTCMonth()+1 + "/" + lastSunday.getUTCDate() + "/" + lastSunday.getUTCFullYear(), 'yyyy-MM-dd');
                 this.googleCharts(this.lastSundayCard.subtitle, this.lastSundayCard.footer, this.euro + (this.isSafari ? collectSum.toFixed(2) : collectSum.toLocaleString(navigator.language,{minimumFractionDigits: 2})));
                 this.cards.push(this.lastSundayCard);
             });

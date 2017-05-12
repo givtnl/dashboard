@@ -60,7 +60,7 @@ export class ApiClientService {
                 try {
                     return res.json();
                 } catch (e) {
-                    return res._body;
+                    return res["_body"];
                 }
             }).catch(err =>  {
                 if(err.status === 403){
@@ -88,7 +88,7 @@ export class ApiClientService {
                 try {
                     return res.json();
                 } catch (e) {
-                    return res._body;
+                    return res["_body"];
                 }
             }).catch(err =>  {
                 if(err.status === 403 || err.status === 401){
