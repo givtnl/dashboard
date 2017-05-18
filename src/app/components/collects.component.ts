@@ -6,6 +6,7 @@ import { ApiClientService } from "app/services/api-client.service";
 import { TranslateService } from "ng2-translate";
 import {CalendarModule} from "primeng/primeng";
 import {Collection} from "../models/collection";
+import {DataService} from "../services/data.service";
 @Component({
     selector: 'my-collects',
     templateUrl: '../html/collects.component.html',
@@ -119,7 +120,7 @@ export class CollectsComponent implements OnInit{
         this.fetchSavedCollects();
     }
 
-    constructor(private apiService: ApiClientService, translate: TranslateService,calendarModule: CalendarModule, private datePipe: DatePipe) {
+    constructor(private apiService: ApiClientService, translate: TranslateService,calendarModule: CalendarModule, private datePipe: DatePipe, private dataService: DataService) {
         this.locale = this.nl;
 
         this.isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
@@ -143,6 +144,14 @@ export class CollectsComponent implements OnInit{
         this.dateBegin = new Date();
         this.dateEnd = new Date();
         this.dateBegin.setHours(6,0,0);
+
+        if (!!this.dataService.getData('dateBegin') && !!this.dataService.getData('dateEnd')) {
+          let b = new Date(1970, 0, 1);
+          let e = new Date(1970, 0, 1);
+          this.dateBegin = new Date(b.setSeconds(Number(this.dataService.getData('dateBegin'))));
+          this.dateEnd = new Date(e.setSeconds(Number(this.dataService.getData('dateEnd'))));
+
+        }
     }
 
     selectRow(row){
@@ -160,7 +169,7 @@ export class CollectsComponent implements OnInit{
                 for(let i in this.savedCollects){
                     this.savedCollects[i].BeginDate = this.savedCollects[i].BeginDate;
                     this.savedCollects[i].EndDate = this.savedCollects[i].EndDate;
-                    
+
                     this.savedCollects[i].BeginDateString = this.datePipe.transform(this.savedCollects[i].BeginDate, 'd MMMM y');
                     this.savedCollects[i].EndDateString = this.datePipe.transform(this.savedCollects[i].EndDate, 'd MMMM y');
                     this.savedCollects[i].BeginTimeString = this.datePipe.transform(this.savedCollects[i].BeginDate, 'shortTime');
@@ -224,7 +233,9 @@ export class CollectsComponent implements OnInit{
             .catch(err => console.log(err));
     }
 
-    fetchCollect(){
+    fetchCollect() {
+      this.dataService.writeData("dateBegin", Math.round(this.dateBegin.getTime() / 1000).toString());
+      this.dataService.writeData("dateEnd", Math.round(this.dateEnd.getTime() / 1000).toString());
         this.ShowLoadingAnimation = true;
         this.showCosts = false;
         if(this.dateBegin !== null && this.dateEnd !== null){
