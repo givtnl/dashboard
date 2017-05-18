@@ -62,6 +62,8 @@ export class MandateComponent implements OnInit{
             .then(data => {
                 this.CRMKey = data.Teamleader;
                 this.getCompanies();
+                this.searchBtn = "Zoeken"
+                this.disabled = false;
             });
 
     }
@@ -91,6 +93,8 @@ export class MandateComponent implements OnInit{
         this.apiClient.getData("Mandate/Org/" + this.selectedOrganisation.id)
             .then(res => {
                 this.selectedOrganisation.mandate_status = res;
+              this.searchBtn = "Zoeken";
+              this.disabled = false;
             })
             .catch(err => {
                 this.searchBtn = "Zoeken";
@@ -130,17 +134,17 @@ export class MandateComponent implements OnInit{
 
     select(i){
         console.log(i);
-        this.searchBtn = "Laden...";
         this.disabled = true;
         this.selectedOrganisation = i;
         //replace spaces in IBAN
-        this.selectedOrganisation.cf_value_93537 = i.cf_value_93537.replace(/\s/g, '');
+        if (this.selectedOrganisation.cf_value_93537 != null)
+           this.selectedOrganisation.cf_value_93537 = i.cf_value_93537.replace(/\s/g, '');
         this.selectedOrganisation.mandate_status = false;
         this.incassoStatus = "Laden...";
-        this.search = "";
         this.change();
         this.getMandateStatus();
         this.checkIncassoStatus();
+        this.disabled = false;
     }
 
     registerMandate(){
