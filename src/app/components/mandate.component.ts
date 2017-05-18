@@ -133,6 +133,8 @@ export class MandateComponent implements OnInit{
         this.searchBtn = "Laden...";
         this.disabled = true;
         this.selectedOrganisation = i;
+        //replace spaces in IBAN
+        this.selectedOrganisation.cf_value_93537 = i.cf_value_93537.replace(/\s/g, '');
         this.selectedOrganisation.mandate_status = false;
         this.incassoStatus = "Laden...";
         this.search = "";
