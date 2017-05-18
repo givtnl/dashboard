@@ -3,6 +3,7 @@
     <h2>{{title}}</h2>
     <h3>{{subtitle}}</h3>
     <div class="search-org">
+      <form>
         <div class="search-content">
             <input [(ngModel)]="search" (ngModelChange)="change($event)" type="text">
             <div class="search-results" *ngIf="filteredOrganisations">
@@ -13,6 +14,7 @@
 
         </div>
         <button (click)="searchOrg()" type="submit" [class.disabled]="disabled">{{searchBtn}}</button>
+      </form>
     </div>
     <hr class="collect-hr"/>
     <div *ngIf="selectedOrganisation">
