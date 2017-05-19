@@ -161,3 +161,76 @@ h3{
 .buttons button:last-child{
     margin-bottom: 0;
 }
+
+.overview-mandates{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.overview-mandates-table{
+  width: 80%;
+  font-size: 16px;
+  font-family: Avenir_Medium;
+  color: #2E2957;
+  margin:0 auto;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.overview-mandates-table tr td:first-child{
+  text-align: left;
+}
+
+.data-row td:first-child{
+  padding-left: 12px;
+}
+
+.status{
+  color:white;
+  text-align: center;
+  display: inline-block;
+  padding:4px 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.status-done{
+  background: #1CA96C;
+
+}
+
+.status-notok{
+  background-color: #E6412C;
+}
+
+.first-row{
+  background-color: #2E2957;
+  color:white;
+  font-family: Avenir_Heavy;
+  border-left: 1px solid #2E2957;
+  border-right: 1px solid #2E2957;
+}
+
+.first-row td{
+  padding: 10px;
+  text-align: center;
+}
+
+.cell{
+  text-align: center;
+}
+
+.data-row{
+  background-color: white;
+  border-left:1px solid #2E2957;
+  border-right:1px solid #2E2957;
+}
+.data-row:hover{
+  background-color: #BCB9C8;
+}
+
+.overview-mandates-table .data-row:last-child{
+  border-bottom:1px solid #2E2957;
+
+}

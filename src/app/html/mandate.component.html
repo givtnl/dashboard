@@ -5,7 +5,7 @@
     <div class="search-org">
       <form>
         <div class="search-content">
-            <input [(ngModel)]="search" (ngModelChange)="change($event)" type="text">
+            <input [(ngModel)]="search" (ngModelChange)="change($event)" type="text" [ngModelOptions]="{standalone: true}">
             <div class="search-results" *ngIf="filteredOrganisations">
                 <ul>
                     <li *ngFor="let i of filteredOrganisations" (click)="select(i)">{{i.name}}, {{i.city}}</li>
@@ -100,6 +100,33 @@
                 <button [class.disabled]="" (click)="registerOrganisation()" >Kerk registreren</button>
             </article>
         </section>
+      <hr class="collect-hr" style="margin-top: 30px;"/>
+
+    </div>
+    <div class="overview-mandates">
+      <h2 style="margin: 0 auto;">Hieronder staan de organisaties die nog niet compleet zijn</h2>
+      <table class="overview-mandates-table">
+        <tr class="first-row">
+          <td>Organisatie</td>
+          <td>Mandaat</td>
+          <td>Incasso</td>
+        </tr>
+        <tr class="data-row">
+        <td>De Pijler</td>
+        <td class="cell"><span class="status status-notok">open.running</span> </td>
+        <td class="cell"><span class="status status-done">open.running</span></td>
+      </tr>
+        <tr class="data-row">
+          <td>Vrije Evangelisatie Sjoerd</td>
+          <td class="cell"><span class="status status-notok">open.running</span> </td>
+          <td class="cell"><span class="status status-done">open.running</span></td>
+        </tr>
+        <tr class="data-row">
+          <td>XRDS Amsterdam</td>
+          <td class="cell"><span class="status status-notok">open.running</span> </td>
+          <td class="cell"><span class="status status-done">open.running</span></td>
+        </tr>
+      </table>
     </div>
 
 </section>
