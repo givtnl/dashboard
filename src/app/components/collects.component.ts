@@ -353,7 +353,7 @@ export class CollectsComponent implements OnInit{
     }
 
     filterCollect(collectId){
-        if(collectId == "0" || collectId == null){
+        if(collectId == null){
             this.multipleCollects = false;
         } else {
             this.multipleCollects = true;
