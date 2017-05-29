@@ -15,6 +15,7 @@ import { ChangeDetectorRef } from '@angular/core';
 
 import 'fullcalendar';
 import 'fullcalendar/dist/locale/nl';
+declare var moment: any;
 import {forEach} from "@angular/router/src/utils/collection";
 @Component({
   selector: 'app-assign-collects',
@@ -37,9 +38,10 @@ export class AssignComponent implements OnInit {
   event: MyEvent = new MyEvent();
   idGen: number = 100;
   schedule: any;
-  public constructor(private cd: ChangeDetectorRef, private renderer: Renderer2, private elementRef:ElementRef) { }
+  public constructor(private cd: ChangeDetectorRef, private renderer: Renderer2, private elementRef:ElementRef, private apiService: ApiClientService) { }
 
   ngOnInit(): void {
+    this.getAllocations();
     //fc-event-container
     this.schedule = $('#calendar');
 
@@ -203,6 +205,28 @@ export class AssignComponent implements OnInit {
     return index;
   }
 
+  getAllocations(){
+    //OrgAdminView/Allocation?dtBegin=2017-05-01T00:00:00&dtEnd=2017-03-02T00:00:00.000
+    return this.apiService.getData('OrgAdminView/Allocation')
+      .then(resp => {
+          console.log(resp);
+          for(let i = 0; i < resp.length; i++) {
+            let event = new MyEvent();
+            event.id = this.idGen++;
+            console.log(resp[i]);
+            event.title = resp[i]['Name'];
+            event.start = moment().format(resp[i]['dtBegin']);
+            event.end = moment().format(resp[i]['dtEnd']);
+            console.log(event);
+            this.events.push(event);
+          }
+
+        });
+  }
+
+  saveAllocation(){
+
+  }
 }
 
 export class MyEvent {
