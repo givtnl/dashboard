@@ -1,10 +1,76 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+<my-navigation></my-navigation>
+<div class="section-page">
+  <h2>Wijs collectes toe</h2>
+  <div class="schedule">
+    <p-schedule [events]="events" [dayRender]="dayRender" locale="nl" [header]="headerConfig" [editable]="true" (onDayClick)="handleDayClick($event)" (onEventClick)="handleEventClick($event)" [options]="options" locale="nl" id="calendar"></p-schedule>
+    <div class="schedule__dialog" *ngIf="isDialogOpen">
+      <div *ngIf="!showForm && !showDelete" class="schedule__dialog__collect">
+        <h3>Enkele of meerdere collecte?</h3>
+        <div class="schedule__dialog__collect__options">
+          <div class="schedule__dialog__collect--option" (click)="selectType(false)">
+            <svg style="margin: 0 auto;" width="50px" height="50px" viewBox="0 0 50 50" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+              <!-- Generator: Sketch 43.2 (39069) - http://www.bohemiancoding.com/sketch -->
+              <desc>Created with Sketch.</desc>
+              <defs></defs>
+              <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                <g id="Artboard" transform="translate(-170.000000, -186.000000)">
+                  <circle id="Oval-Copy" fill="#2E2957" cx="195" cy="211" r="25"></circle>
+                  <text id="1" font-family="Avenir-Black, Avenir" font-size="36" font-weight="700" fill="#FFFFFF">
+                    <tspan x="184.344" y="223">1</tspan>
+                  </text>
+                </g>
+              </g>
+            </svg>
+            <span>Enkele</span>
+          </div>
+          <div class="schedule__dialog__collect--option" (click)="selectType(true)">
+            <svg style="margin: 0 auto;" width="125px" height="50px" viewBox="0 0 125 50" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+              <!-- Generator: Sketch 43.2 (39069) - http://www.bohemiancoding.com/sketch -->
+              <desc>Created with Sketch.</desc>
+              <defs></defs>
+              <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                <g id="Artboard" transform="translate(-170.000000, -186.000000)">
+                  <g id="Group-2" transform="translate(167.000000, 186.000000)">
+                    <path d="M46,7.65061039 C41.4528008,2.93397103 35.0690332,0 28,0 C14.1928813,0 3,11.1928813 3,25 C3,38.8071187 14.1928813,50 28,50 C35.0690332,50 41.4528008,47.066029 46,42.3493896 C41.6656849,37.853567 39,31.7380855 39,25 C39,18.2619145 41.6656849,12.146433 46,7.65061039 Z" id="Combined-Shape" fill="#2E2957"></path>
+                    <text id="1" font-family="Avenir-Black, Avenir" font-size="36" font-weight="700" fill="#FFFFFF">
+                      <tspan x="14.344" y="37">1</tspan>
+                    </text>
+                  </g>
+                  <g id="Group" transform="translate(207.000000, 186.000000)">
+                    <path d="M43.5,8.18456678 C38.9270128,3.15641819 32.3321169,0 25,0 C11.1928813,0 0,11.1928813 0,25 C0,38.8071187 11.1928813,50 25,50 C32.3321169,50 38.9270128,46.8435818 43.5,41.8154332 C39.4615892,37.3750687 37,31.4750018 37,25 C37,18.5249982 39.4615892,12.6249313 43.5,8.18456678 Z" id="Combined-Shape" fill="#2E2957"></path>
+                    <text id="2" font-family="Avenir-Black, Avenir" font-size="36" font-weight="700" fill="#FFFFFF">
+                      <tspan x="14.344" y="37">2</tspan>
+                    </text>
+                  </g>
+                  <g id="Group" transform="translate(245.000000, 186.000000)">
+                    <circle id="Oval-Copy" fill="#2E2957" cx="25" cy="25" r="25"></circle>
+                    <text id="3" font-family="Avenir-Black, Avenir" font-size="36" font-weight="700" fill="#FFFFFF">
+                      <tspan x="14.344" y="37">3</tspan>
+                    </text>
+                  </g>
+                </g>
+              </g>
+            </svg>
+            <span>Meerdere</span>
+          </div>
+        </div>
+        <span class="close-button" (click)="clearAll()">[X]</span>
+
+      </div>
+      <form *ngIf="showForm && !showDelete" action="" class="schedule__dialog__form">
+        <h3>Geef een naam aan de collecte</h3>
+        <div class="schedule__dialog__form__controls">
+          <input class="schedule__dialog__form--input" type="text" name="collectName" [(ngModel)]="collectName" placeholder="Collectenaam">
+          <button type="button" class="schedule__dialog__form--submit" [class.submit-enabled]="collectName != ''" (click)="updateEvent()">Opslaan</button>
+        </div>
+        <span class="close-button" (click)="clearAll(fc)">[X]</span>
+      </form>
+      <form *ngIf="showDelete && !showForm" action="" class="schedule__dialog___form--delete">
+        <h3>Bent u zeker dat u deze collecte wil verwijderen?</h3>
+        <button class="schedule__dialog__form--submit submit-enabled" type="submit" (click)="deleteEvent()">Ja, ik ben het zeker.</button>
+        <button class="schedule__dialog__form--submit submit-enabled" type="submit" (click)="clearAll()">Nee, laat maar.</button>
+      </form>
+    </div>
+  </div>
+
+</div>
