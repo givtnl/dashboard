@@ -9,6 +9,7 @@ import {TranslateService} from 'ng2-translate';
 import {Organisation} from "../models/organisation";
 import { ApiClientService } from "app/services/api-client.service";
 import { environment } from "../../environments/environment";
+import {OrgMandates} from "../models/OrgMandates";
 
 
 @Component({
@@ -30,6 +31,8 @@ export class MandateComponent implements OnInit{
     searchBtn: string = "Zoeken";
     disabled: boolean = false;
 
+    currentMandates: Array<OrgMandates>;
+
     filteredOrganisations;
     selectedOrganisation;
     SlimPayLink;
@@ -44,9 +47,7 @@ export class MandateComponent implements OnInit{
         private route: ActivatedRoute,
         private http: Http,
         private apiClient: ApiClientService,
-    )
-    {
-    }
+    ){}
 
     searchOrg(){
         this.disabled = true;
@@ -92,8 +93,10 @@ export class MandateComponent implements OnInit{
     getCurrentOrgMandates(){
         this.apiClient.getData("Admin/CurrentOrganisations")
             .then(res => {
-                
-                console.log(res);
+                this.currentMandates = res;
+                for(let man in this.currentMandates){
+                    this.checkIncassoStatus(this.currentMandates[man].CrmId, this.currentMandates[man])
+                }
             })
             .catch(err => {
                 console.log(err);
@@ -135,12 +138,19 @@ export class MandateComponent implements OnInit{
         if(this.incassoStatus) alert("Incassoproces is al opgestart.");
     }
 
-    checkIncassoStatus(){
-        if(this.selectedOrganisation.id){
-            this.apiClient.getData("Debit/Org/" + this.selectedOrganisation.id)
-                .then(data => this.incassoStatus = data)
-                .catch(err => console.log(err));
-        }
+    checkIncassoStatus(id, selectedMandate = null){
+        this.apiClient.getData("Debit/Org/" + id)
+            .then(data => {
+                if(selectedMandate)
+                {
+                    return selectedMandate.IncassoStatus = data;
+                }
+                else
+                {
+                    this.incassoStatus = data
+                }
+            })
+            .catch(err => console.log(err));
     }
 
     select(i){
@@ -154,7 +164,8 @@ export class MandateComponent implements OnInit{
         this.incassoStatus = "Laden...";
         this.change();
         this.getMandateStatus();
-        this.checkIncassoStatus();
+        if(this.selectedOrganisation.id)
+            this.checkIncassoStatus(this.selectedOrganisation.id);
         this.disabled = false;
     }
 

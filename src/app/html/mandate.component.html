@@ -111,20 +111,10 @@
           <td>Mandaat</td>
           <td>Incasso</td>
         </tr>
-        <tr class="data-row">
-        <td>De Pijler</td>
-        <td class="cell"><span class="status status-notok">open.running</span> </td>
-        <td class="cell"><span class="status status-done">open.running</span></td>
-      </tr>
-        <tr class="data-row">
-          <td>Vrije Evangelisatie Sjoerd</td>
-          <td class="cell"><span class="status status-notok">open.running</span> </td>
-          <td class="cell"><span class="status status-done">open.running</span></td>
-        </tr>
-        <tr class="data-row">
-          <td>XRDS Amsterdam</td>
-          <td class="cell"><span class="status status-notok">open.running</span> </td>
-          <td class="cell"><span class="status status-done">open.running</span></td>
+        <tr *ngFor="let i of currentMandates" class="data-row">
+            <td>{{i.Name}}</td>
+            <td class="cell"><span [ngClass]="{'status-notok': i.PayProvStatus != 'closed.completed' ,'status-done': i.PayProvStatus == 'closed.completed' }" class="status">{{i.PayProvStatus}}</span> </td>
+            <td class="cell"><span [ngClass]="{'status-notok': i.IncassoStatus != 'closed.completed' ,'status-done': i.PayProvStatus == 'closed.completed' }" class="status">{{i.IncassoStatus}}</span></td>
         </tr>
       </table>
     </div>
