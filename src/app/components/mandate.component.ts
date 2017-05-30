@@ -19,7 +19,7 @@ import { environment } from "../../environments/environment";
 
 export class MandateComponent implements OnInit{
     ngOnInit(): void {
-
+        this.getCurrentOrgMandates();
     }
 
     showFiltered: boolean = false;
@@ -87,6 +87,17 @@ export class MandateComponent implements OnInit{
                 this.searchBtn = "Zoeken";
                 this.disabled = false;
             });
+    }
+
+    getCurrentOrgMandates(){
+        this.apiClient.getData("Admin/CurrentOrganisations")
+            .then(res => {
+                
+                console.log(res);
+            })
+            .catch(err => {
+                console.log(err);
+            })
     }
 
      getMandateStatus(){
