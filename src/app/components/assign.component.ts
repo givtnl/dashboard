@@ -29,15 +29,21 @@ export class AssignComponent implements OnInit {
   headerConfig: any;
   options: Object = new Object();
   locale = { locale: 'nl'};
-  collectName: string = '';
+
+  collectName = '';
+  collectName2 = '';
+  collectName3 = '';
   isDialogOpen: boolean;
   selected: Object = new Object();
   isMultipleCollects: boolean = false;
   showForm = false;
   showDelete = false;
   event: MyEvent = new MyEvent();
+  eventDates: MyEvent = new MyEvent();
   idGen: number = 100;
   schedule: any;
+  errorShown: boolean;
+  errorMessage: string;
   public constructor(private cd: ChangeDetectorRef, private renderer: Renderer2, private elementRef:ElementRef, private apiService: ApiClientService) { }
 
   ngOnInit(): void {
@@ -59,14 +65,17 @@ export class AssignComponent implements OnInit {
       center: 'title',
       right: 'month,agendaWeek,agendaDay'
     };
-  this.options['selectHelper'] = false;
+    this.options['eventDurationEditable'] = false;
+    this.options['eventStartEditable'] = false;
+    this.options['selectHelper'] = false;
+    this.options['fixedWeekCount'] = false;
     this.options['editable'] = true;
     this.options['unselectAuto'] = false;
     this.options['selectable'] = true;
     this.options['select'] = function(start, end, jsEvent, view, resource) {
       this.isDialogOpen = true;
-      this.event.start = start;
-      this.event.end = end;
+      this.eventDates.start = start;
+      this.eventDates.end = end;
       console.log(jsEvent);
       console.log(start);
       console.log(end);
@@ -105,11 +114,18 @@ export class AssignComponent implements OnInit {
     this.events.push(this.selected);
     */
     if (this.collectName === '') return;
+    this.saveEvent(this.collectName, '1');
 
-
-      this.saveEvent();
-    this.isDialogOpen = false;
     this.showForm = false;
+    this.isDialogOpen = false;
+
+
+    if(this.isMultipleCollects){
+      if(this.collectName2 === '') return;
+        this.saveEvent(this.collectName2, '2');
+      if(this.collectName3 === '') return;
+      this.saveEvent(this.collectName3, '3');
+    }
   }
 
   selectType(b: boolean){
@@ -130,7 +146,7 @@ export class AssignComponent implements OnInit {
   handleDayClick(event) {
     this.event = new MyEvent();
     this.event.start = event.date.format();
-    console.log(event);
+  //  console.log(event);
     //this.dialogVisible = true;
 
     //trigger detection manually as somehow only moving the mouse quickly after click triggers the automatic detection
@@ -161,23 +177,30 @@ export class AssignComponent implements OnInit {
     //this.dialogVisible = true;
   }
 
-  saveEvent() {
+  saveEvent(title: string, collectId: string) {
       //update
+    /*
       if(this.event && this.event.id) {
         let index: number = this.findEventIndexById(this.event.id);
         if(index >= 0) {
           this.events[index] = this.event;
         }
-      }
+      }*/
       //new
-      else {
-        this.event.id = this.idGen++;
-        this.event.title = this.collectName;
-        this.events.push(this.event);
-        this.event = new MyEvent();
-      }
+      //else {
+
+        let event = new MyEvent();
+        event.id = this.idGen++;
+        event.title = title;
+        event.collectId = collectId;
+        event.start = this.eventDates.start;
+        event.end = this.eventDates.end;
+        this.events.push(event);
+      //  this.event = new MyEvent();
+      //}
 
       //this.elementRef.nativeElement.querySelector('.fc-content').addEventListener('click', function(e){console.log(e); });
+      this.saveAllocation(title, collectId);
 
 
 
@@ -188,6 +211,7 @@ export class AssignComponent implements OnInit {
     if(index >= 0) {
       this.events.splice(index, 1);
     }
+    this.deleteAllocation();
     this.event = new MyEvent();
     this.clearAll();
     //this.dialogVisible = false;
@@ -204,35 +228,72 @@ export class AssignComponent implements OnInit {
 
     return index;
   }
+  toggleError(setVisible: boolean, msg: any = "") {
+    this.errorShown = setVisible;
+    this.errorMessage = msg;
+  }
 
   getAllocations(){
     //OrgAdminView/Allocation?dtBegin=2017-05-01T00:00:00&dtEnd=2017-03-02T00:00:00.000
     return this.apiService.getData('OrgAdminView/Allocation')
       .then(resp => {
+          this.events.length = 0;
           console.log(resp);
           for(let i = 0; i < resp.length; i++) {
             let event = new MyEvent();
-            event.id = this.idGen++;
+            event.id = resp[i]['Id'];
             console.log(resp[i]);
             event.title = resp[i]['Name'];
             event.start = moment().format(resp[i]['dtBegin']);
             event.end = moment().format(resp[i]['dtEnd']);
-            console.log(event);
+            event.collectId = resp[i]['CollectId'];
+            //console.log(event);
             this.events.push(event);
           }
 
         });
   }
 
-  saveAllocation(){
+  saveAllocation(title: string, collectId: string){
+    console.log(this.event);
+    let body = new Object();
+    body["name"] = title;
+    body["dtBegin"] = this.eventDates.start['_d'];
+    body["dtEnd"] = this.eventDates.end['_d'];
+    body["CollectId"] = collectId;
+    //https://givtapidebug.azurewebsites.net/api/OrgAdminView/Allocation
+    this.apiService.postData("OrgAdminView/Allocation", body)
+      .then(resp => {
+       // console.log("hello");
+        if(resp.status === 409){
+          this.toggleError(true, "Je zit met een overlapping");
+        }
+        this.getAllocations();
 
+
+      })
+      .catch(err => {console.log(err); console.log("err")});
+
+    this.event = new MyEvent();
+  }
+
+  deleteAllocation(){
+    this.apiService.deleteData('OrgAdminView/Allocation?Id=' + this.event.id)
+      .then(resp => { console.log(resp)})
+      .catch(err => console.log(err));
+  }
+
+  eventRender(event: any, element: any, view: any){
+    console.log(event);
+    element[0].innerText = event.title + " (" + event.collectId  + ")";
   }
 }
 
 export class MyEvent {
   id: number;
   title: string;
-  start: string;
-  end: string;
+  start: any;
+  end: any;
+  collectId: string;
   backgroundColor: string;
 }

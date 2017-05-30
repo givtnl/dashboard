@@ -2,7 +2,7 @@
 <div class="section-page">
   <h2>Wijs collectes toe</h2>
   <div class="schedule">
-    <p-schedule [events]="events" [dayRender]="dayRender" locale="nl" [header]="headerConfig" [editable]="true" (onDayClick)="handleDayClick($event)" (onEventClick)="handleEventClick($event)" [options]="options" locale="nl" id="calendar"></p-schedule>
+    <p-schedule [events]="events" [dayRender]="dayRender" [eventRender]="eventRender" locale="nl" [header]="headerConfig" [editable]="true" (onDayClick)="handleDayClick($event)" (onEventClick)="handleEventClick($event)" [options]="options" locale="nl" id="calendar"></p-schedule>
     <div class="schedule__dialog" *ngIf="isDialogOpen">
       <div *ngIf="!showForm && !showDelete" class="schedule__dialog__collect">
         <h3>Enkele of meerdere collecte?</h3>
@@ -59,9 +59,15 @@
       </div>
       <form *ngIf="showForm && !showDelete" action="" class="schedule__dialog__form">
         <h3>Geef een naam aan de collecte</h3>
-        <div class="schedule__dialog__form__controls">
+        <div class="schedule__dialog__form__controls" *ngIf="!isMultipleCollects">
           <input class="schedule__dialog__form--input" type="text" name="collectName" [(ngModel)]="collectName" placeholder="Collectenaam">
           <button type="button" class="schedule__dialog__form--submit" [class.submit-enabled]="collectName != ''" (click)="updateEvent()">Opslaan</button>
+        </div>
+        <div class="schedule__dialog__form__controls flex-col" *ngIf="isMultipleCollects">
+          <input class="schedule__dialog__form--input margin-bottom" type="text" name="collectName" [(ngModel)]="collectName" placeholder="Collecte 1">
+          <input class="schedule__dialog__form--input margin-bottom" type="text" name="collectName2" [(ngModel)]="collectName2" placeholder="Collecte ">
+          <input class="schedule__dialog__form--input margin-bottom" type="text" name="collectName3" [(ngModel)]="collectName3" placeholder="Collecte 3">
+          <button type="button" class="schedule__dialog__form--submit no-margin" [class.submit-enabled]="collectName != '' && collectName2 != ''" (click)="updateEvent()">Opslaan</button>
         </div>
         <span class="close-button" (click)="clearAll(fc)">[X]</span>
       </form>
@@ -70,6 +76,13 @@
         <button class="schedule__dialog__form--submit submit-enabled" type="submit" (click)="deleteEvent()">Ja, ik ben het zeker.</button>
         <button class="schedule__dialog__form--submit submit-enabled" type="submit" (click)="clearAll()">Nee, laat maar.</button>
       </form>
+
+    </div>
+    <div class="error__message" *ngIf="errorShown">
+      <div class="error__message--inner">
+        <h3>{{errorMessage}}</h3>
+        <button class="schedule__dialog__form--submit submit-enabled" (click)="toggleError(false)">Sluiten</button>
+      </div>
     </div>
   </div>
 
