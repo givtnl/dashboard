@@ -1,7 +1,6 @@
- import { Component, OnInit,Injectable } from '@angular/core';
+ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import 'rxjs/add/operator/toPromise';
-import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/observable/forkJoin';
 import { Card } from '../models/card';
 import { ApiClientService } from "app/services/api-client.service";
@@ -13,7 +12,7 @@ import {TranslateService} from "ng2-translate";
     templateUrl: '../html/dashboard.component.html',
     styleUrls: ['../css/dashboard.component.css']
 })
-export class DashboardComponent implements OnInit{
+export class DashboardComponent implements OnInit, OnDestroy{
     cards: Card[] = [];
     lastSundayCard: Card = new Card();
     thisMonthCard: Card = new Card();
@@ -31,11 +30,17 @@ export class DashboardComponent implements OnInit{
     donutcardTitle: string;
     donutcardFooter: string;
 
+    continuousData: any;
+
     constructor(private apiService: ApiClientService,  translate:TranslateService, private datePipe: DatePipe){
         this.translate = translate;
         this.isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
         this.ShowLoadingAnimation = true;
 
+    }
+
+    ngOnDestroy(): void{
+        clearInterval(this.continuousData);
     }
 
     ngOnInit() : void{
@@ -54,7 +59,7 @@ export class DashboardComponent implements OnInit{
     }
 
     fetchDataContinuously(interval: number){
-        setInterval(() => {
+        this.continuousData = setInterval(() => {
             this.fetchThisMonthGivts();
             this.fetchThisMonthGivers();
         }, interval);
@@ -178,7 +183,6 @@ export class DashboardComponent implements OnInit{
                 if(!cardIsInCards){
                     this.cards.push(this.thisMonthCard);
                 }
-                //return new Promise().then( ()=> {return "ok";}).catch (() => { return "error";});
             });
     }
 
