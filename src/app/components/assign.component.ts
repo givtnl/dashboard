@@ -29,7 +29,6 @@ export class AssignComponent implements OnInit, OnChanges {
   events: any[];
   headerConfig: any;
   options: Object = new Object();
-  locale = { locale: 'nl'};
 
   collectName = '';
   collectName2 = '';
@@ -37,7 +36,7 @@ export class AssignComponent implements OnInit, OnChanges {
   isDialogOpen: boolean;
   selected: Object = new Object();
   isMultipleCollects: boolean = false;
-  showForm = false;
+  showForm = true;
   showDelete = false;
   event: MyEvent = new MyEvent();
   eventDates: MyEvent = new MyEvent();
@@ -51,7 +50,7 @@ export class AssignComponent implements OnInit, OnChanges {
   currentViewEnd: any;
 
   @ViewChild('calendar') calendar: ElementRef;
-  public constructor(private cd: ChangeDetectorRef, private renderer: Renderer2, private elementRef:ElementRef, private apiService: ApiClientService) {
+  public constructor(private ts: TranslateService, private cd: ChangeDetectorRef, private renderer: Renderer2, private elementRef:ElementRef, private apiService: ApiClientService) {
     console.log("hello");
   }
 
@@ -72,6 +71,8 @@ export class AssignComponent implements OnInit, OnChanges {
       this.getAllocations();
       this.checkAllocations();
     }.bind(this);
+    this.options['nowIndicator'] = false;
+    this.options['locale'] = this.ts.currentLang;
     this.options['eventDurationEditable'] = false;
     this.options['eventStartEditable'] = false;
     this.options['selectHelper'] = false;
@@ -81,6 +82,7 @@ export class AssignComponent implements OnInit, OnChanges {
     this.options['selectable'] = true;
     this.options['select'] = function(start, end, jsEvent, view, resource) {
       this.isDialogOpen = true;
+      this.showForm = true;
       this.eventDates.start = start;
       this.eventDates.end = end;
     }.bind(this);
@@ -93,11 +95,12 @@ export class AssignComponent implements OnInit, OnChanges {
     }
     this.apiService.getData(apiUrl)
       .then(resp => {
+        console.log(resp);
         let dayArray = document.getElementsByClassName('fc-day');
         for(let i = 0; i < dayArray.length; i++){
           let color = "rgb(213, 61, 76)";
           if(dayArray[i]['style'].backgroundColor === color){
-            dayArray[i]['style'].backgroundColor = "white";
+            dayArray[i].setAttribute("style","");
           }
         }
         for(let x = 0; x < resp.length; x++){
@@ -171,6 +174,7 @@ export class AssignComponent implements OnInit, OnChanges {
   }
 
   handleEventClick(e) {
+    this.showForm = false;
     this.isDialogOpen = true;
     this.showDelete = true;
     this.event = new MyEvent();

@@ -1,8 +1,8 @@
 <my-navigation></my-navigation>
 <div class="section-page">
-  <h2>Wijs collectes toe</h2>
+  <h2>{{ "TitleAllocate" | translate }}</h2>
   <div class="schedule">
-    <p-schedule #calendar [events]="events" [dayRender]="dayRender" [eventRender]="eventRender" locale="nl" [header]="headerConfig" [editable]="true" (onDayClick)="handleDayClick($event)" (onEventClick)="handleEventClick($event)" [options]="options" locale="nl" id="calendar"></p-schedule>
+    <p-schedule #calendar [events]="events" [dayRender]="dayRender" [eventRender]="eventRender" locale="nl" [nowIndicator]="false" [header]="headerConfig" [editable]="true" (onDayClick)="handleDayClick($event)" (onEventClick)="handleEventClick($event)" [options]="options" locale="nl" id="calendar"></p-schedule>
     <div class="schedule__dialog" *ngIf="isDialogOpen">
       <div *ngIf="!showForm && !showDelete" class="schedule__dialog__collect">
         <h3>Enkele of meerdere collecte?</h3>
@@ -54,14 +54,14 @@
             <span>Meerdere</span>
           </div>
         </div>
-        <span class="close-button" (click)="clearAll()">[X]</span>
+        <span class="close-button" (click)="clearAll()">X</span>
 
       </div>
-      <form *ngIf="showForm && !showDelete" action="" class="schedule__dialog__form">
-        <h3>Geef een naam aan de collecte</h3>
+      <form style="position: relative" *ngIf="showForm && !showDelete" action="" class="schedule__dialog__form">
+        <h3>{{ "AddNameToCollect" | translate }}</h3>
         <div class="schedule__dialog__form__controls" *ngIf="!isMultipleCollects">
-          <input class="schedule__dialog__form--input" type="text" name="collectName" [(ngModel)]="collectName" placeholder="Collectenaam">
-          <button type="button" class="schedule__dialog__form--submit" [class.submit-enabled]="collectName != ''" (click)="updateEvent()">Opslaan</button>
+          <input class="schedule__dialog__form--input" type="text" name="collectName" [(ngModel)]="collectName" [attr.placeholder]="'Collection' | translate" placeholder="Collectenaam">
+          <button type="button" class="schedule__dialog__form--submit" [class.submit-enabled]="collectName != ''" (click)="updateEvent()">{{"Text_Collectes_SaveButton" | translate}}</button>
         </div>
         <div class="schedule__dialog__form__controls flex-col" *ngIf="isMultipleCollects">
           <input class="schedule__dialog__form--input margin-bottom" type="text" name="collectName" [(ngModel)]="collectName" placeholder="Collecte 1">
@@ -69,19 +69,19 @@
           <input class="schedule__dialog__form--input margin-bottom" type="text" name="collectName3" [(ngModel)]="collectName3" placeholder="Collecte 3">
           <button type="button" class="schedule__dialog__form--submit no-margin" [class.submit-enabled]="collectName != '' && collectName2 != ''" (click)="updateEvent()">Opslaan</button>
         </div>
-        <span class="close-button" (click)="clearAll(fc)">[X]</span>
+        <span class="close-button" (click)="clearAll(fc)">X</span>
       </form>
       <form *ngIf="showDelete && !showForm" action="" class="schedule__dialog___form--delete">
-        <h3>Bent u zeker dat u deze collecte wil verwijderen?</h3>
-        <button class="schedule__dialog__form--submit submit-enabled" type="submit" (click)="deleteEvent()">Ja, ik ben het zeker.</button>
-        <button class="schedule__dialog__form--submit submit-enabled" type="submit" (click)="clearAll()">Nee, laat maar.</button>
+        <h3>{{"DeleteCollectConfirm" | translate}}</h3>
+        <button class="schedule__dialog__form--submit submit-enabled" type="submit" (click)="deleteEvent()">{{ "YesImSure" | translate}}</button>
+        <button class="schedule__dialog__form--submit submit-enabled" type="submit" (click)="clearAll()">{{ "NoNeverMind" | translate}}</button>
       </form>
 
     </div>
     <div class="error__message" *ngIf="errorShown">
       <div class="error__message--inner">
-        <h3>{{errorMessage}}</h3>
-        <button class="schedule__dialog__form--submit submit-enabled" (click)="toggleError(false)">Sluiten</button>
+        <h3>{{"OverlapError" | translate}}</h3>
+        <button class="schedule__dialog__form--submit submit-enabled no-margin" (click)="toggleError(false)">{{ "PW_GoBack" | translate}}</button>
       </div>
     </div>
   </div>
