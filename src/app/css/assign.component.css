@@ -1,0 +1,205 @@
+.section-page{
+  width: 900px;
+  margin: 0 auto;
+  position: relative;
+}
+
+h2{
+  margin: 0;
+  font-family: 'Avenir_Black';
+  font-size:18px;
+  color: #2C2B57;
+  text-align: center;
+  font-weight: normal;
+  padding: 25px 0;
+  box-sizing: border-box;
+}
+
+h3{
+  font-family: 'Avenir_Roman';
+  font-size:18px;
+  margin: 0 0 30px 0 ;
+  color: #2C2B57;
+  text-align:center;
+  font-weight: normal;
+}
+
+.schedule{
+  position:relative;
+}
+
+.schedule__dialog{
+  position: absolute;
+  top:0;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  background-color: transparent;
+  z-index: 999;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.schedule__dialog__form{
+  border: 1px solid #2E2957;
+  background-color: white;
+  width: 50%;
+  margin: 0 auto;
+  padding: 15px;
+  box-sizing: border-box;
+  color:white;
+  -webkit-box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.5);
+  -moz-box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.5);
+  box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.5);
+}
+
+.schedule__dialog__collect{
+  border: 1px solid #2E2957;
+  background-color: white;
+  width: 50%;
+  margin: 0 auto;
+  padding: 15px;
+  box-sizing: border-box;
+  color:white;
+  -webkit-box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.5);
+  -moz-box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.5);
+  box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.5);
+  position:relative;
+}
+
+.schedule__dialog h3{
+
+}
+
+.schedule__dialog__form__controls{
+  display: flex;
+  justify-content: center;
+}
+
+.schedule__dialog__form--input{
+  font-family: 'Avenir_Heavy';
+  font-size: 16px;
+  color: #2C2B57;
+  padding: 10px;
+  border: 1px solid #D5D4DD;
+  background-color: #FEFEFE;
+  box-sizing: border-box;
+  transition: 0.3s;
+  cursor: pointer;
+  height: 40px;
+}
+
+.schedule__dialog__form--submit{
+  padding: 8px 22px;
+  box-sizing: border-box;
+  color: white;
+  font-family: 'Avenir_Black';
+  background-color: #D5D4DD;
+  border: 0;
+  font-size: 18px;
+  cursor: pointer;
+  transition: 0.3s;
+  height: 40px;
+  margin-left: 10px;
+}
+
+.submit-disabled{
+  background-color: #D5D4DD;
+}
+
+.submit-enabled{
+  background: #2E2957;
+}
+
+.schedule__dialog__collect--option{
+  font-family: 'Avenir_Heavy';
+  color: #2E2957;
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  padding: 15px;
+  box-sizing: border-box;
+  transition: 0.3s;
+  cursor: pointer;
+}
+
+.schedule__dialog__collect--option:hover{
+  background-color: #D5D4DD;
+}
+
+.schedule__dialog__collect--option span{
+  margin-top: 15px;
+}
+
+
+.schedule__dialog__collect__options{
+  display: flex;
+}
+
+
+
+.close-button{
+  position: absolute;
+  color: #2E2957;
+  top: 0;
+  right: 0;
+  padding: 15px;
+  cursor: pointer;
+  font-family: "Avenir_Black";
+  font-size: 20px;
+}
+
+
+.schedule__dialog___form--delete{
+  border: 1px solid #2E2957;
+  background-color: white;
+  width: 50%;
+  margin: 0 auto;
+  padding: 15px;
+  box-sizing: border-box;
+  color:white;
+  -webkit-box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.5);
+  -moz-box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.5);
+  box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.5);
+}
+
+.error__message{
+  position: absolute;
+  top: 0;
+  text-align: center;
+  margin: 0 auto;
+  left: auto;
+  width: 100%;
+  height: 100%;
+  vertical-align: middle;
+  background: rgba(0,0,0,0.4);
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  align-content: center;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.error__message--inner{
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: white;
+  padding: 15px;
+  box-sizing: border-box;
+}
+
+.flex-col{
+  flex-direction: column;
+}
+
+.no-margin{
+  margin:0;
+}
+
+.margin-bottom{
+  margin-bottom: 15px;
+}

@@ -16,13 +16,17 @@ import {LoggedInGuard} from "./guards/logged-in.guard";
 import {AdminGuard} from "./guards/admin.guard";
 import {NavigationComponent} from "./components/navigation.component";
 import {CollectsComponent} from "./components/collects.component";
-import {CalendarModule} from "primeng/components/calendar/calendar";
 import {ReversePipe} from "./pipes/reverse.pipe";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {PayoutsComponent} from "./components/payouts.component";
 import {MandateComponent} from "./components/mandate.component";
 import {ForgotPasswordComponent} from "./components/forgotpassword.component";
 import {UnAuthorizeComponent} from "./components/unauthorized.component";
+import {AssignComponent} from "./components/assign.component";
+
+import * as jQuery from 'jquery';
+import { AutoCompleteModule, ScheduleModule, DialogModule, CalendarModule, DropdownModule } from 'primeng/primeng';
+(window as any).jQuery = (window as any).$ = jQuery; // This is needed to resolve issue.
 
 export function createTranslateLoader(http: Http) {
   return new TranslateStaticLoader(http, './assets/i18n', '.json');
@@ -39,14 +43,22 @@ export function createTranslateLoader(http: Http) {
     PayoutsComponent,
     MandateComponent,
     ForgotPasswordComponent,
-    UnAuthorizeComponent
+    UnAuthorizeComponent,
+    AssignComponent,
   ],
   imports: [
+    AutoCompleteModule,
+    DialogModule,
+    DropdownModule,
+    FormsModule,
+    ScheduleModule,
+    CalendarModule,
     BrowserModule,
     BrowserAnimationsModule,
     FormsModule,
     HttpModule,
     AppRoutingModule,
+    ScheduleModule,
     TranslateModule.forRoot({
       provide: TranslateLoader,
       useFactory: (createTranslateLoader),

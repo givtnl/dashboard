@@ -84,5 +84,12 @@
   "All": "All",
   "Collection": "Collection",
   "BrowserMessage": "We recommend Google Chrome for the best user experience.",
-  "DownloadNow": "Download now"
+  "DownloadNow": "Download now",
+  "Menu_Allocate": "Allocate",
+  "TitleAllocate": "Allocate your collections",
+  "AddNameToCollect": "Give a name to a collection",
+  "DeleteCollectConfirm": "Are you sure to delete this collection?",
+  "OverlapError": "You can't have overlapping collects.",
+  "YesImSure": "Yes, I'm sure.",
+  "NoNeverMind": "No, never mind."
 }

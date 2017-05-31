@@ -9,7 +9,8 @@
             <li><a routerLink="/dashboard" routerLinkActive="active">{{"Menu_Overview" | translate}}</a></li>
             <li><a routerLink="/collects" routerLinkActive="active">{{"Menu_Collectes" | translate}}</a></li>
             <li><a routerLink="/payouts" routerLinkActive="active">{{ "Payout_Title" | translate}}</a></li>
-            <li *ngIf="showMandateLink" ><a routerLink="/mandate" routerLinkActive="active">Mandaten</a></li>
+          <li><a routerLink="/assign" routerLinkActive="active">{{ "Menu_Allocate" | translate }}</a></li>
+          <li *ngIf="showMandateLink" ><a routerLink="/mandate" routerLinkActive="active">Mandaten</a></li>
 
         </ul>
         <span class="menu-settings" (click)="logout()">
