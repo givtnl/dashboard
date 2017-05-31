@@ -1,6 +1,7 @@
 <my-navigation></my-navigation>
 <section class="section-collects">
-    <h2>{{"Payout_OverviewPayouts" | translate}}</h2>
+  <h2 *ngIf="openAllocations" class="red">{{ "OpenAllocationsMessage" | translate}}</h2>
+  <h2>{{"Payout_OverviewPayouts" | translate}}</h2>
     <hr class="collect-hr"/>
 </section>
     <section *ngFor="let payout of payouts | reverse">

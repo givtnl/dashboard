@@ -12,6 +12,7 @@ import {TranslateService} from "ng2-translate";
 
 export class PayoutsComponent implements OnInit{
 
+    openAllocations: boolean = false;
     payouts : Payout[] = [];
     isSafari: boolean;
 
@@ -28,75 +29,87 @@ export class PayoutsComponent implements OnInit{
 
     }
 
+  checkAllocations(){
+    let apiUrl = 'OrgAdminView/AllocationCheck';
+    this.apiService.getData(apiUrl)
+      .then(resp => {
+        console.log(resp);
+        if(resp.length > 0){
+          this.openAllocations = true;
+        }
+      });
+  }
+
     ngOnInit(){
-        this.apiService.getData("OrgAdminView/Payouts")
-            .then(resp =>
-            {
-                this.payouts = resp;
-                for(let i in this.payouts){
-                    let x = this.payouts[i];
-                    x.BeginDate = this.datePipe.transform(new Date(this.payouts[i].BeginDate), "d MMMM y");
-                    x.EndDate = this.datePipe.transform(new Date(this.payouts[i].EndDate), "d MMMM y");
+      this.checkAllocations();
+      this.apiService.getData("OrgAdminView/Payouts")
+          .then(resp =>
+          {
+              this.payouts = resp;
+              for(let i in this.payouts){
+                  let x = this.payouts[i];
+                  x.BeginDate = this.datePipe.transform(new Date(this.payouts[i].BeginDate), "d MMMM y");
+                  x.EndDate = this.datePipe.transform(new Date(this.payouts[i].EndDate), "d MMMM y");
 
-                    x.Mandaatkosten = x.MandateCostCount * this.mandateCost;
-                    x.Transactiekosten = x.TransactionCount * this.transactionCost;
-                    x.Uitbetalingskosten = 0.18;
-                    x.T_Total_Excl = x.Mandaatkosten + x.Transactiekosten + x.Uitbetalingskosten;
-                    x.T_BTW = x.MandateTaxes + x.TransactionTaxes + x.PayoutCostTaxes;
-                    x.T_Total_Incl = x.T_Total_Excl + x.T_BTW;
+                  x.Mandaatkosten = x.MandateCostCount * this.mandateCost;
+                  x.Transactiekosten = x.TransactionCount * this.transactionCost;
+                  x.Uitbetalingskosten = 0.18;
+                  x.T_Total_Excl = x.Mandaatkosten + x.Transactiekosten + x.Uitbetalingskosten;
+                  x.T_BTW = x.MandateTaxes + x.TransactionTaxes + x.PayoutCostTaxes;
+                  x.T_Total_Incl = x.T_Total_Excl + x.T_BTW;
 
-                    x.SK_Total_Incl = x.RTransactionT1Cost + x.RTransactionT2Cost + x.RTransactionTaxes;
-                    x.G_Total_Incl = x.GivtServiceFee + x.GivtServiceFeeTaxes;
+                  x.SK_Total_Incl = x.RTransactionT1Cost + x.RTransactionT2Cost + x.RTransactionTaxes;
+                  x.G_Total_Incl = x.GivtServiceFee + x.GivtServiceFeeTaxes;
 
-                    //tr fee + storno fee + givt fee + storno bedragen
-                    x.TotaalInhoudingen = x.T_Total_Incl + x.SK_Total_Incl + x.G_Total_Incl + x.RTransactionAmount;
+                  //tr fee + storno fee + givt fee + storno bedragen
+                  x.TotaalInhoudingen = x.T_Total_Incl + x.SK_Total_Incl + x.G_Total_Incl + x.RTransactionAmount;
 
-                    x.ToegezegdBedrag = x.TotaalInhoudingen + x.TotalPaid;
+                  x.ToegezegdBedrag = x.TotaalInhoudingen + x.TotalPaid;
 
-                    x.Mandaatkosten = this.displayValue(x.Mandaatkosten);
-                    x.Transactiekosten = this.displayValue(x.Transactiekosten);
-                    x.Uitbetalingskosten = this.displayValue(x.Uitbetalingskosten);
-                    x.T_Total_Excl = this.displayValue(x.T_Total_Excl);
-                    x.T_BTW = this.displayValue(x.T_BTW);
-                    x.T_Total_Incl = this.displayValue(x.T_Total_Incl);
+                  x.Mandaatkosten = this.displayValue(x.Mandaatkosten);
+                  x.Transactiekosten = this.displayValue(x.Transactiekosten);
+                  x.Uitbetalingskosten = this.displayValue(x.Uitbetalingskosten);
+                  x.T_Total_Excl = this.displayValue(x.T_Total_Excl);
+                  x.T_BTW = this.displayValue(x.T_BTW);
+                  x.T_Total_Incl = this.displayValue(x.T_Total_Incl);
 
-                    x.StorneringsKostenT1 = this.displayValue(x.RTransactionT1Cost);
-                    x.StorneringsKostenT2 = this.displayValue(x.RTransactionT2Cost);
-                    x.SK_Total_Excl = this.displayValue(x.RTransactionT1Cost + x.RTransactionT2Cost);
-                    x.SK_BTW = this.displayValue(x.RTransactionTaxes);
-                    x.SK_Total_Incl = this.displayValue(x.SK_Total_Incl);
+                  x.StorneringsKostenT1 = this.displayValue(x.RTransactionT1Cost);
+                  x.StorneringsKostenT2 = this.displayValue(x.RTransactionT2Cost);
+                  x.SK_Total_Excl = this.displayValue(x.RTransactionT1Cost + x.RTransactionT2Cost);
+                  x.SK_BTW = this.displayValue(x.RTransactionTaxes);
+                  x.SK_Total_Incl = this.displayValue(x.SK_Total_Incl);
 
-                    x.G_Total_Excl = this.displayValue(x.GivtServiceFee);
-                    x.G_BTW = this.displayValue(x.GivtServiceFeeTaxes);
-                    x.G_Total_Incl = this.displayValue(x.G_Total_Incl);
+                  x.G_Total_Excl = this.displayValue(x.GivtServiceFee);
+                  x.G_BTW = this.displayValue(x.GivtServiceFeeTaxes);
+                  x.G_Total_Incl = this.displayValue(x.G_Total_Incl);
 
-                    x.GestorneerdeBedragen = this.displayValue(x.RTransactionAmount);
-                    x.TotaalInhoudingen = this.displayValue(x.TotaalInhoudingen);
-                    x.ToegezegdBedrag = this.displayValue(x.ToegezegdBedrag);
+                  x.GestorneerdeBedragen = this.displayValue(x.RTransactionAmount);
+                  x.TotaalInhoudingen = this.displayValue(x.TotaalInhoudingen);
+                  x.ToegezegdBedrag = this.displayValue(x.ToegezegdBedrag);
 
 
-                    x.hidden = true;
-                    x.TotalPaidText = this.displayValue(x.TotalPaid);
+                  x.hidden = true;
+                  x.TotalPaidText = this.displayValue(x.TotalPaid);
 
-                    this.translate.get('Text_Info_Mandate', {0: x.MandateCostCount,1: (this.isSafari ? (this.mandateCost).toFixed(3) : (this.mandateCost).toLocaleString(navigator.language,{minimumFractionDigits: 3,maximumFractionDigits:3}))}).subscribe((res: string) => {
-                        x.Text_Info_Mandate = res;
-                    });
+                  this.translate.get('Text_Info_Mandate', {0: x.MandateCostCount,1: (this.isSafari ? (this.mandateCost).toFixed(3) : (this.mandateCost).toLocaleString(navigator.language,{minimumFractionDigits: 3,maximumFractionDigits:3}))}).subscribe((res: string) => {
+                      x.Text_Info_Mandate = res;
+                  });
 
-                    this.translate.get('Text_Info_Transaction', {0: x.TransactionCount,1: (this.isSafari ? (this.transactionCost).toFixed(2) : (this.transactionCost).toLocaleString(navigator.language,{minimumFractionDigits: 2,maximumFractionDigits:2}))}).subscribe((res: string) => {
-                        x.Text_Info_Transaction = res;
-                    });
+                  this.translate.get('Text_Info_Transaction', {0: x.TransactionCount,1: (this.isSafari ? (this.transactionCost).toFixed(2) : (this.transactionCost).toLocaleString(navigator.language,{minimumFractionDigits: 2,maximumFractionDigits:2}))}).subscribe((res: string) => {
+                      x.Text_Info_Transaction = res;
+                  });
 
-                    this.translate.get('Text_Info_Type1', {0: x.RTransactionT1Count,1: (this.isSafari ? (0.18).toFixed(2) : (0.18).toLocaleString(navigator.language,{minimumFractionDigits: 2,maximumFractionDigits:2}))}).subscribe((res: string) => {
-                        x.Text_Info_Type1 = res;
-                    });
+                  this.translate.get('Text_Info_Type1', {0: x.RTransactionT1Count,1: (this.isSafari ? (0.18).toFixed(2) : (0.18).toLocaleString(navigator.language,{minimumFractionDigits: 2,maximumFractionDigits:2}))}).subscribe((res: string) => {
+                      x.Text_Info_Type1 = res;
+                  });
 
-                    this.translate.get('Text_Info_Type2', {0: x.RTransactionT2Count,1: (this.isSafari ? (1.20).toFixed(2) : (1.20).toLocaleString(navigator.language,{minimumFractionDigits: 2,maximumFractionDigits:2}))}).subscribe((res: string) => {
-                        x.Text_Info_Type2 = res;
-                    });
+                  this.translate.get('Text_Info_Type2', {0: x.RTransactionT2Count,1: (this.isSafari ? (1.20).toFixed(2) : (1.20).toLocaleString(navigator.language,{minimumFractionDigits: 2,maximumFractionDigits:2}))}).subscribe((res: string) => {
+                      x.Text_Info_Type2 = res;
+                  });
 
-                    x.activeRow = 1;
-                }
-            });
+                  x.activeRow = 1;
+              }
+          });
     }
 
     displayValue(x)

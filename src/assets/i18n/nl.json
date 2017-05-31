@@ -91,5 +91,6 @@
   "DeleteCollectConfirm": "Bent u zeker dat u deze collecte wil verwijderen?",
   "OverlapError": "U heeft overlappende collectes, dat is niet toegestaan.",
   "YesImSure": "Ja, ik ben het zeker.",
-  "NoNeverMind.": "Nee, laat maar."
+  "NoNeverMind": "Nee, laat maar.",
+  "OpenAllocationsMessage": "U heeft nog transacties die niet gekoppeld zijn aan een collecte.\nGa naar het Toewijzen tabblad om dit in orde te maken."
 }

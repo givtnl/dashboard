@@ -115,10 +115,13 @@ export class CollectsComponent implements OnInit{
     timeRange: string;
 
     inputTitleLength: number = 1;
-
+    openAllocations: boolean = false;
     ngOnInit(){
-        this.fetchSavedCollects();
+      this.checkAllocations();
+      this.fetchSavedCollects();
     }
+
+
 
     constructor(private apiService: ApiClientService, translate: TranslateService,calendarModule: CalendarModule, private datePipe: DatePipe, private dataService: DataService) {
         this.locale = this.nl;
@@ -153,6 +156,17 @@ export class CollectsComponent implements OnInit{
 
         }
     }
+
+  checkAllocations(){
+    let apiUrl = 'OrgAdminView/AllocationCheck';
+    this.apiService.getData(apiUrl)
+      .then(resp => {
+        console.log(resp);
+        if(resp.length > 0){
+          this.openAllocations = true;
+        }
+      });
+  }
 
     selectRow(row){
         this.activeRow = row;

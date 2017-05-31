@@ -1,6 +1,8 @@
 <my-navigation></my-navigation>
 <section class="section-collects">
-    <h2>{{"Text_Collectes_Title" | translate}}</h2>
+  <h2 *ngIf="openAllocations" class="red">{{ "OpenAllocationsMessage" | translate}}</h2>
+
+  <h2>{{"Text_Collectes_Title" | translate}}</h2>
     <h3>{{"Text_Collectes_Subtitle" | translate}}</h3>
     <section class="collects-pickdate">
         <p-calendar readonlyInput="readonlyInput" inputStyleClass="date-picker-input" [(ngModel)]="dateBegin" (ngModelChange)="onDateBeginChange($event)" showTime="showTime" dateFormat="dd/mm/yy"></p-calendar><span class="till">{{"Text_TotEnMet" | translate}}</span>

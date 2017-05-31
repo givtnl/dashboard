@@ -509,3 +509,8 @@ button:disabled{
 .total{
     font-size: 18px;
 }
+
+.red{
+  color: #D53D4C;
+}
+

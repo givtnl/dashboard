@@ -91,5 +91,6 @@
   "DeleteCollectConfirm": "Are you sure to delete this collection?",
   "OverlapError": "You can't have overlapping collects.",
   "YesImSure": "Yes, I'm sure.",
-  "NoNeverMind": "No, never mind."
+  "NoNeverMind": "No, never mind.",
+  "OpenAllocationsMessage": "You have transactions that are not connected to a collection.\nPlease go to the Allocate tab to resolve this issue."
 }

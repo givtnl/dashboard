@@ -557,3 +557,7 @@ button:disabled{
     padding: 0 0 0 0px;
     background: #41c98e;
 }
+
+.red{
+  color: #D53D4C;
+}
