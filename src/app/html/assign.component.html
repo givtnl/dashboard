@@ -2,7 +2,7 @@
 <div class="section-page">
   <h2>Wijs collectes toe</h2>
   <div class="schedule">
-    <p-schedule [events]="events" [dayRender]="dayRender" [eventRender]="eventRender" locale="nl" [header]="headerConfig" [editable]="true" (onDayClick)="handleDayClick($event)" (onEventClick)="handleEventClick($event)" [options]="options" locale="nl" id="calendar"></p-schedule>
+    <p-schedule #calendar [events]="events" [dayRender]="dayRender" [eventRender]="eventRender" locale="nl" [header]="headerConfig" [editable]="true" (onDayClick)="handleDayClick($event)" (onEventClick)="handleEventClick($event)" [options]="options" locale="nl" id="calendar"></p-schedule>
     <div class="schedule__dialog" *ngIf="isDialogOpen">
       <div *ngIf="!showForm && !showDelete" class="schedule__dialog__collect">
         <h3>Enkele of meerdere collecte?</h3>

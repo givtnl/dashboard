@@ -2,7 +2,7 @@
  * Created by lenniestockman on 23/05/2017.
  */
 
-import {Component, OnInit, Attribute, ViewEncapsulation, Renderer2, ElementRef} from '@angular/core';
+import {Component, OnInit, OnChanges, Attribute, ViewEncapsulation, Renderer2, ElementRef} from '@angular/core';
 import { DatePipe } from '@angular/common';
 import {BrowserModule} from '@angular/platform-browser';
 //import { BrowserAnimationsModule } from '@angular/animations';
@@ -11,11 +11,13 @@ import { TranslateService } from "ng2-translate";
 import {CalendarModule, ScheduleModule } from "primeng/primeng";
 import {Collection} from "../models/collection";
 import {DataService} from "../services/data.service";
-import { ChangeDetectorRef } from '@angular/core';
+import { ViewChild,ChangeDetectorRef } from '@angular/core';
 
 import 'fullcalendar';
 import 'fullcalendar/dist/locale/nl';
 declare var moment: any;
+declare var jQuery: any;
+
 import {forEach} from "@angular/router/src/utils/collection";
 @Component({
   selector: 'app-assign-collects',
@@ -23,8 +25,7 @@ import {forEach} from "@angular/router/src/utils/collection";
   styleUrls: ['../css/assign.component.css'],
   encapsulation: ViewEncapsulation.None
 })
-
-export class AssignComponent implements OnInit {
+export class AssignComponent implements OnInit, OnChanges {
   events: any[];
   headerConfig: any;
   options: Object = new Object();
@@ -44,27 +45,33 @@ export class AssignComponent implements OnInit {
   schedule: any;
   errorShown: boolean;
   errorMessage: string;
-  public constructor(private cd: ChangeDetectorRef, private renderer: Renderer2, private elementRef:ElementRef, private apiService: ApiClientService) { }
+  days = new Array();
+  cells = new Array();
+  currentViewStart: any;
+  currentViewEnd: any;
+
+  @ViewChild('calendar') calendar: ElementRef;
+  public constructor(private cd: ChangeDetectorRef, private renderer: Renderer2, private elementRef:ElementRef, private apiService: ApiClientService) {
+    console.log("hello");
+  }
+
+  ngOnChanges(): void{
+    console.log("changé");
+  }
 
   ngOnInit(): void {
-    this.getAllocations();
-    //fc-event-container
-    this.schedule = $('#calendar');
-
-
-    /* this.events = [
-      {
-        "title": "All Day Event",
-        "start": "2017-05-23",
-        "backgroundColor" : "green"
-      }
-    ]; */
     this.events = [];
     this.headerConfig = {
       left: 'prev,next today',
       center: 'title',
       right: 'month,agendaWeek,agendaDay'
     };
+    this.options['viewRender'] = function(view, element) {
+      this.currentViewStart = view.start['_d'].toISOString();
+      this.currentViewEnd = view.end['_d'].toISOString();
+      this.getAllocations();
+      this.checkAllocations();
+    }.bind(this);
     this.options['eventDurationEditable'] = false;
     this.options['eventStartEditable'] = false;
     this.options['selectHelper'] = false;
@@ -76,53 +83,67 @@ export class AssignComponent implements OnInit {
       this.isDialogOpen = true;
       this.eventDates.start = start;
       this.eventDates.end = end;
-      console.log(jsEvent);
-      console.log(start);
-      console.log(end);
-      console.log(
-        'select callback',
-        start.format(),
-        end.format(),
-        resource ? resource.id : '(no resource)'
-      );
     }.bind(this);
+  }
 
+  checkAllocations(){
+    let apiUrl = 'OrgAdminView/AllocationCheck';
+    if(this.currentViewStart !== null && this.currentViewEnd !== null){
+      apiUrl += "?dtBegin=" + this.currentViewStart + "&dtEnd=" + this.currentViewEnd;
+    }
+    this.apiService.getData(apiUrl)
+      .then(resp => {
+        let dayArray = document.getElementsByClassName('fc-day');
+        for(let i = 0; i < dayArray.length; i++){
+          let color = "rgb(213, 61, 76)";
+          if(dayArray[i]['style'].backgroundColor === color){
+            dayArray[i]['style'].backgroundColor = "white";
+          }
+        }
+        for(let x = 0; x < resp.length; x++){
+          let respDate = this.formatDate(new Date(Date.parse(resp[x].Timestamp)));
+          for(let y = 0; y < dayArray.length; y++){
+            let element = dayArray[y];
+            let dayDate = element['dataset']['date'];
+            if(respDate === dayDate) {
+              element.setAttribute("style", "background-color:#D53D4C;");
+            }
+          }
+        }
+      });
+  }
 
+  formatDate(date) {
+    var d = new Date(date),
+      month = '' + (d.getMonth() + 1),
+      day = '' + d.getDate(),
+      year = d.getFullYear();
+
+    if (month.length < 2) month = '0' + month;
+    if (day.length < 2) day = '0' + day;
+
+    return [year, month, day].join('-');
   }
 
   dayRender(e:any, cell:any) {
-  console.log(e);
-  let today = new Date();
-  let end = new Date();
-  let day  = today.getDate();
-  end.setDate(day + 7);
-  if(e["_d"].getDate() == 8){
-    cell.css("background-color", "red");
-
-  } else {
-//    cell.css("background-color", "white");
-
+    //console.log(e);
+    let today = new Date();
+    let end = new Date();
+    let day  = today.getDate();
+    end.setDate(day + 7);
   }
-
-}
 
   updateEvent()
   {
-    /*
-    console.log(this.events);
-    this.selected['title'] = this.collectName;
-    this.events.push(this.selected);
-    */
     if (this.collectName === '') return;
     this.saveEvent(this.collectName, '1');
 
     this.showForm = false;
     this.isDialogOpen = false;
 
-
     if(this.isMultipleCollects){
       if(this.collectName2 === '') return;
-        this.saveEvent(this.collectName2, '2');
+      this.saveEvent(this.collectName2, '2');
       if(this.collectName3 === '') return;
       this.saveEvent(this.collectName3, '3');
     }
@@ -141,13 +162,9 @@ export class AssignComponent implements OnInit {
     this.event = new MyEvent();
   }
 
-
-
   handleDayClick(event) {
     this.event = new MyEvent();
     this.event.start = event.date.format();
-  //  console.log(event);
-    //this.dialogVisible = true;
 
     //trigger detection manually as somehow only moving the mouse quickly after click triggers the automatic detection
     this.cd.detectChanges();
@@ -172,38 +189,17 @@ export class AssignComponent implements OnInit {
 
     this.event.id = e.calEvent.id;
     this.event.start = start.format();
-   // this.event.allDay = e.calEvent.allDay;
-    //this.deleteEvent();
-    //this.dialogVisible = true;
   }
 
   saveEvent(title: string, collectId: string) {
-      //update
-    /*
-      if(this.event && this.event.id) {
-        let index: number = this.findEventIndexById(this.event.id);
-        if(index >= 0) {
-          this.events[index] = this.event;
-        }
-      }*/
-      //new
-      //else {
-
-        let event = new MyEvent();
-        event.id = this.idGen++;
-        event.title = title;
-        event.collectId = collectId;
-        event.start = this.eventDates.start;
-        event.end = this.eventDates.end;
-        this.events.push(event);
-      //  this.event = new MyEvent();
-      //}
-
-      //this.elementRef.nativeElement.querySelector('.fc-content').addEventListener('click', function(e){console.log(e); });
-      this.saveAllocation(title, collectId);
-
-
-
+    let event = new MyEvent();
+    event.id = this.idGen++;
+    event.title = title;
+    event.collectId = collectId;
+    event.start = this.eventDates.start;
+    event.end = this.eventDates.end;
+    this.events.push(event);
+    this.saveAllocation(title, collectId);
   }
 
   deleteEvent() {
@@ -220,7 +216,7 @@ export class AssignComponent implements OnInit {
   findEventIndexById(id: number) {
     let index = -1;
     for(let i = 0; i < this.events.length; i++) {
-      if(id == this.events[i].id) {
+      if(id === this.events[i].id) {
         index = i;
         break;
       }
@@ -233,29 +229,29 @@ export class AssignComponent implements OnInit {
     this.errorMessage = msg;
   }
 
-  getAllocations(){
-    //OrgAdminView/Allocation?dtBegin=2017-05-01T00:00:00&dtEnd=2017-03-02T00:00:00.000
-    return this.apiService.getData('OrgAdminView/Allocation')
+  getAllocations(dtStart:any = null,dtEnd: any = null){
+    let apiUrl = 'OrgAdminView/Allocation';
+     if(this.currentViewStart !== null && this.currentViewEnd !== null){
+       apiUrl += "?dtBegin=" + this.currentViewStart + "&dtEnd=" + this.currentViewEnd;
+     }
+    return this.apiService.getData(apiUrl)
       .then(resp => {
           this.events.length = 0;
-          console.log(resp);
           for(let i = 0; i < resp.length; i++) {
             let event = new MyEvent();
             event.id = resp[i]['Id'];
-            console.log(resp[i]);
             event.title = resp[i]['Name'];
             event.start = moment().format(resp[i]['dtBegin']);
             event.end = moment().format(resp[i]['dtEnd']);
             event.collectId = resp[i]['CollectId'];
-            //console.log(event);
             this.events.push(event);
           }
-
-        });
+        })
+      .catch(err => console.log(err));
   }
 
   saveAllocation(title: string, collectId: string){
-    console.log(this.event);
+   // console.log(this.event);
     let body = new Object();
     body["name"] = title;
     body["dtBegin"] = this.eventDates.start['_d'];
@@ -269,8 +265,7 @@ export class AssignComponent implements OnInit {
           this.toggleError(true, "Je zit met een overlapping");
         }
         this.getAllocations();
-
-
+        this.checkAllocations();
       })
       .catch(err => {console.log(err); console.log("err")});
 
@@ -279,14 +274,16 @@ export class AssignComponent implements OnInit {
 
   deleteAllocation(){
     this.apiService.deleteData('OrgAdminView/Allocation?Id=' + this.event.id)
-      .then(resp => { console.log(resp)})
+      .then(resp => { console.log(resp); this.checkAllocations(); })
       .catch(err => console.log(err));
   }
 
   eventRender(event: any, element: any, view: any){
-    console.log(event);
-    element[0].innerText = event.title + " (" + event.collectId  + ")";
+  //  element[0].innerText = event.title + " (" + event.collectId  + ")";
+    element[0].innerText = event.title;
   }
+
+
 }
 
 export class MyEvent {
