@@ -84,5 +84,12 @@
   "All": "Alle",
   "Collection": "Collecte",
   "BrowserMessage": "Voor een optimale gebruikservaring raden wij Google Chrome als browser aan. Zo kunnen we de beste functionaliteit garanderen.",
-  "DownloadNow": "Download nu"
+  "DownloadNow": "Download nu",
+  "Menu_Allocate": "Toewijzen",
+  "TitleAllocate": "Wijs collectes toe",
+  "AddNameToCollect": "Geef een naam aan de collecte",
+  "DeleteCollectConfirm": "Bent u zeker dat u deze collecte wil verwijderen?",
+  "OverlapError": "U heeft overlappende collectes, dat is niet toegestaan.",
+  "YesImSure": "Ja, ik ben het zeker.",
+  "NoNeverMind.": "Nee, laat maar."
 }
