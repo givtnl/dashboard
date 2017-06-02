@@ -88,9 +88,9 @@
   "Menu_Allocate": "Allocate",
   "TitleAllocate": "Allocate your collections",
   "AddNameToCollect": "Give a name to a collection",
-  "DeleteCollectConfirm": "Are you sure to delete this collection?",
-  "OverlapError": "You can't have overlapping collects.",
+  "DeleteCollectConfirm": "Are you sure you want to delete this collection?",
+  "OverlapError": "You can't have overlapping collections.",
   "YesImSure": "Yes, I'm sure.",
-  "NoNeverMind": "No, never mind.",
-  "OpenAllocationsMessage": "You have transactions that are not connected to a collection.\nPlease go to the Allocate tab to resolve this issue."
+  "NoNeverMind": "No, I don't want to.",
+  "OpenAllocationsMessage": "You have transactions that are not connected to a collection.\nPlease go to the tab 'Allocate' to resolve this issue."
 }
