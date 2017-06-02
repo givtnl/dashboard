@@ -5,7 +5,7 @@
     <div class="search-org">
       <form>
         <div class="search-content">
-            <input [(ngModel)]="search" (ngModelChange)="change($event)" type="text" [ngModelOptions]="{standalone: true}">
+            <input [(ngModel)]="search" (ngModelChange)="change()" type="text" [ngModelOptions]="{standalone: true}">
             <div class="search-results" *ngIf="filteredOrganisations">
                 <ul>
                     <li *ngFor="let i of filteredOrganisations" (click)="select(i)">{{i.name}}, {{i.city}}</li>
