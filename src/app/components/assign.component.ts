@@ -262,7 +262,12 @@ export class AssignComponent implements OnInit {
 
   addCollect(){
     if(this.collectThree)
+    {
+      if(this.collectOne)
+        this.collectTwo = true;
+      this.collectOne = true;
       return;
+    }
     if(this.collectTwo)
     {
       this.collectThree = true;
