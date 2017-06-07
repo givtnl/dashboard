@@ -59,15 +59,12 @@
       </div>
       <form style="position: relative" *ngIf="showForm && !showDelete" action="" class="schedule__dialog__form">
         <h3>{{ "AddNameToCollect" | translate }}</h3>
-        <div class="schedule__dialog__form__controls" *ngIf="!isMultipleCollects">
-          <input class="schedule__dialog__form--input" type="text" name="collectName" [(ngModel)]="collectName" [attr.placeholder]="'Collection' | translate" placeholder="Collectenaam">
-          <button type="button" class="schedule__dialog__form--submit" [class.submit-enabled]="collectName != ''" (click)="updateEvent()">{{"Text_Collectes_SaveButton" | translate}}</button>
-        </div>
-        <div class="schedule__dialog__form__controls flex-col" *ngIf="isMultipleCollects">
-          <input class="schedule__dialog__form--input margin-bottom" type="text" name="collectName" [(ngModel)]="collectName" placeholder="Collecte 1">
-          <input class="schedule__dialog__form--input margin-bottom" type="text" name="collectName2" [(ngModel)]="collectName2" placeholder="Collecte ">
-          <input class="schedule__dialog__form--input margin-bottom" type="text" name="collectName3" [(ngModel)]="collectName3" placeholder="Collecte 3">
-          <button type="button" class="schedule__dialog__form--submit no-margin" [class.submit-enabled]="collectName != '' && collectName2 != ''" (click)="updateEvent()">Opslaan</button>
+        <div class="schedule__dialog__form__controls flex-col">
+          <input *ngIf="collectOne" [class.red-border]="collectOneCheck" class="schedule__dialog__form--input margin-bottom" type="text" name="collectName" [(ngModel)]="collectName" placeholder="Collecte 1">
+          <input *ngIf="collectTwo" [class.red-border]="collectTwoCheck" class="schedule__dialog__form--input margin-bottom" type="text" name="collectName2" [(ngModel)]="collectName2" placeholder="Collecte 2">
+          <input *ngIf="collectThree" [class.red-border]="collectThreeCheck" class="schedule__dialog__form--input margin-bottom" type="text" name="collectName3" [(ngModel)]="collectName3" placeholder="Collecte 3">
+          <button *ngIf="!collectOne || !collectTwo || !collectThree" type="button" class="schedule__dialog__form--add__collect" [class.submit-enabled]="collectName != '' && collectName2 != ''" (click)="addCollect()">Collecte toevoegen</button>
+          <button type="button" class="schedule__dialog__form--submit" [class.submit-enabled]="collectName != '' || collectName2 != '' || collectName3 != ''" (click)="updateEvent()">Opslaan</button>
         </div>
         <span class="close-button" (click)="clearAll(fc)">X</span>
       </form>

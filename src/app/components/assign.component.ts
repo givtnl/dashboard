@@ -1,31 +1,23 @@
 /**
  * Created by lenniestockman on 23/05/2017.
  */
-
-import {Component, OnInit, OnChanges, Attribute, ViewEncapsulation, Renderer2, ElementRef} from '@angular/core';
-import { DatePipe } from '@angular/common';
-import {BrowserModule} from '@angular/platform-browser';
-//import { BrowserAnimationsModule } from '@angular/animations';
+import {Component, OnInit, ViewEncapsulation, Renderer2, ElementRef} from '@angular/core';
 import { ApiClientService } from "app/services/api-client.service";
 import { TranslateService } from "ng2-translate";
 import {CalendarModule, ScheduleModule } from "primeng/primeng";
-import {Collection} from "../models/collection";
-import {DataService} from "../services/data.service";
 import { ViewChild,ChangeDetectorRef } from '@angular/core';
 
 import 'fullcalendar';
 import 'fullcalendar/dist/locale/nl';
 declare var moment: any;
-declare var jQuery: any;
 
-import {forEach} from "@angular/router/src/utils/collection";
 @Component({
   selector: 'app-assign-collects',
   templateUrl: '../html/assign.component.html',
   styleUrls: ['../css/assign.component.css'],
   encapsulation: ViewEncapsulation.None
 })
-export class AssignComponent implements OnInit, OnChanges {
+export class AssignComponent implements OnInit {
   events: any[];
   headerConfig: any;
   options: Object = new Object();
@@ -33,6 +25,12 @@ export class AssignComponent implements OnInit, OnChanges {
   collectName = '';
   collectName2 = '';
   collectName3 = '';
+  collectOne: boolean = false;
+  collectTwo: boolean = false;
+  collectThree: boolean = false;
+  collectOneCheck: boolean = false;
+  collectTwoCheck: boolean = false;
+  collectThreeCheck: boolean = false;
   isDialogOpen: boolean;
   selected: Object = new Object();
   isMultipleCollects: boolean = false;
@@ -48,14 +46,11 @@ export class AssignComponent implements OnInit, OnChanges {
   cells = new Array();
   currentViewStart: any;
   currentViewEnd: any;
+  openGivts : any;
 
   @ViewChild('calendar') calendar: ElementRef;
   public constructor(private ts: TranslateService, private cd: ChangeDetectorRef, private renderer: Renderer2, private elementRef:ElementRef, private apiService: ApiClientService) {
-    console.log("hello");
-  }
 
-  ngOnChanges(): void{
-    console.log("changé");
   }
 
   ngOnInit(): void {
@@ -85,6 +80,31 @@ export class AssignComponent implements OnInit, OnChanges {
       this.showForm = true;
       this.eventDates.start = start;
       this.eventDates.end = end;
+      for(let i = 0; i < this.openGivts.length; i++){
+        this.isMultipleCollects = true;
+        var x = new Date(this.openGivts[i]["Timestamp"]);
+        var y = new Date(start["_d"]);
+        var z = new Date(end["_d"]);
+        if(x > y && x < z)
+        {
+          switch (this.openGivts[i].CollectId){
+            case "1":
+              this.collectOneCheck = true;
+              this.collectOne = true;
+              break;
+            case "2":
+              this.collectTwoCheck = true;
+              this.collectTwo = true;
+              break;
+            case "3":
+              this.collectThreeCheck = true;
+              this.collectThree = true;
+              break;
+            default:
+                  break;
+          }
+        }
+      }
     }.bind(this);
   }
 
@@ -96,6 +116,7 @@ export class AssignComponent implements OnInit, OnChanges {
     this.apiService.getData(apiUrl)
       .then(resp => {
         console.log(resp);
+        this.openGivts = resp;
         let dayArray = document.getElementsByClassName('fc-day');
         for(let i = 0; i < dayArray.length; i++){
           let color = "rgb(213, 61, 76)";
@@ -138,18 +159,17 @@ export class AssignComponent implements OnInit, OnChanges {
 
   updateEvent()
   {
-    if (this.collectName === '') return;
-    this.saveEvent(this.collectName, '1');
+    if (this.collectName === '' && this.collectName2 === '' && this.collectName3 === '') return;
+    if(this.collectName)
+      this.saveEvent(this.collectName, "1");
+    if(this.collectName2)
+      this.saveEvent(this.collectName2, "2");
+    if(this.collectName3)
+      this.saveEvent(this.collectName3, "3");
 
     this.showForm = false;
     this.isDialogOpen = false;
-
-    if(this.isMultipleCollects){
-      if(this.collectName2 === '') return;
-      this.saveEvent(this.collectName2, '2');
-      if(this.collectName3 === '') return;
-      this.saveEvent(this.collectName3, '3');
-    }
+    this.clearAll();
   }
 
   selectType(b: boolean){
@@ -162,6 +182,16 @@ export class AssignComponent implements OnInit, OnChanges {
     this.showForm = false;
     this.showDelete = false;
     this.isDialogOpen = false;
+    this.collectOne = false;
+    this.collectTwo = false;
+    this.collectThree = false;
+    this.collectOneCheck = false;
+    this.collectTwoCheck = false;
+    this.collectThreeCheck = false;
+    this.collectName = "";
+    this.collectName2 = "";
+    this.collectName3 = "";
+
     this.event = new MyEvent();
   }
 
@@ -233,6 +263,21 @@ export class AssignComponent implements OnInit, OnChanges {
     this.errorMessage = msg;
   }
 
+  addCollect(){
+    if(this.collectThree)
+      return;
+    if(this.collectTwo)
+    {
+      this.collectThree = true;
+      return;
+    }
+    if(this.collectOne){
+      this.collectTwo = true;
+      return;
+    }
+    this.collectOne = true;
+  }
+
   getAllocations(dtStart:any = null,dtEnd: any = null){
     let apiUrl = 'OrgAdminView/Allocation';
      if(this.currentViewStart !== null && this.currentViewEnd !== null){
@@ -244,7 +289,7 @@ export class AssignComponent implements OnInit, OnChanges {
           for(let i = 0; i < resp.length; i++) {
             let event = new MyEvent();
             event.id = resp[i]['Id'];
-            event.title = resp[i]['Name'];
+            event.title = "(" + resp[i]['CollectId'] +") " + resp[i]['Name'];
             event.start = moment().format(resp[i]['dtBegin']);
             event.end = moment().format(resp[i]['dtEnd']);
             event.collectId = resp[i]['CollectId'];
@@ -255,7 +300,6 @@ export class AssignComponent implements OnInit, OnChanges {
   }
 
   saveAllocation(title: string, collectId: string){
-   // console.log(this.event);
     let body = new Object();
     body["name"] = title;
     body["dtBegin"] = this.eventDates.start['_d'];
@@ -278,7 +322,7 @@ export class AssignComponent implements OnInit, OnChanges {
 
   deleteAllocation(){
     this.apiService.deleteData('OrgAdminView/Allocation?Id=' + this.event.id)
-      .then(resp => { console.log(resp); this.checkAllocations(); })
+      .then(resp => { this.checkAllocations(); })
       .catch(err => console.log(err));
   }
 
