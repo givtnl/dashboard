@@ -60,9 +60,9 @@
       <form style="position: relative" *ngIf="showForm && !showDelete" action="" class="schedule__dialog__form">
         <h3>{{ "AddNameToCollect" | translate }}</h3>
         <div class="schedule__dialog__form__controls flex-col">
-          <input *ngIf="collectOne" [class.red-border]="collectOneCheck" class="schedule__dialog__form--input margin-bottom" type="text" name="collectName" [(ngModel)]="collectName" placeholder="Collecte 1">
-          <input *ngIf="collectTwo" [class.red-border]="collectTwoCheck" class="schedule__dialog__form--input margin-bottom" type="text" name="collectName2" [(ngModel)]="collectName2" placeholder="Collecte 2">
-          <input *ngIf="collectThree" [class.red-border]="collectThreeCheck" class="schedule__dialog__form--input margin-bottom" type="text" name="collectName3" [(ngModel)]="collectName3" placeholder="Collecte 3">
+          <div *ngIf="collectOne"><input [class.red-border]="collectOneCheck" class="schedule__dialog__form--input margin-bottom" type="text" name="collectName" [(ngModel)]="collectName" placeholder="Collecte 1"><button (click)="deleteCollect(1)" class="schedule__dialog__form--delete__collect">x</button></div>
+          <div *ngIf="collectTwo"><input [class.red-border]="collectTwoCheck" class="schedule__dialog__form--input margin-bottom" type="text" name="collectName2" [(ngModel)]="collectName2" placeholder="Collecte 2"><button (click)="deleteCollect(2)" class="schedule__dialog__form--delete__collect">x</button></div>
+          <div *ngIf="collectThree"><input [class.red-border]="collectThreeCheck" class="schedule__dialog__form--input margin-bottom" type="text" name="collectName3" [(ngModel)]="collectName3" placeholder="Collecte 3"><button (click)="deleteCollect(3)" class="schedule__dialog__form--delete__collect">x</button></div>
           <button *ngIf="!collectOne || !collectTwo || !collectThree" type="button" class="schedule__dialog__form--add__collect" [class.submit-enabled]="collectName != '' && collectName2 != ''" (click)="addCollect()">Collecte toevoegen</button>
           <button type="button" class="schedule__dialog__form--submit" [class.submit-enabled]="collectName != '' || collectName2 != '' || collectName3 != ''" (click)="updateEvent()">Opslaan</button>
         </div>

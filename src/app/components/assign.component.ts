@@ -275,6 +275,22 @@ export class AssignComponent implements OnInit {
     this.collectOne = true;
   }
 
+  deleteCollect(id){
+    switch (id){
+      case 1:
+        this.collectOne = false;
+        break;
+      case 2:
+        this.collectTwo = false;
+        break;
+      case 3:
+        this.collectThree = false;
+        break;
+      default:
+        break;
+    }
+  }
+
   getAllocations(dtStart:any = null,dtEnd: any = null){
     let apiUrl = 'OrgAdminView/Allocation';
      if(this.currentViewStart !== null && this.currentViewEnd !== null) {
