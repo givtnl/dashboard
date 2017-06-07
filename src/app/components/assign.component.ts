@@ -241,7 +241,6 @@ export class AssignComponent implements OnInit {
     this.deleteAllocation();
     this.event = new MyEvent();
     this.clearAll();
-    //this.dialogVisible = false;
   }
 
   findEventIndexById(id: number) {
@@ -284,12 +283,15 @@ export class AssignComponent implements OnInit {
     switch (id){
       case 1:
         this.collectOne = false;
+        this.collectName = "";
         break;
       case 2:
         this.collectTwo = false;
+        this.collectName2 = "";
         break;
       case 3:
         this.collectThree = false;
+        this.collectName3 = "";
         break;
       default:
         break;
