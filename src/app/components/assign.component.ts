@@ -115,7 +115,6 @@ export class AssignComponent implements OnInit {
     }
     this.apiService.getData(apiUrl)
       .then(resp => {
-        console.log(resp);
         this.openGivts = resp;
         let dayArray = document.getElementsByClassName('fc-day');
         for(let i = 0; i < dayArray.length; i++){
@@ -150,7 +149,6 @@ export class AssignComponent implements OnInit {
   }
 
   dayRender(e:any, cell:any) {
-    //console.log(e);
     let today = new Date();
     let end = new Date();
     let day  = today.getDate();
@@ -209,7 +207,6 @@ export class AssignComponent implements OnInit {
     this.showDelete = true;
     this.event = new MyEvent();
     this.event.title = e.calEvent.title;
-    console.log(e);
     let start = e.calEvent.start;
     let end = e.calEvent.end;
     if(e.view.name === 'month') {
@@ -280,7 +277,7 @@ export class AssignComponent implements OnInit {
 
   getAllocations(dtStart:any = null,dtEnd: any = null){
     let apiUrl = 'OrgAdminView/Allocation';
-     if(this.currentViewStart !== null && this.currentViewEnd !== null){
+     if(this.currentViewStart !== null && this.currentViewEnd !== null) {
        apiUrl += "?dtBegin=" + this.currentViewStart + "&dtEnd=" + this.currentViewEnd;
      }
     return this.apiService.getData(apiUrl)
@@ -289,10 +286,11 @@ export class AssignComponent implements OnInit {
           for(let i = 0; i < resp.length; i++) {
             let event = new MyEvent();
             event.id = resp[i]['Id'];
-            event.title = "(" + resp[i]['CollectId'] +") " + resp[i]['Name'];
+            event.title = "(" + resp[i]['CollectId'] + ") " + resp[i]['Name'];
             event.start = moment().format(resp[i]['dtBegin']);
             event.end = moment().format(resp[i]['dtEnd']);
             event.collectId = resp[i]['CollectId'];
+            event.backgroundColor = "#1CA96C";
             this.events.push(event);
           }
         })
@@ -308,14 +306,13 @@ export class AssignComponent implements OnInit {
     //https://givtapidebug.azurewebsites.net/api/OrgAdminView/Allocation
     this.apiService.postData("OrgAdminView/Allocation", body)
       .then(resp => {
-       // console.log("hello");
         if(resp.status === 409){
           this.toggleError(true, "Je zit met een overlapping");
         }
         this.getAllocations();
         this.checkAllocations();
       })
-      .catch(err => {console.log(err); console.log("err")});
+      .catch(err => {console.log(err)});
 
     this.event = new MyEvent();
   }

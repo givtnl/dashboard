@@ -454,3 +454,8 @@ my-collects{
     }
 }
 
+/* PRIME NG STYLES */
+p-schedule button
+{
+    background: #1CA96C !important;
+}
