@@ -9,6 +9,7 @@ import { ViewChild,ChangeDetectorRef } from '@angular/core';
 
 import 'fullcalendar';
 import 'fullcalendar/dist/locale/nl';
+import {AllocationTimeSpanItem, Transaction} from "../models/allocationTimeSpanItem";
 declare var moment: any;
 
 @Component({
@@ -47,6 +48,7 @@ export class AssignComponent implements OnInit {
   currentViewStart: any;
   currentViewEnd: any;
   openGivts : any;
+  openGivtsBucket : Array<AllocationTimeSpanItem> = new Array<AllocationTimeSpanItem>();
 
   @ViewChild('calendar') calendar: ElementRef;
   public constructor(private ts: TranslateService, private cd: ChangeDetectorRef, private renderer: Renderer2, private elementRef:ElementRef, private apiService: ApiClientService) {
@@ -81,11 +83,10 @@ export class AssignComponent implements OnInit {
       this.eventDates.start = start;
       this.eventDates.end = end;
       for(let i = 0; i < this.openGivts.length; i++){
-        this.isMultipleCollects = true;
-        var x = new Date(this.openGivts[i]["Timestamp"]);
-        var y = new Date(start["_d"]);
-        var z = new Date(end["_d"]);
-        if(x > y && x < z)
+        let dtConfirmed = new Date(this.openGivts[i]["Timestamp"]);
+        var dtStart = new Date(start["_d"]);
+        var dtEnd = new Date(end["_d"]);
+        if(dtConfirmed > dtStart && dtConfirmed < dtEnd)
         {
           switch (this.openGivts[i].CollectId){
             case "1":
@@ -116,6 +117,7 @@ export class AssignComponent implements OnInit {
     this.apiService.getData(apiUrl)
       .then(resp => {
         this.openGivts = resp;
+        this.openGivtsBucket = [];
         let dayArray = document.getElementsByClassName('fc-day');
         for(let i = 0; i < dayArray.length; i++){
           let color = "rgb(213, 61, 76)";
@@ -123,15 +125,60 @@ export class AssignComponent implements OnInit {
             dayArray[i].setAttribute("style","");
           }
         }
-        for(let x = 0; x < resp.length; x++){
-          let respDate = this.formatDate(new Date(Date.parse(resp[x].Timestamp)));
-          for(let y = 0; y < dayArray.length; y++){
-            let element = dayArray[y];
-            let dayDate = element['dataset']['date'];
-            if(respDate === dayDate) {
-              element.setAttribute("style", "background-color:#D53D4C;");
-            }
+
+        for(let x = 0; x < this.openGivts.length; x++){
+          console.log(this.openGivts[x]['Timestamp'])
+          let startTime = new Date(resp[x]['Timestamp']);
+          let endTime = new Date(resp[x]['Timestamp']);
+          if(startTime.getMinutes() < 30)
+          {
+            startTime.setMinutes(0,0,0);
+            endTime.setMinutes(30,0,0);
+          }else{
+            startTime.setMinutes(30,0,0);
+            endTime.setHours(endTime.getHours() + 1,0,0,0);
           }
+
+          let check = false;
+          for(let i = 0; i < this.openGivtsBucket.length; i++)
+          {
+            if(this.openGivtsBucket[i].dtStart.getTime() == startTime.getTime())
+            {
+              this.openGivtsBucket[i].transactions.push(this.openGivts[x]);
+              check = false;
+              break;
+            }
+            check = true;
+          }
+          if(check){
+            let item = new AllocationTimeSpanItem();
+            item.dtEnd = endTime;
+            item.dtStart = startTime;
+            item.transactions = new Array<Transaction>();
+            item.transactions.push(this.openGivts[x]);
+            this.openGivtsBucket.push(item);
+          }
+          if(this.openGivtsBucket.length == 0)
+          {
+            let item = new AllocationTimeSpanItem();
+            item.dtEnd = endTime;
+            item.dtStart = startTime;
+            item.transactions = new Array<Transaction>();
+            item.transactions.push(this.openGivts[x]);
+            this.openGivtsBucket.push(item);
+          }
+        }
+        console.log(this.openGivtsBucket);
+        for(let count = 0; count < this.openGivtsBucket.length; count++)
+        {
+          let event = new MyEvent();
+          event.id = count;
+          event.title = "(0) undefined ddddd";
+          event.start = this.openGivtsBucket[count].dtStart;
+          event.end = this.openGivtsBucket[count].dtEnd;
+          event.collectId = "1";
+          event.backgroundColor = "#D53D4C";
+          this.events.push(event);
         }
       });
   }
