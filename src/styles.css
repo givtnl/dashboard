@@ -459,3 +459,31 @@ p-schedule button
 {
     background: #1CA96C !important;
 }
+
+.fc button {
+  border: 1px solid #F5F5F5 !important;
+}
+
+.ui-widget .fc-event {
+  border: 1px solid #FEFEFE !important;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.ui-widget .fc-event:hover{
+  width: 100%;
+  z-index: 999 !important;
+  left:0 !important;
+  right:0 !important;
+  cursor: pointer;
+}
+
+.fc-scroller{
+  cursor: cell;
+}
+
+
+
+
