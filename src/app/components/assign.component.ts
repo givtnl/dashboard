@@ -40,6 +40,9 @@ export class AssignComponent implements OnInit {
   openGivts : any;
   openGivtsBucket : Array<AllocationTimeSpanItem> = new Array<AllocationTimeSpanItem>();
 
+  startTime: string;
+  endTime: string;
+
   @ViewChild('calendar') calendar: ElementRef;
   public constructor(private ts: TranslateService, private cd: ChangeDetectorRef, private apiService: ApiClientService) {
 
@@ -109,6 +112,10 @@ export class AssignComponent implements OnInit {
     }
     if(check)
     {
+      let tEnd = new Date(end);
+      let tStart = new Date(start);
+      this.endTime = tEnd.toTimeString().split(' ')[0];
+      this.startTime = tStart.toTimeString().split(' ')[0];
       this.isDialogOpen = true;
       this.showForm = true;
     }
@@ -301,14 +308,20 @@ export class AssignComponent implements OnInit {
   deleteCollect(id){
     switch (id){
       case 1:
+        if(!this.collectTwo && !this.collectThree)
+          return;
         this.collectOne = false;
         this.collectName = "";
         break;
       case 2:
+        if(!this.collectOne && !this.collectThree)
+          return;
         this.collectTwo = false;
         this.collectName2 = "";
         break;
       case 3:
+        if(!this.collectOne && !this.collectTwo)
+          return;
         this.collectThree = false;
         this.collectName3 = "";
         break;

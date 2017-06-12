@@ -58,6 +58,11 @@
 
       </div>
       <form style="position: relative" *ngIf="showForm && !showDelete" action="" class="schedule__dialog__form">
+        <div class="flex-col">
+          <input type="text" [(ngModel)]="startTime" name="startTime">
+          <input type="text" [(ngModel)]="endTime" name="endTime">
+        </div>
+
         <h3>{{ "AddNameToCollect" | translate }}</h3>
         <div class="schedule__dialog__form__controls flex-col">
           <div *ngIf="collectOne"><input [class.red-border]="collectOneCheck" class="schedule__dialog__form--input margin-bottom" type="text" name="collectName" [(ngModel)]="collectName" placeholder="Collecte 1"><button (click)="deleteCollect(1)" class="schedule__dialog__form--delete__collect">x</button></div>
