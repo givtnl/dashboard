@@ -1,16 +1,11 @@
-/**
- * Created by lenniestockman on 23/05/2017.
- */
 import {Component, OnInit, ViewEncapsulation, Renderer2, ElementRef} from '@angular/core';
 import { ApiClientService } from "app/services/api-client.service";
 import { TranslateService } from "ng2-translate";
-import {CalendarModule, ScheduleModule } from "primeng/primeng";
 import { ViewChild,ChangeDetectorRef } from '@angular/core';
 
 import 'fullcalendar';
 import 'fullcalendar/dist/locale/nl';
 import {AllocationTimeSpanItem, Transaction} from "../models/allocationTimeSpanItem";
-declare var moment: any;
 
 @Component({
   selector: 'app-assign-collects',
@@ -22,7 +17,6 @@ export class AssignComponent implements OnInit {
   events: any[];
   headerConfig: any;
   options: Object = new Object();
-
   collectName = '';
   collectName2 = '';
   collectName3 = '';
@@ -33,25 +27,21 @@ export class AssignComponent implements OnInit {
   collectTwoCheck: boolean = false;
   collectThreeCheck: boolean = false;
   isDialogOpen: boolean;
-  selected: Object = new Object();
   isMultipleCollects: boolean = false;
   showForm = true;
   showDelete = false;
   event: MyEvent = new MyEvent();
   eventDates: MyEvent = new MyEvent();
   idGen: number = 100;
-  schedule: any;
   errorShown: boolean;
   errorMessage: string;
-  days = new Array();
-  cells = new Array();
   currentViewStart: any;
   currentViewEnd: any;
   openGivts : any;
   openGivtsBucket : Array<AllocationTimeSpanItem> = new Array<AllocationTimeSpanItem>();
 
   @ViewChild('calendar') calendar: ElementRef;
-  public constructor(private ts: TranslateService, private cd: ChangeDetectorRef, private renderer: Renderer2, private elementRef:ElementRef, private apiService: ApiClientService) {
+  public constructor(private ts: TranslateService, private cd: ChangeDetectorRef, private apiService: ApiClientService) {
 
   }
 
@@ -68,6 +58,8 @@ export class AssignComponent implements OnInit {
       this.getAllocations();
       this.checkAllocations();
     }.bind(this);
+    this.options['slotDuration'] = '00:30:00';
+    this.options['timezone'] = 'local';
     this.options['defaultView'] = 'agendaWeek';
     this.options['nowIndicator'] = false;
     this.options['locale'] = this.ts.currentLang;
@@ -85,16 +77,18 @@ export class AssignComponent implements OnInit {
 
   addAllocation(start, end)
   {
-    this.isDialogOpen = true;
-    this.showForm = true;
+    if(this.openGivts.length == 0)
+      return;
     this.eventDates.start = start;
     this.eventDates.end = end;
+    let check = false;
     for(let i = 0; i < this.openGivts.length; i++){
       let dtConfirmed = new Date(this.openGivts[i]["Timestamp"]);
       var dtStart = new Date(start);
       var dtEnd = new Date(end);
       if(dtConfirmed > dtStart && dtConfirmed < dtEnd)
       {
+        check = true;
         switch (this.openGivts[i].CollectId){
           case "1":
             this.collectOneCheck = true;
@@ -113,6 +107,11 @@ export class AssignComponent implements OnInit {
         }
       }
     }
+    if(check)
+    {
+      this.isDialogOpen = true;
+      this.showForm = true;
+    }
   }
 
   checkAllocations(){
@@ -122,18 +121,15 @@ export class AssignComponent implements OnInit {
     }
     this.apiService.getData(apiUrl)
       .then(resp => {
+        for(let i = 0; i < resp.length; i++)
+        {
+          let d = new Date(resp[i]["Timestamp"] + " UTC");
+          resp[i]["Timestamp"] = d;
+        }
         this.openGivts = resp;
         this.openGivtsBucket = [];
-        let dayArray = document.getElementsByClassName('fc-day');
-        for(let i = 0; i < dayArray.length; i++){
-          let color = "rgb(241, 112, 87)";
-          if(dayArray[i]['style'].backgroundColor === color){
-            dayArray[i].setAttribute("style","");
-          }
-        }
 
         for(let x = 0; x < this.openGivts.length; x++){
-          console.log(this.openGivts[x]['Timestamp'])
           let startTime = new Date(resp[x]['Timestamp']);
           let endTime = new Date(resp[x]['Timestamp']);
           if(startTime.getMinutes() < 30)
@@ -181,7 +177,6 @@ export class AssignComponent implements OnInit {
           for(let tr = 0; tr < buckets.length; tr++)
           {
             amount += buckets[tr].Amount;
-            console.log(amount);
           }
           let event = new MyEvent();
           event.id = count;
@@ -194,18 +189,6 @@ export class AssignComponent implements OnInit {
           this.events.push(event);
         }
       });
-  }
-
-  formatDate(date) {
-    var d = new Date(date),
-      month = '' + (d.getMonth() + 1),
-      day = '' + d.getDate(),
-      year = d.getFullYear();
-
-    if (month.length < 2) month = '0' + month;
-    if (day.length < 2) day = '0' + day;
-
-    return [year, month, day].join('-');
   }
 
   dayRender(e:any, cell:any) {
@@ -228,11 +211,6 @@ export class AssignComponent implements OnInit {
     this.showForm = false;
     this.isDialogOpen = false;
     this.clearAll();
-  }
-
-  selectType(b: boolean){
-    this.isMultipleCollects = b;
-    this.showForm = true;
   }
 
   clearAll(){
@@ -280,10 +258,6 @@ export class AssignComponent implements OnInit {
       this.addAllocation(dStart.toLocaleString(), dEnd.toLocaleString());
       return;
     }
-    this.showForm = false;
-    this.isDialogOpen = true;
-    this.showDelete = true;
-    this.event.title = e.calEvent.title;
   }
 
   saveEvent(title: string, collectId: string) {
@@ -322,26 +296,6 @@ export class AssignComponent implements OnInit {
     this.errorMessage = msg;
   }
 
-  addCollect(){
-    if(this.collectThree)
-    {
-      if(this.collectOne)
-        this.collectTwo = true;
-      this.collectOne = true;
-      return;
-    }
-    if(this.collectTwo)
-    {
-      this.collectThree = true;
-      return;
-    }
-    if(this.collectOne){
-      this.collectTwo = true;
-      return;
-    }
-    this.collectOne = true;
-  }
-
   deleteCollect(id){
     switch (id){
       case 1:
@@ -373,8 +327,8 @@ export class AssignComponent implements OnInit {
             let event = new MyEvent();
             event.id = resp[i]['Id'];
             event.title = "(" + resp[i]['CollectId'] + ") " + resp[i]['Name'];
-            event.start = moment().format(resp[i]['dtBegin']);
-            event.end = moment().format(resp[i]['dtEnd']);
+            event.start = new Date(resp[i]['dtBegin'] + " UTC");
+            event.end = new Date(resp[i]['dtEnd'] + " UTC");
             event.collectId = resp[i]['CollectId'];
             event.backgroundColor = "#1CA96C";
             this.events.push(event);
@@ -389,11 +343,12 @@ export class AssignComponent implements OnInit {
     body["dtBegin"] = this.eventDates.start;
     body["dtEnd"] = this.eventDates.end;
     body["CollectId"] = collectId;
-    //https://givtapidebug.azurewebsites.net/api/OrgAdminView/Allocation
     this.apiService.postData("OrgAdminView/Allocation", body)
       .then(resp => {
         if(resp.status === 409){
           this.toggleError(true, "Je zit met een overlapping");
+          this.getAllocations();
+          this.checkAllocations();
         }
         this.getAllocations();
         this.checkAllocations();
@@ -410,7 +365,6 @@ export class AssignComponent implements OnInit {
   }
 
   eventRender(event: any, element: any, view: any){
-  //  element[0].innerText = event.title + " (" + event.collectId  + ")";
     element[0].innerText = event.title;
   }
 

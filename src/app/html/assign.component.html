@@ -63,7 +63,6 @@
           <div *ngIf="collectOne"><input [class.red-border]="collectOneCheck" class="schedule__dialog__form--input margin-bottom" type="text" name="collectName" [(ngModel)]="collectName" placeholder="Collecte 1"><button (click)="deleteCollect(1)" class="schedule__dialog__form--delete__collect">x</button></div>
           <div *ngIf="collectTwo"><input [class.red-border]="collectTwoCheck" class="schedule__dialog__form--input margin-bottom" type="text" name="collectName2" [(ngModel)]="collectName2" placeholder="Collecte 2"><button (click)="deleteCollect(2)" class="schedule__dialog__form--delete__collect">x</button></div>
           <div *ngIf="collectThree"><input [class.red-border]="collectThreeCheck" class="schedule__dialog__form--input margin-bottom" type="text" name="collectName3" [(ngModel)]="collectName3" placeholder="Collecte 3"><button (click)="deleteCollect(3)" class="schedule__dialog__form--delete__collect">x</button></div>
-          <button *ngIf="!collectOne || !collectTwo || !collectThree" type="button" class="schedule__dialog__form--add__collect" [class.submit-enabled]="collectName != '' && collectName2 != ''" (click)="addCollect()">Collecte toevoegen</button>
           <button type="button" class="schedule__dialog__form--submit" [class.submit-enabled]="collectName != '' || collectName2 != '' || collectName3 != ''" (click)="updateEvent()">Opslaan</button>
         </div>
         <span class="close-button" (click)="clearAll(fc)">X</span>

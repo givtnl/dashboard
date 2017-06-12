@@ -91,6 +91,14 @@ h3{
   width: 300px;
 }
 
+.schedule__dialog__form--input:hover{
+  box-shadow: 0px 1px 3px #999999;
+}
+
+.schedule__dialog__form--input:focus{
+  box-shadow: 0px 1px 3px #999999;
+}
+
 .schedule__dialog__form--submit{
   padding: 8px 22px;
   box-sizing: border-box;
