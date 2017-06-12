@@ -121,7 +121,7 @@ export class AssignComponent implements OnInit {
         this.openGivtsBucket = [];
         let dayArray = document.getElementsByClassName('fc-day');
         for(let i = 0; i < dayArray.length; i++){
-          let color = "rgb(213, 61, 76)";
+          let color = "rgb(241, 112, 87)";
           if(dayArray[i]['style'].backgroundColor === color){
             dayArray[i].setAttribute("style","");
           }
@@ -169,16 +169,22 @@ export class AssignComponent implements OnInit {
             this.openGivtsBucket.push(item);
           }
         }
-        console.log(this.openGivtsBucket);
         for(let count = 0; count < this.openGivtsBucket.length; count++)
         {
+          let buckets = <any>this.openGivtsBucket[count]['transactions'];
+          let amount = 0;
+          for(let tr = 0; tr < buckets.length; tr++)
+          {
+            amount += buckets[tr].Amount;
+            console.log(amount);
+          }
           let event = new MyEvent();
           event.id = count;
-          event.title = "(0) undefined ddddd";
+          event.title = "€ " + Math.round(amount * 100) / 100;
           event.start = this.openGivtsBucket[count].dtStart;
           event.end = this.openGivtsBucket[count].dtEnd;
           event.collectId = "1";
-          event.backgroundColor = "#D53D4C";
+          event.backgroundColor = "#F17057";
           this.events.push(event);
         }
       });
