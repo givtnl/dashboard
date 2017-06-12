@@ -68,6 +68,7 @@ export class AssignComponent implements OnInit {
       this.getAllocations();
       this.checkAllocations();
     }.bind(this);
+    this.options['defaultView'] = 'agendaWeek';
     this.options['nowIndicator'] = false;
     this.options['locale'] = this.ts.currentLang;
     this.options['eventDurationEditable'] = false;
