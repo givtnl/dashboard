@@ -184,6 +184,8 @@ export class AssignComponent implements OnInit {
           event.start = this.openGivtsBucket[count].dtStart;
           event.end = this.openGivtsBucket[count].dtEnd;
           event.collectId = "1";
+          event.type = "money";
+          event.className = "money";
           event.backgroundColor = "#F17057";
           event.allocated = false;
           this.events.push(event);
@@ -331,6 +333,7 @@ export class AssignComponent implements OnInit {
             event.end = new Date(resp[i]['dtEnd'] + " UTC");
             event.collectId = resp[i]['CollectId'];
             event.backgroundColor = "#1CA96C";
+            event.className = "allocation";
             this.events.push(event);
           }
         })
@@ -378,5 +381,7 @@ export class MyEvent {
   end: any;
   collectId: string;
   backgroundColor: string;
+  type: string;
+  className: string;
   allocated: boolean = true;
 }
