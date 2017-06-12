@@ -79,35 +79,40 @@ export class AssignComponent implements OnInit {
     this.options['unselectAuto'] = false;
     this.options['selectable'] = true;
     this.options['select'] = function(start, end, jsEvent, view, resource) {
-      this.isDialogOpen = true;
-      this.showForm = true;
-      this.eventDates.start = start;
-      this.eventDates.end = end;
-      for(let i = 0; i < this.openGivts.length; i++){
-        let dtConfirmed = new Date(this.openGivts[i]["Timestamp"]);
-        var dtStart = new Date(start["_d"]);
-        var dtEnd = new Date(end["_d"]);
-        if(dtConfirmed > dtStart && dtConfirmed < dtEnd)
-        {
-          switch (this.openGivts[i].CollectId){
-            case "1":
-              this.collectOneCheck = true;
-              this.collectOne = true;
-              break;
-            case "2":
-              this.collectTwoCheck = true;
-              this.collectTwo = true;
-              break;
-            case "3":
-              this.collectThreeCheck = true;
-              this.collectThree = true;
-              break;
-            default:
-                  break;
-          }
+      this.addAllocation(start["_d"], end["_d"]);
+    }.bind(this);
+  }
+
+  addAllocation(start, end)
+  {
+    this.isDialogOpen = true;
+    this.showForm = true;
+    this.eventDates.start = start;
+    this.eventDates.end = end;
+    for(let i = 0; i < this.openGivts.length; i++){
+      let dtConfirmed = new Date(this.openGivts[i]["Timestamp"]);
+      var dtStart = new Date(start);
+      var dtEnd = new Date(end);
+      if(dtConfirmed > dtStart && dtConfirmed < dtEnd)
+      {
+        switch (this.openGivts[i].CollectId){
+          case "1":
+            this.collectOneCheck = true;
+            this.collectOne = true;
+            break;
+          case "2":
+            this.collectTwoCheck = true;
+            this.collectTwo = true;
+            break;
+          case "3":
+            this.collectThreeCheck = true;
+            this.collectThree = true;
+            break;
+          default:
+            break;
         }
       }
-    }.bind(this);
+    }
   }
 
   checkAllocations(){
@@ -187,6 +192,7 @@ export class AssignComponent implements OnInit {
           event.type = "money";
           event.className = "money";
           event.backgroundColor = "#F17057";
+          event.allocated = false;
           this.events.push(event);
         }
       });
@@ -245,7 +251,6 @@ export class AssignComponent implements OnInit {
     this.collectName = "";
     this.collectName2 = "";
     this.collectName3 = "";
-
     this.event = new MyEvent();
   }
 
@@ -258,24 +263,29 @@ export class AssignComponent implements OnInit {
   }
 
   handleEventClick(e) {
-    this.showForm = false;
-    this.isDialogOpen = true;
-    this.showDelete = true;
-    this.event = new MyEvent();
-    this.event.title = e.calEvent.title;
     let start = e.calEvent.start;
     let end = e.calEvent.end;
     if(e.view.name === 'month') {
       start.stripTime();
+      end.stripTime();
     }
 
     if(end) {
-      end.stripTime();
       this.event.end = end.format();
     }
 
     this.event.id = e.calEvent.id;
     this.event.start = start.format();
+    if(!e.calEvent.allocated){
+      let dStart = new Date(this.event.start);
+      let dEnd = new Date(this.event.end);
+      this.addAllocation(dStart.toLocaleString(), dEnd.toLocaleString());
+      return;
+    }
+    this.showForm = false;
+    this.isDialogOpen = true;
+    this.showDelete = true;
+    this.event.title = e.calEvent.title;
   }
 
   saveEvent(title: string, collectId: string) {
@@ -295,7 +305,6 @@ export class AssignComponent implements OnInit {
       this.events.splice(index, 1);
     }
     this.deleteAllocation();
-    this.event = new MyEvent();
     this.clearAll();
   }
 
@@ -380,8 +389,8 @@ export class AssignComponent implements OnInit {
   saveAllocation(title: string, collectId: string){
     let body = new Object();
     body["name"] = title;
-    body["dtBegin"] = this.eventDates.start['_d'];
-    body["dtEnd"] = this.eventDates.end['_d'];
+    body["dtBegin"] = this.eventDates.start;
+    body["dtEnd"] = this.eventDates.end;
     body["CollectId"] = collectId;
     //https://givtapidebug.azurewebsites.net/api/OrgAdminView/Allocation
     this.apiService.postData("OrgAdminView/Allocation", body)
@@ -399,7 +408,7 @@ export class AssignComponent implements OnInit {
 
   deleteAllocation(){
     this.apiService.deleteData('OrgAdminView/Allocation?Id=' + this.event.id)
-      .then(resp => { this.checkAllocations(); })
+      .then(resp => { this.getAllocations(); this.checkAllocations(); })
       .catch(err => console.log(err));
   }
 
@@ -420,4 +429,5 @@ export class MyEvent {
   backgroundColor: string;
   type: string;
   className: string;
+  allocated: boolean = true;
 }
