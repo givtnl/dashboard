@@ -6,8 +6,8 @@
     <div class="schedule__dialog" *ngIf="isDialogOpen">
       <form style="position: relative" *ngIf="showForm && !showDelete" action="" class="schedule__dialog__form">
         <div style="margin-bottom: 30px" class="flex-col" *ngIf="!isMonthView">
-          <span style="margin-left: 0" class="text">Van</span>
-          <p-calendar [(ngModel)]="startTime" showTime="showTime" [timeOnly]="true" name="startTime" [stepMinute]="10" class="time-picker"></p-calendar> <span class="text">tot</span>
+          <span style="margin-left: 0" class="text">{{'From' | translate}}</span>
+          <p-calendar [(ngModel)]="startTime" showTime="showTime" [timeOnly]="true" name="startTime" [stepMinute]="10" class="time-picker"></p-calendar> <span class="text">{{'To' | translate}}</span>
           <p-calendar [(ngModel)]="endTime" showTime="showTime"  [timeOnly]="true" name="endTime" [stepMinute]="10"></p-calendar>
         </div>
 
@@ -16,7 +16,7 @@
           <div *ngIf="collectOneCheck"><input [class.red-border]="collectOneCheck && collectName == ''" class="schedule__dialog__form--input margin-bottom" type="text" name="collectName" [(ngModel)]="collectName" placeholder="{{ 'Collection' | translate }} 1"><button (click)="deleteCollect(1)" class="schedule__dialog__form--delete__collect">x</button></div>
           <div *ngIf="collectTwoCheck"><input [class.red-border]="collectTwoCheck && collectName2 == ''" class="schedule__dialog__form--input margin-bottom" type="text" name="collectName2" [(ngModel)]="collectName2" placeholder="{{ 'Collection' | translate }} 2"><button (click)="deleteCollect(2)" class="schedule__dialog__form--delete__collect">x</button></div>
           <div *ngIf="collectThreeCheck"><input [class.red-border]="collectThreeCheck && collectName3 == ''" class="schedule__dialog__form--input margin-bottom" type="text" name="collectName3" [(ngModel)]="collectName3" placeholder="{{ 'Collection' | translate }} 3"><button (click)="deleteCollect(3)" class="schedule__dialog__form--delete__collect">x</button></div>
-          <button type="button" class="schedule__dialog__form--submit" [class.submit-enabled]="collectName != '' || collectName2 != '' || collectName3 != ''" (click)="updateEvent()">Opslaan</button>
+          <button type="button" class="schedule__dialog__form--submit" [class.submit-enabled]="collectName != '' || collectName2 != '' || collectName3 != ''" (click)="updateEvent()">{{'PW_Save' | translate}}</button>
         </div>
         <span class="close-button" (click)="resetAll(false)">X</span>
       </form>
