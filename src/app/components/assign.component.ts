@@ -59,6 +59,7 @@ export class AssignComponent implements OnInit {
       this.getAllocations();
       this.checkAllocations();
     }.bind(this);
+    this.options['slotLabelFormat'] = 'h:mm a';
     this.options['slotDuration'] = '00:30:00';
     this.options['timezone'] = 'local';
     this.options['defaultView'] = 'agendaWeek';
