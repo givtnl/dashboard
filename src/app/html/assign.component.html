@@ -23,7 +23,7 @@
       <form *ngIf="showDelete && !showForm" action="" class="schedule__dialog___form--delete">
         <h3>{{"DeleteCollectConfirm" | translate}}</h3>
         <button class="schedule__dialog__form--submit submit-enabled" type="submit" (click)="deleteEvent()">{{ "YesImSure" | translate}}</button>
-        <button class="schedule__dialog__form--submit submit-enabled" type="submit" (click)="clearAll()">{{ "NoNeverMind" | translate}}</button>
+        <button class="schedule__dialog__form--submit submit-enabled" type="submit" (click)="resetAll(false)">{{ "NoNeverMind" | translate}}</button>
       </form>
 
     </div>
