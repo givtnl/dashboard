@@ -260,7 +260,7 @@ h3{
   transform: translateY(2px);
 }
 
-.ui-inputtext{
+.schedule__dialog .ui-inputtext{
   font-family: 'Avenir_Heavy';
   font-size: 16px;
   color: #2C2B57;
@@ -275,7 +275,7 @@ h3{
   border-radius: 0;
 }
 
-.ui-timepicker, .ui-datepicker{
+.schedule__dialog .ui-timepicker, .schedule__dialog .ui-datepicker{
   width: 80px;
 }
 

@@ -502,7 +502,7 @@ p-schedule button
   box-sizing: border-box;
 }
 
-.fc-agendaWeek-view .fc-head .fc-head-container .fc-row .fc-day-header{
+.fc-head .fc-head-container .fc-row .fc-day-header{
   background: #F5F5F5;
   padding: 10px;
   -webkit-box-sizing: border-box;
@@ -531,10 +531,15 @@ p-schedule button
   display: none;
 }
 
-.fc-agendaWeek-view .fc-row .fc-axis {
+.fc-row .fc-axis {
   background: #F5F5F5;
 }
 
 .fc-toolbar h2{
   padding:5px;
+}
+.fc-month-view .ui-widget-content .ui-state-highlight{
+  color: white;
+  background-color: #5A5387;
+  border-color: #5A5387;
 }
