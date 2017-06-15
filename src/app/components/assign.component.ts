@@ -1,8 +1,7 @@
-import {Component, OnInit, ViewEncapsulation, Renderer2, ElementRef} from '@angular/core';
+import {Component, OnInit, ViewEncapsulation, ElementRef} from '@angular/core';
 import { ApiClientService } from "app/services/api-client.service";
 import { TranslateService } from "ng2-translate";
 import { ViewChild,ChangeDetectorRef } from '@angular/core';
-import { CalendarModule } from "primeng/primeng";
 import 'fullcalendar';
 import 'fullcalendar/dist/locale/nl';
 import {AllocationTimeSpanItem, Transaction} from "../models/allocationTimeSpanItem";
@@ -27,7 +26,6 @@ export class AssignComponent implements OnInit {
   showForm = true;
   showDelete = false;
   event: MyEvent = new MyEvent();
-  eventDates: MyEvent = new MyEvent();
   idGen: number = 100;
   errorShown: boolean;
   errorMessage: string;
