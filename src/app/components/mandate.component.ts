@@ -104,7 +104,7 @@ export class MandateComponent implements OnInit{
     }
 
      getMandateStatus(){
-        this.apiClient.getData("Mandate/Org/" + this.selectedOrganisation.id)
+        this.apiClient.getData("OrgMandate/" + this.selectedOrganisation.id)
             .then(res => {
                 this.selectedOrganisation.mandate_status = res;
               this.searchBtn = "Zoeken";
@@ -201,7 +201,7 @@ export class MandateComponent implements OnInit{
             CrmId : this.selectedOrganisation.id.toString()
         };
         console.log(JSON.stringify(mandate));
-        this.apiClient.postData("Mandate/Org", mandate )
+        this.apiClient.postData("OrgMandate/", mandate )
             .then(spl => {
                 this.SlimPayLink = spl;
                 this.sendMandateMail();
