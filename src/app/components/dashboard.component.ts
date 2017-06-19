@@ -6,6 +6,7 @@ import { Card } from '../models/card';
 import { ApiClientService } from "app/services/api-client.service";
 import {TranslateService} from "ng2-translate";
  import {DataService} from "../services/data.service";
+ import {environment} from "../../environments/environment";
 
  declare var google: any;
 @Component({
@@ -65,7 +66,7 @@ export class DashboardComponent implements OnInit, OnDestroy{
         this.continuousData = setInterval(() => {
             this.fetchThisMonthGivts();
             this.fetchThisMonthGivers();
-            if(this.dataService.getData("instanceTitle") === "Nieuwe testkerk 1")
+            if(this.dataService.getData("instanceTitle") === environment.missieNl)
             {
                 this.fetchLastSundayGivts();
             }
@@ -87,9 +88,9 @@ export class DashboardComponent implements OnInit, OnDestroy{
 
         var isDemoChurch = false;
 
-        if(this.dataService.getData("instanceTitle") === "Nieuwe testkerk 1") {
+        if(this.dataService.getData("instanceTitle") === environment.missieNl) {
             isDemoChurch = true;
-            let goal = 3000;
+            let goal = 1500;
             if(this.lastSundaySum >= goal){
                 var reached = goal;
                 var toReach = 0;
@@ -219,7 +220,7 @@ export class DashboardComponent implements OnInit, OnDestroy{
         let dateEnd;
         let chosenDate;
         let displayDate;
-        if(this.dataService.getData("instanceTitle") === "Nieuwe testkerk 1"){
+        if(this.dataService.getData("instanceTitle") === environment.missieNl){
             displayDate = new Date();
         }else{
             let date = new Date();
@@ -236,7 +237,7 @@ export class DashboardComponent implements OnInit, OnDestroy{
                 let collectSum = resp.TotalAmount;
                 this.lastSundaySum = collectSum;
                 this.lastSundayCard.value = this.euro+ "<span class='fat-emphasis'>" + (this.isSafari ? collectSum.toFixed(2) : collectSum.toLocaleString(navigator.language,{minimumFractionDigits: 2})) + "</span>";
-                if(this.dataService.getData("instanceTitle") === "Nieuwe testkerk 1"){
+                if(this.dataService.getData("instanceTitle") === environment.missieNl){
                     this.lastSundayCard.title = "Vandaag";
                 }else{
                     this.translate.get("Text_LastSunday").subscribe(value => { this.lastSundayCard.title = value;});

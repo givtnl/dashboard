@@ -6,6 +6,6 @@
 export const environment = {
   production: false,
   //apiUrl: 'http://192.168.77.107:1699'
-  apiUrl: 'https://givtapidebug.azurewebsites.net'
-
+  apiUrl: 'https://givtapidebug.azurewebsites.net',
+  missieNl : "Nieuwe testkerk 1"
 };
