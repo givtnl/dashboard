@@ -5,6 +5,7 @@ import 'rxjs/add/observable/forkJoin';
 import { Card } from '../models/card';
 import { ApiClientService } from "app/services/api-client.service";
 import {TranslateService} from "ng2-translate";
+ import {DataService} from "../services/data.service";
 
  declare var google: any;
 @Component({
@@ -32,7 +33,9 @@ export class DashboardComponent implements OnInit, OnDestroy{
 
     continuousData: any;
 
-    constructor(private apiService: ApiClientService,  translate:TranslateService, private datePipe: DatePipe){
+    lastSundaySum: number;
+
+    constructor(private apiService: ApiClientService,  translate:TranslateService, private datePipe: DatePipe, private dataService: DataService){
         this.translate = translate;
         this.isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
         this.ShowLoadingAnimation = true;
@@ -62,6 +65,10 @@ export class DashboardComponent implements OnInit, OnDestroy{
         this.continuousData = setInterval(() => {
             this.fetchThisMonthGivts();
             this.fetchThisMonthGivers();
+            if(this.dataService.getData("instanceTitle") === "Nieuwe testkerk 1")
+            {
+                this.fetchLastSundayGivts();
+            }
         }, interval);
     }
 
@@ -78,6 +85,19 @@ export class DashboardComponent implements OnInit, OnDestroy{
         this.donutcardFooter = footer;
         this.donutcardTitle = title;
 
+        var isDemoChurch = false;
+
+        if(this.dataService.getData("instanceTitle") === "Nieuwe testkerk 1") {
+            isDemoChurch = true;
+            let goal = 3000;
+            if(this.lastSundaySum >= goal){
+                var reached = goal;
+                var toReach = 0;
+            }else{
+                var toReach = goal - this.lastSundaySum;
+                var reached = this.lastSundaySum;
+            }
+        }
             scriptElement.src = this.scriptURL;
         scriptElement.onload = () => {
             google.charts.load("visualization", "1", {packages:["corechart"]});
@@ -88,16 +108,24 @@ export class DashboardComponent implements OnInit, OnDestroy{
                 dataTable.addColumn('number', 'Euro');
                 // A column for custom tooltip content
                 dataTable.addColumn({type: 'string', role: 'tooltip'});
-                dataTable.addRows([
-                    ['', 90,'€ 456 goedgekeurd!']
-                ]);
+                if(isDemoChurch)
+                {
+                    dataTable.addRows([
+                        ['', reached,'€ 456 goedgekeurd!'],
+                        ['', toReach,'€123123 fdsqf']
+                    ]);
+                }else{
+                    dataTable.addRows([
+                        ['', 90,'€ 456 goedgekeurd!']
+                    ]);
+                }
 
                 var options = {
                     pieSliceBorderColor: 'transparent',
                     width: 280,
                     height: 280,
                     chartArea: {'width': '100%', 'height': '80%'},
-                    colors: ['#42C98E','#F4BF63','#4F98CF'],
+                    colors: ['#42C98E','#D43D4C','#4F98CF'],
                     legend: {position: 'none'},
                     pieHole: 0.85,
                     pieSliceText: 'label',
@@ -173,7 +201,7 @@ export class DashboardComponent implements OnInit, OnDestroy{
                 this.thisMonthCard.value = this.euro + "<span class='fat-emphasis'>" + (this.isSafari ? collectSum.toFixed(2) : collectSum.toLocaleString(navigator.language,{minimumFractionDigits: 2})) + "</span>";
                 this.translate.get("Text_ThisMonth").subscribe(value => { this.thisMonthCard.title = value;});
                 this.translate.get("Text_Given").subscribe(value => { this.thisMonthCard.footer = value;});
-                this.thisMonthCard.subtitle = this.datePipe.transform(date, 'dd MMMM yyyy');
+                this.thisMonthCard.subtitle = this.datePipe.transform(date, 'MMMM yyyy');
                 let cardIsInCards = false;
                 for(let i in this.cards){
                     if(this.cards[i].title === this.thisMonthCard.title){
@@ -187,23 +215,44 @@ export class DashboardComponent implements OnInit, OnDestroy{
     }
 
     fetchLastSundayGivts(){
-        let date = new Date();
-        let day = date.getUTCDay();
-        let lastSunday = new Date(date.valueOf() - day*1000*60*60*24);
-        let lastSundayDate = lastSunday.getUTCMonth()+1 + "-" + lastSunday.getUTCDate() + "-" + lastSunday.getUTCFullYear();
-        let dateBegin =  lastSundayDate + " 00:00:00";
-        let dateEnd = lastSundayDate + " 23:59:59";
+        let dateBegin;
+        let dateEnd;
+        let chosenDate;
+        let displayDate;
+        if(this.dataService.getData("instanceTitle") === "Nieuwe testkerk 1"){
+            displayDate = new Date();
+        }else{
+            let date = new Date();
+            let day = date.getUTCDay();
+            displayDate = new Date(date.valueOf() - day*1000*60*60*24);
+        }
 
+        chosenDate = displayDate.getUTCMonth()+1 + "-" + displayDate.getUTCDate() + "-" + displayDate.getUTCFullYear();
+        dateBegin =  chosenDate + " 00:00:00";
+        dateEnd = chosenDate + " 23:59:59";
         return this.apiService.getData("OrgAdminView/Givts/?DateBegin="+dateBegin+"&DateEnd="+dateEnd)
             .then(resp =>
             {
                 let collectSum = resp.TotalAmount;
+                this.lastSundaySum = collectSum;
                 this.lastSundayCard.value = this.euro+ "<span class='fat-emphasis'>" + (this.isSafari ? collectSum.toFixed(2) : collectSum.toLocaleString(navigator.language,{minimumFractionDigits: 2})) + "</span>";
-                this.translate.get("Text_LastSunday").subscribe(value => { this.lastSundayCard.title = value;});
+                if(this.dataService.getData("instanceTitle") === "Nieuwe testkerk 1"){
+                    this.lastSundayCard.title = "Vandaag";
+                }else{
+                    this.translate.get("Text_LastSunday").subscribe(value => { this.lastSundayCard.title = value;});
+                }
                 this.translate.get("Text_Given").subscribe(value => { this.lastSundayCard.footer = value;});
-                this.lastSundayCard.subtitle = this.datePipe.transform(lastSunday.getUTCMonth()+1 + "/" + lastSunday.getUTCDate() + "/" + lastSunday.getUTCFullYear(), 'yyyy-MM-dd');
+                this.lastSundayCard.subtitle = this.datePipe.transform(displayDate.getUTCMonth()+1 + "/" + displayDate.getUTCDate() + "/" + displayDate.getUTCFullYear(), 'dd-MM-yyyy');
                 this.googleCharts(this.lastSundayCard.subtitle, this.lastSundayCard.footer, this.euro + (this.isSafari ? collectSum.toFixed(2) : collectSum.toLocaleString(navigator.language,{minimumFractionDigits: 2})));
-                this.cards.push(this.lastSundayCard);
+                let cardIsInCards = false;
+                for(let i in this.cards){
+                    if(this.cards[i].title === this.lastSundayCard.title){
+                        cardIsInCards = true;
+                    }
+                }
+                if(!cardIsInCards){
+                    this.cards.push(this.lastSundayCard);
+                }
             });
     }
 }
