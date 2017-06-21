@@ -2,7 +2,7 @@
 <div class="section-page">
   <h2>{{ "TitleAllocate" | translate }}</h2>
   <div class="schedule">
-    <p-schedule #calendar [events]="events" [dayRender]="dayRender" [eventRender]="eventRender" locale="nl" [nowIndicator]="false" [header]="headerConfig" [editable]="true" (onDayClick)="handleDayClick($event)" (onEventClick)="handleEventClick($event)" [options]="options" id="calendar"></p-schedule>
+    <p-schedule #calendar [events]="events" [eventRender]="eventRender" locale="nl" [nowIndicator]="false" [header]="headerConfig" [editable]="true" (onDayClick)="handleDayClick($event)" (onEventClick)="handleEventClick($event)" [options]="options" id="calendar"></p-schedule>
     <div class="schedule__dialog" *ngIf="isDialogOpen">
       <form style="position: relative" *ngIf="showForm && !showDelete" action="" class="schedule__dialog__form">
         <div style="margin-bottom: 30px" class="flex-col" *ngIf="!isMonthView">

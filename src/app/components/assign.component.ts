@@ -5,6 +5,7 @@ import { ViewChild,ChangeDetectorRef } from '@angular/core';
 import 'fullcalendar';
 import 'fullcalendar/dist/locale/nl';
 import {AllocationTimeSpanItem, Transaction} from "../models/allocationTimeSpanItem";
+import {element} from "protractor";
 
 @Component({
   selector: 'app-assign-collects',
@@ -19,14 +20,14 @@ export class AssignComponent implements OnInit {
   collectName = '';
   collectName2 = '';
   collectName3 = '';
-  collectOneCheck: boolean = false;
-  collectTwoCheck: boolean = false;
-  collectThreeCheck: boolean = false;
+  collectOneCheck = false;
+  collectTwoCheck = false;
+  collectThreeCheck = false;
   isDialogOpen: boolean;
   showForm = true;
   showDelete = false;
   event: MyEvent = new MyEvent();
-  idGen: number = 100;
+  idGen = 100;
   errorShown: boolean;
   errorMessage: string;
   currentViewStart: any;
@@ -56,6 +57,9 @@ export class AssignComponent implements OnInit {
       this.currentViewEnd = view.end['_d'].toISOString();
       this.getAllocations();
       this.checkAllocations();
+    }.bind(this);
+    this.options['eventAfterRender'] = function(event, element, view){
+     this.eventAfterRender(event, element, view);
     }.bind(this);
     this.options['slotDuration'] = '00:30:00';
     this.options['timezone'] = 'local';
@@ -171,14 +175,18 @@ export class AssignComponent implements OnInit {
           {
             amount += buckets[tr].Amount;
           }
+
+          //total amount == amount
+
           let event = new MyEvent();
           event.id = count;
-          event.title = "€ " + Math.round(amount * 100) / 100;
+          event.title = (Math.round(amount * 100) / 100).toString();
           event.start = this.openGivtsBucket[count].dtStart;
           event.end = this.openGivtsBucket[count].dtEnd;
           event.collectId = "1";
           event.className = "money";
           event.allocated = false;
+          event.transactions = buckets;
           this.events.push(event);
         }
       });
@@ -254,7 +262,7 @@ export class AssignComponent implements OnInit {
     event.collectId = collectId;
     event.start = this.startTime;
     event.end = this.endTime;
-    this.events.push(event);
+    //this.events.push(event);
     this.saveAllocation(title, collectId);
   }
 
@@ -322,11 +330,11 @@ export class AssignComponent implements OnInit {
      }
     return this.apiService.getData(apiUrl)
       .then(resp => {
-          this.events.length = 0;
-          for(let i = 0; i < resp.length; i++) {
+        this.events.length = 0;
+        for(let i = 0; i < resp.length; i++) {
             let event = new MyEvent();
             event.id = resp[i]['Id'];
-            event.title = "(" + resp[i]['CollectId'] + ") " + resp[i]['Name'];
+            event.title = resp[i]['Name'];
             event.start = new Date(resp[i]['dtBegin'] + " UTC");
             event.end = new Date(resp[i]['dtEnd'] + " UTC");
             event.collectId = resp[i]['CollectId'];
@@ -356,8 +364,74 @@ export class AssignComponent implements OnInit {
       });
   }
 
+  eventAfterRender(event: any, element: any, view: any){
+    if(element[0].style.left === "33.3333%"){
+      element[0].style.left = "31%";
+    } else if(element[0].style.left === "66.6667%") {
+      element[0].style.left = "62%";
+    } else if(element[0].style.left === "50%") {
+      element[0].style.left = "31%";
+    }
+  }
+
   eventRender(event: any, element: any, view: any){
     element[0].innerText = event.title;
+    element[0].addEventListener("mouseover", function(ev) {
+      let fcEvent = event;
+      let div = document.createElement("div");
+
+      if(fcEvent.allocated){
+        div.innerHTML = "<span>€ 13 Collecte " + fcEvent.collectId  + "</span><br/>" + fcEvent.title;
+        div.className = "balloon balloon_alter";
+
+      } else {
+        console.log(fcEvent.id);
+        console.log(fcEvent);
+
+        div.innerHTML = "Nog niet toegewezen<br/>";
+        if(fcEvent.transactions.length > 0){
+          let collect1 = 0;
+          let collect2 = 0;
+          let collect3 = 0;
+          for(let i = 0; i < fcEvent.transactions.length; i++){
+            let transaction = fcEvent.transactions[i];
+            if(transaction.CollectId === "1"){
+              collect1 += transaction.Amount;
+            } else if(transaction.CollectId === "2"){
+              collect2 += transaction.Amount;
+            } else if(transaction.CollectId === "3"){
+              collect3 += transaction.Amount;
+            }
+          }
+          if(collect1 > 0){
+            div.innerHTML += "Collecte 1 " + collect1 + "<br/>";
+          }
+          if(collect2 > 0)
+            div.innerHTML += "Collecte 2 " + collect2 + "<br/>";
+          if(collect3 > 0)
+            div.innerHTML += "Collecte 3 " + collect3 + "<br/>";
+        }
+        //                + "€ " +  fcEvent.title + " Collecte " + fcEvent.collectId;
+        div.className = "balloon";
+       // console.log(transactions);
+      }
+
+      let offsets = ev.srcElement.getBoundingClientRect();
+      let top = offsets.top;
+      let left = offsets.left;
+      //div.style.top = top - div.offsetHeight +"px";
+      div.style.left = left +"px";
+      document.getElementsByClassName("section-page")[0].appendChild(div);
+      div.style.top = top - div.offsetHeight - 15 +"px";
+
+    }.bind(this));
+    element[0].addEventListener("mouseleave", function(){
+        let b = document.getElementsByClassName("balloon")[0];
+        b.remove();
+      }, true);
+
+      element[0].innerHTML = "";
+
   }
 
 
@@ -370,5 +444,6 @@ export class MyEvent {
   end: any;
   collectId: string;
   className: string;
-  allocated: boolean = true;
+  allocated = true;
+  transactions: any;
 }
