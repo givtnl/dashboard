@@ -65,6 +65,7 @@ export class AssignComponent implements OnInit {
       this.isMonthView = view["type"] === "month";
       this.currentViewStart = view.start['_d'].toISOString();
       this.currentViewEnd = view.end['_d'].toISOString();
+      this.events.length = 0;
       this.getAllocations();
       this.checkAllocations();
     }.bind(this);
@@ -129,6 +130,7 @@ export class AssignComponent implements OnInit {
     if(this.currentViewStart !== null && this.currentViewEnd !== null){
       apiUrl += "?dtBegin=" + this.currentViewStart + "&dtEnd=" + this.currentViewEnd;
     }
+
     this.apiService.getData(apiUrl)
       .then(resp => {
         for(let i = 0; i < resp.length; i++)
@@ -207,13 +209,11 @@ export class AssignComponent implements OnInit {
 
   updateEvent() {
     if (this.collectName === '' && this.collectName2 === '' && this.collectName3 === '') return;
-    if(this.collectName)
-      this.saveEvent(this.collectName, "1");
-    if(this.collectName2)
-      this.saveEvent(this.collectName2, "2");
-    if(this.collectName3)
-      this.saveEvent(this.collectName3, "3");
-    this.resetAll();
+    var promiseArr = [];
+    Promise.all([this.saveAllocation(this.collectName, "1"),this.saveAllocation(this.collectName2, "2"), this.saveAllocation(this.collectName3, "3")]).then(function() {
+      this.resetAll();
+    }.bind(this));
+    this.resetAll(false);
   }
 
   resetAll(reload: boolean = true){
@@ -230,6 +230,7 @@ export class AssignComponent implements OnInit {
     this.startTime = new Date();
     this.endTime = new Date();
     if(reload){
+      this.events.length = 0;
       this.getAllocations();
       this.checkAllocations();
     }
@@ -268,17 +269,6 @@ export class AssignComponent implements OnInit {
     }
   }
 
-  saveEvent(title: string, collectId: string) {
-    let event = new MyEvent();
-    event.id = this.idGen++;
-    event.title = title;
-    event.collectId = collectId;
-    event.start = this.startTime;
-    event.end = this.endTime;
-    //this.events.push(event);
-    this.saveAllocation(title, collectId);
-  }
-
   deleteEvent() {
     let eventId = this.event.id;
     let index: number = this.findEventIndexById(eventId);
@@ -291,7 +281,6 @@ export class AssignComponent implements OnInit {
       })
       .catch(err => {
         console.log(err);
-        this.resetAll();
       });
   }
 
@@ -343,7 +332,6 @@ export class AssignComponent implements OnInit {
      }
     return this.apiService.getData(apiUrl)
       .then(resp => {
-        this.events.length = 0;
         for(let i = 0; i < resp.length; i++) {
             let event = new MyEvent();
             event.id = resp[i]['Id'];
@@ -353,29 +341,42 @@ export class AssignComponent implements OnInit {
             event.collectId = resp[i]['CollectId'];
             event.className = "allocation";
             event.amount = resp[i].SumAmount;
+            event.allocated = true;
             this.events.push(event);
           }
-        })
+      })
       .catch(err => console.log(err));
   }
 
   saveAllocation(title: string, collectId: string){
-    let body = new Object();
-    body["name"] = title;
-    body["dtBegin"] = this.startTime;
-    body["dtEnd"] = this.endTime;
-    body["CollectId"] = collectId;
-    this.apiService.postData("OrgAdminView/Allocation", body)
-      .then(resp => {
-        if(resp.status === 409){
-          this.toggleError(true, "Je zit met een overlapping");
-        }
-        this.resetAll();
-      })
-      .catch(err => {
-        console.log(err);
-        this.resetAll();
-      });
+    return new Promise((resolve, reject) => {
+      if(title === "") resolve();
+      console.log(collectId);
+      let event = new MyEvent();
+      event.id = this.idGen++;
+      event.title = title;
+      event.collectId = collectId;
+      event.start = this.startTime;
+      event.end = this.endTime;
+
+      let body = new Object();
+      body["name"] = title;
+      body["dtBegin"] = this.startTime;
+      body["dtEnd"] = this.endTime;
+      body["CollectId"] = collectId;
+      this.apiService.postData("OrgAdminView/Allocation", body)
+        .then(resp => {
+          if(resp.status === 409){
+            this.toggleError(true, "Je zit met een overlapping");
+          }
+          resolve();
+        })
+        .catch(err => {
+          console.log(err);
+        });
+
+    })
+
   }
 
   eventAfterRender(event: any, element: any, view: any){
@@ -396,6 +397,7 @@ export class AssignComponent implements OnInit {
 
       if(fcEvent.allocated){
         let temp = parseFloat(fcEvent.amount);
+        console.log(fcEvent);
         div.innerHTML = "<span class='fat-font'>" + that.displayValue(temp) + "</span> <span>" + that.collectionTranslation + " " + fcEvent.collectId  + "</span><br/>"
                         + "<span class='fat-font'>" + fcEvent.title + "</span>";
         div.className = "balloon balloon_alter";
@@ -423,7 +425,6 @@ export class AssignComponent implements OnInit {
           if(collect3 > 0)
             div.innerHTML += "<span class='fat-font'>" + that.displayValue(collect3) + "</span> " + that.collectionTranslation + " 3<br/>";
         }
-        //                + "€ " +  fcEvent.title + " Collecte " + fcEvent.collectId;
         div.className = "balloon";
       }
 
@@ -433,12 +434,14 @@ export class AssignComponent implements OnInit {
       //div.style.top = top - div.offsetHeight +"px";
       div.style.left = left +"px";
       document.getElementsByClassName("section-page")[0].appendChild(div);
-      div.style.top = top - div.offsetHeight - 15 +"px";
+      div.style.top = top - div.offsetHeight - 17 +"px";
 
     });
     element[0].addEventListener("mouseleave", function(){
-        let b = document.getElementsByClassName("balloon")[0];
-        b.remove();
+        let b = document.getElementsByClassName("balloon");
+        while(b.length > 0){
+          b[0].remove();
+        }
       }, true);
 
       element[0].innerHTML = "";
