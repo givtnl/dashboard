@@ -34,6 +34,10 @@ export class AssignComponent implements OnInit {
   currentViewEnd: any;
   openGivts : any;
   openGivtsBucket : Array<AllocationTimeSpanItem> = new Array<AllocationTimeSpanItem>();
+  isSafari: boolean;
+  collectionTranslation: string;
+  notYetAllocated: string;
+
 
 
   startTime: Date;
@@ -41,7 +45,13 @@ export class AssignComponent implements OnInit {
 
   @ViewChild('calendar') calendar: ElementRef;
   public constructor(private ts: TranslateService, private cd: ChangeDetectorRef, private apiService: ApiClientService) {
-
+    this.isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+    this.ts.get('Collection').subscribe((res: string) => {
+        this.collectionTranslation = res;
+      });
+    this.ts.get('NotYetAllocated').subscribe((res: string) => {
+      this.notYetAllocated = res;
+    });
   }
 
   ngOnInit(): void {
@@ -60,6 +70,9 @@ export class AssignComponent implements OnInit {
     }.bind(this);
     this.options['eventAfterRender'] = function(event, element, view){
      this.eventAfterRender(event, element, view);
+    }.bind(this);
+    this.options['eventRender'] = function(event, element, view){
+      this.eventRender(this, event, element, view);
     }.bind(this);
     this.options['slotDuration'] = '00:30:00';
     this.options['timezone'] = 'local';
@@ -339,6 +352,7 @@ export class AssignComponent implements OnInit {
             event.end = new Date(resp[i]['dtEnd'] + " UTC");
             event.collectId = resp[i]['CollectId'];
             event.className = "allocation";
+            event.amount = resp[i].SumAmount;
             this.events.push(event);
           }
         })
@@ -373,22 +387,20 @@ export class AssignComponent implements OnInit {
       element[0].style.left = "31%";
     }
   }
-
-  eventRender(event: any, element: any, view: any){
+  eventRender(that: any,event: any, element: any, view: any){
     element[0].innerText = event.title;
     element[0].addEventListener("mouseover", function(ev) {
+
       let fcEvent = event;
       let div = document.createElement("div");
 
       if(fcEvent.allocated){
-        div.innerHTML = "<span>€ 13 Collecte " + fcEvent.collectId  + "</span><br/>" + fcEvent.title;
+        let temp = parseFloat(fcEvent.amount);
+        div.innerHTML = "<span class='fat-font'>" + that.displayValue(temp) + "</span> <span>" + that.collectionTranslation + " " + fcEvent.collectId  + "</span><br/>"
+                        + "<span class='fat-font'>" + fcEvent.title + "</span>";
         div.className = "balloon balloon_alter";
-
       } else {
-        console.log(fcEvent.id);
-        console.log(fcEvent);
-
-        div.innerHTML = "Nog niet toegewezen<br/>";
+        div.innerHTML = that.notYetAllocated + "<br/>";
         if(fcEvent.transactions.length > 0){
           let collect1 = 0;
           let collect2 = 0;
@@ -404,16 +416,15 @@ export class AssignComponent implements OnInit {
             }
           }
           if(collect1 > 0){
-            div.innerHTML += "Collecte 1 " + collect1 + "<br/>";
+            div.innerHTML += "<span class='fat-font'>" + that.displayValue(collect1) + "</span> " + that.collectionTranslation + " 1<br/>";
           }
           if(collect2 > 0)
-            div.innerHTML += "Collecte 2 " + collect2 + "<br/>";
+            div.innerHTML += "<span class='fat-font'>" + that.displayValue(collect2) + "</span> " + that.collectionTranslation + " 2<br/>";
           if(collect3 > 0)
-            div.innerHTML += "Collecte 3 " + collect3 + "<br/>";
+            div.innerHTML += "<span class='fat-font'>" + that.displayValue(collect3) + "</span> " + that.collectionTranslation + " 3<br/>";
         }
         //                + "€ " +  fcEvent.title + " Collecte " + fcEvent.collectId;
         div.className = "balloon";
-       // console.log(transactions);
       }
 
       let offsets = ev.srcElement.getBoundingClientRect();
@@ -424,7 +435,7 @@ export class AssignComponent implements OnInit {
       document.getElementsByClassName("section-page")[0].appendChild(div);
       div.style.top = top - div.offsetHeight - 15 +"px";
 
-    }.bind(this));
+    });
     element[0].addEventListener("mouseleave", function(){
         let b = document.getElementsByClassName("balloon")[0];
         b.remove();
@@ -432,6 +443,16 @@ export class AssignComponent implements OnInit {
 
       element[0].innerHTML = "";
 
+  }
+
+  displayValue(x)
+  {
+    let euro =  "€";
+    if(!navigator.language.includes('en'))
+      euro += " ";
+    return euro + (this.isSafari ? (x).toFixed(2) : (x).toLocaleString(
+      navigator.language,{minimumFractionDigits: 2,maximumFractionDigits:2})
+      );
   }
 
 
@@ -446,4 +467,5 @@ export class MyEvent {
   className: string;
   allocated = true;
   transactions: any;
+  amount: any;
 }

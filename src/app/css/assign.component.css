@@ -299,7 +299,7 @@ h3{
   border-radius: 3px;
   background-color: rgba(231,62,39,1);
   box-shadow: 1px 1px 3px #888888;
-  font-family: 'Avenir_Medium';
+  font-family: 'Avenir_Light';
   text-align: center;
 
 }
@@ -323,4 +323,8 @@ h3{
 
 .balloon_alter:after{
  border-top-color: #1CA96C;
+}
+
+.fat-font{
+  font-family: 'Avenir-Heavy';
 }
