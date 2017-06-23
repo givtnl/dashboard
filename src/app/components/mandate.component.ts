@@ -167,6 +167,7 @@ export class MandateComponent implements OnInit{
         if(this.selectedOrganisation.id)
             this.checkIncassoStatus(this.selectedOrganisation.id);
         this.disabled = false;
+        this.filteredOrganisations = false;
     }
 
     registerMandate(){
