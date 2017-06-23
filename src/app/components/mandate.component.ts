@@ -153,6 +153,14 @@ export class MandateComponent implements OnInit{
             .catch(err => console.log(err));
     }
 
+    decodeHtmlEntity(html){
+        //this hack is needed to decode the ampersand
+        //https://stackoverflow.com/questions/7394748/whats-the-right-way-to-decode-a-string-that-has-special-html-entities-in-it
+        let txt = document.createElement("textarea");
+        txt.innerHTML = html;
+        return txt.value;
+    }
+
     select(i){
         console.log(i);
         this.disabled = true;
@@ -160,6 +168,10 @@ export class MandateComponent implements OnInit{
         //replace spaces in IBAN
         if (this.selectedOrganisation.cf_value_93537 != null)
            this.selectedOrganisation.cf_value_93537 = i.cf_value_93537.replace(/\s/g, '');
+        if(this.selectedOrganisation.city)
+           this.selectedOrganisation.city = this.decodeHtmlEntity(this.selectedOrganisation.city);
+        if(this.selectedOrganisation.name)
+            this.selectedOrganisation.name = this.decodeHtmlEntity(this.selectedOrganisation.name);
         this.selectedOrganisation.mandate_status = false;
         this.incassoStatus = "Laden...";
         this.change();
