@@ -59,7 +59,7 @@ export class AssignComponent implements OnInit {
     this.headerConfig = {
       left: 'prev,next today',
       center: 'title',
-      right: 'month,agendaWeek,agendaDay'
+      right: 'agendaWeek,agendaDay'
     };
     this.options['viewRender'] = function(view, element) {
       this.isMonthView = view["type"] === "month";
