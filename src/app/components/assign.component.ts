@@ -6,7 +6,7 @@ import 'fullcalendar';
 import 'fullcalendar/dist/locale/nl';
 import {AllocationTimeSpanItem, Transaction} from "../models/allocationTimeSpanItem";
 import {element} from "protractor";
-
+declare var moment: any;
 @Component({
   selector: 'app-assign-collects',
   templateUrl: '../html/assign.component.html',
@@ -333,24 +333,34 @@ export class AssignComponent implements OnInit {
     return this.apiService.getData(apiUrl)
       .then(resp => {
         for(let i = 0; i < resp.length; i++) {
-            let event = new MyEvent();
-            event.id = resp[i]['Id'];
-            event.title = resp[i]['Name'];
-            event.start = new Date(resp[i]['dtBegin'] + " UTC");
-            event.end = new Date(resp[i]['dtEnd'] + " UTC");
-            event.collectId = resp[i]['CollectId'];
-            event.className = "allocation";
-            event.amount = resp[i].SumAmount;
-            event.allocated = true;
-            this.events.push(event);
-          }
+          let event = new MyEvent();
+          event.id = resp[i]['Id'];
+          event.title = resp[i]['Name'];
+          event.start = new Date(resp[i]['dtBegin'] + " UTC");
+          event.end = new Date(resp[i]['dtEnd'] + " UTC");
+          event.collectId = resp[i]['CollectId'];
+          event.className = "allocation";
+          event.allocated = true;
+          event.amount = this.displayValue("0");
+          this.events.push(event);
+          let params = "DateBegin=" + moment.utc(event.start).format() + "&DateEnd=" + moment.utc(event.end).format() + "&CollectId=" + event.collectId + "&Status=3";
+          this.apiService.getData("OrgAdminView/AllocationGivts/?"+params)
+              .then(resp => {
+                console.log(resp);
+                let index = this.findEventIndexById(event.id);
+                this.events[index].amount = resp.TotalAmount;
+              });
+        }
       })
       .catch(err => console.log(err));
   }
 
   saveAllocation(title: string, collectId: string){
     return new Promise((resolve, reject) => {
-      if(title === "") resolve();
+      if(title === "") {
+        resolve();
+        return;
+      }
       console.log(collectId);
       let event = new MyEvent();
       event.id = this.idGen++;
@@ -392,12 +402,12 @@ export class AssignComponent implements OnInit {
     element[0].innerText = event.title;
     element[0].addEventListener("mouseover", function(ev) {
 
-      let fcEvent = event;
+      let fcEvent = that.events[that.findEventIndexById(event.id)];
       let div = document.createElement("div");
 
       if(fcEvent.allocated){
         let temp = parseFloat(fcEvent.amount);
-        div.innerHTML = "<span class='fat-font'>" + that.displayValue(temp) + "</span> <span>" + that.collectionTranslation + " " + fcEvent.collectId  + "</span><br/>"
+        div.innerHTML = "<span class='fat-font'>" + that.displayValue(fcEvent.amount) + "</span> <span>" + that.collectionTranslation + " " + fcEvent.collectId  + "</span><br/>"
                         + "<span class='fat-font'>" + fcEvent.title + "</span>";
         div.className = "balloon balloon_alter";
       } else {
