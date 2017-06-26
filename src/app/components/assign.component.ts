@@ -343,12 +343,11 @@ export class AssignComponent implements OnInit {
           event.allocated = true;
           event.amount = this.displayValue("0");
           this.events.push(event);
-          let params = "DateBegin=" + moment.utc(event.start).format() + "&DateEnd=" + moment.utc(event.end).format() + "&CollectId=" + event.collectId + "&Status=3";
-          this.apiService.getData("OrgAdminView/AllocationGivts/?"+params)
+          let params = "dtBegin=" + moment.utc(event.start).format() + "&dtEnd=" + moment.utc(event.end).format() + "&collectId=" + event.collectId;
+          this.apiService.getData("OrgAdmin/AllocationGivts?"+params)
               .then(resp => {
-                console.log(resp);
                 let index = this.findEventIndexById(event.id);
-                this.events[index].amount = resp.TotalAmount;
+                this.events[index].amount = resp;
               });
         }
       })
