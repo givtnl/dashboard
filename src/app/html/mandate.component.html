@@ -98,6 +98,26 @@
                 <button [class.disabled]="this.selectedOrganisation.mandate_status" (click)="registerMandate()">Mandaat aanvragen</button>
                 <button [class.disabled]="!this.selectedOrganisation.mandate_status || this.incassoStatus" (click)="startIncasso()">Start incasso</button>
                 <button [class.disabled]="" (click)="registerOrganisation()" >Kerk registreren</button>
+                <button (click)="showRegisterAdmin = !showRegisterAdmin; this.organisationAdmin = this.selectedOrganisation.cf_value_93495; this.generateOrgAdminPass();">Organisatie admin registreren</button>
+            </article>
+        </section>
+        <section *ngIf="showRegisterAdmin">
+            <article class="register__admin">
+                <table class="table">
+                    <tr>
+                        <th colspan="3">Organisatie administrator</th>
+                    </tr>
+                    <tr>
+                        <td>Gebruiker</td>
+                        <td colspan="2"><input type="text" [(ngModel)]="organisationAdmin"></td>
+                    </tr>
+                    <tr>
+                        <td>Wachtwoord</td>
+                        <td><input type="text" name="orgAdminPass" [(ngModel)]="organisationAdminPassword"></td>
+                        <td><button (click)="generateOrgAdminPass()" class="register__admin__genpass">Generate</button></td>
+                    </tr>
+                </table>
+                <button [class.disabled]="adminRegistered" [disabled]="adminRegistered" (click)="registerOrganisationAdmin()">Register admin</button>
             </article>
         </section>
       <hr class="collect-hr" style="margin-top: 30px;"/>
