@@ -261,7 +261,7 @@ export class AssignComponent implements OnInit {
     if(!e.calEvent.allocated){
       let dStart = new Date(this.event.start);
       let dEnd = new Date(this.event.end);
-      this.addAllocation(dStart.toLocaleString(), dEnd.toLocaleString());
+      this.addAllocation(dStart, dEnd);
     } else {
       this.isDialogOpen = true;
       this.showForm = false;
