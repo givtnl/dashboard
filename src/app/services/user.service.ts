@@ -1,5 +1,7 @@
 import {Injectable} from '@angular/core';
 import { Http, Headers, URLSearchParams } from '@angular/http';
+import { CustomQueryEncoderHelper } from '../helpers/customQueryEncoder';
+
 
 import 'rxjs/add/operator/toPromise'; //to support toPromise
 import { environment } from '../../environments/environment';
@@ -27,7 +29,7 @@ export class UserService {
         headers.append('Content-Type', 'application/x-www-form-urlencoded');
 
         //set the x-www-form-urlencoded parameters
-        let urlSearchParams = new URLSearchParams();
+        let urlSearchParams = new URLSearchParams('', new CustomQueryEncoderHelper());
         urlSearchParams.append('grant_type', 'password');
         urlSearchParams.append('userName', username);
         urlSearchParams.append('password', password);
