@@ -232,5 +232,45 @@ h3{
 
 .overview-mandates-table .data-row:last-child{
   border-bottom:1px solid #2E2957;
-
 }
+
+.register__admin{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 300px;
+    font-family: Avenir_Heavy;
+}
+
+.register__admin input{
+    background: white;
+    border: 1px solid #E3E2E7;
+    outline:0;
+    font-family: Avenir_Heavy;
+    font-size: 16px;
+    padding: 0 12px;
+    box-sizing: border-box;
+    height: 40px;
+    width: 300px;
+}
+
+.register__admin button{
+    margin-bottom: 20px;
+    background-color: #2C2B57;
+    color:white;
+    font-family: Avenir_Black;;
+    font-size: 18px;
+    text-align: center;
+    width: 300px;
+    height: 50px;
+    border:0;
+    align-self: center;
+    cursor: pointer;
+}
+
+.register__admin__genpass{
+    margin: 0 !important;
+    width: 100px !important;
+    height: 25px !important;
+}
+
