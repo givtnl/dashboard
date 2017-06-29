@@ -219,7 +219,8 @@ export class MandateComponent implements OnInit{
                     }
                 }
             },
-            CrmId : this.selectedOrganisation.id.toString()
+            CrmId : this.selectedOrganisation.id.toString(),
+            OrgName : this.selectedOrganisation.name
         };
         console.log(JSON.stringify(mandate));
         this.apiClient.postData("OrgMandate/", mandate )
