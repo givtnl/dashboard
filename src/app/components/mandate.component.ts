@@ -290,22 +290,32 @@ export class MandateComponent implements OnInit{
         let user =
         {
             Email: this.organisationAdmin,
-            Password: this.organisationAdminPassword,
-            CrmId: this.selectedOrganisation.id
+            Password: this.organisationAdminPassword
         };
-        this.apiClient.postData('Users/OrgAdmin', user)
+
+        this.apiClient.postData('Users', user)
             .then(res => {
                 console.log(res);
-                if(res.status > 300)
-                {
-                    var error = res.status + " : " + res._body
-                    alert(error);
-                    this.adminRegistered = false;
-                }else{
-                    alert('admin registered');
-                }
-            })
-            .catch(err => {this.adminRegistered = false;});
+                let path = '';
+                let email = this.organisationAdmin.replace('+', '%2B');
+                if(!res.status)
+                    path = '/Users/CreateOrgAdmin?email='+email+'&crmId='+this.selectedOrganisation.id+'&password='+this.organisationAdminPassword;
+                else
+                    path = '/Users/CreateOrgAdmin?email='+email+'&crmId='+this.selectedOrganisation.id;
+                this.apiClient.postData(path, null)
+                    .then(response => {
+                        console.log(response);
+                        if(response.status > 300)
+                        {
+                            var error = response.status + " : " + response._body;
+                            alert(error);
+                            this.adminRegistered = false;
+                        }else{
+                            alert('admin registered');
+                        }
+                    })
+                    .catch(err => {this.adminRegistered = false;});
+            });
     }
 
     generateOrgAdminPass(){
