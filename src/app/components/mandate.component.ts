@@ -180,7 +180,7 @@ export class MandateComponent implements OnInit{
             this.selectedOrganisation.name = this.decodeHtmlEntity(this.selectedOrganisation.name);
         this.selectedOrganisation.mandate_status = false;
         if(!environment.production)
-            this.selectedOrganisation.cf_value_93495 =  "bjorn.derudder+" + this.selectedOrganisation.id + "@gmail.com";
+            this.selectedOrganisation.cf_value_93495 =  "support+" + this.selectedOrganisation.id + "@givtapp.net";
         this.incassoStatus = "Laden...";
         this.change();
         this.getMandateStatus();
@@ -202,7 +202,7 @@ export class MandateComponent implements OnInit{
         let mandate = {
             Mandate : {
                 Signatory : {
-                    email :  environment.production? o.cf_value_93495 : "bjorn.derudder+" + this.selectedOrganisation.id + "@gmail.com",
+                    email :  environment.production? o.cf_value_93495 : "support+" + this.selectedOrganisation.id + "@givtapp.net",
                     familyName : o.cf_value_93485,
                     givenName :  o.cf_value_93769,
                     companyName: o.cf_value_95707,
@@ -294,7 +294,15 @@ export class MandateComponent implements OnInit{
         };
         this.apiClient.postData('Users/OrgAdmin', user)
             .then(res => {
-                console.log('admin registered');
+                console.log(res);
+                if(res.status > 300)
+                {
+                    var error = res.status + " : " + res._body
+                    alert(error);
+                    this.adminRegistered = false;
+                }else{
+                    alert('admin registered');
+                }
             })
             .catch(err => {this.adminRegistered = false;});
     }
