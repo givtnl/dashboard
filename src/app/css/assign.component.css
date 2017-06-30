@@ -88,6 +88,15 @@ h3{
   transition: 0.3s;
   cursor: pointer;
   height: 40px;
+  width: 300px;
+}
+
+.schedule__dialog__form--input:hover{
+  box-shadow: 0px 1px 3px #999999;
+}
+
+.schedule__dialog__form--input:focus{
+  box-shadow: 0px 1px 3px #999999;
 }
 
 .schedule__dialog__form--submit{
@@ -101,7 +110,7 @@ h3{
   cursor: pointer;
   transition: 0.3s;
   height: 40px;
-  margin-left: 10px;
+  margin-top: 25px;
 }
 
 .submit-disabled{
@@ -202,4 +211,81 @@ h3{
 
 .margin-bottom{
   margin-bottom: 15px;
+}
+
+.red-border{
+  border: 2px solid #d53d4c;
+}
+
+.schedule__dialog__form--add__collect{
+  text-align: center;
+  vertical-align: center;
+  background-color: #41C98E;
+  font-weight: bolder;
+  border: none;
+  padding: 8px 22px;
+  box-sizing: border-box;
+  color: white;
+  font-size: 19px;
+  font-family: 'Avenir_Black';
+}
+
+.schedule__dialog__form--add__collect:active{
+  box-shadow: 0 2px #999;
+  transform: translateY(-2px);
+}
+
+.schedule__dialog__form--delete__collect{
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background-color: #b91a24;
+  border: none;
+  box-shadow: 0px 2px 2px #999999 ;
+  color: #FFFFFF;
+  font-family: 'Avenir_Black';
+  font-weight: bold;
+  padding-bottom: 4px;
+  margin-left: 35px;
+}
+
+.schedule__dialog__form--delete__collect:hover{
+  box-shadow: 0px 4px 2px #999999 ;
+  transform: translateY(-2px);
+  cursor: pointer;
+}
+
+.schedule__dialog__form--delete__collect:active{
+  box-shadow: 0px 2px 2px #999999 ;
+  transform: translateY(2px);
+}
+
+.schedule__dialog .ui-inputtext{
+  font-family: 'Avenir_Heavy';
+  font-size: 16px;
+  color: #2C2B57;
+  padding: 5px;
+  border: 1px solid #D5D4DD;
+  background-color: #FEFEFE;
+  box-sizing: border-box;
+  transition: 0.3s;
+  cursor: pointer;
+  width: 80px;
+  text-align: center;
+  border-radius: 0;
+}
+
+.schedule__dialog .ui-timepicker, .schedule__dialog .ui-datepicker{
+  width: 80px;
+}
+
+.text{
+  font-family: Avenir_Medium;
+  font-size: 16px;
+  color: #2C2B57;
+  margin:0 10px;
+}
+
+.fc-today{
+  color:black;
 }

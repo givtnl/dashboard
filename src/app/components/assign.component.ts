@@ -1,61 +1,46 @@
-/**
- * Created by lenniestockman on 23/05/2017.
- */
-
-import {Component, OnInit, OnChanges, Attribute, ViewEncapsulation, Renderer2, ElementRef} from '@angular/core';
-import { DatePipe } from '@angular/common';
-import {BrowserModule} from '@angular/platform-browser';
-//import { BrowserAnimationsModule } from '@angular/animations';
+import {Component, OnInit, ViewEncapsulation, ElementRef} from '@angular/core';
 import { ApiClientService } from "app/services/api-client.service";
 import { TranslateService } from "ng2-translate";
-import {CalendarModule, ScheduleModule } from "primeng/primeng";
-import {Collection} from "../models/collection";
-import {DataService} from "../services/data.service";
 import { ViewChild,ChangeDetectorRef } from '@angular/core';
-
 import 'fullcalendar';
 import 'fullcalendar/dist/locale/nl';
-declare var moment: any;
-declare var jQuery: any;
+import {AllocationTimeSpanItem, Transaction} from "../models/allocationTimeSpanItem";
 
-import {forEach} from "@angular/router/src/utils/collection";
 @Component({
   selector: 'app-assign-collects',
   templateUrl: '../html/assign.component.html',
   styleUrls: ['../css/assign.component.css'],
   encapsulation: ViewEncapsulation.None
 })
-export class AssignComponent implements OnInit, OnChanges {
+export class AssignComponent implements OnInit {
   events: any[];
   headerConfig: any;
   options: Object = new Object();
-
   collectName = '';
   collectName2 = '';
   collectName3 = '';
+  collectOneCheck: boolean = false;
+  collectTwoCheck: boolean = false;
+  collectThreeCheck: boolean = false;
   isDialogOpen: boolean;
-  selected: Object = new Object();
-  isMultipleCollects: boolean = false;
   showForm = true;
   showDelete = false;
   event: MyEvent = new MyEvent();
-  eventDates: MyEvent = new MyEvent();
   idGen: number = 100;
-  schedule: any;
   errorShown: boolean;
   errorMessage: string;
-  days = new Array();
-  cells = new Array();
   currentViewStart: any;
   currentViewEnd: any;
+  openGivts : any;
+  openGivtsBucket : Array<AllocationTimeSpanItem> = new Array<AllocationTimeSpanItem>();
+
+
+  startTime: Date;
+  endTime: Date;
 
   @ViewChild('calendar') calendar: ElementRef;
-  public constructor(private ts: TranslateService, private cd: ChangeDetectorRef, private renderer: Renderer2, private elementRef:ElementRef, private apiService: ApiClientService) {
-    console.log("hello");
-  }
+  public constructor(private ts: TranslateService, private cd: ChangeDetectorRef, private apiService: ApiClientService) {
 
-  ngOnChanges(): void{
-    console.log("changé");
   }
 
   ngOnInit(): void {
@@ -66,26 +51,60 @@ export class AssignComponent implements OnInit, OnChanges {
       right: 'month,agendaWeek,agendaDay'
     };
     this.options['viewRender'] = function(view, element) {
+      this.isMonthView = view["type"] === "month";
       this.currentViewStart = view.start['_d'].toISOString();
       this.currentViewEnd = view.end['_d'].toISOString();
       this.getAllocations();
       this.checkAllocations();
     }.bind(this);
-    this.options['nowIndicator'] = false;
+    this.options['slotDuration'] = '00:30:00';
+    this.options['timezone'] = 'local';
+    this.options['defaultView'] = 'agendaWeek';
     this.options['locale'] = this.ts.currentLang;
     this.options['eventDurationEditable'] = false;
     this.options['eventStartEditable'] = false;
-    this.options['selectHelper'] = false;
     this.options['fixedWeekCount'] = false;
-    this.options['editable'] = true;
     this.options['unselectAuto'] = false;
     this.options['selectable'] = true;
     this.options['select'] = function(start, end, jsEvent, view, resource) {
+      this.addAllocation(start["_d"], end["_d"]);
+    }.bind(this);
+  }
+
+  addAllocation(start, end)
+  {
+    if(this.openGivts.length === 0)
+      return;
+    let check = false;
+    for(let i = 0; i < this.openGivts.length; i++){
+      let dtConfirmed = new Date(this.openGivts[i]["Timestamp"]);
+      let dtStart = new Date(start);
+      let dtEnd = new Date(end);
+      if(dtConfirmed > dtStart && dtConfirmed < dtEnd)
+      {
+        check = true;
+        switch (this.openGivts[i].CollectId){
+          case "1":
+            this.collectOneCheck = true;
+            break;
+          case "2":
+            this.collectTwoCheck = true;
+            break;
+          case "3":
+            this.collectThreeCheck = true;
+            break;
+          default:
+            break;
+        }
+      }
+    }
+    if(check)
+    {
+      this.startTime = new Date(start);
+      this.endTime = new Date(end);
       this.isDialogOpen = true;
       this.showForm = true;
-      this.eventDates.start = start;
-      this.eventDates.end = end;
-    }.bind(this);
+    }
   }
 
   checkAllocations(){
@@ -95,74 +114,104 @@ export class AssignComponent implements OnInit, OnChanges {
     }
     this.apiService.getData(apiUrl)
       .then(resp => {
-        console.log(resp);
-        let dayArray = document.getElementsByClassName('fc-day');
-        for(let i = 0; i < dayArray.length; i++){
-          let color = "rgb(213, 61, 76)";
-          if(dayArray[i]['style'].backgroundColor === color){
-            dayArray[i].setAttribute("style","");
+        for(let i = 0; i < resp.length; i++)
+        {
+          let d = new Date(resp[i]["Timestamp"] + " UTC");
+          resp[i]["Timestamp"] = d;
+        }
+        this.openGivts = resp;
+        this.openGivtsBucket = [];
+
+        for(let x = 0; x < this.openGivts.length; x++){
+          let startTime = new Date(resp[x]['Timestamp']);
+          let endTime = new Date(resp[x]['Timestamp']);
+          if(startTime.getMinutes() < 30)
+          {
+            startTime.setMinutes(0,0,0);
+            endTime.setMinutes(30,0,0);
+          }else{
+            startTime.setMinutes(30,0,0);
+            endTime.setHours(endTime.getHours() + 1,0,0,0);
+          }
+
+          let check = false;
+          for(let i = 0; i < this.openGivtsBucket.length; i++)
+          {
+            if(this.openGivtsBucket[i].dtStart.getTime() === startTime.getTime())
+            {
+              this.openGivtsBucket[i].transactions.push(this.openGivts[x]);
+              check = false;
+              break;
+            }
+            check = true;
+          }
+          if(check){
+            let item = new AllocationTimeSpanItem();
+            item.dtEnd = endTime;
+            item.dtStart = startTime;
+            item.transactions = new Array<Transaction>();
+            item.transactions.push(this.openGivts[x]);
+            this.openGivtsBucket.push(item);
+          }
+          if(this.openGivtsBucket.length === 0)
+          {
+            let item = new AllocationTimeSpanItem();
+            item.dtEnd = endTime;
+            item.dtStart = startTime;
+            item.transactions = new Array<Transaction>();
+            item.transactions.push(this.openGivts[x]);
+            this.openGivtsBucket.push(item);
           }
         }
-        for(let x = 0; x < resp.length; x++){
-          let respDate = this.formatDate(new Date(Date.parse(resp[x].Timestamp)));
-          for(let y = 0; y < dayArray.length; y++){
-            let element = dayArray[y];
-            let dayDate = element['dataset']['date'];
-            if(respDate === dayDate) {
-              element.setAttribute("style", "background-color:#D53D4C;");
-            }
+        for(let count = 0; count < this.openGivtsBucket.length; count++)
+        {
+          let buckets = <any>this.openGivtsBucket[count]['transactions'];
+          let amount = 0;
+          for(let tr = 0; tr < buckets.length; tr++)
+          {
+            amount += buckets[tr].Amount;
           }
+          let event = new MyEvent();
+          event.id = count;
+          event.title = "€ " + Math.round(amount * 100) / 100;
+          event.start = this.openGivtsBucket[count].dtStart;
+          event.end = this.openGivtsBucket[count].dtEnd;
+          event.collectId = "1";
+          event.className = "money";
+          event.allocated = false;
+          this.events.push(event);
         }
       });
   }
 
-  formatDate(date) {
-    var d = new Date(date),
-      month = '' + (d.getMonth() + 1),
-      day = '' + d.getDate(),
-      year = d.getFullYear();
-
-    if (month.length < 2) month = '0' + month;
-    if (day.length < 2) day = '0' + day;
-
-    return [year, month, day].join('-');
+  updateEvent() {
+    if (this.collectName === '' && this.collectName2 === '' && this.collectName3 === '') return;
+    if(this.collectName)
+      this.saveEvent(this.collectName, "1");
+    if(this.collectName2)
+      this.saveEvent(this.collectName2, "2");
+    if(this.collectName3)
+      this.saveEvent(this.collectName3, "3");
+    this.resetAll();
   }
 
-  dayRender(e:any, cell:any) {
-    //console.log(e);
-    let today = new Date();
-    let end = new Date();
-    let day  = today.getDate();
-    end.setDate(day + 7);
-  }
-
-  updateEvent()
-  {
-    if (this.collectName === '') return;
-    this.saveEvent(this.collectName, '1');
-
-    this.showForm = false;
-    this.isDialogOpen = false;
-
-    if(this.isMultipleCollects){
-      if(this.collectName2 === '') return;
-      this.saveEvent(this.collectName2, '2');
-      if(this.collectName3 === '') return;
-      this.saveEvent(this.collectName3, '3');
-    }
-  }
-
-  selectType(b: boolean){
-    this.isMultipleCollects = b;
-    this.showForm = true;
-  }
-
-  clearAll(){
-    this.isMultipleCollects = false;
+  resetAll(reload: boolean = true){
     this.showForm = false;
     this.showDelete = false;
     this.isDialogOpen = false;
+    this.collectOneCheck = false;
+    this.collectTwoCheck = false;
+    this.collectThreeCheck = false;
+    this.collectName = "";
+    this.collectName2 = "";
+    this.collectName3 = "";
     this.event = new MyEvent();
+    this.startTime = new Date();
+    this.endTime = new Date();
+    if(reload){
+      this.getAllocations();
+      this.checkAllocations();
+    }
   }
 
   handleDayClick(event) {
@@ -174,25 +223,28 @@ export class AssignComponent implements OnInit, OnChanges {
   }
 
   handleEventClick(e) {
-    this.showForm = false;
-    this.isDialogOpen = true;
-    this.showDelete = true;
-    this.event = new MyEvent();
-    this.event.title = e.calEvent.title;
-    console.log(e);
     let start = e.calEvent.start;
     let end = e.calEvent.end;
     if(e.view.name === 'month') {
       start.stripTime();
+      end.stripTime();
     }
 
     if(end) {
-      end.stripTime();
       this.event.end = end.format();
     }
 
     this.event.id = e.calEvent.id;
     this.event.start = start.format();
+    if(!e.calEvent.allocated){
+      let dStart = new Date(this.event.start);
+      let dEnd = new Date(this.event.end);
+      this.addAllocation(dStart.toLocaleString(), dEnd.toLocaleString());
+    } else {
+      this.isDialogOpen = true;
+      this.showForm = false;
+      this.showDelete = true;
+    }
   }
 
   saveEvent(title: string, collectId: string) {
@@ -200,21 +252,26 @@ export class AssignComponent implements OnInit, OnChanges {
     event.id = this.idGen++;
     event.title = title;
     event.collectId = collectId;
-    event.start = this.eventDates.start;
-    event.end = this.eventDates.end;
+    event.start = this.startTime;
+    event.end = this.endTime;
     this.events.push(event);
     this.saveAllocation(title, collectId);
   }
 
   deleteEvent() {
-    let index: number = this.findEventIndexById(this.event.id);
-    if(index >= 0) {
+    let eventId = this.event.id;
+    let index: number = this.findEventIndexById(eventId);
+    if (index >= 0) {
       this.events.splice(index, 1);
     }
-    this.deleteAllocation();
-    this.event = new MyEvent();
-    this.clearAll();
-    //this.dialogVisible = false;
+    this.apiService.deleteData('OrgAdminView/Allocation?Id=' + eventId)
+      .then(resp => {
+        this.resetAll();
+      })
+      .catch(err => {
+        console.log(err);
+        this.resetAll();
+      });
   }
 
   findEventIndexById(id: number) {
@@ -233,9 +290,34 @@ export class AssignComponent implements OnInit, OnChanges {
     this.errorMessage = msg;
   }
 
+  deleteCollect(id){
+    switch (id){
+      case 1:
+        if(!this.collectTwoCheck && !this.collectThreeCheck)
+          return;
+        this.collectOneCheck = false;
+        this.collectName = "";
+        break;
+      case 2:
+        if(!this.collectOneCheck && !this.collectThreeCheck)
+          return;
+        this.collectTwoCheck = false;
+        this.collectName2 = "";
+        break;
+      case 3:
+        if(!this.collectOneCheck && !this.collectTwoCheck)
+          return;
+        this.collectThreeCheck = false;
+        this.collectName3 = "";
+        break;
+      default:
+        break;
+    }
+  }
+
   getAllocations(dtStart:any = null,dtEnd: any = null){
     let apiUrl = 'OrgAdminView/Allocation';
-     if(this.currentViewStart !== null && this.currentViewEnd !== null){
+     if(this.currentViewStart !== null && this.currentViewEnd !== null) {
        apiUrl += "?dtBegin=" + this.currentViewStart + "&dtEnd=" + this.currentViewEnd;
      }
     return this.apiService.getData(apiUrl)
@@ -244,10 +326,11 @@ export class AssignComponent implements OnInit, OnChanges {
           for(let i = 0; i < resp.length; i++) {
             let event = new MyEvent();
             event.id = resp[i]['Id'];
-            event.title = resp[i]['Name'];
-            event.start = moment().format(resp[i]['dtBegin']);
-            event.end = moment().format(resp[i]['dtEnd']);
+            event.title = "(" + resp[i]['CollectId'] + ") " + resp[i]['Name'];
+            event.start = new Date(resp[i]['dtBegin'] + " UTC");
+            event.end = new Date(resp[i]['dtEnd'] + " UTC");
             event.collectId = resp[i]['CollectId'];
+            event.className = "allocation";
             this.events.push(event);
           }
         })
@@ -255,35 +338,25 @@ export class AssignComponent implements OnInit, OnChanges {
   }
 
   saveAllocation(title: string, collectId: string){
-   // console.log(this.event);
     let body = new Object();
     body["name"] = title;
-    body["dtBegin"] = this.eventDates.start['_d'];
-    body["dtEnd"] = this.eventDates.end['_d'];
+    body["dtBegin"] = this.startTime;
+    body["dtEnd"] = this.endTime;
     body["CollectId"] = collectId;
-    //https://givtapidebug.azurewebsites.net/api/OrgAdminView/Allocation
     this.apiService.postData("OrgAdminView/Allocation", body)
       .then(resp => {
-       // console.log("hello");
         if(resp.status === 409){
           this.toggleError(true, "Je zit met een overlapping");
         }
-        this.getAllocations();
-        this.checkAllocations();
+        this.resetAll();
       })
-      .catch(err => {console.log(err); console.log("err")});
-
-    this.event = new MyEvent();
-  }
-
-  deleteAllocation(){
-    this.apiService.deleteData('OrgAdminView/Allocation?Id=' + this.event.id)
-      .then(resp => { console.log(resp); this.checkAllocations(); })
-      .catch(err => console.log(err));
+      .catch(err => {
+        console.log(err);
+        this.resetAll();
+      });
   }
 
   eventRender(event: any, element: any, view: any){
-  //  element[0].innerText = event.title + " (" + event.collectId  + ")";
     element[0].innerText = event.title;
   }
 
@@ -296,5 +369,6 @@ export class MyEvent {
   start: any;
   end: any;
   collectId: string;
-  backgroundColor: string;
+  className: string;
+  allocated: boolean = true;
 }

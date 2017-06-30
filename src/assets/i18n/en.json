@@ -92,5 +92,7 @@
   "OverlapError": "You can't have overlapping collections.",
   "YesImSure": "Yes, I'm sure.",
   "NoNeverMind": "No, I don't want to.",
-  "OpenAllocationsMessage": "You have transactions that are not connected to a collection.\nPlease go to the tab 'Allocate' to resolve this issue."
+  "OpenAllocationsMessage": "You have transactions that are not connected to a collection.\nPlease go to the tab 'Allocate' to resolve this issue.",
+  "From": "From",
+  "To": "to"
 }

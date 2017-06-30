@@ -454,3 +454,92 @@ my-collects{
     }
 }
 
+/* PRIME NG STYLES */
+p-schedule button
+{
+  background: #1CA96C !important;
+}
+
+.fc button {
+  border: 1px solid #F5F5F5 !important;
+}
+
+.allocation{
+  background: #41C98E !important;
+}
+
+.allocation, .money {
+  border: 1px solid #FEFEFE !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+
+.money{
+  width: 50%;
+  background: #F17057 !important;
+}
+
+.allocation:hover{
+  width: 100% !important;
+  z-index: 999 !important;
+  left:0 !important;
+  right:0 !important;
+  cursor: pointer !important;
+  background: #1CA96C !important;
+}
+
+.fc-scroller{
+  cursor: cell;
+}
+
+.fc-row .fc-axis .ui-widget-header{
+  background: #2E2957;
+  padding: 10px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.fc-head .fc-head-container .fc-row .fc-day-header{
+  background: #F5F5F5;
+  padding: 10px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  color:#2E2957;
+  font-family: 'Avenir_Heavy';
+}
+
+.fc-time-grid .fc-slats .fc-time{
+  background-color: #F5F5F5;
+  color:#2E2957;
+}
+
+.ui-widget-header .ui-state-highlight, .ui-widget-content .ui-state-highlight, .ui-state-highlight{
+  background-color: white;
+  border-width:2px;
+  border-color: #2E2957;
+}
+
+.fc-agenda-view .fc-day-grid .fc-row{
+  display: none;
+}
+
+.fc-agenda-view .fc-body .fc-divider{
+  display: none;
+}
+
+.fc-row .fc-axis {
+  background: #F5F5F5;
+}
+
+.fc-toolbar h2{
+  padding:5px;
+}
+.fc-month-view .ui-widget-content .ui-state-highlight{
+  color: white;
+  background-color: #5A5387;
+  border-color: #5A5387;
+}

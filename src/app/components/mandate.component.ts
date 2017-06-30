@@ -40,6 +40,12 @@ export class MandateComponent implements OnInit{
     incassoStatus: string = "Laden...";
     urlGetCompanies: string = "https://app.teamleader.eu/api/getCompanies.php?api_group=50213&amount=10&selected_customfields=92583,95707,93537,93168,93495,93485,93494,93485,95707,93769&pageno=0&searchby=";
 
+    organisationAdmin: string = "Lenin";
+    organisationAdminPassword: string = "fjkldsmqfjklmqsfjlkmq";
+
+    showRegisterAdmin : boolean = false;
+    adminRegistered: boolean = false;
+
     constructor(
         private userService: UserService,
         private router: Router,
@@ -173,12 +179,15 @@ export class MandateComponent implements OnInit{
         if(this.selectedOrganisation.name)
             this.selectedOrganisation.name = this.decodeHtmlEntity(this.selectedOrganisation.name);
         this.selectedOrganisation.mandate_status = false;
+        if(!environment.production)
+            this.selectedOrganisation.cf_value_93495 =  "support+" + this.selectedOrganisation.id + "@givtapp.net";
         this.incassoStatus = "Laden...";
         this.change();
         this.getMandateStatus();
         if(this.selectedOrganisation.id)
             this.checkIncassoStatus(this.selectedOrganisation.id);
         this.disabled = false;
+        this.filteredOrganisations = false;
     }
 
     registerMandate(){
@@ -193,7 +202,7 @@ export class MandateComponent implements OnInit{
         let mandate = {
             Mandate : {
                 Signatory : {
-                    email :  o.cf_value_93495,
+                    email :  environment.production? o.cf_value_93495 : "support+" + this.selectedOrganisation.id + "@givtapp.net",
                     familyName : o.cf_value_93485,
                     givenName :  o.cf_value_93769,
                     companyName: o.cf_value_95707,
@@ -210,7 +219,8 @@ export class MandateComponent implements OnInit{
                     }
                 }
             },
-            CrmId : this.selectedOrganisation.id.toString()
+            CrmId : this.selectedOrganisation.id.toString(),
+            OrgName : this.selectedOrganisation.name
         };
         console.log(JSON.stringify(mandate));
         this.apiClient.postData("OrgMandate/", mandate )
@@ -232,8 +242,8 @@ export class MandateComponent implements OnInit{
         }
 
         let email = {
-            Email : environment.production ? o.cf_value_93495 : "support@givtapp.net",
-            Admin : o.cf_value_93769 + " " + o.cf_value_93485,
+            Email : environment.production ? o.cf_value_93495 : "bjorn.derudder+" + this.selectedOrganisation.id + "@gmail.com",
+            Admin : environment.production? o.cf_value_93769 + " " + o.cf_value_93485 : "Bjorn Derudder",
             Organisation : o.name,
             Amount : this.selectedOrganisation.cf_value_92583,
             Link : this.SlimPayLink,
@@ -270,6 +280,51 @@ export class MandateComponent implements OnInit{
         console.log(JSON.stringify(organisation));
         this.apiClient.postData("Organisation", organisation)
             .then(res => { alert("Gelukt!"); console.log(res) });
+    }
+
+    registerOrganisationAdmin(){
+        if(!this.organisationAdmin || !this.organisationAdminPassword){
+            return;
+        }
+        this.adminRegistered = true;
+        let user =
+        {
+            Email: this.organisationAdmin,
+            Password: this.organisationAdminPassword
+        };
+
+        this.apiClient.postData('Users', user)
+            .then(res => {
+                console.log(res);
+                let path = '';
+                let email = this.organisationAdmin.replace('+', '%2B');
+                if(!res.status)
+                    path = '/Users/CreateOrgAdmin?email='+email+'&crmId='+this.selectedOrganisation.id+'&password='+this.organisationAdminPassword;
+                else
+                    path = '/Users/CreateOrgAdmin?email='+email+'&crmId='+this.selectedOrganisation.id;
+                this.apiClient.postData(path, null)
+                    .then(response => {
+                        console.log(response);
+                        if(response.status > 300)
+                        {
+                            var error = response.status + " : " + response._body;
+                            alert(error);
+                            this.adminRegistered = false;
+                        }else{
+                            alert('admin registered');
+                        }
+                    })
+                    .catch(err => {this.adminRegistered = false;});
+            });
+    }
+
+    generateOrgAdminPass(){
+        var text = "";
+        var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789&%$";
+
+        for( var i=0; i < 8; i++ )
+            text += possible.charAt(Math.floor(Math.random() * possible.length));
+        this.organisationAdminPassword = text;
     }
 
     openCRM(){

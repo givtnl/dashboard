@@ -161,7 +161,6 @@ export class CollectsComponent implements OnInit{
     let apiUrl = 'OrgAdminView/AllocationCheck';
     this.apiService.getData(apiUrl)
       .then(resp => {
-        console.log(resp);
         if(resp.length > 0){
           this.openAllocations = true;
         }
