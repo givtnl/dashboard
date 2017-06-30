@@ -5,7 +5,8 @@ import { ViewChild,ChangeDetectorRef } from '@angular/core';
 import 'fullcalendar';
 import 'fullcalendar/dist/locale/nl';
 import {AllocationTimeSpanItem, Transaction} from "../models/allocationTimeSpanItem";
-
+import {element} from "protractor";
+declare var moment: any;
 @Component({
   selector: 'app-assign-collects',
   templateUrl: '../html/assign.component.html',
@@ -19,20 +20,24 @@ export class AssignComponent implements OnInit {
   collectName = '';
   collectName2 = '';
   collectName3 = '';
-  collectOneCheck: boolean = false;
-  collectTwoCheck: boolean = false;
-  collectThreeCheck: boolean = false;
+  collectOneCheck = false;
+  collectTwoCheck = false;
+  collectThreeCheck = false;
   isDialogOpen: boolean;
   showForm = true;
   showDelete = false;
   event: MyEvent = new MyEvent();
-  idGen: number = 100;
+  idGen = 100;
   errorShown: boolean;
   errorMessage: string;
   currentViewStart: any;
   currentViewEnd: any;
   openGivts : any;
   openGivtsBucket : Array<AllocationTimeSpanItem> = new Array<AllocationTimeSpanItem>();
+  isSafari: boolean;
+  collectionTranslation: string;
+  notYetAllocated: string;
+
 
 
   startTime: Date;
@@ -40,7 +45,13 @@ export class AssignComponent implements OnInit {
 
   @ViewChild('calendar') calendar: ElementRef;
   public constructor(private ts: TranslateService, private cd: ChangeDetectorRef, private apiService: ApiClientService) {
-
+    this.isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+    this.ts.get('Collection').subscribe((res: string) => {
+        this.collectionTranslation = res;
+      });
+    this.ts.get('NotYetAllocated').subscribe((res: string) => {
+      this.notYetAllocated = res;
+    });
   }
 
   ngOnInit(): void {
@@ -48,14 +59,21 @@ export class AssignComponent implements OnInit {
     this.headerConfig = {
       left: 'prev,next today',
       center: 'title',
-      right: 'month,agendaWeek,agendaDay'
+      right: 'agendaWeek,agendaDay'
     };
     this.options['viewRender'] = function(view, element) {
       this.isMonthView = view["type"] === "month";
       this.currentViewStart = view.start['_d'].toISOString();
       this.currentViewEnd = view.end['_d'].toISOString();
+      this.events.length = 0;
       this.getAllocations();
       this.checkAllocations();
+    }.bind(this);
+    this.options['eventAfterRender'] = function(event, element, view){
+     this.eventAfterRender(event, element, view);
+    }.bind(this);
+    this.options['eventRender'] = function(event, element, view){
+      this.eventRender(this, event, element, view);
     }.bind(this);
     this.options['slotDuration'] = '00:30:00';
     this.options['timezone'] = 'local';
@@ -112,6 +130,7 @@ export class AssignComponent implements OnInit {
     if(this.currentViewStart !== null && this.currentViewEnd !== null){
       apiUrl += "?dtBegin=" + this.currentViewStart + "&dtEnd=" + this.currentViewEnd;
     }
+
     this.apiService.getData(apiUrl)
       .then(resp => {
         for(let i = 0; i < resp.length; i++)
@@ -171,14 +190,18 @@ export class AssignComponent implements OnInit {
           {
             amount += buckets[tr].Amount;
           }
+
+          //total amount == amount
+
           let event = new MyEvent();
           event.id = count;
-          event.title = "€ " + Math.round(amount * 100) / 100;
+          event.title = (Math.round(amount * 100) / 100).toString();
           event.start = this.openGivtsBucket[count].dtStart;
           event.end = this.openGivtsBucket[count].dtEnd;
           event.collectId = "1";
           event.className = "money";
           event.allocated = false;
+          event.transactions = buckets;
           this.events.push(event);
         }
       });
@@ -186,13 +209,11 @@ export class AssignComponent implements OnInit {
 
   updateEvent() {
     if (this.collectName === '' && this.collectName2 === '' && this.collectName3 === '') return;
-    if(this.collectName)
-      this.saveEvent(this.collectName, "1");
-    if(this.collectName2)
-      this.saveEvent(this.collectName2, "2");
-    if(this.collectName3)
-      this.saveEvent(this.collectName3, "3");
-    this.resetAll();
+    var promiseArr = [];
+    Promise.all([this.saveAllocation(this.collectName, "1"),this.saveAllocation(this.collectName2, "2"), this.saveAllocation(this.collectName3, "3")]).then(function() {
+      this.resetAll();
+    }.bind(this));
+    this.resetAll(false);
   }
 
   resetAll(reload: boolean = true){
@@ -209,6 +230,7 @@ export class AssignComponent implements OnInit {
     this.startTime = new Date();
     this.endTime = new Date();
     if(reload){
+      this.events.length = 0;
       this.getAllocations();
       this.checkAllocations();
     }
@@ -239,23 +261,12 @@ export class AssignComponent implements OnInit {
     if(!e.calEvent.allocated){
       let dStart = new Date(this.event.start);
       let dEnd = new Date(this.event.end);
-      this.addAllocation(dStart.toLocaleString(), dEnd.toLocaleString());
+      this.addAllocation(dStart, dEnd);
     } else {
       this.isDialogOpen = true;
       this.showForm = false;
       this.showDelete = true;
     }
-  }
-
-  saveEvent(title: string, collectId: string) {
-    let event = new MyEvent();
-    event.id = this.idGen++;
-    event.title = title;
-    event.collectId = collectId;
-    event.start = this.startTime;
-    event.end = this.endTime;
-    this.events.push(event);
-    this.saveAllocation(title, collectId);
   }
 
   deleteEvent() {
@@ -270,7 +281,6 @@ export class AssignComponent implements OnInit {
       })
       .catch(err => {
         console.log(err);
-        this.resetAll();
       });
   }
 
@@ -322,42 +332,138 @@ export class AssignComponent implements OnInit {
      }
     return this.apiService.getData(apiUrl)
       .then(resp => {
-          this.events.length = 0;
-          for(let i = 0; i < resp.length; i++) {
-            let event = new MyEvent();
-            event.id = resp[i]['Id'];
-            event.title = "(" + resp[i]['CollectId'] + ") " + resp[i]['Name'];
-            event.start = new Date(resp[i]['dtBegin'] + " UTC");
-            event.end = new Date(resp[i]['dtEnd'] + " UTC");
-            event.collectId = resp[i]['CollectId'];
-            event.className = "allocation";
-            this.events.push(event);
-          }
-        })
+        for(let i = 0; i < resp.length; i++) {
+          let event = new MyEvent();
+          event.id = resp[i]['Id'];
+          event.title = resp[i]['Name'];
+          event.start = new Date(resp[i]['dtBegin'] + " UTC");
+          event.end = new Date(resp[i]['dtEnd'] + " UTC");
+          event.collectId = resp[i]['CollectId'];
+          event.className = "allocation";
+          event.allocated = true;
+          event.amount = this.displayValue("0");
+          this.events.push(event);
+          let params = "dtBegin=" + moment.utc(event.start).format() + "&dtEnd=" + moment.utc(event.end).format() + "&collectId=" + event.collectId;
+          this.apiService.getData("OrgAdmin/AllocationGivts?"+params)
+              .then(resp => {
+                let index = this.findEventIndexById(event.id);
+                this.events[index].amount = resp;
+              });
+        }
+      })
       .catch(err => console.log(err));
   }
 
   saveAllocation(title: string, collectId: string){
-    let body = new Object();
-    body["name"] = title;
-    body["dtBegin"] = this.startTime;
-    body["dtEnd"] = this.endTime;
-    body["CollectId"] = collectId;
-    this.apiService.postData("OrgAdminView/Allocation", body)
-      .then(resp => {
-        if(resp.status === 409){
-          this.toggleError(true, "Je zit met een overlapping");
-        }
-        this.resetAll();
-      })
-      .catch(err => {
-        console.log(err);
-        this.resetAll();
-      });
+    return new Promise((resolve, reject) => {
+      if(title === "") {
+        resolve();
+        return;
+      }
+      console.log(collectId);
+      let event = new MyEvent();
+      event.id = this.idGen++;
+      event.title = title;
+      event.collectId = collectId;
+      event.start = this.startTime;
+      event.end = this.endTime;
+
+      let body = new Object();
+      body["name"] = title;
+      body["dtBegin"] = this.startTime;
+      body["dtEnd"] = this.endTime;
+      body["CollectId"] = collectId;
+      this.apiService.postData("OrgAdminView/Allocation", body)
+        .then(resp => {
+          if(resp.status === 409){
+            this.toggleError(true, "Je zit met een overlapping");
+          }
+          resolve();
+        })
+        .catch(err => {
+          console.log(err);
+        });
+
+    })
+
   }
 
-  eventRender(event: any, element: any, view: any){
+  eventAfterRender(event: any, element: any, view: any){
+    if(element[0].style.left === "33.3333%"){
+      element[0].style.left = "31%";
+    } else if(element[0].style.left === "66.6667%") {
+      element[0].style.left = "62%";
+    } else if(element[0].style.left === "50%") {
+      element[0].style.left = "31%";
+    }
+  }
+  eventRender(that: any,event: any, element: any, view: any){
     element[0].innerText = event.title;
+    element[0].addEventListener("mouseover", function(ev) {
+
+      let fcEvent = that.events[that.findEventIndexById(event.id)];
+      let div = document.createElement("div");
+
+      if(fcEvent.allocated){
+        let temp = parseFloat(fcEvent.amount);
+        div.innerHTML = "<span class='fat-font'>" + that.displayValue(fcEvent.amount) + "</span> <span>" + that.collectionTranslation + " " + fcEvent.collectId  + "</span><br/>"
+                        + "<span class='fat-font'>" + fcEvent.title + "</span>";
+        div.className = "balloon balloon_alter";
+      } else {
+        div.innerHTML = that.notYetAllocated + "<br/>";
+        if(fcEvent.transactions.length > 0){
+          let collect1 = 0;
+          let collect2 = 0;
+          let collect3 = 0;
+          for(let i = 0; i < fcEvent.transactions.length; i++){
+            let transaction = fcEvent.transactions[i];
+            if(transaction.CollectId === "1"){
+              collect1 += transaction.Amount;
+            } else if(transaction.CollectId === "2"){
+              collect2 += transaction.Amount;
+            } else if(transaction.CollectId === "3"){
+              collect3 += transaction.Amount;
+            }
+          }
+          if(collect1 > 0){
+            div.innerHTML += "<span class='fat-font'>" + that.displayValue(collect1) + "</span> " + that.collectionTranslation + " 1<br/>";
+          }
+          if(collect2 > 0)
+            div.innerHTML += "<span class='fat-font'>" + that.displayValue(collect2) + "</span> " + that.collectionTranslation + " 2<br/>";
+          if(collect3 > 0)
+            div.innerHTML += "<span class='fat-font'>" + that.displayValue(collect3) + "</span> " + that.collectionTranslation + " 3<br/>";
+        }
+        div.className = "balloon";
+      }
+
+      let offsets = ev.srcElement.getBoundingClientRect();
+      let top = offsets.top;
+      let left = offsets.left;
+      //div.style.top = top - div.offsetHeight +"px";
+      div.style.left = left +"px";
+      document.getElementsByClassName("section-page")[0].appendChild(div);
+      div.style.top = top - div.offsetHeight - 17 +"px";
+
+    });
+    element[0].addEventListener("mouseleave", function(){
+        let b = document.getElementsByClassName("balloon");
+        while(b.length > 0){
+          b[0].remove();
+        }
+      }, true);
+
+      element[0].innerHTML = "";
+
+  }
+
+  displayValue(x)
+  {
+    let euro =  "€";
+    if(!navigator.language.includes('en'))
+      euro += " ";
+    return euro + (this.isSafari ? (x).toFixed(2) : (x).toLocaleString(
+      navigator.language,{minimumFractionDigits: 2,maximumFractionDigits:2})
+      );
   }
 
 
@@ -370,5 +476,7 @@ export class MyEvent {
   end: any;
   collectId: string;
   className: string;
-  allocated: boolean = true;
+  allocated = true;
+  transactions: any;
+  amount: any;
 }

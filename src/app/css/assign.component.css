@@ -289,3 +289,42 @@ h3{
 .fc-today{
   color:black;
 }
+
+.balloon{
+  position: fixed;
+  padding: 10px;
+  box-sizing: border-box;
+  color:white;
+  z-index: 10000;
+  border-radius: 3px;
+  background-color: rgba(231,62,39,1);
+  box-shadow: 1px 1px 3px #888888;
+  font-family: 'Avenir_Light';
+  text-align: center;
+
+}
+.balloon:after{
+  content: '';
+  display: block;
+  position: absolute;
+  left: 5px;
+  top: 100%;
+  width: 0;
+  height: 0;
+  border-bottom: 10px solid transparent;
+  border-top: 10px solid rgba(231,62,39,1);
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+}
+
+.balloon_alter{
+  background-color: #1CA96C;
+}
+
+.balloon_alter:after{
+ border-top-color: #1CA96C;
+}
+
+.fat-font{
+  font-family: 'Avenir_Heavy';
+}
