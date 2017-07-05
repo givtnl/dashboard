@@ -23,6 +23,7 @@ import {MandateComponent} from "./components/mandate.component";
 import {ForgotPasswordComponent} from "./components/forgotpassword.component";
 import {UnAuthorizeComponent} from "./components/unauthorized.component";
 import {AssignComponent} from "./components/assign.component";
+import { PayoutComponent } from "./components/children/payout-element.component"
 
 import * as jQuery from 'jquery';
 import { AutoCompleteModule, ScheduleModule, DialogModule, CalendarModule, DropdownModule } from 'primeng/primeng';
@@ -45,6 +46,7 @@ export function createTranslateLoader(http: Http) {
     ForgotPasswordComponent,
     UnAuthorizeComponent,
     AssignComponent,
+    PayoutComponent
   ],
   imports: [
     AutoCompleteModule,
