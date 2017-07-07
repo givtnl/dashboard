@@ -197,6 +197,7 @@ button:disabled{
     color: #2C2B57;
     min-height:210px;
     padding-top: 10px;
+    position: relative;
 }
 
 .withholding-overview h2{
