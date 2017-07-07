@@ -1,6 +1,3 @@
-/**
- * Created by lenniestockman on 03/07/2017.
- */
 import {Component, Input, OnInit} from '@angular/core';
 import {ApiClientService} from "../../services/api-client.service";
 import {DatePipe} from "@angular/common";
