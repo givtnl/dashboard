@@ -458,6 +458,7 @@ export class AssignComponent implements OnInit {
 
   displayValue(x)
   {
+    if(x === undefined) x = 0;
     let euro =  "€";
     if(!navigator.language.includes('en'))
       euro += " ";
