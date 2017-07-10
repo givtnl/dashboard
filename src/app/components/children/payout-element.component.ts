@@ -30,7 +30,7 @@ export class PayoutComponent implements OnInit{
   name: string = "";
   transactionCost = 0.08;
   mandateCost = 0.125;
-  constructor(private apiService: ApiClientService,private translate: TranslateService, private datePipe: DatePipe) {
+  constructor(private apiClient: ApiClientService,private translate: TranslateService, private datePipe: DatePipe) {
     this.isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
     this.name = "Testen";
 
@@ -101,6 +101,7 @@ export class PayoutComponent implements OnInit{
   }
 
   openPayout(x){
+    this.fetchPayoutDetail(x);
     x.hidden = !x.hidden;
   }
 
@@ -111,5 +112,15 @@ export class PayoutComponent implements OnInit{
   selectRow(x, y)
   {
     x.activeRow = y;
+  }
+
+  fetchPayoutDetail(x){
+    this.apiClient.getData('OrgAdminView/PayoutDetail?payoutID='+x.Id)
+        .then( (resp) => {
+          for(var i = 0; i < resp.length; i++){
+            resp[i].Amount = this.displayValue(resp[i].Amount);
+          }
+          x.details = resp;
+        });
   }
 }

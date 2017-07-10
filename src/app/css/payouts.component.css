@@ -513,3 +513,20 @@ button:disabled{
 .red{
   color: #D53D4C;
 }
+
+.collect__table{
+    font-family: Avenir_Heavy;
+    margin-bottom: 30px;
+}
+
+.collect__table td{
+    padding-right : 40px;
+}
+
+
+.collect__table__footer{
+    font-family: Avenir_Black;
+    padding-top: 15px;
+    border-top: 2px solid #2E2957;
+    font-weight: bolder;
+}

@@ -17,6 +17,15 @@
 </section>
 <section class="white-bg">
   <div class="withholding-overview center-me" *ngIf="!childData.hidden">
+    <h3>Overzicht van collectes</h3>
+    <table class="collect__table">
+      <tr *ngFor="let item of childData.details">
+        <td>{{item.Name}}</td><td>{{item.Amount}}</td>
+      </tr>
+      <tr class="collect__table__footer">
+        <td>Totaal uitbetaald</td><td>{{childData.ToegezegdBedrag}}</td>
+      </tr>
+    </table>
     <h2 class="black" style="font-size: 20px">{{"Payout_Overview" | translate}}</h2>
     <button class="close-button" (click)="closePayout(childData)">
       {{"Text_Deduction_CloseButton" | translate}} <svg width="19px" height="19px" viewBox="944 525 19 19" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
