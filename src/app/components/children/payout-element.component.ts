@@ -102,11 +102,13 @@ export class PayoutComponent implements OnInit{
   }
 
   openPayout(){
+    this.childData.hiddenAllocations = true;
     this.childData.hiddenOverview = !this.childData.hiddenOverview;
   }
 
   openAllocations(){
     this.fetchPayoutDetail();
+    this.childData.hiddenOverview = true;
     this.childData.hiddenAllocations = !this.childData.hiddenAllocations;
   }
 
