@@ -5,7 +5,23 @@
   </time>
   <div class="collection-buttons">
     <span class="total-payed">{{"Payout_TotalPayedOut" | translate}} <span id="big">{{childData.TotalPaidText}}</span></span>
-    <button class="icon" [class.fill-green]="childData.hidden == false" (click)="openPayout(childData)">
+    <button class="icon" [class.fill-green]="childData.hiddenAllocations == false" (click)="openAllocations()">
+      <svg width="27px" height="20px" viewBox="0 0 27 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <!-- Generator: Sketch 44.1 (41455) - http://www.bohemiancoding.com/sketch -->
+        <desc>Created with Sketch.</desc>
+        <defs></defs>
+        <g id="Uitbetalingen-incl-BTW" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="square">
+          <g id="Uitbetalingen-page_Storneringskosten-Incl.-BTW-Copy-3" transform="translate(-874.000000, -206.000000)" stroke="#FFFFFF" stroke-width="3">
+            <g id="Group-2" transform="translate(876.000000, 207.000000)">
+              <path d="M0,1 L22.7700005,1" id="Line"></path>
+              <path d="M0,9 L22.7700005,9" id="Line-Copy"></path>
+              <path d="M0,17 L22.7700005,17" id="Line-Copy-5"></path>
+            </g>
+          </g>
+        </g>
+      </svg>
+    </button>
+    <button class="icon" [class.fill-green]="childData.hiddenOverview == false" (click)="openPayout()">
       <svg width="23px" height="23px" viewBox="8 8 23 23" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
         <!-- Generator: Sketch 40.3 (33839) - http://www.bohemiancoding.com/sketch -->
         <desc>Created with Sketch.</desc>
@@ -16,18 +32,8 @@
   </div>
 </section>
 <section class="white-bg">
-  <div class="withholding-overview center-me" *ngIf="!childData.hidden">
-    <h3>Overzicht van collectes</h3>
-    <table class="collect__table">
-      <tr *ngFor="let item of childData.details">
-        <td>{{item.Name}}</td><td>{{item.Amount}}</td>
-      </tr>
-      <tr class="collect__table__footer">
-        <td>Totaal uitbetaald</td><td>{{childData.ToegezegdBedrag}}</td>
-      </tr>
-    </table>
-    <h2 class="black" style="font-size: 20px">{{"Payout_Overview" | translate}}</h2>
-    <button class="close-button" (click)="closePayout(childData)">
+  <div class="withholding-overview center-me allocation-tab" style="min-height: 0px;" *ngIf="!childData.hiddenAllocations">
+    <button class="close-button" (click)="closeAllocations()">
       {{"Text_Deduction_CloseButton" | translate}} <svg width="19px" height="19px" viewBox="944 525 19 19" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
       <!-- Generator: Sketch 40.3 (33839) - http://www.bohemiancoding.com/sketch -->
       <desc>Created with Sketch.</desc>
@@ -37,7 +43,33 @@
       </g>
     </svg>
     </button>
-    <table class="table-stats center-me overview-payout" border="0">
+    <h2 class="black" style="font-size:20px">{{'OverzichtToegewezenCollectes' | translate}}</h2>
+    <table class="collect__table alloc" style="margin-bottom: 0;    border-collapse: collapse;">
+      <tr style="font-family: Avenir_Medium; font-size: 20px;" *ngFor="let item of childData.details">
+        <td>{{item.Name}}</td><td style="text-align: right;">{{item.Amount}}</td>
+      </tr>
+      <tr class="collect__table__footer" style="font-family: Avenir_Black; font-size: 22px;">
+        <td style="text-align:left;" class="special-last-cell" >{{"Payout_TotalPayedOut" | translate}}</td><td style="text-align:right;" class="special-last-cell" >{{childData.TotalPaidText}}</td>
+      </tr>
+    </table>
+
+  </div>
+  <hr class="collect-hr" *ngIf="!childData.hiddenAllocations && !childData.hiddenOverview" style="width: 960px;"/>
+  <div class="withholding-overview center-me" *ngIf="!childData.hiddenOverview">
+
+
+    <h2 class="black" style="font-size: 20px">{{"Payout_Overview" | translate}}</h2>
+    <button class="close-button" (click)="closeOverview()">
+      {{"Text_Deduction_CloseButton" | translate}} <svg width="19px" height="19px" viewBox="944 525 19 19" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+      <!-- Generator: Sketch 40.3 (33839) - http://www.bohemiancoding.com/sketch -->
+      <desc>Created with Sketch.</desc>
+      <defs></defs>
+      <g id="1477510223_icon-close-round" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(944.000000, 525.000000)">
+        <path d="M18.154652,15.6902032 L11.8313314,9.36688256 L18.154652,3.04356195 C18.8373382,2.36087573 18.8373382,1.26179933 18.154652,0.579113112 C17.4719658,-0.10357311 16.3728894,-0.10357311 15.6902032,0.579113112 L9.36688256,6.90243371 L3.04356195,0.579113112 C2.36087573,-0.10357311 1.26179933,-0.10357311 0.579113112,0.579113112 C-0.10357311,1.26179933 -0.10357311,2.36087573 0.579113112,3.04356195 L6.90243371,9.36688256 L0.579113112,15.6902032 C-0.10357311,16.3728894 -0.10357311,17.4719658 0.579113112,18.154652 C1.26179933,18.8373382 2.36087573,18.8373382 3.04356195,18.154652 L9.36688256,11.8313314 L15.6902032,18.154652 C16.3728894,18.8373382 17.4719658,18.8373382 18.154652,18.154652 C18.8324965,17.4719658 18.8324965,16.3680476 18.154652,15.6902032 L18.154652,15.6902032 Z" id="Shape" fill="#2C2B57 "></path>
+      </g>
+    </svg>
+    </button>
+    <table class="table-stats center-me overview-payout"  border="0">
       <tr>
         <td>{{"Payout_CommittedAmount" | translate}}</td>
         <td>{{childData.ToegezegdBedrag}}</td>

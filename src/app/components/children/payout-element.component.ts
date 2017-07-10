@@ -78,7 +78,8 @@ export class PayoutComponent implements OnInit{
     x.ToegezegdBedrag = this.displayValue(x.ToegezegdBedrag);
 
 
-    x.hidden = true;
+    x.hiddenOverview = true;
+    x.hiddenAllocations = true;
     x.TotalPaidText = this.displayValue(x.TotalPaid);
 
     this.translate.get('Text_Info_Mandate', {0: x.MandateCostCount,1: (this.isSafari ? (this.mandateCost).toFixed(3) : (this.mandateCost).toLocaleString(navigator.language,{minimumFractionDigits: 3,maximumFractionDigits:3}))}).subscribe((res: string) => {
@@ -100,13 +101,22 @@ export class PayoutComponent implements OnInit{
     x.activeRow = 1;
   }
 
-  openPayout(x){
-    this.fetchPayoutDetail(x);
-    x.hidden = !x.hidden;
+  openPayout(){
+    this.childData.hiddenOverview = !this.childData.hiddenOverview;
   }
 
-  closePayout(x){
-    x.hidden = !x.hidden;
+  openAllocations(){
+    this.fetchPayoutDetail();
+    this.childData.hiddenAllocations = !this.childData.hiddenAllocations;
+  }
+
+
+  closeOverview(){
+    this.childData.hiddenOverview = true;
+  }
+
+  closeAllocations(){
+    this.childData.hiddenAllocations = true;
   }
 
   selectRow(x, y)
@@ -114,13 +124,13 @@ export class PayoutComponent implements OnInit{
     x.activeRow = y;
   }
 
-  fetchPayoutDetail(x){
-    this.apiClient.getData('OrgAdminView/PayoutDetail?payoutID='+x.Id)
+  fetchPayoutDetail(){
+    this.apiClient.getData('OrgAdminView/PayoutDetail?payoutID='+this.childData.Id)
         .then( (resp) => {
           for(var i = 0; i < resp.length; i++){
             resp[i].Amount = this.displayValue(resp[i].Amount);
           }
-          x.details = resp;
+          this.childData.details = resp;
         });
   }
 }
