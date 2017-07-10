@@ -45,8 +45,8 @@
     </button>
     <h2 class="black" style="font-size:20px">{{'OverzichtToegewezenCollectes' | translate}}</h2>
     <table class="collect__table alloc" style="margin-bottom: 0;    border-collapse: collapse;">
-      <tr style="font-family: Avenir_Medium; font-size: 20px;" *ngFor="let item of childData.details">
-        <td>{{item.Name}}</td><td style="text-align: right;">{{item.Amount}}</td>
+      <tr  style="font-family: Avenir_Medium; font-size: 20px;" *ngFor="let item of childData.details" [class.red]="item.Status == 0">
+        <td >{{item.Name}}</td><td style="text-align: right;">{{item.Amount}}</td>
       </tr>
       <tr class="collect__table__footer" style="font-family: Avenir_Black; font-size: 22px;">
         <td style="text-align:left;" class="special-last-cell" >{{"Payout_TotalPayedOut" | translate}}</td><td style="text-align:right;" class="special-last-cell" >{{childData.TotalPaidText}}</td>

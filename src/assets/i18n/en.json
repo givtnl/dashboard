@@ -96,5 +96,6 @@
     "From": "From",
     "To": "to",
     "NotYetAllocated": "Not yet allocated",
-    "OverzichtToegewezenCollectes": "Overview of the allocated collections"
+    "OverzichtToegewezenCollectes": "Overview of the allocated collections",
+    "NonAllocatedCollect": "Non allocated collection"
 }

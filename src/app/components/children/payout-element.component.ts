@@ -127,12 +127,20 @@ export class PayoutComponent implements OnInit{
   }
 
   fetchPayoutDetail(){
-    this.apiClient.getData('OrgAdminView/PayoutDetail?payoutID='+this.childData.Id)
-        .then( (resp) => {
-          for(var i = 0; i < resp.length; i++){
-            resp[i].Amount = this.displayValue(resp[i].Amount);
-          }
-          this.childData.details = resp;
-        });
+    this.translate.get('NonAllocatedCollect').subscribe((res: string) => {
+      this.apiClient.getData('OrgAdminView/PayoutDetail?payoutID='+this.childData.Id)
+          .then( (resp) => {
+            console.log(resp);
+            for(var i = 0; i < resp.length; i++){
+              resp[i].Status = 1;
+              resp[i].Amount = this.displayValue(resp[i].Amount);
+              if(resp[i].Name == null){
+                resp[i].Name = res;
+                resp[i].Status = 0;
+              }
+            }
+            this.childData.details = resp;
+          });
+    });
   }
 }
