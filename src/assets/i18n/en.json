@@ -97,5 +97,6 @@
     "To": "to",
     "NotYetAllocated": "Not yet allocated",
     "OverzichtToegewezenCollectes": "Overview of the allocated collections",
-    "NonAllocatedCollect": "Non allocated collection"
+    "NonAllocatedCollect": "Non allocated collection",
+    "Help_Manual": "Need help? Download the manual here."
 }
