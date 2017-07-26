@@ -138,7 +138,8 @@ export class DashboardComponent implements OnInit, OnDestroy{
                 var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
                 chart.draw(dataTable, options);
                 var container = <HTMLDivElement>document.getElementById("donutchart").firstChild.firstChild;
-                container.style.width = "100%";
+                if(container)
+                    container.style.width = "100%";
             }
         };
 
@@ -244,7 +245,8 @@ export class DashboardComponent implements OnInit, OnDestroy{
                 }
                 this.translate.get("Text_Given").subscribe(value => { this.lastSundayCard.footer = value;});
                 this.lastSundayCard.subtitle = this.datePipe.transform(displayDate.getUTCMonth()+1 + "/" + displayDate.getUTCDate() + "/" + displayDate.getUTCFullYear(), 'dd-MM-yyyy');
-                this.googleCharts(this.lastSundayCard.subtitle, this.lastSundayCard.footer, this.euro + (this.isSafari ? collectSum.toFixed(2) : collectSum.toLocaleString(navigator.language,{minimumFractionDigits: 2})));
+                if(!<HTMLDivElement>document.getElementById("donutchart"))
+                    this.googleCharts(this.lastSundayCard.subtitle, this.lastSundayCard.footer, this.euro + (this.isSafari ? collectSum.toFixed(2) : collectSum.toLocaleString(navigator.language,{minimumFractionDigits: 2})));
                 let cardIsInCards = false;
                 for(let i in this.cards){
                     if(this.cards[i].title === this.lastSundayCard.title){

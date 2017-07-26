@@ -11,7 +11,7 @@ export class Payout{
 
     GivtServiceFee: string;
     TotalPaidText: string;
-    
+
     Mandaatkosten: any;
     Transactiekosten: any;
     Uitbetalingskosten: any;
@@ -48,3 +48,55 @@ export class Payout{
     Text_Info_Type2: string;
     activeRow: number;
 }
+
+export let testData: any = [
+  {
+    "Id":0,
+    "OrgId":"1c917e4c-0516-4f5c-86fe-092c95018765",
+    "dtExecuted":"2017-04-03T15:38:28.363",
+    "BeginDate":"2017-04-03T00:00:00",
+    "EndDate":"2017-04-09T00:00:00",
+    "TransactionCount":50,
+    "TransactionCost":4.0,
+    "TransactionTaxes":0.84,
+    "MandateCostCount":0,
+    "MandateCost":0.0,
+    "MandateTaxes":0.0,
+    "RTransactionT1Count":0,
+    "RTransactionT1Cost":0.0,
+    "RTransactionT2Count":0,
+    "RTransactionT2Cost":0.0,
+    "RTransactionAmount":0.0,
+    "RTransactionTaxes":0.0,
+    "GivtServiceFee":14.22,
+    "GivtServiceFeeTaxes":2.9862,
+    "PayoutCost":0.18,
+    "PayoutCostTaxes":0.0378,
+    "TotalPaid":293.736
+  },
+  {
+    "Id":0,
+    "OrgId":"1c917e4c-0516-4f5c-86fe-092c95018765",
+    "dtExecuted":"2017-04-03T15:38:28.363",
+    "BeginDate":"2017-04-03T00:00:00",
+    "EndDate":"2017-04-09T00:00:00",
+    "TransactionCount":50,
+    "TransactionCost":4.0,
+    "TransactionTaxes":0.84,
+    "MandateCostCount":0,
+    "MandateCost":0.0,
+    "MandateTaxes":0.0,
+    "RTransactionT1Count":0,
+    "RTransactionT1Cost":0.0,
+    "RTransactionT2Count":0,
+    "RTransactionT2Cost":0.0,
+    "RTransactionAmount":0.0,
+    "RTransactionTaxes":0.0,
+    "GivtServiceFee":14.22,
+    "GivtServiceFeeTaxes":2.9862,
+    "PayoutCost":0.18,
+    "PayoutCostTaxes":0.0378,
+    "TotalPaid":293.736
+  }
+];
+

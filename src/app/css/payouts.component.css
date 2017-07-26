@@ -35,6 +35,9 @@
 .collection-buttons .icon{
     width: 41px;
     height: 41px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 h2{
@@ -197,6 +200,8 @@ button:disabled{
     color: #2C2B57;
     min-height:210px;
     padding-top: 10px;
+    position: relative;
+    padding: 30px 0;
 }
 
 .withholding-overview h2{
@@ -514,3 +519,36 @@ button:disabled{
   color: #D53D4C;
 }
 
+.collect__table{
+    font-family: Avenir_Heavy;
+    margin-bottom: 30px;
+}
+
+.collect__table td{
+    padding-right : 40px;
+}
+
+
+.collect__table__footer{
+    font-family: Avenir_Black;
+    padding-top: 15px;
+    border-top: 2px solid #2E2957;
+    font-weight: bolder;
+}
+
+.allocation-tab{
+  position:relative;
+  box-sizing: border-box;
+}
+
+.special-last-cell{
+  border-top: 2px solid #2C2B57;
+  padding-top: 13px;
+}
+
+.alloc{
+  width: 400px;
+}
+.alloc td{
+  padding-right:5px !important;
+}

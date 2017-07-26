@@ -88,12 +88,15 @@
     "Menu_Allocate": "Toewijzen",
     "TitleAllocate": "Wijs collectes toe",
     "AddNameToCollect": "Geef een naam aan de collecte",
-    "DeleteCollectConfirm": "Bent u zeker dat u deze collecte wilt verwijderen?",
+    "DeleteCollectConfirm": "Weet u zeker dat u deze toewijzing wilt verwijderen?",
     "OverlapError": "U heeft overlappende collectes, dat is niet toegestaan.",
     "YesImSure": "Ja, ik weet het zeker.",
     "NoNeverMind": "Nee, dat wil ik niet.",
-    "OpenAllocationsMessage": "U heeft nog transacties die niet gekoppeld zijn aan een collecte.\nGa naar het tabblad 'Toewijzen' om dit in orde te maken.",
+    "OpenAllocationsMessage": "Er zijn nog transacties die niet toegewezen zijn aan een collecte.\nGa naar het tabblad 'Toewijzen' om dit in orde te maken.",
     "From": "Van",
     "To": "tot",
-    "NotYetAllocated": "Nog niet toegewezen"
+    "NotYetAllocated": "Nog niet toegewezen",
+    "OverzichtToegewezenCollectes": "Overzicht van toegewezen collectes",
+    "NonAllocatedCollect": "Niet toegewezen collecte",
+    "Help_Manual": "Hulp nodig? Download hier de handleiding."
 }

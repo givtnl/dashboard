@@ -1,0 +1,18 @@
+.footer{
+    position:fixed;
+    left:0px;
+    bottom:0px;
+    width:100%;
+    background-color: #D5D4DD;
+    text-align: center;
+    font-family: "Avenir_Light";
+}
+
+a {
+    color: #2E2957;
+    text-decoration: none;
+}
+
+a:hover{
+    font-family: "Avenir_Heavy";
+}

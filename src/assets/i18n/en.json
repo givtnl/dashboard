@@ -88,12 +88,15 @@
     "Menu_Allocate": "Allocate",
     "TitleAllocate": "Allocate your collections",
     "AddNameToCollect": "Name the collection",
-    "DeleteCollectConfirm": "Are you sure you want to delete this collection?",
+    "DeleteCollectConfirm": "Are you sure you want to delete this allocation?",
     "OverlapError": "You can't have overlapping collections.",
     "YesImSure": "Yes, I'm sure.",
     "NoNeverMind": "No, I don't want to.",
-    "OpenAllocationsMessage": "You have transactions that are not tied to a collection.\nPlease go to the tab 'Allocate' to resolve this issue.",
+    "OpenAllocationsMessage": "There are still transactions that are not allocated to a collection.\nPlease go to the tab 'Allocate' to resolve this issue.",
     "From": "From",
     "To": "to",
-    "NotYetAllocated": "Not yet allocated"
+    "NotYetAllocated": "Not yet allocated",
+    "OverzichtToegewezenCollectes": "Overview of the allocated collections",
+    "NonAllocatedCollect": "Non allocated collection",
+    "Help_Manual": "Need help? Download the manual here."
 }
