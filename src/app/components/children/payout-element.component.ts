@@ -30,6 +30,9 @@ export class PayoutComponent implements OnInit{
   name: string = "";
   transactionCost = 0.08;
   mandateCost = 0.125;
+  showCosts: boolean = false;
+
+
   constructor(private apiClient: ApiClientService,private translate: TranslateService, private datePipe: DatePipe) {
     this.isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
     this.name = "Testen";
