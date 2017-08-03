@@ -4,7 +4,7 @@
   <h2>{{"Payout_OverviewPayouts" | translate}}</h2>
     <hr class="collect-hr"/>
 </section>
-    <section *ngFor="let payout of payouts | reverse">
+    <section *ngFor="let payout of payouts | reverse; let last = last" [ngClass]="{last: last}">
       <payout [childData]="payout"></payout>
     </section>
 

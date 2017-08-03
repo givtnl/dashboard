@@ -552,3 +552,7 @@ button:disabled{
 .alloc td{
   padding-right:5px !important;
 }
+
+.last{
+    padding-bottom: 100px;
+}

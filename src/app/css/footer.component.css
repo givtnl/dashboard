@@ -6,6 +6,7 @@
     background-color: #D5D4DD;
     text-align: center;
     font-family: "Avenir_Light";
+    z-index: 99999999;
 }
 
 a {
