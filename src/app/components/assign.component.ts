@@ -37,7 +37,11 @@ export class AssignComponent implements OnInit {
   isSafari: boolean;
   collectionTranslation: string;
   notYetAllocated: string;
-
+  collectOneTyping: boolean = false;
+  collectTwoTyping: boolean = false;
+  collectThreeTyping: boolean = false;
+  usedTags: string[];
+  filteredUsedTags: string[];
 
 
   startTime: Date;
@@ -87,6 +91,48 @@ export class AssignComponent implements OnInit {
     this.options['select'] = function(start, end, jsEvent, view, resource) {
       this.addAllocation(start["_d"], end["_d"]);
     }.bind(this);
+
+    this.apiService.getData('OrgAdmin/getTags')
+        .then(data => {
+          this.usedTags = data;
+        });
+  }
+
+  collectOneChanging(event){
+    this.collectOneTyping = event != "";
+    this.filterTags(event);
+  }
+
+  collectTwoChanging(event){
+    this.collectTwoTyping = event != "";
+    this.filterTags(event);
+  }
+
+  collectThreeChanging(event){
+    console.log('typing');
+    this.collectThreeTyping = event != "";
+    this.filterTags(event);
+  }
+
+  filterTags(typed){
+    this.filteredUsedTags = [];
+    for(let i = 0; i < this.usedTags.length; i++){
+      if(this.usedTags[i].includes(typed) && this.filteredUsedTags.length < 10)
+        this.filteredUsedTags.push(this.usedTags[i]);
+    }
+  }
+
+  setCollectNameOne(item){
+    this.collectName = item;
+    this.collectOneTyping = false;
+  }
+  setCollectNameTwo(item){
+    this.collectName2 = item;
+    this.collectTwoTyping = false;
+  }
+  setCollectNameThree(item){
+    this.collectName3 = item;
+    this.collectThreeTyping = false;
   }
 
   addAllocation(start, end)

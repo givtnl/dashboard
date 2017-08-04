@@ -329,3 +329,33 @@ h3{
 .fat-font{
   font-family: 'Avenir_Heavy';
 }
+
+.schedule__dialog__form__input{
+  position: relative;
+}
+
+.schedule__dialog__form__list{
+  position: absolute;
+  top: 25px;
+  left: 27px;
+  width: 300px;
+  text-align: left;
+  color: #999999;
+  list-style: none;
+  background-color: #D5D4DD;
+  font-family: Avenir_Light;
+  padding: 0px;
+  overflow: hidden;
+  z-index: 999999999;
+}
+
+.schedule__dialog__form__listitem{
+  padding: 10px;
+  border-bottom: 2px solid gray;
+}
+
+.schedule__dialog__form__listitem:hover{
+  cursor: pointer;
+  background-color: #DDDDDD;
+}
+
