@@ -137,8 +137,13 @@ export class PayoutComponent implements OnInit{
             for(var i = 0; i < resp.length; i++){
               resp[i].Status = 1;
               resp[i].Amount = this.displayValue(resp[i].Amount);
-              if(resp[i].Name == null){
-                resp[i].Name = res;
+              if(resp[i].Name.includes("_ERRNAC")){
+                if(resp[i].Name.includes("1"))
+                  resp[i].Name = res + " 1";
+                if(resp[i].Name.includes("2"))
+                  resp[i].Name = res + " 2";
+                if(resp[i].Name.includes("3"))
+                  resp[i].Name = res + " 3";
                 resp[i].Status = 0;
               }
             }
