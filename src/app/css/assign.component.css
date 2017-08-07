@@ -342,7 +342,7 @@ h3{
   text-align: left;
   color: #999999;
   list-style: none;
-  background-color: #D5D4DD;
+  background-color: #F8F8F8;
   font-family: Avenir_Light;
   padding: 0px;
   overflow: hidden;
@@ -351,7 +351,7 @@ h3{
 
 .schedule__dialog__form__listitem{
   padding: 10px;
-  border-bottom: 2px solid gray;
+  border-bottom: 1px solid #DDDDDD;
 }
 
 .schedule__dialog__form__listitem:hover{
@@ -359,3 +359,7 @@ h3{
   background-color: #DDDDDD;
 }
 
+.autocomplete{
+  font-family: 'Avenir_Heavy';
+  color: #2C2B57;
+}
