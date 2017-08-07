@@ -545,6 +545,7 @@ button:disabled{
 }
 
 .input__checkbox--collecte + .label--collecte{
+    cursor: pointer;
     margin-right: 7px;
     background: #2C2B57;
     height: 35px;
