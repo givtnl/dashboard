@@ -425,7 +425,8 @@ export class AssignComponent implements OnInit {
           if(resp.status === 409){
             this.toggleError(true, "Je zit met een overlapping");
           }
-          this.usedTags.push(title);
+          if(this.usedTags.indexOf(title) < 0)
+            this.usedTags.push(title);
           resolve();
         })
         .catch(err => {
