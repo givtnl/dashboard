@@ -99,17 +99,22 @@ export class AssignComponent implements OnInit {
   }
 
   collectOneChanging(event){
+    this.collectThreeTyping = false;
+    this.collectTwoTyping = false;
     this.collectOneTyping = event != "";
     this.filterTags(event);
   }
 
   collectTwoChanging(event){
+    this.collectOneTyping = false;
+    this.collectThreeTyping = false;
     this.collectTwoTyping = event != "";
     this.filterTags(event);
   }
 
   collectThreeChanging(event){
-    console.log('typing');
+    this.collectOneTyping = false;
+    this.collectTwoTyping = false;
     this.collectThreeTyping = event != "";
     this.filterTags(event);
   }
