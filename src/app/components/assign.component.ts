@@ -510,7 +510,7 @@ export class AssignComponent implements OnInit {
     let euro =  "€";
     if(!navigator.language.includes('en'))
       euro += " ";
-    return euro + (this.isSafari ? (x).toFixed(2) : (x).toLocaleString(
+    return euro + (this.isSafari ? parseFloat(x).toFixed(2) : (x).toLocaleString(
       navigator.language,{minimumFractionDigits: 2,maximumFractionDigits:2})
       );
   }
