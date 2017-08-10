@@ -156,6 +156,8 @@ button:disabled{
 .input-collect-title input:hover {
     background-image: url(/images/pencil.svg);
     border:1px solid #E3E2E7;
+    background-color: white;
+    cursor:text;
 
 }
 
@@ -164,7 +166,6 @@ button:disabled{
     background-color: white;
     border:1px solid #E3E2E7;
     cursor:text;
-
 }
 
 ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
