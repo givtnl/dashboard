@@ -45,7 +45,7 @@ h3{
 .schedule__dialog__form{
   border: 1px solid #2E2957;
   background-color: white;
-  width: 50%;
+  width: 55%;
   margin: 0 auto;
   padding: 15px;
   box-sizing: border-box;
@@ -362,4 +362,11 @@ h3{
 .autocomplete{
   font-family: 'Avenir_Heavy';
   color: #2C2B57;
+}
+
+.schedule__dialog__form__amount{
+  font-family: Avenir_Heavy;
+  color: #2C2B57;
+  display: inline-block;
+  margin-right: 15px;
 }

@@ -14,6 +14,7 @@
         <h3>{{ "AddNameToCollect" | translate }}</h3>
         <div class="schedule__dialog__form__controls flex-col">
           <div class="schedule__dialog__form__input" *ngIf="collectOneCheck">
+            <p class="schedule__dialog__form__amount">{{collectOneAmount}}</p>
             <input (foucs)="collectOneTyping=true" (focusout)="collectOneTyping=false" autocomplete="off" (ngModelChange)="collectOneChanging($event)" [class.red-border]="collectOneCheck && collectName == ''" class="schedule__dialog__form--input margin-bottom" type="text" name="collectName" [(ngModel)]="collectName" placeholder="{{ 'Collection' | translate }} 1">
             <ul *ngIf="collectOneTyping" class="schedule__dialog__form__list">
               <li *ngFor="let item of filteredUsedTags" class="schedule__dialog__form__listitem" (click)="setCollectNameOne(item)" [innerHTML]="item"></li>
@@ -21,12 +22,14 @@
             <button (click)="deleteCollect(1)" class="schedule__dialog__form--delete__collect">x</button>
           </div>
           <div class="schedule__dialog__form__input" *ngIf="collectTwoCheck">
+            <p class="schedule__dialog__form__amount">{{collectTwoAmount}}</p>
             <input (foucs)="collectTwoTyping=true" (focusout)="collectTwoTyping=false" autocomplete="off" (ngModelChange)="collectTwoChanging($event)" [class.red-border]="collectTwoCheck && collectName2 == ''" class="schedule__dialog__form--input margin-bottom" type="text" name="collectName2" [(ngModel)]="collectName2" placeholder="{{ 'Collection' | translate }} 2">
             <ul *ngIf="collectTwoTyping" class="schedule__dialog__form__list">
               <li *ngFor="let item of filteredUsedTags" class="schedule__dialog__form__listitem" (click)="setCollectNameTwo(item)" [innerHTML]="item"></li>
             </ul>
             <button (click)="deleteCollect(2)" class="schedule__dialog__form--delete__collect">x</button></div>
           <div class="schedule__dialog__form__input" *ngIf="collectThreeCheck">
+            <p class="schedule__dialog__form__amount">{{collectThreeAmount}}</p>
             <input (foucs)="collectThreeTyping=true" (focusout)="collectThreeTyping=false" autocomplete="off" (ngModelChange)="collectThreeChanging($event)" [class.red-border]="collectThreeCheck && collectName3 == ''" class="schedule__dialog__form--input margin-bottom" type="text" name="collectName3" [(ngModel)]="collectName3" placeholder="{{ 'Collection' | translate }} 3">
             <ul *ngIf="collectThreeTyping" class="schedule__dialog__form__list">
               <li *ngFor="let item of filteredUsedTags" class="schedule__dialog__form__listitem" (click)="setCollectNameThree(item)" [innerHTML]="item"></li>

@@ -23,6 +23,9 @@ export class AssignComponent implements OnInit {
   collectOneCheck = false;
   collectTwoCheck = false;
   collectThreeCheck = false;
+  collectOneAmount : string;
+  collectTwoAmount : string;
+  collectThreeAmount : string;
   isDialogOpen: boolean;
   showForm = true;
   showDelete = false;
@@ -146,6 +149,12 @@ export class AssignComponent implements OnInit {
     if(this.openGivts.length === 0)
       return;
     let check = false;
+    this.collectOneAmount = "";
+    this.collectTwoAmount = "";
+    this.collectThreeAmount = "";
+    var c1am = 0;
+    var c2am = 0;
+    var c3am = 0;
     for(let i = 0; i < this.openGivts.length; i++){
       let dtConfirmed = new Date(this.openGivts[i]["Timestamp"]);
       let dtStart = new Date(start);
@@ -155,12 +164,16 @@ export class AssignComponent implements OnInit {
         check = true;
         switch (this.openGivts[i].CollectId){
           case "1":
+            console.log(this.openGivts[i]);
+            c1am = c1am + this.openGivts[i].Amount;
             this.collectOneCheck = true;
             break;
           case "2":
             this.collectTwoCheck = true;
+            c2am += this.openGivts[i].Amount;
             break;
           case "3":
+            c3am += this.openGivts[i].Amount;
             this.collectThreeCheck = true;
             break;
           default:
@@ -170,6 +183,10 @@ export class AssignComponent implements OnInit {
     }
     if(check)
     {
+      console.log(c1am);
+      this.collectOneAmount = this.displayValue(c1am);
+      this.collectTwoAmount = this.displayValue(c2am);
+      this.collectThreeAmount = this.displayValue(c3am);
       this.startTime = new Date(start);
       this.endTime = new Date(end);
       this.isDialogOpen = true;
