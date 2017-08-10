@@ -46,18 +46,6 @@ h1 {
     font-weight: normal;
 }
 
-.start-logo-wrapper{
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    padding-top:200px;
-    box-sizing: border-box;
-}
-
-.start-logo{
-    width: 350px;
-}
-
 .date-picker-input{
     width: 380px;
     padding: 8px 16px;
