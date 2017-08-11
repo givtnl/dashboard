@@ -31,6 +31,7 @@ export class PayoutComponent implements OnInit{
   transactionCost = 0.08;
   mandateCost = 0.125;
   showCosts: boolean = false;
+  pledgedAmount: number;
 
 
   constructor(private apiClient: ApiClientService,private translate: TranslateService, private datePipe: DatePipe) {
@@ -59,6 +60,8 @@ export class PayoutComponent implements OnInit{
 
     x.ToegezegdBedrag = x.TotaalInhoudingen + x.TotalPaid;
 
+    this.pledgedAmount = x.ToegezegdBedrag;
+
     x.Mandaatkosten = this.displayValue(x.Mandaatkosten);
     x.Transactiekosten = this.displayValue(x.Transactiekosten);
     x.Uitbetalingskosten = this.displayValue(x.Uitbetalingskosten);
@@ -78,6 +81,7 @@ export class PayoutComponent implements OnInit{
 
     x.GestorneerdeBedragen = this.displayValue(x.RTransactionAmount);
     x.TotaalInhoudingen = this.displayValue(x.TotaalInhoudingen);
+
     x.ToegezegdBedrag = this.displayValue(x.ToegezegdBedrag);
 
 
@@ -153,6 +157,21 @@ export class PayoutComponent implements OnInit{
   }
 
   exportCSV(){
+
+    let data = [["Total paid", "Pledged", "Costs", "VAT", "Storno"], [this.childData.TotalPaid, this.pledgedAmount,this.childData.MandateCost + this.childData.PayoutCost + this.childData.TransactionCost + this.childData.RTransactionT1Cost + this.childData.RTransactionT2Cost + this.childData.GivtServiceFee,this.childData.MandateTaxes + this.childData.PayoutCostTaxes + this.childData.TransactionTaxes + this.childData.GivtServiceFeeTaxes + this.childData.RTransactionTaxes, this.childData.RTransactionAmount]];
+    console.log(data);
+    var csvContent = "data:text/csv;charset=utf-8,";
+    data.forEach((infoArray, index) => {
+      let dataString = infoArray.join(",");
+      csvContent += index < data.length ? dataString+ "\n" : dataString;
+    });
+    var encodedUri = encodeURI(csvContent);
+    var link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", "payout.csv");
+    document.body.appendChild(link); // Required for FF
+
+    link.click(); // This will download the data file named "my_data.csv".
     console.log("download click");
   }
 }
