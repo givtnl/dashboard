@@ -151,4 +151,8 @@ export class PayoutComponent implements OnInit{
           });
     });
   }
+
+  exportCSV(){
+    console.log("download click");
+  }
 }
