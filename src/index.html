@@ -61,13 +61,13 @@
     @keyframes color {
       100%,
       0% {
-        stroke: #B91A24;
+        stroke: #1DA96C;
       }
       40% {
         stroke: #4D98CF;
       }
       66% {
-        stroke: #1DA96C;
+        stroke: #B91A24;
       }
       80% {
         stroke: #F4BF63;
@@ -97,20 +97,10 @@
         <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="5" stroke-miterlimit="10"/>
       </svg>
     </div>
-    <p style="width:100%; font-family:Arial, sans-serif; font-weight: lighter;font-size:35px; text-align:center; color:#2e2e2e" id="quote"></p>
+    <p style="width:100%; font-family:Arial, sans-serif; font-weight: lighter;font-size:18px; text-align:center; color:#2e2e2e" id="quote">We'll be with you in a second...</p>
   </div>
 
 </app-root>
-
-<script>
-  var quotelist = [];
-  quotelist.push("Just keep on Giving!");
-  quotelist.push("Life is a Givt");
-  quotelist.push("Less is not more");
-  quotelist.push("Lenniiiieeee");
-  var rand = Math.floor(Math.random() * quotelist.length);
-  document.getElementById("quote").innerHTML = quotelist[rand];
-</script>
 
 </body>
 </html>
