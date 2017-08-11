@@ -131,6 +131,21 @@ export class AssignComponent implements OnInit {
     }
   }
 
+  focusout(collect){
+    var that = this;
+    switch(collect){
+      case 1:
+        setTimeout(()=> {that.collectOneTyping = false}, 200);
+        break;
+      case 2:
+        setTimeout(()=> {that.collectTwoTyping = false}, 200);
+        break;
+      case 3://
+        setTimeout(()=> {that.collectThreeTyping = false}, 200);
+        break;
+    }
+  }
+
   setCollectNameOne(item){
     this.collectName = item.replace("<span class='autocomplete'>","").replace("</span>","");
     this.collectOneTyping = false;
