@@ -59,6 +59,13 @@ export class AssignComponent implements OnInit {
     this.ts.get('NotYetAllocated').subscribe((res: string) => {
       this.notYetAllocated = res;
     });
+
+    document.onkeydown = function(evt){
+      evt = evt || window.event;
+      if(this.isDialogOpen && evt.keyCode == 27){
+        this.resetAll(false);
+      }
+    }.bind(this);
   }
 
   ngOnInit(): void {
