@@ -133,7 +133,7 @@ export class AssignComponent implements OnInit {
     this.filteredUsedTags = [];
     for(let i = 0; i < this.usedTags.length; i++){
       let styledTerm = "<span class='autocomplete'>" + typed + "</span>";
-      if(this.usedTags[i].includes(typed) && this.filteredUsedTags.length < 10)
+      if(this.usedTags[i].toLowerCase().includes(typed.toLowerCase()) && this.filteredUsedTags.length < 10)
         this.filteredUsedTags.push(this.usedTags[i].replace(typed, styledTerm));
     }
   }
@@ -300,7 +300,6 @@ export class AssignComponent implements OnInit {
 
   updateEvent() {
     if (this.collectName === '' && this.collectName2 === '' && this.collectName3 === '') return;
-    var promiseArr = [];
     Promise.all([this.saveAllocation(this.collectName, "1"),this.saveAllocation(this.collectName2, "2"), this.saveAllocation(this.collectName3, "3")]).then(function() {
       this.resetAll();
     }.bind(this));
@@ -469,14 +468,17 @@ export class AssignComponent implements OnInit {
           if(resp.status === 409){
             this.toggleError(true, "Je zit met een overlapping");
           }
-          if(this.usedTags.indexOf(title) < 0)
+          if (!this.usedTags.some(function(element, idx, array) {
+            if (element.toLowerCase() == title.toLowerCase())
+              return true;
+          })) {
             this.usedTags.push(title);
+          }
           resolve();
         })
         .catch(err => {
           console.log(err);
         });
-
     })
 
   }
