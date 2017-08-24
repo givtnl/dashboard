@@ -131,11 +131,13 @@ export class AssignComponent implements OnInit {
 
   filterTags(typed){
     this.filteredUsedTags = [];
-    for(let i = 0; i < this.usedTags.length; i++){
-      let styledTerm = "<span class='autocomplete'>" + typed + "</span>";
-      if(this.usedTags[i].toLowerCase().includes(typed.toLowerCase()) && this.filteredUsedTags.length < 10)
-        this.filteredUsedTags.push(this.usedTags[i].replace(typed, styledTerm));
-    }
+    let regex = new RegExp(typed, "i");
+    this.usedTags.forEach(function(value) {
+      if(value.search(regex) != -1 && this.filteredUsedTags.length < 10) {
+        let hlight = "<span class='autocomplete'>" + value.match(regex)[0] + "</span>";
+        this.filteredUsedTags.push(value.replace(regex, hlight));
+      }
+    }, this);
   }
 
   focusout(collect){
@@ -468,7 +470,7 @@ export class AssignComponent implements OnInit {
           if(resp.status === 409){
             this.toggleError(true, "Je zit met een overlapping");
           }
-          if (!this.usedTags.some(function(element, idx, array) {
+          if (!this.usedTags.some(function(element) {
             if (element.toLowerCase() == title.toLowerCase())
               return true;
           })) {
