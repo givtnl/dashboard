@@ -168,7 +168,8 @@ export class PayoutComponent implements OnInit{
     var encodedUri = encodeURI(csvContent);
     var link = document.createElement("a");
     link.setAttribute("href", encodedUri);
-    link.setAttribute("download", "payout.csv");
+    let fileName = this.childData.BeginDate + "-" + this.childData.EndDate + ".csv";
+    link.setAttribute("download", fileName);
     document.body.appendChild(link); // Required for FF
 
     link.click(); // This will download the data file named "my_data.csv".
