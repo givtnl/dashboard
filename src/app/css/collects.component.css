@@ -143,28 +143,23 @@ button:disabled{
     color: #2C2B57;
     padding: 10px;
     padding-right:40px;
-    border: 1px solid transparent;
-    background-color: transparent;
     box-sizing: border-box;
     transition: 0.3s;
     width: 100%;
     cursor: pointer;
     background-position: 95% 50%;
     background-repeat:no-repeat;
+    border:1px solid #E3E2E7;
+    background-color: white;
 }
 
 .input-collect-title input:hover {
     background-image: url(/images/pencil.svg);
-    border:1px solid #E3E2E7;
-    background-color: white;
     cursor:text;
-
 }
 
 .input-collect-title input:focus{
     background-image: url(/images/pencil-green.svg);
-    background-color: white;
-    border:1px solid #E3E2E7;
     cursor:text;
 }
 
