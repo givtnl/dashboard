@@ -71,8 +71,12 @@
       <tr  style="font-family: Avenir_Medium; font-size: 20px;" *ngFor="let item of childData.details" [class.red]="item.Status == 0">
         <td >{{item.Name}}</td><td style="text-align: right;">{{item.Amount}}</td>
       </tr>
-      <tr class="collect__table__footer" style="font-family: Avenir_Black; font-size: 22px;">
-        <td style="text-align:left;" class="special-last-cell" >{{"Payout_TotalPayedOut" | translate}}</td><td style="text-align:right;" class="special-last-cell" >{{childData.TotalPaidText}}</td>
+      <tr class="collect__table__footer" style="font-size: 20px;font-family: Avenir_Medium">
+        <td style="text-align:left;" class="special-last-cell" >{{"Payout_PayoutCosts" | translate}}</td><td style="text-align:right;" class="special-last-cell" >- {{childData.Uitbetalingskosten}}</td>
+      </tr>
+      <tr  style="font-family: Avenir_Black; font-size: 22px;">
+        <td style="text-align:left;">{{"Payout_TotalPayedOut" | translate}}</td><td style="text-align:right;">{{childData.TotalPaidText}}</td>
+
       </tr>
     </table>
 
