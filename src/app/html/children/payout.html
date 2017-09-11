@@ -62,10 +62,12 @@
     </svg>
     </button>
     <h2 class="black" style="font-size:20px">{{'OverzichtToegewezenCollectes' | translate}}</h2>
-    <div class="loader" style="margin: 0;margin-bottom: 5px" *ngIf="childData.details == null">
+    <div style="width: 400px" *ngIf="childData.details == null">
+      <div class="loader" style="margin-bottom: 5px" >
       <svg class="circular" style="width: 65%; height: 65%" viewBox="25 25 50 50">
         <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="5" stroke-miterlimit="10"/>
       </svg>
+      </div>
     </div>
     <table class="collect__table alloc" style="margin-bottom: 0;    border-collapse: collapse;">
       <tr  style="font-family: Avenir_Medium; font-size: 20px;" *ngFor="let item of childData.details" [class.red]="item.Status == 0">
