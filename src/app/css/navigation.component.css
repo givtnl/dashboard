@@ -124,39 +124,3 @@ nav h1 {
     }
 }
 
-.browser-message{
-  height: 80px;
-  font-family: "Avenir_Medium";
-  font-size:17px;
-  background-color: #F17057;
-  color:white;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-}
-
-.browser-message p{
-  text-align: center;
-  margin:0;
-  padding:0;
-  max-width: 550px;
-}
-
-.browser-message__link, .browser-message__link:focus, .browser-message__link:visited{
-  color: #F17057;
-  font-family: Avenir_Heavy;
-  background-color: white;
-  text-decoration: none;
-  padding: 8px 22px;
-  box-sizing: border-box;
-  transition: 0.3s;
-  display: block;
-}
-.browser-message__link:hover{
-  color: #E6412C;
-}
-
-.browser-message .browser-message-p {
-  margin-left: 15px;
-}
