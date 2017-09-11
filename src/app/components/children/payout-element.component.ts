@@ -140,7 +140,8 @@ export class PayoutComponent implements OnInit{
           let allocsCount: number = resp.length;
           for(let i = 0; i < allocsCount; i++){
             resp[i].Status = 1;
-            resp[i].Amount = this.displayValue(resp[i].Amount);
+            if(resp[i].Amount !== 0)
+              resp[i].Amount = this.displayValue(resp[i].Amount);
             if(resp[i].Name.includes("_ERRNAC")){
               if(resp[i].Name.includes("1"))
                 resp[i].Name = res + " 1";

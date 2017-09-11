@@ -70,9 +70,12 @@
       </div>
     </div>
     <table class="collect__table alloc" style="margin-bottom: 0;    border-collapse: collapse;">
-      <tr  style="font-family: Avenir_Medium; font-size: 20px;" *ngFor="let item of childData.details" [class.red]="item.Status == 0">
-        <td >{{item.Name}}</td><td style="text-align: right;">{{item.Amount}}</td>
-      </tr>
+      <ng-container *ngFor="let item of childData.details">
+        <tr  style="font-family: Avenir_Medium; font-size: 20px;"  [class.red]="item.Status == 0" *ngIf="item.Amount != 0">
+          <td >{{item.Name}}</td><td style="text-align: right;">{{item.Amount}}</td>
+        </tr>
+      </ng-container>
+
       <tr class="collect__table__footer" style="font-size: 20px;font-family: Avenir_Medium">
         <td style="text-align:left;" class="special-last-cell" >{{"Payout_PayoutCosts" | translate}} ({{"INCL_BTW" | translate}})</td><td style="text-align:right;" class="special-last-cell" >- {{childData.UitbetalingskostenIncl}}</td>
       </tr>

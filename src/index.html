@@ -101,6 +101,14 @@
   </div>
 
 </app-root>
-
+<script>
+  var quote = document.getElementById("quote");
+  var lang = navigator.language;
+  if(lang.indexOf("nl") !== null){
+  	quote.innerHtml = "Een ogenblik geduld alsjeblieft...";
+  } else {
+    quote.innerHtml = "We'll be with you in a second...";
+  }
+</script>
 </body>
 </html>
