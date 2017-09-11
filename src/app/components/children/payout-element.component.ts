@@ -64,6 +64,7 @@ export class PayoutComponent implements OnInit{
 
     x.Mandaatkosten = this.displayValue(x.Mandaatkosten);
     x.Transactiekosten = this.displayValue(x.Transactiekosten);
+    x.UitbetalingskostenIncl = this.displayValue(x.Uitbetalingskosten * 1.21);
     x.Uitbetalingskosten = this.displayValue(x.Uitbetalingskosten);
     x.T_Total_Excl = this.displayValue(x.T_Total_Excl);
     x.T_BTW = this.displayValue(x.T_BTW);
