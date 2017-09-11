@@ -28,7 +28,9 @@ export class AlertComponent implements OnInit {
       isIEedge = winNav.userAgent.indexOf('Edge') > -1,
       isIOSChrome = winNav.userAgent.match('CriOS');
 
-    if (isIOSChrome) {
+    var iOS = !!navigator.platform && /iPhone|iPod/.test(navigator.platform);
+
+    if (isIOSChrome || iOS) {
       return true;
     } else if (isChromium !== null && isChromium !== undefined && vendorName === 'Google Inc.' && isOpera === false && isIEedge === false) {
       return true;
