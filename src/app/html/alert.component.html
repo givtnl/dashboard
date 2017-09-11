@@ -1,4 +1,4 @@
-<div *ngIf="!isChrome" class="browser-message">
+<div *ngIf="!shouldIShowAlert" class="browser-message">
   <p>{{ "BrowserMessage" | translate }}</p>
   <p class="browser-message-p"><a class="browser-message__link" target="_blank" href="https://www.google.com/chrome/">{{ "DownloadNow" | translate }}</a></p>
 </div>

@@ -14,12 +14,12 @@ export class AlertComponent implements OnInit {
   ngOnInit(){
 
   }
-  isChrome =  this.checkChrome();
+  shouldIShowAlert =  this.shouldShowAlert();
   constructor(private translate: TranslateService){
 
   }
 
-  checkChrome()
+  shouldShowAlert()
   {
     const isChromium = window['chrome'],
       winNav = window.navigator,
@@ -28,9 +28,9 @@ export class AlertComponent implements OnInit {
       isIEedge = winNav.userAgent.indexOf('Edge') > -1,
       isIOSChrome = winNav.userAgent.match('CriOS');
 
-    var iOS = !!navigator.platform && /iPhone|iPod/.test(navigator.platform);
-
-    if (isIOSChrome || iOS) {
+    let iOS = !!navigator.platform && /iPhone|iPod/.test(navigator.platform);
+    let isAndroid = /(android)/i.test(navigator.userAgent);
+    if (isIOSChrome || iOS || isAndroid) {
       return true;
     } else if (isChromium !== null && isChromium !== undefined && vendorName === 'Google Inc.' && isOpera === false && isIEedge === false) {
       return true;
