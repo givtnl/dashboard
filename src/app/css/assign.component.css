@@ -45,7 +45,7 @@ h3{
 .schedule__dialog__form{
   border: 1px solid #2E2957;
   background-color: white;
-  width: 55%;
+  min-width: 55%;
   margin: 0 auto;
   padding: 15px;
   box-sizing: border-box;
