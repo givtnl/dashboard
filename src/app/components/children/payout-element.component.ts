@@ -64,6 +64,7 @@ export class PayoutComponent implements OnInit{
 
     x.Mandaatkosten = this.displayValue(x.Mandaatkosten);
     x.Transactiekosten = this.displayValue(x.Transactiekosten);
+    x.UitbetalingskostenIncl = this.displayValue(x.Uitbetalingskosten * 1.21);
     x.Uitbetalingskosten = this.displayValue(x.Uitbetalingskosten);
     x.T_Total_Excl = this.displayValue(x.T_Total_Excl);
     x.T_BTW = this.displayValue(x.T_BTW);
@@ -119,7 +120,6 @@ export class PayoutComponent implements OnInit{
     this.childData.hiddenAllocations = !this.childData.hiddenAllocations;
   }
 
-
   closeOverview(){
     this.childData.hiddenOverview = true;
   }
@@ -136,23 +136,38 @@ export class PayoutComponent implements OnInit{
   fetchPayoutDetail(){
     this.translate.get('NonAllocatedCollect').subscribe((res: string) => {
       this.apiClient.getData('OrgAdminView/PayoutDetail?payoutID='+this.childData.Id)
-          .then( (resp) => {
-            console.log(resp);
-            for(var i = 0; i < resp.length; i++){
-              resp[i].Status = 1;
+        .then( (resp) => {
+          let allocsCount: number = resp.length;
+          for(let i = 0; i < allocsCount; i++){
+            resp[i].Status = 1;
+            if(resp[i].Amount !== 0)
               resp[i].Amount = this.displayValue(resp[i].Amount);
-              if(resp[i].Name.includes("_ERRNAC")){
-                if(resp[i].Name.includes("1"))
-                  resp[i].Name = res + " 1";
-                if(resp[i].Name.includes("2"))
-                  resp[i].Name = res + " 2";
-                if(resp[i].Name.includes("3"))
-                  resp[i].Name = res + " 3";
-                resp[i].Status = 0;
-              }
+            if(resp[i].Name.includes("_ERRNAC")){
+              if(resp[i].Name.includes("1"))
+                resp[i].Name = res + " 1";
+              if(resp[i].Name.includes("2"))
+                resp[i].Name = res + " 2";
+              if(resp[i].Name.includes("3"))
+                resp[i].Name = res + " 3";
+              resp[i].Status = 0;
             }
-            this.childData.details = resp;
+          }
+
+          this.translate.get('Stornos').subscribe((res: string) => {
+            for(let i = 0; i < allocsCount; i++){
+              if(resp[i].StornoAmount == 0)
+                continue;
+              let copy = JSON.parse(JSON.stringify(resp[i])); //copy object
+              copy.Name += ": " + res;
+              copy.Amount = "- " +  this.displayValue(resp[i].StornoAmount);
+              copy.Status = 0;
+              resp.push(copy);
+            }
+
+          resp.sort((a, b) => a.Name.localeCompare(b.Name)); //sort by name A-Z
+          this.childData.details = resp;
           });
+        });
     });
   }
 

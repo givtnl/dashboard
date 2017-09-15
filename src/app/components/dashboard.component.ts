@@ -235,6 +235,8 @@ export class DashboardComponent implements OnInit, OnDestroy{
         return this.apiService.getData("OrgAdminView/Givts/?DateBegin="+dateBegin+"&DateEnd="+dateEnd)
             .then(resp =>
             {
+              if(resp.statusCode == 500) return;
+
                 let collectSum = resp.TotalAmount;
                 this.lastSundaySum = collectSum;
                 this.lastSundayCard.value = this.euro+ "<span class='fat-emphasis'>" + (this.isSafari ? collectSum.toFixed(2) : collectSum.toLocaleString(navigator.language,{minimumFractionDigits: 2})) + "</span>";
