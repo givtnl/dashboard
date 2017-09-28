@@ -137,35 +137,40 @@ export class PayoutComponent implements OnInit{
     this.translate.get('NonAllocatedCollect').subscribe((res: string) => {
       this.apiClient.getData('OrgAdminView/PayoutDetail?payoutID='+this.childData.Id)
         .then( (resp) => {
-          let allocsCount: number = resp.length;
+          let allocsCount: number = resp.Details.length;
           for(let i = 0; i < allocsCount; i++){
-            resp[i].Status = 1;
-            if(resp[i].Amount !== 0)
-              resp[i].Amount = this.displayValue(resp[i].Amount);
-            if(resp[i].Name.includes("_ERRNAC")){
-              if(resp[i].Name.includes("1"))
-                resp[i].Name = res + " 1";
-              if(resp[i].Name.includes("2"))
-                resp[i].Name = res + " 2";
-              if(resp[i].Name.includes("3"))
-                resp[i].Name = res + " 3";
-              resp[i].Status = 0;
+            resp.Details[i].Status = 1;
+            if(resp.Details[i].Amount !== 0)
+              resp.Details[i].Amount = this.displayValue(resp.Details[i].Amount);
+            if(resp.Details[i].Name.includes("_ERRNAC")){
+              if(resp.Details[i].Name.includes("1"))
+                resp.Details[i].Name = res + " 1";
+              if(resp.Details[i].Name.includes("2"))
+                resp.Details[i].Name = res + " 2";
+              if(resp.Details[i].Name.includes("3"))
+                resp.Details[i].Name = res + " 3";
+              resp.Details[i].Status = 0;
             }
           }
 
           this.translate.get('Stornos').subscribe((res: string) => {
             for(let i = 0; i < allocsCount; i++){
-              if(resp[i].StornoAmount == 0)
+              if(resp.Details[i].StornoAmount == 0)
                 continue;
-              let copy = JSON.parse(JSON.stringify(resp[i])); //copy object
+              let copy = JSON.parse(JSON.stringify(resp.Details[i])); //copy object
               copy.Name += ": " + res;
-              copy.Amount = "- " +  this.displayValue(resp[i].StornoAmount);
+              copy.Amount = "- " +  this.displayValue(resp.Details[i].StornoAmount);
               copy.Status = 0;
-              resp.push(copy);
+              resp.Details.push(copy);
             }
 
-          resp.sort((a, b) => a.Name.localeCompare(b.Name)); //sort by name A-Z
-          this.childData.details = resp;
+          resp.Details.sort((a, b) => a.Name.localeCompare(b.Name)); //sort by name A-Z
+          this.translate.get('TermCosts').subscribe( (res: string) => {
+              let costs = {Name: res, Amount: "", Status: 0};
+              costs.Amount = "- " + this.displayValue(resp.Costs);
+              resp.Details.push(costs)
+          });
+          this.childData.details = resp.Details;
           });
         });
     });
