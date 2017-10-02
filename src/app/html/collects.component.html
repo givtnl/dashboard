@@ -114,7 +114,7 @@
                 </table>
             </div>
             <div class="stat-calc" *ngIf="1 == activeRow">
-                <table>
+                <table *ngIf="multipleCollects == false">
                     <tr>
                         <td>{{ "Text_Transaction_Fee_Mandate" | translate}}</td>
                         <td class="column-spacing-30"></td>
@@ -157,6 +157,7 @@
                         </td>
                     </tr>
                 </table>
+              <p style="width: 500px;margin: 0;" *ngIf="multipleCollects == true">{{ "TransactionCostsMultipleCollects" | translate }}</p>
             </div>
 
             <div class="stat-calc" *ngIf="2 == activeRow">
