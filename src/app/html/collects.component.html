@@ -98,7 +98,8 @@
                     <tr (click)="selectRow(1)" class="row" [class.active-row]="1 == activeRow">
                         <td><i class="fa fa-circle givt-blue" aria-hidden="true"></i></td>
                         <td>{{"Text_Transaction_Fee" | translate}}</td>
-                        <td>{{Total_T_M_INCL}}</td>
+                        <td *ngIf="multipleCollects == false">{{Total_T_M_INCL}}</td>
+                        <td *ngIf="multipleCollects == true"></td>
                         <!--<td><div class="tooltip"><i class="fa fa-info-circle fa-lg " aria-hidden="true"></i>
                             <span class="blue tooltiptext">(...) aantal transacties maal <b>€ 0,08 transactiekosten</b>. (...) nieuwe gebruikers maal (<b>4x€ 0,125</b>) <b>mandaatkosten</b>.<hr/><b>{{paymentProviderTransactionCost}}</b></span>
                         </div></td>-->
