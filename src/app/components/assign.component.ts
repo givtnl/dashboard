@@ -39,6 +39,7 @@ export class AssignComponent implements OnInit {
   openGivtsBucket : Array<AllocationTimeSpanItem> = new Array<AllocationTimeSpanItem>();
   isSafari: boolean;
   collectionTranslation: string;
+  usersTransalation: string;
   notYetAllocated: string;
   collectOneTyping: boolean = false;
   collectTwoTyping: boolean = false;
@@ -58,6 +59,9 @@ export class AssignComponent implements OnInit {
       });
     this.ts.get('NotYetAllocated').subscribe((res: string) => {
       this.notYetAllocated = res;
+    });
+    this.ts.get('Users').subscribe((res: string) => {
+      this.usersTransalation = res;
     });
 
     document.onkeydown = function(evt){
@@ -510,25 +514,31 @@ export class AssignComponent implements OnInit {
         div.innerHTML = that.notYetAllocated + "<br/>";
         if(fcEvent.transactions.length > 0){
           let collect1 = 0;
+          let collect1users = 0;
           let collect2 = 0;
+          let collect2users = 0;
           let collect3 = 0;
+          let collect3users = 0;
           for(let i = 0; i < fcEvent.transactions.length; i++){
             let transaction = fcEvent.transactions[i];
             if(transaction.CollectId === "1"){
               collect1 += transaction.Amount;
+              collect1users++;
             } else if(transaction.CollectId === "2"){
               collect2 += transaction.Amount;
+              collect2users++;
             } else if(transaction.CollectId === "3"){
               collect3 += transaction.Amount;
+              collect3users++;
             }
           }
           if(collect1 > 0){
-            div.innerHTML += "<span class='fat-font'>" + that.displayValue(collect1) + "</span> " + that.collectionTranslation + " 1<br/>";
+            div.innerHTML +=  "<span><img src='images/user.png' height='15px' width='15px' style='padding-top: 2px'> " + collect1users + "</span>" + "<span class='fat-font' style='margin-left:15px '>" + that.displayValue(collect1) + "</span> " + that.collectionTranslation + " 1<br/>";
           }
           if(collect2 > 0)
-            div.innerHTML += "<span class='fat-font'>" + that.displayValue(collect2) + "</span> " + that.collectionTranslation + " 2<br/>";
+            div.innerHTML +=  "<span><img src='images/user.png' height='15px' width='15px' style='padding-top: 2px'> " + collect2users + "</span>" + "<span class='fat-font' style='margin-left:15px '>" + that.displayValue(collect2) + "</span> " + that.collectionTranslation + " 2<br/>";
           if(collect3 > 0)
-            div.innerHTML += "<span class='fat-font'>" + that.displayValue(collect3) + "</span> " + that.collectionTranslation + " 3<br/>";
+            div.innerHTML +=  "<span><img src='images/user.png' height='15px' width='15px' style='padding-top: 2px'> " + collect3users + "</span>" + "<span class='fat-font' style='margin-left:15px '>" + that.displayValue(collect3) + "</span> " + that.collectionTranslation + " 3<br/>";//Dfjkqlsmfjk
         }
         div.className = "balloon";
       }
