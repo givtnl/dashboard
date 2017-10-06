@@ -66,7 +66,8 @@ export class ApiClientService {
                 if(err.status === 403){
                     this.router.navigate(['unauthorized']);
                 }
-                return err;
+                console.log(err["_body"]);
+                return null;
             })
     }
 

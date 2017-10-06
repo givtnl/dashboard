@@ -225,9 +225,13 @@ export class MandateComponent implements OnInit{
         console.log(JSON.stringify(mandate));
         this.apiClient.postData("OrgMandate/", mandate )
             .then(spl => {
-                this.SlimPayLink = spl;
-                this.sendMandateMail();
-
+                if(spl){
+                    this.SlimPayLink = spl;
+                    this.sendMandateMail();
+                }
+                else{
+                    alert("Something went wrong, please check mandate data and logging.");
+                }
             })
 
     }
