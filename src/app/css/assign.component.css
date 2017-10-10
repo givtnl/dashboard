@@ -376,3 +376,38 @@ h3{
   display: inline-block;
   position: relative;
 }
+
+.assign__button{
+  margin: 20px 0px;
+}
+
+.green-button{
+  cursor: pointer;
+  background: #1CA96C;
+  background-image: url(/images/check.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 40px;
+  color: white;
+  padding: 14px;
+  border-radius: 3px;
+  border: none;
+}
+
+.green-button:disabled{
+  cursor: not-allowed;
+  background: #999999;
+  background-image: url(/images/check.png);
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.allocation__input{
+  font-family: 'Avenir_Heavy';
+  font-size: 16px;
+  color: #2C2B57;
+  padding: 10px;
+  box-sizing: border-box;
+  border: 1px solid #E3E2E7;
+  background-color: white;
+}

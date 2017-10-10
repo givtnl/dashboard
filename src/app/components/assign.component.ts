@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewEncapsulation, ElementRef} from '@angular/core';
+import {Component, OnInit, ViewEncapsulation, ElementRef, AfterViewInit} from '@angular/core';
 import { ApiClientService } from "app/services/api-client.service";
 import { TranslateService } from "ng2-translate";
 import { ViewChild,ChangeDetectorRef } from '@angular/core';
@@ -46,6 +46,7 @@ export class AssignComponent implements OnInit {
   collectThreeTyping: boolean = false;
   usedTags: string[];
   filteredUsedTags: string[];
+  allocateWeekName: string = "";
 
 
   startTime: Date;
@@ -450,7 +451,7 @@ export class AssignComponent implements OnInit {
       .catch(err => console.log(err));
   }
 
-  saveAllocation(title: string, collectId: string){
+  saveAllocation(title: string, collectId: string, startTime: Date = null, endTime: Date = null){
     return new Promise((resolve, reject) => {
       if(title === "") {
         resolve();
@@ -461,13 +462,14 @@ export class AssignComponent implements OnInit {
       event.id = this.idGen++;
       event.title = title;
       event.collectId = collectId;
-      event.start = this.startTime;
-      event.end = this.endTime;
+
+      event.start = startTime == null ? this.startTime : startTime;
+      event.end = endTime == null ? this.endTime : endTime;
 
       let body = new Object();
       body["name"] = title;
-      body["dtBegin"] = this.startTime;
-      body["dtEnd"] = this.endTime;
+      body["dtBegin"] = startTime == null ? this.startTime : startTime;
+      body["dtEnd"] = endTime == null ? this.endTime : endTime;
       body["CollectId"] = collectId;
       this.apiService.postData("OrgAdminView/Allocation", body)
         .then(resp => {
@@ -574,7 +576,46 @@ export class AssignComponent implements OnInit {
       );
   }
 
-
+  allocateWeek(){
+    var filteredEvents = this.events.filter(
+        events => events.allocated === false
+    );
+    for(let i = 0; i < filteredEvents.length; i++) {
+      let obj = filteredEvents[i];
+      let coll1 = false, coll2 = false, coll3 = false;
+      for(let i = 0; i < obj.transactions.length; i++){
+        switch (obj.transactions[i].CollectId){
+          case "1":
+            coll1 = true;
+            break;
+          case "2":
+            coll2 = true;
+            break;
+          case "3":
+            coll3 = true;
+            break;
+          default:
+            console.log("unknown coll");
+            break;
+        }
+      }
+      if(coll1){
+        this.saveAllocation(this.allocateWeekName, "1", obj.start, obj.end).then(function() {
+        })
+      }
+      if(coll2){
+        this.saveAllocation(this.allocateWeekName, "2", obj.start, obj.end).then(function() {
+        })
+      }
+      if(coll3){
+        this.saveAllocation(this.allocateWeekName, "3", obj.start, obj.end).then(function() {
+        })
+      }
+    }
+    setTimeout(()=>{
+      this.resetAll();
+    },250)
+  }
 }
 
 export class MyEvent {
