@@ -613,6 +613,7 @@ export class AssignComponent implements OnInit {
       }
     }
     setTimeout(()=>{
+      this.allocateWeekName = "";
       this.resetAll();
     },250)
   }
