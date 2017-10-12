@@ -135,8 +135,12 @@ export class DashboardComponent implements OnInit, OnDestroy{
                     backgroundColor: 'transparent'
                 };
 
-                var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
-                chart.draw(dataTable, options);
+                var div = document.getElementById('donutchart');
+                if(div)
+                {
+                    var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
+                    chart.draw(dataTable, options);
+                }
                 var container = <HTMLDivElement>document.getElementById("donutchart").firstChild.firstChild;
                 if(container)
                     container.style.width = "100%";
