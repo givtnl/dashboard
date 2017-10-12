@@ -65,7 +65,7 @@ export class PayoutComponent implements OnInit{
     x.Mandaatkosten = this.displayValue(x.Mandaatkosten);
     x.Transactiekosten = this.displayValue(x.Transactiekosten);
     x.UitbetalingskostenIncl = this.displayValue(x.Uitbetalingskosten * 1.21);
-    x.Uitbetalingskosten = this.displayValue(x.Uitbetalingskosten);
+    x.UitbetalingskostenFormatted = this.displayValue(x.Uitbetalingskosten);
     x.T_Total_Excl = this.displayValue(x.T_Total_Excl);
     x.T_BTW = this.displayValue(x.T_BTW);
     x.T_Total_Incl = this.displayValue(x.T_Total_Incl);
@@ -149,7 +149,7 @@ export class PayoutComponent implements OnInit{
                 resp.Details[i].Name = res + " 2";
               if(resp.Details[i].Name.includes("3"))
                 resp.Details[i].Name = res + " 3";
-              resp.Details[i].Status = 0;
+              resp.Details[i].Status = 2;
             }
           }
 
@@ -165,12 +165,9 @@ export class PayoutComponent implements OnInit{
             }
 
           resp.Details.sort((a, b) => a.Name.localeCompare(b.Name)); //sort by name A-Z
-          this.translate.get('TermCosts').subscribe( (res: string) => {
-              let costs = {Name: res, Amount: "", Status: 0};
-              costs.Amount = "- " + this.displayValue(resp.Costs);
-              resp.Details.push(costs)
-          });
           this.childData.details = resp.Details;
+
+          this.childData.KostOverToewijzingenIncl = this.displayValue(resp.Costs + (this.childData.Uitbetalingskosten * 1.21))
           });
         });
     });

@@ -519,6 +519,10 @@ button:disabled{
   color: #D53D4C;
 }
 
+.yellow {
+  color: #F5A623;
+}
+
 .collect__table{
     font-family: Avenir_Heavy;
     margin-bottom: 30px;
@@ -547,7 +551,7 @@ button:disabled{
 }
 
 .alloc{
-  width: 400px;
+  width: 600px;
 }
 .alloc td{
   padding-right:5px !important;
