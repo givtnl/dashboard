@@ -199,19 +199,21 @@ export class DashboardComponent implements OnInit, OnDestroy{
         return this.apiService.getData("OrgAdminView/Givts/?"+params)
             .then(resp =>
             {
-                let collectSum = resp.TotalAmount;
-                this.thisMonthCard.value = this.euro + "<span class='fat-emphasis'>" + (this.isSafari ? collectSum.toFixed(2) : collectSum.toLocaleString(navigator.language,{minimumFractionDigits: 2})) + "</span>";
-                this.translate.get("Text_ThisMonth").subscribe(value => { this.thisMonthCard.title = value;});
-                this.translate.get("Text_Given").subscribe(value => { this.thisMonthCard.footer = value;});
-                this.thisMonthCard.subtitle = this.datePipe.transform(date, 'MMMM yyyy');
-                let cardIsInCards = false;
-                for(let i in this.cards){
-                    if(this.cards[i].title === this.thisMonthCard.title){
-                        cardIsInCards = true;
+                if(resp){
+                    let collectSum = resp.TotalAmount;
+                    this.thisMonthCard.value = this.euro + "<span class='fat-emphasis'>" + (this.isSafari ? collectSum.toFixed(2) : collectSum.toLocaleString(navigator.language,{minimumFractionDigits: 2})) + "</span>";
+                    this.translate.get("Text_ThisMonth").subscribe(value => { this.thisMonthCard.title = value;});
+                    this.translate.get("Text_Given").subscribe(value => { this.thisMonthCard.footer = value;});
+                    this.thisMonthCard.subtitle = this.datePipe.transform(date, 'MMMM yyyy');
+                    let cardIsInCards = false;
+                    for(let i in this.cards){
+                        if(this.cards[i].title === this.thisMonthCard.title){
+                            cardIsInCards = true;
+                        }
                     }
-                }
-                if(!cardIsInCards){
-                    this.cards.push(this.thisMonthCard);
+                    if(!cardIsInCards){
+                        this.cards.push(this.thisMonthCard);
+                    }
                 }
             });
     }
