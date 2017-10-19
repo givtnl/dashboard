@@ -379,6 +379,9 @@ h3{
 
 .assign__button{
   margin: 20px 0px;
+  opacity: 0;
+  visibility: hidden;
+  transition: 0.5s all;
 }
 
 .green-button{
@@ -411,4 +414,9 @@ h3{
   box-sizing: border-box;
   border: 1px solid #E3E2E7;
   background-color: white;
+}
+
+.showElement {
+  opacity: 1;
+  visibility: visible;
 }

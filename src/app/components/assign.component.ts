@@ -47,6 +47,22 @@ export class AssignComponent implements OnInit {
   usedTags: string[];
   filteredUsedTags: string[];
   allocateWeekName: string = "";
+  numberOfFilteredEvents = 0;
+
+  filteredEvents() {
+    console.log("calling");
+    if(this.events == undefined)
+    {
+      this.numberOfFilteredEvents = 0;
+      return [];
+    }
+
+    let filtered = this.events.filter(
+      events => events.allocated === false
+    );
+    this.numberOfFilteredEvents = filtered.length;
+    return filtered
+  }
 
 
   startTime: Date;
@@ -90,9 +106,15 @@ export class AssignComponent implements OnInit {
     }.bind(this);
     this.options['eventAfterRender'] = function(event, element, view){
      this.eventAfterRender(event, element, view);
+     console.log("after render");
     }.bind(this);
     this.options['eventRender'] = function(event, element, view){
       this.eventRender(this, event, element, view);
+      console.log("render");
+    }.bind(this);
+    this.options['eventAfterAllRender'] = function(view) {
+      this.filteredEvents();
+      console.log("all rendered");
     }.bind(this);
     this.options['slotDuration'] = '00:30:00';
     this.options['timezone'] = 'local';
@@ -562,7 +584,6 @@ export class AssignComponent implements OnInit {
       }, true);
 
       element[0].innerHTML = "";
-
   }
 
   displayValue(x)
@@ -577,11 +598,10 @@ export class AssignComponent implements OnInit {
   }
 
   allocateWeek(){
-    var filteredEvents = this.events.filter(
-        events => events.allocated === false
-    );
-    for(let i = 0; i < filteredEvents.length; i++) {
-      let obj = filteredEvents[i];
+
+    console.log(this.filteredEvents().length);
+    for(let i = 0; i < this.filteredEvents().length; i++) {
+      let obj = this.filteredEvents()[i];
       let coll1 = false, coll2 = false, coll3 = false;
       for(let i = 0; i < obj.transactions.length; i++){
         switch (obj.transactions[i].CollectId){
