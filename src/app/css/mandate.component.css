@@ -274,3 +274,7 @@ h3{
     height: 25px !important;
 }
 
+.data-row {
+  cursor:pointer;
+}
+

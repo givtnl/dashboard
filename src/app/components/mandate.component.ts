@@ -39,6 +39,7 @@ export class MandateComponent implements OnInit{
     CRMKey : string;
     incassoStatus: string = "Laden...";
     urlGetCompanies: string = "https://app.teamleader.eu/api/getCompanies.php?api_group=50213&amount=10&selected_customfields=92583,95707,93537,93168,93495,93485,93494,93485,95707,93769&pageno=0&searchby=";
+    urlGetCompany: string = "https://app.teamleader.eu/api/getCompany.php?api_group=50213&customfields=92583,95707,93537,93168,93495,93485,93494,93485,95707,93769&company_id=";
 
     organisationAdmin: string = "Lenin";
     organisationAdminPassword: string = "fjkldsmqfjklmqsfjlkmq";
@@ -69,7 +70,7 @@ export class MandateComponent implements OnInit{
             .then(data => {
                 this.CRMKey = data.Teamleader;
                 this.getCompanies();
-                this.searchBtn = "Zoeken"
+                this.searchBtn = "Zoeken";
                 this.disabled = false;
             });
 
@@ -80,6 +81,20 @@ export class MandateComponent implements OnInit{
         if(!this.search){
             this.filteredOrganisations = [];
         }
+    }
+
+    getCompany(crmId){
+      this.apiClient.getData("Admin/ThirdPartyToken?type=Teamleader")
+        .then(data => {
+          this.CRMKey = data.Teamleader;
+          this.apiClient.postData("Admin/CorsTunnelGet", {url : this.urlGetCompany + crmId + "&api_secret=" + this.CRMKey, body : "", headers: {}})
+            .then(d => {
+              this.select(d);
+            })
+            .catch(err => {
+
+            });
+        });
     }
 
     getCompanies(){
@@ -105,7 +120,6 @@ export class MandateComponent implements OnInit{
                 }
             })
             .catch(err => {
-                console.log(err);
             })
     }
 
@@ -135,7 +149,6 @@ export class MandateComponent implements OnInit{
             console.log(body);
             this.apiClient.postData("Organisation/StartupFee", body)
                 .then(res => {
-                    console.log(res);
                     alert("Incassoproces is gestart.");
                 })
                 .catch(err => console.log(err))
@@ -168,7 +181,6 @@ export class MandateComponent implements OnInit{
     }
 
     select(i){
-        console.log(i);
         this.disabled = true;
         this.selectedOrganisation = i;
         //replace spaces in IBAN
@@ -222,7 +234,6 @@ export class MandateComponent implements OnInit{
             CrmId : this.selectedOrganisation.id.toString(),
             OrgName : this.selectedOrganisation.name
         };
-        console.log(JSON.stringify(mandate));
         this.apiClient.postData("OrgMandate/", mandate )
             .then(spl => {
                 if(spl){
@@ -252,7 +263,6 @@ export class MandateComponent implements OnInit{
             Amount : this.selectedOrganisation.cf_value_92583,
             Link : this.SlimPayLink,
         };
-        console.log(email);
         this.apiClient.postData("Organisation/SendMandateMail", email)
             .then(d => { alert("Mandaat is verzonden."); console.log(d); });
     }
@@ -281,7 +291,6 @@ export class MandateComponent implements OnInit{
             },
             CrmId : this.selectedOrganisation.id.toString()
         };
-        console.log(JSON.stringify(organisation));
         this.apiClient.postData("Organisation", organisation)
             .then(res => { alert("Gelukt!"); console.log(res) });
     }
@@ -299,7 +308,6 @@ export class MandateComponent implements OnInit{
 
         this.apiClient.postData('Users', user)
             .then(res => {
-                console.log(res);
                 let path = '';
                 let email = this.organisationAdmin.replace('+', '%2B');
                 if(!res.status)
@@ -308,7 +316,6 @@ export class MandateComponent implements OnInit{
                     path = '/Users/CreateOrgAdmin?email='+email+'&crmId='+this.selectedOrganisation.id;
                 this.apiClient.postData(path, null)
                     .then(response => {
-                        console.log(response);
                         if(response.status > 300)
                         {
                             var error = response.status + " : " + response._body;
