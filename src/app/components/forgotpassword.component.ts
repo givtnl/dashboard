@@ -115,10 +115,16 @@ export class ForgotPasswordComponent  implements OnInit{
         this.disabled = false;
         this.resetNav();
         this.wrong = true;
+        if(err._body.indexOf('Invalid') != -1) {
+          this.translate.get('InvalidToken').subscribe((res: string) => {
+            this.error_message = res;
+          });
+        } else {
+          this.translate.get('PW_PWPolicy').subscribe((res: string) => {
+            this.error_message = res;
+          });
+        }
 
-        this.translate.get('PW_PWPolicy').subscribe((res: string) => {
-          this.error_message = res;
-        });
         console.log(err);
       })
   }

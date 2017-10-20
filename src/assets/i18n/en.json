@@ -103,5 +103,6 @@
     "TermCosts": "Costs",
     "TransactionCostsMultipleCollects": "When a user gives to multiple collections at once, they will be merged into one transaction for cost optimisation. These transaction costs are therefore only visible by choosing the overview \"All\"",
     "Users": "users",
-    "AssignOpenCollectes": "Assign all non-allocated collections: "
+    "AssignOpenCollectes": "Assign all non-allocated collections: ",
+    "InvalidToken": "This link is not valid anymore. Try requesting a new password."
 }

@@ -103,5 +103,6 @@
     "TermCosts": "Kosten",
     "TransactionCostsMultipleCollects": "Wanneer de gebruiker aan meerdere collectes tegelijk geeft, zullen deze worden samengevoegd tot één transactie om zo de kosten te optimaliseren. Deze kosten zijn daarom alleen zichtbaar wanneer er wordt gekozen voor het overzicht \"Alle\"",
     "Users": "gebruikers",
-    "AssignOpenCollectes": "Alle niet-toegewezen collectes toewijzen: "
+    "AssignOpenCollectes": "Alle niet-toegewezen collectes toewijzen: ",
+    "InvalidToken": "De geldigheid van deze link is verlopen. Probeer een nieuw wachtwoord aan te vragen."
 }
