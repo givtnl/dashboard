@@ -273,22 +273,20 @@ export class MandateComponent implements OnInit{
         }
         let o = this.selectedOrganisation;
         let organisation = {
-            Organisation : {
-                Name: o.cf_value_93168,
-                Address: o.street,
-                City: o.city,
-                PostalCode: o.zipcode,
-                Country: o.country,
-                TelNr: o.telephone,
-                Accounts: [
-                    {
-                        Number: o.cf_value_93537, //iban
-                        Primary: true,
-                        Active: true
-                    }
-                ]
-            },
-            CrmId : this.selectedOrganisation.id.toString()
+            CrmId: this.selectedOrganisation.id.toString(),
+            Name: o.cf_value_93168,
+            Address: o.street,
+            City: o.city,
+            PostalCode: o.zipcode,
+            Country: o.country,
+            TelNr: o.telephone,
+            Accounts: [
+                {
+                    Number: o.cf_value_93537, //iban
+                    Primary: true,
+                    Active: true
+                }
+            ]
         };
         this.apiClient.postData("Organisation", organisation)
             .then(res => { alert("Gelukt!"); console.log(res) });
