@@ -165,7 +165,7 @@ export class DashboardComponent implements OnInit, OnDestroy{
         let dateEnd = nextMonth + "-01-" + secondYear;
         let params = "DateBegin=" + dateBegin + "&DateEnd=" + dateEnd;
 
-        return this.apiService.getData("OrgAdminView/Users/?"+params)
+        return this.apiService.getData("CardView/Users/?"+params)
             .then(resp =>
             {
                 this.thisMonthGiversCard.value = "<span class='fat-emphasis'>" + resp + "</span>";
@@ -200,7 +200,7 @@ export class DashboardComponent implements OnInit, OnDestroy{
         let dateEnd = nextMonth + "-01-" + secondYear;
         let params = "DateBegin=" + dateBegin + "&DateEnd=" + dateEnd;
 
-        return this.apiService.getData("OrgAdminView/Givts/?"+params)
+        return this.apiService.getData("CardView/Givts/?"+params)
             .then(resp =>
             {
                 if(resp){
@@ -238,7 +238,7 @@ export class DashboardComponent implements OnInit, OnDestroy{
         chosenDate = displayDate.getUTCMonth()+1 + "-" + displayDate.getUTCDate() + "-" + displayDate.getUTCFullYear();
         dateBegin =  chosenDate + " 00:00:00";
         dateEnd = chosenDate + " 23:59:59";
-        return this.apiService.getData("OrgAdminView/Givts/?DateBegin="+dateBegin+"&DateEnd="+dateEnd)
+        return this.apiService.getData("CardView/Givts/?DateBegin="+dateBegin+"&DateEnd="+dateEnd)
             .then(resp =>
             {
               if(resp.statusCode == 500) return;

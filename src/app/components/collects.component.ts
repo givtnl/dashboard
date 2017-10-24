@@ -158,7 +158,7 @@ export class CollectsComponent implements OnInit{
     }
 
   checkAllocations(){
-    let apiUrl = 'OrgAdminView/AllocationCheck';
+    let apiUrl = 'Allocations/AllocationCheck';
     this.apiService.getData(apiUrl)
       .then(resp => {
         if(resp.length > 0){
@@ -172,7 +172,7 @@ export class CollectsComponent implements OnInit{
     }
 
     fetchSavedCollects(){
-        return this.apiService.getData("OrgAdminView/Collect")
+        return this.apiService.getData("Collects/Collect")
             .then(resp => {
                 if(resp == undefined){
                     this.savedCollects = [];
@@ -223,7 +223,7 @@ export class CollectsComponent implements OnInit{
         {
             newCollect.CollectId = this.multipleCollectsId;
         }
-        this.apiService.postData("OrgAdminView/Collect", newCollect)
+        this.apiService.postData("Collects/Collect", newCollect)
             .then(resp => {
                 this.fetchSavedCollects().then(() => {
                     this.collectId = this.savedCollects[this.savedCollects.length-1].Id;
@@ -237,7 +237,7 @@ export class CollectsComponent implements OnInit{
     deleteCollect(id: number){
         this.SearchButtonGreen = false;
         if(id == undefined) return;
-        this.apiService.delete("OrgAdminView/Collect/" + id)
+        this.apiService.delete("Collects/Collect/" + id)
             .then(resp => {
                 this.isVisible = false;
                 this.fetchSavedCollects();
@@ -277,7 +277,7 @@ export class CollectsComponent implements OnInit{
             if(!navigator.language.includes('en'))
                 euro += " ";
 
-            this.apiService.getData("OrgAdminView/Givts/?"+params)
+            this.apiService.getData("Cards/Givts/?"+params)
                 .then(resp =>
                 {
                     this.transactionCount = resp.TransactionCount;

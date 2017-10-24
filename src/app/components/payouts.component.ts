@@ -34,7 +34,7 @@ export class PayoutsComponent implements OnInit{
     }
 
   checkAllocations(){
-    let apiUrl = 'OrgAdminView/AllocationCheck';
+    let apiUrl = 'Allocations/AllocationCheck';
     this.apiService.getData(apiUrl)
       .then(resp => {
         if(resp.length > 0){
@@ -47,7 +47,7 @@ export class PayoutsComponent implements OnInit{
       this.checkAllocations();
       //this.payouts = require("../models/payout").testData;
 
-      this.apiService.getData("OrgAdminView/Payouts")
+      this.apiService.getData("Payments/Payouts")
           .then(resp =>
           {
             this.payouts = resp;

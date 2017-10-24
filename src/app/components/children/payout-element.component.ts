@@ -135,7 +135,7 @@ export class PayoutComponent implements OnInit{
 
   fetchPayoutDetail(){
     this.translate.get('NonAllocatedCollect').subscribe((res: string) => {
-      this.apiClient.getData('OrgAdminView/PayoutDetail?payoutID='+this.childData.Id)
+      this.apiClient.getData('Payments/PayoutDetail?payoutID='+this.childData.Id)
         .then( (resp) => {
           let allocsCount: number = resp.Details.length;
           for(let i = 0; i < allocsCount; i++){

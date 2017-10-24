@@ -32,7 +32,7 @@ export class NavigationComponent implements OnInit {
         }
 
         if(!title){
-            return this.apiService.getData('OrgAdminView/Org')
+            return this.apiService.getData('CollectGroupView/CollectGroup')
                 .then(res => {
                     this.instance_title = res;
                     this.dataService.writeData("instanceTitle", res);
