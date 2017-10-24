@@ -39,7 +39,7 @@ export class MandateComponent implements OnInit{
     CRMKey : string;
     incassoStatus: string = "Laden...";
     urlGetCompanies: string = "https://app.teamleader.eu/api/getCompanies.php?api_group=50213&amount=10&selected_customfields=92583,95707,93537,93168,93495,93485,93494,93485,95707,93769&pageno=0&searchby=";
-    urlGetCompany: string = "https://app.teamleader.eu/api/getCompany.php?api_group=50213&customfields=92583,95707,93537,93168,93495,93485,93494,93485,95707,93769&company_id=";
+    urlGetCompany: string = "https://app.teamleader.eu/api/getCompany.php?api_group=50213&company_id=";
 
     organisationAdmin: string = "Lenin";
     organisationAdminPassword: string = "fjkldsmqfjklmqsfjlkmq";
@@ -59,12 +59,6 @@ export class MandateComponent implements OnInit{
     searchOrg(){
         this.disabled = true;
         this.searchBtn = "Laden...";
-        let headers = new Headers({'Content-Type':'application/json'});
-        headers.append('Access-Control-Allow-Origin', '*');
-        headers.append('Access-Control-Allow-Methods','*');
-        headers.append('Access-Control-Allow-Headers','Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type');
-        let options = new RequestOptions({headers:headers});
-
 
         this.apiClient.getData("Admin/ThirdPartyToken?type=Teamleader")
             .then(data => {
@@ -183,9 +177,13 @@ export class MandateComponent implements OnInit{
     select(i){
         this.disabled = true;
         this.selectedOrganisation = i;
+        this.selectedOrganisation.cf_value_93485 = i.custom_fields['93485'];
+        this.selectedOrganisation.cf_value_93769 = i.custom_fields['93769'];
+        this.selectedOrganisation.cf_value_95707 = i.custom_fields['95707'];
+        this.selectedOrganisation.cf_value_93494 = i.custom_fields['93494'];
+        this.selectedOrganisation.cf_value_93168 = i.custom_fields['93168'];
         //replace spaces in IBAN
-        if (this.selectedOrganisation.cf_value_93537 != null)
-           this.selectedOrganisation.cf_value_93537 = i.cf_value_93537.replace(/\s/g, '');
+        this.selectedOrganisation.cf_value_93537 = i.custom_fields['93537'].replace(/\s/g, '');
         if(this.selectedOrganisation.city)
            this.selectedOrganisation.city = this.decodeHtmlEntity(this.selectedOrganisation.city);
         if(this.selectedOrganisation.name)
@@ -193,6 +191,7 @@ export class MandateComponent implements OnInit{
         this.selectedOrganisation.mandate_status = false;
         if(!environment.production)
             this.selectedOrganisation.cf_value_93495 =  "support+" + this.selectedOrganisation.id + "@givtapp.net";
+
         this.incassoStatus = "Laden...";
         this.change();
         this.getMandateStatus();
