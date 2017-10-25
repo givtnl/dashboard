@@ -466,7 +466,8 @@ export class AssignComponent implements OnInit {
           this.apiService.getData("OrgAdmin/AllocationGivts?"+params)
               .then(resp => {
                 let index = this.findEventIndexById(event.id);
-                this.events[index].amount = resp;
+                this.events[index].noTransactions = resp.NoTransactions;
+                this.events[index].amount = resp.Amount;
               });
         }
       })
@@ -531,7 +532,8 @@ export class AssignComponent implements OnInit {
 
       if(fcEvent.allocated){
         let temp = parseFloat(fcEvent.amount);
-        div.innerHTML = "<span class='fat-font'>" + that.displayValue(fcEvent.amount) + "</span> <span>" + that.collectionTranslation + " " + fcEvent.collectId  + "</span><br/>"
+        div.innerHTML = "<span><img src='images/user.png' height='15px' width='15px' style='padding-top: 2px'> " + fcEvent.noTransactions + "</span>"
+                        + "<span style='margin-left:15px' class='fat-font'>" + that.displayValue(fcEvent.amount) + "</span> <span>" + that.collectionTranslation + " " + fcEvent.collectId  + "</span><br/>"
                         + "<span class='fat-font'>" + fcEvent.title + "</span>";
         div.className = "balloon balloon_alter";
       } else {
