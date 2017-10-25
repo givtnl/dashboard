@@ -384,7 +384,7 @@ h3{
   transition: 0.5s all;
 }
 
-.green-button{
+.assign-green-button{
   cursor: pointer;
   background: #1CA96C;
   background-image: url(/images/check.png);
@@ -398,7 +398,7 @@ h3{
   margin-left: 10px;
 }
 
-.green-button:disabled{
+.assign-green-button:disabled{
   cursor: not-allowed;
   background: #999999;
   background-image: url(/images/check.png);

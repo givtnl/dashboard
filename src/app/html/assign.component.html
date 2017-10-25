@@ -1,7 +1,7 @@
 <my-navigation></my-navigation>
 <div class="section-page">
   <h2>{{ "TitleAllocate" | translate }}</h2>
-  <div class="assign__button" [class.showElement]="numberOfFilteredEvents > 0"><span style="font-family: Avenir_Medium; font-size: 17px;">{{'AssignOpenCollectes' | translate}}</span><input class="allocation__input" type="text" name="allocationWeekName" [(ngModel)]="allocateWeekName"/><button [disabled]="allocateWeekName === ''" class="green-button" (click)="allocateWeek()"></button></div>
+  <div class="assign__button" [class.showElement]="numberOfFilteredEvents > 0"><span style="font-family: Avenir_Medium; font-size: 17px;">{{'AssignOpenCollectes' | translate}}</span><input class="allocation__input" type="text" name="allocationWeekName" [(ngModel)]="allocateWeekName"/><button [disabled]="allocateWeekName === ''" class="assign-green-button" (click)="allocateWeek()"></button></div>
   <div class="schedule">
     <p-schedule #calendar [events]="events" locale="nl" [nowIndicator]="false" [header]="headerConfig" [editable]="true" (onDayClick)="handleDayClick($event)" (onEventClick)="handleEventClick($event)" [options]="options" id="calendar"></p-schedule>
     <div class="schedule__dialog" *ngIf="isDialogOpen">
