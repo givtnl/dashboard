@@ -531,7 +531,8 @@ export class AssignComponent implements OnInit {
 
       if(fcEvent.allocated){
         let temp = parseFloat(fcEvent.amount);
-        div.innerHTML = "<span class='fat-font'>" + that.displayValue(fcEvent.amount) + "</span> <span>" + that.collectionTranslation + " " + fcEvent.collectId  + "</span><br/>"
+        div.innerHTML = "<span><img src='images/user.png' height='15px' width='15px' style='padding-top: 2px'> " + fcEvent.transactions.length + "</span>"
+                        + "<span class='fat-font'>" + that.displayValue(fcEvent.amount) + "</span> <span>" + that.collectionTranslation + " " + fcEvent.collectId  + "</span><br/>"
                         + "<span class='fat-font'>" + fcEvent.title + "</span>";
         div.className = "balloon balloon_alter";
       } else {
