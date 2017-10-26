@@ -280,7 +280,7 @@ export class MandateComponent implements OnInit{
                 City: o.city,
                 PostalCode: o.zipcode,
                 Country: o.country,
-                TaxDeductable: o.cf_value_141639,
+                TaxDeductable: (o.cf_value_141639 == "1"),
                 TelNr: o.telephone,
                 Accounts: [
                     {
