@@ -38,7 +38,7 @@ export class MandateComponent implements OnInit{
     SlimPayLink;
     CRMKey : string;
     incassoStatus: string = "Laden...";
-    urlGetCompanies: string = "https://app.teamleader.eu/api/getCompanies.php?api_group=50213&amount=10&selected_customfields=92583,95707,93537,93168,93495,93485,93494,93485,95707,93769&pageno=0&searchby=";
+    urlGetCompanies: string = "https://app.teamleader.eu/api/getCompanies.php?api_group=50213&amount=10&selected_customfields=92583,95707,93537,93168,93495,93485,93494,93485,95707,93769,141639&pageno=0&searchby=";
     urlGetCompany: string = "https://app.teamleader.eu/api/getCompany.php?api_group=50213&company_id=";
 
     organisationAdmin: string = "Lenin";
@@ -182,6 +182,7 @@ export class MandateComponent implements OnInit{
         this.selectedOrganisation.cf_value_95707 = i.custom_fields['95707'];
         this.selectedOrganisation.cf_value_93494 = i.custom_fields['93494'];
         this.selectedOrganisation.cf_value_93168 = i.custom_fields['93168'];
+        this.selectedOrganisation.cf_value_141639 = i.custom_fields['141639'];
         //replace spaces in IBAN
         this.selectedOrganisation.cf_value_93537 = i.custom_fields['93537'].replace(/\s/g, '');
         if(this.selectedOrganisation.city)
@@ -279,6 +280,7 @@ export class MandateComponent implements OnInit{
                 City: o.city,
                 PostalCode: o.zipcode,
                 Country: o.country,
+                TaxDeductable: o.cf_value_141639,
                 TelNr: o.telephone,
                 Accounts: [
                     {
