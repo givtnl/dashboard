@@ -47,6 +47,22 @@ export class AssignComponent implements OnInit {
   usedTags: string[];
   filteredUsedTags: string[];
   allocateWeekName: string = "";
+  numberOfFilteredEvents = 0;
+
+  filteredEvents() {
+    console.log("calling");
+    if(this.events == undefined)
+    {
+      this.numberOfFilteredEvents = 0;
+      return [];
+    }
+
+    let filtered = this.events.filter(
+      events => events.allocated === false
+    );
+    this.numberOfFilteredEvents = filtered.length;
+    return filtered
+  }
 
 
   startTime: Date;
@@ -90,9 +106,15 @@ export class AssignComponent implements OnInit {
     }.bind(this);
     this.options['eventAfterRender'] = function(event, element, view){
      this.eventAfterRender(event, element, view);
+     console.log("after render");
     }.bind(this);
     this.options['eventRender'] = function(event, element, view){
       this.eventRender(this, event, element, view);
+      console.log("render");
+    }.bind(this);
+    this.options['eventAfterAllRender'] = function(view) {
+      this.filteredEvents();
+      console.log("all rendered");
     }.bind(this);
     this.options['slotDuration'] = '00:30:00';
     this.options['timezone'] = 'local';
@@ -444,7 +466,8 @@ export class AssignComponent implements OnInit {
           this.apiService.getData("OrgAdmin/AllocationGivts?"+params)
               .then(resp => {
                 let index = this.findEventIndexById(event.id);
-                this.events[index].amount = resp;
+                this.events[index].noTransactions = resp.NoTransactions;
+                this.events[index].amount = resp.Amount;
               });
         }
       })
@@ -509,7 +532,8 @@ export class AssignComponent implements OnInit {
 
       if(fcEvent.allocated){
         let temp = parseFloat(fcEvent.amount);
-        div.innerHTML = "<span class='fat-font'>" + that.displayValue(fcEvent.amount) + "</span> <span>" + that.collectionTranslation + " " + fcEvent.collectId  + "</span><br/>"
+        div.innerHTML = "<span><img src='images/user.png' height='15px' width='15px' style='padding-top: 2px'> " + fcEvent.noTransactions + "</span>"
+                        + "<span style='margin-left:15px' class='fat-font'>" + that.displayValue(fcEvent.amount) + "</span> <span>" + that.collectionTranslation + " " + fcEvent.collectId  + "</span><br/>"
                         + "<span class='fat-font'>" + fcEvent.title + "</span>";
         div.className = "balloon balloon_alter";
       } else {
@@ -562,7 +586,6 @@ export class AssignComponent implements OnInit {
       }, true);
 
       element[0].innerHTML = "";
-
   }
 
   displayValue(x)
@@ -577,11 +600,10 @@ export class AssignComponent implements OnInit {
   }
 
   allocateWeek(){
-    var filteredEvents = this.events.filter(
-        events => events.allocated === false
-    );
-    for(let i = 0; i < filteredEvents.length; i++) {
-      let obj = filteredEvents[i];
+
+    console.log(this.filteredEvents().length);
+    for(let i = 0; i < this.filteredEvents().length; i++) {
+      let obj = this.filteredEvents()[i];
       let coll1 = false, coll2 = false, coll3 = false;
       for(let i = 0; i < obj.transactions.length; i++){
         switch (obj.transactions[i].CollectId){

@@ -129,7 +129,7 @@
           <td>Mandaat</td>
           <td>Incasso</td>
         </tr>
-        <tr *ngFor="let i of currentMandates" class="data-row">
+        <tr *ngFor="let i of currentMandates" class="data-row" (click)="getCompany(i.CrmId)">
             <td>{{i.Name}}</td>
             <td class="cell"><span [ngClass]="{'status-notok': i.PayProvStatus != 'closed.completed' ,'status-done': i.PayProvStatus == 'closed.completed' }" class="status">{{i.PayProvStatus}}</span> </td>
             <td class="cell"><span [ngClass]="{'status-notok': i.IncassoStatus != 'Processed' ,'status-done': i.IncassoStatus == 'Processed' }" class="status">{{i.IncassoStatus}}</span></td>

@@ -38,7 +38,8 @@ export class MandateComponent implements OnInit{
     SlimPayLink;
     CRMKey : string;
     incassoStatus: string = "Laden...";
-    urlGetCompanies: string = "https://app.teamleader.eu/api/getCompanies.php?api_group=50213&amount=10&selected_customfields=92583,95707,93537,93168,93495,93485,93494,93485,95707,93769&pageno=0&searchby=";
+    urlGetCompanies: string = "https://app.teamleader.eu/api/getCompanies.php?api_group=50213&amount=10&selected_customfields=92583,95707,93537,93168,93495,93485,93494,93485,95707,93769,141639&pageno=0&searchby=";
+    urlGetCompany: string = "https://app.teamleader.eu/api/getCompany.php?api_group=50213&company_id=";
 
     organisationAdmin: string = "Lenin";
     organisationAdminPassword: string = "fjkldsmqfjklmqsfjlkmq";
@@ -58,18 +59,12 @@ export class MandateComponent implements OnInit{
     searchOrg(){
         this.disabled = true;
         this.searchBtn = "Laden...";
-        let headers = new Headers({'Content-Type':'application/json'});
-        headers.append('Access-Control-Allow-Origin', '*');
-        headers.append('Access-Control-Allow-Methods','*');
-        headers.append('Access-Control-Allow-Headers','Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type');
-        let options = new RequestOptions({headers:headers});
-
 
         this.apiClient.getData("Admin/ThirdPartyToken?type=Teamleader")
             .then(data => {
                 this.CRMKey = data.Teamleader;
                 this.getCompanies();
-                this.searchBtn = "Zoeken"
+                this.searchBtn = "Zoeken";
                 this.disabled = false;
             });
 
@@ -80,6 +75,20 @@ export class MandateComponent implements OnInit{
         if(!this.search){
             this.filteredOrganisations = [];
         }
+    }
+
+    getCompany(crmId){
+      this.apiClient.getData("Admin/ThirdPartyToken?type=Teamleader")
+        .then(data => {
+          this.CRMKey = data.Teamleader;
+          this.apiClient.postData("Admin/CorsTunnelGet", {url : this.urlGetCompany + crmId + "&api_secret=" + this.CRMKey, body : "", headers: {}})
+            .then(d => {
+              this.select(d);
+            })
+            .catch(err => {
+
+            });
+        });
     }
 
     getCompanies(){
@@ -105,7 +114,6 @@ export class MandateComponent implements OnInit{
                 }
             })
             .catch(err => {
-                console.log(err);
             })
     }
 
@@ -135,7 +143,6 @@ export class MandateComponent implements OnInit{
             console.log(body);
             this.apiClient.postData("Organisation/StartupFee", body)
                 .then(res => {
-                    console.log(res);
                     alert("Incassoproces is gestart.");
                 })
                 .catch(err => console.log(err))
@@ -168,12 +175,16 @@ export class MandateComponent implements OnInit{
     }
 
     select(i){
-        console.log(i);
         this.disabled = true;
         this.selectedOrganisation = i;
+        this.selectedOrganisation.cf_value_93485 = i.custom_fields['93485'];
+        this.selectedOrganisation.cf_value_93769 = i.custom_fields['93769'];
+        this.selectedOrganisation.cf_value_95707 = i.custom_fields['95707'];
+        this.selectedOrganisation.cf_value_93494 = i.custom_fields['93494'];
+        this.selectedOrganisation.cf_value_93168 = i.custom_fields['93168'];
+        this.selectedOrganisation.cf_value_141639 = i.custom_fields['141639'];
         //replace spaces in IBAN
-        if (this.selectedOrganisation.cf_value_93537 != null)
-           this.selectedOrganisation.cf_value_93537 = i.cf_value_93537.replace(/\s/g, '');
+        this.selectedOrganisation.cf_value_93537 = i.custom_fields['93537'].replace(/\s/g, '');
         if(this.selectedOrganisation.city)
            this.selectedOrganisation.city = this.decodeHtmlEntity(this.selectedOrganisation.city);
         if(this.selectedOrganisation.name)
@@ -181,6 +192,7 @@ export class MandateComponent implements OnInit{
         this.selectedOrganisation.mandate_status = false;
         if(!environment.production)
             this.selectedOrganisation.cf_value_93495 =  "support+" + this.selectedOrganisation.id + "@givtapp.net";
+
         this.incassoStatus = "Laden...";
         this.change();
         this.getMandateStatus();
@@ -222,7 +234,6 @@ export class MandateComponent implements OnInit{
             CrmId : this.selectedOrganisation.id.toString(),
             OrgName : this.selectedOrganisation.name
         };
-        console.log(JSON.stringify(mandate));
         this.apiClient.postData("OrgMandate/", mandate )
             .then(spl => {
                 if(spl){
@@ -252,7 +263,6 @@ export class MandateComponent implements OnInit{
             Amount : this.selectedOrganisation.cf_value_92583,
             Link : this.SlimPayLink,
         };
-        console.log(email);
         this.apiClient.postData("Organisation/SendMandateMail", email)
             .then(d => { alert("Mandaat is verzonden."); console.log(d); });
     }
@@ -270,6 +280,7 @@ export class MandateComponent implements OnInit{
                 City: o.city,
                 PostalCode: o.zipcode,
                 Country: o.country,
+                TaxDeductable: (o.cf_value_141639 == "1"),
                 TelNr: o.telephone,
                 Accounts: [
                     {
@@ -281,7 +292,6 @@ export class MandateComponent implements OnInit{
             },
             CrmId : this.selectedOrganisation.id.toString()
         };
-        console.log(JSON.stringify(organisation));
         this.apiClient.postData("Organisation", organisation)
             .then(res => { alert("Gelukt!"); console.log(res) });
     }
@@ -299,7 +309,6 @@ export class MandateComponent implements OnInit{
 
         this.apiClient.postData('Users', user)
             .then(res => {
-                console.log(res);
                 let path = '';
                 let email = this.organisationAdmin.replace('+', '%2B');
                 if(!res.status)
@@ -308,7 +317,6 @@ export class MandateComponent implements OnInit{
                     path = '/Users/CreateOrgAdmin?email='+email+'&crmId='+this.selectedOrganisation.id;
                 this.apiClient.postData(path, null)
                     .then(response => {
-                        console.log(response);
                         if(response.status > 300)
                         {
                             var error = response.status + " : " + response._body;
