@@ -45,9 +45,9 @@ export class PayoutComponent implements OnInit{
     x.BeginDate = this.datePipe.transform(new Date(this.childData.BeginDate), "d MMMM y");
     x.EndDate = this.datePipe.transform(new Date(this.childData.EndDate), "d MMMM y");
 
-    x.Mandaatkosten = x.MandateCostCount * this.mandateCost;
-    x.Transactiekosten = x.TransactionCount * this.transactionCost;
-    x.Uitbetalingskosten = 0.18;
+    x.Mandaatkosten = x.MandateCost;
+    x.Transactiekosten = x.TransactionCost;
+    x.Uitbetalingskosten = x.PayoutCost;
     x.T_Total_Excl = x.Mandaatkosten + x.Transactiekosten + x.Uitbetalingskosten;
     x.T_BTW = x.MandateTaxes + x.TransactionTaxes + x.PayoutCostTaxes;
     x.T_Total_Incl = x.T_Total_Excl + x.T_BTW;
@@ -64,7 +64,7 @@ export class PayoutComponent implements OnInit{
 
     x.Mandaatkosten = this.displayValue(x.Mandaatkosten);
     x.Transactiekosten = this.displayValue(x.Transactiekosten);
-    x.UitbetalingskostenIncl = this.displayValue(x.Uitbetalingskosten * 1.21);
+    x.UitbetalingskostenIncl = this.displayValue(x.PayoutCost + x.PayoutCostTaxes);
     x.UitbetalingskostenFormatted = this.displayValue(x.Uitbetalingskosten);
     x.T_Total_Excl = this.displayValue(x.T_Total_Excl);
     x.T_BTW = this.displayValue(x.T_BTW);
@@ -166,8 +166,6 @@ export class PayoutComponent implements OnInit{
 
           resp.Details.sort((a, b) => a.Name.localeCompare(b.Name)); //sort by name A-Z
           this.childData.details = resp.Details;
-
-          this.childData.KostOverToewijzingenIncl = this.displayValue(resp.Costs + (this.childData.Uitbetalingskosten * 1.21))
           });
         });
     });
