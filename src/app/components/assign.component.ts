@@ -44,6 +44,7 @@ export class AssignComponent implements OnInit {
   collectOneTyping: boolean = false;
   collectTwoTyping: boolean = false;
   collectThreeTyping: boolean = false;
+  allCollectTyping: boolean = false;
   usedTags: string[];
   filteredUsedTags: string[];
   allocateWeekName: string = "";
@@ -600,8 +601,8 @@ export class AssignComponent implements OnInit {
   }
 
   allocateWeek(){
-
-    console.log(this.filteredEvents().length);
+    /*  fix for the allocate name selected from the list  */
+    this.allocateWeekName = this.allocateWeekName.replace("<span class='autocomplete'>","").replace("</span>","");
     for(let i = 0; i < this.filteredEvents().length; i++) {
       let obj = this.filteredEvents()[i];
       let coll1 = false, coll2 = false, coll3 = false;
@@ -637,8 +638,25 @@ export class AssignComponent implements OnInit {
     setTimeout(()=>{
       this.allocateWeekName = "";
       this.resetAll();
+      this.filterTags("");
     },250)
   }
+
+  focusAllCollectsTyping(focus){
+    if(!focus){
+      let that = this;
+      setTimeout(()=> {
+        that.allCollectTyping = focus;
+      }, 150);
+    }else{
+      this.allCollectTyping = focus;
+    }
+  }
+
+  allCollectNameChanging(event){
+    this.filterTags(event);
+  }
+
 }
 
 export class MyEvent {
