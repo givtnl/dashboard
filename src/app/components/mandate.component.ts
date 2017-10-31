@@ -177,14 +177,21 @@ export class MandateComponent implements OnInit{
     select(i){
         this.disabled = true;
         this.selectedOrganisation = i;
-        this.selectedOrganisation.cf_value_93485 = i.custom_fields['93485'];
-        this.selectedOrganisation.cf_value_93769 = i.custom_fields['93769'];
-        this.selectedOrganisation.cf_value_95707 = i.custom_fields['95707'];
-        this.selectedOrganisation.cf_value_93494 = i.custom_fields['93494'];
-        this.selectedOrganisation.cf_value_93168 = i.custom_fields['93168'];
-        this.selectedOrganisation.cf_value_141639 = i.custom_fields['141639'];
-        //replace spaces in IBAN
-        this.selectedOrganisation.cf_value_93537 = i.custom_fields['93537'].replace(/\s/g, '');
+
+        if (i.hasOwnProperty("custom_fields")) {
+            this.selectedOrganisation.cf_value_93485 = i.custom_fields['93485'];
+            this.selectedOrganisation.cf_value_93769 = i.custom_fields['93769'];
+            this.selectedOrganisation.cf_value_95707 = i.custom_fields['95707'];
+            this.selectedOrganisation.cf_value_93494 = i.custom_fields['93494'];
+            this.selectedOrganisation.cf_value_93168 = i.custom_fields['93168'];
+            this.selectedOrganisation.cf_value_141639 = i.custom_fields['141639'];
+            this.selectedOrganisation.cf_value_93537 = i.custom_fields['93537'].replace(/\s/g, '');
+            this.selectedOrganisation.cf_value_93495 = i.custom_fields['93495'];
+        } else {
+            if (this.selectedOrganisation.cf_value_93537 != null)
+                this.selectedOrganisation.cf_value_93537 = i.cf_value_93537.replace(/\s/g, '');
+        }
+
         if(this.selectedOrganisation.city)
            this.selectedOrganisation.city = this.decodeHtmlEntity(this.selectedOrganisation.city);
         if(this.selectedOrganisation.name)
