@@ -15,21 +15,19 @@ import {DataService} from "../services/data.service";
 export class NavigationComponent implements OnInit {
     instance_title: string;
     dataService: DataService;
+    userService: UserService;
 
     showMandateLink = false;
 
-    constructor(private userService: UserService, private router: Router, private translate: TranslateService, dataService: DataService, private apiService: ApiClientService) {
+    constructor(userService: UserService, private router: Router, private translate: TranslateService, dataService: DataService, private apiService: ApiClientService) {
       this.dataService = dataService;
+      this.userService = userService;
     }
 
     ngOnInit() {
         let title = this.dataService.getData("instanceTitle");
-        if(!!this.dataService.getData("roles")){
-            let x = JSON.parse(this.dataService.getData("roles"));
-            if(x.indexOf("Admin") > -1){
-                this.showMandateLink = true;
-            }
-        }
+        this.showMandateLink = this.userService.SiteAdmin;
+
 
         if(!title){
             return this.apiService.getData('OrgAdminView/Org')

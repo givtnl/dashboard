@@ -13,7 +13,6 @@
   "private": true,
   "dependencies": {
     "@angular/animations": "^4.1.2",
-    "@angular/cli": "^1.2.5",
     "@angular/common": "^4.0.0",
     "@angular/compiler": "^4.0.0",
     "@angular/core": "^4.0.0",
@@ -35,8 +34,8 @@
     "zone.js": "^0.8.4"
   },
   "devDependencies": {
-    "@angular/cli": "1.0.3",
-    "@angular/compiler-cli": "^4.0.0",
+    "@angular/cli": "@1.4.7",
+    "@angular/compiler-cli": "^4.1.2",
     "@types/fullcalendar": "^2.7.37",
     "@types/jasmine": "2.5.38",
     "@types/jquery": "^2.0.40",
@@ -54,7 +53,7 @@
     "protractor": "~5.1.0",
     "ts-node": "~2.0.0",
     "tslint": "~4.5.0",
-    "typescript": "~2.2.0",
+    "typescript": "@2.2.2",
     "webpack": "^3.7.1"
   }
 }
