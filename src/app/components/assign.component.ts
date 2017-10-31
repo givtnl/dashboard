@@ -161,7 +161,7 @@ export class AssignComponent implements OnInit {
     this.filteredUsedTags = [];
     let regex = new RegExp(typed, "i");
     this.usedTags.forEach(function(value) {
-      if(value.search(regex) != -1 && this.filteredUsedTags.length < 10) {
+      if(value.search(regex) != -1 && this.filteredUsedTags.length < 10 && value.trim() != "") {
         let hlight = "<span class='autocomplete'>" + value.match(regex)[0] + "</span>";
         this.filteredUsedTags.push(value.replace(regex, hlight));
       }
@@ -600,9 +600,11 @@ export class AssignComponent implements OnInit {
       );
   }
 
+  setWeekName(item) {
+    this.allocateWeekName = item.replace("<span class='autocomplete'>","").replace("</span>","");
+  }
+
   allocateWeek(){
-    /*  fix for the allocate name selected from the list  */
-    this.allocateWeekName = this.allocateWeekName.replace("<span class='autocomplete'>","").replace("</span>","");
     for(let i = 0; i < this.filteredEvents().length; i++) {
       let obj = this.filteredEvents()[i];
       let coll1 = false, coll2 = false, coll3 = false;

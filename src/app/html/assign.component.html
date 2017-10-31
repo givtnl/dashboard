@@ -6,7 +6,7 @@
     <div class="wrapping_inputlist">
       <input (focus)="focusAllCollectsTyping(true)" (focusout)="focusAllCollectsTyping(false)" (ngModelChange)="allCollectNameChanging($event)" class="allocation__input" type="text" name="allocationWeekName" [(ngModel)]="allocateWeekName"/>
       <ul *ngIf="allCollectTyping" class="schedule__dialog__form__list">
-        <li *ngFor="let item of filteredUsedTags" class="schedule__dialog__form__listitem" [innerHTML]="item" (click)="allocateWeekName = item; allocateWeek()">yoo</li>
+        <li *ngFor="let item of filteredUsedTags" class="schedule__dialog__form__listitem" [innerHTML]="item" (click)="setWeekName(item)">yoo</li>
       </ul>
     </div>
     <button [disabled]="allocateWeekName === ''" class="assign-green-button" (click)="allocateWeek()"></button>
