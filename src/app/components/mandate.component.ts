@@ -179,6 +179,7 @@ export class MandateComponent implements OnInit{
         this.selectedOrganisation = i;
 
         if (i.hasOwnProperty("custom_fields")) {
+            this.selectedOrganisation.cf_value_92583 = i.custom_fields['92583'];
             this.selectedOrganisation.cf_value_93485 = i.custom_fields['93485'];
             this.selectedOrganisation.cf_value_93769 = i.custom_fields['93769'];
             this.selectedOrganisation.cf_value_95707 = i.custom_fields['95707'];
