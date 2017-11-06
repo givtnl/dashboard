@@ -44,6 +44,7 @@ export class AssignComponent implements OnInit {
   collectOneTyping: boolean = false;
   collectTwoTyping: boolean = false;
   collectThreeTyping: boolean = false;
+  allCollectTyping: boolean = false;
   usedTags: string[];
   filteredUsedTags: string[];
   allocateWeekName: string = "";
@@ -160,7 +161,7 @@ export class AssignComponent implements OnInit {
     this.filteredUsedTags = [];
     let regex = new RegExp(typed, "i");
     this.usedTags.forEach(function(value) {
-      if(value.search(regex) != -1 && this.filteredUsedTags.length < 10) {
+      if(value.search(regex) != -1 && this.filteredUsedTags.length < 10 && value.trim() != "") {
         let hlight = "<span class='autocomplete'>" + value.match(regex)[0] + "</span>";
         this.filteredUsedTags.push(value.replace(regex, hlight));
       }
@@ -466,7 +467,8 @@ export class AssignComponent implements OnInit {
           this.apiService.getData("Allocations/AllocationGivts?"+params)
               .then(resp => {
                 let index = this.findEventIndexById(event.id);
-                this.events[index].amount = resp;
+                this.events[index].noTransactions = resp.NoTransactions;
+                this.events[index].amount = resp.Amount;
               });
         }
       })
@@ -531,7 +533,8 @@ export class AssignComponent implements OnInit {
 
       if(fcEvent.allocated){
         let temp = parseFloat(fcEvent.amount);
-        div.innerHTML = "<span class='fat-font'>" + that.displayValue(fcEvent.amount) + "</span> <span>" + that.collectionTranslation + " " + fcEvent.collectId  + "</span><br/>"
+        div.innerHTML = "<span><img src='images/user.png' height='15px' width='15px' style='padding-top: 2px'> " + fcEvent.noTransactions + "</span>"
+                        + "<span style='margin-left:15px' class='fat-font'>" + that.displayValue(fcEvent.amount) + "</span> <span>" + that.collectionTranslation + " " + fcEvent.collectId  + "</span><br/>"
                         + "<span class='fat-font'>" + fcEvent.title + "</span>";
         div.className = "balloon balloon_alter";
       } else {
@@ -597,9 +600,11 @@ export class AssignComponent implements OnInit {
       );
   }
 
-  allocateWeek(){
+  setWeekName(item) {
+    this.allocateWeekName = item.replace("<span class='autocomplete'>","").replace("</span>","");
+  }
 
-    console.log(this.filteredEvents().length);
+  allocateWeek(){
     for(let i = 0; i < this.filteredEvents().length; i++) {
       let obj = this.filteredEvents()[i];
       let coll1 = false, coll2 = false, coll3 = false;
@@ -635,8 +640,25 @@ export class AssignComponent implements OnInit {
     setTimeout(()=>{
       this.allocateWeekName = "";
       this.resetAll();
+      this.filterTags("");
     },250)
   }
+
+  focusAllCollectsTyping(focus){
+    if(!focus){
+      let that = this;
+      setTimeout(()=> {
+        that.allCollectTyping = focus;
+      }, 150);
+    }else{
+      this.allCollectTyping = focus;
+    }
+  }
+
+  allCollectNameChanging(event){
+    this.filterTags(event);
+  }
+
 }
 
 export class MyEvent {

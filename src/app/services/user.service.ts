@@ -16,11 +16,11 @@ export class UserService {
 
     constructor(private dataService: DataService, private http: Http){
         this.loggedIn = !!dataService.getData("accessToken");
-        this.roles = dataService.getData("roles");
+        this.SiteAdmin = dataService.getData("SiteAdmin") == "True";
     }
 
     loggedIn: boolean = false;
-    roles: string = "";
+    SiteAdmin: boolean = false;
     user: User = new User();
 
     login(username: string, password: string){
@@ -48,8 +48,9 @@ export class UserService {
                 if(res.json().access_token){
                     this.loggedIn = true;
                     this.dataService.writeData("accessToken", res.json().access_token);
-                    this.dataService.writeData("roles", JSON.stringify(res.json().AccessRoles.split(',')));
-                    this.roles = this.dataService.getData("roles");
+                    if (res.json().hasOwnProperty("SiteAdmin"))
+                        this.dataService.writeData("SiteAdmin", res.json().SiteAdmin);
+                    this.SiteAdmin = this.dataService.getData("SiteAdmin") == "True";
                 }
                 else{
                     return false;
@@ -59,6 +60,7 @@ export class UserService {
 
     logout(){
         this.loggedIn = false;
+        this.SiteAdmin = false;
         this.dataService.clearAll();
     }
 

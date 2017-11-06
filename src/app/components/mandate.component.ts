@@ -38,7 +38,7 @@ export class MandateComponent implements OnInit{
     SlimPayLink;
     CRMKey : string;
     incassoStatus: string = "Laden...";
-    urlGetCompanies: string = "https://app.teamleader.eu/api/getCompanies.php?api_group=50213&amount=10&selected_customfields=92583,95707,93537,93168,93495,93485,93494,93485,95707,93769&pageno=0&searchby=";
+    urlGetCompanies: string = "https://app.teamleader.eu/api/getCompanies.php?api_group=50213&amount=10&selected_customfields=92583,95707,93537,93168,93495,93485,93494,93485,95707,93769,141639&pageno=0&searchby=";
     urlGetCompany: string = "https://app.teamleader.eu/api/getCompany.php?api_group=50213&company_id=";
 
     organisationAdmin: string = "Lenin";
@@ -177,13 +177,22 @@ export class MandateComponent implements OnInit{
     select(i){
         this.disabled = true;
         this.selectedOrganisation = i;
-        this.selectedOrganisation.cf_value_93485 = i.custom_fields['93485'];
-        this.selectedOrganisation.cf_value_93769 = i.custom_fields['93769'];
-        this.selectedOrganisation.cf_value_95707 = i.custom_fields['95707'];
-        this.selectedOrganisation.cf_value_93494 = i.custom_fields['93494'];
-        this.selectedOrganisation.cf_value_93168 = i.custom_fields['93168'];
-        //replace spaces in IBAN
-        this.selectedOrganisation.cf_value_93537 = i.custom_fields['93537'].replace(/\s/g, '');
+
+        if (i.hasOwnProperty("custom_fields")) {
+            this.selectedOrganisation.cf_value_92583 = i.custom_fields['92583'];
+            this.selectedOrganisation.cf_value_93485 = i.custom_fields['93485'];
+            this.selectedOrganisation.cf_value_93769 = i.custom_fields['93769'];
+            this.selectedOrganisation.cf_value_95707 = i.custom_fields['95707'];
+            this.selectedOrganisation.cf_value_93494 = i.custom_fields['93494'];
+            this.selectedOrganisation.cf_value_93168 = i.custom_fields['93168'];
+            this.selectedOrganisation.cf_value_141639 = i.custom_fields['141639'];
+            this.selectedOrganisation.cf_value_93537 = i.custom_fields['93537'].replace(/\s/g, '');
+            this.selectedOrganisation.cf_value_93495 = i.custom_fields['93495'];
+        } else {
+            if (this.selectedOrganisation.cf_value_93537 != null)
+                this.selectedOrganisation.cf_value_93537 = i.cf_value_93537.replace(/\s/g, '');
+        }
+
         if(this.selectedOrganisation.city)
            this.selectedOrganisation.city = this.decodeHtmlEntity(this.selectedOrganisation.city);
         if(this.selectedOrganisation.name)
@@ -273,20 +282,23 @@ export class MandateComponent implements OnInit{
         }
         let o = this.selectedOrganisation;
         let organisation = {
-            CrmId: this.selectedOrganisation.id.toString(),
-            Name: o.cf_value_93168,
-            Address: o.street,
-            City: o.city,
-            PostalCode: o.zipcode,
-            Country: o.country,
-            TelNr: o.telephone,
-            Accounts: [
-                {
-                    Number: o.cf_value_93537, //iban
-                    Primary: true,
-                    Active: true
-                }
-            ]
+            Organisation : {
+                Name: o.cf_value_93168,
+                Address: o.street,
+                City: o.city,
+                PostalCode: o.zipcode,
+                Country: o.country,
+                TaxDeductable: (o.cf_value_141639 == "1"),
+                TelNr: o.telephone,
+                Accounts: [
+                    {
+                        Number: o.cf_value_93537, //iban
+                        Primary: true,
+                        Active: true
+                    }
+                ]
+            },
+            CrmId : this.selectedOrganisation.id.toString()
         };
         this.apiClient.postData("Organisation", organisation)
             .then(res => { alert("Gelukt!"); console.log(res) });
