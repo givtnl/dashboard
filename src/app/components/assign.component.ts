@@ -130,7 +130,7 @@ export class AssignComponent implements OnInit {
       this.addAllocation(start["_d"], end["_d"]);
     }.bind(this);
 
-    this.apiService.getData('OrgAdmin/getTags')
+    this.apiService.getData('Allocations/AllocationTags')
         .then(data => {
           this.usedTags = data;
         });
@@ -247,7 +247,7 @@ export class AssignComponent implements OnInit {
   }
 
   checkAllocations(){
-    let apiUrl = 'OrgAdminView/AllocationCheck';
+    let apiUrl = 'Allocations/AllocationCheck';
     if(this.currentViewStart !== null && this.currentViewEnd !== null){
       apiUrl += "?dtBegin=" + this.currentViewStart + "&dtEnd=" + this.currentViewEnd;
     }
@@ -395,7 +395,7 @@ export class AssignComponent implements OnInit {
     if (index >= 0) {
       this.events.splice(index, 1);
     }
-    this.apiService.deleteData('OrgAdminView/Allocation?Id=' + eventId)
+    this.apiService.deleteData('Allocations/Allocation?Id=' + eventId)
       .then(resp => {
         this.resetAll();
       })
@@ -446,7 +446,7 @@ export class AssignComponent implements OnInit {
   }
 
   getAllocations(dtStart:any = null,dtEnd: any = null){
-    let apiUrl = 'OrgAdminView/Allocation';
+    let apiUrl = 'Allocations/Allocation';
      if(this.currentViewStart !== null && this.currentViewEnd !== null) {
        apiUrl += "?dtBegin=" + this.currentViewStart + "&dtEnd=" + this.currentViewEnd;
      }
@@ -464,7 +464,7 @@ export class AssignComponent implements OnInit {
           event.amount = this.displayValue("0");
           this.events.push(event);
           let params = "dtBegin=" + moment.utc(event.start).format() + "&dtEnd=" + moment.utc(event.end).format() + "&collectId=" + event.collectId;
-          this.apiService.getData("OrgAdmin/AllocationGivts?"+params)
+          this.apiService.getData("Allocations/AllocationGivts?"+params)
               .then(resp => {
                 let index = this.findEventIndexById(event.id);
                 this.events[index].noTransactions = resp.NoTransactions;
@@ -495,7 +495,7 @@ export class AssignComponent implements OnInit {
       body["dtBegin"] = startTime == null ? this.startTime : startTime;
       body["dtEnd"] = endTime == null ? this.endTime : endTime;
       body["CollectId"] = collectId;
-      this.apiService.postData("OrgAdminView/Allocation", body)
+      this.apiService.postData("Allocations/Allocation", body)
         .then(resp => {
           if(resp.status === 409){
             this.toggleError(true, "Je zit met een overlapping");

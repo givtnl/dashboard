@@ -239,10 +239,18 @@ export class MandateComponent implements OnInit{
                     }
                 }
             },
-            CrmId : this.selectedOrganisation.id.toString(),
-            OrgName : this.selectedOrganisation.name
+            Organisation : {
+                CrmId : o.id.toString(),
+                Name: o.cf_value_93168,
+                Address: o.street,
+                City: o.city,
+                PostalCode: o.zipcode,
+                Country: o.country,
+                TaxDeductable: (o.cf_value_141639 == "1"),
+                TelNr: o.telephone
+            }
         };
-        this.apiClient.postData("OrgMandate/", mandate )
+        this.apiClient.postData("Organisation/", mandate )
             .then(spl => {
                 if(spl){
                     this.SlimPayLink = spl;
@@ -275,33 +283,20 @@ export class MandateComponent implements OnInit{
             .then(d => { alert("Mandaat is verzonden."); console.log(d); });
     }
 
-    registerOrganisation()
+    registerDefaultCollectGroup()
     {
         if(!this.selectedOrganisation){
             return;
         }
         let o = this.selectedOrganisation;
-        let organisation = {
-            Organisation : {
-                Name: o.cf_value_93168,
-                Address: o.street,
-                City: o.city,
-                PostalCode: o.zipcode,
-                Country: o.country,
-                TaxDeductable: (o.cf_value_141639 == "1"),
-                TelNr: o.telephone,
-                Accounts: [
-                    {
-                        Number: o.cf_value_93537, //iban
-                        Primary: true,
-                        Active: true
-                    }
-                ]
-            },
-            CrmId : this.selectedOrganisation.id.toString()
-        };
-        this.apiClient.postData("Organisation", organisation)
-            .then(res => { alert("Gelukt!"); console.log(res) });
+        this.apiClient.postData("CollectGroup?crmId=" + o.id, null)
+            .then(res => {
+                if (res)
+                    alert("Gelukt!");
+                else
+                    alert("Mislukt!");
+                console.log(res)
+            });
     }
 
     registerOrganisationAdmin(){
@@ -340,10 +335,17 @@ export class MandateComponent implements OnInit{
 
     generateOrgAdminPass(){
         var text = "";
+        var charsNeeded = false;
         var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789&%$";
 
-        for( var i=0; i < 8; i++ )
-            text += possible.charAt(Math.floor(Math.random() * possible.length));
+        while (!charsNeeded) {
+            for (var i = 0; i < 8; i++)
+                text += possible.charAt(Math.floor(Math.random() * possible.length));
+            if (/\d/.test(text) && /[A-Z]/.test(text))
+                charsNeeded = true;
+            else
+                text = "";
+        }
         this.organisationAdminPassword = text;
     }
 
