@@ -97,8 +97,8 @@
                 <button (click)="openCRM()" >Vervolledig gegevens in CRM</button>
                 <button [class.disabled]="this.selectedOrganisation.mandate_status" (click)="registerMandate()">Mandaat aanvragen</button>
                 <button [class.disabled]="!this.selectedOrganisation.mandate_status || this.incassoStatus" (click)="startIncasso()">Start incasso</button>
-                <button [class.disabled]="" (click)="registerOrganisation()" >Kerk registreren</button>
-                <button (click)="showRegisterAdmin = !showRegisterAdmin; this.organisationAdmin = this.selectedOrganisation.cf_value_93495; this.generateOrgAdminPass();">Organisatie admin registreren</button>
+                <button [class.disabled]="" (click)="registerDefaultCollectGroup()" >Default collectegroep registreren</button>
+                <button (click)="showRegisterAdmin = !showRegisterAdmin; this.organisationAdmin = this.selectedOrganisation.cf_value_93495; this.generateOrgAdminPass();">Admin registreren</button>
             </article>
         </section>
         <section *ngIf="showRegisterAdmin">
@@ -131,7 +131,7 @@
         </tr>
         <tr *ngFor="let i of currentMandates" class="data-row" (click)="getCompany(i.CrmId)">
             <td>{{i.Name}}</td>
-            <td class="cell"><span [ngClass]="{'status-notok': i.PayProvStatus != 'closed.completed' ,'status-done': i.PayProvStatus == 'closed.completed' }" class="status">{{i.PayProvStatus}}</span> </td>
+            <td class="cell"><span [ngClass]="{'status-notok': i.PayProvMandateStatus != 'closed.completed' ,'status-done': i.PayProvMandateStatus == 'closed.completed' }" class="status">{{i.PayProvMandateStatus}}</span> </td>
             <td class="cell"><span [ngClass]="{'status-notok': i.IncassoStatus != 'Processed' ,'status-done': i.IncassoStatus == 'Processed' }" class="status">{{i.IncassoStatus}}</span></td>
         </tr>
       </table>
