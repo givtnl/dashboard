@@ -26,10 +26,16 @@ export class PayoutsComponent implements OnInit{
     R2Cost = 1.20;
     translate: TranslateService;
 
+    dateBegin: Date = null;
+    dateEnd: Date = null;
 
     constructor(private apiService: ApiClientService,translate: TranslateService, private datePipe: DatePipe) {
         this.isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
         this.translate = translate;
+
+        this.dateBegin = new Date();
+        this.dateEnd = new Date();
+        this.dateBegin.setDate(this.dateBegin.getDate() - 7)
 
     }
 
@@ -60,6 +66,18 @@ export class PayoutsComponent implements OnInit{
         if(!navigator.language.includes('en'))
             euro += " ";
         return euro + (this.isSafari ? (x).toFixed(2) : (x).toLocaleString(navigator.language,{minimumFractionDigits: 2,maximumFractionDigits:2}));
+    }
+
+    exportCSV() {
+      let start = this.dateBegin.toISOString();
+      let end = this.dateEnd.toISOString();
+      let apiUrl = 'Payments/CSV?dtBegin=' + start + '&dtEnd=' + end;
+      this.apiService.getData(apiUrl)
+        .then(resp =>
+        {
+          //TODO: when maarten is ready, parse this response to CSV file!
+          console.log(resp)
+        });
     }
 
 
