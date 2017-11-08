@@ -5,6 +5,7 @@ import { ApiClientService } from "app/services/api-client.service";
 import {Payout} from "../models/payout";
 import {TranslateService} from "ng2-translate";
 import {ViewEncapsulation} from '@angular/core';
+import {DataService} from "../services/data.service";
 
 
 @Component({
@@ -29,7 +30,7 @@ export class PayoutsComponent implements OnInit{
     dateBegin: Date = null;
     dateEnd: Date = null;
 
-    constructor(private apiService: ApiClientService,translate: TranslateService, private datePipe: DatePipe) {
+    constructor(private apiService: ApiClientService,private dataService: DataService, translate: TranslateService, private datePipe: DatePipe) {
         this.isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
         this.translate = translate;
 
@@ -75,8 +76,19 @@ export class PayoutsComponent implements OnInit{
       this.apiService.getData(apiUrl)
         .then(resp =>
         {
-          //TODO: when maarten is ready, parse this response to CSV file!
-          console.log(resp)
+          var csvContent = "data:text/csv;charset=utf-8,";
+          csvContent += resp;
+
+          var encodedUri = encodeURI(csvContent);
+          var link = document.createElement("a");
+          link.setAttribute("href", encodedUri);
+          let beginDate = this.datePipe.transform(new Date(this.dateBegin), "dd-MM-y");
+          let endDate = this.datePipe.transform(new Date(this.dateEnd), "dd-MM-y");
+          let fileName = this.dataService.getData("instanceTitle") + " - " + beginDate + " - " + endDate + ".csv";
+          link.setAttribute("download", fileName);
+          document.body.appendChild(link); // Required for FF
+
+          link.click(); // This will download the data file named "my_data.csv".
         });
     }
 
