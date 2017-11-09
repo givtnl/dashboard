@@ -4,8 +4,8 @@
   <h2>{{"Payout_OverviewPayouts" | translate}}</h2>
   <p class="text">{{"Text_Export" | translate}}</p>
   <div style="margin: 20px auto; text-align: center;display:flex">
-    <p-calendar readonlyInput="readonlyInput" inputStyleClass="date-picker-input" [(ngModel)]="dateBegin" (ngModelChange)="onDateBeginChange($event)" showTime="showTime" dateFormat="dd/mm/yy"></p-calendar><span style="margin: 0 20px;" class="till">{{"Text_TotEnMet" | translate}}</span>
-    <p-calendar readonlyInput="readonlyInput" inputStyleClass="date-picker-input" [(ngModel)]="dateEnd"  (ngModelChange)="onDateEndChange($event)" showTime="showTime" dateFormat="dd/mm/yy"></p-calendar>
+    <p-calendar readonlyInput="readonlyInput" inputStyleClass="date-picker-input" [(ngModel)]="dateBegin" showTime="showTime" dateFormat="dd/mm/yy"></p-calendar><span style="margin: 0 20px;" class="till">{{"Text_TotEnMet" | translate}}</span>
+    <p-calendar readonlyInput="readonlyInput" inputStyleClass="date-picker-input" [(ngModel)]="dateEnd" showTime="showTime" dateFormat="dd/mm/yy"></p-calendar>
     <button style="margin-left: 20px;" class="icon" (click)="exportCSV()">
       <svg width="33px" height="33px" viewBox="0 0 33 33" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
         <!-- Generator: Sketch 46.1 (44463) - http://www.bohemiancoding.com/sketch -->
