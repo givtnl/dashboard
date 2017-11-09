@@ -70,8 +70,9 @@ export class PayoutsComponent implements OnInit{
     }
 
     exportCSV() {
-      let start = this.dateBegin.toISOString();
-      let end = this.dateEnd.toISOString();
+      let start = this.datePipe.transform(this.dateBegin, "y-MM-dd");
+      let end = this.datePipe.transform(this.dateEnd, "y-MM-dd");
+
       let apiUrl = 'Payments/CSV?dtBegin=' + start + '&dtEnd=' + end;
       this.apiService.getData(apiUrl)
         .then(resp =>
