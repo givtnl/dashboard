@@ -53,6 +53,11 @@ nav h1 {
     font-weight: normal;
     max-width: 400px;
     min-width: 200px;
+  align-self: center;
+  min-height: 83px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
 }
 
 .menu-settings{
@@ -68,6 +73,7 @@ nav h1 {
 }
 
 .menu-wrapper{
+  position: relative;
     margin: 0 auto;
     max-width: 1024px;
     display: -webkit-flex;
@@ -122,5 +128,49 @@ nav h1 {
         padding: 15px 0;
         font-size: 18px;
     }
+}
+h1:hover .pick-organisation{
+  visibility: visible;
+}
+
+
+.pick-organisation {
+  align-self: normal;
+  position: absolute;
+  top: calc(100%);
+  background: #5A5387;
+  color:white;
+  font-family: Avenir_Light;
+  max-width: 400px;
+  min-width: 200px;
+  visibility: hidden;
+  box-sizing: border-box;
+  z-index: 99;
+}
+
+.pick-organisation .list-orgs {
+  margin: 0;
+  height:100%;
+  width: 100%;
+}
+.pick-organisation .list-orgs .list-org {
+  padding: 20px;
+  width: 100%;
+  height: 100%;
+  display: block;
+  box-sizing: border-box;
+  font-size: 22px;
+}
+
+.pick-organisation .list-orgs .list-org:hover {
+  font-family: Avenir_Heavy;
+  cursor:pointer;
+  background: #2E2957;
+}
+
+.dropdown-arrow {
+  background: transparent;
+  border: 0;
+  margin-left: auto;
 }
 

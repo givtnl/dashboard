@@ -13,33 +13,65 @@ import {DataService} from "../services/data.service";
     styleUrls: ['../css/navigation.component.css']
 })
 export class NavigationComponent implements OnInit {
-    instance_title: string;
+    instance_title: string = "";
     dataService: DataService;
     userService: UserService;
 
     showMandateLink = false;
 
+    collectGroups = new Array();
     constructor(userService: UserService, private router: Router, private translate: TranslateService, dataService: DataService, private apiService: ApiClientService) {
       this.dataService = dataService;
       this.userService = userService;
     }
 
     ngOnInit() {
-        let title = this.dataService.getData("instanceTitle");
+      let currCollectGroup = this.dataService.getData("currentCollectGroup");
+
+        if(this.dataService.getData("currentCollectGroup") != undefined) {
+          this.instance_title = JSON.parse(currCollectGroup).name
+        }
+
         this.showMandateLink = this.userService.SiteAdmin;
 
+        if(this.dataService.getData("CollectGroupAdmin") != undefined) {
+          this.collectGroups = JSON.parse(this.dataService.getData("CollectGroupAdmin"));
+          console.log(this.collectGroups);
+          //console.log(this.collectGroups.count());
+          console.log(this.collectGroups.length);
+          for(let x in this.collectGroups) {
+            console.log(this.collectGroups[x].id);
+            console.log(this.collectGroups[x].name);
+          }
 
-        if(!title){
+        }
+
+        if(this.instance_title == ""){
             return this.apiService.getData('CollectGroupView/CollectGroup')
                 .then(res => {
-                    this.instance_title = res;
-                    this.dataService.writeData("instanceTitle", res);
-                  //  return res;
+                  this.collectGroups = res;
+
+                  let item;
+                  let items= [];
+                  for (let o in this.collectGroups) {
+                    item = {id: o, name: this.collectGroups[o]};
+                    items.push(item);
+                  }
+                  this.collectGroups = items;
+                  this.dataService.writeData("CollectGroupAdmin", JSON.stringify(items));
+
+                  this.dataService.writeData("currentCollectGroup",JSON.stringify(item));
+                  this.instance_title = item.name;
                 }).catch(err => console.log(err));
         }
-        else{
-                this.instance_title = title;
-        }
+
+
+
+    }
+
+    setCollectGroup(cg) {
+      this.dataService.writeData("currentCollectGroup", JSON.stringify(cg));
+      this.instance_title = cg.name;
     }
 
     logout(){

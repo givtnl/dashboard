@@ -1,7 +1,35 @@
 <my-alert></my-alert>
 <nav>
     <div class="menu-wrapper">
-        <h1><span>{{instance_title}}</span></h1>
+        <h1>
+          <span>{{instance_title}}</span>
+          <button *ngIf="collectGroups.length > 1" class="dropdown-arrow">
+            <svg width="24px" height="15px" viewBox="0 0 24 15" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+              <!-- Generator: Sketch 47.1 (45422) - http://www.bohemiancoding.com/sketch -->
+              <desc>Created with Sketch.</desc>
+              <defs></defs>
+              <g id="Kiezen-voor-welke-organisatie" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="square">
+                <g id="Overzichtspagina" transform="translate(-363.000000, -34.000000)" stroke="#FFFFFF" stroke-width="4">
+                  <g id="Group-7">
+                    <g id="Group-18" transform="translate(375.000000, 41.000000) rotate(-90.000000) translate(-375.000000, -41.000000) translate(370.000000, 32.000000)">
+                      <path d="M0.557359313,9.04264069 L9.04264069,0.557359313" id="Line"></path>
+                      <path d="M0.6,9 L9.08528137,17.4852814" id="Line-Copy-2"></path>
+                    </g>
+                  </g>
+                </g>
+              </g>
+            </svg>
+          </button>
+
+          <div *ngIf="collectGroups.length > 1" class="pick-organisation">
+            <ul class="list-orgs">
+              <li class="list-org" *ngFor="let cg of collectGroups" (click)="setCollectGroup(cg)">
+                {{cg.name}}
+              </li>
+            </ul>
+          </div>
+        </h1>
+
         <ul>
             <li><a routerLink="/dashboard" routerLinkActive="active">{{"Menu_Overview" | translate}}</a></li>
             <li><a routerLink="/collects" routerLinkActive="active">{{"Menu_Collectes" | translate}}</a></li>
@@ -26,5 +54,8 @@
                    </g>
                 </svg>
             <span>{{"Text_Logout" | translate}}</span></span>
+
     </div>
+
 </nav>
+

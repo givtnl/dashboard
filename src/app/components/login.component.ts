@@ -29,6 +29,7 @@ export class LoginComponent  {
         }
         this.userService.login(this.userName, this.password)
             .then(resp => {
+              console.log(resp);
                 this.router.navigate(['/dashboard']);
             },
             error => {

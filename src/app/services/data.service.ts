@@ -4,12 +4,12 @@ import 'rxjs/add/operator/toPromise'; //to support toPromise
 
 @Injectable()
 export class DataService {
-    dataDictionary = new Dictionary<string>();
+    dataDictionary = new Dictionary<any>();
 
     constructor() {
     }
 
-    writeData(key:string, data:string, local:boolean = false){
+    writeData(key:string, data:any, local:boolean = false){
         if(local){
             localStorage.setItem(key, data);
             this.dataDictionary.Add(key, data);
@@ -18,8 +18,7 @@ export class DataService {
             this.dataDictionary.Add(key, data);
         }
     }
-
-    getData(key: string){
+    getData(key: any){
         if(this.dataDictionary.Item(key))
         {
             return this.dataDictionary.Item(key);
@@ -46,7 +45,7 @@ export class Dictionary<T> {
 
     private count: number = 0;
 
-    public ContainsKey(key: string): boolean {
+    public ContainsKey(key: any): boolean {
         return this.items.hasOwnProperty(key);
     }
 
@@ -58,27 +57,27 @@ export class Dictionary<T> {
         return this.count;
     }
 
-    public Add(key: string, value: T) {
+    public Add(key: any, value: T) {
         this.items[key] = value;
         this.count++;
     }
 
-    public Remove(key: string): T {
+    public Remove(key: any): T {
         var val = this.items[key];
         delete this.items[key];
         this.count--;
         return val;
     }
 
-    public Item(key: string): T {
+    public Item(key: any): T {
         return this.items[key];
     }
 
-    public Keys(): string[] {
+    public Keys(): any[] {
         return Object.keys(this.items);
     }
 
-    public Values(): string[] {
+    public Values(): any[] {
         return Object.keys(this.items).map(function(key) {
             return this.items[key];
         });
