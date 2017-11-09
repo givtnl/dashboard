@@ -2,7 +2,7 @@
 <section class="section-collects">
   <h2 *ngIf="openAllocations" class="red">{{ "OpenAllocationsMessage" | translate}}</h2>
   <h2>{{"Payout_OverviewPayouts" | translate}}</h2>
-  <p class="text">Een export aanvragen kan doorhieronder zowel een startdatum en einddatum in tegeven en op het symbool te drukken.</p>
+  <p class="text">{{"Text_Export" | translate}}</p>
   <div style="margin: 20px auto; text-align: center;display:flex">
     <p-calendar readonlyInput="readonlyInput" inputStyleClass="date-picker-input" [(ngModel)]="dateBegin" (ngModelChange)="onDateBeginChange($event)" showTime="showTime" dateFormat="dd/mm/yy"></p-calendar><span style="margin: 0 20px;" class="till">{{"Text_TotEnMet" | translate}}</span>
     <p-calendar readonlyInput="readonlyInput" inputStyleClass="date-picker-input" [(ngModel)]="dateEnd"  (ngModelChange)="onDateEndChange($event)" showTime="showTime" dateFormat="dd/mm/yy"></p-calendar>
