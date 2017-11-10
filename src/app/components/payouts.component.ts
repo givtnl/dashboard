@@ -85,7 +85,13 @@ export class PayoutsComponent implements OnInit{
           link.setAttribute("href", encodedUri);
           let beginDate = this.datePipe.transform(new Date(this.dateBegin), "dd-MM-y");
           let endDate = this.datePipe.transform(new Date(this.dateEnd), "dd-MM-y");
-          let fileName = this.dataService.getData("instanceTitle") + " - " + beginDate + " - " + endDate + ".csv";
+          let orgName = "";
+
+          if(this.dataService.getData("currentCollectGroup") != undefined) {
+            orgName = JSON.parse(this.dataService.getData("currentCollectGroup")).Name;
+          }
+
+          let fileName = orgName + " - " + beginDate + " - " + endDate + ".csv";
           link.setAttribute("download", fileName);
           document.body.appendChild(link); // Required for FF
 

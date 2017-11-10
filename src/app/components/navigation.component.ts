@@ -36,6 +36,7 @@ export class NavigationComponent implements OnInit {
               this.collectGroups = res;
               this.currentCollectGroup = this.collectGroups[0];
               this.dataService.writeData("CollectGroupAdmin", JSON.stringify(this.collectGroups));
+              this.dataService.writeData("currentCollectGroup", JSON.stringify(this.currentCollectGroup));
             }).catch(err => console.log(err));
         }
     }
