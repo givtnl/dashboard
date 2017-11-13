@@ -126,6 +126,7 @@ export class AssignComponent implements OnInit {
     this.options['fixedWeekCount'] = false;
     this.options['unselectAuto'] = false;
     this.options['selectable'] = true;
+    this.options['scrollTime'] = '08:00:00';
     this.options['select'] = function(start, end, jsEvent, view, resource) {
       this.addAllocation(start["_d"], end["_d"]);
     }.bind(this);
