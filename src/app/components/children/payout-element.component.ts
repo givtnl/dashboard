@@ -170,4 +170,24 @@ export class PayoutComponent implements OnInit{
         });
     });
   }
+
+  exportCSV(){
+
+    let data = [["Total paid", "Pledged", "Costs", "VAT", "Storno"], [this.childData.TotalPaid, this.pledgedAmount,this.childData.MandateCost + this.childData.PayoutCost + this.childData.TransactionCost + this.childData.RTransactionT1Cost + this.childData.RTransactionT2Cost + this.childData.GivtServiceFee,this.childData.MandateTaxes + this.childData.PayoutCostTaxes + this.childData.TransactionTaxes + this.childData.GivtServiceFeeTaxes + this.childData.RTransactionTaxes, this.childData.RTransactionAmount]];
+    console.log(data);
+    var csvContent = "data:text/csv;charset=utf-8,";
+    data.forEach((infoArray, index) => {
+      let dataString = infoArray.join(",");
+      csvContent += index < data.length ? dataString+ "\n" : dataString;
+    });
+    var encodedUri = encodeURI(csvContent);
+    var link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    let fileName = this.childData.BeginDate + "-" + this.childData.EndDate + ".csv";
+    link.setAttribute("download", fileName);
+    document.body.appendChild(link); // Required for FF
+
+    link.click(); // This will download the data file named "my_data.csv".
+    console.log("download click");
+  }
 }
