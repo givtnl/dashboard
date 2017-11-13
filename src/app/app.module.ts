@@ -73,7 +73,7 @@ export function createTranslateLoader(http: Http) {
     CalendarModule
   ],
   providers: [
-      DataService,
+    DataService,
     UserService,
     ApiClientService,
     AdminGuard,

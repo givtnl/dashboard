@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {ApiClientService} from "../../services/api-client.service";
+import {DataService} from "../../services/data.service";
 import {DatePipe} from "@angular/common";
 import {TranslateService} from "ng2-translate";
 import {ViewEncapsulation} from '@angular/core';
@@ -34,7 +35,7 @@ export class PayoutComponent implements OnInit{
   pledgedAmount: number;
 
 
-  constructor(private apiClient: ApiClientService,private translate: TranslateService, private datePipe: DatePipe) {
+  constructor(private apiClient: ApiClientService, private dataService: DataService, private translate: TranslateService, private datePipe: DatePipe) {
     this.isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
     this.name = "Testen";
 
@@ -171,23 +172,33 @@ export class PayoutComponent implements OnInit{
     });
   }
 
-  exportCSV(){
+  exportCSV() {
+        let start = this.datePipe.transform(new Date(this.childData.BeginDate), "y-MM-dd");
+        let end = this.datePipe.transform(new Date(this.childData.EndDate), "y-MM-dd");
 
-    let data = [["Total paid", "Pledged", "Costs", "VAT", "Storno"], [this.childData.TotalPaid, this.pledgedAmount,this.childData.MandateCost + this.childData.PayoutCost + this.childData.TransactionCost + this.childData.RTransactionT1Cost + this.childData.RTransactionT2Cost + this.childData.GivtServiceFee,this.childData.MandateTaxes + this.childData.PayoutCostTaxes + this.childData.TransactionTaxes + this.childData.GivtServiceFeeTaxes + this.childData.RTransactionTaxes, this.childData.RTransactionAmount]];
-    console.log(data);
-    var csvContent = "data:text/csv;charset=utf-8,";
-    data.forEach((infoArray, index) => {
-      let dataString = infoArray.join(",");
-      csvContent += index < data.length ? dataString+ "\n" : dataString;
-    });
-    var encodedUri = encodeURI(csvContent);
-    var link = document.createElement("a");
-    link.setAttribute("href", encodedUri);
-    let fileName = this.childData.BeginDate + "-" + this.childData.EndDate + ".csv";
-    link.setAttribute("download", fileName);
-    document.body.appendChild(link); // Required for FF
+        let apiUrl = 'Payments/CSV?dtBegin=' + start + '&dtEnd=' + end;
+        this.apiClient.getData(apiUrl)
+            .then(resp =>
+            {
+                var csvContent = "data:text/csv;charset=utf-8,";
+                csvContent += resp;
 
-    link.click(); // This will download the data file named "my_data.csv".
-    console.log("download click");
-  }
+                var encodedUri = encodeURI(csvContent);
+                var link = document.createElement("a");
+                link.setAttribute("href", encodedUri);
+                let beginDate = this.datePipe.transform(new Date(this.childData.BeginDate), "dd-MM-y");
+                let endDate = this.datePipe.transform(new Date(this.childData.EndDate), "dd-MM-y");
+                let orgName = "";
+
+                if(this.dataService.getData("currentCollectGroup") != undefined) {
+                    orgName = JSON.parse(this.dataService.getData("currentCollectGroup")).Name;
+                }
+
+                let fileName = orgName + " - " + beginDate + " - " + endDate + ".csv";
+                link.setAttribute("download", fileName);
+                document.body.appendChild(link); // Required for FF
+
+                link.click(); // This will download the data file named "my_data.csv".
+            });
+    }
 }
