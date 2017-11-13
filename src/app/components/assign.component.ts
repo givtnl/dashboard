@@ -530,6 +530,10 @@ export class AssignComponent implements OnInit {
     element[0].addEventListener("mouseover", function(ev) {
 
       let fcEvent = that.events[that.findEventIndexById(event.id)];
+      if(fcEvent.amount === "€ 0"){
+        return;
+      }
+
       let div = document.createElement("div");
 
       if(fcEvent.allocated){
