@@ -15,6 +15,7 @@ import {ViewEncapsulation} from '@angular/core';
 export class PayoutComponent implements OnInit{
   ngOnInit(): void {
     console.log(this.childData);
+    console.log(this.loader);
     this.doSomeFancyStuff();
   }
 
@@ -28,6 +29,7 @@ export class PayoutComponent implements OnInit{
 
   isSafari: boolean;
   @Input() childData: any;
+  @Input() loader: object;
   name: string = "";
   transactionCost = 0.08;
   mandateCost = 0.125;
@@ -173,6 +175,7 @@ export class PayoutComponent implements OnInit{
   }
 
   exportCSV() {
+    this.loader["show"] = true;
         let start = this.datePipe.transform(new Date(this.childData.BeginDate), "y-MM-dd");
         let end = this.datePipe.transform(new Date(this.childData.EndDate), "y-MM-dd");
 
@@ -180,6 +183,7 @@ export class PayoutComponent implements OnInit{
         this.apiClient.getData(apiUrl)
             .then(resp =>
             {
+              this.loader["show"] = false;
                 var csvContent = "data:text/csv;charset=utf-8,";
                 csvContent += resp;
 

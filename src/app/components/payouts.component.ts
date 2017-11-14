@@ -29,7 +29,7 @@ export class PayoutsComponent implements OnInit{
 
     dateBegin: Date = null;
     dateEnd: Date = null;
-
+    loader: object = {show: false};
     constructor(private apiService: ApiClientService,private dataService: DataService, translate: TranslateService, private datePipe: DatePipe) {
         this.isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
         this.translate = translate;
@@ -70,6 +70,7 @@ export class PayoutsComponent implements OnInit{
     }
 
     exportCSV() {
+      this.loader["show"] = true;
       let start = this.datePipe.transform(this.dateBegin, "y-MM-dd");
       let end = this.datePipe.transform(this.dateEnd, "y-MM-dd");
 
@@ -77,6 +78,7 @@ export class PayoutsComponent implements OnInit{
       this.apiService.getData(apiUrl)
         .then(resp =>
         {
+          this.loader["show"] = false;
           var csvContent = "data:text/csv;charset=utf-8,";
           csvContent += resp;
 

@@ -29,7 +29,13 @@
   <hr class="collect-hr"/>
 </section>
     <section *ngFor="let payout of payouts | reverse; let last = last" [ngClass]="{last: last}">
-      <payout [childData]="payout"></payout>
+      <payout [childData]="payout" [loader]="loader" ></payout>
     </section>
-
+<div class="overlay-loader" *ngIf="loader['show']">
+  <div class="loader" style="margin-top: 45vh">
+    <svg class="circular" viewBox="25 25 50 50">
+      <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="5" stroke-miterlimit="10"/>
+    </svg>
+  </div>
+</div>
 <my-footer></my-footer>
