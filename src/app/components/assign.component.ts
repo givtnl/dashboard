@@ -462,7 +462,8 @@ export class AssignComponent implements OnInit {
           event.collectId = resp[i]['CollectId'];
           event.className = "allocation";
           event.allocated = true;
-          event.amount = this.displayValue("0");
+          event.amount = null;
+          event.transactions = [];
           this.events.push(event);
           let params = "dtBegin=" + moment.utc(event.start).format() + "&dtEnd=" + moment.utc(event.end).format() + "&collectId=" + event.collectId;
           this.apiService.getData("Allocations/AllocationGivts?"+params)
@@ -530,17 +531,19 @@ export class AssignComponent implements OnInit {
     element[0].addEventListener("mouseover", function(ev) {
 
       let fcEvent = that.events[that.findEventIndexById(event.id)];
-      if(fcEvent.amount === "€ 0"){
-        return;
-      }
 
       let div = document.createElement("div");
 
       if(fcEvent.allocated){
-        let temp = parseFloat(fcEvent.amount);
-        div.innerHTML = "<span><img src='images/user.png' height='15px' width='15px' style='padding-top: 2px'> " + fcEvent.noTransactions + "</span>"
-                        + "<span style='margin-left:15px' class='fat-font'>" + that.displayValue(fcEvent.amount) + "</span> <span>" + that.collectionTranslation + " " + fcEvent.collectId  + "</span><br/>"
-                        + "<span class='fat-font'>" + fcEvent.title + "</span>";
+        if(!fcEvent.amount){
+            that.ts.get('Loading').subscribe((res) => {
+                div.innerHTML = "<span class='fat-font'>" + res + "...</span>";
+            });
+        } else {
+            div.innerHTML = "<span><img src='images/user.png' height='15px' width='15px' style='padding-top: 2px'> " + fcEvent.noTransactions + "</span>"
+                + "<span style='margin-left:15px' class='fat-font'>" + that.displayValue(fcEvent.amount) + "</span> <span>" + that.collectionTranslation + " " + fcEvent.collectId + "</span><br/>"
+                + "<span class='fat-font'>" + fcEvent.title + "</span>";
+        }
         div.className = "balloon balloon_alter";
       } else {
         div.innerHTML = that.notYetAllocated + "<br/>";

@@ -105,5 +105,6 @@
     "Users": "gebruikers",
     "AssignOpenCollectes": "Alle niet-toegewezen collectes toewijzen: ",
     "InvalidToken": "De geldigheid van deze link is verlopen. Probeer een nieuw wachtwoord aan te vragen.",
-    "Text_Export": "Geef een start- en einddatum in en klik op het download-symbool om een export te verkrijgen."
+    "Text_Export": "Geef een start- en einddatum in en klik op het download-symbool om een export te verkrijgen.",
+    "Loading": "Laden"
 }
