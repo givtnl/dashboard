@@ -7,6 +7,7 @@ import 'rxjs/add/operator/toPromise';
 import {UserService} from "./user.service";
 import {Router} from "@angular/router";
 import {DataService} from "./data.service";
+import {User} from "../models/user";
 
 @Injectable()
 export class ApiClientService {
@@ -107,6 +108,8 @@ export class ApiClientService {
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
         headers.append('authorization', 'Bearer '+ this.dataService.getData("accessToken"));
+        if (this.dataService.getData("CurrentCollectGroup"))
+            headers.append('CollectGroupId', JSON.parse(this.dataService.getData("CurrentCollectGroup")).GUID);
 
         //do the http call
         return this.http

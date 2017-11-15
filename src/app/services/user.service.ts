@@ -24,7 +24,7 @@ export class UserService {
 
     loggedIn: boolean = false;
     SiteAdmin: boolean = false;
-    public CollectGroups: any[] = null;
+    public CollectGroups: Array<any> = null;
     public CurrentCollectGroup: any = null;
     user: User = new User();
 
