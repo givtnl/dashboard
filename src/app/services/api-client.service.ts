@@ -14,7 +14,7 @@ export class ApiClientService {
     private apiUrl = environment.apiUrl + '/api/';
     dataService: DataService;
 
-    constructor(private http: Http, private userService: UserService, private router: Router, dataService: DataService){
+    constructor(private http: Http, private router: Router, dataService: DataService){
         this.dataService = dataService;
     }
 

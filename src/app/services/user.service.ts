@@ -8,19 +8,24 @@ import { environment } from '../../environments/environment';
 
 import { User } from '../models/user';
 import { DataService } from "./data.service";
+import { ApiClientService} from "./api-client.service";
 
 @Injectable()
 export class UserService {
     //this has to become environment variable in story 2461
     private apiUrl = environment.apiUrl + '/oauth2/token';
 
-    constructor(private dataService: DataService, private http: Http){
+    constructor(private dataService: DataService, private apiService: ApiClientService, private http: Http){
         this.loggedIn = !!dataService.getData("accessToken");
         this.SiteAdmin = dataService.getData("SiteAdmin") == "True";
+        this.CollectGroups = dataService.getData("CollectGroups");
+        this.CurrentCollectGroup = dataService.getData("CurrentCollectGroup")
     }
 
     loggedIn: boolean = false;
     SiteAdmin: boolean = false;
+    public CollectGroups: any[] = null;
+    public CurrentCollectGroup: any = null;
     user: User = new User();
 
     login(username: string, password: string){
@@ -48,9 +53,23 @@ export class UserService {
                 if(res.json().access_token){
                     this.loggedIn = true;
                     this.dataService.writeData("accessToken", res.json().access_token);
+
                     if (res.json().hasOwnProperty("SiteAdmin"))
                         this.dataService.writeData("SiteAdmin", res.json().SiteAdmin);
                     this.SiteAdmin = this.dataService.getData("SiteAdmin") == "True";
+
+                    if (res.json().hasOwnProperty("CollectGroupAdmin")) {
+                        return this.apiService.getData('CollectGroupView/CollectGroup')
+                            .then(res => {
+                                this.dataService.writeData("CollectGroups", JSON.stringify(res));
+                                if (!this.CurrentCollectGroup || this.CollectGroups.indexOf(this.CurrentCollectGroup) < 0)
+                                    this.dataService.writeData("CurrentCollectGroup", JSON.stringify(res[0]), true);
+                                this.CurrentCollectGroup = JSON.parse(this.dataService.getData("CurrentCollectGroup"));
+                                this.CollectGroups = JSON.parse(this.dataService.getData("CollectGroups"));
+                            }).catch(err => console.log(err));
+                    } else {
+                        this.dataService.writeData("CurrentCollectGroup", null, true);
+                    }
                 }
                 else{
                     return false;
@@ -62,10 +81,6 @@ export class UserService {
         this.loggedIn = false;
         this.SiteAdmin = false;
         this.dataService.clearAll();
-    }
-
-    getAccessToken(){
-        return localStorage.getItem('access_token') || sessionStorage.getItem('access_token');
     }
 
     requestNewPass(email){
@@ -87,5 +102,14 @@ export class UserService {
             .then(res=>{
                 return res;
             });
+    }
+
+    changeCollectGroup(cg) {
+        if (this.CollectGroups.indexOf(cg) > -1) {
+            this.dataService.writeData("CurrentCollectGroup", JSON.stringify(cg), true);
+            this.CurrentCollectGroup = cg;
+        }
+        else
+            console.log("Collect group does not exist");
     }
 }
