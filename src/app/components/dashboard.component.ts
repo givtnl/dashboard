@@ -7,6 +7,7 @@ import { ApiClientService } from "app/services/api-client.service";
 import {TranslateService} from "ng2-translate";
  import {DataService} from "../services/data.service";
  import {environment} from "../../environments/environment";
+ import {UserService} from "../services/user.service";
 
  declare var google: any;
 @Component({
@@ -36,11 +37,14 @@ export class DashboardComponent implements OnInit, OnDestroy{
 
     lastSundaySum: number;
 
-    constructor(private apiService: ApiClientService,  translate:TranslateService, private datePipe: DatePipe, private dataService: DataService){
+    constructor(private apiService: ApiClientService,  translate:TranslateService, private datePipe: DatePipe, private dataService: DataService, private userService: UserService){
         this.translate = translate;
         this.isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
         this.ShowLoadingAnimation = true;
 
+        this.userService.collectGroupChanged.subscribe(() => {
+            this.ngOnInit();
+        });
     }
 
     ngOnDestroy(): void{

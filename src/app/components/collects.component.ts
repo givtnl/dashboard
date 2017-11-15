@@ -7,6 +7,7 @@ import { TranslateService } from "ng2-translate";
 import {CalendarModule} from "primeng/primeng";
 import {Collection} from "../models/collection";
 import {DataService} from "../services/data.service";
+import {UserService} from "../services/user.service";
 @Component({
     selector: 'my-collects',
     templateUrl: '../html/collects.component.html',
@@ -123,7 +124,7 @@ export class CollectsComponent implements OnInit{
 
 
 
-    constructor(private apiService: ApiClientService, translate: TranslateService,calendarModule: CalendarModule, private datePipe: DatePipe, private dataService: DataService) {
+    constructor(private apiService: ApiClientService, translate: TranslateService, private datePipe: DatePipe, private dataService: DataService, private userService: UserService) {
         this.locale = this.nl;
 
         this.isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
@@ -153,8 +154,11 @@ export class CollectsComponent implements OnInit{
           let e = new Date(1970, 0, 1);
           this.dateBegin = new Date(b.setSeconds(Number(this.dataService.getData('dateBegin'))));
           this.dateEnd = new Date(e.setSeconds(Number(this.dataService.getData('dateEnd'))));
-
         }
+        
+        this.userService.collectGroupChanged.subscribe(() => {
+            this.ngOnInit();
+        });
     }
 
   checkAllocations(){

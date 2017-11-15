@@ -9,9 +9,12 @@ import { environment } from '../../environments/environment';
 import { User } from '../models/user';
 import { DataService } from "./data.service";
 import { ApiClientService} from "./api-client.service";
+import { EventEmitter, Output } from "@angular/core";
 
 @Injectable()
 export class UserService {
+    @Output() collectGroupChanged: EventEmitter<any> = new EventEmitter();
+
     //this has to become environment variable in story 2461
     private apiUrl = environment.apiUrl + '/oauth2/token';
 
@@ -28,7 +31,8 @@ export class UserService {
     public CurrentCollectGroup: any = null;
     user: User = new User();
 
-    login(username: string, password: string){
+    login(username: string, password: string) {
+        this.CurrentCollectGroup = this.dataService.getData("CurrentCollectGroup")
         //Set the headers
         let headers = new Headers();
         headers.append('Content-Type', 'application/x-www-form-urlencoded');
@@ -108,6 +112,7 @@ export class UserService {
         if (this.CollectGroups.indexOf(cg) > -1) {
             this.dataService.writeData("CurrentCollectGroup", JSON.stringify(cg), true);
             this.CurrentCollectGroup = cg;
+            this.collectGroupChanged.emit(null);
         }
         else
             console.log("Collect group does not exist");

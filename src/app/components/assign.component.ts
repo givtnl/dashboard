@@ -6,6 +6,7 @@ import 'fullcalendar';
 import 'fullcalendar/dist/locale/nl';
 import {AllocationTimeSpanItem, Transaction} from "../models/allocationTimeSpanItem";
 import {element} from "protractor";
+import {UserService} from "../services/user.service";
 declare var moment: any;
 @Component({
   selector: 'app-assign-collects',
@@ -70,7 +71,7 @@ export class AssignComponent implements OnInit {
   endTime: Date;
 
   @ViewChild('calendar') calendar: ElementRef;
-  public constructor(private ts: TranslateService, private cd: ChangeDetectorRef, private apiService: ApiClientService) {
+  public constructor(private ts: TranslateService, private cd: ChangeDetectorRef, private apiService: ApiClientService, private userService: UserService) {
     this.isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
     this.ts.get('Collection').subscribe((res: string) => {
         this.collectionTranslation = res;
@@ -88,6 +89,9 @@ export class AssignComponent implements OnInit {
         this.resetAll(false);
       }
     }.bind(this);
+    this.userService.collectGroupChanged.subscribe(() => {
+      this.ngOnInit();
+    });
   }
 
   ngOnInit(): void {

@@ -17,7 +17,7 @@ export class NavigationComponent implements OnInit {
     showMandateLink = false;
 
     currentCollectGroup: any = {Name:"", GUID:""};
-    collectGroups = new Array();
+    collectGroups : Array<any> = null;
     constructor(userService: UserService, private router: Router) {
       this.userService = userService;
     }

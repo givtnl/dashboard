@@ -6,6 +6,7 @@ import {Payout} from "../models/payout";
 import {TranslateService} from "ng2-translate";
 import {ViewEncapsulation} from '@angular/core';
 import {DataService} from "../services/data.service";
+import {UserService} from "../services/user.service";
 
 
 @Component({
@@ -30,7 +31,7 @@ export class PayoutsComponent implements OnInit{
     dateBegin: Date = null;
     dateEnd: Date = null;
     loader: object = {show: false};
-    constructor(private apiService: ApiClientService,private dataService: DataService, translate: TranslateService, private datePipe: DatePipe) {
+    constructor(private apiService: ApiClientService,private dataService: DataService, translate: TranslateService, private datePipe: DatePipe, private userService: UserService) {
         this.isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
         this.translate = translate;
 
@@ -38,6 +39,9 @@ export class PayoutsComponent implements OnInit{
         this.dateEnd = new Date();
         this.dateBegin.setDate(this.dateBegin.getDate() - 7)
 
+        this.userService.collectGroupChanged.subscribe(() => {
+            this.ngOnInit();
+        });
     }
 
   checkAllocations(){
