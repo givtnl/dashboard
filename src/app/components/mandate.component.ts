@@ -241,7 +241,7 @@ export class MandateComponent implements OnInit{
             },
             Organisation : {
                 CrmId : o.id.toString(),
-                Name: o.cf_value_93168,
+                Name: o.name,
                 Address: o.street,
                 City: o.city,
                 PostalCode: o.zipcode,
