@@ -1,0 +1,33 @@
+{  
+  "applinks":{  
+    "apps":[  
+
+    ],
+    "details":[  
+      {  
+        "appID":"9C9K7PRW9C.com.givt.ios",
+        "paths":[  
+          "/hockey"
+        ]
+      },
+      {  
+        "appID":"9C9K7PRW9C.com.givt.iospre",
+        "paths":[  
+          "/hockey-pre"
+        ]
+      },
+      {  
+        "appID":"9C9K7PRW9C.com.givt.iosdemo",
+        "paths":[  
+          "/hockey-demo"
+        ]
+      },      
+      {  
+        "appID":"YDSA4AY496.net.givtapp.ios",
+        "paths":[  
+          "/store"
+        ]
+      }
+    ]
+  }
+}
