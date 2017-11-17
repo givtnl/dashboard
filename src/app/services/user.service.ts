@@ -110,7 +110,7 @@ export class UserService {
 
     changeCollectGroup(cg) {
         if (this.CollectGroups.indexOf(cg) > -1) {
-            this.dataService.writeData("CurrentCollectGroup", JSON.stringify(cg), true);
+            this.dataService.writeData("CurrentCollectGroup", JSON.stringify(cg));
             this.CurrentCollectGroup = cg;
             this.collectGroupChanged.emit(null);
         }
