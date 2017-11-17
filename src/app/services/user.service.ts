@@ -67,12 +67,12 @@ export class UserService {
                             .then(res => {
                                 this.dataService.writeData("CollectGroups", JSON.stringify(res));
                                 if (!this.CurrentCollectGroup || this.CollectGroups.indexOf(this.CurrentCollectGroup) < 0)
-                                    this.dataService.writeData("CurrentCollectGroup", JSON.stringify(res[0]), true);
+                                    this.dataService.writeData("CurrentCollectGroup", JSON.stringify(res[0]));
                                 this.CurrentCollectGroup = JSON.parse(this.dataService.getData("CurrentCollectGroup"));
                                 this.CollectGroups = JSON.parse(this.dataService.getData("CollectGroups"));
                             }).catch(err => console.log(err));
                     } else {
-                        this.dataService.writeData("CurrentCollectGroup", null, true);
+                        this.dataService.writeData("CurrentCollectGroup", null);
                     }
                 }
                 else{
