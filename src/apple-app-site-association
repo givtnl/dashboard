@@ -5,6 +5,12 @@
     ],
     "details":[  
       {  
+        "appID":"9C9K7PRW9C.com.givt.iosnativedev",
+        "paths":[  
+          "/native"
+        ]
+      },
+      {  
         "appID":"9C9K7PRW9C.com.givt.ios",
         "paths":[  
           "/hockey"
