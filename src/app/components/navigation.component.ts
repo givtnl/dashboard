@@ -17,19 +17,16 @@ export class NavigationComponent implements OnInit {
     showMandateLink = false;
 
     currentCollectGroup: any = {Name:"", GUID:""};
-    collectGroups : any = [];
+    collectGroups : Array<any> = null;
     constructor(userService: UserService, private router: Router) {
       this.userService = userService;
     }
 
     ngOnInit() {
-      console.log("nav init");
       this.showMandateLink = this.userService.SiteAdmin;
-      console.log(this.userService.CollectGroups);
-      console.log(this.userService.CurrentCollectGroup);
       if (this.userService.CurrentCollectGroup) {
-          this.collectGroups = JSON.parse(this.userService.CollectGroups);
-          this.currentCollectGroup = JSON.parse(this.userService.CurrentCollectGroup);
+          this.collectGroups = this.userService.CollectGroups;
+          this.currentCollectGroup = this.userService.CurrentCollectGroup;
       }
     }
 

@@ -115,9 +115,8 @@ export class ApiClientService {
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
         headers.append('authorization', 'Bearer '+ this.dataService.getData("accessToken"));
-
         if (this.dataService.getData("CurrentCollectGroup"))
-            headers.append('CollectGroupId', JSON.parse(String(this.dataService.getData("CurrentCollectGroup"))).GUID);
+            headers.append('CollectGroupId', JSON.parse(this.dataService.getData("CurrentCollectGroup")).GUID);
 
         //do the http call
         return this.http

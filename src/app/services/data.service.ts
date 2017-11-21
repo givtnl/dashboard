@@ -9,7 +9,7 @@ export class DataService {
     constructor() {
     }
 
-    writeData(key:any, data:any, local:boolean = false){
+    writeData(key:string, data:any, local:boolean = false){
         if(local){
             localStorage.setItem(key, data);
             this.dataDictionary.Add(key, data);
