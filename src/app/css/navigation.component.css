@@ -53,11 +53,11 @@ nav h1 {
     font-weight: normal;
     max-width: 400px;
     min-width: 200px;
-  align-self: center;
   min-height: 83px;
   display: flex;
   align-items: center;
   cursor: pointer;
+  align-self:stretch;
 }
 
 .menu-settings{
