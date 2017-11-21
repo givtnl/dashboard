@@ -27,12 +27,12 @@ export class UserService {
 
     loggedIn: boolean = false;
     SiteAdmin: boolean = false;
-    public CollectGroups: Array<any> = null;
-    public CurrentCollectGroup: any = null;
+    public CollectGroups: any = [];
+    public CurrentCollectGroup: any = "";
     user: User = new User();
 
     login(username: string, password: string) {
-        this.CurrentCollectGroup = this.dataService.getData("CurrentCollectGroup")
+        this.CurrentCollectGroup = this.dataService.getData("CurrentCollectGroup");
         //Set the headers
         let headers = new Headers();
         headers.append('Content-Type', 'application/x-www-form-urlencoded');
@@ -68,8 +68,8 @@ export class UserService {
                                 this.dataService.writeData("CollectGroups", JSON.stringify(res));
                                 if (!this.CurrentCollectGroup || this.CollectGroups.indexOf(this.CurrentCollectGroup) < 0)
                                     this.dataService.writeData("CurrentCollectGroup", JSON.stringify(res[0]));
-                                this.CurrentCollectGroup = JSON.parse(this.dataService.getData("CurrentCollectGroup"));
-                                this.CollectGroups = JSON.parse(this.dataService.getData("CollectGroups"));
+                                this.CurrentCollectGroup = this.dataService.getData("CurrentCollectGroup");
+                                this.CollectGroups = this.dataService.getData("CollectGroups");
                             }).catch(err => console.log(err));
                     } else {
                         this.dataService.writeData("CurrentCollectGroup", null);
@@ -109,7 +109,8 @@ export class UserService {
     }
 
     changeCollectGroup(cg) {
-        if (this.CollectGroups.indexOf(cg) > -1) {
+        let cgs: string = String(this.CollectGroups);
+        if (cgs.indexOf(JSON.stringify(cg)) > -1) {
             this.dataService.writeData("CurrentCollectGroup", JSON.stringify(cg));
             this.CurrentCollectGroup = cg;
             this.collectGroupChanged.emit(null);
