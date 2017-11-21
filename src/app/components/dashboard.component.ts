@@ -144,10 +144,10 @@ export class DashboardComponent implements OnInit, OnDestroy{
                 {
                     var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
                     chart.draw(dataTable, options);
+                    var container = <HTMLDivElement>div.firstChild.firstChild;
+                    if(container)
+                        container.style.width = "100%";
                 }
-                var container = <HTMLDivElement>document.getElementById("donutchart").firstChild.firstChild;
-                if(container)
-                    container.style.width = "100%";
             }
         };
 
@@ -223,7 +223,7 @@ export class DashboardComponent implements OnInit, OnDestroy{
                         this.cards.push(this.thisMonthCard);
                     }
                 }
-            });
+            }, _ => { /* Do nothing */});
     }
 
     fetchLastSundayGivts(){
