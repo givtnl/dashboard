@@ -223,7 +223,7 @@ export class DashboardComponent implements OnInit, OnDestroy{
                         this.cards.push(this.thisMonthCard);
                     }
                 }
-            }, _ => { /* Do nothing */});
+            });
     }
 
     fetchLastSundayGivts(){
