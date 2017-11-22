@@ -95,6 +95,10 @@
                         <td [class.warning]="!selectedOrganisation.country">Land</td>
                         <td>{{selectedOrganisation.country}}</td>
                     </tr>
+                    <tr>
+                      <td [class.warning]="!selectedOrganisation.status || selectedOrganisation.status.indexOf(',') > -1">Type organisatie</td>
+                      <td [class.warning]="selectedOrganisation.status.indexOf(',') > -1">{{selectedOrganisation.status}}</td>
+                    </tr>
                 </table>
             </article>
             <article class="buttons">

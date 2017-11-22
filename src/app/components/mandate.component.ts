@@ -216,6 +216,12 @@ export class MandateComponent implements OnInit{
         if(!this.selectedOrganisation){
             return;
         }
+
+        if(this.selectedOrganisation.status.indexOf(',') > -1) {
+          alert("Het type van de organisatie is niet correct, namelijk: " + this.selectedOrganisation.status + "\nZorg er voor dat slechts één type aangeduid staat in het CRM.");
+          return;
+        }
+
         let o = this.selectedOrganisation;
         if(!o.cf_value_93495 || !o.cf_value_93485 || !o.cf_value_93769 || !o.cf_value_93494){
             alert("Niet alle velden zijn ingevuld voor de admin van de organisatie!");
