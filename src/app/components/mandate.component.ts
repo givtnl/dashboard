@@ -163,7 +163,11 @@ export class MandateComponent implements OnInit{
                     this.incassoStatus = data
                 }
             })
-            .catch(err => console.log(err));
+            .catch(err => {
+                if (err.status != 404) {
+                    console.log(err);
+                }
+            });
     }
 
     decodeHtmlEntity(html){

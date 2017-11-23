@@ -30,6 +30,12 @@
     font-family: 'Avenir_Medium';
     src: url('./fonts/AvenirLTStd-Medium.otf');
 }
+@font-face {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 400;
+    src: url("./fonts/roboto-v15-latin-regular.woff") format('woff');
+}
 
 html,body,.container{
     height: 100%;
