@@ -256,7 +256,8 @@ export class MandateComponent implements OnInit{
                 Country: o.country,
                 TaxDeductable: (o.cf_value_141639 == "1"),
                 TelNr: o.telephone
-            }
+            },
+            Type: this.selectedOrganisation.status
         };
         this.apiClient.postData("Organisation/", mandate )
             .then(spl => {
@@ -286,6 +287,7 @@ export class MandateComponent implements OnInit{
             Organisation : o.name,
             Amount : this.selectedOrganisation.cf_value_92583,
             Link : this.SlimPayLink,
+            Type: this.selectedOrganisation.status
         };
         this.apiClient.postData("Organisation/SendMandateMail", email)
             .then(d => { alert("Mandaat is verzonden."); console.log(d); });
