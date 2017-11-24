@@ -4,6 +4,7 @@ import {DataService} from "../../services/data.service";
 import {DatePipe} from "@angular/common";
 import {TranslateService} from "ng2-translate";
 import {ViewEncapsulation} from '@angular/core';
+import {UserService} from "../../services/user.service";
 
 @Component({
   selector: 'payout',
@@ -37,7 +38,7 @@ export class PayoutComponent implements OnInit{
   pledgedAmount: number;
 
 
-  constructor(private apiClient: ApiClientService, private dataService: DataService, private translate: TranslateService, private datePipe: DatePipe) {
+  constructor(private apiClient: ApiClientService, private translate: TranslateService, private datePipe: DatePipe, private userService: UserService) {
     this.isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
     this.name = "Testen";
 
@@ -192,13 +193,8 @@ export class PayoutComponent implements OnInit{
                 link.setAttribute("href", encodedUri);
                 let beginDate = this.datePipe.transform(new Date(this.childData.BeginDate), "dd-MM-y");
                 let endDate = this.datePipe.transform(new Date(this.childData.EndDate), "dd-MM-y");
-                let orgName = "";
 
-                if(this.dataService.getData("currentCollectGroup") != undefined) {
-                    orgName = JSON.parse(this.dataService.getData("currentCollectGroup")).Name;
-                }
-
-                let fileName = orgName + " - " + beginDate + " - " + endDate + ".csv";
+                let fileName = this.userService.CurrentCollectGroup.Name + " - " + beginDate + " - " + endDate + ".csv";
                 link.setAttribute("download", fileName);
                 document.body.appendChild(link); // Required for FF
 
