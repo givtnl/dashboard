@@ -22,9 +22,9 @@ export class UserService {
         this.loggedIn = !!dataService.getData("accessToken");
         this.SiteAdmin = dataService.getData("SiteAdmin") == "True";
         let d = dataService.getData("CollectGroups");
-        this.CollectGroups = d ? JSON.parse(d) : [];
+        this.CollectGroups = d && d != 'undefined' ? JSON.parse(d) : [];
         d = dataService.getData("CurrentCollectGroup")
-        this.CurrentCollectGroup = d ? JSON.parse(d) : null;
+        this.CurrentCollectGroup = d && d != 'undefined' ? JSON.parse(d) : null;
     }
 
     loggedIn: boolean = false;
@@ -35,7 +35,7 @@ export class UserService {
 
     login(username: string, password: string) {
         let d = this.dataService.getData("CurrentCollectGroup");
-        this.CurrentCollectGroup = d ? JSON.parse(d) : null;
+        this.CurrentCollectGroup = typeof d != 'undefined' ? JSON.parse(d) : null;
         //Set the headers
         let headers = new Headers();
         headers.append('Content-Type', 'application/x-www-form-urlencoded');
