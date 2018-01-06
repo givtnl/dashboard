@@ -50,7 +50,7 @@ nav h1 {
     margin:0px;
     display: inline-block;
     font-family: "Avenir_Black";
-    font-size:22px;
+    font-size: calc(16px + .5vw);
     font-weight: normal;
     max-width: 400px;
     min-width: 200px;
