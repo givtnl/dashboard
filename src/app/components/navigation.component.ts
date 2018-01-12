@@ -15,6 +15,7 @@ export class NavigationComponent implements OnInit {
     userService: UserService;
 
     showMandateLink = false;
+    showDashboardItems = true;
 
     currentCollectGroup: any = {Name:"", GUID:""};
     collectGroups : Array<any> = null;
@@ -23,10 +24,19 @@ export class NavigationComponent implements OnInit {
     }
 
     ngOnInit() {
-      this.showMandateLink = this.userService.SiteAdmin;
-      if (this.userService.CurrentCollectGroup) {
-          this.collectGroups = this.userService.CollectGroups;
-          this.currentCollectGroup = this.userService.CurrentCollectGroup;
+      this.showMandateLink = this.userService.GivtOperations;
+      if ((!this.userService.CollectGroups || this.userService.CollectGroups.length == 0) && this.userService.GivtOperations) {
+          this.showDashboardItems = false;
+          var cg = { Name: "Administratie", GUID: "" };
+          this.collectGroups = [cg]
+          this.currentCollectGroup = cg;
+      }
+      else {
+          this.showDashboardItems = true;
+          if (this.userService.CurrentCollectGroup) {
+              this.collectGroups = this.userService.CollectGroups;
+              this.currentCollectGroup = this.userService.CurrentCollectGroup;
+          }
       }
     }
 

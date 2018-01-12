@@ -18,7 +18,7 @@ export class DataService {
             this.dataDictionary.Add(key, data);
         }
     }
-    getData(key: any){
+    getData(key: string){
         if(this.dataDictionary.Item(key))
         {
             return this.dataDictionary.Item(key);
@@ -37,6 +37,13 @@ export class DataService {
         this.dataDictionary.Truncate();
         sessionStorage.clear();
         localStorage.clear();
+    }
+
+    removeOne (key: string) {
+        var val = this.dataDictionary.Remove(key);
+        sessionStorage.removeItem(key);
+        localStorage.removeItem(key);
+        return val;
     }
 }
 
@@ -63,10 +70,13 @@ export class Dictionary<T> {
     }
 
     public Remove(key: any): T {
-        var val = this.items[key];
-        delete this.items[key];
-        this.count--;
-        return val;
+        if (this.items.hasOwnProperty(key)) {
+            var val = this.items[key];
+            delete this.items[key];
+            this.count--;
+            return val;
+        }
+        return null;
     }
 
     public Item(key: any): T {

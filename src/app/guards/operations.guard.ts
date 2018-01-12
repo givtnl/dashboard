@@ -3,11 +3,11 @@ import { Router, CanActivate } from '@angular/router';
 import { UserService } from 'app/services/user.service';
 
 @Injectable()
-export class AdminGuard implements CanActivate {
+export class OperationsGuard implements CanActivate {
     constructor(private userService: UserService, private router: Router) {}
 
     canActivate() {
-        if(this.userService.SiteAdmin)
+        if(this.userService.GivtOperations)
            return true;
 
         this.router.navigate(['dashboard']);

@@ -13,7 +13,7 @@ import { DashboardComponent} from "./components/dashboard.component";
 import { ApiClientService} from "./services/api-client.service";
 import { LoginComponentGuard} from "./guards/login.component.guard";
 import { LoggedInGuard} from "./guards/logged-in.guard";
-import { AdminGuard} from "./guards/admin.guard";
+import { OperationsGuard} from "./guards/operations.guard";
 import { NavigationComponent} from "./components/navigation.component";
 import { CollectsComponent} from "./components/collects.component";
 import { ReversePipe} from "./pipes/reverse.pipe";
@@ -76,7 +76,7 @@ export function createTranslateLoader(http: Http) {
     DataService,
     UserService,
     ApiClientService,
-    AdminGuard,
+    OperationsGuard,
     LoggedInGuard,
     LoginComponentGuard,
     {

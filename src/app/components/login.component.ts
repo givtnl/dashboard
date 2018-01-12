@@ -29,7 +29,10 @@ export class LoginComponent  {
         }
         this.userService.login(this.userName, this.password)
             .then(resp => {
-                this.router.navigate(['/dashboard']);
+                if (this.userService.GivtOperations)
+                    this.router.navigate(['/mandate']);
+                else
+                    this.router.navigate(['/dashboard']);
             },
             error => {
                 if(JSON.parse(error._body).error_description == "LockedOut")

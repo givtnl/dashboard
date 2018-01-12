@@ -21,6 +21,7 @@ export class UserService {
     constructor(private dataService: DataService, private apiService: ApiClientService, private http: Http){
         this.loggedIn = !!dataService.getData("accessToken");
         this.SiteAdmin = dataService.getData("SiteAdmin") == "True";
+        this.GivtOperations = dataService.getData("GivtOperations") == "True";
         let d = dataService.getData("CollectGroups");
         this.CollectGroups = d && d != 'undefined' ? JSON.parse(d) : [];
         d = dataService.getData("CurrentCollectGroup")
@@ -29,6 +30,7 @@ export class UserService {
 
     loggedIn: boolean = false;
     SiteAdmin: boolean = false;
+    GivtOperations: boolean = false;
     public CollectGroups: Array<any> = null;
     public CurrentCollectGroup: any = null;
     user: User = new User();
@@ -65,6 +67,10 @@ export class UserService {
                         this.dataService.writeData("SiteAdmin", res.json().SiteAdmin);
                     this.SiteAdmin = this.dataService.getData("SiteAdmin") == "True";
 
+                    if (res.json().hasOwnProperty("GivtOperations"))
+                        this.dataService.writeData("GivtOperations", res.json().GivtOperations);
+                    this.GivtOperations = this.dataService.getData("GivtOperations") == "True";
+
                     if (res.json().hasOwnProperty("CollectGroupAdmin")) {
                         return this.apiService.getData('CollectGroupView/CollectGroup')
                             .then(res => {
@@ -75,7 +81,7 @@ export class UserService {
                                 this.CollectGroups = JSON.parse(this.dataService.getData("CollectGroups"));
                             }).catch(err => console.log(err));
                     } else {
-                        this.dataService.writeData("CurrentCollectGroup", null);
+                        this.dataService.removeOne("CurrentCollectGroup");
                     }
                 }
                 else{
