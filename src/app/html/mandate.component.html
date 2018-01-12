@@ -96,8 +96,8 @@
                         <td>{{selectedOrganisation.country}}</td>
                     </tr>
                     <tr *ngIf="selectedOrganisation">
-                      <td [class.warning]="selectedOrganisation != undefined && !selectedOrganisation.status && selectedOrganisation.status.indexOf(',') > -1">Type organisatie</td>
-                      <td [class.warning]="selectedOrganisation != undefined && selectedOrganisation.status.indexOf(',') > -1">{{selectedOrganisation.status}}</td>
+                      <td [class.warning]="selectedOrganisation.status === undefined || selectedOrganisation.status.indexOf(',') > -1">Type organisatie</td>
+                      <td [class.warning]="selectedOrganisation.status === undefined || selectedOrganisation.status.indexOf(',') > -1">{{selectedOrganisation.status}}</td>
                     </tr>
                   <tr>
                     <td [class.warning]="!selectedOrganisation.cf_value_92583">Opstartkosten in euro</td>
