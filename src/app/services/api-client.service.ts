@@ -8,6 +8,7 @@ import {UserService} from "./user.service";
 import {Router} from "@angular/router";
 import {DataService} from "./data.service";
 import {User} from "../models/user";
+import {reject} from "q";
 
 @Injectable()
 export class ApiClientService {
@@ -71,42 +72,41 @@ export class ApiClientService {
                 if(err.status === 403){
                     this.router.navigate(['unauthorized']);
                 }
-                console.log(err["_body"]);
-                return null;
+                return reject(err);
             })
     }
 
-  deleteData(path: string){
-    if(!this.dataService.getData("accessToken")){
-      return;
+    deleteData(path: string){
+      if(!this.dataService.getData("accessToken")){
+        return;
+      }
+     // let json = JSON.stringify(body);
+
+      //Set the headers
+      let headers = new Headers();
+      headers.append('Content-Type', 'application/json');
+      headers.append('authorization', 'Bearer '+ this.dataService.getData("accessToken"));
+      if (this.dataService.getData("CurrentCollectGroup"))
+        headers.append('CollectGroupId', JSON.parse(this.dataService.getData("CurrentCollectGroup")).GUID);
+
+      return this.http
+        .delete(
+          this.apiUrl + path,
+          { headers: headers }
+        )
+        .toPromise()
+        .then(res => {
+          try {
+            return res.json();
+          } catch (e) {
+            return res["_body"];
+          }
+        }).catch(err =>  {
+          if(err.status === 403){
+            this.router.navigate(['unauthorized']);
+          }
+        })
     }
-   // let json = JSON.stringify(body);
-
-    //Set the headers
-    let headers = new Headers();
-    headers.append('Content-Type', 'application/json');
-    headers.append('authorization', 'Bearer '+ this.dataService.getData("accessToken"));
-    if (this.dataService.getData("CurrentCollectGroup"))
-      headers.append('CollectGroupId', JSON.parse(this.dataService.getData("CurrentCollectGroup")).GUID);
-
-    return this.http
-      .delete(
-        this.apiUrl + path,
-        { headers: headers }
-      )
-      .toPromise()
-      .then(res => {
-        try {
-          return res.json();
-        } catch (e) {
-          return res["_body"];
-        }
-      }).catch(err =>  {
-        if(err.status === 403){
-          this.router.navigate(['unauthorized']);
-        }
-      })
-  }
 
     getData(path: string){
         if(!this.dataService.getData("accessToken")){

@@ -7,10 +7,10 @@ export class LoginComponentGuard implements CanActivate {
     constructor(private userService: UserService, private router: Router) {}
 
     canActivate() {
-        if(this.userService.loggedIn){
+        if(this.userService.loggedIn) {
             this.router.navigate(['dashboard']);
             return false;
-        }else{
+        } else {
             return true;
         }
     }

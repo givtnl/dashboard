@@ -9,7 +9,7 @@ import {CollectsComponent} from "./components/collects.component";
 import {PayoutsComponent} from "./components/payouts.component";
 import {MandateComponent} from "./components/mandate.component";
 import { AssignComponent } from "./components/assign.component";
-import {AdminGuard} from "./guards/admin.guard";
+import {OperationsGuard} from "./guards/operations.guard";
 import {ForgotPasswordComponent} from "./components/forgotpassword.component";
 import {UnAuthorizeComponent} from "./components/unauthorized.component";
 const routes: Routes = [
@@ -19,7 +19,7 @@ const routes: Routes = [
     { path: 'collects', component: CollectsComponent, canActivate: [LoggedInGuard]},
   { path: 'payouts', component: PayoutsComponent, canActivate: [LoggedInGuard]},
   { path: 'assign', component: AssignComponent, canActivate: [LoggedInGuard]},
-    { path: 'mandate', component: MandateComponent, canActivate: [LoggedInGuard, AdminGuard]},
+    { path: 'mandate', component: MandateComponent, canActivate: [LoggedInGuard, OperationsGuard]},
     { path: 'forgotpassword',  component: ForgotPasswordComponent, canActivate: [LoginComponentGuard] },
     { path: 'unauthorized', component: UnAuthorizeComponent },
     { path: '**', component: LoginComponent, pathMatch: 'full', canActivate: [LoginComponentGuard] }
