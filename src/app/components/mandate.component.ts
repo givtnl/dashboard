@@ -38,11 +38,11 @@ export class MandateComponent implements OnInit{
     SlimPayLink;
     CRMKey : string;
     incassoStatus: string = "Laden...";
-    urlGetCompanies: string = "https://app.teamleader.eu/api/getCompanies.php?api_group=50213&amount=10&selected_customfields=93491,92583,95707,93537,93168,93495,93485,93494,95707,93769,141639&pageno=0&searchby=";
+    urlGetCompanies: string = "https://app.teamleader.eu/api/getCompanies.php?api_group=50213&amount=10&selected_customfields=93491,92583,95707,93537,93168,93493,93495,93485,93494,95707,93769,141639&pageno=0&searchby=";
     urlGetCompany: string = "https://app.teamleader.eu/api/getCompany.php?api_group=50213&company_id=";
     urlGetTags: string = "https://app.teamleader.eu/api/getTags.php?api_group=50213&";
 
-    organisationAdmin: string = "Lenin";
+    organisationAdmin: string = null;
     organisationAdminPassword: string = "fjkldsmqfjklmqsfjlkmq";
 
     showRegisterAdmin : boolean = false;
@@ -182,6 +182,7 @@ export class MandateComponent implements OnInit{
     select(i){
         this.disabled = true;
         this.selectedOrganisation = i;
+        let dashBoardUsers: string = null;
 
         if (i.hasOwnProperty("custom_fields")) {
             this.selectedOrganisation.cf_value_92583 = i.custom_fields['92583'];
@@ -194,6 +195,7 @@ export class MandateComponent implements OnInit{
             this.selectedOrganisation.cf_value_93537 = i.custom_fields['93537'].replace(/\s/g, '');
             this.selectedOrganisation.cf_value_93495 = i.custom_fields['93495'];
             this.selectedOrganisation.cf_value_93491 = i.custom_fields['93491'];
+            dashBoardUsers = i.custom_fields['93493'];
             if (i.hasOwnProperty("tags")) {
                 this.apiClient.postData("Admin/CorsTunnelGet", {
                     url: this.urlGetTags + "&api_secret=" + this.CRMKey,
@@ -210,6 +212,7 @@ export class MandateComponent implements OnInit{
         } else {
             if (this.selectedOrganisation.cf_value_93537 != null)
                 this.selectedOrganisation.cf_value_93537 = i.cf_value_93537.replace(/\s/g, '');
+            dashBoardUsers = this.selectedOrganisation.cf_value_93493;
         }
 
         if(this.selectedOrganisation.city)
@@ -220,6 +223,16 @@ export class MandateComponent implements OnInit{
         this.selectedOrganisation.mandate_status = false;
         if(!environment.production)
             this.selectedOrganisation.cf_value_93495 =  "support+" + this.selectedOrganisation.id + "@givtapp.net";
+
+        if (dashBoardUsers)
+        {
+            if (dashBoardUsers.split(' ').length == 1)
+                this.organisationAdmin = dashBoardUsers.split(',')[0];
+            else
+                this.organisationAdmin = dashBoardUsers.split(' ')[0];
+        } else {
+            this.organisationAdmin = "Niet ingevuld in Teamleader!!"
+        }
 
         this.incassoStatus = "Laden...";
         this.change();
