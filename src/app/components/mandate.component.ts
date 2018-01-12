@@ -200,7 +200,11 @@ export class MandateComponent implements OnInit{
                     body: "",
                     headers: {}
                 }).then(d => {
-                    this.selectedOrganisation.status = d[i.tags[0]];
+                    let status = '';
+                    for (let tagid of i.tags)
+                        status = status + d[tagid] + ',';
+                    status = status.slice(0, -1);
+                    this.selectedOrganisation.status = status;
                 }).catch(err => { });
             }
         } else {
