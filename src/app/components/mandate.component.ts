@@ -334,6 +334,7 @@ export class MandateComponent implements OnInit{
             return;
         }
         this.adminRegistered = true;
+        this.generateOrgAdminPass();
         let user =
         {
             Email: this.organisationAdmin,
@@ -342,25 +343,30 @@ export class MandateComponent implements OnInit{
 
         this.apiClient.postData('Users', user)
             .then(res => {
-                let path = '';
-                let email = this.organisationAdmin.replace('+', '%2B');
-                if(!res.status)
-                    path = '/Users/CreateOrgAdmin?email='+email+'&crmId='+this.selectedOrganisation.id+'&password='+this.organisationAdminPassword;
-                else
-                    path = '/Users/CreateOrgAdmin?email='+email+'&crmId='+this.selectedOrganisation.id;
-                this.apiClient.postData(path, null)
-                    .then(response => {
-                        if(response.status > 300)
-                        {
-                            var error = response.status + " : " + response._body;
-                            alert(error);
-                            this.adminRegistered = false;
-                        }else{
-                            alert('admin registered');
-                        }
+                let url = '/Users/CreateOrgAdmin?email='+encodeURIComponent(this.organisationAdmin)+'&crmId='+this.selectedOrganisation.id+'&password='+this.organisationAdminPassword;
+                this.apiClient.postData(url, null)
+                    .then( _ => {
+                        alert('Admin registered with new e-mail address');
                     })
-                    .catch(err => {this.adminRegistered = false;});
-            });
+                    .catch( reason => {
+                        alert(reason["_body"]);
+                    });
+            })
+            .catch(reason =>{
+                if (reason.status == 409)
+                {
+                    let url = '/Users/CreateOrgAdmin?email='+encodeURIComponent(this.organisationAdmin)+'&crmId='+this.selectedOrganisation.id;
+                    this.apiClient.postData(url, null)
+                        .then( _ => {
+                            alert('Admin registered with existing e-mail address');
+                        })
+                        .catch( reason => {
+                            alert(reason["_body"]);
+                        });
+                }else {
+                    alert(reason["_body"]);
+                }
+            })
     }
 
     generateOrgAdminPass(){
