@@ -108,8 +108,12 @@
             <article class="buttons">
                 <button (click)="openCRM()" >Vervolledig gegevens in CRM</button>
                 <button [class.disabled]="this.selectedOrganisation.mandate_status" [disabled]="this.selectedOrganisation.mandate_status" (click)="registerMandate()">Mandaat aanvragen</button>
-                <button [class.disabled]="!this.selectedOrganisation.mandate_status || this.selectedOrganisation.mandate_status != 'closed.completed' || this.incassoStatus"
-                        [disabled]="!this.selectedOrganisation.mandate_status || this.selectedOrganisation.mandate_status != 'closed.completed' || this.incassoStatus"
+                <button [class.disabled]="!this.selectedOrganisation.mandate_status
+                                || this.selectedOrganisation.mandate_status.PayProvMandateStatus != 'closed.completed'
+                                || this.incassoStatus"
+                        [disabled]="!this.selectedOrganisation.mandate_status
+                                || this.selectedOrganisation.mandate_status.PayProvMandateStatus != 'closed.completed'
+                                || this.incassoStatus"
                         (click)="startIncasso()">Start incasso</button>
                 <button [class.disabled]="" (click)="registerDefaultCollectGroup()" >Default collectegroep registreren</button>
                 <button (click)="showRegisterAdmin = !showRegisterAdmin">Admin registreren</button>
