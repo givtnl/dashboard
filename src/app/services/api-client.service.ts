@@ -70,6 +70,11 @@ export class ApiClientService {
                 if(err.status === 403){
                     this.router.navigate(['unauthorized']);
                 }
+                try {
+                    console.error(JSON.stringify(JSON.parse(err["_body"]), null, 2));
+                } catch (e) {
+                    console.error(err["_body"])
+                }
                 return reject(err);
             });
     }

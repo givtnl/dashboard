@@ -340,9 +340,9 @@ export class MandateComponent implements OnInit{
             .then(res => {
                 if (res)
                     alert("Gelukt!");
-                else
-                    alert("Mislukt!");
-                console.log(res)
+                console.log(res);
+            }).catch(res => {
+                alert("Mislukt!");
             });
     }
 
