@@ -404,7 +404,9 @@ export class MandateComponent implements OnInit{
 
     openCRM(){
         let url = "https://app.teamleader.eu/company_detail.php?id=";
-        if(this.selectedOrganisation)
-         window.location.href = url + this.selectedOrganisation.id;
+        if(this.selectedOrganisation) {
+          var win = window.open(url + this.selectedOrganisation.id, "_blank");
+          win.focus();
+        }
     }
 }
