@@ -4,10 +4,8 @@ import { Http, Headers} from '@angular/http';
 import { environment } from '../../environments/environment';
 
 import 'rxjs/add/operator/toPromise';
-import {UserService} from "./user.service";
 import {Router} from "@angular/router";
 import {DataService} from "./data.service";
-import {User} from "../models/user";
 import {reject} from "q";
 
 @Injectable()
@@ -39,7 +37,7 @@ export class ApiClientService {
                 return res;
             }).catch(
                 err => console.log(err)
-            )
+            );
     }
 
     postData(path: string, body: any){
@@ -72,8 +70,13 @@ export class ApiClientService {
                 if(err.status === 403){
                     this.router.navigate(['unauthorized']);
                 }
+                try {
+                    console.error(JSON.stringify(JSON.parse(err["_body"]), null, 2));
+                } catch (e) {
+                    console.error(err["_body"])
+                }
                 return reject(err);
-            })
+            });
     }
 
     deleteData(path: string){
@@ -105,7 +108,7 @@ export class ApiClientService {
           if(err.status === 403){
             this.router.navigate(['unauthorized']);
           }
-        })
+        });
     }
 
     getData(path: string){
@@ -135,6 +138,6 @@ export class ApiClientService {
                 if(err.status === 403 || err.status === 401){
                     this.router.navigate(['unauthorized']);
                 }
-            })
+            });
     }
 }
