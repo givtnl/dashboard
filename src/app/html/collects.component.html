@@ -52,7 +52,7 @@
             </span>
         </time>
         <div class="collection-buttons">
-            <span>{{value}}</span>
+            <span *ngIf="infoToProcess != undefined && infoProcessed != undefined && infoCancelledByUser != undefined && infoCancelledByBank != undefined" >{{ displayValue(totalAmountsCombined) }}</span>
 
             <button class="icon" [class.fill-green]="showCosts == true" (click)="showCosts = !showCosts">
 
@@ -77,11 +77,9 @@
 
     </section>
 
-
-
     <div class="withholding-overview" *ngIf="showCosts">
       <div class="graph-section">
-        <div class="graph">
+        <div class="graph" [class.hideElement]="totalAmountsCombined == 0">
           <canvas baseChart
                   [colors]="chartColors"
                   [options]="pieChartOptions"
@@ -90,182 +88,39 @@
                   [labels]="pieChartLabels"
                   (chartHover)="chartHovered($event)"
                   (chartClick)="chartClicked($event)"></canvas>
+
         </div>
         <table class="graph-overview">
-          <tr [class.selectRow]="selectedIndex == 0">
+          <tr [class.selectRow]="selectedIndex == 0" *ngIf="infoToProcess != undefined">
             <td><span class="rectangle blue"></span></td>
             <td>Wordt verwerkt</td>
             <td><img class="personal-icon" src="images/personal-blue.png" alt=""></td>
-            <td>112</td>
-            <td>€ 5143,45</td>
+            <td>{{ infoToProcess.numberOfUsers }}</td>
+            <td>{{ displayValue(infoToProcess.totalAmount) }}</td>
           </tr>
-          <tr [class.selectRow]="selectedIndex == 1">
+          <tr [class.selectRow]="selectedIndex == 1" *ngIf="infoProcessed != undefined">
             <td><span class="rectangle green"></span></td>
             <td>Verwerkt</td>
             <td><img class="personal-icon" src="images/personal-green.png" alt=""></td>
-            <td>112</td>
-            <td>€ 1948,45</td>
+            <td>{{ infoProcessed.numberOfUsers }}</td>
+            <td>{{ displayValue(infoProcessed.totalAmount) }}</td>
           </tr>
-          <tr [class.selectRow]="selectedIndex == 2">
+          <tr [class.selectRow]="selectedIndex == 2" *ngIf="infoCancelledByBank != undefined">
             <td><span class="rectangle red"></span></td>
             <td>Geweigerd door de bank</td>
             <td><img class="personal-icon" src="images/personal-red.png" alt=""></td>
-            <td>112</td>
-            <td>€ 75,12</td>
+            <td>{{ infoCancelledByBank.numberOfUsers }}</td>
+            <td>{{ displayValue(infoCancelledByBank.totalAmount) }}</td>
           </tr>
-          <tr [class.selectRow]="selectedIndex == 3">
+          <tr [class.selectRow]="selectedIndex == 3" *ngIf="infoCancelledByUser != undefined">
             <td><span class="rectangle grey"></span></td>
             <td>Geannuleerd door de gever</td>
             <td><img class="personal-icon" src="images/personal-grey.png" alt=""></td>
-            <td>112</td>
-            <td>€ 5,10</td>
+            <td>{{ infoCancelledByUser.numberOfUsers }}</td>
+            <td>{{ displayValue(infoCancelledByUser.totalAmount) }}</td>
           </tr>
         </table>
       </div>
-            <h2>{{"Text_OverviewDeduction" | translate}}</h2>
-            <button class="close-button" (click)="showCosts = !showCosts">
-                {{"Text_Deduction_CloseButton" | translate}} <svg width="19px" height="19px" viewBox="944 525 19 19" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                    <!-- Generator: Sketch 40.3 (33839) - http://www.bohemiancoding.com/sketch -->
-                    <desc>Created with Sketch.</desc>
-                    <defs></defs>
-                    <g id="1477510223_icon-close-round" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(944.000000, 525.000000)">
-                        <path d="M18.154652,15.6902032 L11.8313314,9.36688256 L18.154652,3.04356195 C18.8373382,2.36087573 18.8373382,1.26179933 18.154652,0.579113112 C17.4719658,-0.10357311 16.3728894,-0.10357311 15.6902032,0.579113112 L9.36688256,6.90243371 L3.04356195,0.579113112 C2.36087573,-0.10357311 1.26179933,-0.10357311 0.579113112,0.579113112 C-0.10357311,1.26179933 -0.10357311,2.36087573 0.579113112,3.04356195 L6.90243371,9.36688256 L0.579113112,15.6902032 C-0.10357311,16.3728894 -0.10357311,17.4719658 0.579113112,18.154652 C1.26179933,18.8373382 2.36087573,18.8373382 3.04356195,18.154652 L9.36688256,11.8313314 L15.6902032,18.154652 C16.3728894,18.8373382 17.4719658,18.8373382 18.154652,18.154652 C18.8324965,17.4719658 18.8324965,16.3680476 18.154652,15.6902032 L18.154652,15.6902032 Z" id="Shape" fill="#2C2B57 "></path>
-                    </g>
-                </svg>
-            </button>
-        <div class="withholding-stats">
-            <div class="stat-comp">
-                <table class="table-stats" border="0">
-
-                    <tr (click)="selectRow(1)" class="row" [class.active-row]="1 == activeRow">
-                        <td><i class="fa fa-circle givt-blue" aria-hidden="true"></i></td>
-                        <td>{{"Text_Transaction_Fee" | translate}}</td>
-                        <td *ngIf="multipleCollects == false">{{Total_T_M_INCL}}</td>
-                        <td *ngIf="multipleCollects == true"></td>
-                        <!--<td><div class="tooltip"><i class="fa fa-info-circle fa-lg " aria-hidden="true"></i>
-                            <span class="blue tooltiptext">(...) aantal transacties maal <b>€ 0,08 transactiekosten</b>. (...) nieuwe gebruikers maal (<b>4x€ 0,125</b>) <b>mandaatkosten</b>.<hr/><b>{{paymentProviderTransactionCost}}</b></span>
-                        </div></td>-->
-                    </tr>
-                    <tr (click)="selectRow(3)" class="row" [class.active-row]="3 == activeRow">
-                        <td><i class="fa fa-circle givt-green" aria-hidden="true"></i></td>
-                        <td>{{"Text_Givt_Fee" | translate}}</td>
-                        <td>{{Total_G_INCL}}</td>
-                        <!-- <td><div class="tooltip"><i class="fa fa-info-circle fa-lg " aria-hidden="true"></i>
-                             <span class="green tooltiptext">{{value}} maal <b>4,5% kosten per donatie</b>.<hr/><b>{{givtServiceCost}}</b></span>
-                         </div></td>-->
-                    </tr>
-                </table>
-            </div>
-            <div class="stat-calc" *ngIf="1 == activeRow">
-                <table *ngIf="multipleCollects == false">
-                    <tr>
-                        <td>{{ "Text_Transaction_Fee_Mandate" | translate}}</td>
-                        <td class="column-spacing-30"></td>
-                        <td>{{mandateCosts}}</td>
-                        <td class="column-spacing-40"></td>
-                        <td>{{ Text_Info_Mandate }}</td>
-                    </tr>
-                    <tr class="border-bottom">
-                        <td>{{"Text_Transaction_Fee_Transaction" | translate }}</td>
-                        <td class="column-spacing-30"></td>
-                        <td>{{transactionCost}}</td>
-                        <td class="column-spacing-40"></td>
-                        <td>{{Text_Info_Transaction}}</td>
-                    </tr>
-                    <tr>
-                        <td class="heavy">{{ "BTW_EXCL" | translate }}</td>
-                        <td class="column-spacing-30"></td>
-                        <td class="heavy">{{Total_T_M_EXCL}}</td>
-                        <td class="column-spacing-40"></td>
-                        <td class="more-info tooltip">
-                        </td>
-                    </tr>
-                    <tr class="border-bottom">
-                        <td class="heavy">{{"BTW_PERCENT" | translate}}</td>
-                        <td class="column-spacing-30"></td>
-                        <td class="heavy">{{Total_T_M_VAT}}</td>
-                        <td class="column-spacing-40"></td>
-                        <td class="more-info tooltip">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="heavy total">{{"BTW_INCL" | translate}}</td>
-                        <td class="column-spacing-30"></td>
-                        <td class="heavy total" >{{Total_T_M_INCL}}</td>
-                        <td class="column-spacing-40"></td>
-                        <td class="more-info tooltip">{{"Text_Deduction_InfoButton" | translate}}
-                            <span class="green tooltiptext">
-                                 {{"Text_TransactionCost_MoreInfo" | translate }}
-                            </span>
-                        </td>
-                    </tr>
-                </table>
-              <p style="width: 500px;margin: 0;" *ngIf="multipleCollects == true">{{ "TransactionCostsMultipleCollects" | translate }}</p>
-            </div>
-
-            <div class="stat-calc" *ngIf="2 == activeRow">
-                <table>
-                    <tr>
-                        <td>{{"Text_Deduction_Type1" | translate}}</td>
-                        <td class="column-spacing-30"></td>
-                        <td>{{RTransactionCostType1}}</td>
-                        <td class="column-spacing-40"></td>
-                        <td>{{Text_Info_Type1}} <br />{{Total_Stornation}}</td>
-                    </tr>
-                    <tr>
-                        <td>{{"Text_Deduction_Type2" | translate}}</td>
-                        <td class="column-spacing-30"></td>
-                        <td>{{RTransactionCostType2}}</td>
-                        <td class="column-spacing-40"></td>
-                        <td class="big-cell">{{Text_Info_Type2}}<br />{{Total_Stornation2}}</td>
-                    </tr>
-                    <tr>
-                        <td>{{"Text_Fee_Total" | translate}}</td>
-                        <td class="column-spacing-30"></td>
-                        <td>{{totalRTransactionCost}}</td>
-                        <td class="column-spacing-40"></td>
-                        <td class="more-info tooltip">{{"Text_Deduction_InfoButton" | translate}}
-                            <span class="green tooltiptext" [innerHTML]="'Text_Stornos_MoreInfo' | translate">
-
-                            </span>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-
-
-            <div class="stat-calc" *ngIf="3 == activeRow">
-                <table>
-                    <tr>
-                        <td class="heavy">{{"BTW_EXCL" | translate}}</td>
-                        <td class="column-spacing-30"></td>
-                        <td class="heavy">{{givtServiceCost}}</td>
-                        <td class="column-spacing-40"></td>
-                        <td class="more-info tooltip">
-                        </td>
-                    </tr>
-                    <tr class="border-bottom">
-                        <td class="heavy">{{"BTW_PERCENT" | translate}}</td>
-                        <td class="column-spacing-30"></td>
-                        <td class="heavy">{{Total_G_VAT}}</td>
-                        <td class="column-spacing-40"></td>
-                        <td class="more-info tooltip">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="heavy total">{{"BTW_INCL" | translate}}</td>
-                        <td class="column-spacing-30"></td>
-                        <td class="heavy total">{{Total_G_INCL}}</td>
-                        <td class="column-spacing-40"></td>
-                        <td class="more-info tooltip">{{"Text_Deduction_InfoButton" | translate }}
-                            <span class="green tooltiptext">
-                                {{"Text_GivtServiceFee_MoreInfo" | translate }}
-                            </span>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-        </div>
     </div>
 </section>
 <section class="saved-collects">

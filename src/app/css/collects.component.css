@@ -6,6 +6,7 @@
 
 .collection-buttons{
     display: flex;
+  align-items: center;
 }
 
 .collection-buttons > span{
@@ -224,7 +225,7 @@ button:disabled{
     text-align: left;
     color: #2C2B57;
     min-height:210px;
-   padding-top: 10px;
+    padding-bottom: 20px;
 }
 
 .withholding-overview h2{
@@ -611,6 +612,7 @@ button:disabled{
   width: 250px;
   height: 250px;
   margin-right: 30px;
+  position: relative;
 }
 
 .graph-section {
@@ -620,5 +622,9 @@ button:disabled{
 
 .selectRow > td {
   background: lightgrey;
+}
+
+.hideElement {
+  opacity: 0;
 }
 

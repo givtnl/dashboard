@@ -1,4 +1,4 @@
-import {Component, OnInit, Attribute, ViewEncapsulation} from '@angular/core';
+import {Component, OnInit, Attribute, ViewEncapsulation, ViewChild} from '@angular/core';
 import { DatePipe } from '@angular/common';
 import {BrowserModule} from '@angular/platform-browser';
 //import { BrowserAnimationsModule } from '@angular/animations';
@@ -8,6 +8,10 @@ import {CalendarModule} from "primeng/primeng";
 import {Collection} from "../models/collection";
 import {DataService} from "../services/data.service";
 import {UserService} from "../services/user.service";
+import {visualCollection} from "../models/visualCollection";
+import {BaseChartDirective} from "ng2-charts";
+import * as moment from "moment";
+import Base = moment.unitOfTime.Base;
 @Component({
     selector: 'my-collects',
     templateUrl: '../html/collects.component.html',
@@ -16,6 +20,14 @@ import {UserService} from "../services/user.service";
 })
 
 export class CollectsComponent implements OnInit{
+  @ViewChild(BaseChartDirective) chart: BaseChartDirective;
+  isDataAvailable: boolean = false;
+    infoToProcess: visualCollection;
+    infoProcessed: visualCollection;
+    infoCancelledByBank: visualCollection;
+    infoCancelledByUser: visualCollection;
+    totalAmountsCombined: number = 0;
+
     translate: TranslateService;
     text: string;
     calendarModule: CalendarModule;
@@ -37,40 +49,10 @@ export class CollectsComponent implements OnInit{
 
     SearchButtonGreen: boolean = false;
 
-    transactionCount: number;
-    costPerTransaction: number;
-    mandateCount: number;
-    costPerMandate: number;
     activeRow: number = 1;
-    RTransactionCostType1 : string;
-    RTransactionCostType2 : string;
-    totalRTransactionCost : string;
-    countRTransactionType1 : number;
-    countRTransactionType2 : number;
-    transactionCosts : string;
-    mandateCosts: string;
-    transactionCostsDetail: string;
-    Total_Stornation: string;
-    Total_Stornation2: string;
-    transactionCost: string;
-
-    Total_T_M_EXCL: string;
-    Total_T_M_VAT: string;
-    Total_T_M_INCL: string;
-    Total_G_VAT: string;
-    Total_G_INCL: string;
-
-    Text_Info_Mandate: string;
-    Text_Info_Transaction: string;
-    Text_Info_Type1: string;
-    Text_Info_Type2: string;
 
     multipleCollects: boolean = false;
     multipleCollectsId: string;
-
-    //costs
-    givtServiceCost: string;
-    paymentProviderTransactionCost: string;
 
 
     ShowLoadingAnimation = false;
@@ -119,7 +101,7 @@ export class CollectsComponent implements OnInit{
     openAllocations: boolean = false;
 
     public pieChartLabels:string[] = ['Wordt verwerkt', 'Verwerkt', 'Geweigerd',"Geannuleerd"];
-    public pieChartData:number[] = [300, 500, 100, 50];
+    public pieChartData:number[] = [0, 0, 0, 0];
     public pieChartType:string = 'pie';
     public chartColors: any[] = [
       {
@@ -300,7 +282,7 @@ export class CollectsComponent implements OnInit{
             if(this.multipleCollects){
                 params = "DateBegin=" + dateBegin + "&DateEnd=" + dateEnd + "&CollectId=" + this.multipleCollectsId;
             }else{
-                params = "DateBegin=" + dateBegin + "&DateEnd=" + dateEnd + "&Status=1";
+                params = "DateBegin=" + dateBegin + "&DateEnd=" + dateEnd + "&Status=2";
             }
 
             let beginTime = new Date(this.dateBegin.valueOf()).getTime();
@@ -322,54 +304,8 @@ export class CollectsComponent implements OnInit{
             this.apiService.getData("Cards/Givts/?"+params)
                 .then(resp =>
                 {
+                  this.ShowLoadingAnimation = false;
                   console.log(resp);
-                    this.transactionCount = resp.TransactionCount;
-                    this.costPerTransaction = resp.PayProvCostPerTransaction;
-
-                    this.mandateCount = resp.PayProvMandateCost.MandateCostCount;
-                    this.costPerMandate = resp.PayProvMandateCost.MandateCostAmount;
-
-                    let givtServiceCost = resp.TotalAmount * resp.GivtCostPerTransaction;
-                    this.givtServiceCost = euro + (this.isSafari ? (givtServiceCost).toFixed(2) : (givtServiceCost).toLocaleString(navigator.language,{minimumFractionDigits: 2,maximumFractionDigits:2}));
-                    this.Total_G_VAT = this.displayValue(givtServiceCost * 0.21);
-                    this.Total_G_INCL = this.displayValue(givtServiceCost * 1.21);
-                    this.paymentProviderTransactionCost = euro + (this.isSafari ? (resp.TransactionCount * resp.PayProvCostPerTransaction).toFixed(2) : (resp.TransactionCount * resp.PayProvCostPerTransaction).toLocaleString(navigator.language,{minimumFractionDigits: 2}));
-                    let collectSum = resp.TotalAmount;
-                    this.value = euro + (this.isSafari ? collectSum.toFixed(2) : collectSum.toLocaleString(navigator.language,{minimumFractionDigits: 2}));
-
-                    this.translate.get('Text_Info_Total_Stornos', {0: (this.isSafari ? (resp.RTransactionCost.AmountRTransaction).toFixed(2) : (resp.RTransactionCost.AmountRTransaction).toLocaleString(navigator.language,{minimumFractionDigits: 2,maximumFractionDigits:2}))}).subscribe((res: string) => {
-                        this.Total_Stornation = res;
-                    });
-                    let T_Cost = +this.transactionCount * +this.costPerTransaction;
-                    let M_Cost = this.mandateCount * this.costPerMandate;
-                    let Total_T_M_EXCL = +T_Cost + +M_Cost;
-                    let Total_T_M_VAT = (T_Cost + M_Cost) * 0.21;
-                    let Total_T_M_INCL = Total_T_M_EXCL + Total_T_M_VAT;
-                    this.Total_T_M_EXCL = this.displayValue(Total_T_M_EXCL);
-                    this.Total_T_M_VAT = this.displayValue(Total_T_M_VAT);
-                    this.Total_T_M_INCL = this.displayValue(Total_T_M_INCL);
-
-                    this.transactionCost = euro + (this.isSafari ? (+this.transactionCount * +this.costPerTransaction).toFixed(2) : (+this.transactionCount * +this.costPerTransaction).toLocaleString(navigator.language,{minimumFractionDigits: 2,maximumFractionDigits:2}));
-                    this.transactionCosts =  euro + (this.isSafari ? (this.mandateCount * this.costPerMandate + this.transactionCount * this.costPerTransaction).toFixed(2) : (this.mandateCount * this.costPerMandate + this.transactionCount * this.costPerTransaction).toLocaleString(navigator.language,{minimumFractionDigits: 2,maximumFractionDigits:2}));
-                    this.mandateCosts = euro + (this.isSafari ? (this.mandateCount * this.costPerMandate).toFixed(2) : (this.mandateCount * this.costPerMandate).toLocaleString(navigator.language,{minimumFractionDigits: 2,maximumFractionDigits:2}));
-                    this.transactionCostsDetail = euro + (this.isSafari ? (this.transactionCount * this.costPerTransaction).toFixed(2) : (this.transactionCount * this.costPerTransaction).toLocaleString(navigator.language,{minimumFractionDigits: 2,maximumFractionDigits:2}));
-
-                    this.translate.get('Text_Info_Mandate', {0: this.mandateCount,1: (this.isSafari ? (this.costPerMandate).toFixed(3) : (this.costPerMandate).toLocaleString(navigator.language,{minimumFractionDigits: 3,maximumFractionDigits:3}))}).subscribe((res: string) => {
-                        this.Text_Info_Mandate = res;
-                    });
-
-                    this.translate.get('Text_Info_Transaction', {0: this.transactionCount,1: (this.isSafari ? (this.costPerTransaction).toFixed(2) : (this.costPerTransaction).toLocaleString(navigator.language,{minimumFractionDigits: 2,maximumFractionDigits:2}))}).subscribe((res: string) => {
-                        this.Text_Info_Transaction = res;
-                    });
-
-                    this.translate.get('Text_Info_Type1', {0: this.countRTransactionType1,1: (this.isSafari ? (0.18).toFixed(2) : (0.18).toLocaleString(navigator.language,{minimumFractionDigits: 2,maximumFractionDigits:2}))}).subscribe((res: string) => {
-                        this.Text_Info_Type1 = res;
-                    });
-
-                    this.translate.get('Text_Info_Type2', {0: this.countRTransactionType2,1: (this.isSafari ? (1.20).toFixed(2) : (1.20).toLocaleString(navigator.language,{minimumFractionDigits: 2,maximumFractionDigits:2}))}).subscribe((res: string) => {
-                        this.Text_Info_Type2 = res;
-                    });
-                    this.ShowLoadingAnimation = false;
                 });
         }
 
@@ -409,14 +345,104 @@ export class CollectsComponent implements OnInit{
     }
 
     filterCollect(collectId){
-      this.pieChartData = [300, 500, 100, this.pieChartData[3]+100];
+
+
         if(collectId == null || collectId == 0){
             this.multipleCollects = false;
         } else {
             this.multipleCollects = true;
             this.multipleCollectsId = collectId;
         }
+      this.fetchAllGivts();
         this.fetchCollect();
     }
+
+
+  fetchAllGivts() {
+      this.totalAmountsCombined = 0;
+      if(this.dateBegin !== null && this.dateEnd !== null){
+        var dateBegin = this.formatDate(this.dateBegin);
+        var dateEnd = this.formatDate(this.dateEnd);
+        let baseParams;
+        if(this.multipleCollects){
+          baseParams = "DateBegin=" + dateBegin + "&DateEnd=" + dateEnd + "&CollectId=" + this.multipleCollectsId;
+        }else{
+          baseParams = "DateBegin=" + dateBegin + "&DateEnd=" + dateEnd;
+        }
+
+
+        this.isVisible = true;
+
+        let euro =  "€";
+        if(!navigator.language.includes('en'))
+          euro += " ";
+
+        let params = baseParams + "&Status=1";
+        this.apiService.getData("Cards/Givts/?"+params)
+          .then(resp =>
+          {
+            console.log(resp);
+            this.infoToProcess = new visualCollection();
+            this.infoToProcess.numberOfUsers = resp.TransactionCount;
+            this.infoToProcess.totalAmount = resp.TotalAmount;
+            console.log(this.infoToProcess);
+            this.apiService.getData("Cards/Givts/?DateBegin=" + dateBegin + "&DateEnd=" + dateEnd + "&Status=2")
+              .then( resp =>
+              {
+                console.log(resp);
+                this.infoToProcess.numberOfUsers += resp.TransactionCount;
+                this.infoToProcess.totalAmount += resp.TotalAmount;
+                this.pieChartData[0] = this.infoToProcess.totalAmount;
+                this.totalAmountsCombined += this.infoToProcess.totalAmount;
+                this.isDataAvailable = true;
+                this.chart.chart.update();
+              });
+
+          });
+
+        params = baseParams + "&Status=3";
+        this.apiService.getData("Cards/Givts/?"+params)
+          .then(resp =>
+          {
+            console.log(resp);
+            this.infoProcessed = new visualCollection();
+            this.infoProcessed.numberOfUsers = resp.TransactionCount;
+            this.infoProcessed.totalAmount = resp.TotalAmount;
+            this.pieChartData[1] = this.infoProcessed.totalAmount;
+            this.totalAmountsCombined += this.infoProcessed.totalAmount;
+            this.chart.chart.update();
+          });
+
+        params = baseParams + "&Status=4";
+        this.apiService.getData("Cards/Givts/?"+params)
+          .then(resp =>
+          {
+            console.log(resp);
+            this.infoCancelledByBank = new visualCollection();
+            this.infoCancelledByBank.numberOfUsers = resp.TransactionCount;
+            this.infoCancelledByBank.totalAmount = resp.TotalAmount;
+            this.pieChartData[2] = this.infoCancelledByBank.totalAmount;
+            this.totalAmountsCombined += this.infoCancelledByBank.totalAmount;
+            this.chart.chart.update();
+          });
+
+        params = baseParams + "&Status=5";
+        this.apiService.getData("Cards/Givts/?"+params)
+          .then(resp =>
+          {
+            console.log(resp);
+            this.infoCancelledByUser = new visualCollection();
+            this.infoCancelledByUser.numberOfUsers = resp.TransactionCount;
+            this.infoCancelledByUser.totalAmount = resp.TotalAmount;
+            this.pieChartData[3] = this.infoCancelledByUser.totalAmount;
+            this.totalAmountsCombined += this.infoCancelledByUser.totalAmount;
+            this.chart.chart.update();
+
+          });
+
+      }
+    }
+
+
 
 }
