@@ -80,6 +80,48 @@
 
 
     <div class="withholding-overview" *ngIf="showCosts">
+      <div class="graph-section">
+        <div class="graph">
+          <canvas baseChart
+                  [colors]="chartColors"
+                  [options]="pieChartOptions"
+                  [data]="pieChartData"
+                  [chartType]="pieChartType"
+                  [labels]="pieChartLabels"
+                  (chartHover)="chartHovered($event)"
+                  (chartClick)="chartClicked($event)"></canvas>
+        </div>
+        <table class="graph-overview">
+          <tr [class.selectRow]="selectedIndex == 0">
+            <td><span class="rectangle blue"></span></td>
+            <td>Wordt verwerkt</td>
+            <td><img class="personal-icon" src="images/personal-blue.png" alt=""></td>
+            <td>112</td>
+            <td>€ 5143,45</td>
+          </tr>
+          <tr [class.selectRow]="selectedIndex == 1">
+            <td><span class="rectangle green"></span></td>
+            <td>Verwerkt</td>
+            <td><img class="personal-icon" src="images/personal-green.png" alt=""></td>
+            <td>112</td>
+            <td>€ 1948,45</td>
+          </tr>
+          <tr [class.selectRow]="selectedIndex == 2">
+            <td><span class="rectangle red"></span></td>
+            <td>Geweigerd door de bank</td>
+            <td><img class="personal-icon" src="images/personal-red.png" alt=""></td>
+            <td>112</td>
+            <td>€ 75,12</td>
+          </tr>
+          <tr [class.selectRow]="selectedIndex == 3">
+            <td><span class="rectangle grey"></span></td>
+            <td>Geannuleerd door de gever</td>
+            <td><img class="personal-icon" src="images/personal-grey.png" alt=""></td>
+            <td>112</td>
+            <td>€ 5,10</td>
+          </tr>
+        </table>
+      </div>
             <h2>{{"Text_OverviewDeduction" | translate}}</h2>
             <button class="close-button" (click)="showCosts = !showCosts">
                 {{"Text_Deduction_CloseButton" | translate}} <svg width="19px" height="19px" viewBox="944 525 19 19" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">

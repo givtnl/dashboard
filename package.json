@@ -22,18 +22,21 @@
     "@angular/platform-browser-dynamic": "^4.0.0",
     "@angular/router": "^4.0.0",
     "ap-angular2-fullcalendar": "^1.2.8",
+    "chart.js": "^2.7.1",
     "core-js": "^2.4.1",
     "fullcalendar": "^3.4.0",
     "intl": "^1.2.5",
     "jquery": "^3.2.1",
     "moment": "^2.18.1",
+    "ng2-charts": "^1.6.0",
     "ng2-translate": "^5.0.0",
     "primeng": "^4.0.0",
+    "q": "^1.5.1",
     "rxjs": "^5.1.0",
     "zone.js": "^0.8.4"
   },
   "devDependencies": {
-    "@angular/cli": "@1.4.7",
+    "@angular/cli": "1.4.7",
     "@angular/compiler-cli": "^4.1.2",
     "@types/fullcalendar": "^2.7.37",
     "@types/jasmine": "2.5.38",
@@ -52,7 +55,7 @@
     "protractor": "~5.1.0",
     "ts-node": "~2.0.0",
     "tslint": "~4.5.0",
-    "typescript": "@2.2.2",
+    "typescript": "2.2.2",
     "webpack": "^3.7.1"
   }
 }

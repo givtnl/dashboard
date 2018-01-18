@@ -26,6 +26,7 @@ import { AssignComponent} from "./components/assign.component";
 import { PayoutComponent } from "./components/children/payout-element.component";
 import { FooterComponent } from "./components/footer.component";
 import { AlertComponent} from "./components/alert.component";
+import { ChartsModule } from "ng2-charts";
 
 import * as jQuery from 'jquery';
 import { AutoCompleteModule, ScheduleModule, DialogModule, CalendarModule, DropdownModule } from 'primeng/primeng';
@@ -54,6 +55,7 @@ export function createTranslateLoader(http: Http) {
   ],
   imports: [
     AutoCompleteModule,
+    ChartsModule,
     DialogModule,
     DropdownModule,
     FormsModule,

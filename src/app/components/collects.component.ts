@@ -117,12 +117,50 @@ export class CollectsComponent implements OnInit{
 
     inputTitleLength: number = 1;
     openAllocations: boolean = false;
+
+    public pieChartLabels:string[] = ['Wordt verwerkt', 'Verwerkt', 'Geweigerd',"Geannuleerd"];
+    public pieChartData:number[] = [300, 500, 100, 50];
+    public pieChartType:string = 'pie';
+    public chartColors: any[] = [
+      {
+        backgroundColor:["#494874", "#41C98E", "#D43D4C", "#9B96B0"]
+      }];
+    selectedIndex: number = -1
+    public pieChartOptions: any = {
+      responsive: true,
+      maintainAspectRatio: false,
+      legend: {
+        display: false
+      },
+      hover: {
+        onHover: (event, active) => {
+          if(active && active.length){
+            let index = active[0]._index; //with this you get the index of the segment you hovered on
+            this.selectedIndex = index;
+            console.log(active[0]._chart.config.data.labels);  //with this you can get all the labels of your chart
+            console.log(active[0]._chart.config.data.datasets[0].backgroundColor);   //with this you can get all the bg color of your chart
+            console.log(active[0]._chart.config.data.datasets[0].data);   //with this you can get all the dataset values of your chart
+            this.chartHovered(event);
+          }
+        }
+      }
+    };
+    public chartClicked(e:any):void {
+      console.log(e);
+    }
+
+    public chartHovered(e:any):void {
+      console.log(e);
+    }
+
+    mouseMovedOut() {
+      console.log("tesdf");
+    }
+
     ngOnInit(){
       this.checkAllocations();
       this.fetchSavedCollects();
     }
-
-
 
     constructor(private apiService: ApiClientService, translate: TranslateService, private datePipe: DatePipe, private dataService: DataService, private userService: UserService) {
         this.locale = this.nl;
@@ -155,7 +193,7 @@ export class CollectsComponent implements OnInit{
           this.dateBegin = new Date(b.setSeconds(Number(this.dataService.getData('dateBegin'))));
           this.dateEnd = new Date(e.setSeconds(Number(this.dataService.getData('dateEnd'))));
         }
-        
+
         this.userService.collectGroupChanged.subscribe(() => {
             this.ngOnInit();
         });
@@ -262,7 +300,7 @@ export class CollectsComponent implements OnInit{
             if(this.multipleCollects){
                 params = "DateBegin=" + dateBegin + "&DateEnd=" + dateEnd + "&CollectId=" + this.multipleCollectsId;
             }else{
-                params = "DateBegin=" + dateBegin + "&DateEnd=" + dateEnd;
+                params = "DateBegin=" + dateBegin + "&DateEnd=" + dateEnd + "&Status=1";
             }
 
             let beginTime = new Date(this.dateBegin.valueOf()).getTime();
@@ -284,6 +322,7 @@ export class CollectsComponent implements OnInit{
             this.apiService.getData("Cards/Givts/?"+params)
                 .then(resp =>
                 {
+                  console.log(resp);
                     this.transactionCount = resp.TransactionCount;
                     this.costPerTransaction = resp.PayProvCostPerTransaction;
 
@@ -370,6 +409,7 @@ export class CollectsComponent implements OnInit{
     }
 
     filterCollect(collectId){
+      this.pieChartData = [300, 500, 100, this.pieChartData[3]+100];
         if(collectId == null || collectId == 0){
             this.multipleCollects = false;
         } else {

@@ -559,3 +559,66 @@ button:disabled{
 .red{
   color: #D53D4C;
 }
+
+.graph-overview {
+  width: 560px;
+  font-family: Avenir_Light;
+  border-collapse: collapse;
+}
+
+.graph-overview tr td {
+  padding: 10px 0;
+}
+
+.graph-overview tr td .personal-icon {
+  padding: 0 0 5px 5px;
+}
+
+.graph-overview tr td .rectangle {
+  background: white;
+  display: inline-block;
+  width: 55px;
+  height: 15px;
+}
+
+.graph-overview tr td .blue {
+  background: #494874;
+}
+
+.graph-overview tr td .green {
+  background: #41C98E;
+}
+
+.graph-overview tr td .red {
+  background: #D43D4C;
+}
+
+.graph-overview tr td .grey {
+  background: #9B96B0;
+}
+
+.graph-overview tr td:first-child {
+  width: 100px;
+  text-align: center
+}
+
+.graph-overview tr td:last-child {
+  text-align: center;
+}
+
+.graph {
+  display: inline-block;
+  width: 250px;
+  height: 250px;
+  margin-right: 30px;
+}
+
+.graph-section {
+  display: flex;
+  align-items: center;
+}
+
+.selectRow > td {
+  background: lightgrey;
+}
+
