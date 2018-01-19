@@ -120,25 +120,22 @@ export class CollectsComponent implements OnInit{
           if(active && active.length){
             let index = active[0]._index; //with this you get the index of the segment you hovered on
             this.selectedIndex = index;
-            console.log(active[0]._chart.config.data.labels);  //with this you can get all the labels of your chart
-            console.log(active[0]._chart.config.data.datasets[0].backgroundColor);   //with this you can get all the bg color of your chart
-            console.log(active[0]._chart.config.data.datasets[0].data);   //with this you can get all the dataset values of your chart
+            //console.log(active[0]._chart.config.data.labels);  //with this you can get all the labels of your chart
+            //console.log(active[0]._chart.config.data.datasets[0].backgroundColor);   //with this you can get all the bg color of your chart
+            //console.log(active[0]._chart.config.data.datasets[0].data);   //with this you can get all the dataset values of your chart
             this.chartHovered(event);
           }
         }
       }
     };
     public chartClicked(e:any):void {
-      console.log(e);
+      //console.log(e);
     }
 
     public chartHovered(e:any):void {
-      console.log(e);
+      //console.log(e);
     }
 
-    mouseMovedOut() {
-      console.log("tesdf");
-    }
 
     ngOnInit(){
       this.checkAllocations();
@@ -306,7 +303,6 @@ export class CollectsComponent implements OnInit{
                 .then(resp =>
                 {
                   this.ShowLoadingAnimation = false;
-                  console.log(resp);
                 });
         }
 
@@ -346,9 +342,7 @@ export class CollectsComponent implements OnInit{
     }
 
     filterCollect(collectId){
-
-
-        if(collectId == null || collectId == 0){
+       if(collectId == null || collectId == 0){
             this.multipleCollects = false;
         } else {
             this.multipleCollects = true;
@@ -377,10 +371,6 @@ export class CollectsComponent implements OnInit{
           this.apiService.getData("v2/collectgroups/" + GUID + "/givts/view/search?dtBegin=" + dateBegin + "&dtEnd=" + dateEnd + baseParams)
             .then(resp =>
             {
-              console.log(resp);
-              console.log(resp.length);
-              console.log(resp.count);
-
               this.infoToProcess = new visualCollection(0,0);
               this.infoProcessed = new visualCollection(0,0);
               this.infoCancelledByUser = new visualCollection(0,0);
