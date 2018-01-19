@@ -12,6 +12,7 @@ import {visualCollection} from "../models/visualCollection";
 import {BaseChartDirective} from "ng2-charts";
 import * as moment from "moment";
 import Base = moment.unitOfTime.Base;
+import {forEach} from "@angular/router/src/utils/collection";
 @Component({
     selector: 'my-collects',
     templateUrl: '../html/collects.component.html',
@@ -365,80 +366,71 @@ export class CollectsComponent implements OnInit{
         var dateEnd = this.formatDate(this.dateEnd);
         let baseParams;
         if(this.multipleCollects){
-          baseParams = "DateBegin=" + dateBegin + "&DateEnd=" + dateEnd + "&CollectId=" + this.multipleCollectsId;
+          baseParams = "&CollectId=" + this.multipleCollectsId;
         }else{
-          baseParams = "DateBegin=" + dateBegin + "&DateEnd=" + dateEnd;
+          baseParams = "";
+        }
+
+
+        if (this.dataService.getData("CurrentCollectGroup")) {
+          let GUID = JSON.parse(this.dataService.getData("CurrentCollectGroup")).GUID;
+          this.apiService.getData("v2/collectgroups/" + GUID + "/givts/view/search?dtBegin=" + dateBegin + "&dtEnd=" + dateEnd + baseParams)
+            .then(resp =>
+            {
+              console.log(resp);
+              console.log(resp.length);
+              console.log(resp.count);
+
+              this.infoToProcess = new visualCollection(0,0);
+              this.infoProcessed = new visualCollection(0,0);
+              this.infoCancelledByUser = new visualCollection(0,0);
+              this.infoCancelledByBank = new visualCollection(0,0);
+              this.pieChartData = [0,0,0,0];
+              this.totalAmountsCombined = 0;
+
+              for(let i = 0; i < resp.length; i++) {
+                let currentResp = resp[i];
+                switch (resp[i].Status) {
+                  case 1:
+                  case 2:
+                    this.infoToProcess.numberOfUsers += currentResp.Count;
+                    this.infoToProcess.totalAmount += currentResp.Sum;
+                    this.pieChartData[0] = this.infoToProcess.totalAmount;
+                    this.totalAmountsCombined += this.infoToProcess.totalAmount;
+                    break;
+                  case 3:
+                    this.infoProcessed.numberOfUsers += currentResp.Count;
+                    this.infoProcessed.totalAmount += currentResp.Sum;
+                    this.pieChartData[1] = this.infoProcessed.totalAmount;
+                    this.totalAmountsCombined += this.infoProcessed.totalAmount;
+
+                    break;
+                  case 4:
+                    this.infoCancelledByBank.numberOfUsers += currentResp.Count;
+                    this.infoCancelledByBank.totalAmount += currentResp.Sum;
+                    this.pieChartData[2] = this.infoCancelledByBank.totalAmount;
+                    this.totalAmountsCombined += this.infoCancelledByBank.totalAmount;
+
+                    break;
+                  case 5:
+                    this.infoCancelledByUser.numberOfUsers += currentResp.Count;
+                    this.infoCancelledByUser.totalAmount += currentResp.Sum;
+                    this.pieChartData[3] = this.infoCancelledByUser.totalAmount;
+                    this.totalAmountsCombined += this.infoCancelledByUser.totalAmount;
+                    break;
+                  default:
+                    break;
+                }
+              }
+              this.isDataAvailable = true;
+              if(this.chart != undefined) {
+                this.chart.chart.update();
+              }
+            });
         }
 
 
         this.isVisible = true;
-
-        let euro =  "€";
-        if(!navigator.language.includes('en'))
-          euro += " ";
-
-        let params = baseParams + "&Status=1";
-        this.apiService.getData("Cards/Givts/?"+params)
-          .then(resp =>
-          {
-            console.log(resp);
-            this.infoToProcess = new visualCollection();
-            this.infoToProcess.numberOfUsers = resp.TransactionCount;
-            this.infoToProcess.totalAmount = resp.TotalAmount;
-            console.log(this.infoToProcess);
-            this.apiService.getData("Cards/Givts/?DateBegin=" + dateBegin + "&DateEnd=" + dateEnd + "&Status=2")
-              .then( resp =>
-              {
-                console.log(resp);
-                this.infoToProcess.numberOfUsers += resp.TransactionCount;
-                this.infoToProcess.totalAmount += resp.TotalAmount;
-                this.pieChartData[0] = this.infoToProcess.totalAmount;
-                this.totalAmountsCombined += this.infoToProcess.totalAmount;
-                this.isDataAvailable = true;
-                this.chart.chart.update();
-              });
-
-          });
-
-        params = baseParams + "&Status=3";
-        this.apiService.getData("Cards/Givts/?"+params)
-          .then(resp =>
-          {
-            console.log(resp);
-            this.infoProcessed = new visualCollection();
-            this.infoProcessed.numberOfUsers = resp.TransactionCount;
-            this.infoProcessed.totalAmount = resp.TotalAmount;
-            this.pieChartData[1] = this.infoProcessed.totalAmount;
-            this.totalAmountsCombined += this.infoProcessed.totalAmount;
-            this.chart.chart.update();
-          });
-
-        params = baseParams + "&Status=4";
-        this.apiService.getData("Cards/Givts/?"+params)
-          .then(resp =>
-          {
-            console.log(resp);
-            this.infoCancelledByBank = new visualCollection();
-            this.infoCancelledByBank.numberOfUsers = resp.TransactionCount;
-            this.infoCancelledByBank.totalAmount = resp.TotalAmount;
-            this.pieChartData[2] = this.infoCancelledByBank.totalAmount;
-            this.totalAmountsCombined += this.infoCancelledByBank.totalAmount;
-            this.chart.chart.update();
-          });
-
-        params = baseParams + "&Status=5";
-        this.apiService.getData("Cards/Givts/?"+params)
-          .then(resp =>
-          {
-            console.log(resp);
-            this.infoCancelledByUser = new visualCollection();
-            this.infoCancelledByUser.numberOfUsers = resp.TransactionCount;
-            this.infoCancelledByUser.totalAmount = resp.TotalAmount;
-            this.pieChartData[3] = this.infoCancelledByUser.totalAmount;
-            this.totalAmountsCombined += this.infoCancelledByUser.totalAmount;
-            this.chart.chart.update();
-
-          });
 
       }
     }

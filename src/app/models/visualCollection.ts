@@ -5,8 +5,8 @@ export class visualCollection{
   numberOfUsers: number;
   totalAmount: number;
 
-  constructor() {
-    this.numberOfUsers = 0;
-    this.totalAmount = 0;
+  constructor(numberOfusers = 0, totalAmount = 0) {
+    this.numberOfUsers = numberOfusers;
+    this.totalAmount = totalAmount;
   }
 }
