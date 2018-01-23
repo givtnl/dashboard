@@ -106,5 +106,10 @@
     "AssignOpenCollectes": "Assign all non-allocated collections: ",
     "InvalidToken": "This link is not valid anymore. Try requesting a new password.",
     "Text_Export": "Enter a start and end date and click on the download-button to obtain an export.",
-    "Loading": "Loading"
+    "Loading": "Loading",
+    "Processing": "In process",
+    "Processed": "Processed",
+    "CancelledByUser": "Cancelled by user",
+    "CancelledByBank": "Refused by bank",
+    "LegendExplanation": "In process: donations yet to be processed by SlimPay.\nProcessed: donations that will be paid out with the next payout.\nRefused by the bank: donations that were refused by the bank, can happen when there's not enough provision on the bank account.\nCancelled by the giver: donations that were cancelled by the user before being processed by SlimPay."
 }

@@ -106,5 +106,10 @@
     "AssignOpenCollectes": "Alle niet-toegewezen collectes toewijzen: ",
     "InvalidToken": "De geldigheid van deze link is verlopen. Probeer een nieuw wachtwoord aan te vragen.",
     "Text_Export": "Geef een start- en einddatum in en klik op het download-symbool om een export te verkrijgen.",
-    "Loading": "Laden"
+    "Loading": "Laden",
+    "Processing": "Wordt verwerkt",
+    "Processed": "Verwerkt",
+    "CancelledByUser": "Geannuleerd door de gever",
+    "CancelledByBank": "Geweigerd door de bank",
+    "LegendExplanation": "Wordt verwerkt: deze giften zijn nog niet verwerkt door onze transactieprocessor.\nVerwerkt: deze giften zijn verwerkt en zullen uitbetaald worden bij de volgende uitbetaling.\nGeweigerd door de bank: de bank heeft deze gift geweigerd, dit kan bijvoorbeeld gebeuren als er niet voldoende provisie op de rekening staat.\nGeannuleerd door de gever: deze gift is geannuleerd door de gebruiker vooraleer deze transactie verwerkt werd."
 }
