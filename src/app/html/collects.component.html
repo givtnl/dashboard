@@ -93,31 +93,42 @@
         <table class="graph-overview">
           <tr [class.selectRow]="selectedIndex == 0" *ngIf="infoToProcess != undefined">
             <td><span class="rectangle blue"></span></td>
-            <td>Wordt verwerkt</td>
+            <td>{{ "Processing" | translate }}</td>
             <td><img class="personal-icon" src="images/personal-blue.png" alt=""></td>
             <td>{{ infoToProcess.numberOfUsers }}</td>
             <td>{{ displayValue(infoToProcess.totalAmount) }}</td>
           </tr>
           <tr [class.selectRow]="selectedIndex == 1" *ngIf="infoProcessed != undefined">
             <td><span class="rectangle green"></span></td>
-            <td>Verwerkt</td>
+            <td>{{ "Processed" | translate }}</td>
             <td><img class="personal-icon" src="images/personal-green.png" alt=""></td>
             <td>{{ infoProcessed.numberOfUsers }}</td>
             <td>{{ displayValue(infoProcessed.totalAmount) }}</td>
           </tr>
           <tr [class.selectRow]="selectedIndex == 2" *ngIf="infoCancelledByBank != undefined">
             <td><span class="rectangle red"></span></td>
-            <td>Geweigerd door de bank</td>
+            <td>{{ "CancelledByBank" | translate }}</td>
             <td><img class="personal-icon" src="images/personal-red.png" alt=""></td>
             <td>{{ infoCancelledByBank.numberOfUsers }}</td>
             <td>{{ displayValue(infoCancelledByBank.totalAmount) }}</td>
           </tr>
           <tr [class.selectRow]="selectedIndex == 3" *ngIf="infoCancelledByUser != undefined">
             <td><span class="rectangle grey"></span></td>
-            <td>Geannuleerd door de gever</td>
+            <td>{{ "CancelledByUser" | translate }}</td>
             <td><img class="personal-icon" src="images/personal-grey.png" alt=""></td>
             <td>{{ infoCancelledByUser.numberOfUsers }}</td>
             <td>{{ displayValue(infoCancelledByUser.totalAmount) }}</td>
+          </tr>
+          <tr>
+            <td colspan="5">
+              <span class="more-info tooltip">{{ "Text_Deduction_InfoButton" | translate }}
+              <span class="green tooltiptext">
+                                 {{"LegendExplanation" | translate }}
+              </span>
+              </span>
+
+
+            </td>
           </tr>
         </table>
       </div>
