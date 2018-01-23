@@ -54,7 +54,7 @@
         <div class="collection-buttons">
             <span *ngIf="infoToProcess != undefined && infoProcessed != undefined && infoCancelledByUser != undefined && infoCancelledByBank != undefined" >{{ displayValue(totalAmountsCombined) }}</span>
 
-            <button class="icon" [class.fill-green]="showCosts == true" (click)="showCosts = !showCosts">
+            <button class="icon" [class.fill-green]="showCosts == true" (click)="showCosts = !showCosts" [disabled]="totalAmountsCombined == 0" >
 
                 <svg width="23px" height="23px" viewBox="8 8 23 23" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                     <!-- Generator: Sketch 40.3 (33839) - http://www.bohemiancoding.com/sketch -->

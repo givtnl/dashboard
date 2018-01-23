@@ -102,18 +102,34 @@ export class CollectsComponent implements OnInit{
     openAllocations: boolean = false;
 
     public pieChartLabels:string[] = ['Wordt verwerkt', 'Verwerkt', 'Geweigerd',"Geannuleerd"];
-    public pieChartData:number[] = [0, 0, 0, 0];
+    public pieChartData:number[] = [0,0,0,0];
     public pieChartType:string = 'pie';
     public chartColors: any[] = [
       {
         backgroundColor:["#494874", "#41C98E", "#D43D4C", "#9B96B0"]
       }];
-    selectedIndex: number = -1
+    selectedIndex: number = -1;
     public pieChartOptions: any = {
       responsive: true,
       maintainAspectRatio: false,
       legend: {
         display: false
+      },
+      borderWidth : 0,
+      tooltips: {
+        filter: function(tooltipItem, data) {
+          return data.datasets[0].data[tooltipItem.index] != 0;
+        },
+        bodyFontColor: 'rgb(44,43,87)',
+        backgroundColor: 'rgb(255,255,255)',
+        callbacks: {
+          label: function(tooltipItem, data) {
+            let val = data.datasets[0].data[tooltipItem.index];
+            let label = data.labels[tooltipItem.index];
+            let amount = this.displayValue(val);
+            return label + ": " + amount;
+          }.bind(this)
+        }
       },
       hover: {
         onHover: (event, active) => {
@@ -371,6 +387,7 @@ export class CollectsComponent implements OnInit{
           this.apiService.getData("v2/collectgroups/" + GUID + "/givts/view/search?dtBegin=" + dateBegin + "&dtEnd=" + dateEnd + baseParams)
             .then(resp =>
             {
+              //reset vars
               this.infoToProcess = new visualCollection(0,0);
               this.infoProcessed = new visualCollection(0,0);
               this.infoCancelledByUser = new visualCollection(0,0);
@@ -385,32 +402,29 @@ export class CollectsComponent implements OnInit{
                   case 2:
                     this.infoToProcess.numberOfUsers += currentResp.Count;
                     this.infoToProcess.totalAmount += currentResp.Sum;
-                    this.pieChartData[0] = this.infoToProcess.totalAmount;
-                    this.totalAmountsCombined += this.infoToProcess.totalAmount;
                     break;
                   case 3:
                     this.infoProcessed.numberOfUsers += currentResp.Count;
                     this.infoProcessed.totalAmount += currentResp.Sum;
-                    this.pieChartData[1] = this.infoProcessed.totalAmount;
-                    this.totalAmountsCombined += this.infoProcessed.totalAmount;
-
                     break;
                   case 4:
                     this.infoCancelledByBank.numberOfUsers += currentResp.Count;
                     this.infoCancelledByBank.totalAmount += currentResp.Sum;
-                    this.pieChartData[2] = this.infoCancelledByBank.totalAmount;
-                    this.totalAmountsCombined += this.infoCancelledByBank.totalAmount;
-
                     break;
                   case 5:
                     this.infoCancelledByUser.numberOfUsers += currentResp.Count;
                     this.infoCancelledByUser.totalAmount += currentResp.Sum;
-                    this.pieChartData[3] = this.infoCancelledByUser.totalAmount;
-                    this.totalAmountsCombined += this.infoCancelledByUser.totalAmount;
                     break;
                   default:
                     break;
                 }
+              }
+              this.pieChartData = [this.infoToProcess.totalAmount, this.infoProcessed.totalAmount, this.infoCancelledByBank.totalAmount, this.infoCancelledByUser.totalAmount];
+              this.totalAmountsCombined = this.infoToProcess.totalAmount + this.infoProcessed.totalAmount + this.infoCancelledByBank.totalAmount + this.infoCancelledByUser.totalAmount;
+
+              //open the graph details when amount is available
+              if (this.totalAmountsCombined > 0) {
+                this.showCosts = true;
               }
               this.isDataAvailable = true;
               if(this.chart != undefined) {
