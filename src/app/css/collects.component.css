@@ -429,8 +429,8 @@ button:disabled{
     border-radius: 6px;
     position: absolute;
     z-index: 1;
-    top: 0;
-    left: 120%;
+    top: -20px;
+    right: 120%;
     padding: 8px 12px;
     box-sizing: border-box;
     text-align: left;
@@ -438,13 +438,14 @@ button:disabled{
 }
 
 .tooltip .tooltiptext::after {
-    content: "";
-    position: absolute;
-    top: 15px;
-    right: 100%;
-    margin-top: -5px;
-    border-width: 5px;
-    border-style: solid;
+  content: "";
+  position: absolute;
+  top: 18px;
+  left: 100%;
+  margin-left: -1px;
+  border-width: 10px;
+  border-style: solid;
+  transform: rotate(180deg);
 }
 .tooltip:hover .tooltiptext {
     visibility: visible;
@@ -481,6 +482,8 @@ button:disabled{
 .more-info{
     color:#06B26B;
     cursor: pointer;
+    text-align: right;
+    font-family: Avenir_Heavy;
 }
 
 .stat-calc tr .big-cell{
@@ -604,7 +607,7 @@ button:disabled{
 }
 
 .graph-overview tr td:last-child {
-  text-align: center;
+  text-align: right;
 }
 
 .graph {
