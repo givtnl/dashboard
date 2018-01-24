@@ -640,8 +640,8 @@ button:disabled{
   outline: 0;
   background: none;
   opacity: 0.3;
-  margin: 0 0 0 20px;
-  padding:0;
+  margin: 0;
+  padding: 0 15px;
 }
 
 .info-button:focus, .info-button:hover {
