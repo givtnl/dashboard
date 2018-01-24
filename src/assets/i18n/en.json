@@ -111,5 +111,9 @@
     "Processed": "Processed",
     "CancelledByUser": "Cancelled by user",
     "CancelledByBank": "Refused by bank",
-    "LegendExplanation": "In process: donations yet to be processed by SlimPay.\nProcessed: donations that will be paid out with the next payout.\nRefused by the bank: donations that were refused by the bank, can happen when there's not enough provision on the bank account.\nCancelled by the giver: donations that were cancelled by the user before being processed by SlimPay."
+    "LegendExplanation": "In process: donations yet to be processed by SlimPay.\nProcessed: donations that will be paid out with the next payout.\nRefused by the bank: donations that were refused by the bank, can happen when there's not enough provision on the bank account.\nCancelled by the giver: donations that were cancelled by the user before being processed by SlimPay.",
+    "ToProcessExplanation": "Donations are yet to be processed by our transactionmanager",
+    "ProcessedExplanation": "Donations are processed and will be paid out with the next payout",
+    "CancelByUserExplanation": "Storno's by the user",
+    "CancelByBankExplanation": "Storno's by the bank"
 }

@@ -90,47 +90,67 @@
                   (chartClick)="chartClicked($event)"></canvas>
 
         </div>
-        <table class="graph-overview">
-          <tr [class.selectRow]="selectedIndex == 0" *ngIf="infoToProcess != undefined">
-            <td><span class="rectangle blue"></span></td>
-            <td>{{ "Processing" | translate }}</td>
-            <td><img class="personal-icon" src="images/personal-blue.png" alt=""></td>
-            <td>{{ infoToProcess.numberOfUsers }}</td>
-            <td>{{ displayValue(infoToProcess.totalAmount) }}</td>
-          </tr>
-          <tr [class.selectRow]="selectedIndex == 1" *ngIf="infoProcessed != undefined">
-            <td><span class="rectangle green"></span></td>
-            <td>{{ "Processed" | translate }}</td>
-            <td><img class="personal-icon" src="images/personal-green.png" alt=""></td>
-            <td>{{ infoProcessed.numberOfUsers }}</td>
-            <td>{{ displayValue(infoProcessed.totalAmount) }}</td>
-          </tr>
-          <tr [class.selectRow]="selectedIndex == 2" *ngIf="infoCancelledByBank != undefined">
-            <td><span class="rectangle red"></span></td>
-            <td>{{ "CancelledByBank" | translate }}</td>
-            <td><img class="personal-icon" src="images/personal-red.png" alt=""></td>
-            <td>{{ infoCancelledByBank.numberOfUsers }}</td>
-            <td>{{ displayValue(infoCancelledByBank.totalAmount) }}</td>
-          </tr>
-          <tr [class.selectRow]="selectedIndex == 3" *ngIf="infoCancelledByUser != undefined">
-            <td><span class="rectangle grey"></span></td>
-            <td>{{ "CancelledByUser" | translate }}</td>
-            <td><img class="personal-icon" src="images/personal-grey.png" alt=""></td>
-            <td>{{ infoCancelledByUser.numberOfUsers }}</td>
-            <td>{{ displayValue(infoCancelledByUser.totalAmount) }}</td>
-          </tr>
-          <tr>
-            <td colspan="5">
-              <span class="more-info tooltip">{{ "Text_Deduction_InfoButton" | translate }}
-              <span class="green tooltiptext">
-                                 {{"LegendExplanation" | translate }}
+        <div style="width: 100%;">
+          <table class="graph-overview">
+            <tr [class.selectRow]="selectedIndex == 0" *ngIf="infoToProcess != undefined">
+              <td><span class="rectangle blue"></span></td>
+              <td>{{ "Processing" | translate }}</td>
+              <td><img class="personal-icon" src="images/personal-blue.png" alt=""></td>
+              <td>{{ infoToProcess.numberOfUsers }}</td>
+              <td class="cell-amount">{{ displayValue(infoToProcess.totalAmount) }}</td>
+              <td class="align-right">
+                <span class="tooltip">
+                  <button class="info-button"><img class="" src="/images/blueinfo.png" alt=""></button>
+                  <span class="tooltiptext">
+                                 {{"ToProcessExplanation" | translate }}
               </span>
+                </span></td>
+            </tr>
+            <tr [class.selectRow]="selectedIndex == 1" *ngIf="infoProcessed != undefined">
+              <td><span class="rectangle green"></span></td>
+              <td>{{ "Processed" | translate }}</td>
+              <td><img class="personal-icon" src="images/personal-green.png" alt=""></td>
+              <td>{{ infoProcessed.numberOfUsers }}</td>
+              <td class="cell-amount">{{ displayValue(infoProcessed.totalAmount) }}</td>
+              <td class="align-right">
+                <span class="tooltip">
+                  <button class="info-button"><img class="" src="/images/blueinfo.png" alt=""></button>
+                  <span class="tooltiptext">
+                                 {{"ProcessedExplanation" | translate }}
               </span>
+                </span></td>
+            </tr>
+            <tr [class.selectRow]="selectedIndex == 2" *ngIf="infoCancelledByBank != undefined">
+              <td><span class="rectangle red"></span></td>
+              <td>{{ "CancelledByBank" | translate }}</td>
+              <td><img class="personal-icon" src="images/personal-red.png" alt=""></td>
+              <td>{{ infoCancelledByBank.numberOfUsers }}</td>
+              <td class="cell-amount">{{ displayValue(infoCancelledByBank.totalAmount) }}</td>
+              <td class="align-right">
+                <span class="tooltip">
+                  <button class="info-button"><img class="" src="/images/blueinfo.png" alt=""></button>
+                  <span class="tooltiptext">
+                                 {{"CancelByBankExplanation" | translate }}
+              </span>
+                </span></td>
+            </tr>
+            <tr [class.selectRow]="selectedIndex == 3" *ngIf="infoCancelledByUser != undefined">
+              <td><span class="rectangle grey"></span></td>
+              <td>{{ "CancelledByUser" | translate }}</td>
+              <td><img class="personal-icon" src="images/personal-grey.png" alt=""></td>
+              <td>{{ infoCancelledByUser.numberOfUsers }}</td>
+              <td class="cell-amount">{{ displayValue(infoCancelledByUser.totalAmount) }}</td>
+              <td class="align-right">
+                <span class="tooltip">
+                  <button class="info-button"><img class="" src="/images/blueinfo.png" alt=""></button>
+                  <span class="tooltiptext">
+                                 {{"CancelByUserExplanation" | translate }}
+              </span>
+                </span></td>
+            </tr>
+          </table>
+        </div>
 
-
-            </td>
-          </tr>
-        </table>
       </div>
     </div>
 </section>

@@ -3,7 +3,7 @@ import { DatePipe } from '@angular/common';
 import {BrowserModule} from '@angular/platform-browser';
 //import { BrowserAnimationsModule } from '@angular/animations';
 import { ApiClientService } from "app/services/api-client.service";
-import { TranslateService } from "ng2-translate";
+import {TranslatePipe, TranslateService} from "ng2-translate";
 import {CalendarModule} from "primeng/primeng";
 import {Collection} from "../models/collection";
 import {DataService} from "../services/data.service";
@@ -29,7 +29,6 @@ export class CollectsComponent implements OnInit{
     infoCancelledByUser: visualCollection;
     totalAmountsCombined: number = 0;
 
-    translate: TranslateService;
     text: string;
     calendarModule: CalendarModule;
     dateBegin: Date = null;
@@ -101,7 +100,7 @@ export class CollectsComponent implements OnInit{
     inputTitleLength: number = 1;
     openAllocations: boolean = false;
 
-    public pieChartLabels:string[] = ['Wordt verwerkt', 'Verwerkt', 'Geweigerd',"Geannuleerd"];
+    public pieChartLabels:string[] = [this.translate.instant("Text_Export").toString(), 'Verwerkt', 'Geweigerd',"Geannuleerd"];
     public pieChartData:number[] = [0,0,0,0];
     public pieChartType:string = 'pie';
     public chartColors: any[] = [
@@ -158,11 +157,10 @@ export class CollectsComponent implements OnInit{
       this.fetchSavedCollects();
     }
 
-    constructor(private apiService: ApiClientService, translate: TranslateService, private datePipe: DatePipe, private dataService: DataService, private userService: UserService) {
+    constructor(private apiService: ApiClientService, private translate: TranslateService, private datePipe: DatePipe, private dataService: DataService, private userService: UserService) {
         this.locale = this.nl;
 
         this.isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
-        this.translate = translate;
         switch (this.translate.currentLang){
             case "nl":
                 this.locale = this.nl;
@@ -419,6 +417,7 @@ export class CollectsComponent implements OnInit{
                     break;
                 }
               }
+              this.pieChartLabels = [this.translate.instant("Processing").toString(), this.translate.instant("Processed"), this.translate.instant("CancelledByBank"), this.translate.instant("CancelledByUser")];
               this.pieChartData = [this.infoToProcess.totalAmount, this.infoProcessed.totalAmount, this.infoCancelledByBank.totalAmount, this.infoCancelledByUser.totalAmount];
               this.totalAmountsCombined = this.infoToProcess.totalAmount + this.infoProcessed.totalAmount + this.infoCancelledByBank.totalAmount + this.infoCancelledByUser.totalAmount;
 

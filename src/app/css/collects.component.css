@@ -418,10 +418,12 @@ button:disabled{
 .tooltip {
     position: relative;
     display: inline-block;
+
    /* border-bottom: 1px dotted black;*/
 }
 
 .tooltip .tooltiptext {
+  background: #2E2957;
     visibility: hidden;
     width: 320px;
     /*background-color: black;*/
@@ -429,21 +431,22 @@ button:disabled{
     border-radius: 6px;
     position: absolute;
     z-index: 1;
-    top: -20px;
-    right: 120%;
+    top: -7px;
+    right: 100%;
     padding: 8px 12px;
     box-sizing: border-box;
-    text-align: left;
-    font-family: 'Avenir_Roman';
+    text-align: center;
+    font-family: 'Avenir_Light';
 }
 
 .tooltip .tooltiptext::after {
   content: "";
+  border-color: transparent #2E2957 transparent transparent;
   position: absolute;
-  top: 18px;
+  top: 8px;
   left: 100%;
   margin-left: -1px;
-  border-width: 10px;
+  border-width: 7px;
   border-style: solid;
   transform: rotate(180deg);
 }
@@ -565,7 +568,7 @@ button:disabled{
 }
 
 .graph-overview {
-  width: 560px;
+  width: 100%;
   font-family: Avenir_Light;
   border-collapse: collapse;
 }
@@ -603,11 +606,12 @@ button:disabled{
 
 .graph-overview tr td:first-child {
   width: 100px;
-  text-align: center
+  text-align: center;
 }
 
-.graph-overview tr td:last-child {
+.graph-overview tr .cell-amount {
   text-align: right;
+  white-space: nowrap;
 }
 
 .graph {
@@ -630,4 +634,22 @@ button:disabled{
 .hideElement {
   opacity: 0;
 }
+
+.info-button {
+  border:0;
+  outline: 0;
+  background: none;
+  opacity: 0.3;
+  margin: 0 0 0 20px;
+  padding:0;
+}
+
+.info-button:focus, .info-button:hover {
+  opacity: 1;
+}
+
+.align-right {
+  text-align: right;
+}
+
 
