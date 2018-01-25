@@ -154,7 +154,7 @@ export class AssignComponent implements OnInit {
     this.secondCollection = new AssignedCollection();
     this.thirdCollection = new AssignedCollection();
     for(let i = 0; i < this.openGivts.length; i++){
-      let dtConfirmed = new Date(this.openGivts[i]["Timestamp"]);
+      let dtConfirmed = new Date(this.openGivts[i]["dt_Confirmed"]);
       let dtStart = new Date(start);
       let dtEnd = new Date(end);
       if(dtConfirmed > dtStart && dtConfirmed < dtEnd)
