@@ -7,6 +7,7 @@ import 'fullcalendar/dist/locale/nl';
 import {AllocationTimeSpanItem, Transaction} from "../models/allocationTimeSpanItem";
 import {element} from "protractor";
 import {UserService} from "../services/user.service";
+import {Button} from "primeng/primeng";
 declare var moment: any;
 @Component({
   selector: 'app-assign-collects',
@@ -18,15 +19,6 @@ export class AssignComponent implements OnInit {
   events: any[];
   headerConfig: any;
   options: Object = new Object();
-  collectName = '';
-  collectName2 = '';
-  collectName3 = '';
-  collectOneCheck = false;
-  collectTwoCheck = false;
-  collectThreeCheck = false;
-  collectOneAmount : string;
-  collectTwoAmount : string;
-  collectThreeAmount : string;
   isDialogOpen: boolean;
   showForm = true;
   showDelete = false;
@@ -42,17 +34,16 @@ export class AssignComponent implements OnInit {
   collectionTranslation: string;
   usersTransalation: string;
   notYetAllocated: string;
-  collectOneTyping: boolean = false;
-  collectTwoTyping: boolean = false;
-  collectThreeTyping: boolean = false;
   allCollectTyping: boolean = false;
   usedTags: string[];
   filteredUsedTags: string[];
   allocateWeekName: string = "";
   numberOfFilteredEvents = 0;
+  SelectedTab = SelectedTab;
+  ButtonState = ButtonState;
+  currentTab: SelectedTab = SelectedTab.Collects;
 
   filteredEvents() {
-    console.log("calling");
     if(this.events == undefined)
     {
       this.numberOfFilteredEvents = 0;
@@ -111,15 +102,12 @@ export class AssignComponent implements OnInit {
     }.bind(this);
     this.options['eventAfterRender'] = function(event, element, view){
      this.eventAfterRender(event, element, view);
-     console.log("after render");
     }.bind(this);
     this.options['eventRender'] = function(event, element, view){
       this.eventRender(this, event, element, view);
-      console.log("render");
     }.bind(this);
     this.options['eventAfterAllRender'] = function(view) {
       this.filteredEvents();
-      console.log("all rendered");
     }.bind(this);
     this.options['slotDuration'] = '00:30:00';
     this.options['timezone'] = 'local';
@@ -141,27 +129,6 @@ export class AssignComponent implements OnInit {
         });
   }
 
-  collectOneChanging(event){
-    this.collectThreeTyping = false;
-    this.collectTwoTyping = false;
-    this.collectOneTyping = event != "";
-    this.filterTags(event);
-  }
-
-  collectTwoChanging(event){
-    this.collectOneTyping = false;
-    this.collectThreeTyping = false;
-    this.collectTwoTyping = event != "";
-    this.filterTags(event);
-  }
-
-  collectThreeChanging(event){
-    this.collectOneTyping = false;
-    this.collectTwoTyping = false;
-    this.collectThreeTyping = event != "";
-    this.filterTags(event);
-  }
-
   filterTags(typed){
     this.filteredUsedTags = [];
     let regex = new RegExp(typed, "i");
@@ -173,32 +140,9 @@ export class AssignComponent implements OnInit {
     }, this);
   }
 
-  focusout(collect){
-    var that = this;
-    switch(collect){
-      case 1:
-        setTimeout(()=> {that.collectOneTyping = false}, 200);
-        break;
-      case 2:
-        setTimeout(()=> {that.collectTwoTyping = false}, 200);
-        break;
-      case 3://
-        setTimeout(()=> {that.collectThreeTyping = false}, 200);
-        break;
-    }
-  }
-
-  setCollectNameOne(item){
-    this.collectName = item.replace("<span class='autocomplete'>","").replace("</span>","");
-    this.collectOneTyping = false;
-  }
-  setCollectNameTwo(item){
-    this.collectName2 = item.replace("<span class='autocomplete'>","").replace("</span>","");
-    this.collectTwoTyping = false;
-  }
-  setCollectNameThree(item){
-    this.collectName3 = item.replace("<span class='autocomplete'>","").replace("</span>","");
-    this.collectThreeTyping = false;
+  setCollectNameOf(item, aCollection: AssignedCollection) {
+    aCollection.name = item.replace("<span class='autocomplete'>","").replace("</span>","");
+    aCollection.isTyping = false;
   }
 
   addAllocation(start, end)
@@ -206,32 +150,27 @@ export class AssignComponent implements OnInit {
     if(this.openGivts.length === 0)
       return;
     let check = false;
-    this.collectOneAmount = "";
-    this.collectTwoAmount = "";
-    this.collectThreeAmount = "";
-    var c1am = 0;
-    var c2am = 0;
-    var c3am = 0;
+    this.firstCollection = new AssignedCollection();
+    this.secondCollection = new AssignedCollection();
+    this.thirdCollection = new AssignedCollection();
     for(let i = 0; i < this.openGivts.length; i++){
       let dtConfirmed = new Date(this.openGivts[i]["Timestamp"]);
       let dtStart = new Date(start);
       let dtEnd = new Date(end);
       if(dtConfirmed > dtStart && dtConfirmed < dtEnd)
       {
+
+
         check = true;
         switch (this.openGivts[i].CollectId){
           case "1":
-            console.log(this.openGivts[i]);
-            c1am = c1am + this.openGivts[i].Amount;
-            this.collectOneCheck = true;
+            this.fillCollectBy(this.firstCollection, this.openGivts[i].Status, this.openGivts[i].Amount);
             break;
           case "2":
-            this.collectTwoCheck = true;
-            c2am += this.openGivts[i].Amount;
+            this.fillCollectBy(this.secondCollection, this.openGivts[i].Status, this.openGivts[i].Amount);
             break;
           case "3":
-            c3am += this.openGivts[i].Amount;
-            this.collectThreeCheck = true;
+            this.fillCollectBy(this.thirdCollection, this.openGivts[i].Status, this.openGivts[i].Amount);
             break;
           default:
             break;
@@ -240,10 +179,6 @@ export class AssignComponent implements OnInit {
     }
     if(check)
     {
-      console.log(c1am);
-      this.collectOneAmount = this.displayValue(c1am);
-      this.collectTwoAmount = this.displayValue(c2am);
-      this.collectThreeAmount = this.displayValue(c3am);
       this.startTime = new Date(start);
       this.endTime = new Date(end);
       this.isDialogOpen = true;
@@ -261,15 +196,19 @@ export class AssignComponent implements OnInit {
       .then(resp => {
         for(let i = 0; i < resp.length; i++)
         {
-          let d = new Date(resp[i]["Timestamp"] + " UTC");
-          resp[i]["Timestamp"] = d;
+          let d = new Date(resp[i]["dt_Confirmed"] + " UTC");
+          resp[i]["dt_Confirmed"] = d;
         }
-        this.openGivts = resp;
+
+        this.openGivts = resp.filter((ts) => {
+          return ts.AllocationName == null;
+        });
+
         this.openGivtsBucket = [];
 
         for(let x = 0; x < this.openGivts.length; x++){
-          let startTime = new Date(resp[x]['Timestamp']);
-          let endTime = new Date(resp[x]['Timestamp']);
+          let startTime = new Date(this.openGivts[x]['dt_Confirmed']);
+          let endTime = new Date(this.openGivts[x]['dt_Confirmed']);
           if(startTime.getMinutes() < 30)
           {
             startTime.setMinutes(0,0,0);
@@ -333,32 +272,36 @@ export class AssignComponent implements OnInit {
       });
   }
 
-  updateEvent() {
-    if (this.collectName === '' && this.collectName2 === '' && this.collectName3 === '') return;
-    Promise.all([this.saveAllocation(this.collectName, "1"),this.saveAllocation(this.collectName2, "2"), this.saveAllocation(this.collectName3, "3")]).then(function() {
-      this.resetAll();
-    }.bind(this));
-    this.resetAll(false);
+  shouldHideCollect1Button = false;
+  updateEvent(aCollection: AssignedCollection = null, collectId = null) {
+    if (collectId != null && aCollection != null) {
+      aCollection.state = ButtonState.isLoading;
+      Promise.all([this.saveAllocation(aCollection.name, collectId)]).then(
+        function () {
+          aCollection.state = ButtonState.Saved;
+          this.reloadEvents();
+        }.bind(this)
+      );
+    }
   }
+
 
   resetAll(reload: boolean = true){
     this.showForm = false;
     this.showDelete = false;
     this.isDialogOpen = false;
-    this.collectOneCheck = false;
-    this.collectTwoCheck = false;
-    this.collectThreeCheck = false;
-    this.collectName = "";
-    this.collectName2 = "";
-    this.collectName3 = "";
     this.event = new MyEvent();
     this.startTime = new Date();
     this.endTime = new Date();
     if(reload){
-      this.events.length = 0;
-      this.getAllocations();
-      this.checkAllocations();
+      this.reloadEvents()
     }
+  }
+
+  reloadEvents() {
+    this.events.length = 0;
+    this.getAllocations();
+    this.checkAllocations();
   }
 
   handleDayClick(event) {
@@ -425,30 +368,6 @@ export class AssignComponent implements OnInit {
     this.errorMessage = msg;
   }
 
-  deleteCollect(id){
-    switch (id){
-      case 1:
-        if(!this.collectTwoCheck && !this.collectThreeCheck)
-          return;
-        this.collectOneCheck = false;
-        this.collectName = "";
-        break;
-      case 2:
-        if(!this.collectOneCheck && !this.collectThreeCheck)
-          return;
-        this.collectTwoCheck = false;
-        this.collectName2 = "";
-        break;
-      case 3:
-        if(!this.collectOneCheck && !this.collectTwoCheck)
-          return;
-        this.collectThreeCheck = false;
-        this.collectName3 = "";
-        break;
-      default:
-        break;
-    }
-  }
 
   getAllocations(dtStart:any = null,dtEnd: any = null){
     let apiUrl = 'Allocations/Allocation';
@@ -530,6 +449,31 @@ export class AssignComponent implements OnInit {
       element[0].style.left = "31%";
     }
   }
+  firstCollection = new AssignedCollection();
+  secondCollection = new AssignedCollection();
+  thirdCollection = new AssignedCollection();
+
+  fillCollectBy(collection, statusId, amount) {
+    switch (statusId) {
+      case 1:
+      case 2:
+        collection.toProcessTotal += amount;
+        break;
+      case 3:
+        collection.processedTotal += amount;
+        break;
+      case 4:
+        collection.refusedBank += amount;
+        break;
+      case 5: //cancelbyuser
+        collection.cancelByGiver += amount;
+        break;
+      default:
+        break;
+    }
+    collection.amountOfGivts++;
+  }
+
   eventRender(that: any,event: any, element: any, view: any){
     element[0].innerText = event.title;
     element[0].addEventListener("mouseover", function(ev) {
@@ -552,33 +496,23 @@ export class AssignComponent implements OnInit {
       } else {
         div.innerHTML = that.notYetAllocated + "<br/>";
         if(fcEvent.transactions.length > 0){
-          let collect1 = 0;
-          let collect1users = 0;
-          let collect2 = 0;
-          let collect2users = 0;
-          let collect3 = 0;
-          let collect3users = 0;
+          this.firstCollection = new AssignedCollection();
+
           for(let i = 0; i < fcEvent.transactions.length; i++){
             let transaction = fcEvent.transactions[i];
             if(transaction.CollectId === "1"){
-              collect1 += transaction.Amount;
-              collect1users++;
+              //////
+              this.fillCollectBy(this.firstCollection, transaction.Status, transaction.Amount);
             } else if(transaction.CollectId === "2"){
-              collect2 += transaction.Amount;
-              collect2users++;
+              this.fillCollectBy(this.secondCollection, transaction.Status, transaction.Amount);
+
             } else if(transaction.CollectId === "3"){
-              collect3 += transaction.Amount;
-              collect3users++;
+              this.fillCollectBy(this.thirdCollection, transaction.Status, transaction.Amount);
             }
           }
-          if(collect1 > 0){
-            div.innerHTML +=  "<span><img src='images/user.png' height='15px' width='15px' style='padding-top: 2px'> " + collect1users + "</span>" + "<span class='fat-font' style='margin-left:15px '>" + that.displayValue(collect1) + "</span> " + that.collectionTranslation + " 1<br/>";
-          }
-          if(collect2 > 0)
-            div.innerHTML +=  "<span><img src='images/user.png' height='15px' width='15px' style='padding-top: 2px'> " + collect2users + "</span>" + "<span class='fat-font' style='margin-left:15px '>" + that.displayValue(collect2) + "</span> " + that.collectionTranslation + " 2<br/>";
-          if(collect3 > 0)
-            div.innerHTML +=  "<span><img src='images/user.png' height='15px' width='15px' style='padding-top: 2px'> " + collect3users + "</span>" + "<span class='fat-font' style='margin-left:15px '>" + that.displayValue(collect3) + "</span> " + that.collectionTranslation + " 3<br/>";//Dfjkqlsmfjk
+
         }
+        div.innerHTML = "<span>Click the item to view more information</span>";
         div.className = "balloon";
       }
 
@@ -590,7 +524,7 @@ export class AssignComponent implements OnInit {
       document.getElementsByClassName("section-page")[0].appendChild(div);
       div.style.top = top - div.offsetHeight - 17 +"px";
 
-    });
+    }.bind(this));
     element[0].addEventListener("mouseleave", function(){
         let b = document.getElementsByClassName("balloon");
         while(b.length > 0){
@@ -599,6 +533,12 @@ export class AssignComponent implements OnInit {
       }, true);
 
       element[0].innerHTML = "";
+  }
+
+  onFocusOutOf(aCollection: AssignedCollection) {
+    setTimeout(() => {
+      aCollection.isTyping = false;
+    }, 200);
   }
 
   displayValue(x)
@@ -673,6 +613,18 @@ export class AssignComponent implements OnInit {
 
 }
 
+export enum SelectedTab {
+  Collects,
+  Fixed
+}
+
+export enum ButtonState {
+  Enabled,
+  isLoading,
+  Saved,
+  Disabled
+}
+
 export class MyEvent {
   id: number;
   title: string;
@@ -683,4 +635,26 @@ export class MyEvent {
   allocated = true;
   transactions: any;
   amount: any;
+}
+
+export class AssignedCollection {
+  toProcessTotal: number;
+  processedTotal: number;
+  refusedBank: number;
+  cancelByGiver: number;
+  amountOfGivts : number;
+  name: string;
+  isTyping: boolean;
+  state: ButtonState;
+
+  constructor(toProcessTotal = 0, processedTotal = 0, refusedByBank = 0, cancelByGiver = 0, amountOfGivts = 0, name = "", isTyping = false, state = ButtonState.Enabled) {
+    this.toProcessTotal = toProcessTotal;
+    this.processedTotal = processedTotal;
+    this.refusedBank = refusedByBank;
+    this.cancelByGiver = cancelByGiver;
+    this.amountOfGivts = amountOfGivts;
+    this.name = name;
+    this.isTyping = false;
+    this.state = state;
+  }
 }

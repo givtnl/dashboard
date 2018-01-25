@@ -21,43 +21,91 @@
           <p-calendar [(ngModel)]="endTime" showTime="showTime"  [timeOnly]="true" name="endTime" [stepMinute]="10"></p-calendar>
         </div>
 
-        <h3>{{ "AddNameToCollect" | translate }}</h3>
-        <div class="schedule__dialog__form__controls flex-col">
-          <div class="schedule__dialog__form__input" *ngIf="collectOneCheck">
-            <p class="schedule__dialog__form__amount">{{collectOneAmount}}</p>
-            <div class="wrapping_inputlist">
-              <input (focus)="collectOneTyping=true" (focusout)="focusout(1);" autocomplete="off" (ngModelChange)="collectOneChanging($event)" [class.red-border]="collectOneCheck && collectName == ''" class="schedule__dialog__form--input margin-bottom" type="text" name="collectName" [(ngModel)]="collectName" placeholder="{{ 'Collection' | translate }} 1">
-              <ul *ngIf="collectOneTyping" class="schedule__dialog__form__list">
-                <li *ngFor="let item of filteredUsedTags" class="schedule__dialog__form__listitem" (click)="setCollectNameOne(item)" [innerHTML]="item"></li>
-              </ul>
-            </div>
-
-            <button (click)="deleteCollect(1)" class="schedule__dialog__form--delete__collect">x</button>
+        <div style="display: flex;flex-wrap: wrap;">
+          <div style="margin-left: 20px">
+            <span class="tab__element" (click)="currentTab = SelectedTab.Collects" [class.tab__element--active]="currentTab == SelectedTab.Collects">Collectes</span>
+            <span class="tab__element" (click)="currentTab = SelectedTab.Fixed" [class.tab__element--active]="currentTab == SelectedTab.Fixed">Vaste punten</span>
           </div>
-          <div class="schedule__dialog__form__input" *ngIf="collectTwoCheck">
-            <p class="schedule__dialog__form__amount">{{collectTwoAmount}}</p>
-            <div class="wrapping_inputlist">
-              <input (focus)="collectTwoTyping=true" (focusout)="focusout(2);" autocomplete="off" (ngModelChange)="collectTwoChanging($event)" [class.red-border]="collectTwoCheck && collectName2 == ''" class="schedule__dialog__form--input margin-bottom" type="text" name="collectName2" [(ngModel)]="collectName2" placeholder="{{ 'Collection' | translate }} 2">
-              <ul *ngIf="collectTwoTyping" class="schedule__dialog__form__list">
-                <li *ngFor="let item of filteredUsedTags" class="schedule__dialog__form__listitem" (click)="setCollectNameTwo(item)" [innerHTML]="item"></li>
-              </ul>
-            </div>
 
-            <button (click)="deleteCollect(2)" class="schedule__dialog__form--delete__collect">x</button></div>
-          <div class="schedule__dialog__form__input" *ngIf="collectThreeCheck">
-            <p class="schedule__dialog__form__amount">{{collectThreeAmount}}</p>
-            <div class="wrapping_inputlist">
-              <input (focus)="collectThreeTyping=true" (focusout)="focusout(3);" autocomplete="off" (ngModelChange)="collectThreeChanging($event)" [class.red-border]="collectThreeCheck && collectName3 == ''" class="schedule__dialog__form--input margin-bottom" type="text" name="collectName3" [(ngModel)]="collectName3" placeholder="{{ 'Collection' | translate }} 3">
-              <ul *ngIf="collectThreeTyping" class="schedule__dialog__form__list">
-                <li *ngFor="let item of filteredUsedTags" class="schedule__dialog__form__listitem" (click)="setCollectNameThree(item)" [innerHTML]="item"></li>
-              </ul>
-            </div>
+          <div class="info-table">
+            <table class="info-table__table" width="100%" cellpadding="0" cellspacing="0" marginwidth="0" marginheight="0" leftmargin="0" topmargin="0">
+              <tr class="info-table__row" *ngIf="this.firstCollection.amountOfGivts != 0">
+                <td><img src="images/personal-green.png" alt=""> {{ this.firstCollection.amountOfGivts }}</td>
+                <td>
+                  <div style="height: 40px;display: flex;justify-content: center;">
+                    <div class="wrapping_inputlist">
+                      <input (focus)="this.firstCollection.isTyping=true" (focusout)="onFocusOutOf(this.firstCollection);" autocomplete="off"  class="info-table__input" [class.info-table__input--false]="this.firstCollection.name == ''" (ngModelChange)="this.filterTags($event)" type="text" name="collectName" [(ngModel)]="this.firstCollection.name" placeholder="{{ 'Collection' | translate }} 1">
+                      <ul *ngIf="this.firstCollection.isTyping" class="schedule__dialog__form__list">
+                        <li *ngFor="let item of filteredUsedTags" class="schedule__dialog__form__listitem" (click)="setCollectNameOf(item, this.firstCollection)" [innerHTML]="item"></li>
+                      </ul>
+                    </div>
+                      <button style="margin-left: 10px;" class="info-table__button" [class.info-table__button--hidden]="firstCollection.state == ButtonState.Saved" [class.info-table__button--disabled]="this.firstCollection.name == '' " [disabled]="this.firstCollection.name == ''" (click)="updateEvent(this.firstCollection, '1')">{{'PW_Save' | translate}}</button>
+                  </div>
+                 </td>
+                <td class="incasso-state">
+                  <div style="display: flex; flex-direction: column; align-items: flex-end;">
+                    <span *ngIf="firstCollection.toProcessTotal != 0" class="light">{{ "Processing" | translate }}: <span class="heavy-text">{{ displayValue(this.firstCollection.toProcessTotal) }}</span> </span>
+                    <span *ngIf="firstCollection.processedTotal != 0" class="light green-color">{{ "Processed" | translate }}: <span class="heavy-text">{{ displayValue(this.firstCollection.processedTotal) }}</span></span>
+                    <span *ngIf="firstCollection.refusedBank != 0" class="light red">{{"CancelledByBank" | translate}}: <span class="heavy-text">{{ displayValue(this.firstCollection.refusedBank) }}</span> </span>
+                    <span *ngIf="firstCollection.cancelByGiver != 0" class="light grey">{{ "CancelledByUser" | translate}}: <span class="heavy-text">{{ displayValue(this.firstCollection.cancelByGiver) }}</span></span>
+                  </div>
 
-            <button (click)="deleteCollect(3)" class="schedule__dialog__form--delete__collect">x</button>
+                 </td>
+              </tr>
+              <tr class="info-table__row" *ngIf="this.secondCollection.amountOfGivts != 0">
+                <td><img src="images/personal-green.png" alt=""> {{ this.secondCollection.amountOfGivts }}</td>
+                <td>
+                  <div style="height: 40px;display: flex;justify-content: center;">
+                    <div class="wrapping_inputlist">
+                      <input (focus)="this.secondCollection.isTyping=true" (focusout)="onFocusOutOf(this.secondCollection);" autocomplete="off" (ngModelChange)="this.filterTags($event)" [class.info-table__input--false]="this.secondCollection.name == ''" class="info-table__input" type="text" name="collectName2" [(ngModel)]="this.secondCollection.name" placeholder="{{ 'Collection' | translate }} 2">
+                      <ul *ngIf="secondCollection.isTyping" class="schedule__dialog__form__list">
+                        <li *ngFor="let item of filteredUsedTags" class="schedule__dialog__form__listitem" (click)="setCollectNameOf(item, this.secondCollection)" [innerHTML]="item"></li>
+                      </ul>
+                    </div>
+                    <button style="margin-left: 10px;" class="info-table__button" [class.info-table__button--hidden]="secondCollection.state == ButtonState.Saved" [class.info-table__button--disabled]="this.secondCollection.name == '' " [disabled]="this.secondCollection.name == ''" (click)="updateEvent(this.secondCollection, '2')">{{'PW_Save' | translate}}</button>
+
+                  </div>
+                </td>
+                <td class="incasso-state">
+                  <div style="display: flex; flex-direction: column; align-items: flex-end;">
+                    <span *ngIf="secondCollection.toProcessTotal != 0" class="light">{{ "Processing" | translate }}:  <span class="heavy-text">{{ displayValue(this.secondCollection.toProcessTotal) }}</span> </span>
+                    <span *ngIf="secondCollection.processedTotal != 0" class="light green-color">{{ "Processed" | translate }}: <span class="heavy-text">{{ displayValue(this.secondCollection.processedTotal) }}</span></span>
+                    <span *ngIf="secondCollection.refusedBank != 0" class="light red">{{"CancelledByBank" | translate}}: <span class="heavy-text">{{ displayValue(this.secondCollection.refusedBank) }}</span> </span>
+                    <span *ngIf="secondCollection.cancelByGiver != 0" class="light grey">{{ "CancelledByUser" | translate}}: <span class="heavy-text">{{ displayValue(this.secondCollection.cancelByGiver) }}</span></span>
+                  </div>
+
+                </td>
+              </tr>
+              <tr class="info-table__row" *ngIf="this.thirdCollection.amountOfGivts != 0">
+                <td><img src="images/personal-green.png" alt=""> {{ this.thirdCollection.amountOfGivts }}</td>
+                <td>
+                  <div style="height: 40px;display: flex;justify-content: center;">
+                    <div class="wrapping_inputlist">
+                      <input (focus)="this.thirdCollection.isTyping=true" (focusout)="onFocusOutOf(this.secondCollection);" autocomplete="off" (ngModelChange)="this.filterTags($event)" [class.info-table__input--false]="this.thirdCollection.name == ''" class="info-table__input" type="text" name="collectName3" [(ngModel)]="this.thirdCollection.name" placeholder="{{ 'Collection' | translate }} 3">
+                      <ul *ngIf="this.thirdCollection.isTyping" class="schedule__dialog__form__list">
+                        <li *ngFor="let item of filteredUsedTags" class="schedule__dialog__form__listitem" (click)="setCollectNameOf(item, this.thirdCollection)" [innerHTML]="item"></li>
+                      </ul>
+                    </div>
+                    <button style="margin-left: 10px;" class="info-table__button" [class.info-table__button--hidden]="this.thirdCollection.state == ButtonState.Saved" [class.info-table__button--disabled]="this.thirdCollection.name == '' " [disabled]="this.thirdCollection.name == ''" (click)="updateEvent(this.thirdCollection, '3')">{{'PW_Save' | translate}}</button>
+
+                  </div>
+                </td>
+                <td class="incasso-state">
+                  <div style="display: flex; flex-direction: column; align-items: flex-end;">
+                    <span *ngIf="thirdCollection.toProcessTotal != 0" class="light ">{{ "Processing" | translate }}: <span class="heavy-text">{{ displayValue(this.thirdCollection.toProcessTotal) }}</span> </span>
+                    <span *ngIf="thirdCollection.processedTotal != 0" class="light green-color">{{ "Processed" | translate }}: <span class="heavy-text">{{ displayValue(this.thirdCollection.processedTotal) }}</span></span>
+                    <span *ngIf="thirdCollection.refusedBank != 0" class="light red">{{"CancelledByBank" | translate}}: <span class="heavy-text">{{ displayValue(this.thirdCollection.refusedBank) }}</span> </span>
+                    <span *ngIf="thirdCollection.cancelByGiver != 0" class="light grey">{{ "CancelledByUser" | translate}}: <span class="heavy-text">{{ displayValue(this.thirdCollection.cancelByGiver) }}</span></span>
+                  </div>
+
+                </td>
+              </tr>
+            </table>
           </div>
-          <button type="button" class="schedule__dialog__form--submit" [class.submit-enabled]="collectName != '' || collectName2 != '' || collectName3 != ''" (click)="updateEvent()">{{'PW_Save' | translate}}</button>
         </div>
-        <span class="close-button" (click)="resetAll(false)">X</span>
+
+
+        <button (click)="resetAll(false)" class="close-button"><img src="images/close.png" alt=""></button>
       </form>
       <form *ngIf="showDelete && !showForm" action="" class="schedule__dialog___form--delete">
         <h3>{{"DeleteCollectConfirm" | translate}}</h3>
