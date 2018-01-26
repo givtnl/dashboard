@@ -30,6 +30,7 @@ import { ChartsModule } from "ng2-charts";
 
 import * as jQuery from 'jquery';
 import { AutoCompleteModule, ScheduleModule, DialogModule, CalendarModule, DropdownModule } from 'primeng/primeng';
+import { LoggedOutComponent } from 'app/components/loggedout.component';
 (window as any).jQuery = (window as any).$ = jQuery; // This is needed to resolve issue.
 
 export function createTranslateLoader(http: Http) {
@@ -51,7 +52,8 @@ export function createTranslateLoader(http: Http) {
     AssignComponent,
     PayoutComponent,
     FooterComponent,
-    AlertComponent
+    AlertComponent,
+    LoggedOutComponent,
   ],
   imports: [
     AutoCompleteModule,

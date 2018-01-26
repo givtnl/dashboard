@@ -12,6 +12,7 @@ import { AssignComponent } from "./components/assign.component";
 import {OperationsGuard} from "./guards/operations.guard";
 import {ForgotPasswordComponent} from "./components/forgotpassword.component";
 import {UnAuthorizeComponent} from "./components/unauthorized.component";
+import { LoggedOutComponent } from 'app/components/loggedout.component';
 const routes: Routes = [
     { path: '', component: LoginComponent, pathMatch: 'full', canActivate: [LoginComponentGuard] },
     { path: 'dashboard', component: DashboardComponent, canActivate: [LoggedInGuard] },
@@ -22,6 +23,7 @@ const routes: Routes = [
     { path: 'mandate', component: MandateComponent, canActivate: [LoggedInGuard, OperationsGuard]},
     { path: 'forgotpassword',  component: ForgotPasswordComponent, canActivate: [LoginComponentGuard] },
     { path: 'unauthorized', component: UnAuthorizeComponent },
+    { path: 'loggedout', component: LoggedOutComponent},
     { path: '**', component: LoginComponent, pathMatch: 'full', canActivate: [LoginComponentGuard] }
 ];
 

@@ -1,8 +1,7 @@
 import {Injectable} from '@angular/core';
 import { Http, Headers, URLSearchParams } from '@angular/http';
 import { CustomQueryEncoderHelper } from '../helpers/customQueryEncoder';
-
-
+import {Router} from "@angular/router";
 import 'rxjs/add/operator/toPromise'; //to support toPromise
 import { environment } from '../../environments/environment';
 
@@ -10,6 +9,7 @@ import { User } from '../models/user';
 import { DataService } from "./data.service";
 import { ApiClientService} from "./api-client.service";
 import { EventEmitter, Output } from "@angular/core";
+import { setTimeout } from 'timers';
 
 @Injectable()
 export class UserService {
@@ -18,7 +18,7 @@ export class UserService {
     //this has to become environment variable in story 2461
     private apiUrl = environment.apiUrl + '/oauth2/token';
 
-    constructor(private dataService: DataService, private apiService: ApiClientService, private http: Http){
+    constructor(private dataService: DataService, private apiService: ApiClientService, private http: Http, private router: Router){
         this.loggedIn = !!dataService.getData("accessToken");
         this.SiteAdmin = dataService.getData("SiteAdmin") == "True";
         this.GivtOperations = dataService.getData("GivtOperations") == "True";
@@ -61,6 +61,7 @@ export class UserService {
             .then(res => {
                 if(res.json().access_token){
                     this.loggedIn = true;
+                    this.startTimedLogout(res.json().expires_in * 1000);
                     this.dataService.writeData("accessToken", res.json().access_token);
 
                     if (res.json().hasOwnProperty("SiteAdmin"))
@@ -88,6 +89,13 @@ export class UserService {
                     return false;
                 }
             })
+    }
+
+    startTimedLogout(ms){
+        setTimeout(()=>{
+            this.logout();
+            this.router.navigate(['loggedout']);
+        }, ms);
     }
 
     logout(){
