@@ -326,6 +326,46 @@ export class AssignComponent implements OnInit {
     }
   }
 
+  saveAllEvents() {
+    let promises = [];
+    let collections: AssignedCollection[] = [this.firstCollection, this.secondCollection, this.thirdCollection];
+
+
+
+
+    //count number of collections that have givts + count the collections with a name. when it's not equal
+    //this means that there are still open allocations
+    let allocationsWithGivts = collections.filter((d) =>  d.amountOfGivts != 0).length;
+    let allocationsWithNames = collections.filter((d) => d.name != "").length;
+    if(allocationsWithGivts != allocationsWithNames) {
+      //err: has open allocs
+      return
+    }
+
+    for(let i = 0; i < collections.length; i++) {
+      console.log(collections[i].name);
+      let current = collections[i];
+
+      if(current.amountOfGivts > 0 && current.name != "") {
+        promises.push(this.saveAllocation(current.name, String(i + 1)));
+      }
+    }
+
+
+
+    Promise.all(promises).then(() => {
+      //success
+      this.isDialogOpen = false;
+      this.reloadEvents();
+    }).catch((err) => {
+      console.log(err);
+    });
+
+
+  }
+
+
+
   renderAllocatedGivts() {
     let buckets: Bucket[] = [];
     for(let x = 0; x < this.allocatedBuckets.length; x++) {

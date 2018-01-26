@@ -577,10 +577,16 @@ h3{
   color: #888888;
 }
 
+
+
 .info-table__button--disabled {
   opacity: 1;
   background: #918FA6;
   cursor: not-allowed;
+}
+
+.info-table__button--danger {
+  background: #b91a24;
 }
 
 .info-table__button--hidden {
