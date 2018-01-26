@@ -124,7 +124,7 @@ export class ApiClientService {
         //do the http call
         return this.http
             .get(
-                this.apiUrl + path,
+                this.apiUrl + encodeURI(path),
                 { headers }
             )
             .toPromise()

@@ -8,7 +8,10 @@ import {AllocationTimeSpanItem, Transaction} from "../models/allocationTimeSpanI
 import {element} from "protractor";
 import {UserService} from "../services/user.service";
 import {Button} from "primeng/primeng";
-declare var moment: any;
+import * as moment from "moment";
+import _date = moment.unitOfTime._date;
+import {forEach} from "@angular/router/src/utils/collection";
+//declare var moment: any;
 @Component({
   selector: 'app-assign-collects',
   templateUrl: '../html/assign.component.html',
@@ -42,6 +45,8 @@ export class AssignComponent implements OnInit {
   SelectedTab = SelectedTab;
   ButtonState = ButtonState;
   currentTab: SelectedTab = SelectedTab.Collects;
+  allocatedBuckets: any;
+  that = this;
 
   filteredEvents() {
     if(this.events == undefined)
@@ -108,6 +113,97 @@ export class AssignComponent implements OnInit {
     }.bind(this);
     this.options['eventAfterAllRender'] = function(view) {
       this.filteredEvents();
+    }.bind(this);
+    this.options["eventClick"] = function(event, jsEvent, view) {
+      this.event = event;
+
+      let start = event.start;
+      let end = event.end;
+      if(view.name === 'month') {
+        start.stripTime();
+        end.stripTime();
+      }
+
+      if(end) {
+        this.event.end = end.format();
+      }
+
+      this.event.id = event.id;
+      this.event.start = start.format();
+      if(!event.allocated){
+        let dStart = new Date(this.event.start);
+        let dEnd = new Date(this.event.end);
+        this.addAllocation(dStart, dEnd);
+      } else {
+        this.isDialogOpen = true;
+      }
+      this.isDialogOpen = true;
+    }.bind(this);
+    this.options["eventMouseover"] = function(event, jsEvent, view) {
+        let fcEvent = event;
+
+        let div = document.createElement("div");
+        this.firstCollection = new AssignedCollection();
+        this.secondCollection = new AssignedCollection();
+        this.thirdCollection = new AssignedCollection();
+
+        if(fcEvent.allocated){
+          if(fcEvent.transactions.length > 0) {
+            for(let i = 0; i < fcEvent.transactions.length; i++) {
+              let tr = fcEvent.transactions[i];
+              if(tr.CollectId  === "1") {
+                this.fillCollectBy(this.firstCollection, tr.Status,tr.Amount);
+                this.firstCollection.name = fcEvent.transactions[i].AllocationName;
+                this.firstCollection.allocated = true;
+              } else if(tr.CollectId === "2") {
+                this.fillCollectBy(this.secondCollection, tr.Status,tr.Amount);
+                this.secondCollection.name = fcEvent.transactions[i].AllocationName;
+                this.secondCollection.allocated = true;
+
+
+              } else if(tr.CollectId === "3") {
+                this.fillCollectBy(this.thirdCollection, tr.Status,tr.Amount);
+                this.thirdCollection.name = fcEvent.transactions[i].AllocationName;
+                this.thirdCollection.allocated = true;
+
+
+
+              }
+            }
+          }
+          if(!fcEvent.amount){
+            this.ts.get('Loading').subscribe((res) => {
+              div.innerHTML = "<span class='fat-font'>" + res + "...</span>";
+            });
+          } else {
+            div.innerHTML = "<span><img src='images/user.png' height='15px' width='15px' style='padding-top: 2px'> " + fcEvent.noTransactions + "</span>"
+              + "<span style='margin-left:15px' class='fat-font'>" + this.displayValue(fcEvent.amount) + "</span> <span>" + this.collectionTranslation + " " + fcEvent.collectId + "</span><br/>"
+              + "<span class='fat-font'>" + fcEvent.title + "</span>";
+          }
+          div.className = "balloon balloon_alter";
+        } else {
+          div.innerHTML = this.notYetAllocated + "<br/>";
+          if(fcEvent.transactions.length > 0){
+            this.firstCollection = new AssignedCollection();
+
+            for(let i = 0; i < fcEvent.transactions.length; i++){
+              let transaction = fcEvent.transactions[i];
+              if(transaction.CollectId === "1"){
+                //////
+                this.fillCollectBy(this.firstCollection, transaction.Status, transaction.Amount);
+              } else if(transaction.CollectId === "2"){
+                this.fillCollectBy(this.secondCollection, transaction.Status, transaction.Amount);
+
+              } else if(transaction.CollectId === "3"){
+                this.fillCollectBy(this.thirdCollection, transaction.Status, transaction.Amount);
+              }
+            }
+
+          }
+          div.innerHTML = "<span>Click the item to view more information</span>";
+          div.className = "balloon";
+        }
+
     }.bind(this);
     this.options['slotDuration'] = '00:30:00';
     this.options['timezone'] = 'local';
@@ -204,71 +300,16 @@ export class AssignComponent implements OnInit {
           return ts.AllocationName == null;
         });
 
+        this.allocatedBuckets = resp.filter((ts) => {
+          return ts.AllocationName != null;
+        });
+
         this.openGivtsBucket = [];
 
-        for(let x = 0; x < this.openGivts.length; x++){
-          let startTime = new Date(this.openGivts[x]['dt_Confirmed']);
-          let endTime = new Date(this.openGivts[x]['dt_Confirmed']);
-          if(startTime.getMinutes() < 30)
-          {
-            startTime.setMinutes(0,0,0);
-            endTime.setMinutes(30,0,0);
-          }else{
-            startTime.setMinutes(30,0,0);
-            endTime.setHours(endTime.getHours() + 1,0,0,0);
-          }
+        this.renderOpenGivts();
+        this.renderAllocatedGivts();
 
-          let check = false;
-          for(let i = 0; i < this.openGivtsBucket.length; i++)
-          {
-            if(this.openGivtsBucket[i].dtStart.getTime() === startTime.getTime())
-            {
-              this.openGivtsBucket[i].transactions.push(this.openGivts[x]);
-              check = false;
-              break;
-            }
-            check = true;
-          }
-          if(check){
-            let item = new AllocationTimeSpanItem();
-            item.dtEnd = endTime;
-            item.dtStart = startTime;
-            item.transactions = new Array<Transaction>();
-            item.transactions.push(this.openGivts[x]);
-            this.openGivtsBucket.push(item);
-          }
-          if(this.openGivtsBucket.length === 0)
-          {
-            let item = new AllocationTimeSpanItem();
-            item.dtEnd = endTime;
-            item.dtStart = startTime;
-            item.transactions = new Array<Transaction>();
-            item.transactions.push(this.openGivts[x]);
-            this.openGivtsBucket.push(item);
-          }
-        }
-        for(let count = 0; count < this.openGivtsBucket.length; count++)
-        {
-          let buckets = <any>this.openGivtsBucket[count]['transactions'];
-          let amount = 0;
-          for(let tr = 0; tr < buckets.length; tr++)
-          {
-            amount += buckets[tr].Amount;
-          }
 
-          //total amount == amount
-
-          let event = new MyEvent();
-          event.id = count;
-          event.title = (Math.round(amount * 100) / 100).toString();
-          event.start = this.openGivtsBucket[count].dtStart;
-          event.end = this.openGivtsBucket[count].dtEnd;
-          event.collectId = "1";
-          event.className = "money";
-          event.allocated = false;
-          event.transactions = buckets;
-          this.events.push(event);
-        }
       });
   }
 
@@ -285,8 +326,114 @@ export class AssignComponent implements OnInit {
     }
   }
 
+  renderAllocatedGivts() {
+    let buckets: Bucket[] = [];
+    for(let x = 0; x < this.allocatedBuckets.length; x++) {
+      let startTime = new Date(this.allocatedBuckets[x]['dtBegin']);
+      let endTime = new Date(this.allocatedBuckets[x]['dtEnd']);
+      this.allocatedBuckets[x]['dtBegin'] = startTime;
+      this.allocatedBuckets[x]['dtEnd'] = endTime;
+      let filteredBuckets = buckets.filter((b) => b.startTime.getTime() == this.allocatedBuckets[x]['dtBegin'].getTime() && b.endTime.getTime() == this.allocatedBuckets[x]['dtEnd'].getTime());
+      if(filteredBuckets.length == 0) {
+        //transaction does not fit into bucket
+        //create new bucket and add to array
+        let newBucket = new Bucket();
+        newBucket.startTime = startTime;
+        newBucket.endTime = endTime;
+        newBucket.allocationName = this.allocatedBuckets[x].AllocationName;
+        newBucket.allocationId = this.allocatedBuckets[x].AllocationId;
+        newBucket.transactions = [];
+        buckets.push(newBucket)
+      }
+
+      let currentBucket = buckets.filter((b) => b.startTime.getTime() == this.allocatedBuckets[x]['dtBegin'].getTime() && b.endTime.getTime() == this.allocatedBuckets[x]['dtEnd'].getTime())[0];
+      currentBucket.transactions.push(this.allocatedBuckets[x]);
+    }
+
+    for(let i = 0; i < buckets.length; i++) {
+      let event = new MyEvent();
+      event.id = buckets[i].allocationId;
+      event.title = buckets[i].allocationName;
+      event.start = buckets[i].startTime;
+      event.end = buckets[i].endTime;
+      event.className = "allocation";
+      event.allocated = true;
+      event.amount = null;
+      event.transactions = buckets[i].transactions;
+      this.events.push(event);
+    }
+  }
+
+  renderOpenGivts() {
+    for(let x = 0; x < this.openGivts.length; x++){
+      let startTime = new Date(this.openGivts[x]['dt_Confirmed']);
+      let endTime = new Date(this.openGivts[x]['dt_Confirmed']);
+      if(startTime.getMinutes() < 30)
+      {
+        startTime.setMinutes(0,0,0);
+        endTime.setMinutes(30,0,0);
+      }else{
+        startTime.setMinutes(30,0,0);
+        endTime.setHours(endTime.getHours() + 1,0,0,0);
+      }
+
+      let check = false;
+      for(let i = 0; i < this.openGivtsBucket.length; i++)
+      {
+        if(this.openGivtsBucket[i].dtStart.getTime() === startTime.getTime())
+        {
+          this.openGivtsBucket[i].transactions.push(this.openGivts[x]);
+          check = false;
+          break;
+        }
+        check = true;
+      }
+      if(check){
+        let item = new AllocationTimeSpanItem();
+        item.dtEnd = endTime;
+        item.dtStart = startTime;
+        item.transactions = new Array<Transaction>();
+        item.transactions.push(this.openGivts[x]);
+        this.openGivtsBucket.push(item);
+      }
+      if(this.openGivtsBucket.length === 0)
+      {
+        let item = new AllocationTimeSpanItem();
+        item.dtEnd = endTime;
+        item.dtStart = startTime;
+        item.transactions = new Array<Transaction>();
+        item.transactions.push(this.openGivts[x]);
+        this.openGivtsBucket.push(item);
+      }
+    }
+    for(let count = 0; count < this.openGivtsBucket.length; count++)
+    {
+      let buckets = <any>this.openGivtsBucket[count]['transactions'];
+      let amount = 0;
+      for(let tr = 0; tr < buckets.length; tr++)
+      {
+        amount += buckets[tr].Amount;
+      }
+
+      //total amount == amount
+
+      let event = new MyEvent();
+      event.id = count;
+      event.title = (Math.round(amount * 100) / 100).toString();
+      event.start = this.openGivtsBucket[count].dtStart;
+      event.end = this.openGivtsBucket[count].dtEnd;
+      event.collectId = "1"; //what
+      event.className = "money";
+      event.allocated = false;
+      event.transactions = buckets;
+      this.events.push(event);
+    }
+  }
 
   resetAll(reload: boolean = true){
+    this.firstCollection = new AssignedCollection();
+    this.secondCollection = new AssignedCollection();
+    this.thirdCollection = new AssignedCollection();
     this.showForm = false;
     this.showDelete = false;
     this.isDialogOpen = false;
@@ -313,6 +460,7 @@ export class AssignComponent implements OnInit {
   }
 
   handleEventClick(e) {
+    console.log(e);
     let start = e.calEvent.start;
     let end = e.calEvent.end;
     if(e.view.name === 'month') {
@@ -332,24 +480,34 @@ export class AssignComponent implements OnInit {
       this.addAllocation(dStart, dEnd);
     } else {
       this.isDialogOpen = true;
-      this.showForm = false;
-      this.showDelete = true;
     }
   }
 
   deleteEvent() {
     let eventId = this.event.id;
     let index: number = this.findEventIndexById(eventId);
+    let thisEvent = this.event;
     if (index >= 0) {
       this.events.splice(index, 1);
     }
-    this.apiService.deleteData('Allocations/Allocation?Id=' + eventId)
-      .then(resp => {
-        this.resetAll();
-      })
-      .catch(err => {
-        console.log(err);
-      });
+    let promises = [];
+    let allocationsIds = [];
+    for(var i = 0; i < thisEvent.transactions.length; i++) {
+      allocationsIds.push(thisEvent.transactions[i].AllocationId);
+    }
+
+    allocationsIds = allocationsIds.filter((item, i, ar) => {
+      return ar.indexOf(item) === i;
+    });
+
+    for(var id of allocationsIds) {
+      promises.push(this.apiService.deleteData('Allocations/Allocation?Id=' + id));
+    }
+
+    Promise.all(promises).then(() => {
+      this.resetAll();
+    }).catch((err) => console.log(err));
+
   }
 
   findEventIndexById(id: number) {
@@ -370,6 +528,7 @@ export class AssignComponent implements OnInit {
 
 
   getAllocations(dtStart:any = null,dtEnd: any = null){
+    return;
     let apiUrl = 'Allocations/Allocation';
      if(this.currentViewStart !== null && this.currentViewEnd !== null) {
        apiUrl += "?dtBegin=" + this.currentViewStart + "&dtEnd=" + this.currentViewEnd;
@@ -476,46 +635,11 @@ export class AssignComponent implements OnInit {
 
   eventRender(that: any,event: any, element: any, view: any){
     element[0].innerText = event.title;
+
     element[0].addEventListener("mouseover", function(ev) {
-
-      let fcEvent = that.events[that.findEventIndexById(event.id)];
-
       let div = document.createElement("div");
-
-      if(fcEvent.allocated){
-        if(!fcEvent.amount){
-            that.ts.get('Loading').subscribe((res) => {
-                div.innerHTML = "<span class='fat-font'>" + res + "...</span>";
-            });
-        } else {
-            div.innerHTML = "<span><img src='images/user.png' height='15px' width='15px' style='padding-top: 2px'> " + fcEvent.noTransactions + "</span>"
-                + "<span style='margin-left:15px' class='fat-font'>" + that.displayValue(fcEvent.amount) + "</span> <span>" + that.collectionTranslation + " " + fcEvent.collectId + "</span><br/>"
-                + "<span class='fat-font'>" + fcEvent.title + "</span>";
-        }
-        div.className = "balloon balloon_alter";
-      } else {
-        div.innerHTML = that.notYetAllocated + "<br/>";
-        if(fcEvent.transactions.length > 0){
-          this.firstCollection = new AssignedCollection();
-
-          for(let i = 0; i < fcEvent.transactions.length; i++){
-            let transaction = fcEvent.transactions[i];
-            if(transaction.CollectId === "1"){
-              //////
-              this.fillCollectBy(this.firstCollection, transaction.Status, transaction.Amount);
-            } else if(transaction.CollectId === "2"){
-              this.fillCollectBy(this.secondCollection, transaction.Status, transaction.Amount);
-
-            } else if(transaction.CollectId === "3"){
-              this.fillCollectBy(this.thirdCollection, transaction.Status, transaction.Amount);
-            }
-          }
-
-        }
-        div.innerHTML = "<span>Click the item to view more information</span>";
-        div.className = "balloon";
-      }
-
+      div.innerHTML = "<span>Click the item to view more information</span>";
+      div.className = "balloon";
       let offsets = ev.srcElement.getBoundingClientRect();
       let top = offsets.top;
       let left = offsets.left;
@@ -523,7 +647,6 @@ export class AssignComponent implements OnInit {
       div.style.left = left +"px";
       document.getElementsByClassName("section-page")[0].appendChild(div);
       div.style.top = top - div.offsetHeight - 17 +"px";
-
     }.bind(this));
     element[0].addEventListener("mouseleave", function(){
         let b = document.getElementsByClassName("balloon");
@@ -637,6 +760,15 @@ export class MyEvent {
   amount: any;
 }
 
+export class Bucket {
+  startTime: Date;
+  endTime: Date;
+  allocationName: string;
+  transactions: any;
+  allocationId: number;
+  collectId: string;
+}
+
 export class AssignedCollection {
   toProcessTotal: number;
   processedTotal: number;
@@ -646,8 +778,9 @@ export class AssignedCollection {
   name: string;
   isTyping: boolean;
   state: ButtonState;
+  allocated: boolean;
 
-  constructor(toProcessTotal = 0, processedTotal = 0, refusedByBank = 0, cancelByGiver = 0, amountOfGivts = 0, name = "", isTyping = false, state = ButtonState.Enabled) {
+  constructor(toProcessTotal = 0, processedTotal = 0, refusedByBank = 0, cancelByGiver = 0, amountOfGivts = 0, name = "", isTyping = false, state = ButtonState.Enabled, allocated = false) {
     this.toProcessTotal = toProcessTotal;
     this.processedTotal = processedTotal;
     this.refusedBank = refusedByBank;
@@ -656,5 +789,6 @@ export class AssignedCollection {
     this.name = name;
     this.isTyping = false;
     this.state = state;
+    this.allocated = allocated;
   }
 }
