@@ -15,7 +15,7 @@
     <p-schedule #calendar [events]="events" locale="nl" [nowIndicator]="false" [header]="headerConfig" [editable]="true" (onDayClick)="handleDayClick($event)" (onEventClick)="handleEventClick($event)" [options]="options" id="calendar"></p-schedule>
     <div class="schedule__dialog" *ngIf="isDialogOpen">
       <form style="position: relative" action="" class="schedule__dialog__form">
-        <div style="margin-bottom: 30px" class="flex-col" *ngIf="!isMonthView">
+        <div style="margin-top:15px; margin-bottom: 30px" class="flex-col" *ngIf="!isMonthView">
           <span style="margin-left: 0" class="text">{{'From' | translate}}</span>
           <p-calendar [(ngModel)]="startTime" showTime="showTime" [timeOnly]="true" name="startTime" [stepMinute]="10" class="time-picker"></p-calendar> <span class="text">{{'To' | translate}}</span>
           <p-calendar [(ngModel)]="endTime" showTime="showTime"  [timeOnly]="true" name="endTime" [stepMinute]="10"></p-calendar>
@@ -39,7 +39,6 @@
                         <li *ngFor="let item of filteredUsedTags" class="schedule__dialog__form__listitem" (click)="setCollectNameOf(item, this.firstCollection)" [innerHTML]="item"></li>
                       </ul>
                     </div>
-                      <button style="margin-left: 10px;" class="info-table__button" [class.info-table__button--hidden]="firstCollection.state == ButtonState.Saved" [class.info-table__button--disabled]="this.firstCollection.name == '' " [disabled]="this.firstCollection.name == ''" (click)="updateEvent(this.firstCollection, '1')">{{'PW_Save' | translate}}</button>
 
                   </div>
                  </td>
@@ -63,7 +62,6 @@
                         <li *ngFor="let item of filteredUsedTags" class="schedule__dialog__form__listitem" (click)="setCollectNameOf(item, this.secondCollection)" [innerHTML]="item"></li>
                       </ul>
                     </div>
-                    <button style="margin-left: 10px;" class="info-table__button" [class.info-table__button--hidden]="secondCollection.state == ButtonState.Saved" [class.info-table__button--disabled]="this.secondCollection.name == '' " [disabled]="this.secondCollection.name == ''" (click)="updateEvent(this.secondCollection, '2')">{{'PW_Save' | translate}}</button>
 
                   </div>
                 </td>
@@ -87,7 +85,6 @@
                         <li *ngFor="let item of filteredUsedTags" class="schedule__dialog__form__listitem" (click)="setCollectNameOf(item, this.thirdCollection)" [innerHTML]="item"></li>
                       </ul>
                     </div>
-                    <button style="margin-left: 10px;" class="info-table__button" [class.info-table__button--hidden]="this.thirdCollection.state == ButtonState.Saved" [class.info-table__button--disabled]="this.thirdCollection.name == '' " [disabled]="this.thirdCollection.name == ''" (click)="updateEvent(this.thirdCollection, '3')">{{'PW_Save' | translate}}</button>
 
                   </div>
                 </td>
@@ -102,9 +99,9 @@
                 </td>
               </tr>
             </table>
-            <div style="float: right;padding: 15px;box-sizing:border-box;">
-              <button style="height: 44px;margin-right:15px;" class="info-table__button" (click)="saveAllEvents()">Sla deze toewijzingen op</button>
-              <button style="height: 44px;" class="info-table__button info-table__button--danger" (click)="deleteEvent()">Verwijder deze toewijzingen</button>
+            <div class="dialog-button-container">
+              <button *ngIf="allowButton" style="height: 44px;" class="info-table__button" (click)="saveAllEvents()">Sla deze toewijzingen op</button>
+              <button *ngIf="!allowButton" style="height: 44px;" class="info-table__button info-table__button--danger" (click)="deleteEvent()">Verwijder deze toewijzingen</button>
             </div>
           </div>
         </div>

@@ -46,7 +46,19 @@ export class AssignComponent implements OnInit {
   ButtonState = ButtonState;
   currentTab: SelectedTab = SelectedTab.Collects;
   allocatedBuckets: any;
-  that = this;
+
+  get allowButton(): boolean {
+    if(this.firstCollection.amountOfGivts > 0 && this.firstCollection.allocated == false)
+      return true;
+
+    if(this.secondCollection.amountOfGivts > 0 && this.secondCollection.allocated == false)
+      return true;
+
+    if(this.thirdCollection.amountOfGivts > 0 && this.thirdCollection.allocated == false)
+      return true;
+
+    return false;
+  }
 
   filteredEvents() {
     if(this.events == undefined)
@@ -102,7 +114,6 @@ export class AssignComponent implements OnInit {
       this.currentViewStart = view.start['_d'].toISOString();
       this.currentViewEnd = view.end['_d'].toISOString();
       this.events.length = 0;
-      this.getAllocations();
       this.checkAllocations();
     }.bind(this);
     this.options['eventAfterRender'] = function(event, element, view){
@@ -139,6 +150,9 @@ export class AssignComponent implements OnInit {
       }
       this.isDialogOpen = true;
     }.bind(this);
+
+
+
     this.options["eventMouseover"] = function(event, jsEvent, view) {
         let fcEvent = event;
 
@@ -313,7 +327,6 @@ export class AssignComponent implements OnInit {
       });
   }
 
-  shouldHideCollect1Button = false;
   updateEvent(aCollection: AssignedCollection = null, collectId = null) {
     if (collectId != null && aCollection != null) {
       aCollection.state = ButtonState.isLoading;
@@ -328,7 +341,7 @@ export class AssignComponent implements OnInit {
 
   saveAllEvents() {
     let promises = [];
-    let collections: AssignedCollection[] = [this.firstCollection, this.secondCollection, this.thirdCollection];
+    let collections: Array<AssignedCollection> = [this.firstCollection, this.secondCollection, this.thirdCollection];
 
 
 
@@ -355,7 +368,7 @@ export class AssignComponent implements OnInit {
 
     Promise.all(promises).then(() => {
       //success
-      this.isDialogOpen = false;
+      //this.isDialogOpen = false;
       this.reloadEvents();
     }).catch((err) => {
       console.log(err);
@@ -487,7 +500,6 @@ export class AssignComponent implements OnInit {
 
   reloadEvents() {
     this.events.length = 0;
-    this.getAllocations();
     this.checkAllocations();
   }
 
@@ -541,7 +553,9 @@ export class AssignComponent implements OnInit {
     });
 
     for(var id of allocationsIds) {
-      promises.push(this.apiService.deleteData('Allocations/Allocation?Id=' + id));
+      if(id != 0) {
+        promises.push(this.apiService.deleteData('Allocations/Allocation?Id=' + id));
+      }
     }
 
     Promise.all(promises).then(() => {
@@ -567,37 +581,6 @@ export class AssignComponent implements OnInit {
   }
 
 
-  getAllocations(dtStart:any = null,dtEnd: any = null){
-    return;
-    let apiUrl = 'Allocations/Allocation';
-     if(this.currentViewStart !== null && this.currentViewEnd !== null) {
-       apiUrl += "?dtBegin=" + this.currentViewStart + "&dtEnd=" + this.currentViewEnd;
-     }
-    return this.apiService.getData(apiUrl)
-      .then(resp => {
-        for(let i = 0; i < resp.length; i++) {
-          let event = new MyEvent();
-          event.id = resp[i]['Id'];
-          event.title = resp[i]['Name'];
-          event.start = new Date(resp[i]['dtBegin'] + " UTC");
-          event.end = new Date(resp[i]['dtEnd'] + " UTC");
-          event.collectId = resp[i]['CollectId'];
-          event.className = "allocation";
-          event.allocated = true;
-          event.amount = null;
-          event.transactions = [];
-          this.events.push(event);
-          let params = "dtBegin=" + moment.utc(event.start).format() + "&dtEnd=" + moment.utc(event.end).format() + "&collectId=" + event.collectId;
-          this.apiService.getData("Allocations/AllocationGivts?"+params)
-              .then(resp => {
-                let index = this.findEventIndexById(event.id);
-                this.events[index].noTransactions = resp.NoTransactions;
-                this.events[index].amount = resp.Amount;
-              });
-        }
-      })
-      .catch(err => console.log(err));
-  }
 
   saveAllocation(title: string, collectId: string, startTime: Date = null, endTime: Date = null){
     return new Promise((resolve, reject) => {

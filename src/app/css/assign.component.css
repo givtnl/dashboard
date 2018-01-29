@@ -592,3 +592,17 @@ h3{
 .info-table__button--hidden {
   visibility: hidden;
 }
+
+.dialog-button-container {
+  float: right;
+  padding: 15px;
+  box-sizing:border-box;
+}
+
+.dialog-button-container button {
+  margin-right: 15px;
+}
+
+.dialog-button-container button:last-child {
+  margin-right: 0;
+}
