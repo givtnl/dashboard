@@ -377,7 +377,7 @@ export class AssignComponent implements OnInit {
 
     Promise.all(promises).then(() => {
       //success
-      //this.isDialogOpen = false;
+      this.isDialogOpen = false;
       this.reloadEvents();
     }).catch((err) => {
       console.log(err);
