@@ -69,7 +69,7 @@
     "PW_PWPolicy": "Het wachtwoord moet uit ten minste 7 tekens bestaan, waaronder een hoofdletter en een cijfer.",
     "PW_Save": "Opslaan",
     "PW_PlaceholderPW": "Nieuw wachtwoord",
-    "PW_GoBack": "Keer terug",
+    "PW_GoBack": "Ga terug",
     "PW_ForgotPassword": "Wachtwoord vergeten?",
     "PW_RequestedPW": "Als je geregistreerd bent met dit account, dan zou je een mail moeten gehad hebben om je wachtwoord te herstellen.",
     "PW_Saved": "Je wachtwoord werd opgeslagen. Je kan nu opnieuw inloggen met je nieuw wachtwoord.",
@@ -111,9 +111,14 @@
     "Processed": "Verwerkt",
     "CancelledByUser": "Geannuleerd door de gever",
     "CancelledByBank": "Geweigerd door de bank",
-    "LegendExplanation": "Wordt verwerkt: deze giften zijn nog niet verwerkt door onze transactieprocessor.\nVerwerkt: deze giften zijn verwerkt en zullen uitbetaald worden bij de volgende uitbetaling.\nGeweigerd door de bank: de bank heeft deze gift geweigerd, dit kan bijvoorbeeld gebeuren als er niet voldoende provisie op de rekening staat.\nGeannuleerd door de gever: deze gift is geannuleerd door de gebruiker vooraleer deze transactie verwerkt werd.",
-    "ToProcessExplanation": "Giften zijn nog niet verwerkt door de transactieverwerker",
-    "ProcessedExplanation": "Giften zijn verwerkt en zullen uitbetaald worden bij de volgende uitbetaling",
-    "CancelByUserExplanation": "Storneringen door de gebruiker",
-    "CancelByBankExplanation": "Storneringen door de bank"
+    "LegendExplanation": "Wordt verwerkt: deze giften zijn nog niet verwerkt door onze transactieprocessor.\nVerwerkt: deze giften zijn verwerkt en zullen uitbetaald worden bij de volgende uitbetaling.\nGeweigerd door de bank: de bank heeft deze gift geweigerd, dit kan bijvoorbeeld gebeuren als er niet voldoende provisie op de rekening staat.\nGeannuleerd door de gever: deze gift is geannuleerd door de gebruiker nadat de transactie verwerkt werd.",
+    "ToProcessExplanation": "Giften zijn nog niet verwerkt door SlimPay. Kijk in de handleiding voor meer uitleg.",
+    "ProcessedExplanation": "Giften zijn verwerkt en zullen uitbetaald worden bij de volgende uitbetaling.",
+    "CancelByUserExplanation": "Storneringen door de gebruiker.",
+    "CancelByBankExplanation": "Storneringen door de bank.",
+    "ClickToViewMoreInformation": "Klik om meer informatie weer te geven",
+    "SessionExpiredTitle": "Sessie verlopen",
+    "SessionExpiredMessage": "Wegens veiligheidsredenen is je sessie verlopen. Log opnieuw in om je sessie te verlengen.",
+    "Ok": "",
+    "Relog": "Opnieuw inloggen"
 }
