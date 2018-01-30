@@ -70,7 +70,7 @@
                           </tr>
                           <tr class="incasso-state-table__row--em">
                             <td></td>
-                            <td>{{ "Text_Fee_Total"}}</td>
+                            <td>{{ "Text_Fee_Total" | translate}}</td>
                             <td>{{ displayValue(alloc.toProcessTotal + alloc.processedTotal + alloc.refusedBank + alloc.cancelByGiver) }}</td>
                           </tr>
                         </table>
@@ -81,8 +81,8 @@
               </ng-container>
             </table>
             <div class="dialog-button-container">
-              <button *ngIf="allowButton" style="height: 44px;" class="info-table__button" [disabled]="disableSaveButton" [class.info-table__button--disabled]="disableSaveButton" (click)="saveAllEvents()">Sla deze toewijzingen op</button>
-              <button *ngIf="!allowButton" style="height: 44px;" class="info-table__button info-table__button--danger" (click)="deleteEvent()">Verwijder deze toewijzingen</button>
+              <button *ngIf="allowButton" style="height: 44px;" class="info-table__button" [disabled]="disableSaveButton" [class.info-table__button--disabled]="disableSaveButton" (click)="saveAllEvents()">{{ "Save" | translate }}</button>
+              <button *ngIf="!allowButton" style="height: 44px;" class="info-table__button info-table__button--danger" (click)="deleteEvent()">{{ "Delete" | translate }}</button>
             </div>
           </div>
         </div>
