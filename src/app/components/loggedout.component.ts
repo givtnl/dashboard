@@ -48,12 +48,9 @@ button{
 `]
 })
 export class LoggedOutComponent  {
-    message: string;
     secondsLeft: number = 3;
 
     constructor(private userService: UserService, private router:Router) {
-        this.message = "Je bent uitgelogd wegens veiligheidsredenen. \n Je wordt dadelijk doorverwezen naar de loginpagina.";
-
         this.secondsLeft = 3;
         var timer = setInterval(() => {
           --this.secondsLeft;
