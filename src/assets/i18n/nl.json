@@ -89,7 +89,7 @@
     "TitleAllocate": "Wijs collectes toe",
     "AddNameToCollect": "Geef een naam aan de collecte",
     "DeleteCollectConfirm": "Weet u zeker dat u deze toewijzing wilt verwijderen?",
-    "OverlapError": "U heeft overlappende collectes, dat is niet toegestaan.",
+    "OverlapError": "Er zit al een toegewezen collecte in dit tijdslot. Los dit conflict op door die toewijzingen te verwijderen. Probeer daarna opnieuw.",
     "YesImSure": "Ja, ik weet het zeker.",
     "NoNeverMind": "Nee, dat wil ik niet.",
     "OpenAllocationsMessage": "Er zijn nog transacties die niet toegewezen zijn aan een collecte.\nGa naar het tabblad 'Toewijzen' om dit in orde te maken.",
@@ -120,5 +120,8 @@
     "SessionExpiredTitle": "Sessie verlopen",
     "SessionExpiredMessage": "Wegens veiligheidsredenen is je sessie verlopen. Log opnieuw in om je sessie te verlengen.",
     "Ok": "",
-    "Relog": "Opnieuw inloggen"
+    "Relog": "Opnieuw inloggen",
+    "SaveAll": "Opslaan",
+    "DeleteAll": "Verwijderen",
+    "AllocationConflict": "Conflict bij toewijzing"
 }
