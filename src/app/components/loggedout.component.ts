@@ -8,44 +8,59 @@ import { setTimeout } from 'timers';
 @Component({
     selector: 'loggedout',
     template: `
-<span class="errormessage">{{message}}</span>
+      <div class="errormessage">
+        <h1 style="font-family: Avenir_Heavy">{{ "SessionExpiredTitle" | translate}}</h1>
+        <span style="font-family: Avenir_Light" >{{ "SessionExpiredMessage" | translate}}</span>
+        <button type="submit" (click)="logout()">{{ "Relog" | translate }} ({{ this.secondsLeft }})</button>
+      </div>
+     
 
-<button type="submit" (click)="logout()">Back to login</button>
+
 `,
     styles: [`
 .errormessage{
     font-family: Avenir_Medium;
     display: block;
-    width: 500ps;
-    text-align:center;
-    color: red;
+    width: 350px;
+    color: #2C2B57;
     margin: 50px auto;
 }
 
 button{
-    margin: 0 auto;
+    margin-top: 20px;
+    margin-left: auto;
     width: auto;
     display: block;
-    background: #41C98E;
-    border: 1px solid #41C98E;
-    font-family: 'Avenir_Black';
-    font-size: 1em;
+    background: #2C2B57;
+    opacity: 0.8;
+    font-family: 'Avenir_Medium';
+    font-size: 18px;
     color: #FFFFFF;
     text-align: center;
     padding:10px;
+  cursor:pointer;
 }
+      
+      button:hover{
+        opacity: 1.0;
+      }
 
 `]
 })
 export class LoggedOutComponent  {
     message: string;
+    secondsLeft: number = 3;
 
     constructor(private userService: UserService, private router:Router) {
         this.message = "Je bent uitgelogd wegens veiligheidsredenen. \n Je wordt dadelijk doorverwezen naar de loginpagina.";
 
-        setTimeout(()=>{
+        this.secondsLeft = 3;
+        var timer = setInterval(() => {
+          --this.secondsLeft;
+          if(this.secondsLeft <= 0) {
             this.router.navigate(['']);
-        },5000);
+          }
+        }, 1000);
 
     }
 
