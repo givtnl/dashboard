@@ -439,6 +439,10 @@ button:disabled{
     font-family: 'Avenir_Light';
 }
 
+.tooltiptext--visible {
+  visibility: visible !important;
+}
+
 .tooltip .tooltiptext::after {
   content: "";
   border-color: transparent #2E2957 transparent transparent;

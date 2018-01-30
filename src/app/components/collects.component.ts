@@ -29,6 +29,8 @@ export class CollectsComponent implements OnInit{
     infoCancelledByUser: visualCollection;
     totalAmountsCombined: number = 0;
 
+    infoButtonShouldHavePopover = [false, false, false, false];
+
     text: string;
     calendarModule: CalendarModule;
     dateBegin: Date = null;
@@ -149,6 +151,10 @@ export class CollectsComponent implements OnInit{
 
     public chartHovered(e:any):void {
       //console.log(e);
+    }
+
+    public resetInfoButtonsPopovers() {
+      this.infoButtonShouldHavePopover = [false, false, false, false];
     }
 
 
