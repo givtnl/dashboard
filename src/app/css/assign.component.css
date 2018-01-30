@@ -563,6 +563,10 @@ h3{
   border-bottom: 1px solid rgba(44,43,47,0.25);
 }
 
+.info-table__row td:nth-child(2) {
+  max-width: 250px;
+}
+
 .info-table__row:last-child > td {
   border: none;
 }
