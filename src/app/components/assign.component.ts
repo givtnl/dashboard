@@ -60,6 +60,14 @@ export class AssignComponent implements OnInit {
     return false;
   }
 
+  get disableSaveButton(): boolean {
+    for(let alloc of this.allocations) {
+      if(alloc.amountOfGivts > 0 && alloc.name  == "")
+        return true;
+    }
+    return false;
+  }
+
   get allocations(): Array<AssignedCollection> {
     return [this.firstCollection, this.secondCollection, this.thirdCollection];
   }

@@ -80,7 +80,7 @@
               </ng-container>
             </table>
             <div class="dialog-button-container">
-              <button *ngIf="allowButton" style="height: 44px;" class="info-table__button" (click)="saveAllEvents()">Sla deze toewijzingen op</button>
+              <button *ngIf="allowButton" style="height: 44px;" class="info-table__button" [disabled]="disableSaveButton" [class.info-table__button--disabled]="disableSaveButton" (click)="saveAllEvents()">Sla deze toewijzingen op</button>
               <button *ngIf="!allowButton" style="height: 44px;" class="info-table__button info-table__button--danger" (click)="deleteEvent()">Verwijder deze toewijzingen</button>
             </div>
           </div>
