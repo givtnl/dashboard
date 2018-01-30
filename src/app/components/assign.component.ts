@@ -138,6 +138,7 @@ export class AssignComponent implements OnInit {
       this.filteredEvents();
     }.bind(this);
     this.options["eventClick"] = function(event, jsEvent, view) {
+      this.fillData(event);
       this.event = event;
 
       let start = event.start;
@@ -162,75 +163,6 @@ export class AssignComponent implements OnInit {
       }
       this.isDialogOpen = true;
     }.bind(this);
-
-
-
-    this.options["eventMouseover"] = function(event, jsEvent, view) {
-        let fcEvent = event;
-
-        let div = document.createElement("div");
-        this.firstCollection = new AssignedCollection();
-        this.secondCollection = new AssignedCollection();
-        this.thirdCollection = new AssignedCollection();
-
-        if(fcEvent.allocated){
-          if(fcEvent.transactions.length > 0) {
-            for(let i = 0; i < fcEvent.transactions.length; i++) {
-              let tr = fcEvent.transactions[i];
-              if(tr.CollectId  === "1") {
-                this.fillCollectBy(this.firstCollection, tr.Status,tr.Amount);
-                this.firstCollection.name = fcEvent.transactions[i].AllocationName;
-                this.firstCollection.allocated = true;
-                this.firstCollection.collectionNumber = 1;
-              } else if(tr.CollectId === "2") {
-                this.fillCollectBy(this.secondCollection, tr.Status,tr.Amount);
-                this.secondCollection.name = fcEvent.transactions[i].AllocationName;
-                this.secondCollection.allocated = true;
-                this.secondCollection.collectionNumber = 2;
-              } else if(tr.CollectId === "3") {
-                this.fillCollectBy(this.thirdCollection, tr.Status,tr.Amount);
-                this.thirdCollection.name = fcEvent.transactions[i].AllocationName;
-                this.thirdCollection.allocated = true;
-                this.thirdCollection.collectionNumber = 3;
-              }
-            }
-          }
-          if(!fcEvent.amount){
-            this.ts.get('Loading').subscribe((res) => {
-              div.innerHTML = "<span class='fat-font'>" + res + "...</span>";
-            });
-          } else {
-            div.innerHTML = "<span><img src='images/user.png' height='15px' width='15px' style='padding-top: 2px'> " + fcEvent.noTransactions + "</span>"
-              + "<span style='margin-left:15px' class='fat-font'>" + this.displayValue(fcEvent.amount) + "</span> <span>" + this.collectionTranslation + " " + fcEvent.collectId + "</span><br/>"
-              + "<span class='fat-font'>" + fcEvent.title + "</span>";
-          }
-          div.className = "balloon balloon_alter";
-        } else {
-          div.innerHTML = this.notYetAllocated + "<br/>";
-          if(fcEvent.transactions.length > 0){
-            this.firstCollection = new AssignedCollection();
-
-            for(let i = 0; i < fcEvent.transactions.length; i++){
-              let transaction = fcEvent.transactions[i];
-              if(transaction.CollectId === "1"){
-                //////
-                this.fillCollectBy(this.firstCollection, transaction.Status, transaction.Amount);
-                this.firstCollection.collectionNumber = 1;
-              } else if(transaction.CollectId === "2"){
-                this.fillCollectBy(this.secondCollection, transaction.Status, transaction.Amount);
-                this.secondCollection.collectionNumber = 2;
-              } else if(transaction.CollectId === "3"){
-                this.fillCollectBy(this.thirdCollection, transaction.Status, transaction.Amount);
-                this.thirdCollection.collectionNumber = 3;
-              }
-            }
-
-          }
-          div.innerHTML = "<span>Click the item to view more information</span>";
-          div.className = "balloon";
-        }
-
-    }.bind(this);
     this.options['slotDuration'] = '00:30:00';
     this.options['timezone'] = 'local';
     this.options['defaultView'] = 'agendaWeek';
@@ -249,6 +181,72 @@ export class AssignComponent implements OnInit {
         .then(data => {
           this.usedTags = data;
         });
+  }
+
+  private fillData(event) {
+    let fcEvent = event;
+
+    let div = document.createElement("div");
+    this.firstCollection = new AssignedCollection();
+    this.secondCollection = new AssignedCollection();
+    this.thirdCollection = new AssignedCollection();
+
+    if (fcEvent.allocated) {
+      if (fcEvent.transactions.length > 0) {
+        for (let i = 0; i < fcEvent.transactions.length; i++) {
+          let tr = fcEvent.transactions[i];
+          if (tr.CollectId === "1") {
+            this.fillCollectBy(this.firstCollection, tr.Status, tr.Amount);
+            this.firstCollection.name = fcEvent.transactions[i].AllocationName;
+            this.firstCollection.allocated = true;
+            this.firstCollection.collectionNumber = 1;
+          } else if (tr.CollectId === "2") {
+            this.fillCollectBy(this.secondCollection, tr.Status, tr.Amount);
+            this.secondCollection.name = fcEvent.transactions[i].AllocationName;
+            this.secondCollection.allocated = true;
+            this.secondCollection.collectionNumber = 2;
+          } else if (tr.CollectId === "3") {
+            this.fillCollectBy(this.thirdCollection, tr.Status, tr.Amount);
+            this.thirdCollection.name = fcEvent.transactions[i].AllocationName;
+            this.thirdCollection.allocated = true;
+            this.thirdCollection.collectionNumber = 3;
+          }
+        }
+      }
+      if (!fcEvent.amount) {
+        this.ts.get('Loading').subscribe((res) => {
+          div.innerHTML = "<span class='fat-font'>" + res + "...</span>";
+        });
+      } else {
+        div.innerHTML = "<span><img src='images/user.png' height='15px' width='15px' style='padding-top: 2px'> " + fcEvent.noTransactions + "</span>"
+          + "<span style='margin-left:15px' class='fat-font'>" + this.displayValue(fcEvent.amount) + "</span> <span>" + this.collectionTranslation + " " + fcEvent.collectId + "</span><br/>"
+          + "<span class='fat-font'>" + fcEvent.title + "</span>";
+      }
+      div.className = "balloon balloon_alter";
+    } else {
+      div.innerHTML = this.notYetAllocated + "<br/>";
+      if (fcEvent.transactions.length > 0) {
+        this.firstCollection = new AssignedCollection();
+
+        for (let i = 0; i < fcEvent.transactions.length; i++) {
+          let transaction = fcEvent.transactions[i];
+          if (transaction.CollectId === "1") {
+            //////
+            this.fillCollectBy(this.firstCollection, transaction.Status, transaction.Amount);
+            this.firstCollection.collectionNumber = 1;
+          } else if (transaction.CollectId === "2") {
+            this.fillCollectBy(this.secondCollection, transaction.Status, transaction.Amount);
+            this.secondCollection.collectionNumber = 2;
+          } else if (transaction.CollectId === "3") {
+            this.fillCollectBy(this.thirdCollection, transaction.Status, transaction.Amount);
+            this.thirdCollection.collectionNumber = 3;
+          }
+        }
+
+      }
+      div.innerHTML = "<span>Click the item to view more information</span>";
+      div.className = "balloon";
+    }
   }
 
   filterTags(typed){
