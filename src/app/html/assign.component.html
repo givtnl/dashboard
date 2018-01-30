@@ -14,7 +14,7 @@
   <div class="schedule">
     <p-schedule #calendar [events]="events" locale="nl" [nowIndicator]="false" [header]="headerConfig" [editable]="true" (onDayClick)="handleDayClick($event)" (onEventClick)="handleEventClick($event)" [options]="options" id="calendar"></p-schedule>
     <div class="schedule__dialog" *ngIf="isDialogOpen">
-      <form style="position: relative" action="" class="schedule__dialog__form">
+      <form style="position: relative" [class.schedule__dialog__form--disabled]="errorShown" action="" class="schedule__dialog__form">
         <div style="margin-top:15px; margin-bottom: 30px" class="flex-col" *ngIf="!isMonthView">
           <span style="margin-left: 0" class="text">{{'From' | translate}}</span>
           <p-calendar [(ngModel)]="startTime" showTime="showTime" [timeOnly]="true" name="startTime" [stepMinute]="10" class="time-picker"></p-calendar> <span class="text">{{'To' | translate}}</span>
@@ -88,13 +88,17 @@
         <button (click)="resetAll(false)" class="close-button"><img src="images/close.png" alt=""></button>
       </form>
 
-    </div>
-    <div class="error__message" *ngIf="errorShown">
-      <div class="error__message--inner">
-        <h3>{{"OverlapError" | translate}}</h3>
-        <button class="schedule__dialog__form--submit submit-enabled no-margin" (click)="toggleError(false)">{{ "PW_GoBack" | translate}}</button>
+      <div class="error__message" *ngIf="errorShown">
+        <div class="error-wrapper">
+          <div class="error__message--inner">
+            <h3>{{"OverlapError" | translate}}</h3>
+            <button class="schedule__dialog__form--submit submit-enabled no-margin" (click)="toggleError(false)">{{ "PW_GoBack" | translate}}</button>
+          </div>
+        </div>
       </div>
+
     </div>
+
   </div>
 
 </div>
