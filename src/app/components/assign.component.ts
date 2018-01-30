@@ -512,6 +512,7 @@ export class AssignComponent implements OnInit {
     this.event = new MyEvent();
     this.startTime = new Date();
     this.endTime = new Date();
+    this.filteredUsedTags = [];
     if(reload){
       this.reloadEvents()
     }
@@ -708,6 +709,7 @@ export class AssignComponent implements OnInit {
   onFocusOutOf(aCollection: AssignedCollection) {
     setTimeout(() => {
       aCollection.isTyping = false;
+      this.filteredUsedTags = [];
     }, 200);
   }
 
