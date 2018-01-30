@@ -606,3 +606,49 @@ h3{
 .dialog-button-container button:last-child {
   margin-right: 0;
 }
+
+.bullet {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  background: black;
+  border-radius: 50%;
+  vertical-align: middle;
+}
+
+.bullet--blue {
+  background: #2C2B57;
+}
+
+.bullet--green {
+  background: #1CA96C;
+}
+
+.bullet--red {
+  background: #b91a24;
+}
+
+.bullet--grey {
+  background: #888888;
+}
+
+.incasso-state-table {
+  text-align: left;
+  font-family: Avenir_Light;
+  border-collapse: collapse;
+  margin: 15px 0;
+}
+
+.incasso-state-table td {
+  padding: 7px 5px;
+}
+
+.incasso-state-table__row--em td{
+  font-family: Avenir_Heavy;
+  border-top: 2px solid #2C2B57;
+  padding-top: 10px;
+}
+
+.incasso-state-table__row--disabled {
+  opacity: 0.5;
+}

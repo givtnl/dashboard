@@ -29,75 +29,55 @@
 
           <div class="info-table">
             <table class="info-table__table" width="100%" cellpadding="0" cellspacing="0" marginwidth="0" marginheight="0" leftmargin="0" topmargin="0">
-              <tr class="info-table__row" *ngIf="this.firstCollection.amountOfGivts != 0">
-                <td><img src="images/personal-green.png" alt=""> {{ this.firstCollection.amountOfGivts }}</td>
-                <td>
-                  <div style="height: 40px;display: flex;justify-content: center;">
-                    <div class="wrapping_inputlist">
-                      <input (focus)="this.firstCollection.isTyping=true" (focusout)="onFocusOutOf(this.firstCollection);" autocomplete="off"  class="info-table__input" [class.info-table__input--false]="this.firstCollection.name == ''" (ngModelChange)="this.filterTags($event)" type="text" name="collectName" [(ngModel)]="this.firstCollection.name" placeholder="{{ 'Collection' | translate }} 1">
-                      <ul *ngIf="this.firstCollection.isTyping" class="schedule__dialog__form__list">
-                        <li *ngFor="let item of filteredUsedTags" class="schedule__dialog__form__listitem" (click)="setCollectNameOf(item, this.firstCollection)" [innerHTML]="item"></li>
-                      </ul>
-                    </div>
 
-                  </div>
-                 </td>
-                <td class="incasso-state">
-                  <div style="display: flex; flex-direction: column; align-items: flex-end;">
-                    <span *ngIf="firstCollection.toProcessTotal != 0" class="light">{{ "Processing" | translate }}: <span class="heavy-text">{{ displayValue(this.firstCollection.toProcessTotal) }}</span> </span>
-                    <span *ngIf="firstCollection.processedTotal != 0" class="light green-color">{{ "Processed" | translate }}: <span class="heavy-text">{{ displayValue(this.firstCollection.processedTotal) }}</span></span>
-                    <span *ngIf="firstCollection.refusedBank != 0" class="light red">{{"CancelledByBank" | translate}}: <span class="heavy-text">{{ displayValue(this.firstCollection.refusedBank) }}</span> </span>
-                    <span *ngIf="firstCollection.cancelByGiver != 0" class="light grey">{{ "CancelledByUser" | translate}}: <span class="heavy-text">{{ displayValue(this.firstCollection.cancelByGiver) }}</span></span>
-                  </div>
+              <ng-container *ngFor="let alloc of allocations">
+                <tr class="info-table__row" *ngIf="alloc.amountOfGivts != 0">
+                    <td><img src="images/personal-blue.png" alt=""> {{ alloc.amountOfGivts }}</td>
+                    <td>
+                      <div style="height: 40px;display: flex;justify-content: center;">
+                        <div class="wrapping_inputlist">
+                          <input (focus)="alloc.isTyping=true" (focusout)="onFocusOutOf(alloc);" autocomplete="off"  class="info-table__input" [class.info-table__input--false]="alloc.name == ''" (ngModelChange)="this.filterTags($event)" type="text" name="collectName{{alloc.collectionNumber}}" [(ngModel)]="alloc.name" placeholder="{{ 'Collection' | translate }} {{ alloc.collectionNumber }}">
+                          <ul *ngIf="alloc.isTyping" class="schedule__dialog__form__list">
+                            <li *ngFor="let item of filteredUsedTags" class="schedule__dialog__form__listitem" (click)="setCollectNameOf(item, alloc)" [innerHTML]="item"></li>
+                          </ul>
+                        </div>
 
-                 </td>
-              </tr>
-              <tr class="info-table__row" *ngIf="this.secondCollection.amountOfGivts != 0">
-                <td><img src="images/personal-green.png" alt=""> {{ this.secondCollection.amountOfGivts }}</td>
-                <td>
-                  <div style="height: 40px;display: flex;justify-content: center;">
-                    <div class="wrapping_inputlist">
-                      <input (focus)="this.secondCollection.isTyping=true" (focusout)="onFocusOutOf(this.secondCollection);" autocomplete="off" (ngModelChange)="this.filterTags($event)" [class.info-table__input--false]="this.secondCollection.name == ''" class="info-table__input" type="text" name="collectName2" [(ngModel)]="this.secondCollection.name" placeholder="{{ 'Collection' | translate }} 2">
-                      <ul *ngIf="secondCollection.isTyping" class="schedule__dialog__form__list">
-                        <li *ngFor="let item of filteredUsedTags" class="schedule__dialog__form__listitem" (click)="setCollectNameOf(item, this.secondCollection)" [innerHTML]="item"></li>
-                      </ul>
-                    </div>
+                      </div>
+                    </td>
+                    <td class="incasso-state">
+                      <div style="display: flex; flex-direction: column; align-items: flex-end;">
+                        <table class="incasso-state-table">
+                          <tr [class.incasso-state-table__row--disabled]="alloc.toProcessTotal == 0">
+                            <td><span class="bullet bullet--blue"></span></td>
+                            <td>{{ "Processing" | translate }}</td>
+                            <td>{{ displayValue(alloc.toProcessTotal) }}</td>
+                          </tr>
+                          <tr [class.incasso-state-table__row--disabled]="alloc.processedTotal == 0">
+                            <td><span class="bullet bullet--green"></span></td>
+                            <td>{{ "Processed" | translate }}</td>
+                            <td>{{ displayValue(alloc.processedTotal) }}</td>
+                          </tr>
+                          <tr [class.incasso-state-table__row--disabled]="alloc.refusedBank == 0">
+                            <td><span class="bullet bullet--red"></span></td>
+                            <td>{{"CancelledByBank" | translate}}</td>
+                            <td>{{ displayValue(alloc.refusedBank) }}</td>
+                          </tr>
+                          <tr [class.incasso-state-table__row--disabled]="alloc.cancelByGiver == 0">
+                            <td><span class="bullet bullet--grey"></span></td>
+                            <td>{{ "CancelledByUser" | translate}}</td>
+                            <td>{{ displayValue(alloc.cancelByGiver) }}</td>
+                          </tr>
+                          <tr class="incasso-state-table__row--em">
+                            <td></td>
+                            <td>Totaal</td>
+                            <td>{{ displayValue(alloc.toProcessTotal + alloc.processedTotal + alloc.refusedBank + alloc.cancelByGiver) }}</td>
+                          </tr>
+                        </table>
+                      </div>
 
-                  </div>
-                </td>
-                <td class="incasso-state">
-                  <div style="display: flex; flex-direction: column; align-items: flex-end;">
-                    <span *ngIf="secondCollection.toProcessTotal != 0" class="light">{{ "Processing" | translate }}:  <span class="heavy-text">{{ displayValue(this.secondCollection.toProcessTotal) }}</span> </span>
-                    <span *ngIf="secondCollection.processedTotal != 0" class="light green-color">{{ "Processed" | translate }}: <span class="heavy-text">{{ displayValue(this.secondCollection.processedTotal) }}</span></span>
-                    <span *ngIf="secondCollection.refusedBank != 0" class="light red">{{"CancelledByBank" | translate}}: <span class="heavy-text">{{ displayValue(this.secondCollection.refusedBank) }}</span> </span>
-                    <span *ngIf="secondCollection.cancelByGiver != 0" class="light grey">{{ "CancelledByUser" | translate}}: <span class="heavy-text">{{ displayValue(this.secondCollection.cancelByGiver) }}</span></span>
-                  </div>
-
-                </td>
-              </tr>
-              <tr class="info-table__row" *ngIf="this.thirdCollection.amountOfGivts != 0">
-                <td><img src="images/personal-green.png" alt=""> {{ this.thirdCollection.amountOfGivts }}</td>
-                <td>
-                  <div style="height: 40px;display: flex;justify-content: center;">
-                    <div class="wrapping_inputlist">
-                      <input (focus)="this.thirdCollection.isTyping=true" (focusout)="onFocusOutOf(this.secondCollection);" autocomplete="off" (ngModelChange)="this.filterTags($event)" [class.info-table__input--false]="this.thirdCollection.name == ''" class="info-table__input" type="text" name="collectName3" [(ngModel)]="this.thirdCollection.name" placeholder="{{ 'Collection' | translate }} 3">
-                      <ul *ngIf="this.thirdCollection.isTyping" class="schedule__dialog__form__list">
-                        <li *ngFor="let item of filteredUsedTags" class="schedule__dialog__form__listitem" (click)="setCollectNameOf(item, this.thirdCollection)" [innerHTML]="item"></li>
-                      </ul>
-                    </div>
-
-                  </div>
-                </td>
-                <td class="incasso-state">
-                  <div style="display: flex; flex-direction: column; align-items: flex-end;">
-                    <span *ngIf="thirdCollection.toProcessTotal != 0" class="light ">{{ "Processing" | translate }}: <span class="heavy-text">{{ displayValue(this.thirdCollection.toProcessTotal) }}</span> </span>
-                    <span *ngIf="thirdCollection.processedTotal != 0" class="light green-color">{{ "Processed" | translate }}: <span class="heavy-text">{{ displayValue(this.thirdCollection.processedTotal) }}</span></span>
-                    <span *ngIf="thirdCollection.refusedBank != 0" class="light red">{{"CancelledByBank" | translate}}: <span class="heavy-text">{{ displayValue(this.thirdCollection.refusedBank) }}</span> </span>
-                    <span *ngIf="thirdCollection.cancelByGiver != 0" class="light grey">{{ "CancelledByUser" | translate}}: <span class="heavy-text">{{ displayValue(this.thirdCollection.cancelByGiver) }}</span></span>
-                  </div>
-
-                </td>
-              </tr>
+                    </td>
+                </tr>
+              </ng-container>
             </table>
             <div class="dialog-button-container">
               <button *ngIf="allowButton" style="height: 44px;" class="info-table__button" (click)="saveAllEvents()">Sla deze toewijzingen op</button>
@@ -105,17 +85,8 @@
             </div>
           </div>
         </div>
-
-
         <button (click)="resetAll(false)" class="close-button"><img src="images/close.png" alt=""></button>
       </form>
-      <!--
-      <form *ngIf="" action="" class="schedule__dialog___form--delete">
-        <h3>{{"DeleteCollectConfirm" | translate}}</h3>
-        <button class="schedule__dialog__form--submit submit-enabled" type="submit" (click)="deleteEvent()">{{ "YesImSure" | translate}}</button>
-        <button class="schedule__dialog__form--submit submit-enabled" type="submit" (click)="resetAll(false)">{{ "NoNeverMind" | translate}}</button>
-      </form>
-      -->
 
     </div>
     <div class="error__message" *ngIf="errorShown">

@@ -60,6 +60,10 @@ export class AssignComponent implements OnInit {
     return false;
   }
 
+  get allocations(): Array<AssignedCollection> {
+    return [this.firstCollection, this.secondCollection, this.thirdCollection];
+  }
+
   filteredEvents() {
     if(this.events == undefined)
     {
@@ -169,19 +173,17 @@ export class AssignComponent implements OnInit {
                 this.fillCollectBy(this.firstCollection, tr.Status,tr.Amount);
                 this.firstCollection.name = fcEvent.transactions[i].AllocationName;
                 this.firstCollection.allocated = true;
+                this.firstCollection.collectionNumber = 1;
               } else if(tr.CollectId === "2") {
                 this.fillCollectBy(this.secondCollection, tr.Status,tr.Amount);
                 this.secondCollection.name = fcEvent.transactions[i].AllocationName;
                 this.secondCollection.allocated = true;
-
-
+                this.secondCollection.collectionNumber = 2;
               } else if(tr.CollectId === "3") {
                 this.fillCollectBy(this.thirdCollection, tr.Status,tr.Amount);
                 this.thirdCollection.name = fcEvent.transactions[i].AllocationName;
                 this.thirdCollection.allocated = true;
-
-
-
+                this.thirdCollection.collectionNumber = 3;
               }
             }
           }
@@ -205,11 +207,13 @@ export class AssignComponent implements OnInit {
               if(transaction.CollectId === "1"){
                 //////
                 this.fillCollectBy(this.firstCollection, transaction.Status, transaction.Amount);
+                this.firstCollection.collectionNumber = 1;
               } else if(transaction.CollectId === "2"){
                 this.fillCollectBy(this.secondCollection, transaction.Status, transaction.Amount);
-
+                this.secondCollection.collectionNumber = 2;
               } else if(transaction.CollectId === "3"){
                 this.fillCollectBy(this.thirdCollection, transaction.Status, transaction.Amount);
+                this.thirdCollection.collectionNumber = 3;
               }
             }
 
@@ -275,12 +279,17 @@ export class AssignComponent implements OnInit {
         switch (this.openGivts[i].CollectId){
           case "1":
             this.fillCollectBy(this.firstCollection, this.openGivts[i].Status, this.openGivts[i].Amount);
+            this.firstCollection.collectionNumber = 1;
             break;
           case "2":
             this.fillCollectBy(this.secondCollection, this.openGivts[i].Status, this.openGivts[i].Amount);
+            this.secondCollection.collectionNumber = 2;
+
             break;
           case "3":
             this.fillCollectBy(this.thirdCollection, this.openGivts[i].Status, this.openGivts[i].Amount);
+            this.thirdCollection.collectionNumber = 3;
+
             break;
           default:
             break;
@@ -802,8 +811,9 @@ export class AssignedCollection {
   isTyping: boolean;
   state: ButtonState;
   allocated: boolean;
+  collectionNumber: number;
 
-  constructor(toProcessTotal = 0, processedTotal = 0, refusedByBank = 0, cancelByGiver = 0, amountOfGivts = 0, name = "", isTyping = false, state = ButtonState.Enabled, allocated = false) {
+  constructor(toProcessTotal = 0, processedTotal = 0, refusedByBank = 0, cancelByGiver = 0, amountOfGivts = 0, name = "", isTyping = false, state = ButtonState.Enabled, allocated = false, collectionNumber = 1) {
     this.toProcessTotal = toProcessTotal;
     this.processedTotal = processedTotal;
     this.refusedBank = refusedByBank;
@@ -813,5 +823,6 @@ export class AssignedCollection {
     this.isTyping = false;
     this.state = state;
     this.allocated = allocated;
+    this.collectionNumber = collectionNumber;
   }
 }
