@@ -14,7 +14,7 @@
   <div class="schedule">
     <p-schedule #calendar [events]="events" locale="nl" [nowIndicator]="false" [header]="headerConfig" [editable]="true" (onDayClick)="handleDayClick($event)" (onEventClick)="handleEventClick($event)" [options]="options" id="calendar"></p-schedule>
     <div class="schedule__dialog" *ngIf="isDialogOpen">
-      <form style="position: relative" [class.schedule__dialog__form--disabled]="errorShown" action="" class="schedule__dialog__form">
+      <form style="position: relative;max-height: 667px;overflow: scroll;" [class.schedule__dialog__form--disabled]="errorShown" action="" class="schedule__dialog__form">
         <div style="margin-top:15px; margin-bottom: 30px" class="flex-col" *ngIf="!isMonthView && allowButton">
           <span style="margin-left: 0" class="text">{{'From' | translate}}</span>
           <p-calendar [(ngModel)]="startTime" showTime="showTime" [timeOnly]="true" name="startTime" [stepMinute]="10" class="time-picker"></p-calendar> <span class="text">{{'To' | translate}}</span>
@@ -70,7 +70,7 @@
                           </tr>
                           <tr class="incasso-state-table__row--em">
                             <td></td>
-                            <td>Totaal</td>
+                            <td>{{ "Text_Fee_Total"}}</td>
                             <td>{{ displayValue(alloc.toProcessTotal + alloc.processedTotal + alloc.refusedBank + alloc.cancelByGiver) }}</td>
                           </tr>
                         </table>
