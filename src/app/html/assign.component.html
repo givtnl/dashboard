@@ -35,8 +35,9 @@
                     <td><img src="images/personal-blue.png" alt=""> {{ alloc.amountOfGivts }}</td>
                     <td>
                       <div style="height: 40px;display: flex;justify-content: center;">
-                        <div class="wrapping_inputlist">
-                          <input (focus)="alloc.isTyping=true" (focusout)="onFocusOutOf(alloc);" autocomplete="off"  class="info-table__input" [class.info-table__input--false]="alloc.name == ''" (ngModelChange)="this.filterTags($event)" type="text" name="collectName{{alloc.collectionNumber}}" [(ngModel)]="alloc.name" placeholder="{{ 'Collection' | translate }} {{ alloc.collectionNumber }}">
+                        <div class="wrapping_inputlist" style="display: flex;">
+                          <span style="align-self: center;" *ngIf="!allowButton">{{alloc.name}}</span>
+                          <input *ngIf="allowButton" (focus)="alloc.isTyping=true" (focusout)="onFocusOutOf(alloc);" autocomplete="off"  class="info-table__input" [class.info-table__input--false]="alloc.name == ''" (ngModelChange)="this.filterTags($event)" type="text" name="collectName{{alloc.collectionNumber}}" [(ngModel)]="alloc.name" placeholder="{{ 'Collection' | translate }} {{ alloc.collectionNumber }}">
                           <ul *ngIf="alloc.isTyping" class="schedule__dialog__form__list">
                             <li *ngFor="let item of filteredUsedTags" class="schedule__dialog__form__listitem" (click)="setCollectNameOf(item, alloc)" [innerHTML]="item"></li>
                           </ul>

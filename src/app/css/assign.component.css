@@ -668,3 +668,8 @@ h3{
   align-items: center;
   background: rgba(0,0,0,0.2);
 }
+
+.info-table__input--readonly {
+  background: transparent;
+  border:0;
+}
