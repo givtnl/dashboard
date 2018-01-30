@@ -352,7 +352,9 @@ export class AssignComponent implements OnInit {
           aCollection.state = ButtonState.Saved;
           this.reloadEvents();
         }.bind(this)
-      );
+      ).catch((err) => {
+
+      });
     }
   }
 
@@ -389,6 +391,8 @@ export class AssignComponent implements OnInit {
       this.reloadEvents();
     }).catch((err) => {
       console.log(err);
+      this.errorShown = true;
+      console.log(this.errorShown);
     });
 
 
@@ -577,7 +581,11 @@ export class AssignComponent implements OnInit {
 
     Promise.all(promises).then(() => {
       this.resetAll();
-    }).catch((err) => console.log(err));
+    }).catch((err) =>
+    {
+      console.log(err);
+
+    });
 
   }
 
@@ -634,6 +642,7 @@ export class AssignComponent implements OnInit {
         })
         .catch(err => {
           console.log(err);
+          reject();
         });
     })
 
