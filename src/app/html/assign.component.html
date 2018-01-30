@@ -15,14 +15,14 @@
     <p-schedule #calendar [events]="events" locale="nl" [nowIndicator]="false" [header]="headerConfig" [editable]="true" (onDayClick)="handleDayClick($event)" (onEventClick)="handleEventClick($event)" [options]="options" id="calendar"></p-schedule>
     <div class="schedule__dialog" *ngIf="isDialogOpen">
       <form style="position: relative" [class.schedule__dialog__form--disabled]="errorShown" action="" class="schedule__dialog__form">
-        <div style="margin-top:15px; margin-bottom: 30px" class="flex-col" *ngIf="!isMonthView">
+        <div style="margin-top:15px; margin-bottom: 30px" class="flex-col" *ngIf="!isMonthView && allowButton">
           <span style="margin-left: 0" class="text">{{'From' | translate}}</span>
           <p-calendar [(ngModel)]="startTime" showTime="showTime" [timeOnly]="true" name="startTime" [stepMinute]="10" class="time-picker"></p-calendar> <span class="text">{{'To' | translate}}</span>
           <p-calendar [(ngModel)]="endTime" showTime="showTime"  [timeOnly]="true" name="endTime" [stepMinute]="10"></p-calendar>
         </div>
 
         <div style="display: flex;flex-wrap: wrap;">
-          <div style="margin-left: 20px">
+          <div style="margin-left: 20px;margin-top: 6px;">
             <span class="tab__element" (click)="currentTab = SelectedTab.Collects" [class.tab__element--active]="currentTab == SelectedTab.Collects">Collectes</span>
             <span class="tab__element" (click)="currentTab = SelectedTab.Fixed" [class.tab__element--active]="currentTab == SelectedTab.Fixed">Vaste punten</span>
           </div>
