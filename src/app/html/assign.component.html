@@ -23,11 +23,11 @@
 
         <div style="display: flex;flex-wrap: wrap;">
           <div style="margin-left: 20px;margin-top: 6px;">
-            <span class="tab__element" (click)="currentTab = SelectedTab.Collects" [class.tab__element--active]="currentTab == SelectedTab.Collects">Collectes</span>
-            <span class="tab__element" (click)="currentTab = SelectedTab.Fixed" [class.tab__element--active]="currentTab == SelectedTab.Fixed">Vaste punten</span>
+            <span *ngIf="!areAllocationsEmpty" class="tab__element" (click)="currentTab = SelectedTab.Collects" [class.tab__element--active]="currentTab == SelectedTab.Collects">Collectes</span>
+            <span *ngIf="fixedAllocations.length > 0" class="tab__element" (click)="currentTab = SelectedTab.Fixed" [class.tab__element--active]="currentTab == SelectedTab.Fixed">Vaste punten</span>
           </div>
 
-          <div class="info-table">
+          <div class="info-table" *ngIf="currentTab == SelectedTab.Collects">
             <table class="info-table__table" width="100%" cellpadding="0" cellspacing="0" marginwidth="0" marginheight="0" leftmargin="0" topmargin="0">
 
               <ng-container *ngFor="let alloc of allocations">
@@ -83,6 +83,60 @@
             <div class="dialog-button-container">
               <button *ngIf="allowButton" style="height: 44px;" class="info-table__button" [disabled]="disableSaveButton" [class.info-table__button--disabled]="disableSaveButton" (click)="saveAllEvents()">{{ "Save" | translate }}</button>
               <button *ngIf="!allowButton" style="height: 44px;" class="info-table__button info-table__button--danger" (click)="deleteEvent()">{{ "Delete" | translate }}</button>
+            </div>
+          </div>
+
+          <div class="info-table" *ngIf="currentTab == SelectedTab.Fixed">
+            <table class="info-table__table" width="100%" cellpadding="0" cellspacing="0" marginwidth="0" marginheight="0" leftmargin="0" topmargin="0">
+
+              <ng-container *ngFor="let alloc of fixedAllocations">
+                <tr class="info-table__row" *ngIf="alloc.amountOfGivts != 0">
+                  <td><img src="images/personal-blue.png" alt=""> {{ alloc.amountOfGivts }}</td>
+                  <td>
+                    <div style="height: 40px;display: flex;justify-content: center;">
+                      <div class="wrapping_inputlist" style="display: flex;">
+                        <span style="align-self: center;">{{alloc.name}}</span>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="incasso-state">
+                    <div style="display: flex; flex-direction: column; align-items: flex-end;">
+                      <table class="incasso-state-table">
+                        <tr [class.incasso-state-table__row--disabled]="alloc.toProcessTotal == 0">
+                          <td><span class="bullet bullet--blue"></span></td>
+                          <td>{{ "Processing" | translate }}</td>
+                          <td>{{ displayValue(alloc.toProcessTotal) }}</td>
+                        </tr>
+                        <tr [class.incasso-state-table__row--disabled]="alloc.processedTotal == 0">
+                          <td><span class="bullet bullet--green"></span></td>
+                          <td>{{ "Processed" | translate }}</td>
+                          <td>{{ displayValue(alloc.processedTotal) }}</td>
+                        </tr>
+                        <tr [class.incasso-state-table__row--disabled]="alloc.refusedBank == 0">
+                          <td><span class="bullet bullet--red"></span></td>
+                          <td>{{"CancelledByBank" | translate}}</td>
+                          <td>{{ displayValue(alloc.refusedBank) }}</td>
+                        </tr>
+                        <tr [class.incasso-state-table__row--disabled]="alloc.cancelByGiver == 0">
+                          <td><span class="bullet bullet--grey"></span></td>
+                          <td>{{ "CancelledByUser" | translate}}</td>
+                          <td>{{ displayValue(alloc.cancelByGiver) }}</td>
+                        </tr>
+                        <tr class="incasso-state-table__row--em">
+                          <td></td>
+                          <td>{{ "Text_Fee_Total" | translate}}</td>
+                          <td>{{ displayValue(alloc.toProcessTotal + alloc.processedTotal + alloc.refusedBank + alloc.cancelByGiver) }}</td>
+                        </tr>
+                      </table>
+                    </div>
+
+                  </td>
+                </tr>
+              </ng-container>
+            </table>
+            <div class="dialog-button-container">
+              <button *ngIf="allowButton && currentTab == SelectedTab.Collects" style="height: 44px;" class="info-table__button" [disabled]="disableSaveButton" [class.info-table__button--disabled]="disableSaveButton" (click)="saveAllEvents()">{{ "Save" | translate }}</button>
+              <button *ngIf="!allowButton && currentTab == SelectedTab.Collects" style="height: 44px;" class="info-table__button info-table__button--danger" (click)="deleteEvent()">{{ "Delete" | translate }}</button>
             </div>
           </div>
         </div>
