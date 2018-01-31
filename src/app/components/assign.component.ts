@@ -98,7 +98,7 @@ export class AssignComponent implements OnInit {
 
 
   @ViewChild('calendar') calendar: ElementRef;
-  public constructor(private ts: TranslateService, private cd: ChangeDetectorRef, private apiService: ApiClientService, private userService: UserService) {
+  public constructor(public ts: TranslateService, private cd: ChangeDetectorRef, private apiService: ApiClientService, private userService: UserService) {
     this.isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
     this.ts.get('Collection').subscribe((res: string) => {
         this.collectionTranslation = res;
@@ -793,7 +793,7 @@ export class AssignComponent implements OnInit {
 
     element[0].addEventListener("mouseover", function(ev) {
       let div = document.createElement("div");
-      div.innerHTML = "<span>Click the item to view more information</span>";
+      div.innerHTML = "<span>" + this.ts.instant("ClickToViewMoreInformation") +  "</span>";
       div.className = "balloon";
       let offsets = ev.srcElement.getBoundingClientRect();
       let top = offsets.top;
