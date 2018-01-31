@@ -53,8 +53,9 @@ export class LoggedOutComponent  {
     constructor(private userService: UserService, private router:Router) {
         this.secondsLeft = 3;
         var timer = setInterval(() => {
-          --this.secondsLeft;
+          this.secondsLeft--;
           if(this.secondsLeft <= 0) {
+            clearInterval(timer);
             this.router.navigate(['']);
           }
         }, 1000);
