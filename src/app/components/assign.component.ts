@@ -402,10 +402,10 @@ export class AssignComponent implements OnInit {
     if (collectId != null && aCollection != null) {
       aCollection.state = ButtonState.isLoading;
       Promise.all([this.saveAllocation(aCollection.name, collectId)]).then(
-        function () {
+        (resp) => {
           aCollection.state = ButtonState.Saved;
           this.reloadEvents();
-        }.bind(this)
+        }
       ).catch((err) => {
 
       });
@@ -432,20 +432,30 @@ export class AssignComponent implements OnInit {
         promises.push(this.saveAllocation(current.name, String(i + 1)));
       }
     }
+    Promise.all(promises.map(p => p.catch(e => e)))
+      .then(results => {
+        console.log(results);
+        let promisesWithResults = results.filter((e) => e != undefined);
+        if(promisesWithResults.length == promises.length) {
+          //all went good
+          this.isDialogOpen = false;
+          this.reloadEvents();
+        } else {
+          //cancel previous allocs
+          if(promisesWithResults.length > 0)  {
+            this.errorShown = true;
+            let cancelPromises = [];
+            for(var p of promisesWithResults) {
+              cancelPromises.push(this.apiService.deleteData('Allocations/Allocation?Id=' + p.id));
+            }
 
+            Promise.all(cancelPromises).then(() => {
+              //promises
+            });
 
-
-    Promise.all(promises).then(() => {
-      //success
-      this.isDialogOpen = false;
-      this.reloadEvents();
-    }).catch((err) => {
-      console.log(err);
-      this.errorShown = true;
-      console.log(this.errorShown);
-    });
-
-
+          }
+        }
+      }).catch(e => console.log(e));
   }
 
   renderAllocatedGivts() {
@@ -730,11 +740,12 @@ export class AssignComponent implements OnInit {
 
       let body = new Object();
       body["name"] = title;
-      body["dtBegin"] = startTime == null ? this.startTime : startTime;
-      body["dtEnd"] = endTime == null ? this.endTime : endTime;
+      body["dtBegin"] = startTime == null ? this.startTime.toISOString() : startTime;
+      body["dtEnd"] = endTime == null ? this.endTime.toISOString() : endTime;
       body["CollectId"] = collectId;
       this.apiService.postData("Allocations/Allocation", body)
         .then(resp => {
+          resolve(resp);
           if(resp.status === 409){
             this.toggleError(true, "Je zit met een overlapping");
           }
@@ -744,7 +755,7 @@ export class AssignComponent implements OnInit {
           })) {
             this.usedTags.push(title);
           }
-          resolve();
+
         })
         .catch(err => {
           console.log(err);
