@@ -51,27 +51,27 @@
                           <tr [class.incasso-state-table__row--disabled]="alloc.toProcessTotal == 0">
                             <td><span class="bullet bullet--blue"></span></td>
                             <td>{{ "Processing" | translate }}</td>
-                            <td>{{ displayValue(alloc.toProcessTotal) }}</td>
+                            <td class="align--right">{{ displayValue(alloc.toProcessTotal) }}</td>
                           </tr>
                           <tr [class.incasso-state-table__row--disabled]="alloc.processedTotal == 0">
                             <td><span class="bullet bullet--green"></span></td>
                             <td>{{ "Processed" | translate }}</td>
-                            <td>{{ displayValue(alloc.processedTotal) }}</td>
+                            <td class="align--right">{{ displayValue(alloc.processedTotal) }}</td>
                           </tr>
                           <tr [class.incasso-state-table__row--disabled]="alloc.refusedBank == 0">
                             <td><span class="bullet bullet--red"></span></td>
                             <td>{{"CancelledByBank" | translate}}</td>
-                            <td>{{ displayValue(alloc.refusedBank) }}</td>
+                            <td class="align--right">{{ displayValue(alloc.refusedBank) }}</td>
                           </tr>
                           <tr [class.incasso-state-table__row--disabled]="alloc.cancelByGiver == 0">
                             <td><span class="bullet bullet--grey"></span></td>
                             <td>{{ "CancelledByUser" | translate}}</td>
-                            <td>{{ displayValue(alloc.cancelByGiver) }}</td>
+                            <td class="align--right">{{ displayValue(alloc.cancelByGiver) }}</td>
                           </tr>
                           <tr class="incasso-state-table__row--em">
                             <td></td>
                             <td>{{ "Text_Fee_Total" | translate}}</td>
-                            <td>{{ displayValue(alloc.toProcessTotal + alloc.processedTotal + alloc.refusedBank + alloc.cancelByGiver) }}</td>
+                            <td class="align--right">{{ displayValue(alloc.toProcessTotal + alloc.processedTotal + alloc.refusedBank + alloc.cancelByGiver) }}</td>
                           </tr>
                         </table>
                       </div>

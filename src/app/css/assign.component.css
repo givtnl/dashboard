@@ -676,3 +676,7 @@ h3{
   background: transparent;
   border:0;
 }
+
+.align--right{
+  text-align: right;
+}
