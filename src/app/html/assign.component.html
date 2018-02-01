@@ -34,7 +34,7 @@
                 <tr class="info-table__row" *ngIf="alloc.amountOfGivts != 0">
                     <td><img src="images/personal-blue.png" alt=""> {{ alloc.amountOfGivts }}</td>
                     <td>
-                      <div style="height: 40px;display: flex;justify-content: center;">
+                      <div style="height: 40px;display: flex;justify-content: left;margin-left: 10px;">
                         <div class="wrapping_inputlist" style="display: flex;">
                           <span style="align-self: center;" *ngIf="!allowButton">{{alloc.name}}</span>
                           <input *ngIf="allowButton" (focus)="alloc.isTyping=true" (focusout)="onFocusOutOf(alloc);" autocomplete="off"  class="info-table__input" [class.info-table__input--false]="alloc.name == ''" (ngModelChange)="this.filterTags($event)" type="text" name="collectName{{alloc.collectionNumber}}" [(ngModel)]="alloc.name" placeholder="{{ 'Collection' | translate }} {{ alloc.collectionNumber }}">
@@ -51,27 +51,27 @@
                           <tr [class.incasso-state-table__row--disabled]="alloc.toProcessTotal == 0">
                             <td><span class="bullet bullet--blue"></span></td>
                             <td>{{ "Processing" | translate }}</td>
-                            <td class="align--right">{{ displayValue(alloc.toProcessTotal) }}</td>
+                            <td class="info-table-cell--money">{{ displayValue(alloc.toProcessTotal) }}</td>
                           </tr>
                           <tr [class.incasso-state-table__row--disabled]="alloc.processedTotal == 0">
                             <td><span class="bullet bullet--green"></span></td>
                             <td>{{ "Processed" | translate }}</td>
-                            <td class="align--right">{{ displayValue(alloc.processedTotal) }}</td>
+                            <td class="info-table-cell--money">{{ displayValue(alloc.processedTotal) }}</td>
                           </tr>
                           <tr [class.incasso-state-table__row--disabled]="alloc.refusedBank == 0">
                             <td><span class="bullet bullet--red"></span></td>
                             <td>{{"CancelledByBank" | translate}}</td>
-                            <td class="align--right">{{ displayValue(alloc.refusedBank) }}</td>
+                            <td class="info-table-cell--money">{{ displayValue(alloc.refusedBank) }}</td>
                           </tr>
                           <tr [class.incasso-state-table__row--disabled]="alloc.cancelByGiver == 0">
                             <td><span class="bullet bullet--grey"></span></td>
                             <td>{{ "CancelledByUser" | translate}}</td>
-                            <td class="align--right">{{ displayValue(alloc.cancelByGiver) }}</td>
+                            <td class="info-table-cell--money">{{ displayValue(alloc.cancelByGiver) }}</td>
                           </tr>
                           <tr class="incasso-state-table__row--em">
                             <td></td>
                             <td>{{ "Text_Fee_Total" | translate}}</td>
-                            <td class="align--right">{{ displayValue(alloc.toProcessTotal + alloc.processedTotal + alloc.refusedBank + alloc.cancelByGiver) }}</td>
+                            <td class="info-table-cell--money">{{ displayValue(alloc.toProcessTotal + alloc.processedTotal + alloc.refusedBank + alloc.cancelByGiver) }}</td>
                           </tr>
                         </table>
                       </div>
@@ -93,7 +93,7 @@
                 <tr class="info-table__row" *ngIf="alloc.amountOfGivts != 0">
                   <td><img src="images/personal-blue.png" alt=""> {{ alloc.amountOfGivts }}</td>
                   <td>
-                    <div style="height: 40px;display: flex;justify-content: center;">
+                    <div style="height: 40px;display: flex;justify-content: left;margin-left: 10px;">
                       <div class="wrapping_inputlist" style="display: flex;">
                         <span style="align-self: center;">{{alloc.name}}</span>
                       </div>
@@ -105,27 +105,27 @@
                         <tr [class.incasso-state-table__row--disabled]="alloc.toProcessTotal == 0">
                           <td><span class="bullet bullet--blue"></span></td>
                           <td>{{ "Processing" | translate }}</td>
-                          <td>{{ displayValue(alloc.toProcessTotal) }}</td>
+                          <td class="info-table-cell--money">{{ displayValue(alloc.toProcessTotal) }}</td>
                         </tr>
                         <tr [class.incasso-state-table__row--disabled]="alloc.processedTotal == 0">
                           <td><span class="bullet bullet--green"></span></td>
                           <td>{{ "Processed" | translate }}</td>
-                          <td>{{ displayValue(alloc.processedTotal) }}</td>
+                          <td class="info-table-cell--money">{{ displayValue(alloc.processedTotal) }}</td>
                         </tr>
                         <tr [class.incasso-state-table__row--disabled]="alloc.refusedBank == 0">
                           <td><span class="bullet bullet--red"></span></td>
                           <td>{{"CancelledByBank" | translate}}</td>
-                          <td>{{ displayValue(alloc.refusedBank) }}</td>
+                          <td class="info-table-cell--money">{{ displayValue(alloc.refusedBank) }}</td>
                         </tr>
                         <tr [class.incasso-state-table__row--disabled]="alloc.cancelByGiver == 0">
                           <td><span class="bullet bullet--grey"></span></td>
                           <td>{{ "CancelledByUser" | translate}}</td>
-                          <td>{{ displayValue(alloc.cancelByGiver) }}</td>
+                          <td class="info-table-cell--money">{{ displayValue(alloc.cancelByGiver) }}</td>
                         </tr>
                         <tr class="incasso-state-table__row--em">
                           <td></td>
                           <td>{{ "Text_Fee_Total" | translate}}</td>
-                          <td>{{ displayValue(alloc.toProcessTotal + alloc.processedTotal + alloc.refusedBank + alloc.cancelByGiver) }}</td>
+                          <td class="info-table-cell--money">{{ displayValue(alloc.toProcessTotal + alloc.processedTotal + alloc.refusedBank + alloc.cancelByGiver) }}</td>
                         </tr>
                       </table>
                     </div>
