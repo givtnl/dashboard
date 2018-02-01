@@ -646,6 +646,7 @@ h3{
   font-family: Avenir_Light;
   border-collapse: collapse;
   margin: 15px 0;
+  min-width: 300px;
 }
 
 .incasso-state-table td {
