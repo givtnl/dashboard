@@ -123,5 +123,6 @@
     "Relog": "Re-login",
     "SaveAll": "Save",
     "DeleteAll": "Delete",
-    "AllocationConflict": "Allocation conflict"
+    "AllocationConflict": "Allocation conflict",
+    "FixedPoints": "Predefined"
 }

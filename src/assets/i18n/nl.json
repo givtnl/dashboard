@@ -123,5 +123,6 @@
     "Relog": "Opnieuw inloggen",
     "SaveAll": "Opslaan",
     "DeleteAll": "Verwijderen",
-    "AllocationConflict": "Conflict bij toewijzing"
+    "AllocationConflict": "Conflict bij toewijzing",
+    "FixedPoints": "Vaste punten"
 }
