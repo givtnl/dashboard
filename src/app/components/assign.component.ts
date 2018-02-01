@@ -442,8 +442,9 @@ export class AssignComponent implements OnInit {
           this.reloadEvents();
         } else {
           //cancel previous allocs
+          this.errorShown = true;
           if(promisesWithResults.length > 0)  {
-            this.errorShown = true;
+
             let cancelPromises = [];
             for(var p of promisesWithResults) {
               cancelPromises.push(this.apiService.deleteData('Allocations/Allocation?Id=' + p.id));
