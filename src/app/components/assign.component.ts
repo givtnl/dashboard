@@ -449,6 +449,7 @@ export class AssignComponent implements OnInit {
               cancelPromises.push(this.apiService.deleteData('Allocations/Allocation?Id=' + p.id));
             }
 
+            //delete previous added allocations
             Promise.all(cancelPromises).then(() => {
               //promises
             });
