@@ -23,8 +23,8 @@
 
         <div style="display: flex;flex-wrap: wrap;">
           <div style="margin-left: 20px;margin-top: 6px;">
-            <span *ngIf="!areAllocationsEmpty" class="tab__element" (click)="currentTab = SelectedTab.Collects" [class.tab__element--active]="currentTab == SelectedTab.Collects">Collectes</span>
-            <span *ngIf="fixedAllocations.length > 0" class="tab__element" (click)="currentTab = SelectedTab.Fixed" [class.tab__element--active]="currentTab == SelectedTab.Fixed">Vaste punten</span>
+            <span *ngIf="!areAllocationsEmpty" class="tab__element" (click)="currentTab = SelectedTab.Collects" [class.tab__element--active]="currentTab == SelectedTab.Collects">{{ "Menu_Collectes" | translate}}</span>
+            <span *ngIf="fixedAllocations.length > 0" class="tab__element" (click)="currentTab = SelectedTab.Fixed" [class.tab__element--active]="currentTab == SelectedTab.Fixed">{{"FixedPoints" | translate}}</span>
           </div>
 
           <div class="info-table" *ngIf="currentTab == SelectedTab.Collects">
