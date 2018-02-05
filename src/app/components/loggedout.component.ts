@@ -39,6 +39,7 @@ button{
     text-align: center;
     padding:10px;
   cursor:pointer;
+  border:0;
 }
       
       button:hover{
