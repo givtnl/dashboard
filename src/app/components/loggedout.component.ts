@@ -1,22 +1,19 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component } from '@angular/core';
 
-import {TranslateService} from 'ng2-translate';
-import {DataService} from "../services/data.service";
 import {UserService} from "../services/user.service";
 import {Router} from "@angular/router";
-import { setTimeout } from 'timers';
 @Component({
     selector: 'loggedout',
     template: `
       <div class="errormessage">
         <h1 style="font-family: Avenir_Heavy">{{ "SessionExpiredTitle" | translate}}</h1>
-        <span style="font-family: Avenir_Light" >{{ "SessionExpiredMessage" | translate}}</span>
-        <button type="submit" (click)="logout()">{{ "Relog" | translate }} ({{ this.secondsLeft }})</button>
+        <span style="font-family: Avenir_Light">{{ "SessionExpiredMessage" | translate}}</span>
+        <button type="submit" (click)="relogin()">{{ "Relog" | translate }} ({{ this.secondsLeft }})</button>
       </div>
-     
 
 
-`,
+
+    `,
     styles: [`
 .errormessage{
     font-family: Avenir_Medium;
@@ -51,9 +48,9 @@ button{
 export class LoggedOutComponent  {
     secondsLeft: number = 3;
 
-    constructor(private userService: UserService, private router:Router) {
+    constructor(private router:Router) {
         this.secondsLeft = 3;
-        var timer = setInterval(() => {
+        let timer = setInterval(() => {
           this.secondsLeft--;
           if(this.secondsLeft <= 0) {
             clearInterval(timer);
@@ -63,4 +60,7 @@ export class LoggedOutComponent  {
 
     }
 
+    relogin(){
+      this.router.navigate(['']);
+    }
 }
