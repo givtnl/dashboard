@@ -57,6 +57,16 @@ export class MandateComponent implements OnInit{
         private apiClient: ApiClientService,
     ){}
 
+    get hasEmptyFields(): boolean {
+      if(!this.selectedOrganisation
+        || !this.selectedOrganisation.cf_value_93168
+        || !this.selectedOrganisation.cf_value_93491
+      ) {
+        return true;
+      }
+      return false;
+    }
+
     searchOrg(){
         this.disabled = true;
         this.searchBtn = "Laden...";
