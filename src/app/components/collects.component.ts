@@ -203,7 +203,7 @@ export class CollectsComponent implements OnInit{
     let apiUrl = 'Allocations/AllocationCheck';
     this.apiService.getData(apiUrl)
       .then(resp => {
-        if(resp.length > 0){
+        if(resp.filter((ts) => ts.AllocationName == null && ts.Fixed == null).length > 0){
           this.openAllocations = true;
         }
       });

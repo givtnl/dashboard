@@ -27,11 +27,11 @@
                         <td>{{selectedOrganisation.name}}</td>
                     </tr>
                     <tr>
-                        <td [class.warning]="!selectedOrganisation.name">Naam in app</td>
+                        <td [class.warning]="!selectedOrganisation.cf_value_93168">Naam in app</td>
                         <td>{{selectedOrganisation.cf_value_93168}}</td>
                     </tr>
                     <tr>
-                        <td>Beacon namespace</td>
+                        <td [class.warning]="!selectedOrganisation.cf_value_93491">Beacon namespace</td>
                         <td>{{selectedOrganisation.cf_value_93491}}</td>
                     </tr>
                     <tr>
@@ -115,7 +115,7 @@
                                 || this.selectedOrganisation.mandate_status.PayProvMandateStatus != 'closed.completed'
                                 || this.incassoStatus"
                         (click)="startIncasso()">Start incasso</button>
-                <button [class.disabled]="" (click)="registerDefaultCollectGroup()" >Default collectegroep registreren</button>
+                <button [class.disabled]="hasEmptyFields" [disabled]="hasEmptyFields" (click)="registerDefaultCollectGroup()" >Default collectegroep registreren</button>
                 <button (click)="showRegisterAdmin = !showRegisterAdmin">Admin registreren</button>
             </article>
         </section>
