@@ -62,6 +62,7 @@ export class MandateComponent implements OnInit{
         || !this.selectedOrganisation.cf_value_93168
         || !this.selectedOrganisation.cf_value_93491
         || !(this.selectedOrganisation.mandate_status.PayProvMandateStatus == "closed.completed" && this.incassoStatus == "Processed")
+        || !(this.currentMandates.filter((cm) => cm.CrmId == this.selectedOrganisation.id).length > 0)
       ) {
         return true;
       }
