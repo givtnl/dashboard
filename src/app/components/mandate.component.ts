@@ -61,6 +61,7 @@ export class MandateComponent implements OnInit{
       if(!this.selectedOrganisation
         || !this.selectedOrganisation.cf_value_93168
         || !this.selectedOrganisation.cf_value_93491
+        || !(this.selectedOrganisation.mandate_status.PayProvMandateStatus == "closed.completed" && this.incassoStatus == "Processed")
       ) {
         return true;
       }
