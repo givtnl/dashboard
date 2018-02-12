@@ -375,7 +375,6 @@ button:disabled{
 }
 
 .tooltip .tooltiptext {
-    background: #41C98E;
     visibility: hidden;
     width: 320px;
     /*background-color: black;*/
@@ -385,7 +384,6 @@ button:disabled{
     z-index: 1;
     top: 0;
     left: 120%;
-    right: unset;
     padding: 8px 12px;
     box-sizing: border-box;
     text-align: left;
@@ -395,14 +393,11 @@ button:disabled{
 .tooltip .tooltiptext::after {
     content: "";
     position: absolute;
-    border-color: transparent #41C98E transparent transparent;
     top: 15px;
     right: 100%;
-    left:unset;
     margin-top: -5px;
     border-width: 5px;
     border-style: solid;
-  transform: unset;
 }
 .tooltip:hover .tooltiptext {
     visibility: visible;
