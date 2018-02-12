@@ -433,6 +433,7 @@ button:disabled{
     z-index: 1;
     top: -7px;
     right: 100%;
+    left: unset;
     padding: 8px 12px;
     box-sizing: border-box;
     text-align: center;
@@ -449,6 +450,7 @@ button:disabled{
   position: absolute;
   top: 8px;
   left: 100%;
+  right: unset;
   margin-left: -1px;
   border-width: 7px;
   border-style: solid;
