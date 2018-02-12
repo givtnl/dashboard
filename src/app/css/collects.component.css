@@ -423,7 +423,6 @@ button:disabled{
 }
 
 .tooltip .tooltiptext {
-  background: #2E2957;
     visibility: hidden;
     width: 320px;
     /*background-color: black;*/
@@ -446,7 +445,6 @@ button:disabled{
 
 .tooltip .tooltiptext::after {
   content: "";
-  border-color: transparent #2E2957 transparent transparent;
   position: absolute;
   top: 8px;
   left: 100%;
