@@ -422,8 +422,8 @@ button:disabled{
    /* border-bottom: 1px dotted black;*/
 }
 
-.tooltip .tooltiptext {
-  background: #2E2957;
+.tooltip .tooltiptext-alter {
+  background: #41C98E;
     visibility: hidden;
     width: 320px;
     /*background-color: black;*/
@@ -432,7 +432,9 @@ button:disabled{
     position: absolute;
     z-index: 1;
     top: -7px;
+  left: unset;
     right: 100%;
+
     padding: 8px 12px;
     box-sizing: border-box;
     text-align: center;
@@ -443,18 +445,21 @@ button:disabled{
   visibility: visible !important;
 }
 
-.tooltip .tooltiptext::after {
+.tooltip .tooltiptext-alter::after {
+  border-color: transparent #41C98E transparent transparent;
   content: "";
-  border-color: transparent #2E2957 transparent transparent;
   position: absolute;
   top: 8px;
+  right: unset !important;
   left: 100%;
+
   margin-left: -1px;
+  margin-top: unset;
   border-width: 7px;
   border-style: solid;
   transform: rotate(180deg);
 }
-.tooltip:hover .tooltiptext {
+.tooltip:hover .tooltiptext-alter {
     visibility: visible;
 }
 
