@@ -384,8 +384,9 @@ button:disabled{
     position: absolute;
     z-index: 1;
     top: 0;
+  right: unset;
     left: 120%;
-    right: unset;
+
     padding: 8px 12px;
     box-sizing: border-box;
     text-align: left;
@@ -397,9 +398,11 @@ button:disabled{
     position: absolute;
     border-color: transparent #41C98E transparent transparent;
     top: 15px;
+  left:unset;
     right: 100%;
-    left:unset;
+
     margin-top: -5px;
+  margin-left: unset;
     border-width: 5px;
     border-style: solid;
   transform: unset;
