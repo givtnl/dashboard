@@ -144,6 +144,7 @@ export class AssignComponent implements OnInit {
     this.options['eventAfterAllRender'] = function(view) {
       this.filteredEvents();
     }.bind(this);
+    this.options["contentHeight"] = "auto";
     this.options["eventClick"] = function(event, jsEvent, view) {
 
       this.event = event;
