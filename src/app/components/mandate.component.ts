@@ -370,7 +370,7 @@ export class MandateComponent implements OnInit{
 
         this.apiClient.postData('Users', user)
             .then(res => {
-                let url = '/Users/CreateOrgAdmin?email='+encodeURIComponent(this.organisationAdmin)+'&crmId='+this.selectedOrganisation.id+'&password='+this.organisationAdminPassword;
+                let url = '/Users/CreateOrgAdmin?'+ +encodeURIComponent('email=' + this.organisationAdmin +'&crmId=' + this.selectedOrganisation.id + '&password=' + this.organisationAdminPassword);
                 this.apiClient.postData(url, null)
                     .then( _ => {
                         alert('Admin registered with new e-mail address');
@@ -382,7 +382,7 @@ export class MandateComponent implements OnInit{
             .catch(reason =>{
                 if (reason.status == 409)
                 {
-                    let url = '/Users/CreateOrgAdmin?email='+encodeURIComponent(this.organisationAdmin)+'&crmId='+this.selectedOrganisation.id;
+                    let url = '/Users/CreateOrgAdmin?' + encodeURI('email=' + this.organisationAdmin + '&crmId='+this.selectedOrganisation.id);
                     this.apiClient.postData(url, null)
                         .then( _ => {
                             alert('Admin registered with existing e-mail address');
@@ -399,7 +399,7 @@ export class MandateComponent implements OnInit{
     generateOrgAdminPass(){
         var text = "";
         var charsNeeded = false;
-        var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789&%$";
+        var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
         while (!charsNeeded) {
             for (var i = 0; i < 8; i++)
