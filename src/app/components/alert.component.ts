@@ -3,6 +3,7 @@
  */
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import { TranslateService } from "ng2-translate";
+import {DataService} from "../services/data.service";
 
 @Component({
   selector: 'my-alert',
@@ -12,15 +13,26 @@ import { TranslateService } from "ng2-translate";
 
 export class AlertComponent implements OnInit {
   ngOnInit(){
-
   }
-  shouldIShowAlert =  this.shouldShowAlert();
-  constructor(private translate: TranslateService){
 
+  shouldIShowAlert = false;
+
+  constructor(private translate: TranslateService, private dataService: DataService){
+	  this.shouldShowAlert();
+  }
+
+  hideAlert() {
+  	this.shouldIShowAlert = false;
+  	this.dataService.writeData("ForceHideChromeAlert", true);
   }
 
   shouldShowAlert()
   {
+  	if(this.dataService.getData("ForceHideChromeAlert") != undefined) {
+  	    this.shouldIShowAlert = false;
+  	    return
+    }
+
     const isChromium = window['chrome'],
       winNav = window.navigator,
       vendorName = winNav.vendor,
@@ -31,11 +43,12 @@ export class AlertComponent implements OnInit {
     let iOS = !!navigator.platform && /iPhone|iPod/.test(navigator.platform);
     let isAndroid = /(android)/i.test(navigator.userAgent);
     if (isIOSChrome || iOS || isAndroid) {
-      return true;
+	    this.shouldIShowAlert = false;
     } else if (isChromium !== null && isChromium !== undefined && vendorName === 'Google Inc.' && isOpera === false && isIEedge === false) {
-      return true;
+    	this.shouldIShowAlert = false;
     } else {
-      return false;
+	    this.shouldIShowAlert = true;
+
     }
   }
 }
