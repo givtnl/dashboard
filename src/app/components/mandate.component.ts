@@ -1,12 +1,8 @@
-/**
- * Created by Lennie on 28/03/2017.
- */
-import {Component, OnInit, ViewEncapsulation, isDevMode, enableProdMode} from '@angular/core';
-import {HttpModule, Http, Headers, RequestOptions} from '@angular/http';
+import {Component, OnInit } from '@angular/core';
+import {Http } from '@angular/http';
 import { UserService } from 'app/services/user.service';
 import {Router, ActivatedRoute} from '@angular/router';
 import {TranslateService} from 'ng2-translate';
-import {Organisation} from "../models/organisation";
 import { ApiClientService } from "app/services/api-client.service";
 import { environment } from "../../environments/environment";
 import {OrgMandates} from "../models/OrgMandates";
@@ -19,34 +15,35 @@ import {OrgMandates} from "../models/OrgMandates";
 })
 
 export class MandateComponent implements OnInit{
-    ngOnInit(): void {
-        this.getCurrentOrgMandates();
-    }
+    showFiltered = false;
+    search = "";
 
-    showFiltered: boolean = false;
-    search: string = "";
-
-    title: string = "Regel mandaat voor een organisatie";
-    subtitle: string = "Zoek een organisatie bij naam om een mandaat te regelen.";
-    searchBtn: string = "Zoeken";
-    disabled: boolean = false;
+    title = "Regel mandaat voor een organisatie";
+    subtitle = "Zoek een organisatie bij naam om een mandaat te regelen.";
+    searchBtn = "Zoeken";
+    disabled = false;
 
     currentMandates: Array<OrgMandates>;
 
     filteredOrganisations;
     selectedOrganisation;
     SlimPayLink;
-    CRMKey : string;
-    incassoStatus: string = "Laden...";
-    urlGetCompanies: string = "https://app.teamleader.eu/api/getCompanies.php?api_group=50213&amount=10&selected_customfields=93491,92583,95707,93537,93168,93493,93495,93485,93494,95707,93769,141639&pageno=0&searchby=";
-    urlGetCompany: string = "https://app.teamleader.eu/api/getCompany.php?api_group=50213&company_id=";
-    urlGetTags: string = "https://app.teamleader.eu/api/getTags.php?api_group=50213&";
+    CRMKey: string;
+    incassoStatus = "Laden...";
+    urlGetCompanies = "https://app.teamleader.eu/api/getCompanies.php?api_group=50213&amount=10&selected_customfields=93491,92583,95707,93537,93168,93493,93495,93485,93494,95707,93769,141639&pageno=0&searchby=";
+    urlGetCompanies2 = "https://app.teamleader.eu/api/getCompanies.php?api_group=50213&amount=10&selected_customfields=93301&pageno=0&searchby=";
+    urlGetCompany = "https://app.teamleader.eu/api/getCompany.php?api_group=50213&company_id=";
+    urlGetTags = "https://app.teamleader.eu/api/getTags.php?api_group=50213&";
 
     organisationAdmin: string = null;
-    organisationAdminPassword: string = "fjkldsmqfjklmqsfjlkmq";
+    organisationAdminPassword = "fjkldsmqfjklmqsfjlkmq";
 
-    showRegisterAdmin : boolean = false;
-    adminRegistered: boolean = false;
+    showRegisterAdmin = false;
+    adminRegistered = false;
+
+    ngOnInit(): void {
+        this.getCurrentOrgMandates();
+    }
 
     constructor(
         private userService: UserService,
@@ -61,8 +58,8 @@ export class MandateComponent implements OnInit{
       if(!this.selectedOrganisation
         || !this.selectedOrganisation.cf_value_93168
         || !this.selectedOrganisation.cf_value_93491
-        || !(this.selectedOrganisation.mandate_status.PayProvMandateStatus == "closed.completed" && this.incassoStatus == "Processed")
-        || !(this.currentMandates.filter((cm) => cm.CrmId == this.selectedOrganisation.id).length > 0)
+        || !(this.selectedOrganisation.mandate_status.PayProvMandateStatus === "closed.completed" && this.incassoStatus === "Processed")
+        || !(this.currentMandates.filter((cm) => cm.CrmId === this.selectedOrganisation.id).length > 0)
       ) {
         return true;
       }
@@ -98,9 +95,7 @@ export class MandateComponent implements OnInit{
             .then(d => {
               this.select(d);
             })
-            .catch(err => {
-
-            });
+            .catch();
         });
     }
 
@@ -108,9 +103,21 @@ export class MandateComponent implements OnInit{
         this.apiClient.postData("Admin/CorsTunnelGet", {url : this.urlGetCompanies + this.search + "&api_secret=" + this.CRMKey,body : "{}", headers: {}})
             .then(d => {
                 this.filteredOrganisations = d;
-                this.showFiltered = true;
-                this.searchBtn = "Zoeken";
-                this.disabled = false;
+                this.apiClient.postData("Admin/CorsTunnelGet", {url : this.urlGetCompanies2 + this.search + "&api_secret=" + this.CRMKey,body : "{}", headers: {}})
+                    .then( d => {
+                        for (let org in this.filteredOrganisations){
+                            for (let borg in d){
+                                if (this.filteredOrganisations[org].id === d[borg].id){
+                                  this.filteredOrganisations[org].cf_value_93301 = d[borg].cf_value_93301;
+                                  this.filteredOrganisations[org].hasVisitors = !isNaN(Number(this.filteredOrganisations[org].cf_value_93301));
+                                }
+                            }
+                        }
+                        console.log(this.filteredOrganisations);
+                        this.showFiltered = true;
+                        this.searchBtn = "Zoeken";
+                        this.disabled = false;
+                    })
             })
             .catch(err => {
                 this.searchBtn = "Zoeken";
@@ -122,12 +129,12 @@ export class MandateComponent implements OnInit{
         this.apiClient.getData("Admin/CurrentOrganisations")
             .then(res => {
                 this.currentMandates = res;
-                for(let man in this.currentMandates){
-                    this.checkIncassoStatus(this.currentMandates[man].CrmId, this.currentMandates[man])
+                for(let man of this.currentMandates){
+                    this.checkIncassoStatus(man.CrmId, man);
                 }
             })
             .catch(err => {
-            })
+            });
     }
 
      getMandateStatus(){
@@ -148,7 +155,7 @@ export class MandateComponent implements OnInit{
              alert("Kan mandaatstatus niet checken, probeer later opnieuw.");
              return;
          }
-        if(this.selectedOrganisation.mandate_status.PayProvMandateStatus == "closed.completed" && !this.incassoStatus){
+        if(this.selectedOrganisation.mandate_status.PayProvMandateStatus === "closed.completed" && !this.incassoStatus){
             let body = {
                     Amount: this.selectedOrganisation.cf_value_92583,
                     CrmId: this.selectedOrganisation.id
@@ -173,11 +180,11 @@ export class MandateComponent implements OnInit{
                 }
                 else
                 {
-                    this.incassoStatus = data
+                    this.incassoStatus = data;
                 }
             })
             .catch(err => {
-                if (err.status != 404) {
+                if (err.status !== 404) {
                     console.log(err);
                 }
             });
@@ -195,17 +202,19 @@ export class MandateComponent implements OnInit{
         this.disabled = true;
         this.selectedOrganisation = i;
         let dashBoardUsers: string = null;
+        console.log(i);
 
         this.selectedOrganisation.cf_value_92583 = this.decodeHtmlEntity(this.selectedOrganisation.cf_value_92583);
-	    this.selectedOrganisation.cf_value_93485 = this.decodeHtmlEntity(this.selectedOrganisation.cf_value_93485);
-	    this.selectedOrganisation.cf_value_93769 = this.decodeHtmlEntity(this.selectedOrganisation.cf_value_93769);
-	    this.selectedOrganisation.cf_value_95707 = this.decodeHtmlEntity(this.selectedOrganisation.cf_value_95707);
-	    this.selectedOrganisation.cf_value_93494 = this.decodeHtmlEntity(this.selectedOrganisation.cf_value_93494);
-	    this.selectedOrganisation.cf_value_93168 = this.decodeHtmlEntity(this.selectedOrganisation.cf_value_93168);
-	    this.selectedOrganisation.cf_value_141639 = this.decodeHtmlEntity(this.selectedOrganisation.cf_value_141639);
-	    this.selectedOrganisation.cf_value_93537 = this.decodeHtmlEntity(this.selectedOrganisation.cf_value_93537.replace(/\s/g, ''));
-	    this.selectedOrganisation.cf_value_93495 = this.decodeHtmlEntity(this.selectedOrganisation.cf_value_93495);
-	    this.selectedOrganisation.cf_value_93491 = this.decodeHtmlEntity(this.selectedOrganisation.cf_value_93491);
+        this.selectedOrganisation.cf_value_93485 = this.decodeHtmlEntity(this.selectedOrganisation.cf_value_93485);
+        this.selectedOrganisation.cf_value_93769 = this.decodeHtmlEntity(this.selectedOrganisation.cf_value_93769);
+        this.selectedOrganisation.cf_value_95707 = this.decodeHtmlEntity(this.selectedOrganisation.cf_value_95707);
+        this.selectedOrganisation.cf_value_93494 = this.decodeHtmlEntity(this.selectedOrganisation.cf_value_93494);
+        this.selectedOrganisation.cf_value_93168 = this.decodeHtmlEntity(this.selectedOrganisation.cf_value_93168);
+        this.selectedOrganisation.cf_value_141639 = this.decodeHtmlEntity(this.selectedOrganisation.cf_value_141639);
+        this.selectedOrganisation.cf_value_93537 = this.decodeHtmlEntity(this.selectedOrganisation.cf_value_93537.replace(/\s/g, ''));
+        this.selectedOrganisation.cf_value_93495 = this.decodeHtmlEntity(this.selectedOrganisation.cf_value_93495);
+        this.selectedOrganisation.cf_value_93491 = this.decodeHtmlEntity(this.selectedOrganisation.cf_value_93491);
+        this.selectedOrganisation.cf_value_93301 = this.decodeHtmlEntity(this.selectedOrganisation.cf_value_93301);
 
         if(this.selectedOrganisation.cf_value_93493)
           dashBoardUsers = this.selectedOrganisation.cf_value_93493;
@@ -236,12 +245,12 @@ export class MandateComponent implements OnInit{
 
         if (dashBoardUsers)
         {
-            if (dashBoardUsers.split(' ').length == 1)
+            if (dashBoardUsers.split(' ').length === 1)
                 this.organisationAdmin = dashBoardUsers.split(',')[0];
             else
                 this.organisationAdmin = dashBoardUsers.split(' ')[0];
         } else {
-            this.organisationAdmin = "Niet ingevuld in Teamleader!!"
+            this.organisationAdmin = "Niet ingevuld in Teamleader!!";
         }
 
         this.incassoStatus = "Laden...";
@@ -295,8 +304,9 @@ export class MandateComponent implements OnInit{
                 City: o.city,
                 PostalCode: o.zipcode,
                 Country: o.country,
-                TaxDeductable: (o.cf_value_141639 == "1"),
-                TelNr: o.telephone
+                TaxDeductable: (o.cf_value_141639 === "1"),
+                TelNr: o.telephone,
+                VisitorCount: o.cf_value_93301
             },
             Type: this.selectedOrganisation.status
         };
@@ -309,7 +319,7 @@ export class MandateComponent implements OnInit{
                 else{
                     alert("Something went wrong, please check mandate data and logging.");
                 }
-            })
+            });
 
     }
 
@@ -380,29 +390,29 @@ export class MandateComponent implements OnInit{
                     });
             })
             .catch(reason =>{
-                if (reason.status == 409)
+                if (reason.status === 409)
                 {
                     let url = '/Users/CreateOrgAdmin?' + encodeURI('email=' + this.organisationAdmin + '&crmId='+this.selectedOrganisation.id);
                     this.apiClient.postData(url, null)
                         .then( _ => {
                             alert('Admin registered with existing e-mail address');
                         })
-                        .catch( reason => {
-                            alert(reason["_body"]);
+                        .catch( res => {
+                            alert(res["_body"]);
                         });
                 }else {
                     alert(reason["_body"]);
                 }
-            })
+            });
     }
 
     generateOrgAdminPass(){
-        var text = "";
-        var charsNeeded = false;
-        var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        let text = "";
+        let charsNeeded = false;
+        let possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
         while (!charsNeeded) {
-            for (var i = 0; i < 8; i++)
+            for (let i = 0; i < 8; i++)
                 text += possible.charAt(Math.floor(Math.random() * possible.length));
             if (/\d/.test(text) && /[A-Z]/.test(text))
                 charsNeeded = true;
@@ -415,7 +425,7 @@ export class MandateComponent implements OnInit{
     openCRM(){
         let url = "https://app.teamleader.eu/company_detail.php?id=";
         if(this.selectedOrganisation) {
-          var win = window.open(url + this.selectedOrganisation.id, "_blank");
+          let win = window.open(url + this.selectedOrganisation.id, "_blank");
           win.focus();
         }
     }

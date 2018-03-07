@@ -38,6 +38,10 @@
                         <td>Aangesloten sinds</td>
                         <td>{{selectedOrganisation.date_added}}</td>
                     </tr>
+                    <tr>
+                        <td [class.warning]="!selectedOrganisation.hasVisitors" >Bezoekers</td>
+                        <td>{{selectedOrganisation.cf_value_93301}}</td>
+                    </tr>
                     <tr >
                         <td>Mandaatstatus</td>
                         <td *ngIf="selectedOrganisation.mandate_status">{{selectedOrganisation.mandate_status.PayProvMandateStatus}}</td>
