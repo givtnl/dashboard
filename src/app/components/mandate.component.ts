@@ -1,14 +1,10 @@
-/**
- * Created by Lennie on 28/03/2017.
- */
-import {Component, OnInit, ViewEncapsulation, isDevMode, enableProdMode} from '@angular/core';
-import {HttpModule, Http, Headers, RequestOptions} from '@angular/http';
-import { UserService } from 'app/services/user.service';
+import {Component, OnInit} from '@angular/core';
+import {Http} from '@angular/http';
+import {UserService} from 'app/services/user.service';
 import {Router, ActivatedRoute} from '@angular/router';
 import {TranslateService} from 'ng2-translate';
-import {Organisation} from "../models/organisation";
-import { ApiClientService } from "app/services/api-client.service";
-import { environment } from "../../environments/environment";
+import {ApiClientService} from "app/services/api-client.service";
+import {environment} from "../../environments/environment";
 import {OrgMandates} from "../models/OrgMandates";
 
 
@@ -18,58 +14,58 @@ import {OrgMandates} from "../models/OrgMandates";
     styleUrls: ['../css/mandate.component.css']
 })
 
-export class MandateComponent implements OnInit{
-    ngOnInit(): void {
-        this.getCurrentOrgMandates();
-    }
+export class MandateComponent implements OnInit {
+    showFiltered = false;
+    search = "";
 
-    showFiltered: boolean = false;
-    search: string = "";
-
-    title: string = "Regel mandaat voor een organisatie";
-    subtitle: string = "Zoek een organisatie bij naam om een mandaat te regelen.";
-    searchBtn: string = "Zoeken";
-    disabled: boolean = false;
+    title = "Regel mandaat voor een organisatie";
+    subtitle = "Zoek een organisatie bij naam om een mandaat te regelen.";
+    searchBtn = "Zoeken";
+    disabled = false;
 
     currentMandates: Array<OrgMandates>;
 
     filteredOrganisations;
     selectedOrganisation;
     SlimPayLink;
-    CRMKey : string;
-    incassoStatus: string = "Laden...";
-    urlGetCompanies: string = "https://app.teamleader.eu/api/getCompanies.php?api_group=50213&amount=10&selected_customfields=93491,92583,95707,93537,93168,93493,93495,93485,93494,95707,93769,141639&pageno=0&searchby=";
-    urlGetCompany: string = "https://app.teamleader.eu/api/getCompany.php?api_group=50213&company_id=";
-    urlGetTags: string = "https://app.teamleader.eu/api/getTags.php?api_group=50213&";
+    CRMKey: string;
+    incassoStatus = "Laden...";
+    urlGetCompanies = "https://app.teamleader.eu/api/getCompanies.php?api_group=50213&amount=10&selected_customfields=93491,92583,95707,93537,93168,93493,93495,93485,93494,95707,93769,141639&pageno=0&searchby=";
+    urlGetCompanies2 = "https://app.teamleader.eu/api/getCompanies.php?api_group=50213&amount=10&selected_customfields=93301&pageno=0&searchby=";
+    urlGetCompany = "https://app.teamleader.eu/api/getCompany.php?api_group=50213&company_id=";
+    urlGetTags = "https://app.teamleader.eu/api/getTags.php?api_group=50213&";
 
     organisationAdmin: string = null;
-    organisationAdminPassword: string = "fjkldsmqfjklmqsfjlkmq";
+    organisationAdminPassword = "fjkldsmqfjklmqsfjlkmq";
 
-    showRegisterAdmin : boolean = false;
-    adminRegistered: boolean = false;
+    showRegisterAdmin = false;
+    adminRegistered = false;
 
-    constructor(
-        private userService: UserService,
-        private router: Router,
-        translate: TranslateService,
-        private route: ActivatedRoute,
-        private http: Http,
-        private apiClient: ApiClientService,
-    ){}
-
-    get hasEmptyFields(): boolean {
-      if(!this.selectedOrganisation
-        || !this.selectedOrganisation.cf_value_93168
-        || !this.selectedOrganisation.cf_value_93491
-        || !(this.selectedOrganisation.mandate_status.PayProvMandateStatus == "closed.completed" && this.incassoStatus == "Processed")
-        || !(this.currentMandates.filter((cm) => cm.CrmId == this.selectedOrganisation.id).length > 0)
-      ) {
-        return true;
-      }
-      return false;
+    ngOnInit(): void {
+        this.getCurrentOrgMandates();
     }
 
-    searchOrg(){
+    constructor(private userService: UserService,
+                private router: Router,
+                translate: TranslateService,
+                private route: ActivatedRoute,
+                private http: Http,
+                private apiClient: ApiClientService,) {
+    }
+
+    get hasEmptyFields(): boolean {
+        if (!this.selectedOrganisation
+            || !this.selectedOrganisation.cf_value_93168
+            || !this.selectedOrganisation.cf_value_93491
+            || !(this.selectedOrganisation.mandate_status.PayProvMandateStatus === "closed.completed" && this.incassoStatus === "Processed")
+            || !(this.currentMandates.filter((cm) => cm.CrmId === this.selectedOrganisation.id).length > 0)
+        ) {
+            return true;
+        }
+        return false;
+    }
+
+    searchOrg() {
         this.disabled = true;
         this.searchBtn = "Laden...";
 
@@ -83,34 +79,55 @@ export class MandateComponent implements OnInit{
 
     }
 
-    change()
-    {
-        if(!this.search){
+    change() {
+        if (!this.search) {
             this.filteredOrganisations = [];
         }
     }
 
-    getCompany(crmId){
-      this.apiClient.getData("Admin/ThirdPartyToken?type=Teamleader")
-        .then(data => {
-          this.CRMKey = data.Teamleader;
-          this.apiClient.postData("Admin/CorsTunnelGet", {url : this.urlGetCompany + crmId + "&api_secret=" + this.CRMKey, body : "", headers: {}})
-            .then(d => {
-              this.select(d);
-            })
-            .catch(err => {
-
+    getCompany(crmId) {
+        this.apiClient.getData("Admin/ThirdPartyToken?type=Teamleader")
+            .then(data => {
+                this.CRMKey = data.Teamleader;
+                this.apiClient.postData("Admin/CorsTunnelGet", {
+                    url: this.urlGetCompany + crmId + "&api_secret=" + this.CRMKey,
+                    body: "",
+                    headers: {}
+                })
+                    .then(d => {
+                        this.select(d);
+                    })
+                    .catch();
             });
-        });
     }
 
-    getCompanies(){
-        this.apiClient.postData("Admin/CorsTunnelGet", {url : this.urlGetCompanies + this.search + "&api_secret=" + this.CRMKey,body : "{}", headers: {}})
+    getCompanies() {
+        this.apiClient.postData("Admin/CorsTunnelGet", {
+            url: this.urlGetCompanies + this.search + "&api_secret=" + this.CRMKey,
+            body: "{}",
+            headers: {}
+        })
             .then(d => {
                 this.filteredOrganisations = d;
-                this.showFiltered = true;
-                this.searchBtn = "Zoeken";
-                this.disabled = false;
+                this.apiClient.postData("Admin/CorsTunnelGet", {
+                    url: this.urlGetCompanies2 + this.search + "&api_secret=" + this.CRMKey,
+                    body: "{}",
+                    headers: {}
+                })
+                    .then(d => {
+                        for (let org in this.filteredOrganisations) {
+                            for (let borg in d) {
+                                if (this.filteredOrganisations[org].id === d[borg].id) {
+                                    this.filteredOrganisations[org].cf_value_93301 = d[borg].cf_value_93301;
+                                    this.filteredOrganisations[org].hasVisitors = !isNaN(Number(this.filteredOrganisations[org].cf_value_93301));
+                                }
+                            }
+                        }
+                        console.log(this.filteredOrganisations);
+                        this.showFiltered = true;
+                        this.searchBtn = "Zoeken";
+                        this.disabled = false;
+                    })
             })
             .catch(err => {
                 this.searchBtn = "Zoeken";
@@ -118,24 +135,24 @@ export class MandateComponent implements OnInit{
             });
     }
 
-    getCurrentOrgMandates(){
+    getCurrentOrgMandates() {
         this.apiClient.getData("Admin/CurrentOrganisations")
             .then(res => {
                 this.currentMandates = res;
-                for(let man in this.currentMandates){
-                    this.checkIncassoStatus(this.currentMandates[man].CrmId, this.currentMandates[man])
+                for (let man of this.currentMandates) {
+                    this.checkIncassoStatus(man.CrmId, man);
                 }
             })
             .catch(err => {
-            })
+            });
     }
 
-     getMandateStatus(){
+    getMandateStatus() {
         this.apiClient.getData("OrgMandate/" + this.selectedOrganisation.id)
             .then(res => {
                 this.selectedOrganisation.mandate_status = res;
-              this.searchBtn = "Zoeken";
-              this.disabled = false;
+                this.searchBtn = "Zoeken";
+                this.disabled = false;
             })
             .catch(err => {
                 this.searchBtn = "Zoeken";
@@ -143,15 +160,15 @@ export class MandateComponent implements OnInit{
             });
     }
 
-    startIncasso(){
-         if(!this.selectedOrganisation.mandate_status) {
-             alert("Kan mandaatstatus niet checken, probeer later opnieuw.");
-             return;
-         }
-        if(this.selectedOrganisation.mandate_status.PayProvMandateStatus == "closed.completed" && !this.incassoStatus){
+    startIncasso() {
+        if (!this.selectedOrganisation.mandate_status) {
+            alert("Kan mandaatstatus niet checken, probeer later opnieuw.");
+            return;
+        }
+        if (this.selectedOrganisation.mandate_status.PayProvMandateStatus === "closed.completed" && !this.incassoStatus) {
             let body = {
-                    Amount: this.selectedOrganisation.cf_value_92583,
-                    CrmId: this.selectedOrganisation.id
+                Amount: this.selectedOrganisation.cf_value_92583,
+                CrmId: this.selectedOrganisation.id
             };
             console.log(body);
             this.apiClient.postData("Organisation/StartupFee", body)
@@ -161,29 +178,27 @@ export class MandateComponent implements OnInit{
                 .catch(err => console.log(err))
         }
 
-        if(this.incassoStatus) alert("Incassoproces is al opgestart.");
+        if (this.incassoStatus) alert("Incassoproces is al opgestart.");
     }
 
-    checkIncassoStatus(id, selectedMandate = null){
+    checkIncassoStatus(id, selectedMandate = null) {
         this.apiClient.getData("Debit/Org/" + id)
             .then(data => {
-                if(selectedMandate)
-                {
+                if (selectedMandate) {
                     return selectedMandate.IncassoStatus = data;
                 }
-                else
-                {
-                    this.incassoStatus = data
+                else {
+                    this.incassoStatus = data;
                 }
             })
             .catch(err => {
-                if (err.status != 404) {
+                if (err.status !== 404) {
                     console.log(err);
                 }
             });
     }
 
-    decodeHtmlEntity(html){
+    decodeHtmlEntity(html) {
         //this hack is needed to decode the ampersand
         //https://stackoverflow.com/questions/7394748/whats-the-right-way-to-decode-a-string-that-has-special-html-entities-in-it
         let txt = document.createElement("textarea");
@@ -191,188 +206,193 @@ export class MandateComponent implements OnInit{
         return txt.value;
     }
 
-    select(i){
+    select(i) {
         this.disabled = true;
         this.selectedOrganisation = i;
         let dashBoardUsers: string = null;
 
+        if (this.selectedOrganisation.cf_value_93493)
+            dashBoardUsers = this.selectedOrganisation.cf_value_93493;
+
+        if (i.hasOwnProperty("custom_fields")) {
+            this.selectedOrganisation.cf_value_92583 = i.custom_fields['92583'];
+            this.selectedOrganisation.cf_value_93485 = i.custom_fields['93485'];
+            this.selectedOrganisation.cf_value_93769 = i.custom_fields['93769'];
+            this.selectedOrganisation.cf_value_95707 = i.custom_fields['95707'];
+            this.selectedOrganisation.cf_value_93494 = i.custom_fields['93494'];
+            this.selectedOrganisation.cf_value_93168 = i.custom_fields['93168'];
+            this.selectedOrganisation.cf_value_141639 = i.custom_fields['141639'];
+            this.selectedOrganisation.cf_value_93537 = i.custom_fields['93537'].replace(/\s/g, '');
+            this.selectedOrganisation.cf_value_93495 = i.custom_fields['93495'];
+            this.selectedOrganisation.cf_value_93491 = i.custom_fields['93491'];
+            this.selectedOrganisation.cf_value_93301 = this.decodeHtmlEntity(this.selectedOrganisation.cf_value_93301);
+            dashBoardUsers = i.custom_fields['93493'];
+            if (i.hasOwnProperty("tags")) {
+                this.apiClient.postData("Admin/CorsTunnelGet", {
+                    url: this.urlGetTags + "&api_secret=" + this.CRMKey,
+                    body: "",
+                    headers: {}
+                }).then(d => {
+                    let status = '';
+                    for (let tagid of i.tags)
+                        status = status + d[tagid] + ',';
+                    status = status.slice(0, -1);
+                    if (status.indexOf("Kerk") > -1) {
+                        this.selectedOrganisation.status = "Kerk";
+                    } else if (status.indexOf("Stichting") > -1) {
+                        this.selectedOrganisation.status = "Stichting";
+                    }
+
+                }).catch(err => {
+                });
+            }
+        } else {
+            this.selectedOrganisation.cf_value_92583 = this.decodeHtmlEntity(this.selectedOrganisation.cf_value_92583);
+            this.selectedOrganisation.cf_value_93485 = this.decodeHtmlEntity(this.selectedOrganisation.cf_value_93485);
+            this.selectedOrganisation.cf_value_93769 = this.decodeHtmlEntity(this.selectedOrganisation.cf_value_93769);
+            this.selectedOrganisation.cf_value_95707 = this.decodeHtmlEntity(this.selectedOrganisation.cf_value_95707);
+            this.selectedOrganisation.cf_value_93494 = this.decodeHtmlEntity(this.selectedOrganisation.cf_value_93494);
+            this.selectedOrganisation.cf_value_93168 = this.decodeHtmlEntity(this.selectedOrganisation.cf_value_93168);
+            this.selectedOrganisation.cf_value_141639 = this.decodeHtmlEntity(this.selectedOrganisation.cf_value_141639);
+            this.selectedOrganisation.cf_value_93537 = this.decodeHtmlEntity(this.selectedOrganisation.cf_value_93537.replace(/\s/g, ''));
+            this.selectedOrganisation.cf_value_93495 = this.decodeHtmlEntity(this.selectedOrganisation.cf_value_93495);
+            this.selectedOrganisation.cf_value_93491 = this.decodeHtmlEntity(this.selectedOrganisation.cf_value_93491);
+            this.selectedOrganisation.cf_value_93301 = this.decodeHtmlEntity(this.selectedOrganisation.cf_value_93301);
+            if (this.selectedOrganisation.status.indexOf("Kerk") > -1) {
+                this.selectedOrganisation.status = "Kerk";
+            } else if (this.selectedOrganisation.status.indexOf("Stichting") > -1) {
+                this.selectedOrganisation.status = "Stichting";
+            } else {
+                this.selectedOrganisation.status = "";
+            }
+        }
 
 
-	    if (i.hasOwnProperty("custom_fields")) {
-		    this.selectedOrganisation.cf_value_92583 = i.custom_fields['92583'];
-		    this.selectedOrganisation.cf_value_93485 = i.custom_fields['93485'];
-		    this.selectedOrganisation.cf_value_93769 = i.custom_fields['93769'];
-		    this.selectedOrganisation.cf_value_95707 = i.custom_fields['95707'];
-		    this.selectedOrganisation.cf_value_93494 = i.custom_fields['93494'];
-		    this.selectedOrganisation.cf_value_93168 = i.custom_fields['93168'];
-		    this.selectedOrganisation.cf_value_141639 = i.custom_fields['141639'];
-		    this.selectedOrganisation.cf_value_93537 = i.custom_fields['93537'].replace(/\s/g, '');
-		    this.selectedOrganisation.cf_value_93495 = i.custom_fields['93495'];
-		    this.selectedOrganisation.cf_value_93491 = i.custom_fields['93491'];
-		    dashBoardUsers = i.custom_fields['93493'];
-		    if (i.hasOwnProperty("tags")) {
-			    this.apiClient.postData("Admin/CorsTunnelGet", {
-				    url: this.urlGetTags + "&api_secret=" + this.CRMKey,
-				    body: "",
-				    headers: {}
-			    }).then(d => {
-				    let status = '';
-				    for (let tagid of i.tags)
-					    status = status + d[tagid] + ',';
-				    status = status.slice(0, -1);
-				    if(status.indexOf("Kerk") > -1) {
-					    this.selectedOrganisation.status = "Kerk";
-				    } else if(status.indexOf("Stichting") > -1) {
-					    this.selectedOrganisation.status = "Stichting";
-				    }
+        if (this.selectedOrganisation.cf_value_93493)
+            dashBoardUsers = this.selectedOrganisation.cf_value_93493;
 
-			    }).catch(err => {
-			    });
-		    }
-	    } else {
-		    this.selectedOrganisation.cf_value_92583 = this.decodeHtmlEntity(this.selectedOrganisation.cf_value_92583);
-		    this.selectedOrganisation.cf_value_93485 = this.decodeHtmlEntity(this.selectedOrganisation.cf_value_93485);
-		    this.selectedOrganisation.cf_value_93769 = this.decodeHtmlEntity(this.selectedOrganisation.cf_value_93769);
-		    this.selectedOrganisation.cf_value_95707 = this.decodeHtmlEntity(this.selectedOrganisation.cf_value_95707);
-		    this.selectedOrganisation.cf_value_93494 = this.decodeHtmlEntity(this.selectedOrganisation.cf_value_93494);
-		    this.selectedOrganisation.cf_value_93168 = this.decodeHtmlEntity(this.selectedOrganisation.cf_value_93168);
-		    this.selectedOrganisation.cf_value_141639 = this.decodeHtmlEntity(this.selectedOrganisation.cf_value_141639);
-		    this.selectedOrganisation.cf_value_93537 = this.decodeHtmlEntity(this.selectedOrganisation.cf_value_93537.replace(/\s/g, ''));
-		    this.selectedOrganisation.cf_value_93495 = this.decodeHtmlEntity(this.selectedOrganisation.cf_value_93495);
-		    this.selectedOrganisation.cf_value_93491 = this.decodeHtmlEntity(this.selectedOrganisation.cf_value_93491);
-		    if(this.selectedOrganisation.status.indexOf("Kerk") > -1) {
-			    this.selectedOrganisation.status = "Kerk";
-		    } else if(this.selectedOrganisation.status.indexOf("Stichting") > -1) {
-			    this.selectedOrganisation.status = "Stichting";
-		    } else {
-		    	this.selectedOrganisation.status = "";
-		    }
-	    }
-
-
-		    if(this.selectedOrganisation.cf_value_93493)
-          dashBoardUsers = this.selectedOrganisation.cf_value_93493;
-
-        if(this.selectedOrganisation.city)
-           this.selectedOrganisation.city = this.decodeHtmlEntity(this.selectedOrganisation.city);
-        if(this.selectedOrganisation.name)
+        if (this.selectedOrganisation.city)
+            this.selectedOrganisation.city = this.decodeHtmlEntity(this.selectedOrganisation.city);
+        if (this.selectedOrganisation.name)
             this.selectedOrganisation.name = this.decodeHtmlEntity(this.selectedOrganisation.name);
         this.selectedOrganisation.address = this.decodeHtmlEntity(i.street) + " " + i.number;
         this.selectedOrganisation.mandate_status = false;
-        if(!environment.production)
-            this.selectedOrganisation.cf_value_93495 =  "support+" + this.selectedOrganisation.id + "@givtapp.net";
+        if (!environment.production)
+            this.selectedOrganisation.cf_value_93495 = "support+" + this.selectedOrganisation.id + "@givtapp.net";
 
-        if (dashBoardUsers)
-        {
-            if (dashBoardUsers.split(' ').length == 1)
+        if (dashBoardUsers) {
+            if (dashBoardUsers.split(' ').length === 1)
                 this.organisationAdmin = dashBoardUsers.split(',')[0];
             else
                 this.organisationAdmin = dashBoardUsers.split(' ')[0];
         } else {
-            this.organisationAdmin = "Niet ingevuld in Teamleader!!"
+            this.organisationAdmin = "Niet ingevuld in Teamleader!!";
         }
 
         this.incassoStatus = "Laden...";
         this.change();
         this.getMandateStatus();
-        if(this.selectedOrganisation.id)
+        if (this.selectedOrganisation.id)
             this.checkIncassoStatus(this.selectedOrganisation.id);
         this.disabled = false;
         this.filteredOrganisations = false;
     }
 
-    registerMandate(){
-        if(!this.selectedOrganisation){
+    registerMandate() {
+        if (!this.selectedOrganisation) {
             return;
         }
 
-        if(this.selectedOrganisation.status.indexOf(',') > -1) {
-          alert("Het type van de organisatie is niet correct, namelijk: " + this.selectedOrganisation.status + "\nZorg er voor dat slechts één type aangeduid staat in het CRM.");
-          return;
+        if (this.selectedOrganisation.status.indexOf(',') > -1) {
+            alert("Het type van de organisatie is niet correct, namelijk: " + this.selectedOrganisation.status + "\nZorg er voor dat slechts één type aangeduid staat in het CRM.");
+            return;
         }
 
         let o = this.selectedOrganisation;
-        if(!o.cf_value_93495 || !o.cf_value_93485 || !o.cf_value_93769 || !o.cf_value_93494){
+        if (!o.cf_value_93495 || !o.cf_value_93485 || !o.cf_value_93769 || !o.cf_value_93494) {
             alert("Niet alle velden zijn ingevuld voor de admin van de organisatie!");
             return;
         }
         let mandate = {
-            Mandate : {
-                Signatory : {
-                    email :  environment.production? o.cf_value_93495 : "support+" + this.selectedOrganisation.id + "@givtapp.net",
-                    familyName : o.cf_value_93485,
-                    givenName :  o.cf_value_93769,
+            Mandate: {
+                Signatory: {
+                    email: environment.production ? o.cf_value_93495 : "support+" + this.selectedOrganisation.id + "@givtapp.net",
+                    familyName: o.cf_value_93485,
+                    givenName: o.cf_value_93769,
                     companyName: o.cf_value_95707,
-                    telephone : o.cf_value_93494,
-                    bankAccount : {
+                    telephone: o.cf_value_93494,
+                    bankAccount: {
                         iban: o.cf_value_93537.replace(/\s/g, '')
                     },
-                    billingAddress : {
-                        city : o.city,
-                        country : o.country,
-                        postalCode : o.zipcode,
-                        street1 : o.address,
-                        street2 : "", //empty
+                    billingAddress: {
+                        city: o.city,
+                        country: o.country,
+                        postalCode: o.zipcode,
+                        street1: o.address,
+                        street2: "", //empty
                     }
                 }
             },
-            Organisation : {
-                CrmId : o.id.toString(),
+            Organisation: {
+                CrmId: o.id.toString(),
                 Name: o.name,
                 Address: o.address,
                 City: o.city,
                 PostalCode: o.zipcode,
                 Country: o.country,
-                TaxDeductable: (o.cf_value_141639 == "1"),
-                TelNr: o.telephone
+                TaxDeductable: (o.cf_value_141639 === "1"),
+                TelNr: o.telephone,
+                VisitorCount: o.cf_value_93301
             },
             Type: this.selectedOrganisation.status
         };
-        this.apiClient.postData("Organisation/", mandate )
+        this.apiClient.postData("Organisation/", mandate)
             .then(spl => {
-                if(spl){
+                if (spl) {
                     this.SlimPayLink = spl;
                     this.sendMandateMail();
                 }
-                else{
+                else {
                     alert("Something went wrong, please check mandate data and logging.");
                 }
-            })
+            });
 
     }
 
-    sendMandateMail(){
-        if(!this.SlimPayLink) return;
-        if(!this.selectedOrganisation) return;
+    sendMandateMail() {
+        if (!this.SlimPayLink) return;
+        if (!this.selectedOrganisation) return;
 
         let o = this.selectedOrganisation;
-        if(!o.cf_value_92583 || !o.cf_value_93495 || !o.cf_value_93769 || !o.cf_value_93485){
+        if (!o.cf_value_92583 || !o.cf_value_93495 || !o.cf_value_93769 || !o.cf_value_93485) {
             alert("Email, administrator naam en bedrag van kosten moeten ingevuld zijn om een mandaat te kunnen aanmaken.");
         }
 
         let email = {
-            Email : environment.production ? o.cf_value_93495 : "bjorn.derudder+" + this.selectedOrganisation.id + "@gmail.com",
-            Admin : environment.production? o.cf_value_93769 + " " + o.cf_value_93485 : "Bjorn Derudder",
-            Organisation : o.name,
-            Amount : this.selectedOrganisation.cf_value_92583,
-            Link : this.SlimPayLink,
+            Email: environment.production ? o.cf_value_93495 : "bjorn.derudder+" + this.selectedOrganisation.id + "@gmail.com",
+            Admin: environment.production ? o.cf_value_93769 + " " + o.cf_value_93485 : "Bjorn Derudder",
+            Organisation: o.name,
+            Amount: this.selectedOrganisation.cf_value_92583,
+            Link: this.SlimPayLink,
             Type: this.selectedOrganisation.status
         };
         this.apiClient.postData("Organisation/SendMandateMail", email)
-            .then(d => { alert("Mandaat is verzonden."); console.log(d); });
+            .then(d => {
+                alert("Mandaat is verzonden.");
+                console.log(d);
+            });
     }
 
-    registerDefaultCollectGroup()
-    {
-        if(!this.selectedOrganisation){
+    registerDefaultCollectGroup() {
+        if (!this.selectedOrganisation) {
             return;
         }
         let o = this.selectedOrganisation;
         let cg = {
-            Name : o.cf_value_93168,
-            Namespace : o.cf_value_93491,
-            PaymentReference : "Automatische betaling Givt",
-            Active : true
+            Name: o.cf_value_93168,
+            Namespace: o.cf_value_93491,
+            PaymentReference: "Automatische betaling Givt",
+            Active: true
         };
         this.apiClient.postData("CollectGroup?crmId=" + o.id, cg)
             .then(res => {
@@ -380,57 +400,56 @@ export class MandateComponent implements OnInit{
                     alert("Gelukt!");
                 console.log(res);
             }).catch(res => {
-                alert("Mislukt!");
-            });
+            alert("Mislukt!");
+        });
     }
 
-    registerOrganisationAdmin(){
-        if(!this.organisationAdmin || !this.organisationAdminPassword){
+    registerOrganisationAdmin() {
+        if (!this.organisationAdmin || !this.organisationAdminPassword) {
             return;
         }
         this.adminRegistered = true;
         this.generateOrgAdminPass();
         let user =
-        {
-            Email: this.organisationAdmin,
-            Password: this.organisationAdminPassword
-        };
+            {
+                Email: this.organisationAdmin,
+                Password: this.organisationAdminPassword
+            };
 
         this.apiClient.postData('Users', user)
             .then(res => {
-                let url = '/Users/CreateOrgAdmin?'+ +encodeURIComponent('email=' + this.organisationAdmin +'&crmId=' + this.selectedOrganisation.id + '&password=' + this.organisationAdminPassword);
+                let url = '/Users/CreateOrgAdmin?' + +encodeURIComponent('email=' + this.organisationAdmin + '&crmId=' + this.selectedOrganisation.id + '&password=' + this.organisationAdminPassword);
                 this.apiClient.postData(url, null)
-                    .then( _ => {
+                    .then(_ => {
                         alert('Admin registered with new e-mail address');
                     })
-                    .catch( reason => {
+                    .catch(reason => {
                         alert(reason["_body"]);
                     });
             })
-            .catch(reason =>{
-                if (reason.status == 409)
-                {
-                    let url = '/Users/CreateOrgAdmin?' + encodeURI('email=' + this.organisationAdmin + '&crmId='+this.selectedOrganisation.id);
+            .catch(reason => {
+                if (reason.status === 409) {
+                    let url = '/Users/CreateOrgAdmin?' + encodeURI('email=' + this.organisationAdmin + '&crmId=' + this.selectedOrganisation.id);
                     this.apiClient.postData(url, null)
-                        .then( _ => {
+                        .then(_ => {
                             alert('Admin registered with existing e-mail address');
                         })
-                        .catch( reason => {
-                            alert(reason["_body"]);
+                        .catch(res => {
+                            alert(res["_body"]);
                         });
-                }else {
+                } else {
                     alert(reason["_body"]);
                 }
-            })
+            });
     }
 
-    generateOrgAdminPass(){
-        var text = "";
-        var charsNeeded = false;
-        var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    generateOrgAdminPass() {
+        let text = "";
+        let charsNeeded = false;
+        let possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
         while (!charsNeeded) {
-            for (var i = 0; i < 8; i++)
+            for (let i = 0; i < 8; i++)
                 text += possible.charAt(Math.floor(Math.random() * possible.length));
             if (/\d/.test(text) && /[A-Z]/.test(text))
                 charsNeeded = true;
@@ -440,11 +459,11 @@ export class MandateComponent implements OnInit{
         this.organisationAdminPassword = text;
     }
 
-    openCRM(){
+    openCRM() {
         let url = "https://app.teamleader.eu/company_detail.php?id=";
-        if(this.selectedOrganisation) {
-          var win = window.open(url + this.selectedOrganisation.id, "_blank");
-          win.focus();
+        if (this.selectedOrganisation) {
+            let win = window.open(url + this.selectedOrganisation.id, "_blank");
+            win.focus();
         }
     }
 }
