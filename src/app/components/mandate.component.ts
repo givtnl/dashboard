@@ -261,7 +261,11 @@ export class MandateComponent implements OnInit {
             this.selectedOrganisation.cf_value_93495 = this.decodeHtmlEntity(this.selectedOrganisation.cf_value_93495);
             this.selectedOrganisation.cf_value_93491 = this.decodeHtmlEntity(this.selectedOrganisation.cf_value_93491);
             this.selectedOrganisation.cf_value_93301 = this.decodeHtmlEntity(this.selectedOrganisation.cf_value_93301);
-            if (this.selectedOrganisation.status.indexOf("Kerk") > -1) {
+	        if(this.selectedOrganisation.cf_value_93301 == "")
+		        this.selectedOrganisation.cf_value_93301 = 0;
+	        this.selectedOrganisation.hasVisitors = !isNaN(Number(this.selectedOrganisation.cf_value_93301)) && isFinite(Number(this.selectedOrganisation.cf_value_93301)) && Number(this.selectedOrganisation.cf_value_93301) > 0;
+
+	        if (this.selectedOrganisation.status.indexOf("Kerk") > -1) {
                 this.selectedOrganisation.status = "Kerk";
             } else if (this.selectedOrganisation.status.indexOf("Stichting") > -1) {
                 this.selectedOrganisation.status = "Stichting";
