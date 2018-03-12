@@ -226,7 +226,9 @@ export class MandateComponent implements OnInit {
             this.selectedOrganisation.cf_value_93495 = this.decodeHtmlEntity(i.custom_fields['93495']);
             this.selectedOrganisation.cf_value_93491 = this.decodeHtmlEntity(i.custom_fields['93491']);
             this.selectedOrganisation.cf_value_93301 = this.decodeHtmlEntity(i.custom_fields['93301']);
-	        this.selectedOrganisation.hasVisitors = !isNaN(Number(this.selectedOrganisation.cf_value_93301));
+            if(this.selectedOrganisation.cf_value_93301 == "")
+            	this.selectedOrganisation.cf_value_93301 = 0;
+	        this.selectedOrganisation.hasVisitors = !isNaN(Number(this.selectedOrganisation.cf_value_93301)) && isFinite(Number(this.selectedOrganisation.cf_value_93301)) && Number(this.selectedOrganisation.cf_value_93301) > 0;
 	        dashBoardUsers = i.custom_fields['93493'];
             if (i.hasOwnProperty("tags")) {
                 this.apiClient.postData("Admin/CorsTunnelGet", {
@@ -307,6 +309,11 @@ export class MandateComponent implements OnInit {
         if (this.selectedOrganisation.status.indexOf(',') > -1) {
             alert("Het type van de organisatie is niet correct, namelijk: " + this.selectedOrganisation.status + "\nZorg er voor dat slechts één type aangeduid staat in het CRM.");
             return;
+        }
+
+        if(!this.selectedOrganisation.hasVisitors) {
+        	alert("Het bezoekersveld mag enkel getallen bevatten én moet hoger zijn dan 0. Los dit akkefietje op vooraleer je een mandaat aanvraagt.");
+        	return;
         }
 
         let o = this.selectedOrganisation;
