@@ -14,6 +14,7 @@ export class LoginComponent  {
     userName: string;
     password: string;
     error_message: string;
+	ShowLoadingAnimation: boolean = false;
 
     constructor(private userService: UserService, private router: Router, private translate:TranslateService){
         this.passwordHidden = true;
@@ -27,14 +28,17 @@ export class LoginComponent  {
             this.translate.get("Error_FillAllFieldsIn").subscribe(value => {this.error_message = value;});
             return;
         }
+	    this.ShowLoadingAnimation = true;
         this.userService.login(this.userName, this.password)
             .then(resp => {
+            	this.ShowLoadingAnimation = false;
                 if (this.userService.GivtOperations)
                     this.router.navigate(['/mandate']);
                 else
                     this.router.navigate(['/dashboard']);
             },
             error => {
+            	this.ShowLoadingAnimation = false;
                 if(JSON.parse(error._body).error_description == "LockedOut")
                 {
                     this.translate.get("Error_LockedOut")
