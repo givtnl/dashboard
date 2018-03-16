@@ -10,7 +10,7 @@ main{
 
 section{
     width: 100%;
-    padding:38px 27px;
+
 
 }
 
@@ -68,6 +68,7 @@ button:active{
 }
 form{
     background:white;
+    padding:38px 27px;
 }
 .block{
     display: block;
@@ -195,4 +196,7 @@ button[type="submit"]{
     text-decoration: underline;
 }
 
-
+.show-loading-animation {
+    visibility: visible !important;
+    transition: visibility 0.5s linear;
+}

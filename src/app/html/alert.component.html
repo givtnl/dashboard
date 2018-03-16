@@ -1,4 +1,19 @@
-<div *ngIf="!shouldIShowAlert" class="browser-message">
-  <p>{{ "BrowserMessage" | translate }}</p>
-  <p class="browser-message-p"><a class="browser-message__link" target="_blank" href="https://www.google.com/chrome/">{{ "DownloadNow" | translate }}</a></p>
+<div *ngIf="shouldIShowAlert" class="browser-message">
+    <div>
+        <p>{{ "BrowserMessage" | translate }}</p>
+        <p class="browser-message-p"><a class="browser-message__link" target="_blank" href="https://www.google.com/chrome/">{{ "DownloadNow" | translate }}</a></p>
+    </div>
+
+    <span (click)="hideAlert()" class="alert-close-button" style="display: flex;">
+        <svg width="30px" height="30px" viewBox="0 0 30 30" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <!-- Generator: Sketch 49 (51002) - http://www.bohemiancoding.com/sketch -->
+            <desc>Created with Sketch.</desc>
+            <defs></defs>
+            <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                <g id="Artboard" fill="#FFFFFF">
+                    <path d="M15,30 C6.71572875,30 0,23.2842712 0,15 C0,6.71572875 6.71572875,0 15,0 C23.2842712,0 30,6.71572875 30,15 C30,23.2842712 23.2842712,30 15,30 Z M15,13.1369954 L10.9817548,9.11875024 L9.11875024,10.9817548 L13.1369954,15 L9.11875024,19.0182452 L10.9817548,20.8812498 L15,16.8630046 L19.0182452,20.8812498 L20.8812498,19.0182452 L16.8630046,15 L20.8812498,10.9817548 L19.0182452,9.11875024 L15,13.1369954 Z" id="Combined-Shape"></path>
+                </g>
+            </g>
+        </svg>
+    </span>
 </div>

@@ -9,7 +9,15 @@
             <polygon id="Givt" fill="#2E2957" points="79.091623 51.1277174 64.0366492 12.2418478 75.6282733 12.2418478 84.5340314 36.7255435 94.0052356 12.2418478 105.031414 12.2418478 89.9764398 51.1277174"></polygon>
         </g>
     </svg>
-    <section class="white-bg login" id="login">
+    <section style="position: relative" class="white-bg login" id="login">
+        <div style="width: 100%;height: 100%;position: absolute;background:rgba(255,255,255,0.7);display: flex;z-index: 1;visibility: hidden;" [ngClass]="{'show-loading-animation': ShowLoadingAnimation }">
+            <div class="loader"  >
+                <svg class="circular" viewBox="25 25 50 50">
+                    <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="5" stroke-miterlimit="10"/>
+                </svg>
+            </div>
+        </div>
+
         <form>
             <input class="block input-full-width" [(ngModel)]="userName" type="email" name="email" [attr.placeholder]="'Placeholder_Email' | translate" required>
             <div class="password-box">

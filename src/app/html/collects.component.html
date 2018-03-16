@@ -13,23 +13,11 @@
 <hr *ngIf="isVisible" class="collect-hr"/>
 <section class="section-collects" *ngIf="isVisible">
     <div class="loading-wrapper" [ngClass]="{'show-loading-animation': ShowLoadingAnimation }">
-        <div class="windows8">
-            <div class="wBall" id="wBall_1">
-                <div class="wInnerBall"></div>
-            </div>
-            <div class="wBall" id="wBall_2">
-                <div class="wInnerBall"></div>
-            </div>
-            <div class="wBall" id="wBall_3">
-                <div class="wInnerBall"></div>
-            </div>
-            <div class="wBall" id="wBall_4">
-                <div class="wInnerBall"></div>
-            </div>
-            <div class="wBall" id="wBall_5">
-                <div class="wInnerBall"></div>
-            </div>
-        </div>
+      <div class="loader" >
+        <svg class="circular" viewBox="25 25 50 50">
+          <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="5" stroke-miterlimit="10"/>
+        </svg>
+      </div>
     </div>
     <section  class="show-collect">
         <time>

@@ -15,6 +15,7 @@ import {UserService} from "../services/user.service";
     styleUrls: ['../css/dashboard.component.css']
 })
 export class DashboardComponent implements OnInit, OnDestroy{
+
     cards: Card[] = [];
     lastSundayCard: Card = new Card();
     thisMonthCard: Card = new Card();
@@ -37,7 +38,7 @@ export class DashboardComponent implements OnInit, OnDestroy{
     lastSundaySum: number;
 
     constructor(private apiService: ApiClientService,  translate:TranslateService, private datePipe: DatePipe, private dataService: DataService, private userService: UserService){
-        this.translate = translate;
+      this.translate = translate;
         this.isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
         this.ShowLoadingAnimation = true;
 
@@ -51,11 +52,15 @@ export class DashboardComponent implements OnInit, OnDestroy{
     }
 
     ngOnInit() : void{
+      google.charts.load('current', {'packages':['corechart']});
+
         Promise.all(
             [this.waitALittle(2000),this.fetchLastSundayGivts(),this.fetchThisMonthGivts(),this.fetchThisMonthGivers()]
         ).then(()=>{
+            google.charts.setOnLoadCallback(() => this.drawChart());
             this.ShowLoadingAnimation = false;
             this.fetchDataContinuously(3000);
+
         })
     }
 
@@ -73,11 +78,6 @@ export class DashboardComponent implements OnInit, OnDestroy{
     }
 
     googleCharts(title: string, footer: string, value: string){
-        //cdn
-        this.scriptURL = "https://www.gstatic.com/charts/loader.js";
-        let scriptElement = document.createElement('script');
-
-
         //activate the donutcard
         this.donutCard = true;
         //make donutchart from the lastsundayvalue
@@ -85,46 +85,40 @@ export class DashboardComponent implements OnInit, OnDestroy{
         this.donutcardFooter = footer;
         this.donutcardTitle = title;
 
-        scriptElement.src = this.scriptURL;
-        scriptElement.onload = () => {
-            google.charts.load("visualization", "1", {packages:["corechart"]});
-            google.charts.setOnLoadCallback(drawChart);
-            function drawChart() {
-                let dataTable = new google.visualization.DataTable();
-                dataTable.addColumn('string', 'Bedrag');
-                dataTable.addColumn('number', 'Euro');
-                // A column for custom tooltip content
-                dataTable.addColumn({type: 'string', role: 'tooltip'});
-                    dataTable.addRows([
-                        ['', 90,'€ 456 goedgekeurd!']
-                    ]);
-                let options = {
-                    pieSliceBorderColor: 'transparent',
-                    width: 280,
-                    height: 280,
-                    chartArea: {'width': '100%', 'height': '80%'},
-                    colors: ['#42C98E','#D43D4C','#4F98CF'],
-                    legend: {position: 'none'},
-                    pieHole: 0.85,
-                    pieSliceText: 'label',
-                    pieStartAngle: 0,
-                    pieSliceTextStyle:{color: 'black', fontName: 'arial', fontSize: 10},
-                    backgroundColor: 'transparent'
-                };
+    }
 
-                let div = document.getElementById('donutchart');
-                if(div)
-                {
-                    let chart = new google.visualization.PieChart(document.getElementById('donutchart'));
-                    chart.draw(dataTable, options);
-                    let container = <HTMLDivElement>div.firstChild.firstChild;
-                    if(container)
-                        container.style.width = "100%";
-                }
-            }
-        };
+    drawChart() {
+      let dataTable = new google.visualization.DataTable();
+      dataTable.addColumn('string', 'Bedrag');
+      dataTable.addColumn('number', 'Euro');
+      // A column for custom tooltip content
+      dataTable.addColumn({type: 'string', role: 'tooltip'});
+      dataTable.addRows([
+        ['', 90,'€ 456 goedgekeurd!']
+      ]);
+      let options = {
+        pieSliceBorderColor: 'transparent',
+        width: 280,
+        height: 280,
+        chartArea: {'width': '100%', 'height': '80%'},
+        colors: ['#42C98E','#D43D4C','#4F98CF'],
+        legend: {position: 'none'},
+        pieHole: 0.85,
+        pieSliceText: 'label',
+        pieStartAngle: 0,
+        pieSliceTextStyle:{color: 'black', fontName: 'arial', fontSize: 10},
+        backgroundColor: 'transparent'
+      };
 
-        document.querySelector('head').appendChild(scriptElement);
+      let div = document.getElementById('donutchart');
+      if(div)
+      {
+        let chart = new google.visualization.PieChart(document.getElementById('donutchart'));
+        chart.draw(dataTable, options);
+        let container = <HTMLDivElement>div.firstChild.firstChild;
+        if(container)
+          container.style.width = "100%";
+      }
     }
 
     fetchThisMonthGivers(){
