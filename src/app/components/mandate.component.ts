@@ -315,11 +315,6 @@ export class MandateComponent implements OnInit {
             return;
         }
 
-        if(!this.selectedOrganisation.hasVisitors) {
-        	alert("Het bezoekersveld mag enkel getallen bevatten én moet hoger zijn dan 0. Los dit akkefietje op vooraleer je een mandaat aanvraagt.");
-        	return;
-        }
-
         let o = this.selectedOrganisation;
         if (!o.cf_value_93495 || !o.cf_value_93485 || !o.cf_value_93769 || !o.cf_value_93494) {
             alert("Niet alle velden zijn ingevuld voor de admin van de organisatie!");
@@ -353,8 +348,7 @@ export class MandateComponent implements OnInit {
                 PostalCode: o.zipcode,
                 Country: o.country,
                 TaxDeductable: (o.cf_value_141639 === "1"),
-                TelNr: o.telephone,
-                VisitorCount: o.cf_value_93301
+                TelNr: o.telephone
             },
             Type: this.selectedOrganisation.status
         };
@@ -399,12 +393,17 @@ export class MandateComponent implements OnInit {
         if (!this.selectedOrganisation) {
             return;
         }
+        if(!this.selectedOrganisation.hasVisitors) {
+            alert("Het bezoekersveld mag enkel getallen bevatten én moet hoger zijn dan 0. Los dit akkefietje op vooraleer je een mandaat aanvraagt.");
+            return;
+        }
         let o = this.selectedOrganisation;
         let cg = {
             Name: o.cf_value_93168,
             Namespace: o.cf_value_93491,
             PaymentReference: "Automatische betaling Givt",
-            Active: true
+            Active: true,
+            VisitorCount: o.cf_value_93301
         };
         this.apiClient.postData("CollectGroup?crmId=" + o.id, cg)
             .then(res => {
