@@ -7,13 +7,14 @@ import {TranslateService} from "ng2-translate";
 import {ViewEncapsulation} from '@angular/core';
 import {DataService} from "../services/data.service";
 import {UserService} from "../services/user.service";
+import {PayoutComponent} from "./children/payout-element.component";
 
 
 @Component({
     selector: 'my-collects',
     templateUrl: '../html/payouts.component.html',
     styleUrls: ['../css/payouts.component.css'],
-    encapsulation: ViewEncapsulation.None
+    encapsulation: ViewEncapsulation.None,
 })
 
 export class PayoutsComponent implements OnInit{
@@ -27,6 +28,8 @@ export class PayoutsComponent implements OnInit{
     R1Cost = 0.18;
     R2Cost = 1.20;
     translate: TranslateService;
+
+    showAlert = false;
 
     dateBegin: Date = null;
     dateEnd: Date = null;
@@ -74,7 +77,8 @@ export class PayoutsComponent implements OnInit{
     }
 
     exportCSV() {
-      this.loader["show"] = true;
+    	this.toggleAlert(null)
+/*      this.loader["show"] = true;
       let start = this.datePipe.transform(this.dateBegin, "y-MM-dd");
       let end = this.datePipe.transform(this.dateEnd, "y-MM-dd");
 
@@ -97,7 +101,11 @@ export class PayoutsComponent implements OnInit{
           document.body.appendChild(link); // Required for FF
 
           link.click(); // This will download the data file named "my_data.csv".
-        });
+        });*/
+    }
+
+    toggleAlert(event) {
+    	this.showAlert = !this.showAlert;
     }
 
 
