@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {ApiClientService} from "../../services/api-client.service";
 import {DataService} from "../../services/data.service";
 import {DatePipe} from "@angular/common";
@@ -28,21 +28,17 @@ export class PayoutComponent implements OnInit{
     return euro + (this.isSafari ? (x).toFixed(2) : (x).toLocaleString(navigator.language,{minimumFractionDigits: 2,maximumFractionDigits:2}));
   }
 
-	isSafari: boolean;
-	@Input() childData: any;
-	@Input() loader: object;
-	name: string = "";
-	transactionCost = 0.08;
-	mandateCost = 0.125;
-	showCosts: boolean = false;
-	pledgedAmount: number;
-
-	@Output()
-	show_alert = new EventEmitter<string>();
+  isSafari: boolean;
+  @Input() childData: any;
+  @Input() loader: object;
+  name: string = "";
+  transactionCost = 0.08;
+  mandateCost = 0.125;
+  showCosts: boolean = false;
+  pledgedAmount: number;
 
 
-
-	constructor(private apiClient: ApiClientService, private translate: TranslateService, private datePipe: DatePipe, private userService: UserService) {
+  constructor(private apiClient: ApiClientService, private translate: TranslateService, private datePipe: DatePipe, private userService: UserService) {
     this.isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
     this.name = "Testen";
 
@@ -180,8 +176,7 @@ export class PayoutComponent implements OnInit{
   }
 
   exportCSV() {
-	this.show_alert.emit("outofservice");
-/*    this.loader["show"] = true;
+    this.loader["show"] = true;
         let start = this.datePipe.transform(new Date(this.childData.BeginDate), "y-MM-dd");
         let end = this.datePipe.transform(new Date(this.childData.EndDate), "y-MM-dd");
 
@@ -204,6 +199,6 @@ export class PayoutComponent implements OnInit{
                 document.body.appendChild(link); // Required for FF
 
                 link.click(); // This will download the data file named "my_data.csv".
-            });*/
+            });
     }
 }

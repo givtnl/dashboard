@@ -361,8 +361,10 @@ export class MandateComponent implements OnInit {
                 else {
                     alert("Something went wrong, please check mandate data and logging.");
                 }
+            }).catch( error => {
+                console.log(error);
+                alert("Mandaat niet verzonden, controleer alle gegevens.");
             });
-
     }
 
     sendMandateMail() {
@@ -386,6 +388,9 @@ export class MandateComponent implements OnInit {
             .then(d => {
                 alert("Mandaat is verzonden.");
                 console.log(d);
+            }).catch(error => {
+                console.log(error);
+                alert("Mandaat niet verzonden, controleer alle gegevens.");
             });
     }
 
