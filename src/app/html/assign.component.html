@@ -1,161 +1,172 @@
 <my-navigation></my-navigation>
-<div class="section-page">
-  <h2>{{ "TitleAllocate" | translate }}</h2>
-  <div class="assign__button" [class.showElement]="numberOfFilteredEvents > 0">
-    <span style="font-family: Avenir_Medium; font-size: 17px;">{{'AssignOpenCollectes' | translate}}</span>
-    <div class="wrapping_inputlist">
-      <input (focus)="focusAllCollectsTyping(true)" (focusout)="focusAllCollectsTyping(false)" (ngModelChange)="allCollectNameChanging($event)" class="allocation__input" type="text" name="allocationWeekName" [(ngModel)]="allocateWeekName"/>
-      <ul *ngIf="allCollectTyping" class="schedule__dialog__form__list">
-        <li *ngFor="let item of filteredUsedTags" class="schedule__dialog__form__listitem" [innerHTML]="item" (click)="setWeekName(item)">yoo</li>
-      </ul>
-    </div>
-    <button [disabled]="allocateWeekName === ''" class="assign-green-button" (click)="allocateWeek()"></button>
-  </div>
-  <div class="schedule">
-    <p-schedule #calendar [events]="events" locale="nl" [nowIndicator]="false" [header]="headerConfig" [editable]="true" (onDayClick)="handleDayClick($event)" (onEventClick)="handleEventClick($event)" [options]="options" id="calendar"></p-schedule>
-    <div class="schedule__dialog" *ngIf="isDialogOpen">
-      <form style="position: fixed;width: 1000px;max-height: 800px;min-height: 350px;top: 50%;left: 50%;margin-top: -400px; margin-left: -500px;overflow: scroll;" [class.schedule__dialog__form--disabled]="errorShown" action="" class="schedule__dialog__form">
-        <div style="margin-top:15px; margin-bottom: 30px" class="flex-col" *ngIf="!isMonthView && allowButton">
-          <span style="margin-left: 0" class="text">{{'From' | translate}}</span>
-          <p-calendar [(ngModel)]="startTime" showTime="showTime" [timeOnly]="true" name="startTime" [stepMinute]="10" class="time-picker"></p-calendar> <span class="text">{{'To' | translate}}</span>
-          <p-calendar [(ngModel)]="endTime" showTime="showTime"  [timeOnly]="true" name="endTime" [stepMinute]="10"></p-calendar>
+<div style="display: flex;width: auto;justify-content: center">
+    <div class="section-page" style="margin:unset;">
+        <h2>{{ "TitleAllocate" | translate }}</h2>
+        <div class="assign__button" [class.showElement]="numberOfFilteredEvents > 0">
+            <span style="font-family: Avenir_Medium; font-size: 17px;">{{'AssignOpenCollectes' | translate}}</span>
+            <div class="wrapping_inputlist">
+                <input (focus)="focusAllCollectsTyping(true)" (focusout)="focusAllCollectsTyping(false)" (ngModelChange)="allCollectNameChanging($event)" class="allocation__input" type="text" name="allocationWeekName" [(ngModel)]="allocateWeekName"/>
+                <ul *ngIf="allCollectTyping" class="schedule__dialog__form__list">
+                    <li *ngFor="let item of filteredUsedTags" class="schedule__dialog__form__listitem" [innerHTML]="item" (click)="setWeekName(item)">yoo</li>
+                </ul>
+            </div>
+            <button [disabled]="allocateWeekName === ''" class="assign-green-button" (click)="allocateWeek()"></button>
+        </div>
+        <div class="schedule">
+            <p-schedule #calendar [events]="events" locale="nl" [nowIndicator]="false" [header]="headerConfig" [editable]="true" (onDayClick)="handleDayClick($event)" (onEventClick)="handleEventClick($event)" [options]="options" id="calendar"></p-schedule>
         </div>
 
-        <div style="display: flex;flex-wrap: wrap;">
-          <div style="margin-left: 20px;margin-top: 6px;">
-            <span *ngIf="!areAllocationsEmpty" class="tab__element" (click)="currentTab = SelectedTab.Collects" [class.tab__element--active]="currentTab == SelectedTab.Collects">{{ "Menu_Collectes" | translate}}</span>
-            <span *ngIf="fixedAllocations.length > 0" class="tab__element" (click)="currentTab = SelectedTab.Fixed" [class.tab__element--active]="currentTab == SelectedTab.Fixed">{{"FixedPoints" | translate}}</span>
-          </div>
+    </div>
+    <aside style="width: 450px; display: block;" *ngIf="isDialogOpen">
+        <div class="schedule__dialog" style="margin-left: 20px;margin-top: 208px;margin-left: 20px;top: 20px;position: sticky">
 
-          <div class="info-table" *ngIf="currentTab == SelectedTab.Collects">
-            <table class="info-table__table" width="100%" cellpadding="0" cellspacing="0" marginwidth="0" marginheight="0" leftmargin="0" topmargin="0">
+            <div style="" class="list-collections">
+                <button style="background: none;border:none;position: absolute;top:1px;right:1px;margin: 0;padding: 10px;cursor:  pointer;" (click)="isDialogOpen = false">
 
-              <ng-container *ngFor="let alloc of allocations">
-                <tr class="info-table__row" *ngIf="alloc.amountOfGivts != 0">
-                    <td><img src="images/personal-blue.png" alt=""> {{ alloc.amountOfGivts }}</td>
-                    <td>
-                      <div style="height: 40px;display: flex;justify-content: left;margin-left: 10px;">
-                        <div class="wrapping_inputlist" style="display: flex;">
-                          <span style="align-self: center;" *ngIf="!allowButton">{{alloc.name}}</span>
-                          <input *ngIf="allowButton" (focus)="alloc.isTyping=true" (focusout)="onFocusOutOf(alloc);" autocomplete="off"  class="info-table__input" [class.info-table__input--false]="alloc.name == ''" (ngModelChange)="this.filterTags($event)" type="text" name="collectName{{alloc.collectionNumber}}" [(ngModel)]="alloc.name" placeholder="{{ 'Collection' | translate }} {{ alloc.collectionNumber }}">
-                          <ul *ngIf="alloc.isTyping" class="schedule__dialog__form__list">
-                            <li *ngFor="let item of filteredUsedTags" class="schedule__dialog__form__listitem" (click)="setCollectNameOf(item, alloc)" [innerHTML]="item"></li>
-                          </ul>
+                    <svg width="19px" height="19px" viewBox="0 0 19 19" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                        <!-- Generator: Sketch 49.1 (51147) - http://www.bohemiancoding.com/sketch -->
+                        <desc>Created with Sketch.</desc>
+                        <defs></defs>
+                        <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                            <g id="Artboard" transform="translate(-10.000000, -6.000000)" fill="#000000">
+                                <rect id="Rectangle-3" transform="translate(19.545942, 15.545942) rotate(45.000000) translate(-19.545942, -15.545942) " x="7.04594155" y="14.5459415" width="25" height="2" rx="1"></rect>
+                                <rect id="Rectangle-3" transform="translate(19.545942, 15.545942) rotate(-45.000000) translate(-19.545942, -15.545942) " x="7.04594155" y="14.5459415" width="25" height="2" rx="1"></rect>
+                            </g>
+                        </g>
+                    </svg>
+                </button>
+                <div style="margin-top: 6px;">
+                    <span *ngIf="!areAllocationsEmpty" class="tab__element" (click)="currentTab = SelectedTab.Collects" [class.tab__element--active]="currentTab == SelectedTab.Collects">{{ "Menu_Collectes" | translate}}</span>
+                    <span *ngIf="fixedAllocations.length > 0" class="tab__element" (click)="currentTab = SelectedTab.Fixed" [class.tab__element--active]="currentTab == SelectedTab.Fixed">{{"FixedPoints" | translate}}</span>
+                </div>
+                <ng-container *ngIf="currentTab == SelectedTab.Collects">
+                    <ng-container *ngFor="let alloc of allocations" >
+                        <div *ngIf="alloc.amountOfGivts != 0" style="padding: 15px;">
+                            <div style="height: 40px;margin-left: 10px;display:flex;" >
+                                <div class="wrapping_inputlist" style="display: flex;">
+                                    <span style="align-self: center;font-family: Avenir_Heavy; font-size: 18px;" *ngIf="!allowButton">{{alloc.name}}</span>
+                                    <input *ngIf="allowButton" (focus)="alloc.isTyping=true" (focusout)="onFocusOutOf(alloc);" autocomplete="off"  class="info-table__input" [class.info-table__input--false]="alloc.name == ''" (ngModelChange)="this.filterTags($event)" type="text" name="collectName{{alloc.collectionNumber}}" [(ngModel)]="alloc.name" placeholder="{{ 'Collection' | translate }} {{ alloc.collectionNumber }}">
+                                    <ul *ngIf="alloc.isTyping" class="schedule__dialog__form__list">
+                                        <li *ngFor="let item of filteredUsedTags" class="schedule__dialog__form__listitem" (click)="setCollectNameOf(item, alloc)" [innerHTML]="item"></li>
+                                    </ul>
+                                </div>
+
+                                <button style="cursor:pointer;background: #2E2957; border:0;margin-left: auto;display:  flex;justify-content:  center;" class="icon" [class.fill-green]="!alloc.isStatsHidden" (click)="alloc.isStatsHidden = !alloc.isStatsHidden">
+
+                                    <svg width="23px" height="23px" viewBox="8 8 23 23" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                                        <!-- Generator: Sketch 40.3 (33839) - http://www.bohemiancoding.com/sketch -->
+                                        <desc>Created with Sketch.</desc>
+                                        <defs></defs>
+                                        <path  d="M9.00761688,21.0025814 C9.53265354,26.5888828 14.2352667,30.9603199 19.9588837,30.9603199 C22.6363805,30.9603199 25.090446,30.0036964 26.9979399,28.4135896 L19.5869317,21.0025814 L9.00761688,21.0025814 Z M9,19.0025814 C9.45855668,13.6859391 13.6990295,9.4505879 19.0179464,9 L19.0179464,19.0018685 C19.0177045,19.0021045 19.0174628,19.0023406 19.0172212,19.0025769 L9,19.0025814 Z M28.4121534,26.9993761 C30.0022602,25.0918822 30.9588837,22.6378167 30.9588837,19.9603199 C30.9588837,14.2424422 26.5962091,9.54352172 21.0179464,9.01064508 L21.0179464,19.5461063 C21.0179464,19.5653854 21.0174008,19.5845372 21.0163242,19.6035469 L28.4121534,26.9993761 Z" id="Combined-Shape" stroke="none" fill="#FFFFFF " fill-rule="evenodd"></path>
+                                    </svg>
+                                </button>
+                                <span style="font-family: Avenir_Light;display: flex;flex-direction: row;align-items:  center;margin-left: 15px;">
+
+                                    <img src="images/personal-blue.png" alt=""> <span style="padding-left: 5px;padding-top: 5px;">{{ alloc.amountOfGivts }}</span></span>
+
+                            </div>
+                            <table class="incasso-state-table" *ngIf="!alloc.isStatsHidden">
+                                <tr [class.incasso-state-table__row--disabled]="alloc.toProcessTotal == 0">
+                                    <td><span class="bullet bullet--blue"></span></td>
+                                    <td>{{ "Processing" | translate }}</td>
+                                    <td class="info-table-cell--money">{{ displayValue(alloc.toProcessTotal) }}</td>
+                                </tr>
+                                <tr [class.incasso-state-table__row--disabled]="alloc.processedTotal == 0">
+                                    <td><span class="bullet bullet--green"></span></td>
+                                    <td>{{ "Processed" | translate }}</td>
+                                    <td class="info-table-cell--money">{{ displayValue(alloc.processedTotal) }}</td>
+                                </tr>
+                                <tr [class.incasso-state-table__row--disabled]="alloc.refusedBank == 0">
+                                    <td><span class="bullet bullet--red"></span></td>
+                                    <td>{{"CancelledByBank" | translate}}</td>
+                                    <td class="info-table-cell--money">{{ displayValue(alloc.refusedBank) }}</td>
+                                </tr>
+                                <tr [class.incasso-state-table__row--disabled]="alloc.cancelByGiver == 0">
+                                    <td><span class="bullet bullet--grey"></span></td>
+                                    <td>{{ "CancelledByUser" | translate}}</td>
+                                    <td class="info-table-cell--money">{{ displayValue(alloc.cancelByGiver) }}</td>
+                                </tr>
+                                <tr class="incasso-state-table__row--em">
+                                    <td></td>
+                                    <td>{{ "Text_Fee_Total" | translate}}</td>
+                                    <td class="info-table-cell--money">{{ displayValue(alloc.toProcessTotal + alloc.processedTotal + alloc.refusedBank + alloc.cancelByGiver) }}</td>
+                                </tr>
+                            </table>
                         </div>
 
-                      </div>
-                    </td>
-                    <td class="incasso-state">
-                      <div style="display: flex; flex-direction: column; align-items: flex-end;">
-                        <table class="incasso-state-table">
-                          <tr [class.incasso-state-table__row--disabled]="alloc.toProcessTotal == 0">
-                            <td><span class="bullet bullet--blue"></span></td>
-                            <td>{{ "Processing" | translate }}</td>
-                            <td class="info-table-cell--money">{{ displayValue(alloc.toProcessTotal) }}</td>
-                          </tr>
-                          <tr [class.incasso-state-table__row--disabled]="alloc.processedTotal == 0">
-                            <td><span class="bullet bullet--green"></span></td>
-                            <td>{{ "Processed" | translate }}</td>
-                            <td class="info-table-cell--money">{{ displayValue(alloc.processedTotal) }}</td>
-                          </tr>
-                          <tr [class.incasso-state-table__row--disabled]="alloc.refusedBank == 0">
-                            <td><span class="bullet bullet--red"></span></td>
-                            <td>{{"CancelledByBank" | translate}}</td>
-                            <td class="info-table-cell--money">{{ displayValue(alloc.refusedBank) }}</td>
-                          </tr>
-                          <tr [class.incasso-state-table__row--disabled]="alloc.cancelByGiver == 0">
-                            <td><span class="bullet bullet--grey"></span></td>
-                            <td>{{ "CancelledByUser" | translate}}</td>
-                            <td class="info-table-cell--money">{{ displayValue(alloc.cancelByGiver) }}</td>
-                          </tr>
-                          <tr class="incasso-state-table__row--em">
-                            <td></td>
-                            <td>{{ "Text_Fee_Total" | translate}}</td>
-                            <td class="info-table-cell--money">{{ displayValue(alloc.toProcessTotal + alloc.processedTotal + alloc.refusedBank + alloc.cancelByGiver) }}</td>
-                          </tr>
-                        </table>
-                      </div>
+                    </ng-container>
+                    <button *ngIf="allowButton && currentTab == SelectedTab.Collects" style="height: 50px;width: 100%;" class="info-table__button" [disabled]="disableSaveButton" [class.info-table__button--disabled]="disableSaveButton" (click)="saveAllEvents()">{{ "SaveAll" | translate }}</button>
+                    <button *ngIf="!allowButton && currentTab == SelectedTab.Collects" style="height: 50px;width: 100%;" class="info-table__button info-table__button--danger" (click)="deleteEvent()">{{ "DeleteAll" | translate }}</button>
+                </ng-container>
+                <ng-container *ngIf="currentTab == SelectedTab.Fixed">
+                    <ng-container *ngFor="let alloc of fixedAllocations">
+                        <div *ngIf="alloc.amountOfGivts != 0" style="padding: 15px;">
+                            <div style="height: 40px;display: flex;margin-left: 10px;">
+                                <div class="wrapping_inputlist" style="display: flex;">
+                                    <span style="align-self: center;font-family: Avenir_Heavy; font-size: 18px;">{{alloc.name}}</span>
+                                </div>
+                                <button style="cursor:pointer;background: #2E2957; border:0;margin-left: auto;display:  flex;justify-content:  center;" class="icon" [class.fill-green]="!alloc.isStatsHidden" (click)="alloc.isStatsHidden = !alloc.isStatsHidden">
 
-                    </td>
-                </tr>
-              </ng-container>
-            </table>
-            <div class="dialog-button-container">
-              <button *ngIf="allowButton" style="height: 44px;" class="info-table__button" [disabled]="disableSaveButton" [class.info-table__button--disabled]="disableSaveButton" (click)="saveAllEvents()">{{ "SaveAll" | translate }}</button>
-              <button *ngIf="!allowButton" style="height: 44px;" class="info-table__button info-table__button--danger" (click)="deleteEvent()">{{ "DeleteAll" | translate }}</button>
+                                    <svg width="23px" height="23px" viewBox="8 8 23 23" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                                        <!-- Generator: Sketch 40.3 (33839) - http://www.bohemiancoding.com/sketch -->
+                                        <desc>Created with Sketch.</desc>
+                                        <defs></defs>
+                                        <path  d="M9.00761688,21.0025814 C9.53265354,26.5888828 14.2352667,30.9603199 19.9588837,30.9603199 C22.6363805,30.9603199 25.090446,30.0036964 26.9979399,28.4135896 L19.5869317,21.0025814 L9.00761688,21.0025814 Z M9,19.0025814 C9.45855668,13.6859391 13.6990295,9.4505879 19.0179464,9 L19.0179464,19.0018685 C19.0177045,19.0021045 19.0174628,19.0023406 19.0172212,19.0025769 L9,19.0025814 Z M28.4121534,26.9993761 C30.0022602,25.0918822 30.9588837,22.6378167 30.9588837,19.9603199 C30.9588837,14.2424422 26.5962091,9.54352172 21.0179464,9.01064508 L21.0179464,19.5461063 C21.0179464,19.5653854 21.0174008,19.5845372 21.0163242,19.6035469 L28.4121534,26.9993761 Z" id="Combined-Shape" stroke="none" fill="#FFFFFF " fill-rule="evenodd"></path>
+                                    </svg>
+                                </button>
+                                <span style="font-family: Avenir_Light;display: flex;flex-direction: row;align-items:  center;margin-left: 15px;">
+
+                                    <img src="images/personal-blue.png" alt=""> <span style="padding-left: 5px;padding-top: 5px;">{{ alloc.amountOfGivts }}</span></span>
+
+                            </div>
+                            <table class="incasso-state-table" *ngIf="!alloc.isStatsHidden">
+                                <tr [class.incasso-state-table__row--disabled]="alloc.toProcessTotal == 0">
+                                    <td><span class="bullet bullet--blue"></span></td>
+                                    <td>{{ "Processing" | translate }}</td>
+                                    <td class="info-table-cell--money">{{ displayValue(alloc.toProcessTotal) }}</td>
+                                </tr>
+                                <tr [class.incasso-state-table__row--disabled]="alloc.processedTotal == 0">
+                                    <td><span class="bullet bullet--green"></span></td>
+                                    <td>{{ "Processed" | translate }}</td>
+                                    <td class="info-table-cell--money">{{ displayValue(alloc.processedTotal) }}</td>
+                                </tr>
+                                <tr [class.incasso-state-table__row--disabled]="alloc.refusedBank == 0">
+                                    <td><span class="bullet bullet--red"></span></td>
+                                    <td>{{"CancelledByBank" | translate}}</td>
+                                    <td class="info-table-cell--money">{{ displayValue(alloc.refusedBank) }}</td>
+                                </tr>
+                                <tr [class.incasso-state-table__row--disabled]="alloc.cancelByGiver == 0">
+                                    <td><span class="bullet bullet--grey"></span></td>
+                                    <td>{{ "CancelledByUser" | translate}}</td>
+                                    <td class="info-table-cell--money">{{ displayValue(alloc.cancelByGiver) }}</td>
+                                </tr>
+                                <tr class="incasso-state-table__row--em">
+                                    <td></td>
+                                    <td>{{ "Text_Fee_Total" | translate}}</td>
+                                    <td class="info-table-cell--money">{{ displayValue(alloc.toProcessTotal + alloc.processedTotal + alloc.refusedBank + alloc.cancelByGiver) }}</td>
+                                </tr>
+                            </table>
+                        </div>
+
+                    </ng-container>
+                </ng-container>
             </div>
-          </div>
 
-          <div class="info-table" *ngIf="currentTab == SelectedTab.Fixed">
-            <table class="info-table__table" width="100%" cellpadding="0" cellspacing="0" marginwidth="0" marginheight="0" leftmargin="0" topmargin="0">
 
-              <ng-container *ngFor="let alloc of fixedAllocations">
-                <tr class="info-table__row" *ngIf="alloc.amountOfGivts != 0">
-                  <td><img src="images/personal-blue.png" alt=""> {{ alloc.amountOfGivts }}</td>
-                  <td>
-                    <div style="height: 40px;display: flex;justify-content: left;margin-left: 10px;">
-                      <div class="wrapping_inputlist" style="display: flex;">
-                        <span style="align-self: center;">{{alloc.name}}</span>
-                      </div>
+
+
+            <div class="error__message" *ngIf="errorShown">
+                <div class="error-wrapper">
+                    <div class="error__message--inner">
+                        <h3>{{"OverlapError" | translate}}</h3>
+                        <button class="schedule__dialog__form--submit submit-enabled no-margin" (click)="toggleError(false)">{{ "PW_GoBack" | translate}}</button>
                     </div>
-                  </td>
-                  <td class="incasso-state">
-                    <div style="display: flex; flex-direction: column; align-items: flex-end;">
-                      <table class="incasso-state-table">
-                        <tr [class.incasso-state-table__row--disabled]="alloc.toProcessTotal == 0">
-                          <td><span class="bullet bullet--blue"></span></td>
-                          <td>{{ "Processing" | translate }}</td>
-                          <td class="info-table-cell--money">{{ displayValue(alloc.toProcessTotal) }}</td>
-                        </tr>
-                        <tr [class.incasso-state-table__row--disabled]="alloc.processedTotal == 0">
-                          <td><span class="bullet bullet--green"></span></td>
-                          <td>{{ "Processed" | translate }}</td>
-                          <td class="info-table-cell--money">{{ displayValue(alloc.processedTotal) }}</td>
-                        </tr>
-                        <tr [class.incasso-state-table__row--disabled]="alloc.refusedBank == 0">
-                          <td><span class="bullet bullet--red"></span></td>
-                          <td>{{"CancelledByBank" | translate}}</td>
-                          <td class="info-table-cell--money">{{ displayValue(alloc.refusedBank) }}</td>
-                        </tr>
-                        <tr [class.incasso-state-table__row--disabled]="alloc.cancelByGiver == 0">
-                          <td><span class="bullet bullet--grey"></span></td>
-                          <td>{{ "CancelledByUser" | translate}}</td>
-                          <td class="info-table-cell--money">{{ displayValue(alloc.cancelByGiver) }}</td>
-                        </tr>
-                        <tr class="incasso-state-table__row--em">
-                          <td></td>
-                          <td>{{ "Text_Fee_Total" | translate}}</td>
-                          <td class="info-table-cell--money">{{ displayValue(alloc.toProcessTotal + alloc.processedTotal + alloc.refusedBank + alloc.cancelByGiver) }}</td>
-                        </tr>
-                      </table>
-                    </div>
-
-                  </td>
-                </tr>
-              </ng-container>
-            </table>
-            <div class="dialog-button-container">
-              <button *ngIf="allowButton && currentTab == SelectedTab.Collects" style="height: 44px;" class="info-table__button" [disabled]="disableSaveButton" [class.info-table__button--disabled]="disableSaveButton" (click)="saveAllEvents()">{{ "SaveAll" | translate }}</button>
-              <button *ngIf="!allowButton && currentTab == SelectedTab.Collects" style="height: 44px;" class="info-table__button info-table__button--danger" (click)="deleteEvent()">{{ "DeleteAll" | translate }}</button>
+                </div>
             </div>
-          </div>
+
         </div>
-        <button (click)="resetAll(false)" class="close-button"><img src="images/close.png" alt=""></button>
-      </form>
-
-      <div class="error__message" *ngIf="errorShown">
-        <div class="error-wrapper">
-          <div class="error__message--inner">
-            <h3>{{"OverlapError" | translate}}</h3>
-            <button class="schedule__dialog__form--submit submit-enabled no-margin" (click)="toggleError(false)">{{ "PW_GoBack" | translate}}</button>
-          </div>
-        </div>
-      </div>
-
-    </div>
-
-  </div>
-
+    </aside>
 </div>
+
 
 <my-footer></my-footer>

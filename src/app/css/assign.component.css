@@ -30,10 +30,6 @@ h3{
 }
 
 .schedule__dialog{
-  z-index: 999;
-  position: absolute;
-  top: 52px;
-  width: 100%;
   text-align: center;
   background-color: transparent;
   display: flex;
@@ -46,15 +42,11 @@ h3{
 }
 
 .schedule__dialog__form{
-  border: 1px solid #2E2957;
+    border: 1px solid #2E2957;
+    margin-top: 207px;
   background-color: white;
-  width: 750px;
-  margin: 0 auto;
   box-sizing: border-box;
   color:white;
-  -webkit-box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.5);
-  -moz-box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.5);
-  box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.5);
 }
 
 .schedule__dialog__collect{
@@ -168,11 +160,11 @@ h3{
 }
 
 .error__message{
-  position: absolute;
+  position: fixed;
   top: 0;
   text-align: center;
   margin: 0 auto;
-  left: auto;
+  left: 0;
   width: 100%;
   height: 100%;
   vertical-align: middle;
@@ -182,6 +174,7 @@ h3{
   align-content: center;
   flex-direction: column;
   justify-content: center;
+    background: rgba(0,0,0,0.2);
 }
 
 .error__message--inner{
@@ -645,7 +638,7 @@ h3{
   text-align: left;
   font-family: Avenir_Light;
   border-collapse: collapse;
-  margin: 15px 0;
+  margin-top: 15px;
   min-width: 375px;
 }
 
@@ -670,7 +663,6 @@ h3{
   height: 100%;
   flex-direction: column;
   align-items: center;
-  background: rgba(0,0,0,0.2);
 }
 
 .info-table__input--readonly {
@@ -686,4 +678,28 @@ h3{
   width: 70px;
   text-align: left;
   padding-left: 10px;
+}
+
+.list-collections {
+    background: white;
+    border: 1px solid #2E2957;
+    box-sizing: border-box;
+}
+
+.list-collections > div {
+    border-bottom: 1px solid #d9d9d9;
+    padding: 15px 0;
+    box-sizing: border-box;
+}
+
+.list-collections > div:last-child {
+    border-bottom: none;
+}
+
+.active-list-collection {
+    background: #E3E2E7;
+}
+
+.fill-green {
+    background: #1CA96C !important;
 }
