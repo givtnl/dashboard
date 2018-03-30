@@ -11,6 +11,7 @@ import {Button} from "primeng/primeng";
 import * as moment from "moment";
 import _date = moment.unitOfTime._date;
 import {forEach} from "@angular/router/src/utils/collection";
+import { trigger, style, animate, transition } from '@angular/animations';
 //declare var moment: any;
 @Component({
   selector: 'app-assign-collects',
@@ -23,7 +24,6 @@ export class AssignComponent implements OnInit {
   headerConfig: any;
   options: Object = new Object();
   isDialogOpen: boolean;
-  showForm = true;
   showDelete = false;
   event: MyEvent = new MyEvent();
   idGen = 100;
@@ -189,6 +189,8 @@ export class AssignComponent implements OnInit {
       this.currentTab = SelectedTab.Collects;
     } else if (this.fixedAllocations.length > 0) {
       this.currentTab = SelectedTab.Fixed;
+    } else {
+    	this.isDialogOpen = false;
     }
   }
 
@@ -308,8 +310,11 @@ export class AssignComponent implements OnInit {
     let fixedGivts = this.allGivts.filter((ts) => {
       return ts.Fixed != null && ts["dt_Confirmed"] > new Date(start) && ts["dt_Confirmed"] < new Date(end);
     });
-    if(openGivts.length === 0 && fixedGivts.length === 0)
-      return;
+    if(openGivts.length === 0 && fixedGivts.length === 0) {
+    	this.openDialog();
+	    return;
+    }
+
     let check = false;
     this.firstCollection = new AssignedCollection();
     this.secondCollection = new AssignedCollection();
@@ -359,12 +364,12 @@ export class AssignComponent implements OnInit {
         }
       }
     }
+    this.openDialog();
     if(check)
     {
       this.startTime = new Date(start);
       this.endTime = new Date(end);
-      this.openDialog()
-      this.showForm = true;
+
     }
   }
 
@@ -462,6 +467,7 @@ export class AssignComponent implements OnInit {
   }
 
   renderAllocatedGivts() {
+  	this.isDialogOpen = false;
     let buckets: Bucket[] = [];
 
     let noFixed = this.allocatedGivts.filter((ts) => ts.Fixed == null);
@@ -625,7 +631,6 @@ export class AssignComponent implements OnInit {
     this.firstCollection = new AssignedCollection();
     this.secondCollection = new AssignedCollection();
     this.thirdCollection = new AssignedCollection();
-    this.showForm = false;
     this.showDelete = false;
     this.isDialogOpen = false;
     this.event = new MyEvent();
@@ -904,6 +909,16 @@ export class AssignComponent implements OnInit {
     this.filterTags(event);
   }
 
+  hideAllAllocations() {
+  	this.fixedAllocations.forEach(allocation => {
+	    allocation.isStatsHidden = true;
+    });
+  	this.allocations.forEach(allocation => {
+	    allocation.isStatsHidden = true;
+    });
+
+  }
+
 }
 
 export enum SelectedTab {
@@ -952,6 +967,7 @@ export class AssignedCollection {
   collectionNumber: number;
   dtBegin: Date;
   dtEnd: Date;
+  isStatsHidden: boolean = true;
 
   constructor(toProcessTotal = 0, processedTotal = 0, refusedByBank = 0, cancelByGiver = 0, amountOfGivts = 0, name = "", isTyping = false, state = ButtonState.Enabled, allocated = false, collectionNumber = 1) {
     this.toProcessTotal = toProcessTotal;
