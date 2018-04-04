@@ -42,6 +42,11 @@ export class PayoutsComponent implements OnInit{
         this.userService.collectGroupChanged.subscribe(() => {
             this.ngOnInit();
         });
+
+	    if (!!this.dataService.getData('payoutDateBegin') && !!this.dataService.getData('payoutDateEnd')) {
+		    this.dateBegin = new Date(Number(this.dataService.getData('payoutDateBegin')) * 1000);
+		    this.dateEnd = new Date(Number(this.dataService.getData('payoutDateEnd')) * 1000);
+	    }
     }
 
   checkAllocations(){
@@ -77,6 +82,9 @@ export class PayoutsComponent implements OnInit{
       this.loader["show"] = true;
       let start = this.datePipe.transform(this.dateBegin, "y-MM-dd");
       let end = this.datePipe.transform(this.dateEnd, "y-MM-dd");
+
+	   this.dataService.writeData("payoutDateBegin", Math.round(this.dateBegin.getTime() / 1000));
+	   this.dataService.writeData("payoutDateEnd", Math.round(this.dateEnd.getTime() / 1000));
 
       let apiUrl = 'Payments/CSV?dtBegin=' + start + '&dtEnd=' + end;
       this.apiService.getData(apiUrl)
