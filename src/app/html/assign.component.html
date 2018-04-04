@@ -155,17 +155,18 @@
 
 
 
-            <div class="error__message" *ngIf="errorShown">
-                <div class="error-wrapper">
-                    <div class="error__message--inner">
-                        <h3>{{"OverlapError" | translate}}</h3>
-                        <button class="schedule__dialog__form--submit submit-enabled no-margin" (click)="toggleError(false)">{{ "PW_GoBack" | translate}}</button>
-                    </div>
-                </div>
-            </div>
+
 
         </div>
     </aside>
+    <div class="error__message" *ngIf="errorShown">
+        <div class="error-wrapper">
+            <div class="error__message--inner">
+                <h3>{{"OverlapError" | translate}}</h3>
+                <button class="schedule__dialog__form--submit submit-enabled no-margin" (click)="toggleError(false)">{{ "PW_GoBack" | translate}}</button>
+            </div>
+        </div>
+    </div>
 </div>
 
 
