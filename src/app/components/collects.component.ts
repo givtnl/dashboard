@@ -188,10 +188,8 @@ export class CollectsComponent implements OnInit{
         this.dateBegin.setHours(6,0,0);
 
         if (!!this.dataService.getData('dateBegin') && !!this.dataService.getData('dateEnd')) {
-          let b = new Date(1970, 0, 1);
-          let e = new Date(1970, 0, 1);
-          this.dateBegin = new Date(b.setSeconds(Number(this.dataService.getData('dateBegin'))));
-          this.dateEnd = new Date(e.setSeconds(Number(this.dataService.getData('dateEnd'))));
+          this.dateBegin = new Date(Number(this.dataService.getData('dateBegin')) * 1000);
+          this.dateEnd = new Date(Number(this.dataService.getData('dateEnd')) * 1000);
         }
 
         this.userService.collectGroupChanged.subscribe(() => {
@@ -289,8 +287,8 @@ export class CollectsComponent implements OnInit{
     }
 
     fetchCollect() {
-      this.dataService.writeData("dateBegin", Math.round(this.dateBegin.getTime() / 1000).toString());
-      this.dataService.writeData("dateEnd", Math.round(this.dateEnd.getTime() / 1000).toString());
+		this.dataService.writeData("dateBegin", (this.dateBegin.getTime() / 1000));
+		this.dataService.writeData("dateEnd", (this.dateEnd.getTime() / 1000));
         this.ShowLoadingAnimation = true;
         this.showCosts = false;
         if(this.dateBegin !== null && this.dateEnd !== null){
