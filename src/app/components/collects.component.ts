@@ -187,9 +187,9 @@ export class CollectsComponent implements OnInit{
         this.dateEnd = new Date();
         this.dateBegin.setHours(6,0,0);
 
-        if (!!this.dataService.getData('dateBegin') && !!this.dataService.getData('dateEnd')) {
-          this.dateBegin = new Date(Number(this.dataService.getData('dateBegin')) * 1000);
-          this.dateEnd = new Date(Number(this.dataService.getData('dateEnd')) * 1000);
+        if (!!this.dataService.getData('collectDateBegin') && !!this.dataService.getData('collectDateEnd')) {
+          this.dateBegin = new Date(Number(this.dataService.getData('collectDateBegin')) * 1000);
+          this.dateEnd = new Date(Number(this.dataService.getData('collectDateEnd')) * 1000);
         }
 
         this.userService.collectGroupChanged.subscribe(() => {
@@ -287,8 +287,8 @@ export class CollectsComponent implements OnInit{
     }
 
     fetchCollect() {
-		this.dataService.writeData("dateBegin", (this.dateBegin.getTime() / 1000));
-		this.dataService.writeData("dateEnd", (this.dateEnd.getTime() / 1000));
+		this.dataService.writeData("collectDateBegin", Math.round(this.dateBegin.getTime() / 1000));
+		this.dataService.writeData("collectDateEnd", Math.round(this.dateEnd.getTime() / 1000));
         this.ShowLoadingAnimation = true;
         this.showCosts = false;
         if(this.dateBegin !== null && this.dateEnd !== null){
