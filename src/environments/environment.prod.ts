@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://api2.nfcollect.com',
+  apiUrl: 'https://api.givtapp.net',
 };
