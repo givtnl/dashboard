@@ -35,7 +35,26 @@ export class DataService {
 
     clearAll(){
         this.dataDictionary.Truncate();
-        sessionStorage.clear();
+        //save some settings
+	    let collectDateBegin = sessionStorage.getItem('collectDateBegin');
+	    let collectDateEnd = sessionStorage.getItem('collectDateEnd');
+
+	    let payoutDateBegin = sessionStorage.getItem('payoutDateBegin');
+	    let payoutDateEnd = sessionStorage.getItem('payoutDateEnd');
+	    //clear whole session storage
+		sessionStorage.clear();
+
+		if(collectDateBegin != null && collectDateEnd != null) {
+			sessionStorage.setItem('collectDateBegin', collectDateBegin);
+			sessionStorage.setItem('collectDateEnd', collectDateEnd);
+		}
+
+		if(payoutDateBegin != null && payoutDateEnd != null) {
+			sessionStorage.setItem('payoutDateBegin', payoutDateBegin);
+			sessionStorage.setItem('payoutDateEnd', payoutDateEnd);
+		}
+
+        console.log(sessionStorage);
         localStorage.clear();
     }
 
