@@ -53,6 +53,7 @@ export class PayoutsComponent implements OnInit{
     let apiUrl = 'Allocations/AllocationCheck';
     this.apiService.getData(apiUrl)
       .then(resp => {
+      	console.log(resp);
         if(resp.filter((ts) => ts.AllocationName == null && ts.Fixed == null).length > 0){
           this.openAllocations = true;
         }
@@ -66,7 +67,10 @@ export class PayoutsComponent implements OnInit{
       this.apiService.getData("Payments/Payouts")
           .then(resp =>
           {
-            this.payouts = resp;
+          	this.payouts = [];
+          	if(resp.length > 0) {
+	            this.payouts = resp;
+            }
           });
     }
 

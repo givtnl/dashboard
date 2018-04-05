@@ -1,5 +1,11 @@
 <my-navigation></my-navigation>
-<section class="section-collects">
+<section class="section-collects" *ngIf="payouts.length == 0">
+    <p class="text section-collects-nopayments">{{ "Payout_NoPayouts" | translate }}</p>
+    <div class="placeholder-line"></div>
+    <div class="placeholder-line"></div>
+    <div class="placeholder-line"></div>
+</section>
+<section *ngIf="payouts.length > 0" class="section-collects">
   <h2 *ngIf="openAllocations" class="red">{{ "OpenAllocationsMessage" | translate}}</h2>
   <h2>{{"Payout_OverviewPayouts" | translate}}</h2>
   <p class="text">{{"Text_Export" | translate}}</p>
@@ -31,6 +37,7 @@
     <section *ngFor="let payout of payouts | reverse; let last = last" [ngClass]="{last: last}">
       <payout [childData]="payout" [loader]="loader" ></payout>
     </section>
+
 <div class="overlay-loader" *ngIf="loader['show']">
   <div class="loader" style="margin-top: 45vh">
     <svg class="circular" viewBox="25 25 50 50">
