@@ -48,7 +48,7 @@
     "Text_TotEnMet": "till",
     "Text_TransactionCost_MoreInfo": "These costs are charged by SlimPay for the signed mandates and for handling the transactions. Signing a mandate costs €0.50. Givt will apply this cost on the first four times the donor uses Givt. This way the costs are evenly divided over the different situations in which Givt is used for donating.",
     "Text_GivtServiceFee_MoreInfo": "Givt charges this fee for providing the service.",
-    "Text_Stornos_MoreInfo": "Here you can find the fees that are charged by SlimPay for retracting money.\n<br/><br/>\nType 1 means the donor has retracted the money before it was withdrawn from his or her bank account or the transaction was declined by the bank or processor. Type 2 means the donor has retracted the gift after it was already withdrawn from his or her account or the donor's bank cancelled the transaction. In almost every case fees of type 2 will be charged over a payout period which is different than the period in which the donor has given.",
+    "Text_Stornos_MoreInfo": "Here you can find the fees that are charged by SlimPay for retracting money.\n<br/><br/>\nType 1 means the donor has retracted the money before it was withdrawn from his or her bank account or the transaction was declined by the bank or processor. Type 2 means the donor has retracted the gift after it was already withdrawn from his or her account or the donor's bank cancelled the transaction. In almost every case fees of type 2 will be charged over a payment period which is different than the period in which the donor has given.",
     "Payout_PayoutCosts": "Payment costs",
     "Payout_Title": "Payments",
     "Payout_OverviewPayouts": "Overview of payments",
@@ -73,7 +73,7 @@
     "PW_ForgotPassword": "Forgot password?",
     "PW_RequestedPW": "If you are registered with this account, you would have received an email in your inbox to reset your password. If not, then you are not registered with this account.",
     "PW_Saved": "Your password has been saved. You can now login into the app with your new credentials.",
-    "Text_Reversals_MoreInfo": "This fee contains the donations that were reversed by the donors. In almost every case this fee will be charged over a payout period which is different than the period in which the donor has given.",
+    "Text_Reversals_MoreInfo": "This fee contains the donations that were reversed by the donors. In almost every case this fee will be charged over a payment period which is different than the period in which the donor has given.",
     "Text_Reversals": "Reversals",
     "BTW_EXCL": "Total excl. VAT",
     "BTW_PERCENT": "VAT (21%)",
@@ -111,9 +111,9 @@
     "Processed": "Processed",
     "CancelledByUser": "Cancelled by user",
     "CancelledByBank": "Refused by bank",
-    "LegendExplanation": "In process: donations yet to be processed by SlimPay.\nProcessed: donations that will be paid out with the next payout.\nRefused by the bank: donations that were refused by the bank. E.g. when there's not enough provision on the bank account.\nCancelled by the giver: donations that were cancelled by the user after being processed.",
+    "LegendExplanation": "In process: donations yet to be processed by SlimPay.\nProcessed: donations that will be paid out with the next payment.\nRefused by the bank: donations that were refused by the bank. E.g. when there's not enough provision on the bank account.\nCancelled by the giver: donations that were cancelled by the user after being processed.",
     "ToProcessExplanation": "Donations are yet to be processed by SlimPay. Take a look in the manual for more info.",
-    "ProcessedExplanation": "Donations are processed and will be paid out with the next payout.",
+    "ProcessedExplanation": "Donations are processed and will be paid out with the next payment.",
     "CancelByUserExplanation": "Storno's by the user.",
     "CancelByBankExplanation": "Storno's by the bank.",
     "ClickToViewMoreInformation": "Click to view more information",
@@ -124,5 +124,6 @@
     "SaveAll": "Save",
     "DeleteAll": "Delete",
     "AllocationConflict": "Allocation conflict",
-    "FixedPoints": "Predefined"
+    "FixedPoints": "Predefined",
+    "Payout_NoPayouts": "No payments are available for your organisation yet. You can expect the first payment on the second Thursday after the first time that there has been collected."
 }
