@@ -84,8 +84,8 @@ export class PayoutsComponent implements OnInit{
 
     exportCSV() {
       this.loader["show"] = true;
-      let start = this.datePipe.transform(this.dateBegin, "y-MM-dd");
-      let end = this.datePipe.transform(this.dateEnd, "y-MM-dd");
+      let start = this.datePipe.transform(this.dateBegin, "yyy-MM-ddT00:00:00.000Z");
+      let end = this.datePipe.transform(this.dateEnd, "yyy-MM-ddT00:00:00.000Z");
 
 	   this.dataService.writeData("payoutDateBegin", Math.round(this.dateBegin.getTime() / 1000));
 	   this.dataService.writeData("payoutDateEnd", Math.round(this.dateEnd.getTime() / 1000));
@@ -101,8 +101,8 @@ export class PayoutsComponent implements OnInit{
           var encodedUri = encodeURI(csvContent);
           var link = document.createElement("a");
           link.setAttribute("href", encodedUri);
-          let beginDate = this.datePipe.transform(new Date(this.dateBegin), "dd-MM-y");
-          let endDate = this.datePipe.transform(new Date(this.dateEnd), "dd-MM-y");
+          let beginDate = this.datePipe.transform(new Date(this.dateBegin), "yyyy-MM-ddT00:00:00.000Z");
+          let endDate = this.datePipe.transform(new Date(this.dateEnd), "yyy-MM-ddT00:00:00.000Z");
 
           let fileName = this.userService.CurrentCollectGroup.Name + " - " + beginDate + " - " + endDate + ".csv";
           link.setAttribute("download", fileName);
