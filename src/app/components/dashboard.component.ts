@@ -1,5 +1,4 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { DatePipe } from '@angular/common';
 import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/observable/forkJoin';
 import { Card } from '../models/card';
@@ -17,12 +16,21 @@ import {ISODatePipe} from "../pipes/iso.datepipe";
 })
 export class DashboardComponent implements OnInit, OnDestroy{
 
+    daysOfWeek : string[] = [
+        "Text_LastSunday",
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday"
+    ];
+
     cards: Card[] = [];
     lastSundayCard: Card = new Card();
     thisMonthCard: Card = new Card();
     thisMonthGiversCard: Card = new Card();
     isSafari: boolean;
-    scriptURL: string;
     translate: TranslateService;
 
     ShowLoadingAnimation = false;
@@ -197,26 +205,29 @@ export class DashboardComponent implements OnInit, OnDestroy{
     fetchLastSundayGivts(){
         let dateBegin;
         let dateEnd;
-        let chosenDate;
-        let displayDate;
-        let date = new Date();
-        let day = date.getUTCDay();
-        displayDate = new Date(date.valueOf() - day*1000*60*60*24);
+        dateEnd = new Date(this.datePipe.transform(new Date(), "yyyy-MM-dd 23:59:59"));
+        dateBegin = new Date(this.datePipe.transform(new Date().setDate(dateEnd.getDate() - 7), "yyyy-MM-dd 00:00:00"));
 
-        chosenDate = displayDate.getUTCMonth()+1 + "-" + displayDate.getUTCDate() + "-" + displayDate.getUTCFullYear();
-        dateBegin =  chosenDate + " 00:00:00";
-        dateEnd = chosenDate + " 23:59:59";
-        return this.apiService.getData("Cards/Givts/?DateBegin="+dateBegin+"&DateEnd="+dateEnd)
+        return this.apiService.getData("v2/collectgroups/" + this.userService.CurrentCollectGroup.GUID
+                                        + "/givts/view/search?dtBegin="+ this.datePipe.toISODateNoLocale(dateBegin) + "&dtEnd=" + this.datePipe.toISODateNoLocale(dateEnd))
             .then(resp =>
             {
-              if(resp.statusCode == 500) return;
+                if(resp.statusCode == 500)
+                    return;
 
-                let collectSum = resp.TotalAmount;
+                let highest = resp.reduce(function(rv, x) {
+                    if (rv && x.Sum < rv.Sum) return rv;
+                    else return x;
+                });
+
+                let displayDate = new Date(highest.Date);
+
+                let collectSum = highest.Sum;
                 this.lastSundaySum = collectSum;
                 this.lastSundayCard.value = this.euro+ "<span class='fat-emphasis'>" + (this.isSafari ? collectSum.toFixed(2) : collectSum.toLocaleString(navigator.language,{minimumFractionDigits: 2})) + "</span>";
-                this.translate.get("Text_LastSunday").subscribe(value => { this.lastSundayCard.title = value;});
+                this.translate.get(this.daysOfWeek[displayDate.getDay()]).subscribe(value => { this.lastSundayCard.title = value;});
                 this.translate.get("Text_Given").subscribe(value => { this.lastSundayCard.footer = value;});
-                this.lastSundayCard.subtitle = this.datePipe.transform(displayDate.getUTCMonth()+1 + "/" + displayDate.getUTCDate() + "/" + displayDate.getUTCFullYear(), 'dd-MM-yyyy');
+                this.lastSundayCard.subtitle = this.datePipe.transform(displayDate, 'dd-MM-yyyy');
                 if(!<HTMLDivElement>document.getElementById("donutchart"))
                     this.googleCharts(this.lastSundayCard.subtitle, this.lastSundayCard.footer, this.euro + (this.isSafari ? collectSum.toFixed(2) : collectSum.toLocaleString(navigator.language,{minimumFractionDigits: 2})));
                 let cardIsInCards = false;

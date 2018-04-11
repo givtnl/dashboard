@@ -379,11 +379,22 @@ export class CollectsComponent implements OnInit{
         }
 
 
-        if (this.dataService.getData("CurrentCollectGroup")) {
-          let GUID = JSON.parse(this.dataService.getData("CurrentCollectGroup")).GUID;
-          this.apiService.getData("v2/collectgroups/" + GUID + "/givts/view/search?dtBegin=" + dateBegin + "&dtEnd=" + dateEnd + baseParams)
-            .then(resp =>
+        if (this.userService.CurrentCollectGroup) {
+          this.apiService.getData("v2/collectgroups/" + this.userService.CurrentCollectGroup.GUID
+                        + "/givts/view/search?dtBegin=" + this.datePipe.toISODateNoLocale(dateBegin) + "&dtEnd=" + this.datePipe.toISODateNoLocale(dateEnd)
+                        + baseParams)
+            .then(serverResp =>
             {
+              let resp = serverResp.reduce(function(rv, x)
+              {
+                  let el = rv.find(r => r && r.key === x.Status);
+                  if (el)
+                      el.values.push(x);
+                  else
+                      rv.push({ key: x.Status, values: [x]});
+                  return rv;
+              }, []);
+
               //reset vars
               this.infoToProcess = new visualCollection(0,0);
               this.infoProcessed = new visualCollection(0,0);
@@ -394,23 +405,29 @@ export class CollectsComponent implements OnInit{
 
               for(let i = 0; i < resp.length; i++) {
                 let currentResp = resp[i];
-                switch (resp[i].Status) {
+                  let count = currentResp.values.reduce(function(rv, x) {
+                      rv += x.Count; return rv;
+                  }, 0);
+                  let sum = currentResp.values.reduce(function(rv, x){
+                      rv += x.Sum; return rv;
+                  }, 0);
+                  switch (currentResp.key) {
                   case 1:
                   case 2:
-                    this.infoToProcess.numberOfUsers += currentResp.Count;
-                    this.infoToProcess.totalAmount += currentResp.Sum;
+                    this.infoToProcess.numberOfUsers += count;
+                    this.infoToProcess.totalAmount += sum;
                     break;
                   case 3:
-                    this.infoProcessed.numberOfUsers += currentResp.Count;
-                    this.infoProcessed.totalAmount += currentResp.Sum;
+                    this.infoProcessed.numberOfUsers += count;
+                    this.infoProcessed.totalAmount += sum;
                     break;
                   case 4:
-                    this.infoCancelledByBank.numberOfUsers += currentResp.Count;
-                    this.infoCancelledByBank.totalAmount += currentResp.Sum;
+                    this.infoCancelledByBank.numberOfUsers += count;
+                    this.infoCancelledByBank.totalAmount += sum;
                     break;
                   case 5:
-                    this.infoCancelledByUser.numberOfUsers += currentResp.Count;
-                    this.infoCancelledByUser.totalAmount += currentResp.Sum;
+                    this.infoCancelledByUser.numberOfUsers += count;
+                    this.infoCancelledByUser.totalAmount += sum;
                     break;
                   default:
                     break;

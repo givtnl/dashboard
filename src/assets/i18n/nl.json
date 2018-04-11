@@ -125,5 +125,11 @@
     "DeleteAll": "Verwijderen",
     "AllocationConflict": "Conflict bij toewijzing",
     "FixedPoints": "Vaste punten",
-    "Payout_NoPayouts": "Er zijn nog geen uitbetalingen voor uw organisatie beschikbaar. De eerste uitbetaling kunt u verwachten op de tweede donderdag na de eerste keer dat er gecollecteerd is."
+    "Payout_NoPayouts": "Er zijn nog geen uitbetalingen voor uw organisatie beschikbaar. De eerste uitbetaling kunt u verwachten op de tweede donderdag na de eerste keer dat er gecollecteerd is.",
+    "Monday": "Maandag",
+    "Tuesday": "Dinsdag",
+    "Wednesday": "Woensdag",
+    "Thursday": "Donderdag",
+    "Friday": "Vrijdag",
+    "Saturday": "Zaterdag"
 }
