@@ -46,6 +46,7 @@ export function createTranslateLoader(http: Http) {
     NavigationComponent,
     CollectsComponent,
     ReversePipe,
+    ISODatePipe,
     PayoutsComponent,
     MandateComponent,
     ForgotPasswordComponent,
