@@ -206,7 +206,7 @@ export class DashboardComponent implements OnInit, OnDestroy{
         let dateBegin;
         let dateEnd;
         dateEnd = new Date(this.datePipe.transform(new Date(), "yyyy-MM-dd 23:59:59"));
-        dateBegin = new Date(this.datePipe.transform(new Date().setDate(dateEnd.getDate() - 7), "yyyy-MM-dd 00:00:00"));
+        dateBegin = new Date(this.datePipe.transform(new Date().setDate(dateEnd.getDate() - 6), "yyyy-MM-dd 00:00:00"));
 
         return this.apiService.getData("v2/collectgroups/" + this.userService.CurrentCollectGroup.GUID
                                         + "/givts/view/search?dtBegin="+ this.datePipe.toISODateNoLocale(dateBegin) + "&dtEnd=" + this.datePipe.toISODateNoLocale(dateEnd))
@@ -216,9 +216,9 @@ export class DashboardComponent implements OnInit, OnDestroy{
                     return;
 
                 let highest = resp.reduce(function(rv, x) {
-                    if (rv && x.Sum < rv.Sum) return rv;
+                    if (rv && x.Count < rv.Count) return rv;
                     else return x;
-                });
+                }, {Sum:0, Count:0, Date:new Date()});
 
                 let displayDate = new Date(highest.Date);
 
