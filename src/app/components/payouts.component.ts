@@ -1,5 +1,4 @@
 import { Component,OnInit,isDevMode } from '@angular/core';
-import { DatePipe } from '@angular/common';
 
 import { ApiClientService } from "app/services/api-client.service";
 import {Payout} from "../models/payout";
@@ -7,6 +6,7 @@ import {TranslateService} from "ng2-translate";
 import {ViewEncapsulation} from '@angular/core';
 import {DataService} from "../services/data.service";
 import {UserService} from "../services/user.service";
+import {ISODatePipe} from "../pipes/iso.datepipe";
 
 
 @Component({
@@ -31,7 +31,7 @@ export class PayoutsComponent implements OnInit{
     dateBegin: Date = null;
     dateEnd: Date = null;
     loader: object = {show: false};
-    constructor(private apiService: ApiClientService,private dataService: DataService, translate: TranslateService, private datePipe: DatePipe, private userService: UserService) {
+    constructor(private apiService: ApiClientService,private dataService: DataService, translate: TranslateService, private datePipe: ISODatePipe, private userService: UserService) {
         this.isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
         this.translate = translate;
 
@@ -42,12 +42,18 @@ export class PayoutsComponent implements OnInit{
         this.userService.collectGroupChanged.subscribe(() => {
             this.ngOnInit();
         });
+
+	    if (!!this.dataService.getData('payoutDateBegin') && !!this.dataService.getData('payoutDateEnd')) {
+		    this.dateBegin = new Date(Number(this.dataService.getData('payoutDateBegin')) * 1000);
+		    this.dateEnd = new Date(Number(this.dataService.getData('payoutDateEnd')) * 1000);
+	    }
     }
 
   checkAllocations(){
     let apiUrl = 'Allocations/AllocationCheck';
     this.apiService.getData(apiUrl)
       .then(resp => {
+      	console.log(resp);
         if(resp.filter((ts) => ts.AllocationName == null && ts.Fixed == null).length > 0){
           this.openAllocations = true;
         }
@@ -61,7 +67,10 @@ export class PayoutsComponent implements OnInit{
       this.apiService.getData("Payments/Payouts")
           .then(resp =>
           {
-            this.payouts = resp;
+          	this.payouts = [];
+          	if(resp.length > 0) {
+	            this.payouts = resp;
+            }
           });
     }
 
@@ -75,8 +84,11 @@ export class PayoutsComponent implements OnInit{
 
     exportCSV() {
       this.loader["show"] = true;
-      let start = this.datePipe.transform(this.dateBegin, "y-MM-dd");
-      let end = this.datePipe.transform(this.dateEnd, "y-MM-dd");
+      let start = this.datePipe.toISODateNoLocale(this.dateBegin);
+      let end = this.datePipe.toISODateNoLocale(this.dateEnd);
+
+	   this.dataService.writeData("payoutDateBegin", Math.round(this.dateBegin.getTime() / 1000));
+	   this.dataService.writeData("payoutDateEnd", Math.round(this.dateEnd.getTime() / 1000));
 
       let apiUrl = 'Payments/CSV?dtBegin=' + start + '&dtEnd=' + end;
       this.apiService.getData(apiUrl)
@@ -89,8 +101,8 @@ export class PayoutsComponent implements OnInit{
           var encodedUri = encodeURI(csvContent);
           var link = document.createElement("a");
           link.setAttribute("href", encodedUri);
-          let beginDate = this.datePipe.transform(new Date(this.dateBegin), "dd-MM-y");
-          let endDate = this.datePipe.transform(new Date(this.dateEnd), "dd-MM-y");
+          let beginDate = this.datePipe.transform(new Date(this.dateBegin), "dd-MM-yyyy");
+          let endDate = this.datePipe.transform(new Date(this.dateEnd), "dd-MM-yyyy");
 
           let fileName = this.userService.CurrentCollectGroup.Name + " - " + beginDate + " - " + endDate + ".csv";
           link.setAttribute("download", fileName);

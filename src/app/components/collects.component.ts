@@ -1,18 +1,13 @@
-import {Component, OnInit, Attribute, ViewEncapsulation, ViewChild} from '@angular/core';
-import { DatePipe } from '@angular/common';
-import {BrowserModule} from '@angular/platform-browser';
-//import { BrowserAnimationsModule } from '@angular/animations';
+import {Component, OnInit, ViewEncapsulation, ViewChild} from '@angular/core';
 import { ApiClientService } from "app/services/api-client.service";
-import {TranslatePipe, TranslateService} from "ng2-translate";
+import {TranslateService} from "ng2-translate";
 import {CalendarModule} from "primeng/primeng";
 import {Collection} from "../models/collection";
 import {DataService} from "../services/data.service";
 import {UserService} from "../services/user.service";
 import {visualCollection} from "../models/visualCollection";
 import {BaseChartDirective} from "ng2-charts";
-import * as moment from "moment";
-import Base = moment.unitOfTime.Base;
-import {forEach} from "@angular/router/src/utils/collection";
+import {ISODatePipe} from "../pipes/iso.datepipe";
 @Component({
     selector: 'my-collects',
     templateUrl: '../html/collects.component.html',
@@ -163,7 +158,7 @@ export class CollectsComponent implements OnInit{
       this.fetchSavedCollects();
     }
 
-    constructor(private apiService: ApiClientService, private translate: TranslateService, private datePipe: DatePipe, private dataService: DataService, private userService: UserService) {
+    constructor(private apiService: ApiClientService, private translate: TranslateService, private datePipe: ISODatePipe, private dataService: DataService, private userService: UserService) {
         this.locale = this.nl;
 
         this.isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
@@ -187,11 +182,9 @@ export class CollectsComponent implements OnInit{
         this.dateEnd = new Date();
         this.dateBegin.setHours(6,0,0);
 
-        if (!!this.dataService.getData('dateBegin') && !!this.dataService.getData('dateEnd')) {
-          let b = new Date(1970, 0, 1);
-          let e = new Date(1970, 0, 1);
-          this.dateBegin = new Date(b.setSeconds(Number(this.dataService.getData('dateBegin'))));
-          this.dateEnd = new Date(e.setSeconds(Number(this.dataService.getData('dateEnd'))));
+        if (!!this.dataService.getData('collectDateBegin') && !!this.dataService.getData('collectDateEnd')) {
+          this.dateBegin = new Date(Number(this.dataService.getData('collectDateBegin')) * 1000);
+          this.dateEnd = new Date(Number(this.dataService.getData('collectDateEnd')) * 1000);
         }
 
         this.userService.collectGroupChanged.subscribe(() => {
@@ -222,8 +215,8 @@ export class CollectsComponent implements OnInit{
                 }
                 this.savedCollects = resp;
                 for(let i in this.savedCollects){
-                    this.savedCollects[i].BeginDate = new Date(resp[i].BeginDate + "Z");
-                    this.savedCollects[i].EndDate =  new Date(resp[i].EndDate + "Z");
+                    this.savedCollects[i].BeginDate = new Date(resp[i].BeginDate);
+                    this.savedCollects[i].EndDate =  new Date(resp[i].EndDate);
 
                     this.savedCollects[i].BeginDateString = this.datePipe.transform(this.savedCollects[i].BeginDate, 'd MMMM y');
                     this.savedCollects[i].EndDateString = this.datePipe.transform(this.savedCollects[i].EndDate, 'd MMMM y');
@@ -289,8 +282,8 @@ export class CollectsComponent implements OnInit{
     }
 
     fetchCollect() {
-      this.dataService.writeData("dateBegin", Math.round(this.dateBegin.getTime() / 1000).toString());
-      this.dataService.writeData("dateEnd", Math.round(this.dateEnd.getTime() / 1000).toString());
+		this.dataService.writeData("collectDateBegin", Math.round(this.dateBegin.getTime() / 1000));
+		this.dataService.writeData("collectDateEnd", Math.round(this.dateEnd.getTime() / 1000));
         this.ShowLoadingAnimation = true;
         this.showCosts = false;
         if(this.dateBegin !== null && this.dateEnd !== null){

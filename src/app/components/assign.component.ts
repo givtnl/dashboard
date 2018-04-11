@@ -5,14 +5,9 @@ import { ViewChild,ChangeDetectorRef } from '@angular/core';
 import 'fullcalendar';
 import 'fullcalendar/dist/locale/nl';
 import {AllocationTimeSpanItem, Transaction} from "../models/allocationTimeSpanItem";
-import {element} from "protractor";
 import {UserService} from "../services/user.service";
-import {Button} from "primeng/primeng";
-import * as moment from "moment";
-import _date = moment.unitOfTime._date;
-import {forEach} from "@angular/router/src/utils/collection";
-import { trigger, style, animate, transition } from '@angular/animations';
-//declare var moment: any;
+
+
 @Component({
   selector: 'app-assign-collects',
   templateUrl: '../html/assign.component.html',
@@ -146,17 +141,7 @@ export class AssignComponent implements OnInit {
     }.bind(this);
     this.options["contentHeight"] = "auto";
     this.options["eventClick"] = function(event, jsEvent, view) {
-
       this.event = event;
-
-      let start = event.start;
-      let end = event.end;
-      if(view.name === 'month') {
-        start.stripTime();
-        end.stripTime();
-      }
-
-
       this.startTime = new Date(this.event.start);
       this.endTime = new Date(this.event.end);
       this.fillData(event);
@@ -205,7 +190,7 @@ export class AssignComponent implements OnInit {
     this.fixedAllocations = [];
 
     let fixedGivts = this.allGivts.filter((ts) => {
-      return ts.Fixed != null && ts["dt_Confirmed"] > this.startTime && ts["dt_Confirmed"] < this.endTime;
+      return ts.Fixed != null && (new Date(ts["dt_Confirmed"])) >= this.startTime && (new Date(ts["dt_Confirmed"])) < this.endTime;
     });
 
     for(let g of fixedGivts) {
@@ -222,7 +207,7 @@ export class AssignComponent implements OnInit {
     }
 
     let normalGivts = this.allGivts.filter((g) => {
-      return g.Fixed == null && g["dt_Confirmed"] > this.startTime && g["dt_Confirmed"] < this.endTime;
+      return g.Fixed == null && (new Date(g["dt_Confirmed"])) >= this.startTime && (new Date(g["dt_Confirmed"])) < this.endTime;
     });
     if (fcEvent.allocated) {
       if (normalGivts.length > 0) {
@@ -308,7 +293,7 @@ export class AssignComponent implements OnInit {
       return ts.Fixed == null;
     });
     let fixedGivts = this.allGivts.filter((ts) => {
-      return ts.Fixed != null && ts["dt_Confirmed"] > new Date(start) && ts["dt_Confirmed"] < new Date(end);
+      return ts.Fixed != null && (new Date(ts["dt_Confirmed"])) >= new Date(start) && (new Date(ts["dt_Confirmed"])) < new Date(end);
     });
     if(openGivts.length === 0 && fixedGivts.length === 0) {
     	this.openDialog();
@@ -381,12 +366,6 @@ export class AssignComponent implements OnInit {
 
     this.apiService.getData(apiUrl)
       .then(resp => {
-        for(let i = 0; i < resp.length; i++)
-        {
-          let d = new Date(resp[i]["dt_Confirmed"] + " UTC");
-          resp[i]["dt_Confirmed"] = d;
-        }
-
         this.allGivts = resp;
 
         this.openGivts = resp.filter((ts) => {

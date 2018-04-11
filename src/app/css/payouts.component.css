@@ -594,3 +594,17 @@ button:disabled{
   width: 100vw;
   height:100vh;
 }
+
+.section-collects-nopayments {
+    width: 500px;
+    margin: 40px auto !important;
+    font-size: 18px !important;
+    font-family: Avenir_Light !important;
+}
+
+.placeholder-line {
+    background: #e3e2e7;
+    margin: 30px 0;
+    border-radius: 30px;
+    height: 20px;
+}
