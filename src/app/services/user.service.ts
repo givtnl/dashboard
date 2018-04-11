@@ -9,7 +9,6 @@ import { User } from '../models/user';
 import { DataService } from "./data.service";
 import { ApiClientService} from "./api-client.service";
 import { EventEmitter, Output } from "@angular/core";
-import { setTimeout } from 'timers';
 
 @Injectable()
 export class UserService {
