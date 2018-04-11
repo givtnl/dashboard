@@ -1,9 +1,8 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component } from '@angular/core';
 
-import {TranslateService} from 'ng2-translate';
-import {DataService} from "../services/data.service";
 import {UserService} from "../services/user.service";
 import {Router} from "@angular/router";
+
 @Component({
     selector: 'unauthorized',
     template: `

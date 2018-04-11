@@ -1,18 +1,13 @@
-import {Component, OnInit, Attribute, ViewEncapsulation, ViewChild} from '@angular/core';
-import { DatePipe } from '@angular/common';
-import {BrowserModule} from '@angular/platform-browser';
-//import { BrowserAnimationsModule } from '@angular/animations';
+import {Component, OnInit, ViewEncapsulation, ViewChild} from '@angular/core';
 import { ApiClientService } from "app/services/api-client.service";
-import {TranslatePipe, TranslateService} from "ng2-translate";
+import {TranslateService} from "ng2-translate";
 import {CalendarModule} from "primeng/primeng";
 import {Collection} from "../models/collection";
 import {DataService} from "../services/data.service";
 import {UserService} from "../services/user.service";
 import {visualCollection} from "../models/visualCollection";
 import {BaseChartDirective} from "ng2-charts";
-import * as moment from "moment";
-import Base = moment.unitOfTime.Base;
-import {forEach} from "@angular/router/src/utils/collection";
+import {ISODatePipe} from "../pipes/iso.datepipe";
 @Component({
     selector: 'my-collects',
     templateUrl: '../html/collects.component.html',
@@ -163,7 +158,7 @@ export class CollectsComponent implements OnInit{
       this.fetchSavedCollects();
     }
 
-    constructor(private apiService: ApiClientService, private translate: TranslateService, private datePipe: DatePipe, private dataService: DataService, private userService: UserService) {
+    constructor(private apiService: ApiClientService, private translate: TranslateService, private datePipe: ISODatePipe, private dataService: DataService, private userService: UserService) {
         this.locale = this.nl;
 
         this.isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);

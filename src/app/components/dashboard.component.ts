@@ -7,6 +7,7 @@ import { ApiClientService } from "app/services/api-client.service";
 import {TranslateService} from "ng2-translate";
 import {DataService} from "../services/data.service";
 import {UserService} from "../services/user.service";
+import {ISODatePipe} from "../pipes/iso.datepipe";
 
  declare var google: any;
 @Component({
@@ -37,7 +38,7 @@ export class DashboardComponent implements OnInit, OnDestroy{
 
     lastSundaySum: number;
 
-    constructor(private apiService: ApiClientService,  translate:TranslateService, private datePipe: DatePipe, private dataService: DataService, private userService: UserService){
+    constructor(private apiService: ApiClientService,  translate:TranslateService, private datePipe: ISODatePipe, private dataService: DataService, private userService: UserService){
       this.translate = translate;
         this.isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
         this.ShowLoadingAnimation = true;
@@ -134,7 +135,7 @@ export class DashboardComponent implements OnInit, OnDestroy{
 
         let dateBegin = month + "-01-" + year;
         let dateEnd = nextMonth + "-01-" + secondYear;
-        let params = "DateBegin=" + dateBegin + "&DateEnd=" + dateEnd;
+        let params = "DateBegin=" + this.datePipe.toISODateNoLocale(new Date(dateBegin)) + "&DateEnd=" + this.datePipe.toISODateNoLocale(new Date(dateEnd));
 
         return this.apiService.getData("Cards/Users/?"+params)
             .then(resp =>

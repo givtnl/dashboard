@@ -1,5 +1,4 @@
 import { Component,OnInit,isDevMode } from '@angular/core';
-import { DatePipe } from '@angular/common';
 
 import { ApiClientService } from "app/services/api-client.service";
 import {Payout} from "../models/payout";
@@ -7,6 +6,7 @@ import {TranslateService} from "ng2-translate";
 import {ViewEncapsulation} from '@angular/core';
 import {DataService} from "../services/data.service";
 import {UserService} from "../services/user.service";
+import {ISODatePipe} from "../pipes/iso.datepipe";
 
 
 @Component({
@@ -31,7 +31,7 @@ export class PayoutsComponent implements OnInit{
     dateBegin: Date = null;
     dateEnd: Date = null;
     loader: object = {show: false};
-    constructor(private apiService: ApiClientService,private dataService: DataService, translate: TranslateService, private datePipe: DatePipe, private userService: UserService) {
+    constructor(private apiService: ApiClientService,private dataService: DataService, translate: TranslateService, private datePipe: ISODatePipe, private userService: UserService) {
         this.isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
         this.translate = translate;
 
@@ -84,8 +84,8 @@ export class PayoutsComponent implements OnInit{
 
     exportCSV() {
       this.loader["show"] = true;
-      let start = this.datePipe.transform(this.dateBegin, "yyy-MM-ddT00:00:00.000Z");
-      let end = this.datePipe.transform(this.dateEnd, "yyy-MM-ddT00:00:00.000Z");
+      let start = this.datePipe.toISODateNoLocale(this.dateBegin);
+      let end = this.datePipe.toISODateNoLocale(this.dateEnd);
 
 	   this.dataService.writeData("payoutDateBegin", Math.round(this.dateBegin.getTime() / 1000));
 	   this.dataService.writeData("payoutDateEnd", Math.round(this.dateEnd.getTime() / 1000));
@@ -101,8 +101,8 @@ export class PayoutsComponent implements OnInit{
           var encodedUri = encodeURI(csvContent);
           var link = document.createElement("a");
           link.setAttribute("href", encodedUri);
-          let beginDate = this.datePipe.transform(new Date(this.dateBegin), "yyyy-MM-ddT00:00:00.000Z");
-          let endDate = this.datePipe.transform(new Date(this.dateEnd), "yyy-MM-ddT00:00:00.000Z");
+          let beginDate = this.datePipe.transform(new Date(this.dateBegin), "dd-MM-yyyy");
+          let endDate = this.datePipe.transform(new Date(this.dateEnd), "dd-MM-yyyy");
 
           let fileName = this.userService.CurrentCollectGroup.Name + " - " + beginDate + " - " + endDate + ".csv";
           link.setAttribute("download", fileName);

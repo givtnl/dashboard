@@ -31,6 +31,7 @@ import { ChartsModule } from "ng2-charts";
 import * as jQuery from 'jquery';
 import { AutoCompleteModule, ScheduleModule, DialogModule, CalendarModule, DropdownModule } from 'primeng/primeng';
 import { LoggedOutComponent } from 'app/components/loggedout.component';
+import {ISODatePipe} from "./pipes/iso.datepipe";
 (window as any).jQuery = (window as any).$ = jQuery; // This is needed to resolve issue.
 
 export function createTranslateLoader(http: Http) {
@@ -91,7 +92,7 @@ export function createTranslateLoader(http: Http) {
       provide: LocationStrategy,
       useClass: HashLocationStrategy
     },
-    DatePipe
+    ISODatePipe
   ],
   bootstrap: [AppComponent]
 })

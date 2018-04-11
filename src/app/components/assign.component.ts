@@ -5,14 +5,9 @@ import { ViewChild,ChangeDetectorRef } from '@angular/core';
 import 'fullcalendar';
 import 'fullcalendar/dist/locale/nl';
 import {AllocationTimeSpanItem, Transaction} from "../models/allocationTimeSpanItem";
-import {element} from "protractor";
 import {UserService} from "../services/user.service";
-import {Button} from "primeng/primeng";
-import * as moment from "moment";
-import _date = moment.unitOfTime._date;
-import {forEach} from "@angular/router/src/utils/collection";
-import { trigger, style, animate, transition } from '@angular/animations';
-//declare var moment: any;
+
+
 @Component({
   selector: 'app-assign-collects',
   templateUrl: '../html/assign.component.html',
