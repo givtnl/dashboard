@@ -3,8 +3,8 @@
  */
 export class Payout{
     dtExecuted: Date;
-    BeginDate: string;
-    EndDate: string;
+    BeginDate: Date;
+    EndDate: Date;
     TransactionCount: number;
     TotalPaid: string;
     MandateCostCount: number;
