@@ -141,8 +141,8 @@ export class DashboardComponent implements OnInit, OnDestroy{
             nextMonth = 1;
         }
 
-        let dateBegin = month + "-01-" + year;
-        let dateEnd = nextMonth + "-01-" + secondYear;
+        let dateBegin = year + "-" + month + "-01 00:00:00";
+        let dateEnd = secondYear + "-" + nextMonth + "-01 00:00:00";
         let params = "DateBegin=" + this.datePipe.toISODateNoLocale(new Date(dateBegin)) + "&DateEnd=" + this.datePipe.toISODateNoLocale(new Date(dateEnd));
 
         return this.apiService.getData("Cards/Users/?"+params)
@@ -176,9 +176,9 @@ export class DashboardComponent implements OnInit, OnDestroy{
             nextMonth = 1;
         }
 
-        let dateBegin = month + "-01-" + year;
-        let dateEnd = nextMonth + "-01-" + secondYear;
-        let params = "DateBegin=" + dateBegin + "&DateEnd=" + dateEnd;
+        let dateBegin = year + "-" + month + "-01 00:00:00";
+        let dateEnd = secondYear + "-" + nextMonth + "-01 00:00:00";
+        let params = "DateBegin=" + this.datePipe.toISODateNoLocale(new Date(dateBegin)) + "&DateEnd=" + this.datePipe.toISODateNoLocale(new Date(dateEnd));
 
         return this.apiService.getData("Cards/Givts/?"+params)
             .then(resp =>
