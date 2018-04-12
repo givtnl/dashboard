@@ -125,5 +125,11 @@
     "DeleteAll": "Delete",
     "AllocationConflict": "Allocation conflict",
     "FixedPoints": "Predefined",
-    "Payout_NoPayouts": "No payments are available for your organisation yet. You can expect the first payment on the second Thursday after the first time that there has been collected."
+    "Payout_NoPayouts": "No payments are available for your organisation yet. You can expect the first payment on the second Thursday after the first time that there has been collected.",
+    "Monday": "Monday",
+    "Tuesday": "Tuesday",
+    "Wednesday": "Wednesday",
+    "Thursday": "Thursday",
+    "Friday": "Friday",
+    "Saturday": "Saturday"
 }

@@ -21,7 +21,7 @@
         <div class="schedule__dialog" style="margin-left: 20px;margin-top: 208px;margin-left: 20px;top: 20px;position: sticky;position: -webkit-sticky;">
 
             <div style="" class="list-collections">
-                <button style="background: none;border:none;position: absolute;top:1px;right:1px;margin: 0;padding: 10px;cursor:  pointer;" (click)="isDialogOpen = false">
+                <button style="background: none;border:none;position: absolute;top:1px;right:1px;margin: 0;padding: 10px;cursor:  pointer;" (click)="closeDialog()">
 
                     <svg width="19px" height="19px" viewBox="0 0 19 19" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                         <!-- Generator: Sketch 49.1 (51147) - http://www.bohemiancoding.com/sketch -->
@@ -36,6 +36,11 @@
                     </svg>
                 </button>
                 <div style="margin-top: 6px;">
+                    <div style="margin-top:15px; margin-bottom: 30px" class="flex-col" *ngIf="currentTab == SelectedTab.Collects">
+                        <span style="margin-left: 0" class="text">{{'From' | translate}}</span>
+                        <p-calendar [(ngModel)]="startTime" showTime="showTime" [timeOnly]="true" name="startTime" [stepMinute]="10" class="time-picker"></p-calendar> <span class="text">{{'To' | translate}}</span>
+                        <p-calendar [(ngModel)]="endTime" showTime="showTime"  [timeOnly]="true" name="endTime" [stepMinute]="10"></p-calendar>
+                    </div>
                     <span *ngIf="!areAllocationsEmpty" class="tab__element" (click)="currentTab = SelectedTab.Collects" [class.tab__element--active]="currentTab == SelectedTab.Collects">{{ "Menu_Collectes" | translate}}</span>
                     <span *ngIf="fixedAllocations.length > 0" class="tab__element" (click)="currentTab = SelectedTab.Fixed" [class.tab__element--active]="currentTab == SelectedTab.Fixed">{{"FixedPoints" | translate}}</span>
                 </div>

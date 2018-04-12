@@ -45,6 +45,7 @@ export class AssignComponent implements OnInit {
   fixedAllocations: Array<AssignedCollection> = [];
   startTime: Date;
   endTime: Date;
+  oldJsEvent: any;
 
   get allowButton(): boolean {
     if(this.firstCollection.amountOfGivts > 0 && this.firstCollection.allocated == false)
@@ -141,11 +142,25 @@ export class AssignComponent implements OnInit {
     }.bind(this);
     this.options["contentHeight"] = "auto";
     this.options["eventClick"] = function(event, jsEvent, view) {
-      this.event = event;
-      this.startTime = new Date(this.event.start);
-      this.endTime = new Date(this.event.end);
-      this.fillData(event);
-      this.openDialog();
+		if(this.oldJsEvent != undefined) {
+			this.oldJsEvent.target.style.boxShadow = "0px 0px 15px transparent";
+		}
+		jsEvent.target.style.boxShadow = "0px 0px 15px #2E2957";
+
+		this.oldJsEvent = jsEvent;
+        this.event = event;
+
+		let start = event.start;
+		let end = event.end;
+		if(view.name === 'month') {
+			start.stripTime();
+			end.stripTime();
+		}
+		
+		this.startTime = new Date(this.event.start);
+		this.endTime = new Date(this.event.end);
+		this.fillData(event);
+		this.openDialog();
     }.bind(this);
     this.options['slotDuration'] = '00:30:00';
     this.options['timezone'] = 'local';
@@ -175,6 +190,9 @@ export class AssignComponent implements OnInit {
     } else if (this.fixedAllocations.length > 0) {
       this.currentTab = SelectedTab.Fixed;
     } else {
+	    if(this.oldJsEvent != undefined) {
+		    this.oldJsEvent.target.style.boxShadow = "0px 0px 15px transparent";
+	    }
     	this.isDialogOpen = false;
     }
   }
@@ -789,7 +807,9 @@ export class AssignComponent implements OnInit {
   eventRender(that: any,event: any, element: any, view: any){
     element[0].innerText = event.title;
 
+
     element[0].addEventListener("mouseover", function(ev) {
+
       let div = document.createElement("div");
       div.innerHTML = "<span>" + this.ts.instant("ClickToViewMoreInformation") +  "</span>";
       div.className = "balloon";
@@ -800,8 +820,10 @@ export class AssignComponent implements OnInit {
       div.style.left = left +"px";
       document.getElementsByClassName("section-page")[0].appendChild(div);
       div.style.top = top - div.offsetHeight - 17 +"px";
+
     }.bind(this));
     element[0].addEventListener("mouseleave", function(){
+
         let b = document.getElementsByClassName("balloon");
         while(b.length > 0){
           b[0].remove();
@@ -886,6 +908,13 @@ export class AssignComponent implements OnInit {
 
   allCollectNameChanging(event){
     this.filterTags(event);
+  }
+
+  closeDialog() {
+  	this.isDialogOpen = false;
+	 if(this.oldJsEvent != undefined) {
+		  this.oldJsEvent.target.style.boxShadow = "0px 0px 15px transparent";
+	  }
   }
 
   hideAllAllocations() {
