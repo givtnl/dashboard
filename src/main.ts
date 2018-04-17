@@ -9,7 +9,3 @@ if (environment.production) {
 }
 
 platformBrowserDynamic().bootstrapModule(AppModule);
-
-export class NavigationComponent {
-  public navItems = navItems;
-}
