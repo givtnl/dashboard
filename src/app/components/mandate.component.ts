@@ -57,7 +57,7 @@ export class MandateComponent implements OnInit {
         if (!this.selectedOrganisation
             || !this.selectedOrganisation.cf_value_93168
             || !this.selectedOrganisation.cf_value_93491
-            || !(this.selectedOrganisation.mandate_status.PayProvMandateStatus === "closed.completed" && this.incassoStatus === "Processed")
+            || !(this.selectedOrganisation.mandate_status && this.selectedOrganisation.mandate_status.PayProvMandateStatus === "closed.completed" && this.incassoStatus === "Processed")
             || !(this.currentMandates.filter((cm) => cm.CrmId === this.selectedOrganisation.id).length > 0)
         ) {
             return true;
@@ -306,6 +306,7 @@ export class MandateComponent implements OnInit {
     }
 
     registerMandate() {
+
         if (!this.selectedOrganisation) {
             return;
         }
@@ -320,51 +321,69 @@ export class MandateComponent implements OnInit {
             alert("Niet alle velden zijn ingevuld voor de admin van de organisatie!");
             return;
         }
-        let mandate = {
-            Mandate: {
-                Signatory: {
-                    email: environment.production ? o.cf_value_93495 : "support+" + this.selectedOrganisation.id + "@givtapp.net",
-                    familyName: o.cf_value_93485,
-                    givenName: o.cf_value_93769,
-                    companyName: o.cf_value_95707,
-                    telephone: o.cf_value_93494,
-                    bankAccount: {
-                        iban: o.cf_value_93537.replace(/\s/g, '')
-                    },
-                    billingAddress: {
-                        city: o.city,
-                        country: o.country,
-                        postalCode: o.zipcode,
-                        street1: o.address,
-                        street2: "", //empty
+
+        let f_createMandate = function(that) : void {
+            let mandate = {
+                Mandate: {
+                    Signatory: {
+                        email: environment.production ? o.cf_value_93495 : "support+" + that.selectedOrganisation.id + "@givtapp.net",
+                        familyName: o.cf_value_93485,
+                        givenName: o.cf_value_93769,
+                        companyName: o.cf_value_95707,
+                        telephone: o.cf_value_93494,
+                        bankAccount: {
+                            iban: o.cf_value_93537.replace(/\s/g, '')
+                        },
+                        billingAddress: {
+                            city: o.city,
+                            country: o.country,
+                            postalCode: o.zipcode,
+                            street1: o.address,
+                            street2: "", //empty
+                        }
                     }
-                }
-            },
-            Organisation: {
-                CrmId: o.id.toString(),
-                Name: o.name,
-                Address: o.address,
-                City: o.city,
-                PostalCode: o.zipcode,
-                Country: o.country,
-                TaxDeductable: (o.cf_value_141639 === "1"),
-                TelNr: o.telephone
-            },
-            Type: this.selectedOrganisation.status
-        };
-        this.apiClient.postData("Organisation/", mandate)
-            .then(spl => {
-                if (spl) {
-                    this.SlimPayLink = spl;
-                    this.sendMandateMail();
-                }
-                else {
-                    alert("Something went wrong, please check mandate data and logging.");
-                }
-            }).catch( error => {
-                console.log(error);
+                },
+                Organisation: {
+                    CrmId: o.id.toString(),
+                    Name: o.name,
+                    Address: o.address,
+                    City: o.city,
+                    PostalCode: o.zipcode,
+                    Country: o.country,
+                    TaxDeductable: (o.cf_value_141639 === "1"),
+                    TelNr: o.telephone
+                },
+                Type: that.selectedOrganisation.status
+            };
+            that.apiClient.postData("Organisation/", mandate)
+                .then(spl => {
+                    if (spl) {
+                        that.SlimPayLink = spl;
+                        that.sendMandateMail();
+                    }
+                    else {
+                        alert("Something went wrong, please check mandate data and logging.");
+                    }
+                }).catch( error => {
+                console.error(error);
                 alert("Mandaat niet verzonden, controleer alle gegevens.");
             });
+
+        };
+
+        if (this.selectedOrganisation.mandate_status) {
+            if (!confirm("Weet je het zeker?")) return;
+            else {
+                this.apiClient.delete("organisation/" + this.selectedOrganisation.id)
+                    .then(_ => f_createMandate(this))
+                    .catch( error => {
+                        console.error(error);
+                        alert("Niet gelukt om de bestaande organisatie te verwijderen!");
+                    });
+            }
+        } else {
+            f_createMandate(this);
+        }
     }
 
     sendMandateMail() {
