@@ -6,7 +6,7 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
-    "buildprod" : "ng b -prod",
+    "buildprod": "ng b -prod",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
@@ -22,6 +22,7 @@
     "@angular/platform-browser": "^4.0.0",
     "@angular/platform-browser-dynamic": "^4.0.0",
     "@angular/router": "^4.0.0",
+    "@types/sprintf": "^0.1.0",
     "ap-angular2-fullcalendar": "^1.2.8",
     "chart.js": "^2.7.1",
     "core-js": "^2.4.1",
@@ -34,6 +35,7 @@
     "primeng": "^4.0.0",
     "q": "^1.5.1",
     "rxjs": "^5.1.0",
+    "sprintf-js": "^1.1.1",
     "zone.js": "^0.8.4"
   },
   "devDependencies": {

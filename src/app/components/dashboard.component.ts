@@ -7,8 +7,9 @@ import {TranslateService} from "ng2-translate";
 import {DataService} from "../services/data.service";
 import {UserService} from "../services/user.service";
 import {ISODatePipe} from "../pipes/iso.datepipe";
+import {sprintf} from 'sprintf-js';
 
- declare var google: any;
+declare var google: any;
 @Component({
     selector: 'my-dashboard',
     templateUrl: '../html/dashboard.component.html',
@@ -141,8 +142,8 @@ export class DashboardComponent implements OnInit, OnDestroy{
             nextMonth = 1;
         }
 
-        let dateBegin = year + "-" + month + "-01 00:00:00";
-        let dateEnd = secondYear + "-" + nextMonth + "-01 00:00:00";
+        let dateBegin = new Date(sprintf("%2i-%02i-01T00:00:00.000Z", year, month));
+        let dateEnd = new Date(sprintf("%2i-%02i-01T00:00:00.000Z", secondYear, nextMonth));
         let params = "DateBegin=" + this.datePipe.toISODateNoLocale(new Date(dateBegin)) + "&DateEnd=" + this.datePipe.toISODateNoLocale(new Date(dateEnd));
 
         return this.apiService.getData("Cards/Users/?"+params)
@@ -176,8 +177,8 @@ export class DashboardComponent implements OnInit, OnDestroy{
             nextMonth = 1;
         }
 
-        let dateBegin = year + "-" + month + "-01 00:00:00";
-        let dateEnd = secondYear + "-" + nextMonth + "-01 00:00:00";
+        let dateBegin = new Date(sprintf("%2i-%02i-01T00:00:00.000Z", year, month));
+        let dateEnd = new Date(sprintf("%2i-%02i-01T00:00:00.000Z", secondYear, nextMonth));
         let params = "DateBegin=" + this.datePipe.toISODateNoLocale(new Date(dateBegin)) + "&DateEnd=" + this.datePipe.toISODateNoLocale(new Date(dateEnd));
 
         return this.apiService.getData("Cards/Givts/?"+params)
@@ -203,10 +204,8 @@ export class DashboardComponent implements OnInit, OnDestroy{
     }
 
     fetchLastSundayGivts(){
-        let dateBegin;
-        let dateEnd;
-        dateEnd = new Date(this.datePipe.transform(new Date(), "yyyy-MM-dd 23:59:59"));
-        dateBegin = new Date(this.datePipe.transform(new Date().setDate(dateEnd.getDate() - 6), "yyyy-MM-dd 00:00:00"));
+        let dateEnd = new Date(this.datePipe.transform(new Date(), "yyyy-MM-ddT23:59:59.999") + "Z");
+        let dateBegin = new Date(this.datePipe.transform(new Date().setDate(dateEnd.getDate() - 6), "yyyy-MM-ddT00:00:00.000") + "Z");
 
         return this.apiService.getData("v2/collectgroups/" + this.userService.CurrentCollectGroup.GUID
                                         + "/givts/view/search?dtBegin="+ this.datePipe.toISODateNoLocale(dateBegin) + "&dtEnd=" + this.datePipe.toISODateNoLocale(dateEnd))
