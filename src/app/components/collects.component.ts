@@ -287,8 +287,8 @@ export class CollectsComponent implements OnInit{
         this.ShowLoadingAnimation = true;
         this.showCosts = false;
         if(this.dateBegin !== null && this.dateEnd !== null){
-            var dateBegin = this.formatDate(this.dateBegin);
-            var dateEnd = this.formatDate(this.dateEnd);
+            var dateBegin = this.datePipe.toISODateUTC(this.dateBegin);
+            var dateEnd = this.datePipe.toISODateUTC(this.dateEnd);
             let params;
             if(this.multipleCollects){
                 params = "DateBegin=" + dateBegin + "&DateEnd=" + dateEnd + "&CollectId=" + this.multipleCollectsId;
@@ -345,15 +345,6 @@ export class CollectsComponent implements OnInit{
         }
     }
 
-    formatDate(d){
-        d = new Date(d);
-        return [d.getUTCMonth()+1,
-            d.getUTCDate(),
-            d.getUTCFullYear()].join('/')+' '+
-        [d.getUTCHours(),
-            d.getUTCMinutes()].join(':');
-    }
-
     filterCollect(collectId){
        if(collectId == null || collectId == 0){
             this.multipleCollects = false;
@@ -369,8 +360,6 @@ export class CollectsComponent implements OnInit{
   fetchAllGivts() {
       this.totalAmountsCombined = 0;
       if(this.dateBegin !== null && this.dateEnd !== null){
-        var dateBegin = this.formatDate(this.dateBegin);
-        var dateEnd = this.formatDate(this.dateEnd);
         let baseParams;
         if(this.multipleCollects){
           baseParams = "&CollectId=" + this.multipleCollectsId;
@@ -381,7 +370,7 @@ export class CollectsComponent implements OnInit{
 
         if (this.userService.CurrentCollectGroup) {
           this.apiService.getData("v2/collectgroups/" + this.userService.CurrentCollectGroup.GUID
-                        + "/givts/view/search?dtBegin=" + this.datePipe.toISODateNoLocale(dateBegin) + "&dtEnd=" + this.datePipe.toISODateNoLocale(dateEnd)
+                        + "/givts/view/search?dtBegin=" + this.datePipe.toISODateUTC(this.dateBegin) + "&dtEnd=" + this.datePipe.toISODateUTC(this.dateEnd)
                         + baseParams)
             .then(serverResp =>
             {
