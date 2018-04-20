@@ -37,7 +37,7 @@
     src: url("./fonts/roboto-v15-latin-regular.woff") format('woff');
 }
 
-html,body,.container{
+html,body,.container, .body-container{
     height: 100%;
 }
 
@@ -77,11 +77,23 @@ h1 {
 }
 
 my-collects{
-    display: flex;
-    flex-flow: column;
     height: 100%;
 }
+my-titlebar {
+  position: sticky;
+  display: block;
+  top: 0;
+  z-index: 99;
+}
+my-footer {
+  display: table;
+  font-family: "Avenir_Light";
+  width: 100%;
+  background: #D5D4DD;
 
+}
+my-footer p{
+}
 /* loading animation */
 .loading-wrapper{
     width: 100%;
@@ -549,4 +561,21 @@ p-schedule button
   color: white;
   background-color: #5A5387;
   border-color: #5A5387;
+}
+
+.global-layout {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.global-layout-content {
+  flex: 1 0 auto;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.bottom-flex {
+  margin-bottom: auto !important;
 }

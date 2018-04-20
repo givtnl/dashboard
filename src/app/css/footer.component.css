@@ -1,12 +1,5 @@
-.footer{
-    position:fixed;
-    left:0px;
-    bottom:0px;
-    width:100%;
-    background-color: #D5D4DD;
-    text-align: center;
-    font-family: "Avenir_Light";
-    z-index: 99999999;
+p {
+  text-align: center;
 }
 
 a {

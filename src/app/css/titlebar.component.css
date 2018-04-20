@@ -1,0 +1,40 @@
+
+.nav-title {
+  width: 100%;
+  background-color: darkgray;
+}
+
+
+
+.nav-title-heading {
+  padding: 10px 20px;
+  font-family: "Avenir_Heavy";
+  font-size:18px;
+  color:#2C2B57;
+  margin: 0;
+}
+.nav-title-heading:hover > ul{
+  display: none;
+}
+
+.nav-title-dropdown {
+  background: lightgray;
+  display: inline-block;
+  position: absolute;
+  z-index: 1000;
+
+}
+.nav-title-dropdown ul {
+  list-style: none;
+  padding:  0 20px 0 20px;
+  font-family: "Avenir_Heavy";
+  font-size:14px;
+  color:#2C2B57;
+}
+.nav-title-dropdown ul > li {
+  padding: 15px 0;
+}
+.hidden {
+  display: none;
+}
+[hidden] { display: none !important;}

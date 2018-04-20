@@ -1,20 +1,11 @@
-#wrapper {
-  -webkit-transition: all .5s ease;
-  -moz-transition: all .5s ease;
-  -o-transition: all .5s ease;
-  transition: all .5s ease;
-}
-
-#sidebar-wrapper {
-  position: absolute;
-  height: 100%;
+.sidebar {
   background-color: #0b0b30;
   flex: 0 0 auto;
-  padding-right: 20px;
-  z-index: 1000;
+  padding-right: 25px;
+  height: 100%;
 }
 
-#sidebar-wrapper .sidebar-nav {
+.sidebar .sidebar-nav {
   font-size: 14px;
   margin: 0;
   padding: 0;
@@ -22,34 +13,45 @@
   font-family: "Avenir_Heavy";
 
 }
-
-#sidebar-wrapper .sidebar-nav li {
+#sidemenu {
+  height: 100vh;
+}
+.sidebar .sidebar-nav li {
   text-indent: 0;
   line-height: 45px;
   border-left: 3px solid transparent;
 }
-#sidebar-wrapper .sidebar-nav li:hover {
+.sidebar .sidebar-nav li:hover {
   border-left: 3px solid lawngreen;
 }
 li.list-org a {
    background: none !important;
 }
 
-#sidebar-wrapper .sidebar-nav li a {
+.sidebar .sidebar-nav li a {
   display: block;
   text-decoration: none;
   color: white;
 }
 
-.sidebar-nav li:first-child a {
+.sidebar .sidebar-nav li:first-child a {
+margin-left: 23px;
+  padding-top: 23px;
+}
+.sidebar .sidebar-nav li:last-child {
+  position: absolute;
+  bottom: 0;
+}
+
+.sidebar-nav li:first-child {
   text-align: center;
   border-left: 3px solid transparent;
 }
 .sidebar-nav li:first-child:hover {
-  border: none !important;
+  border-left: 3px solid transparent !important;
 }
 
-#sidebar-wrapper .sidebar-nav li a .sidebar-icon {
+.sidebar .sidebar-nav li a .sidebar-icon {
   width: 45px;
   height: 45px;
   font-size: 14px;
@@ -61,14 +63,14 @@ li.list-org a {
   float: left;
 }
 
-#sidebar-wrapper .sidebar-nav li a .caret {
+.sidebar .sidebar-nav li a .caret {
   position: absolute;
   right: 23px;
   top: auto;
   margin-top: 20px;
 }
 
-#sidebar-wrapper .sidebar-nav li ul.panel-collapse {
+.sidebar .sidebar-nav li ul.panel-collapse {
   list-style: none;
   -moz-padding-start: 0;
   -webkit-padding-start: 0;
@@ -78,52 +80,11 @@ li.list-org a {
   padding: 0;
 }
 
-#sidebar-wrapper .sidebar-nav li ul.panel-collapse li i {
+.sidebar .sidebar-nav li ul.panel-collapse li i {
   margin-right: 10px;
 }
 
-#sidebar-wrapper .sidebar-nav li ul.panel-collapse li {
+.sidebar .sidebar-nav li ul.panel-collapse li {
   text-indent: 15px;
 }
 
-
-.nav-title {
-  width: 100%;
-  background-color: darkgray;
-  position: relative;
-}
-
-
-
-.nav-title-heading {
-  padding: 10px 20px;
-  font-family: "Avenir_Heavy";
-  font-size:18px;
-  color:#2C2B57;
-  margin: 0;
-}
-.nav-title-heading:hover > ul{
-  display: none;
-}
-
-.nav-title-dropdown {
-  background: lightgray;
-  display: inline-block;
-  position: absolute;
-  z-index: 1000;
-
-}
-.nav-title-dropdown ul {
-  list-style: none;
-  padding:  0 20px 0 20px;
-  font-family: "Avenir_Heavy";
-  font-size:14px;
-  color:#2C2B57;
-}
-.nav-title-dropdown ul > li {
-  padding: 15px 0;
-}
-.hidden {
-  display: none;
-}
-[hidden] { display: none !important;}

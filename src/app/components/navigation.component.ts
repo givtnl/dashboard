@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { UserService } from 'app/services/user.service';
 import {Router} from "@angular/router";
 
@@ -7,12 +7,11 @@ import {Router} from "@angular/router";
     templateUrl: '../html/navigation.component.html',
     styleUrls: ['../css/navigation.component.css']
 })
-export class NavigationComponent implements OnInit {
+export class NavigationComponent implements OnInit, AfterViewInit {
     userService: UserService;
 
     showMandateLink = false;
     showDashboardItems = true;
-    isDropDownOpen = false;
     currentCollectGroup: any = {Name:"", GUID:""};
     collectGroups : Array<any> = null;
     constructor(userService: UserService, private router: Router) {
@@ -35,14 +34,10 @@ export class NavigationComponent implements OnInit {
           }
       }
     }
-
-    setCollectGroup(cg) {
-        this.userService.changeCollectGroup(cg);
-        this.currentCollectGroup = cg;
+    ngAfterViewInit() {
+      console.log("dit werkt");
     }
-  toggleDropdown(){
-      this.isDropDownOpen = !this.isDropDownOpen;
-  }
+
     logout(){
         this.userService.logout();
         this.router.navigate(['']);

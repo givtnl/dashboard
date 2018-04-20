@@ -1,0 +1,15 @@
+
+  <div class="nav-title">
+    <p class="nav-title-heading" (click)="toggleDropdown()">{{currentCollectGroup.Name}}
+      <i class="fa fa-caret-down"></i>
+    </p>
+  </div>
+  <div class="nav-title-dropdown" *ngIf="isDropDownOpen">
+    <ul *ngIf="collectGroups.length > 1">
+      <li class="list-org" *ngFor="let cg of collectGroups" (click)="setCollectGroup(cg)" [class.hidden]="cg.Name == currentCollectGroup.Name">
+        <a>
+          {{cg.Name}}
+        </a>
+      </li>
+    </ul>
+  </div>

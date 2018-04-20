@@ -1,5 +1,8 @@
-<my-navigation></my-navigation>
-<section class="section-dashboard">
+<div class="global-layout">
+  <my-navigation></my-navigation>
+  <div class="global-layout-content">
+    <my-titlebar></my-titlebar>
+    <section class="section-dashboard bottom-flex">
     <div class="loading-wrapper" [ngClass]="{'show-loading-animation': ShowLoadingAnimation }">
       <div class="loader" >
         <svg class="circular" viewBox="25 25 50 50">
@@ -8,23 +11,29 @@
       </div>
     </div>
     <article *ngIf="donutCard">
-        <div id="h">
-            <p class="card-title">{{donutcardTitle}}</p>
-            <div id="donutchart"></div>
-            <div id="test">
-                <span [innerHTML]="donutcardValue"></span>
-                <p t="Text_Collected">{{donutcardFooter}}</p>
-            </div>
+      <div id="h">
+        <p class="card-title">{{donutcardTitle}}</p>
+        <div id="donutchart"></div>
+        <div id="test">
+          <span [innerHTML]="donutcardValue"></span>
+          <p t="Text_Collected">{{donutcardFooter}}</p>
         </div>
+      </div>
     </article>
     <article *ngFor="let card of cards">
-        <div>
-            <p class="card-title">{{card.title}}</p>
-            <p class="card-subtitle"><span>{{card.subtitle}}</span></p>
-            <p class="card-subtitle" [innerHTML]="card.value"></p>
-            <p class="card-subtitle">{{card.footer}}</p>
-        </div>
+      <div>
+        <p class="card-title">{{card.title}}</p>
+        <p class="card-subtitle"><span>{{card.subtitle}}</span></p>
+        <p class="card-subtitle" [innerHTML]="card.value"></p>
+        <p class="card-subtitle">{{card.footer}}</p>
+      </div>
     </article>
 
-</section>
-<my-footer></my-footer>
+  </section>
+    <my-footer></my-footer>
+
+  </div>
+</div>
+
+
+
