@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-
 import { UserService } from 'app/services/user.service';
 import {Router} from "@angular/router";
 
@@ -13,7 +12,7 @@ export class NavigationComponent implements OnInit {
 
     showMandateLink = false;
     showDashboardItems = true;
-
+    isDropDownOpen = false;
     currentCollectGroup: any = {Name:"", GUID:""};
     collectGroups : Array<any> = null;
     constructor(userService: UserService, private router: Router) {
@@ -22,7 +21,7 @@ export class NavigationComponent implements OnInit {
 
     ngOnInit() {
       this.showMandateLink = this.userService.GivtOperations;
-      if ((!this.userService.CollectGroups || this.userService.CollectGroups.length == 0) && this.userService.GivtOperations) {
+      if ((!this.userService.CollectGroups || this.userService.CollectGroups.length === 0) && this.userService.GivtOperations) {
           this.showDashboardItems = false;
           var cg = { Name: "Administratie", GUID: "" };
           this.collectGroups = [cg]
@@ -41,7 +40,9 @@ export class NavigationComponent implements OnInit {
         this.userService.changeCollectGroup(cg);
         this.currentCollectGroup = cg;
     }
-
+  toggleDropdown(){
+      this.isDropDownOpen = !this.isDropDownOpen;
+  }
     logout(){
         this.userService.logout();
         this.router.navigate(['']);
