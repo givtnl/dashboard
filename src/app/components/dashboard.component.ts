@@ -142,9 +142,9 @@ export class DashboardComponent implements OnInit, OnDestroy{
             nextMonth = 1;
         }
 
-        let dateBegin = new Date(sprintf("%2i-%02i-01T00:00:00.000Z", year, month));
-        let dateEnd = new Date(sprintf("%2i-%02i-01T00:00:00.000Z", secondYear, nextMonth));
-        let params = "DateBegin=" + this.datePipe.toISODateNoLocale(new Date(dateBegin)) + "&DateEnd=" + this.datePipe.toISODateNoLocale(new Date(dateEnd));
+        let dateBegin = new Date(sprintf("%4i-%02i-01T00:00:00.000%s", year, month, this.datePipe.getLocalTimeZoneISOString()));
+        let dateEnd = new Date(sprintf("%4i-%02i-01T00:00:00.000%s", secondYear, nextMonth, this.datePipe.getLocalTimeZoneISOString()));
+        let params = "DateBegin=" + this.datePipe.toISODateUTC(new Date(dateBegin)) + "&DateEnd=" + this.datePipe.toISODateUTC(new Date(dateEnd));
 
         return this.apiService.getData("Cards/Users/?"+params)
             .then(resp =>
@@ -177,9 +177,9 @@ export class DashboardComponent implements OnInit, OnDestroy{
             nextMonth = 1;
         }
 
-        let dateBegin = new Date(sprintf("%2i-%02i-01T00:00:00.000Z", year, month));
-        let dateEnd = new Date(sprintf("%2i-%02i-01T00:00:00.000Z", secondYear, nextMonth));
-        let params = "DateBegin=" + this.datePipe.toISODateNoLocale(new Date(dateBegin)) + "&DateEnd=" + this.datePipe.toISODateNoLocale(new Date(dateEnd));
+        let dateBegin = new Date(sprintf("%4i-%02i-01T00:00:00.000%s", year, month, this.datePipe.getLocalTimeZoneISOString()));
+        let dateEnd = new Date(sprintf("%4i-%02i-01T00:00:00.000%s", secondYear, nextMonth, this.datePipe.getLocalTimeZoneISOString()));
+        let params = "DateBegin=" + this.datePipe.toISODateUTC(new Date(dateBegin)) + "&DateEnd=" + this.datePipe.toISODateUTC(new Date(dateEnd));
 
         return this.apiService.getData("Cards/Givts/?"+params)
             .then(resp =>
@@ -204,11 +204,13 @@ export class DashboardComponent implements OnInit, OnDestroy{
     }
 
     fetchLastSundayGivts(){
-        let dateEnd = new Date(this.datePipe.transform(new Date(), "yyyy-MM-ddT23:59:59.999") + "Z");
-        let dateBegin = new Date(this.datePipe.transform(new Date().setDate(dateEnd.getDate() - 6), "yyyy-MM-ddT00:00:00.000") + "Z");
+        let dtEnd = this.datePipe.transform(new Date(), "yyyy-MM-ddT23:59:59.999" + this.datePipe.getLocalTimeZoneISOString());
+        let dtBegin = this.datePipe.transform(new Date().setDate(new Date().getDate() - 6), "yyyy-MM-ddT00:00:00.000" + this.datePipe.getLocalTimeZoneISOString());
+        let dateEnd = new Date(dtEnd);
+        let dateBegin = new Date(dtBegin);
 
         return this.apiService.getData("v2/collectgroups/" + this.userService.CurrentCollectGroup.GUID
-                                        + "/givts/view/search?dtBegin="+ this.datePipe.toISODateNoLocale(dateBegin) + "&dtEnd=" + this.datePipe.toISODateNoLocale(dateEnd))
+                                        + "/givts/view/search?dtBegin="+ this.datePipe.toISODateUTC(dateBegin) + "&dtEnd=" + this.datePipe.toISODateUTC(dateEnd))
             .then(resp =>
             {
                 if(resp.statusCode == 500)

@@ -179,8 +179,8 @@ export class PayoutComponent implements OnInit{
 
   exportCSV() {
     this.loader["show"] = true;
-        let start = this.datePipe.toISODateNoLocale(this.dtBegin);
-        let end = this.datePipe.toISODateNoLocale(this.dtEnd);
+        let start = this.datePipe.toISODateUTC(this.dtBegin);
+        let end = this.datePipe.toISODateUTC(this.dtEnd);
 
         let apiUrl = 'Payments/CSV?dtBegin=' + start + '&dtEnd=' + end;
         this.apiClient.getData(apiUrl)
