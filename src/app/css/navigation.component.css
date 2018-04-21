@@ -35,12 +35,38 @@ li.list-org a {
 }
 
 .sidebar .sidebar-nav li:first-child a {
-margin-left: 23px;
+  margin-left: 23px;
   padding-top: 23px;
 }
-.sidebar .sidebar-nav li:last-child {
+#sidemenu > li:nth-child(7){
+  border: none;
+}
+ul.sidebar-nav-bottom {
+  list-style: none;
   position: absolute;
   bottom: 0;
+  margin: 0;
+  padding: 0;
+}
+ul.sidebar-nav-bottom li {
+  margin:0;
+  padding: 0;
+}
+
+ul.sidebar-nav-bottom li:first-child a {
+  margin-left: 0;
+  text-align: left;
+}
+#sidemenu > li:nth-child(7) > ul > li:nth-child(1) > a{
+  margin-left: 0;
+  text-align: left;
+  padding-top: 0;
+}
+#sidemenu > li:nth-child(7) > ul > li:nth-child(1) {
+  border-left: 3px solid transparent;
+}
+#sidemenu > li:nth-child(7) > ul > li:hover {
+  border-left: 3px solid lawngreen !important;
 }
 
 .sidebar-nav li:first-child {
