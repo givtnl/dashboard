@@ -4,12 +4,19 @@
   background-color: darkgray;
 }
 @media only screen and (max-device-width : 480px) {
-
+  .nav-title {
+    width: 100vw;
+  }
+  .nav-title p {
+    width: 150px;
+  }
   .mobile-manual {
     color: white;
-    display: block !important;
-    float: right;
-    margin: 4px;
+    display: inline-block !important;
+    margin-right: 12px;
+    margin-top: 1px;
+    position: fixed;
+    right: 0;
   }
 }
 
