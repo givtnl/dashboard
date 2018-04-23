@@ -86,7 +86,6 @@ ul.sidebar-nav-bottom li:first-child a {
   text-indent: 7px;
   margin-right: 10px;
   color: #fff;
-  float: left;
 }
 
 .sidebar .sidebar-nav li a .caret {
@@ -120,9 +119,15 @@ ul.sidebar-nav-bottom li:first-child a {
 @media only screen and (max-device-width : 480px) {
   #sidebar {
     padding-right: 0px;
+    -webkit-transition: width 200ms; /* For Safari 3.1 to 6.0 */
+    transition: width 1000ms ease;
+    width: 52px;
   }
   .sidebar-icon{
     margin-right: 0px !important;
+  }
+  #sidemenu{
+    position:absolute;
   }
   #sidemenu > li > a > span.sidebar-title {
     display: none;
@@ -136,13 +141,17 @@ ul.sidebar-nav-bottom li:first-child a {
   .givt-white-small{
     display: block !important;
     margin: 0 !important;
-    padding-top: 14px !important;
-    line-height: 25px;
+    padding-top: 0px !important;
+    text-align: left;
   }
   .givt-white-small svg {
-    margin-left: -5px;
+    margin-top: 4px;
   }
-  /* Styles */
+  #sidemenu > li:nth-child(4) > a > span.sidebar-title {
+    margin-left: 3px;
+  }
+
+
 }
 
 @media only screen
@@ -150,9 +159,14 @@ and (max-device-width : 1080px)  {
   .sidebar .sidebar-nav {
     font-size: 0.8em;
   }
+  #sidemenu > li:nth-child(4) > a > span.sidebar-title {
+    float: right;
+    margin-left: 2px;
+  }
 }
 
 
-/* GIVT SVG */
+
+
 
 
