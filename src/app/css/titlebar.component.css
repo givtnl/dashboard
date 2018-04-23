@@ -3,8 +3,15 @@
   width: 100%;
   background-color: darkgray;
 }
+@media only screen and (max-device-width : 480px) {
 
-
+  .mobile-manual {
+    color: white;
+    display: block !important;
+    float: right;
+    margin: 4px;
+  }
+}
 
 .nav-title-heading {
   padding: 10px 20px;

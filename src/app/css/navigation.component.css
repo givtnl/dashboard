@@ -118,40 +118,8 @@ ul.sidebar-nav-bottom li:first-child a {
 /* Smartphones (portrait and landscape) ----------- */
 @media only screen and (max-device-width : 480px) {
   #sidebar {
-    padding-right: 0px;
-    -webkit-transition: width 200ms; /* For Safari 3.1 to 6.0 */
-    transition: width 1000ms ease;
-    width: 52px;
-  }
-  .sidebar-icon{
-    margin-right: 0px !important;
-  }
-  #sidemenu{
-    position:absolute;
-  }
-  #sidemenu > li > a > span.sidebar-title {
     display: none;
   }
-  #sidemenu > li:nth-child(7) > ul > li > a > span.sidebar-title{
-    display: none;
-  }
-  .givt-white-large {
-    display: none !important;
-  }
-  .givt-white-small{
-    display: block !important;
-    margin: 0 !important;
-    padding-top: 0px !important;
-    text-align: left;
-  }
-  .givt-white-small svg {
-    margin-top: 4px;
-  }
-  #sidemenu > li:nth-child(4) > a > span.sidebar-title {
-    margin-left: 3px;
-  }
-
-
 }
 
 @media only screen

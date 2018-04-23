@@ -579,3 +579,10 @@ p-schedule button
 .bottom-flex {
   margin-bottom: auto !important;
 }
+
+@media only screen and (max-device-width : 480px) {
+  body {
+    margin-bottom: 92px;
+  }
+}
+
