@@ -1,5 +1,5 @@
 .section-dashboard {
-    max-width:900px;
+    max-width:1200px;
     margin:0px auto;
     -webkit-column-count:3;
     -moz-column-count:3;
@@ -8,6 +8,7 @@
     -moz-column-gap:0;
     column-gap:0;
     position: relative;
+    margin-top:12px;
 }
 
 
@@ -16,12 +17,12 @@
     -webkit-column-break-inside: avoid;
     page-break-inside: avoid;
     break-inside: avoid;
-    padding: 5px;
+    padding: 12px 12px;
     box-sizing: border-box;
-    width: 320px;
+    width: 380px;
 }
 .section-dashboard article > div{
-    padding:15px;
+    padding:25px;
     box-sizing: border-box;
 
     display: -webkit-flex;
@@ -144,21 +145,42 @@
     color:#2C2B57;
 }
 
-@media only screen and (max-width: 830px) {
-    .section-dashboard.section-dashboard {
-        -webkit-column-count:2;
-        -moz-column-count:2;
-        column-count:2;
-        margin-top:55px;
-    }
+@media only screen and (max-width: 1200px) {
+  .section-dashboard.section-dashboard {
+    -webkit-column-count: 2;
+    -moz-column-count: 2;
+    column-count: 2;
+    margin-top: 12px;
+  }
+  .section-dashboard article {
+    width: 40vw;
+    padding: 12px 12px;
+  }
 }
 
-@media only screen and (max-width: 500px) {
+@media only screen and (max-width: 768px) {
     /* For mobile phones: */
     .section-dashboard.section-dashboard {
         -webkit-column-count: 1;
         -moz-column-count: 1;
         column-count: 1;
-        margin-top: 55px;
+        margin-top: 12px;
     }
+  .section-dashboard article {
+      width: 100vw;
+      padding: 12px 25px;
+  }
+
+}
+@media only screen and (min-width: 481px) and (max-width: 800px){
+  .section-dashboard.section-dashboard {
+    -webkit-column-count: 1;
+    -moz-column-count: 1;
+    column-count: 1;
+    margin-top: 12px;
+  }
+  .section-dashboard article {
+    width: 70vw;
+    padding: 12px 12px;
+  }
 }

@@ -2,7 +2,7 @@
   <my-navigation></my-navigation>
   <div class="global-layout-content">
     <my-titlebar></my-titlebar>
-    <section class="section-dashboard bottom-flex">
+    <section class="section-dashboard bottom-flex" (onDimensionsChange)="onDimensionsChangeHandler($event)">
     <div class="loading-wrapper" [ngClass]="{'show-loading-animation': ShowLoadingAnimation }">
       <div class="loader" >
         <svg class="circular" viewBox="25 25 50 50">
@@ -28,7 +28,6 @@
         <p class="card-subtitle">{{card.footer}}</p>
       </div>
     </article>
-
   </section>
     <my-footer></my-footer>
 

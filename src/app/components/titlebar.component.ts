@@ -35,6 +35,7 @@ export class TitlebarComponent implements OnInit {
   setCollectGroup(cg) {
     this.userService.changeCollectGroup(cg);
     this.currentCollectGroup = cg;
+    this.isDropDownOpen = !this.isDropDownOpen;
   }
   toggleDropdown(){
     this.isDropDownOpen = !this.isDropDownOpen;

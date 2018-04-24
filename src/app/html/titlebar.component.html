@@ -2,8 +2,8 @@
   <div class="nav-title">
     <p class="nav-title-heading" (click)="toggleDropdown()">{{currentCollectGroup.Name}}
       <i class="fa fa-caret-down"></i>
-      <a href="https://www.givtapp.net/wp-content/uploads/2017/07/Handleiding_Givt_Dashboard.pdf" class="mobile-manual" style="display: none;"><i class="fa fa-question-circle"></i></a>
     </p>
+    <a href="https://www.givtapp.net/wp-content/uploads/2017/07/Handleiding_Givt_Dashboard.pdf" class="mobile-manual" style="display: none;"><i class="fa fa-question-circle"></i></a>
   </div>
   <div class="nav-title-dropdown" *ngIf="isDropDownOpen">
     <ul *ngIf="collectGroups.length > 1">

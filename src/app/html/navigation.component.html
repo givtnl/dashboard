@@ -33,32 +33,32 @@
       </span>
     </a>
     </li>
-    <li *ngIf="showDashboardItems">
-      <a routerLink="/dashboard" routerLinkActive="active">
+    <li *ngIf="showDashboardItems" routerLinkActive="active-menu-item">
+      <a routerLink="/dashboard">
         <span class="sidebar-icon"><i class="fa fa-area-chart"></i></span>
         <span class="sidebar-title">{{"Menu_Overview" | translate}}</span>
       </a>
     </li>
-    <li *ngIf="showDashboardItems">
-      <a routerLink="/collects" routerLinkActive="active">
+    <li *ngIf="showDashboardItems" routerLinkActive="active-menu-item">
+      <a routerLink="/collects">
         <span class="sidebar-icon"><i class="fa fa-history"></i></span>
         <span class="sidebar-title">{{"Menu_Collectes" | translate}}</span>
       </a>
     </li>
-    <li *ngIf="showDashboardItems">
-      <a routerLink="/payouts" routerLinkActive="active">
+    <li *ngIf="showDashboardItems" routerLinkActive="active-menu-item">
+      <a routerLink="/payouts">
         <span class="sidebar-icon"><i class="fa fa-calculator"></i></span>
         <span class="sidebar-title">{{"Payout_Title" | translate}}</span>
       </a>
     </li>
-    <li *ngIf="showDashboardItems">
-      <a routerLink="/assign" routerLinkActive="active">
+    <li *ngIf="showDashboardItems" routerLinkActive="active-menu-item">
+      <a routerLink="/assign">
         <span class="sidebar-icon"><i class="fa fa-calendar-check-o"></i></span>
         <span class="sidebar-title">{{"Menu_Allocate" | translate}}</span>
       </a>
     </li>
-    <li *ngIf="showMandateLink">
-      <a routerLink="/mandate" routerLinkActive="active">
+    <li *ngIf="showMandateLink" routerLinkActive="active-menu-item">
+      <a routerLink="/mandate">
         <span class="sidebar-icon"><i class="fa fa-file-text-o"></i></span>
         <span class="sidebar-title">Mandaten</span>
       </a>
