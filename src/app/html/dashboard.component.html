@@ -7,16 +7,6 @@
         </svg>
       </div>
     </div>
-    <article *ngIf="donutCard">
-        <div id="h">
-            <p class="card-title">{{donutcardTitle}}</p>
-            <div id="donutchart"></div>
-            <div id="test">
-                <span [innerHTML]="donutcardValue"></span>
-                <p t="Text_Collected">{{donutcardFooter}}</p>
-            </div>
-        </div>
-    </article>
     <article *ngFor="let card of cards">
         <div>
             <p class="card-title">{{card.title}}</p>
