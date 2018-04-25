@@ -4,12 +4,10 @@ import 'rxjs/add/observable/forkJoin';
 import { Card } from '../models/card';
 import { ApiClientService } from "app/services/api-client.service";
 import {TranslateService} from "ng2-translate";
-import {DataService} from "../services/data.service";
 import {UserService} from "../services/user.service";
 import {ISODatePipe} from "../pipes/iso.datepipe";
 import {sprintf} from 'sprintf-js';
 
-declare var google: any;
 @Component({
     selector: 'my-dashboard',
     templateUrl: '../html/dashboard.component.html',
@@ -37,22 +35,18 @@ export class DashboardComponent implements OnInit, OnDestroy{
     ShowLoadingAnimation = false;
 
     euro = !navigator.language.includes('en') ? "€ " : "€";
-    //maybe a new donutcard model?
-    donutCard: boolean = false;
-    donutcardValue: string;
-    donutcardTitle: string;
-    donutcardFooter: string;
 
     continuousData: any;
 
     lastSundaySum: number;
 
-    constructor(private apiService: ApiClientService,  translate:TranslateService, private datePipe: ISODatePipe, private dataService: DataService, private userService: UserService){
+    constructor(private apiService: ApiClientService,  translate:TranslateService, private datePipe: ISODatePipe, private userService: UserService){
       this.translate = translate;
         this.isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
         this.ShowLoadingAnimation = true;
 
         this.userService.collectGroupChanged.subscribe(() => {
+            this.ShowLoadingAnimation = true;
             this.ngOnInit();
         });
     }
@@ -62,73 +56,13 @@ export class DashboardComponent implements OnInit, OnDestroy{
     }
 
     ngOnInit() : void{
-      google.charts.load('current', {'packages':['corechart']});
-
-        Promise.all(
-            [this.waitALittle(2000),this.fetchLastSundayGivts(),this.fetchThisMonthGivts(),this.fetchThisMonthGivers()]
-        ).then(()=>{
-            google.charts.setOnLoadCallback(() => this.drawChart());
-            this.ShowLoadingAnimation = false;
-            this.fetchDataContinuously(3000);
-
-        })
-    }
-
-    waitALittle(ms: number){
-        return new Promise((resolve, reject) => {
-            setTimeout(resolve, ms);
-        });
-    }
-
-    fetchDataContinuously(interval: number){
         this.continuousData = setInterval(() => {
             this.fetchThisMonthGivts();
             this.fetchThisMonthGivers();
-        }, interval);
-    }
-
-    googleCharts(title: string, footer: string, value: string){
-        //activate the donutcard
-        this.donutCard = true;
-        //make donutchart from the lastsundayvalue
-        this.donutcardValue = value;
-        this.donutcardFooter = footer;
-        this.donutcardTitle = title;
-
-    }
-
-    drawChart() {
-      let dataTable = new google.visualization.DataTable();
-      dataTable.addColumn('string', 'Bedrag');
-      dataTable.addColumn('number', 'Euro');
-      // A column for custom tooltip content
-      dataTable.addColumn({type: 'string', role: 'tooltip'});
-      dataTable.addRows([
-        ['', 90,'€ 456 goedgekeurd!']
-      ]);
-      let options = {
-        pieSliceBorderColor: 'transparent',
-        width: 280,
-        height: 280,
-        chartArea: {'width': '100%', 'height': '80%'},
-        colors: ['#42C98E','#D43D4C','#4F98CF'],
-        legend: {position: 'none'},
-        pieHole: 0.85,
-        pieSliceText: 'label',
-        pieStartAngle: 0,
-        pieSliceTextStyle:{color: 'black', fontName: 'arial', fontSize: 10},
-        backgroundColor: 'transparent'
-      };
-
-      let div = document.getElementById('donutchart');
-      if(div)
-      {
-        let chart = new google.visualization.PieChart(document.getElementById('donutchart'));
-        chart.draw(dataTable, options);
-        let container = <HTMLDivElement>div.firstChild.firstChild;
-        if(container)
-          container.style.width = "100%";
-      }
+            this.fetchLastDayGivts();
+            if (this.ShowLoadingAnimation)
+                this.ShowLoadingAnimation = false;
+        }, 3000);
     }
 
     fetchThisMonthGivers(){
@@ -142,9 +76,9 @@ export class DashboardComponent implements OnInit, OnDestroy{
             nextMonth = 1;
         }
 
-        let dateBegin = new Date(sprintf("%2i-%02i-01T00:00:00.000Z", year, month));
-        let dateEnd = new Date(sprintf("%2i-%02i-01T00:00:00.000Z", secondYear, nextMonth));
-        let params = "DateBegin=" + this.datePipe.toISODateNoLocale(new Date(dateBegin)) + "&DateEnd=" + this.datePipe.toISODateNoLocale(new Date(dateEnd));
+        let dateBegin = new Date(sprintf("%4i-%02i-01T00:00:00.000%s", year, month, this.datePipe.getLocalTimeZoneISOString()));
+        let dateEnd = new Date(sprintf("%4i-%02i-01T00:00:00.000%s", secondYear, nextMonth, this.datePipe.getLocalTimeZoneISOString()));
+        let params = "DateBegin=" + this.datePipe.toISODateUTC(new Date(dateBegin)) + "&DateEnd=" + this.datePipe.toISODateUTC(new Date(dateEnd));
 
         return this.apiService.getData("Cards/Users/?"+params)
             .then(resp =>
@@ -177,9 +111,9 @@ export class DashboardComponent implements OnInit, OnDestroy{
             nextMonth = 1;
         }
 
-        let dateBegin = new Date(sprintf("%2i-%02i-01T00:00:00.000Z", year, month));
-        let dateEnd = new Date(sprintf("%2i-%02i-01T00:00:00.000Z", secondYear, nextMonth));
-        let params = "DateBegin=" + this.datePipe.toISODateNoLocale(new Date(dateBegin)) + "&DateEnd=" + this.datePipe.toISODateNoLocale(new Date(dateEnd));
+        let dateBegin = new Date(sprintf("%4i-%02i-01T00:00:00.000%s", year, month, this.datePipe.getLocalTimeZoneISOString()));
+        let dateEnd = new Date(sprintf("%4i-%02i-01T00:00:00.000%s", secondYear, nextMonth, this.datePipe.getLocalTimeZoneISOString()));
+        let params = "DateBegin=" + this.datePipe.toISODateUTC(new Date(dateBegin)) + "&DateEnd=" + this.datePipe.toISODateUTC(new Date(dateEnd));
 
         return this.apiService.getData("Cards/Givts/?"+params)
             .then(resp =>
@@ -203,12 +137,14 @@ export class DashboardComponent implements OnInit, OnDestroy{
             });
     }
 
-    fetchLastSundayGivts(){
-        let dateEnd = new Date(this.datePipe.transform(new Date(), "yyyy-MM-ddT23:59:59.999") + "Z");
-        let dateBegin = new Date(this.datePipe.transform(new Date().setDate(dateEnd.getDate() - 6), "yyyy-MM-ddT00:00:00.000") + "Z");
+    fetchLastDayGivts(){
+        let dtEnd = this.datePipe.transform(new Date(), "yyyy-MM-ddT23:59:59.999" + this.datePipe.getLocalTimeZoneISOString());
+        let dtBegin = this.datePipe.transform(new Date().setDate(new Date().getDate() - 6), "yyyy-MM-ddT00:00:00.000" + this.datePipe.getLocalTimeZoneISOString());
+        let dateEnd = new Date(dtEnd);
+        let dateBegin = new Date(dtBegin);
 
         return this.apiService.getData("v2/collectgroups/" + this.userService.CurrentCollectGroup.GUID
-                                        + "/givts/view/search?dtBegin="+ this.datePipe.toISODateNoLocale(dateBegin) + "&dtEnd=" + this.datePipe.toISODateNoLocale(dateEnd))
+                                        + "/givts/view/search?dtBegin="+ this.datePipe.toISODateUTC(dateBegin) + "&dtEnd=" + this.datePipe.toISODateUTC(dateEnd))
             .then(resp =>
             {
                 if(resp.statusCode == 500)
@@ -227,8 +163,6 @@ export class DashboardComponent implements OnInit, OnDestroy{
                 this.translate.get(this.daysOfWeek[displayDate.getDay()]).subscribe(value => { this.lastSundayCard.title = value;});
                 this.translate.get("Text_Given").subscribe(value => { this.lastSundayCard.footer = value;});
                 this.lastSundayCard.subtitle = this.datePipe.transform(displayDate, 'dd-MM-yyyy');
-                if(!<HTMLDivElement>document.getElementById("donutchart"))
-                    this.googleCharts(this.lastSundayCard.subtitle, this.lastSundayCard.footer, this.euro + (this.isSafari ? collectSum.toFixed(2) : collectSum.toLocaleString(navigator.language,{minimumFractionDigits: 2})));
                 let cardIsInCards = false;
                 for(let i in this.cards){
                     if(this.cards[i].title === this.lastSundayCard.title){
