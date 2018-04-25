@@ -1,11 +1,11 @@
 .section-collects{
-    width: 800px;
+    width: 70vw;
     margin: 0 auto;
     position: relative;
 }
 
 .collection-buttons{
-    display: flex;
+  display: flex;
   align-items: center;
 }
 
@@ -55,6 +55,21 @@ h3{
 .collects-pickdate {
     display: flex;
     justify-content: space-between;
+    max-width: 500px;
+}
+
+@media only screen
+  and (max-device-width: 800px){
+  .collects-pickdate {
+    display: block;
+
+  }
+  .date-picker-input {
+    width: 70vw;
+    max-width: 320px;
+  }
+  .saved-collects {
+  }
 }
 
 .input-date{
@@ -65,14 +80,13 @@ h3{
 .search-collect{
     padding: 8px 22px;
     box-sizing: border-box;
-    margin: 40px 0;
+    margin: 40px auto !important;
     color:white;
     font-family: 'Avenir_Black';
     background-color:#2C2B57;
     border:0;
     font-size: 18px;
     display: block;
-    margin-left:auto;
     cursor:pointer;
     transition: 0.3s;
 }
@@ -108,7 +122,7 @@ h3{
 .collect-hr{
     border:0;
     border-bottom: 1px solid #E3E2E7;
-    width: 940px;
+    width: 80vw;
     margin: 0 auto;
 }
 
@@ -119,7 +133,7 @@ h3{
 .collects-list{
     margin: 0 auto;
     display: block;
-    width: 940px;
+    width: 80vw;
 }
 
 button:disabled{
@@ -511,7 +525,7 @@ button:disabled{
 }
 
 .till{
-    align-self:center;
+    text-align: center;
     font-family: 'Avenir_Heavy';
     font-size:16px;
     color: #2C2B57;
@@ -588,6 +602,7 @@ button:disabled{
 
 .graph-overview tr td .personal-icon {
   padding: 0 0 5px 5px;
+  margin-right: 5px;
 }
 
 .graph-overview tr td .rectangle {

@@ -1,7 +1,18 @@
 .section-page{
-  width: 800px;
+  width: 70vw;
   margin: 0 auto;
   position: relative;
+}
+
+@media only screen and (max-device-width : 480px) {
+  .section-page {
+    width: 90vw;
+    font-size: 10px;
+  }
+  h2{
+    font-size: 14px;
+  }
+
 }
 
 h2{

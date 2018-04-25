@@ -1,5 +1,5 @@
 .section-collects{
-    width: 800px;
+    width: 70vw;
     margin: 0 auto;
     position: relative;
 }
@@ -107,14 +107,14 @@ h3{
 .collect-hr{
     border:0;
     border-bottom: 1px solid #E3E2E7;
-    width: 940px;
+    width: 70vw !important;
     margin: 0 auto;
 }
 
 .collects-list{
     margin: 0 auto;
     display: block;
-    width: 940px;
+    width: 70vw !important;
 }
 
 button:disabled{
@@ -596,7 +596,6 @@ button:disabled{
 }
 
 .section-collects-nopayments {
-    width: 500px;
     margin: 40px auto !important;
     font-size: 18px !important;
     font-family: Avenir_Light !important;
