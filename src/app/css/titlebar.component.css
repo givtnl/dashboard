@@ -22,7 +22,6 @@
   }
 }
 
-
 .nav-title-heading {
   padding: 10px 20px;
   font-family: "Avenir_Heavy";
@@ -43,6 +42,7 @@
   display: inline-block;
   position: absolute;
   z-index: 1000;
+  min-width: 180px;
 
 }
 .nav-title-dropdown ul {
@@ -51,8 +51,27 @@
   font-family: "Avenir_Heavy";
   font-size:14px;
   color:#2C2B57;
+
 }
 .hidden {
-  display: none;
+  display:none;
 }
 [hidden] { display: none !important;}
+
+@media only screen
+and (max-device-height: 400px) {
+  .nav-title{
+    display: flex;
+    justify-content: space-between;
+  }
+  .mobile-manual {
+    color: white;
+    display: inline-block !important;
+    margin: 10px;
+  }
+  .mobile-manual i {
+    height: 20px;
+    width: 20px;
+    color: #2C2B57;
+  }
+}

@@ -1,13 +1,13 @@
 
   <div class="nav-title">
-    <p class="nav-title-heading" (click)="toggleDropdown()">{{currentCollectGroup.Name}}
+    <p id="nav-title-heading" class="nav-title-heading" (click)="toggleDropdown()">{{currentCollectGroup.Name}}
       <i class="fa " [ngClass]="{'fa-caret-down': !isDropDownOpen,'fa-caret-up': isDropDownOpen}"></i>
     </p>
     <a href="https://www.givtapp.net/wp-content/uploads/2017/07/Handleiding_Givt_Dashboard.pdf" class="mobile-manual" style="display: none;">
       <i class="fa fa-question-circle"></i>
     </a>
   </div>
-  <div class="nav-title-dropdown" *ngIf="isDropDownOpen">
+  <div id="nav-title-dropdown" class="nav-title-dropdown" *ngIf="isDropDownOpen">
     <ul *ngIf="collectGroups.length > 1">
       <li class="list-org" *ngFor="let cg of collectGroups" (click)="setCollectGroup(cg)" [class.hidden]="cg.Name == currentCollectGroup.Name">
         <a>
