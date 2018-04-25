@@ -154,16 +154,21 @@ h3{
 and (max-device-width : 1324px)  {
   .buttons {
     display: block;
+    margin-top: 10px;
   }
   .buttons button {
     margin: 0 auto;
     width: 100% !important;
+    font-size: 16px !important;
   }
   .flex-section {
     display: block;
   }
   .flex-section article {
     width: 100%;
+  }
+  .flex-section article table {
+    font-size: 12px;
   }
   .global-layout-content {
     padding-bottom: 20px;

@@ -72,11 +72,12 @@ h3{
     display: block !important;
   }
   .collection-buttons > span {
-    font-size: 20px;
+    font-size: 18px;
   }
   .arrow-right {
     float: right;
     margin-top: -40px;
+    margin-right: -12px;
   }
 }
 
