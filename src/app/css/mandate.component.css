@@ -151,7 +151,7 @@ h3{
 }
 
 @media only screen
-and (max-device-width : 1324px)  {
+and (max-device-width : 1023px)  {
   .buttons {
     display: block;
     margin-top: 10px;
