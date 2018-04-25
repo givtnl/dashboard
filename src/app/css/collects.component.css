@@ -59,6 +59,13 @@ h3{
 
 @media only screen
   and (max-device-width: 1024px){
+  h2, h3 {
+    font-size: 16px;
+
+  }
+  .section-collects h2:first-of-type{
+    padding-bottom: 0;
+  }
   .collects-pickdate {
     display: block;
     max-width: 320px;
@@ -72,12 +79,52 @@ h3{
     display: block !important;
   }
   .collection-buttons > span {
-    font-size: 18px;
+    font-size: 16px;
   }
   .arrow-right {
     float: right;
     margin-top: -40px;
     margin-right: -12px;
+  }
+  input[name=bjorn]{
+    margin-bottom: 10px;
+  }
+  .choose_collecte {
+    display: flex;
+    flex: auto;
+    justify-content:  space-between;
+    margin-bottom: 30px;
+    margin-top: 10px;
+  }
+  body > app-root > div > my-collects > div > div > section:nth-child(4) > section {
+    padding-bottom: 0px !important;
+  }
+  body > app-root > div > my-collects > div > div > section:nth-child(4) > section > div > button.search-collect.save-collect {
+    margin-left: 20px !important;
+  }
+  .choose_collecte span:first-of-type {
+    margin-top: 8px;
+  }
+  .search-collect {
+    margin-top: 20px;
+  }
+
+  .graph {
+    margin: 0 auto;
+    display: block !important;
+    margin-bottom: 20px;
+  }
+  table.graph-overview {
+    font-size: 12px;
+  }
+  table.graph-overview .cell-amount {
+    padding-left:20px;
+  }
+  body > app-root > div > my-collects > div > div > section:nth-child(4) > section > time > span.date {
+    text-align: center;
+  }
+  body > app-root > div > my-collects > div > div > section:nth-child(4) > section > time > span.time {
+    text-align: center;
   }
 }
 @media only screen
@@ -86,7 +133,7 @@ h3{
     width: 800px;
     margin: 0 auto;
   }
-  }
+}
 
 
 .input-date{
