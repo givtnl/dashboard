@@ -55,14 +55,14 @@ h3{
 .collects-pickdate {
     display: flex;
     justify-content: space-between;
-    max-width: 500px;
 }
 
 @media only screen
-  and (max-device-width: 800px){
+  and (max-device-width: 1024px){
   .collects-pickdate {
     display: block;
-
+    max-width: 320px;
+    margin: 0 auto;
   }
   .date-picker-input {
     width: 80vw;
@@ -80,6 +80,14 @@ h3{
     margin-right: -12px;
   }
 }
+@media only screen
+  and (min-device-width: 1025px) {
+  .collects-pickdate {
+    width: 800px;
+    margin: 0 auto;
+  }
+  }
+
 
 .input-date{
     width: 380px;
