@@ -56,11 +56,13 @@
             </table>
           </article>
         </section>
+        <hr class="collect-hr" style="margin:30px 0 24px 0;"/>
+
         <section class="flex-section">
           <article>
             <table class="table">
               <tr>
-                <th colspan="2">Mandaatgegevens</th>
+                <th style="font-size: 14px; padding-bottom: 10px" colspan="2">Mandaatgegevens</th>
               </tr>
               <tr>
                 <td [class.warning]="!selectedOrganisation.cf_value_93485">Familienaam</td>
@@ -112,6 +114,8 @@
               </tr>
             </table>
           </article>
+          <hr class="collect-hr" style="margin-bottom: 30px; margin-top: 20px;"/>
+
           <article class="buttons">
             <button (click)="openCRM()" >Vervolledig gegevens in CRM</button>
             <button [class.disabled]="this.selectedOrganisation.mandate_status && this.selectedOrganisation.mandate_status.PayProvMandateStatus === 'closed.completed'"
@@ -131,6 +135,7 @@
             <button (click)="showRegisterAdmin = !showRegisterAdmin">Admin registreren</button>
           </article>
         </section>
+
         <section *ngIf="showRegisterAdmin">
           <article class="register__admin">
             <table class="table">
