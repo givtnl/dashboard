@@ -1,6 +1,7 @@
 .section-page{
   width: 70vw;
   margin: 0 auto;
+    display: flex;
   position: relative;
 }
 
@@ -22,11 +23,6 @@ h3{
   color: #2C2B57;
   text-align:center;
   font-weight: normal;
-}
-
-.schedule{
-  position:relative;
-  padding-bottom: 100px;
 }
 
 .schedule__dialog{
@@ -705,26 +701,27 @@ h3{
 }
 
 .sidebar-collection {
-    width: 450px;
     display: block;
+    flex: 0 0 450px;
+    padding: 0 0 0 50px;
 }
 
 .sidebar-collection-popup {
-    margin-left: 20px;
     margin-top: 208px;
-    margin-left: 20px;
     top: 20px;
     position: sticky;
     position: -webkit-sticky;
 }
 
+@media only screen and (max-device-width : 1366px) {
+    .sidebar-collection {
+        padding-left: 20px;
+    }
+}
+
 @media only screen and (max-device-width : 480px) {
     .section-page {
         width: 100vw;
-        padding: 10px;
-        -webkit-box-sizing: border-box;
-        -moz-box-sizing: border-box;
-        box-sizing: border-box;
         font-size: 10px;
     }
     h2{
@@ -736,8 +733,7 @@ h3{
         position: absolute;
         z-index: 2001;
         top: 0;
-        height: 100vh;
-        background: rgba(0,0,0,0.2);
+        padding-left: 0;
     }
 
     .sidebar-collection-popup {
