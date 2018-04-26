@@ -38,6 +38,7 @@ export class FooterComponent implements OnInit {
 
 
     ngOnInit() {
-      this.showDashboardItems = true;
+        this.showDashboardItems = true;
+	    this.showMandateLink = this.userService.GivtOperations;
     }
 }

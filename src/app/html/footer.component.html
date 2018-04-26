@@ -37,7 +37,7 @@
               <span class="sidebar-title">{{"Menu_Allocate" | translate}}</span>
             </a>
           </td>
-          <td style="align-items: center; width: 20vw">
+          <td *ngIf="showMandateLink" style="align-items: center; width: 20vw">
             <a routerLink="/mandate" routerLinkActive="active">
               <span class="sidebar-icon"><i class="fa fa-file-text-o"></i></span>
               <br/>
