@@ -33,7 +33,7 @@ a:hover{
       display: flex;
       flex-direction: column;
       align-self: center;
-      font-size: 14px;
+      font-size: 0.8em;
   }
 }
 

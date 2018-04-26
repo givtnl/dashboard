@@ -11,7 +11,7 @@ import {childOfKind} from "tslint";
 })
 export class NavigationComponent implements OnInit {
     userService: UserService;
-
+    huidigJaar = new Date().getFullYear().toString();
     showMandateLink = false;
     showDashboardItems = true;
     toggleSidebar = false;
@@ -23,6 +23,7 @@ export class NavigationComponent implements OnInit {
 
     ngOnInit() {
       this.showMandateLink = this.userService.GivtOperations;
+      this.huidigJaar = this.huidigJaar;
       if ((!this.userService.CollectGroups || this.userService.CollectGroups.length === 0) && this.userService.GivtOperations) {
           this.showDashboardItems = false;
           var cg = { Name: "Administratie", GUID: "" };
