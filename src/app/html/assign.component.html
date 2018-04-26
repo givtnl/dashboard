@@ -2,7 +2,7 @@
   <my-navigation></my-navigation>
   <div class="global-layout-content">
     <my-titlebar></my-titlebar>
-      <div class="section-page">
+      <div class="section-page bottom-flex">
         <h2>{{ "TitleAllocate" | translate }}</h2>
         <div class="assign__button" [class.showElement]="numberOfFilteredEvents > 0">
           <span style="font-family: Avenir_Medium; font-size: 17px;">{{'AssignOpenCollectes' | translate}}</span>
@@ -19,8 +19,8 @@
         </div>
 
       </div>
-      <aside style="width: 450px; display: block;" *ngIf="isDialogOpen">
-        <div class="schedule__dialog" style="margin-left: 20px;margin-top: 208px;margin-left: 20px;top: 20px;position: sticky;position: -webkit-sticky;">
+      <aside class="sidebar-collection" *ngIf="isDialogOpen">
+        <div class="schedule__dialog sidebar-collection-popup">
 
           <div style="" class="list-collections">
             <button style="background: none;border:none;position: absolute;top:1px;right:1px;margin: 0;padding: 10px;cursor:  pointer;" (click)="closeDialog()">

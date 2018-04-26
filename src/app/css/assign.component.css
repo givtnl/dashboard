@@ -4,17 +4,6 @@
   position: relative;
 }
 
-@media only screen and (max-device-width : 480px) {
-  .section-page {
-    width: 90vw;
-    font-size: 10px;
-  }
-  h2{
-    font-size: 14px;
-  }
-
-}
-
 h2{
   margin: 0;
   font-family: 'Avenir_Black';
@@ -714,3 +703,51 @@ h3{
 .fill-green {
     background: #1CA96C !important;
 }
+
+.sidebar-collection {
+    width: 450px;
+    display: block;
+}
+
+.sidebar-collection-popup {
+    margin-left: 20px;
+    margin-top: 208px;
+    margin-left: 20px;
+    top: 20px;
+    position: sticky;
+    position: -webkit-sticky;
+}
+
+@media only screen and (max-device-width : 480px) {
+    .section-page {
+        width: 100vw;
+        padding: 10px;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+        font-size: 10px;
+    }
+    h2{
+        font-size: 14px;
+    }
+    .sidebar-collection {
+        width: 100vw;
+        display: block;
+        position: absolute;
+        z-index: 2001;
+        top: 0;
+        height: 100vh;
+        background: rgba(0,0,0,0.2);
+    }
+
+    .sidebar-collection-popup {
+        margin-left: unset;
+        margin-top: unset;
+        margin-left: unset;
+        top: unset;
+
+    }
+
+}
+
+
