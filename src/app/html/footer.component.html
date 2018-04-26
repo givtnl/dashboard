@@ -7,43 +7,24 @@
     </p>
 
     <footer id="bottom-bar" style="display: none;">
-      <table>
-        <tr>
-          <td style="align-items: center; width: 20vw">
-            <a routerLink="/dashboard" routerLinkActive="active">
-              <span class="sidebar-icon"><i class="fa fa-area-chart"></i></span>
-              <br/>
-              <span class="sidebar-title">{{"Menu_Overview" | translate}}</span>
-            </a>
-          </td>
-          <td style="align-items: center; width: 20vw">
-            <a routerLink="/collects" routerLinkActive="active">
-              <span class="sidebar-icon"><i class="fa fa-history"></i></span>
-              <br/>
-              <span class="sidebar-title">{{"Menu_Collectes" | translate}}</span>
-            </a>
-          </td>
-          <td style="align-items: center; width: 20vw">
-            <a routerLink="/payouts" routerLinkActive="active">
-              <span class="sidebar-icon"><i class="fa fa-calculator"></i></span>
-              <br/>
-              <span class="sidebar-title">{{"Payout_Title" | translate}}</span>
-            </a>
-          </td>
-          <td style="align-items: center; width: 20vw">
-            <a routerLink="/assign" routerLinkActive="active">
-              <span class="sidebar-icon"><i class="fa fa-calendar-check-o"></i></span>
-              <br/>
-              <span class="sidebar-title">{{"Menu_Allocate" | translate}}</span>
-            </a>
-          </td>
-          <td *ngIf="showMandateLink" style="align-items: center; width: 20vw">
-            <a routerLink="/mandate" routerLinkActive="active">
-              <span class="sidebar-icon"><i class="fa fa-file-text-o"></i></span>
-              <br/>
-              <span class="sidebar-title">Mandaten</span>
-            </a>
-          </td>
-        </tr>
-      </table>
+        <a routerLink="/dashboard" routerLinkActive="active">
+            <span class="sidebar-icon"><i class="fa fa-area-chart"></i></span>
+            <span class="sidebar-title">{{"Menu_Overview" | translate}}</span>
+        </a>
+        <a routerLink="/collects" routerLinkActive="active">
+            <span class="sidebar-icon"><i class="fa fa-history"></i></span>
+            <span class="sidebar-title">{{"Menu_Collectes" | translate}}</span>
+        </a>
+        <a routerLink="/payouts" routerLinkActive="active">
+            <span class="sidebar-icon"><i class="fa fa-calculator"></i></span>
+            <span class="sidebar-title">{{"Payout_Title" | translate}}</span>
+        </a>
+        <a routerLink="/assign" routerLinkActive="active">
+            <span class="sidebar-icon"><i class="fa fa-calendar-check-o"></i></span>
+            <span class="sidebar-title">{{"Menu_Allocate" | translate}}</span>
+        </a>
+        <a *ngIf="showMandateLink" routerLink="/mandate" routerLinkActive="active">
+            <span class="sidebar-icon"><i class="fa fa-file-text-o"></i></span>
+            <span class="sidebar-title">Mandaten</span>
+        </a>
     </footer>
