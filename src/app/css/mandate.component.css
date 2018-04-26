@@ -150,35 +150,6 @@ h3{
     justify-content: center;
 }
 
-@media only screen
-and (max-device-width : 1023px)  {
-  .buttons {
-    display: block;
-    margin-top: 10px;
-  }
-  .buttons button {
-    width: 60vw !important;
-    font-size: 12px !important;
-    margin: 0 auto;
-    display: block;
-  }
-  .flex-section {
-    display: block;
-  }
-  .flex-section article {
-    width: 100%;
-  }
-  .flex-section article table {
-    font-size: 12px;
-  }
-  .global-layout-content {
-    padding-bottom: 20px;
-  }
-  .search-org button {
-    margin-top: 28px;
-  }
-}
-
 .buttons button{
     margin-bottom: 20px;
     background-color: #2C2B57;
@@ -312,5 +283,41 @@ and (max-device-width : 1023px)  {
 
 .data-row {
   cursor:pointer;
+}
+
+@media only screen
+and (max-device-width : 1023px)  {
+  .buttons {
+    display: block;
+    margin-top: 10px;
+  }
+  .buttons button {
+    width: 60vw !important;
+    font-size: 12px !important;
+    margin: 0 auto;
+    display: block;
+  }
+  .flex-section {
+    display: block;
+  }
+  .flex-section article {
+    width: 100%;
+  }
+  .flex-section article table {
+    font-size: 12px;
+  }
+  .global-layout-content {
+    padding-bottom: 20px;
+  }
+  .search-org button {
+    margin-top: 28px;
+  }
+}
+@media only screen
+and (min-device-width: 1024px)
+and (max-device-width: 1365px){
+  .section-collects {
+    width: 70vw;
+  }
 }
 
