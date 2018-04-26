@@ -472,7 +472,8 @@ p-schedule button
   background-image: url(images/check.png);
   background-position: center;
   background-repeat: no-repeat;
-  width: 30% !important;
+  width: 90% !important;
+    left: 5% !important;
 }
 
 .allocation, .money {
@@ -489,13 +490,14 @@ p-schedule button
 }
 
 .money{
-  width: 30% !important;
+  width: 90% !important;
   background-color: #F17057 !important;
   background-image: url(images/question_mark.png);
   background-position: center;
   background-repeat: no-repeat;
   font-family: 'Avenir_Black';
   font-size: 16px;
+    left: 5% !important;
 }
 
 .allocation:hover{
