@@ -47,11 +47,14 @@
 }
 .nav-title-dropdown ul {
   list-style: none;
-  padding:  0 20px 0 20px;
   font-family: "Avenir_Heavy";
   font-size:14px;
   color:#2C2B57;
-
+  margin: 0;
+  padding-left: unset;
+}
+.nav-title-dropdown ul li {
+  padding: 15px 15px;
 }
 .hidden {
   display:none;
