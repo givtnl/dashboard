@@ -614,6 +614,10 @@ button:disabled{
 }
 @media only screen
 and (max-device-width: 480px){
+  .date-picker-input {
+    max-width: 250px;
+    margin: 0 auto;
+  }
     h2{
       font-size: 1em !important;
     }
@@ -638,6 +642,7 @@ and (max-device-width: 480px){
   }
   #big {
     margin: unset;
+    font-size: 22px;
   }
   .withholding-stats{
     display:block !important;
@@ -666,6 +671,7 @@ and (max-device-width: 480px){
   .till {
     margin: 1em auto !important;
   }
+
 }
 @media only screen
 and (min-device-width: 481px)
