@@ -575,7 +575,7 @@ h3{
 
 .info-table__button--disabled {
   opacity: 0.5;
-  //background: #918FA6;
+  /*background: #918FA6;*/
   cursor: not-allowed;
 }
 
@@ -713,13 +713,13 @@ h3{
     position: -webkit-sticky;
 }
 
-@media only screen and (max-device-width : 1366px) {
+@media only screen and (max-width : 1366px) {
     .sidebar-collection {
         padding-left: 20px;
     }
 }
 
-@media only screen and (max-device-width : 480px) {
+@media only screen and (max-width : 480px) {
     .section-page {
         width: 100vw;
         font-size: 10px;

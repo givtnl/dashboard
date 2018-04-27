@@ -105,11 +105,6 @@ ul.sidebar-nav-bottom li:first-child a {
 
 .sidebar .sidebar-nav li ul.panel-collapse {
   list-style: none;
-  -moz-padding-start: 0;
-  -webkit-padding-start: 0;
-  -khtml-padding-start: 0;
-  -o-padding-start: 0;
-  padding-start: 0;
   padding: 0;
 }
 
@@ -124,14 +119,13 @@ ul.sidebar-nav-bottom li:first-child a {
   display: none !important;
 }
 /* Smartphones (portrait and landscape) ----------- */
-@media only screen and (max-device-width : 480px) {
+@media only screen and (max-width : 480px) {
   #sidebar {
     display: none;
   }
 }
 
-@media only screen
-and (max-device-width : 1324px)  {
+@media only screen and (max-width : 1324px)  {
   .sidebar .sidebar-nav {
     font-size: 0.8em;
   }
@@ -140,8 +134,7 @@ and (max-device-width : 1324px)  {
     margin-left: 2px;
   }
 }
-@media only screen
-and (max-device-height: 400px) {
+@media only screen and (max-height: 400px) {
   .sidebar-nav-bottom li:first-of-type {
     display:none;
   }

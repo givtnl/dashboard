@@ -661,8 +661,7 @@ button:disabled{
   text-align: right;
 }
 
-@media only screen
-and (max-device-width: 480px){
+@media only screen and (max-width: 480px){
   h2, h3 {
     font-size: 16px;
 
@@ -733,9 +732,7 @@ and (max-device-width: 480px){
   }
 }
 
-@media only screen
-and (min-device-width: 481px)
-and (max-device-width: 1024px){
+max-width only screen and (min-width: 481px) and (max-width: 1024px){
   .section-collects {
     width: 70vw;
   }
@@ -787,8 +784,7 @@ and (max-device-width: 1024px){
     width: 70vw;
   }
 }
-@media only screen
-and (min-device-width: 1025px) {
+@media only screen and (min-width: 1025px) {
   .collects-pickdate {
     width: 70vw;
     margin: 0 auto;

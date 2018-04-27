@@ -3,7 +3,7 @@
   width: 100%;
   background-color: #BCB9C8;
 }
-@media only screen and (max-device-width : 480px) {
+@media only screen and (max-width : 480px) {
   .nav-title {
     width: 100vw;
     display: flex;
@@ -61,8 +61,7 @@
 }
 [hidden] { display: none !important;}
 
-@media only screen
-and (max-device-height: 400px) {
+@media only screen and (max-height: 400px) {
   .nav-title{
     display: flex;
     justify-content: space-between;
