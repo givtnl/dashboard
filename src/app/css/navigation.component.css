@@ -1,3 +1,10 @@
+my-alert {
+  position: absolute;
+  margin: 0 auto;
+  z-index: 3000;
+  width: 100vw;
+}
+
 .sidebar {
   background-color: #2e2957;
   flex: 0 0 auto;

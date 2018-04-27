@@ -10,10 +10,8 @@ a {
 a:hover{
     font-family: "Avenir_Heavy";
 }
-@media only screen and (max-device-width : 480px) {
-  my-footer{
-    display: none !important;
-  }
+@media only screen and (max-device-width: 480px) {
+
   p {
     display:none;
   }
@@ -37,11 +35,11 @@ a:hover{
   }
 }
 
-@media only screen and (max-device-width : 350px) {
-    .sidebar-title {
-        display: none;
-    }
-    footer a {
-        font-size: 16px;
-    }
+@media only screen and (max-device-width: 350px) {
+  .sidebar-title {
+    display: none;
+  }
+  footer a {
+    font-size: 16px;
+  }
 }
