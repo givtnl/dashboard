@@ -15,6 +15,7 @@ import { LoginComponentGuard} from "./guards/login.component.guard";
 import { LoggedInGuard} from "./guards/logged-in.guard";
 import { OperationsGuard} from "./guards/operations.guard";
 import { NavigationComponent} from "./components/navigation.component";
+import { TitlebarComponent} from "./components/titlebar.component";
 import { CollectsComponent} from "./components/collects.component";
 import { ReversePipe} from "./pipes/reverse.pipe";
 import { BrowserAnimationsModule} from "@angular/platform-browser/animations";
@@ -44,6 +45,7 @@ export function createTranslateLoader(http: Http) {
     LoginComponent,
     DashboardComponent,
     NavigationComponent,
+    TitlebarComponent,
     CollectsComponent,
     ReversePipe,
     ISODatePipe,

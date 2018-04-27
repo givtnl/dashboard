@@ -1,11 +1,11 @@
 .section-collects{
-    width: 900px;
+    width: 960px;
     margin: 0 auto;
     position: relative;
 }
 
 .collection-buttons{
-    display: flex;
+  display: flex;
   align-items: center;
 }
 
@@ -31,7 +31,7 @@
     height: 41px;
 }
 
-h2{
+h2 {
     margin: 0;
     font-family: 'Avenir_Black';
     font-size:18px;
@@ -42,7 +42,7 @@ h2{
     box-sizing: border-box;
 }
 
-h3{
+h3 {
     font-family: 'Avenir_Roman';
     font-size:18px;
     margin: 0 0 30px 0 ;
@@ -65,14 +65,13 @@ h3{
 .search-collect{
     padding: 8px 22px;
     box-sizing: border-box;
-    margin: 40px 0;
+    margin: 40px auto !important;
     color:white;
     font-family: 'Avenir_Black';
     background-color:#2C2B57;
     border:0;
     font-size: 18px;
     display: block;
-    margin-left:auto;
     cursor:pointer;
     transition: 0.3s;
 }
@@ -108,18 +107,18 @@ h3{
 .collect-hr{
     border:0;
     border-bottom: 1px solid #E3E2E7;
-    width: 940px;
+    width: 80vw;
     margin: 0 auto;
 }
 
 .save-collect{
-    margin:0;
+    margin:0 0 0 20px !important;
 }
 
 .collects-list{
     margin: 0 auto;
     display: block;
-    width: 940px;
+    width: 960px;
 }
 
 button:disabled{
@@ -511,7 +510,7 @@ button:disabled{
 }
 
 .till{
-    align-self:center;
+    text-align: center;
     font-family: 'Avenir_Heavy';
     font-size:16px;
     color: #2C2B57;
@@ -588,6 +587,7 @@ button:disabled{
 
 .graph-overview tr td .personal-icon {
   padding: 0 0 5px 5px;
+  margin-right: 5px;
 }
 
 .graph-overview tr td .rectangle {
@@ -661,4 +661,133 @@ button:disabled{
   text-align: right;
 }
 
+@media only screen and (max-width: 480px){
+  h2, h3 {
+    font-size: 16px;
 
+  }
+  .section-collects h2:first-of-type{
+    padding-bottom: 0;
+  }
+  .collects-pickdate {
+    display: block;
+    max-width: 320px;
+    margin: 0 auto;
+  }
+  .date-picker-input {
+    width: 80vw;
+    max-width: 320px;
+  }
+  .show-collect, .graph-section{
+    display: block !important;
+  }
+  .collection-buttons > span {
+    font-size: 16px;
+  }
+  .arrow-right {
+    float: right;
+    margin-top: -40px;
+    margin-right: -12px;
+  }
+  input[name=bjorn]{
+    margin-bottom: 10px;
+  }
+  .choose_collecte {
+    display: flex;
+    flex: auto;
+    justify-content:  space-between;
+    margin-bottom: 30px;
+    margin-top: 10px;
+  }
+  body > app-root > div > my-collects > div > div > section:nth-child(4) > section {
+    padding-bottom: 0px !important;
+  }
+  body > app-root > div > my-collects > div > div > section:nth-child(4) > section > div > button.search-collect.save-collect {
+    margin-left: 20px !important;
+  }
+  .choose_collecte span:first-of-type {
+    margin-top: 8px;
+  }
+  .search-collect {
+    margin-top: 20px;
+  }
+
+  .graph {
+    margin: 0 auto;
+    display: block !important;
+    margin-bottom: 20px;
+  }
+  table.graph-overview {
+    font-size: 12px;
+  }
+  table.graph-overview .cell-amount {
+    padding-left:20px;
+  }
+
+  body > app-root > div > my-collects > div > div > section:nth-child(4) > section > time > span.date {
+    text-align: center;
+  }
+  body > app-root > div > my-collects > div > div > section:nth-child(4) > section > time > span.time {
+    text-align: center;
+  }
+}
+
+max-width only screen and (min-width: 481px) and (max-width: 1024px){
+  .section-collects {
+    width: 70vw;
+  }
+  h2, h3 {
+    padding: 20px 20px;
+  }
+  .collects-pickdate {
+    display: block;
+    max-width: 320px;
+    margin: 0 auto;
+  }
+  body > app-root > div > my-collects > div > div > section:nth-child(4) > section {
+    display: block;
+    padding-bottom: 0px;
+  }
+  .choose_collecte {
+    margin: 20px auto;
+    width: 34vw;
+    display: flex;
+    justify-content:  space-between;
+  }
+  .choose_collecte span:first-of-type {
+    margin-top: 8px;
+  }
+  .collection-buttons {
+    width: 350px;
+    display: flex;
+    margin: 0 auto;
+  }
+  .save-collect {
+    margin-left: 20px !important;
+    margin-right: 0px !important;
+  }
+  body > app-root > div > my-collects > div > div > section:nth-child(4) > section > time > span.date {
+    text-align: center;
+  }
+  body > app-root > div > my-collects > div > div > section:nth-child(4) > section > time > span.time {
+    text-align: center;
+  }
+  .graph-section {
+    display: block;
+  }
+  .graph {
+    margin: 0 auto;
+    display: block !important;
+    margin-bottom: 20px;
+  }
+  .collects-list{
+    width: 70vw;
+  }
+}
+@media only screen and (min-width: 1025px) {
+  .collects-pickdate {
+    width: 70vw;
+    margin: 0 auto;
+    max-width: 750px;
+  }
+}

@@ -1,20 +1,29 @@
-<my-navigation></my-navigation>
-<section class="section-dashboard">
-    <div class="loading-wrapper" [ngClass]="{'show-loading-animation': ShowLoadingAnimation }">
-      <div class="loader" >
-        <svg class="circular" viewBox="25 25 50 50">
-          <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="5" stroke-miterlimit="10"/>
-        </svg>
-      </div>
-    </div>
-    <article *ngFor="let card of cards">
-        <div>
-            <p class="card-title">{{card.title}}</p>
-            <p class="card-subtitle"><span>{{card.subtitle}}</span></p>
-            <p class="card-subtitle" [innerHTML]="card.value"></p>
-            <p class="card-subtitle">{{card.footer}}</p>
-        </div>
-    </article>
 
-</section>
-<my-footer></my-footer>
+<my-alert></my-alert>
+<div class="global-layout">
+  <my-navigation></my-navigation>
+  <div class="global-layout-content">
+    <my-titlebar></my-titlebar>
+    <section class="section-dashboard bottom-flex">
+      <div class="loading-wrapper" [ngClass]="{'show-loading-animation': ShowLoadingAnimation }">
+        <div class="loader" >
+          <svg class="circular" viewBox="25 25 50 50">
+            <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="5" stroke-miterlimit="10"/>
+          </svg>
+        </div>
+      </div>
+      <article *ngFor="let card of cards">
+        <div>
+          <p class="card-title">{{card.title}}</p>
+          <p class="card-subtitle"><span>{{card.subtitle}}</span></p>
+          <p class="card-subtitle" [innerHTML]="card.value"></p>
+          <p class="card-subtitle">{{card.footer}}</p>
+        </div>
+      </article>
+
+    </section>
+    <my-footer></my-footer>
+  </div>
+</div>
+
+

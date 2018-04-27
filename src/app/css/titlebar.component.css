@@ -1,0 +1,79 @@
+
+.nav-title {
+  width: 100%;
+  background-color: #BCB9C8;
+}
+@media only screen and (max-width : 480px) {
+  .nav-title {
+    width: 100vw;
+    display: flex;
+    justify-content: space-between;
+
+  }
+  .mobile-manual {
+    color: white;
+    display: inline-block !important;
+    margin: 12px;
+  }
+  .mobile-manual i {
+    height: 20px;
+    width: 20px;
+    color: #2C2B57;
+  }
+}
+
+.nav-title-heading {
+  padding: 10px 20px;
+  font-family: "Avenir_Heavy";
+  font-size:18px;
+  color:#2C2B57;
+  margin: 0;
+  display: inline-flex;
+}
+.nav-title-heading i {
+  margin-left: 10px;
+}
+.nav-title-heading:hover > ul{
+  display: none;
+}
+
+.nav-title-dropdown {
+  background: #E3E2E7;
+  display: inline-block;
+  position: absolute;
+  z-index: 1000;
+  min-width: 180px;
+
+}
+.nav-title-dropdown ul {
+  list-style: none;
+  font-family: "Avenir_Heavy";
+  font-size:14px;
+  color:#2C2B57;
+  margin: 0;
+  padding-left: unset;
+}
+.nav-title-dropdown ul li {
+  padding: 15px 15px;
+}
+.hidden {
+  display:none;
+}
+[hidden] { display: none !important;}
+
+@media only screen and (max-height: 400px) {
+  .nav-title{
+    display: flex;
+    justify-content: space-between;
+  }
+  .mobile-manual {
+    color: white;
+    display: inline-block !important;
+    margin: 10px;
+  }
+  .mobile-manual i {
+    height: 20px;
+    width: 20px;
+    color: #2C2B57;
+  }
+}

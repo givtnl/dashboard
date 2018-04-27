@@ -37,7 +37,7 @@
     src: url("./fonts/roboto-v15-latin-regular.woff") format('woff');
 }
 
-html,body,.container{
+html,body,.container, .body-container{
     height: 100%;
 }
 
@@ -53,7 +53,7 @@ h1 {
 }
 
 .date-picker-input{
-    width: 380px;
+    width: 320px;
     padding: 8px 16px;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -77,27 +77,36 @@ h1 {
 }
 
 my-collects{
-    display: flex;
-    flex-flow: column;
     height: 100%;
 }
+my-titlebar {
+  position: sticky;
+  display: block;
+  top: 1;
+  z-index: 99;
+}
+my-footer {
+  display: table;
+  font-family: "Avenir_Light";
+  width: 100%;
+  background: #D5D4DD;
 
+}
+my-footer p{
+}
 /* loading animation */
 .loading-wrapper{
-    width: 100%;
-    position: absolute;
     margin:auto;
-    height: 100%;
     display: flex;
     background:#F5F5F5 ;
     z-index: 1;
-    visibility:hidden;
+    display:none;
     opacity:0;
     transition:visibility 0s linear 0.1s,opacity 0.1s linear;
 }
 
 .show-loading-animation{
-    visibility:visible;
+    display: block;
     opacity:1;
     transition-delay:0s;
 }
@@ -463,7 +472,8 @@ p-schedule button
   background-image: url(images/check.png);
   background-position: center;
   background-repeat: no-repeat;
-  width: 30% !important;
+  width: 90% !important;
+    left: 5% !important;
 }
 
 .allocation, .money {
@@ -480,13 +490,14 @@ p-schedule button
 }
 
 .money{
-  width: 30% !important;
+  width: 90% !important;
   background-color: #F17057 !important;
   background-image: url(images/question_mark.png);
   background-position: center;
   background-repeat: no-repeat;
   font-family: 'Avenir_Black';
   font-size: 16px;
+    left: 5% !important;
 }
 
 .allocation:hover{
@@ -550,3 +561,27 @@ p-schedule button
   background-color: #5A5387;
   border-color: #5A5387;
 }
+
+.global-layout {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.global-layout-content {
+  flex: 1 0 auto;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.bottom-flex {
+  margin-bottom: auto !important;
+}
+
+@media only screen and (max-width : 480px) {
+  body {
+    margin-bottom: 60px;
+  }
+}
+

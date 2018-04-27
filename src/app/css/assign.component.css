@@ -1,6 +1,7 @@
 .section-page{
-  width: 900px;
+  width: 70vw;
   margin: 0 auto;
+    display: flex;
   position: relative;
 }
 
@@ -22,11 +23,6 @@ h3{
   color: #2C2B57;
   text-align:center;
   font-weight: normal;
-}
-
-.schedule{
-  position:relative;
-  padding-bottom: 100px;
 }
 
 .schedule__dialog{
@@ -579,7 +575,7 @@ h3{
 
 .info-table__button--disabled {
   opacity: 0.5;
-  //background: #918FA6;
+  /*background: #918FA6;*/
   cursor: not-allowed;
 }
 
@@ -703,3 +699,51 @@ h3{
 .fill-green {
     background: #1CA96C !important;
 }
+
+.sidebar-collection {
+    display: block;
+    flex: 0 0 450px;
+    padding: 0 0 0 50px;
+}
+
+.sidebar-collection-popup {
+    margin-top: 208px;
+    top: 20px;
+    position: sticky;
+    position: -webkit-sticky;
+}
+
+@media only screen and (max-width : 1366px) {
+    .sidebar-collection {
+        padding-left: 20px;
+    }
+}
+
+@media only screen and (max-width : 480px) {
+    .section-page {
+        width: 100vw;
+        font-size: 10px;
+    }
+    h2{
+        font-size: 14px;
+    }
+    .sidebar-collection {
+        width: 100vw;
+        display: block;
+        position: absolute;
+        z-index: 2001;
+        top: 0;
+        padding-left: 0;
+    }
+
+    .sidebar-collection-popup {
+        margin-left: unset;
+        margin-top: unset;
+        margin-left: unset;
+        top: unset;
+
+    }
+
+}
+
+
