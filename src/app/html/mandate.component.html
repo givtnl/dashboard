@@ -1,164 +1,178 @@
-<my-navigation></my-navigation>
-<section class="section-collects">
-    <h2>{{title}}</h2>
-    <h3>{{subtitle}}</h3>
-    <div class="search-org">
-      <form>
-        <div class="search-content">
+<my-alert></my-alert>
+
+<div class="global-layout">
+  <my-navigation></my-navigation>
+  <div class="global-layout-content">
+    <my-titlebar></my-titlebar>
+    <section class="section-collects bottom-flex">
+      <h2>{{title}}</h2>
+      <h3>{{subtitle}}</h3>
+      <div class="search-org">
+        <form>
+          <div class="search-content">
             <input [(ngModel)]="search" (ngModelChange)="change()" type="text" [ngModelOptions]="{standalone: true}">
             <div class="search-results" *ngIf="filteredOrganisations">
-                <ul>
-                    <li *ngFor="let i of filteredOrganisations" (click)="select(i)">{{i.name}}, {{i.city}}</li>
-                </ul>
+              <ul>
+                <li *ngFor="let i of filteredOrganisations" (click)="select(i)">{{i.name}}, {{i.city}}</li>
+              </ul>
             </div>
 
-        </div>
-        <button (click)="searchOrg()" type="submit" [class.disabled]="disabled">{{searchBtn}}</button>
-      </form>
-    </div>
-    <hr class="collect-hr"/>
-    <div *ngIf="selectedOrganisation">
+          </div>
+          <button (click)="searchOrg()" type="submit" [class.disabled]="disabled">{{searchBtn}}</button>
+        </form>
+      </div>
+      <hr class="collect-hr"/>
+      <div *ngIf="selectedOrganisation">
         <h2>{{selectedOrganisation.name}}</h2>
         <section class="flex-section">
-            <article>
-                <table class="table">
-                    <tr>
-                        <td [class.warning]="!selectedOrganisation.name">Naam</td>
-                        <td>{{selectedOrganisation.name}}</td>
-                    </tr>
-                    <tr>
-                        <td [class.warning]="!selectedOrganisation.cf_value_93168">Naam in app</td>
-                        <td>{{selectedOrganisation.cf_value_93168}}</td>
-                    </tr>
-                    <tr>
-                        <td [class.warning]="!selectedOrganisation.cf_value_93491">Beacon namespace</td>
-                        <td>{{selectedOrganisation.cf_value_93491}}</td>
-                    </tr>
-                    <tr>
-                        <td>Aangesloten sinds</td>
-                        <td>{{selectedOrganisation.date_added}}</td>
-                    </tr>
-                    <tr>
-                        <td [class.warning]="!selectedOrganisation.hasVisitors" >Bezoekers</td>
-                        <td>{{selectedOrganisation.cf_value_93301}}</td>
-                    </tr>
-                    <tr >
-                        <td>Mandaatstatus</td>
-                        <td *ngIf="selectedOrganisation.mandate_status">{{selectedOrganisation.mandate_status.PayProvMandateStatus}}</td>
-                    </tr>
-                    <tr >
-                        <td>Incassostatus</td>
-                        <td>{{incassoStatus}}</td>
-                    </tr>
-                </table>
-            </article>
+          <article>
+            <table class="table">
+              <tr>
+                <td [class.warning]="!selectedOrganisation.name">Naam</td>
+                <td>{{selectedOrganisation.name}}</td>
+              </tr>
+              <tr>
+                <td [class.warning]="!selectedOrganisation.cf_value_93168">Naam in app</td>
+                <td>{{selectedOrganisation.cf_value_93168}}</td>
+              </tr>
+              <tr>
+                <td [class.warning]="!selectedOrganisation.cf_value_93491">Beacon namespace</td>
+                <td>{{selectedOrganisation.cf_value_93491}}</td>
+              </tr>
+              <tr>
+                <td>Aangesloten sinds</td>
+                <td>{{selectedOrganisation.date_added}}</td>
+              </tr>
+              <tr>
+                <td [class.warning]="!selectedOrganisation.hasVisitors" >Bezoekers</td>
+                <td>{{selectedOrganisation.cf_value_93301}}</td>
+              </tr>
+              <tr >
+                <td>Mandaatstatus</td>
+                <td *ngIf="selectedOrganisation.mandate_status">{{selectedOrganisation.mandate_status.PayProvMandateStatus}}</td>
+              </tr>
+              <tr >
+                <td>Incassostatus</td>
+                <td>{{incassoStatus}}</td>
+              </tr>
+            </table>
+          </article>
         </section>
-        <section class="flex-section">
-            <article>
-                <table class="table">
-                    <tr>
-                        <th colspan="2">Mandaatgegevens</th>
-                    </tr>
-                    <tr>
-                        <td [class.warning]="!selectedOrganisation.cf_value_93485">Familienaam</td>
-                        <td>{{selectedOrganisation.cf_value_93485}}</td>
-                    </tr>
-                    <tr>
-                        <td [class.warning]="!selectedOrganisation.cf_value_93769">Voornaam</td>
-                        <td>{{selectedOrganisation.cf_value_93769}}</td>
-                    </tr>
-                    <tr>
-                        <td [class.warning]="!selectedOrganisation.cf_value_93495">Email</td>
-                        <td>{{selectedOrganisation.cf_value_93495}}</td>
-                    </tr>
-                    <tr>
-                        <td [class.warning]="!selectedOrganisation.cf_value_95707">Bedrijfsnaam</td>
-                        <td>{{selectedOrganisation.cf_value_95707}}</td>
-                    </tr>
-                    <tr>
-                        <td [class.warning]="!selectedOrganisation.cf_value_93494">GSM nr</td>
-                        <td>{{selectedOrganisation.cf_value_93494}}</td>
-                    </tr>
-                    <tr>
-                        <td [class.warning]="!selectedOrganisation.cf_value_93537">Gemachtigd IBAN</td>
-                        <td>{{selectedOrganisation.cf_value_93537}}</td>
-                    </tr>
-                    <tr>
-                        <td [class.warning]="!selectedOrganisation.address">Straat</td>
-                        <td>{{selectedOrganisation.address}}</td>
-                    </tr>
-                    <tr>
-                        <td [class.warning]="!selectedOrganisation.city">Stad</td>
-                        <td>{{selectedOrganisation.city}}</td>
-                    </tr>
-                    <tr>
-                        <td [class.warning]="!selectedOrganisation.zipcode">Postcode</td>
-                        <td>{{selectedOrganisation.zipcode}}</td>
-                    </tr>
-                    <tr>
-                        <td [class.warning]="!selectedOrganisation.country">Land</td>
-                        <td>{{selectedOrganisation.country}}</td>
-                    </tr>
-                    <tr *ngIf="selectedOrganisation">
-                      <td [class.warning]="!selectedOrganisation.status || selectedOrganisation.status === '' || selectedOrganisation.status.indexOf(',') > -1">Type organisatie</td>
-                      <td [class.warning]="!selectedOrganisation.status || selectedOrganisation.status === '' || selectedOrganisation.status.indexOf(',') > -1">{{selectedOrganisation.status}}</td>
-                    </tr>
-                  <tr>
-                    <td [class.warning]="!selectedOrganisation.cf_value_92583">Opstartkosten in euro</td>
-                    <td>€ {{this.selectedOrganisation.cf_value_92583}}</td>
-                  </tr>
-                </table>
-            </article>
-            <article class="buttons">
-                <button (click)="openCRM()" >Vervolledig gegevens in CRM</button>
-                <button [class.disabled]="this.selectedOrganisation.mandate_status && this.selectedOrganisation.mandate_status.PayProvMandateStatus === 'closed.completed'"
-                        [disabled]="this.selectedOrganisation.mandate_status && this.selectedOrganisation.mandate_status.PayProvMandateStatus === 'closed.completed'"
-                        (click)="registerMandate()">
-                    {{this.selectedOrganisation.mandate_status ? "Mandaat OPNIEUW aanvragen" : "Mandaat aanvragen"}}
-                </button>
-                <button [class.disabled]="!this.selectedOrganisation.mandate_status
-                                || this.selectedOrganisation.mandate_status.PayProvMandateStatus !== 'closed.completed'
-                                || this.incassoStatus"
-                        [disabled]="!this.selectedOrganisation.mandate_status
-                                || this.selectedOrganisation.mandate_status.PayProvMandateStatus !== 'closed.completed'
-                                || this.incassoStatus"
-                        (click)="startIncasso()">Start incasso
-                </button>
-                <button [class.disabled]="hasEmptyFields" [disabled]="hasEmptyFields" (click)="registerDefaultCollectGroup()" >Default collectegroep registreren</button>
-                <button (click)="showRegisterAdmin = !showRegisterAdmin">Admin registreren</button>
-            </article>
-        </section>
-        <section *ngIf="showRegisterAdmin">
-            <article class="register__admin">
-                <table class="table">
-                    <tr>
-                        <th colspan="3">Organisatie administrator</th>
-                    </tr>
-                    <tr>
-                        <td>Gebruiker</td>
-                        <td colspan="2"><input type="text" [(ngModel)]="organisationAdmin" (ngModelChange)="adminRegistered = false"></td>
-                    </tr>
-                </table>
-                <button [class.disabled]="adminRegistered" [disabled]="adminRegistered" (click)="registerOrganisationAdmin()">Register admin</button>
-            </article>
-        </section>
-      <hr class="collect-hr" style="margin-top: 30px;"/>
+        <hr class="collect-hr" style="margin:30px 0 24px 0;"/>
 
-    </div>
-    <div class="overview-mandates">
-      <h2 style="margin: 0 auto;">Hieronder staan de organisaties die nog niet compleet zijn</h2>
-      <table class="overview-mandates-table">
-        <tr class="first-row">
-          <td>Organisatie</td>
-          <td>Mandaat</td>
-          <td>Incasso</td>
-        </tr>
-        <tr *ngFor="let i of currentMandates" class="data-row" (click)="getCompany(i.CrmId)">
+        <section class="flex-section">
+          <article>
+            <table class="table">
+              <tr>
+                <th style="font-size: 14px; padding-bottom: 10px" colspan="2">Mandaatgegevens</th>
+              </tr>
+              <tr>
+                <td [class.warning]="!selectedOrganisation.cf_value_93485">Familienaam</td>
+                <td>{{selectedOrganisation.cf_value_93485}}</td>
+              </tr>
+              <tr>
+                <td [class.warning]="!selectedOrganisation.cf_value_93769">Voornaam</td>
+                <td>{{selectedOrganisation.cf_value_93769}}</td>
+              </tr>
+              <tr>
+                <td [class.warning]="!selectedOrganisation.cf_value_93495">Email</td>
+                <td>{{selectedOrganisation.cf_value_93495}}</td>
+              </tr>
+              <tr>
+                <td [class.warning]="!selectedOrganisation.cf_value_95707">Bedrijfsnaam</td>
+                <td>{{selectedOrganisation.cf_value_95707}}</td>
+              </tr>
+              <tr>
+                <td [class.warning]="!selectedOrganisation.cf_value_93494">GSM nr</td>
+                <td>{{selectedOrganisation.cf_value_93494}}</td>
+              </tr>
+              <tr>
+                <td [class.warning]="!selectedOrganisation.cf_value_93537">Gemachtigd IBAN</td>
+                <td>{{selectedOrganisation.cf_value_93537}}</td>
+              </tr>
+              <tr>
+                <td [class.warning]="!selectedOrganisation.address">Straat</td>
+                <td>{{selectedOrganisation.address}}</td>
+              </tr>
+              <tr>
+                <td [class.warning]="!selectedOrganisation.city">Stad</td>
+                <td>{{selectedOrganisation.city}}</td>
+              </tr>
+              <tr>
+                <td [class.warning]="!selectedOrganisation.zipcode">Postcode</td>
+                <td>{{selectedOrganisation.zipcode}}</td>
+              </tr>
+              <tr>
+                <td [class.warning]="!selectedOrganisation.country">Land</td>
+                <td>{{selectedOrganisation.country}}</td>
+              </tr>
+              <tr *ngIf="selectedOrganisation">
+                <td [class.warning]="!selectedOrganisation.status || selectedOrganisation.status === '' || selectedOrganisation.status.indexOf(',') > -1">Type organisatie</td>
+                <td [class.warning]="!selectedOrganisation.status || selectedOrganisation.status === '' || selectedOrganisation.status.indexOf(',') > -1">{{selectedOrganisation.status}}</td>
+              </tr>
+              <tr>
+                <td [class.warning]="!selectedOrganisation.cf_value_92583">Opstartkosten in euro</td>
+                <td>€ {{this.selectedOrganisation.cf_value_92583}}</td>
+              </tr>
+            </table>
+          </article>
+          <hr class="collect-hr" style="margin-bottom: 30px; margin-top: 20px;"/>
+
+          <article class="buttons">
+            <button (click)="openCRM()" >Vervolledig gegevens in CRM</button>
+            <button [class.disabled]="this.selectedOrganisation.mandate_status && this.selectedOrganisation.mandate_status.PayProvMandateStatus === 'closed.completed'"
+                    [disabled]="this.selectedOrganisation.mandate_status && this.selectedOrganisation.mandate_status.PayProvMandateStatus === 'closed.completed'"
+                    (click)="registerMandate()">
+              {{this.selectedOrganisation.mandate_status ? "Mandaat OPNIEUW aanvragen" : "Mandaat aanvragen"}}
+            </button>
+            <button [class.disabled]="!this.selectedOrganisation.mandate_status
+                                || this.selectedOrganisation.mandate_status.PayProvMandateStatus !== 'closed.completed'
+                                || this.incassoStatus"
+                    [disabled]="!this.selectedOrganisation.mandate_status
+                                || this.selectedOrganisation.mandate_status.PayProvMandateStatus !== 'closed.completed'
+                                || this.incassoStatus"
+                    (click)="startIncasso()">Start incasso
+            </button>
+            <button [class.disabled]="hasEmptyFields" [disabled]="hasEmptyFields" (click)="registerDefaultCollectGroup()" >Default collectegroep registreren</button>
+            <button (click)="showRegisterAdmin = !showRegisterAdmin">Admin registreren</button>
+          </article>
+        </section>
+
+        <section *ngIf="showRegisterAdmin">
+          <article class="register__admin">
+            <table class="table">
+              <tr>
+                <th colspan="3">Organisatie administrator</th>
+              </tr>
+              <tr>
+                <td>Gebruiker</td>
+                <td colspan="2"><input type="text" [(ngModel)]="organisationAdmin" (ngModelChange)="adminRegistered = false"></td>
+              </tr>
+            </table>
+            <button [class.disabled]="adminRegistered" [disabled]="adminRegistered" (click)="registerOrganisationAdmin()">Register admin</button>
+          </article>
+        </section>
+        <hr class="collect-hr" style="margin-top: 30px;"/>
+
+      </div>
+      <div class="overview-mandates">
+        <h2 style="margin: 0 auto;">Hieronder staan de organisaties die nog niet compleet zijn</h2>
+        <table class="overview-mandates-table">
+          <tr class="first-row">
+            <td>Organisatie</td>
+            <td>Mandaat</td>
+            <td>Incasso</td>
+          </tr>
+          <tr *ngFor="let i of currentMandates" class="data-row" (click)="getCompany(i.CrmId)">
             <td>{{i.Name}}</td>
             <td class="cell"><span [ngClass]="{'status-notok': i.PayProvMandateStatus != 'closed.completed' ,'status-done': i.PayProvMandateStatus == 'closed.completed' }" class="status">{{i.PayProvMandateStatus}}</span> </td>
             <td class="cell"><span [ngClass]="{'status-notok': i.IncassoStatus != 'Processed' ,'status-done': i.IncassoStatus == 'Processed' }" class="status">{{i.IncassoStatus}}</span></td>
-        </tr>
-      </table>
-    </div>
+          </tr>
+        </table>
+      </div>
 
-</section>
+    </section>
+    <my-footer></my-footer>
+  </div>
+</div>
+

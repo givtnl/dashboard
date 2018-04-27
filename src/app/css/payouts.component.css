@@ -1,5 +1,5 @@
 .section-collects{
-    width: 900px;
+    width: 960px;
     margin: 0 auto;
     position: relative;
 }
@@ -107,14 +107,14 @@ h3{
 .collect-hr{
     border:0;
     border-bottom: 1px solid #E3E2E7;
-    width: 940px;
+    width: 70vw !important;
     margin: 0 auto;
 }
 
 .collects-list{
     margin: 0 auto;
     display: block;
-    width: 940px;
+    width: 960px;
 }
 
 button:disabled{
@@ -472,7 +472,12 @@ button:disabled{
     margin: 0 auto;
     width: 960px;
 }
-
+.search-payouts {
+  margin: 20px auto;
+  text-align: center;
+  display:flex;
+  max-width: 740px;
+}
 .white-bg{
     background-color: white;
 }
@@ -596,7 +601,6 @@ button:disabled{
 }
 
 .section-collects-nopayments {
-    width: 500px;
     margin: 40px auto !important;
     font-size: 18px !important;
     font-family: Avenir_Light !important;
@@ -607,4 +611,66 @@ button:disabled{
     margin: 30px 0;
     border-radius: 30px;
     height: 20px;
+}
+.mobile-text-info {
+  display: none;
+}
+@media only screen and (max-width: 480px){
+  .date-picker-input {
+    max-width: 250px;
+    margin: 0 auto;
+  }
+    h2{
+      font-size: 16px !important;
+    }
+   .search-payouts {
+     display: block;
+   }
+  .search-payouts button {
+    margin-top: 20px;
+  }
+  .show-collect {
+    display: block;
+  }
+  .alloc {
+    max-width: 80vw;
+  }
+  .collection-buttons > .total-payed {
+    margin-right: 0;
+    margin-top: 16px;
+  }
+  .collection-buttons > .icon {
+    margin-top: 16px;
+  }
+  #big {
+    margin: unset;
+    font-size: 22px;
+  }
+  .withholding-stats{
+    display:block !important;
+  }
+  .mobile-text-info {
+    display: block;
+    font-size: 10px;
+  }
+  .mobile-text-info td {
+    padding: 0px !important;
+    border: none !important;
+  }
+  .text-info {
+    text-indent: -30000px;
+  }
+  .stat-calc alt-stat {
+    padding: unset;
+  }
+  .stat-calc table tr td:nth-child(5) {
+    display:none;
+  }
+  .stat-calc table tr td:nth-child(4) {
+    display:none;
+  }
+  .till {
+    margin: 16px auto !important;
+  }
+
 }

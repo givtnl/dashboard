@@ -93,7 +93,15 @@ export class ForgotPasswordComponent  implements OnInit{
             this.error_message = res;
           });
         }
-      });
+      })
+        .catch(resp => {
+            this.resetNav();
+            this.disabled = false;
+            this.wrong = true;
+            this.translate.get('PW_UnknownEmail').subscribe((res: string) => {
+                this.error_message = res;
+            });
+        });
   }
 
   save(){

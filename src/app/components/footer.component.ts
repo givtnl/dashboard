@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import {Router} from "@angular/router";
 import {TranslateService} from "ng2-translate";
+import {UserService} from "../services/user.service";
 
 
 @Component({
@@ -11,7 +12,12 @@ import {TranslateService} from "ng2-translate";
 })
 export class FooterComponent implements OnInit {
     isChrome =  this.checkChrome();
-
+    userService: UserService;
+    showMandateLink = false;
+    showDashboardItems = true;
+    constructor(userService: UserService, private router: Router) {
+      this.userService = userService;
+    }
     checkChrome()
     {
         const isChromium = window['chrome'],
@@ -30,9 +36,9 @@ export class FooterComponent implements OnInit {
         }
     }
 
-    constructor(private router: Router, private translate: TranslateService) {
-    }
 
     ngOnInit() {
+        this.showDashboardItems = true;
+	    this.showMandateLink = this.userService.GivtOperations;
     }
 }

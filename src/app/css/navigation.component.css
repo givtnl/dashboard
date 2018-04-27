@@ -1,180 +1,146 @@
-nav{
-    display: block;
-    width: 100%;
-    background-color:#2c2b57;
-    font-size: 16px;
-    color:white;
-}
-
-nav ul {
-    margin: 0 0 0 2em;
-    list-style-type: none;
-    display: inline-block;
-    padding:0;
-    align-self: flex-end;
-}
-
-nav ul li a.active{
-    border-bottom:6px solid #41C98E;
-    font-family: "Avenir_Medium";
-}
-
-
-nav ul > li{
-    display: inline-block;
-}
-nav ul > li > a {
-    border-bottom:6px solid transparent;
-
-    display: inline-block;
-    margin-right: 15px;
-    padding: 29px 6px 26px 6px;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    font-family: "Avenir_Light";
-    text-decoration: none;
-    color:white;
-}
-
-nav ul > li:last-child > a{
-    margin-right: 0;
-}
-
-li{
-    -webkit-column-break-inside: avoid;
-    page-break-inside: avoid;
-    break-inside: avoid;
-}
-nav h1 {
-    margin:0px;
-    display: inline-block;
-    font-family: "Avenir_Black";
-    font-size: calc(16px + .5vw);
-    font-weight: normal;
-    max-width: 400px;
-    min-width: 200px;
-  min-height: 83px;
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-  align-self:flex-end;
-}
-
-.menu-settings{
-    margin-bottom:5px;
-    font-family: "Avenir_Roman";
-    display:inline-block;
-    cursor: pointer;
-    color:#C0BFCC;
-    margin-left: auto;
-}
-.menu-settings svg{
-    vertical-align: bottom;
-}
-
-.menu-wrapper{
-  position: relative;
-    margin: 0 auto;
-    max-width: 1024px;
-    display: -webkit-flex;
-    display: -moz-flex;
-    display: -ms-flex;
-    display: flex;
-    justify-content: flex-start;
-    padding:0;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    align-items: center;
-}
-
-@media only screen and (max-width: 830px) {
-    nav ul {
-        display: block;
-        max-width: 250px;
-    }
-
-    nav ul li{
-        width: 120px;
-    }
-}
-
-@media only screen and (max-width: 500px) {
-    /* For mobile phones: */
-    nav {
-        position: fixed;
-        top:0;
-        z-index: 1337;
-    }
-
-    nav ul {
-        display: none;
-    }
-
-    .menu-wrapper{
-        padding-left:68px;
-    }
-
-    .menu-settings span{
-        display: none;
-    }
-
-    .menu-settings svg{
-        display: block;
-    }
-
-    nav h1 {
-        margin:0 auto;
-        padding: 15px 0;
-        font-size: 18px;
-    }
-}
-h1:hover .pick-organisation{
-  visibility: visible;
-}
-
-
-.pick-organisation {
-  align-self: normal;
+my-alert {
   position: absolute;
-  top: calc(100%);
-  background: #5A5387;
-  color:white;
-  font-family: Avenir_Light;
-  max-width: 400px;
-  min-width: 200px;
-  visibility: hidden;
-  box-sizing: border-box;
-  z-index: 99;
+  margin: 0 auto;
+  z-index: 3000;
+  width: 100vw;
 }
 
-.pick-organisation .list-orgs {
-  margin: 0;
-  height:100%;
-  width: 100%;
-}
-.pick-organisation .list-orgs .list-org {
-  padding: 20px;
-  width: 100%;
+.sidebar {
+  background-color: #2e2957;
+  flex: 0 0 auto;
+  padding-right: 25px;
   height: 100%;
+}
+
+.sidebar .sidebar-nav {
+  font-size: 14px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-family: "Avenir_Heavy";
+
+}
+#sidemenu {
+  height: 100vh;
+}
+.sidebar .sidebar-nav li {
+  text-indent: 0;
+  line-height: 45px;
+  border-left: 4px solid transparent;
+}
+.sidebar .sidebar-nav li:hover {
+  border-left: 4px solid #41C98E;
+}
+li.list-org a {
+   background: none !important;
+}
+
+.sidebar .sidebar-nav li a {
   display: block;
-  box-sizing: border-box;
-  font-size: 20px;
+  text-decoration: none;
+  color: white;
 }
 
-.pick-organisation .list-orgs .list-org:hover {
-  font-family: Avenir_Heavy;
-  cursor:pointer;
-  background: #2E2957;
+.sidebar .sidebar-nav li:first-child a {
+  margin-left: 23px;
+  padding-top: 23px;
 }
 
-.dropdown-arrow {
-  background: transparent;
-  border: 0;
-  margin-left: auto;
+ul.sidebar-nav-bottom {
+  list-style: none;
+  position: absolute;
+  bottom: 0;
+  margin: 0;
+  padding: 0;
+  margin-left: -4px;
+}
+ul.sidebar-nav-bottom li {
+  margin:0;
+  padding: 0;
 }
 
-.hidden {
-  display:none !important;
+ul.sidebar-nav-bottom li:first-child a {
+  margin-left: 0;
+  text-align: left;
 }
+#sidemenu > li:last-child > ul > li > a{
+  margin-left: 0;
+  text-align: left;
+  padding-top: 0;
+}
+#sidemenu > li:last-child > ul > li {
+  border-left: 4px solid transparent;
+}
+
+.active-menu-item {
+  border-left: 4px solid #41C98E !important;
+}
+
+.sidebar-nav li:first-child {
+  text-align: center;
+  border-left: 4px solid transparent;
+}
+.sidebar-nav li:first-child:hover {
+  border-left: 4px solid transparent !important;
+}
+
+.sidebar .sidebar-nav li a .sidebar-icon {
+  width: 45px;
+  height: 45px;
+  font-size: 14px;
+  padding: 0 2px;
+  display: inline-block;
+  text-indent: 7px;
+  margin-right: 10px;
+  color: #fff;
+}
+
+.sidebar .sidebar-nav li a .caret {
+  position: absolute;
+  right: 23px;
+  top: auto;
+  margin-top: 20px;
+  margin-left: 8px;
+}
+
+.sidebar .sidebar-nav li ul.panel-collapse {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar .sidebar-nav li ul.panel-collapse li i {
+  margin-right: 10px;
+}
+
+.sidebar .sidebar-nav li ul.panel-collapse li {
+  text-indent: 15px;
+}
+.givt-white-small {
+  display: none !important;
+}
+/* Smartphones (portrait and landscape) ----------- */
+@media only screen and (max-width : 480px) {
+  #sidebar {
+    display: none;
+  }
+}
+
+@media only screen and (max-width : 1324px)  {
+  .sidebar .sidebar-nav {
+    font-size: 0.8em;
+  }
+  #sidemenu > li:nth-child(4) > a > span.sidebar-title {
+    float: right;
+    margin-left: 2px;
+  }
+}
+@media only screen and (max-height: 400px) {
+  .sidebar-nav-bottom li:first-of-type {
+    display:none;
+  }
+}
+
+
+
+
+

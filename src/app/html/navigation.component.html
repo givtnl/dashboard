@@ -1,76 +1,83 @@
-<my-alert></my-alert>
-<nav>
-    <div class="menu-wrapper">
-      <svg style="margin-right: 22px;margin-left: -7px" width="46px" height="42px" viewBox="0 0 46 42" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-        <!-- Generator: Sketch 48.1 (47250) - http://www.bohemiancoding.com/sketch -->
+<aside id="sidebar" class="sidebar">
+  <ul id="sidemenu" class="sidebar-nav">
+    <li><a  class="givt-white-large">
+
+      <svg width="120px" height="45px" viewBox="0 0 191 71" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <!-- Generator: Sketch 49.2 (51160) - http://www.bohemiancoding.com/sketch -->
         <desc>Created with Sketch.</desc>
         <defs></defs>
-        <g id="Logo-in-dashboard" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-          <g id="Overzichtspagina" transform="translate(-237.000000, -19.000000)">
-            <g id="Beeldmerk" transform="translate(237.000000, 19.000000)">
+        <g id="Logo" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+          <g id="Givt_Logo-Dark" transform="translate(-40.000000, -35.000000)">
+            <g id="Group-2" transform="translate(40.000000, 35.000000)">
               <g id="Group">
-                <polygon id="Rectangle-1-Copy-3" fill="#41C98E" points="0 0 46 0 46 6.50704225 0 6.50704225"></polygon>
-                <polygon id="Givt-Copy" fill="#FFFFFF" points="24.8975 42 12.65 10.056338 22.0800009 10.056338 29.325 30.1690141 37.03 10.056338 46 10.056338 33.7525 42"></polygon>
+                <rect id="Rectangle-1-Copy-2" fill="#41C98E" x="69" y="0" width="79" height="11"></rect>
+                <path d="M48,35 L63,35 L63,59.4481328 C56.0772823,67.1494161 47.4921247,71 35.2442396,71 C24.9932923,71 15.2641602,66.3181381 8.96337891,59.4481316 C2.66259766,52.578125 4.45288509e-16,43.5101567 0,35.1991701 C4.40317875e-16,26.8881836 3.01780445,17.4045988 10.1069336,10.5 C17.1960627,3.59540116 25.2761916,0 35.2941628,0 C45.3121341,0 54.015324,3.28627419 63,10.5 L53.1643066,21.9257812 C52.1071477,20.5286891 46.6228027,14 36,14 C30.9538574,14 25.7642976,15.7956383 21.7038574,19.8122559 C17.6434173,23.8288735 15.1159668,28.6265222 15.1159668,35.1991692 C15.1159668,41.7718161 17.6459961,47.161377 21.4099121,50.7680664 C25.1738281,54.3747559 30.5395508,56.9585081 34.8448541,56.9585062 C40.5810547,56.9585037 44.7296287,55.9294709 48,54 L48,35 Z" id="Path-Copy" fill="#FFFFFF"></path>
+                <polygon id="Path-Copy-2" fill="#FFFFFF" points="84 71 69 71 69 17 84 17"></polygon>
+                <path d="M169.001449,28 L169.001449,51 C169.001449,51 169.758529,57.9305344 176.501449,58 C179.818544,58.0341728 182.001448,55.8239746 182.84381,54.6699653 C183.503645,55.8239746 190.922836,61.8098145 190.922836,61.8098145 C186.97142,66.8122559 180.09178,70.7497559 173.091322,71 C167.649177,71.1945394 163.195982,69.2440265 159.493854,65.7320267 C155.791725,62.2200269 153.940689,57.4341382 154.001449,51 L154.001449,0 L169.001449,0 L169.001449,17 L182.001449,17 L182.001449,28 L169.001449,28 Z" id="Path-Copy-4" fill="#FFFFFF"></path>
+                <polygon id="Givt" fill="#FFFFFF" points="111.9 71 90.6 17 107.000002 17 119.6 51 133 17 148.6 17 127.3 71"></polygon>
               </g>
             </g>
           </g>
         </g>
       </svg>
-        <h1>
-          <span>{{currentCollectGroup.Name}}</span>
-          <button *ngIf="collectGroups.length > 1" class="dropdown-arrow">
-            <svg width="24px" height="15px" viewBox="0 0 24 15" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-              <!-- Generator: Sketch 47.1 (45422) - http://www.bohemiancoding.com/sketch -->
-              <desc>Created with Sketch.</desc>
-              <defs></defs>
-              <g id="Kiezen-voor-welke-organisatie" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="square">
-                <g id="Overzichtspagina" transform="translate(-363.000000, -34.000000)" stroke="#FFFFFF" stroke-width="4">
-                  <g id="Group-7">
-                    <g id="Group-18" transform="translate(375.000000, 41.000000) rotate(-90.000000) translate(-375.000000, -41.000000) translate(370.000000, 32.000000)">
-                      <path d="M0.557359313,9.04264069 L9.04264069,0.557359313" id="Line"></path>
-                      <path d="M0.6,9 L9.08528137,17.4852814" id="Line-Copy-2"></path>
-                    </g>
-                  </g>
-                </g>
-              </g>
-            </svg>
-          </button>
+    </a>
+    <a class="givt-white-small" (click)="toggleFullSidebar()">
 
-          <div *ngIf="collectGroups.length > 1" class="pick-organisation">
-            <ul class="list-orgs">
-              <li class="list-org" *ngFor="let cg of collectGroups" (click)="setCollectGroup(cg)" [class.hidden]="cg.Name == currentCollectGroup.Name">
-                {{cg.Name}}
-              </li>
-            </ul>
-          </div>
-        </h1>
+    <span class="sidebar-icon"><i class="fa fa-bars"></i> </span>
+      <span class="sidebar-title" id="givt-sidebar-logo">
 
-        <ul>
-            <li *ngIf="showDashboardItems"><a routerLink="/dashboard" routerLinkActive="active">{{"Menu_Overview" | translate}}</a></li>
-            <li *ngIf="showDashboardItems"><a routerLink="/collects" routerLinkActive="active">{{"Menu_Collectes" | translate}}</a></li>
-            <li *ngIf="showDashboardItems"><a routerLink="/payouts" routerLinkActive="active">{{ "Payout_Title" | translate}}</a></li>
-          <li *ngIf="showDashboardItems"><a routerLink="/assign" routerLinkActive="active">{{ "Menu_Allocate" | translate }}</a></li>
-          <li *ngIf="showMandateLink" ><a routerLink="/mandate" routerLinkActive="active">Mandaten</a></li>
-
-        </ul>
-        <span class="menu-settings" (click)="logout()">
-                <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                   <g id="Uitloggen-icoon" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                       <g id="Group-4">
-                           <rect id="Rectangle-2" x="0" y="0" width="24" height="24"></rect>
-                           <polygon id="Rectangle" fill="#C0BFCC" transform="translate(16.000000, 12.000000) rotate(-45.000000) translate(-16.000000, -12.000000) " points="20 8 20 16 12 16"></polygon>
-                           <polygon id="Line-Copy-4" fill="#C0BFCC" points="14 14 16 14 16 10 14 10 8 10 6 10 6 14 8 14"></polygon>
-                       </g>
-                       <g id="Group-3" transform="translate(2.000000, 3.000000)" fill="#C0BFCC">
-                           <polygon id="Line" points="13 2 14 2 14 0 13 0 1 0 0 0 0 2 1 2"></polygon>
-                           <polygon id="Line-Copy-6" points="0 16.9672852 0 17.9672852 2 17.9672852 2 16.9672852 2 1 2 0 0 0 0 1"></polygon>
-                           <polygon id="Line-Copy-3" points="13 18 14 18 14 16 13 16 1 16 0 16 0 18 1 18"></polygon>
-                       </g>
-                   </g>
-                </svg>
-            <span>{{"Text_Logout" | translate}}</span></span>
-
-    </div>
-
-</nav>
+      </span>
+    </a>
+    </li>
+    <li *ngIf="showDashboardItems" routerLinkActive="active-menu-item">
+      <a routerLink="/dashboard">
+        <span class="sidebar-icon"><i class="fa fa-area-chart"></i></span>
+        <span class="sidebar-title">{{"Menu_Overview" | translate}}</span>
+      </a>
+    </li>
+    <li *ngIf="showDashboardItems" routerLinkActive="active-menu-item">
+      <a routerLink="/collects">
+        <span class="sidebar-icon"><i class="fa fa-history"></i></span>
+        <span class="sidebar-title">{{"Menu_Collectes" | translate}}</span>
+      </a>
+    </li>
+    <li *ngIf="showDashboardItems" routerLinkActive="active-menu-item">
+      <a routerLink="/payouts">
+        <span class="sidebar-icon"><i class="fa fa-calculator"></i></span>
+        <span class="sidebar-title">{{"Payout_Title" | translate}}</span>
+      </a>
+    </li>
+    <li *ngIf="showDashboardItems" routerLinkActive="active-menu-item">
+      <a routerLink="/assign">
+        <span class="sidebar-icon"><i class="fa fa-calendar-check-o"></i></span>
+        <span class="sidebar-title">{{"Menu_Allocate" | translate}}</span>
+      </a>
+    </li>
+    <li *ngIf="showMandateLink" routerLinkActive="active-menu-item">
+      <a routerLink="/mandate">
+        <span class="sidebar-icon"><i class="fa fa-file-text-o"></i></span>
+        <span class="sidebar-title">Mandaten</span>
+      </a>
+    </li>
+    <li>
+      <ul class="sidebar-nav-bottom">
+        <li>
+          <a href="https://www.givtapp.net/wp-content/uploads/2017/07/Handleiding_Givt_Dashboard.pdf">
+            <span class="sidebar-icon"><i class="fa fa-book"></i></span>
+            <span class="sidebar-title">Handleiding</span>
+          </a>
+        </li>
+        <li (click)="logout()">
+          <a href="#">
+            <span class="sidebar-icon"><i class="fa fa-power-off"></i></span>
+            <span class="sidebar-title">Uitloggen</span>
+          </a>
+        </li>
+        <li style="text-align: center">
+          <p style="text-align: center; margin: 0 auto; padding-left: 25px; color: white">&copy; Givt {{huidigJaar}}</p>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</aside>
 

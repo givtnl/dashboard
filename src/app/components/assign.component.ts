@@ -771,13 +771,7 @@ export class AssignComponent implements OnInit {
   }
 
   eventAfterRender(event: any, element: any, view: any){
-    if(element[0].style.left === "33.3333%"){
-      element[0].style.left = "31%";
-    } else if(element[0].style.left === "66.6667%") {
-      element[0].style.left = "62%";
-    } else if(element[0].style.left === "50%") {
-      element[0].style.left = "31%";
-    }
+
   }
   firstCollection = new AssignedCollection();
   secondCollection = new AssignedCollection();
