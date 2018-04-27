@@ -11,7 +11,7 @@
 .collection-buttons > .total-payed{
     margin-right:76px;
     align-self: center;
-    font-size: 16px;
+    font-size: 1em;
     display: inline-block;
 }
 
@@ -85,7 +85,7 @@ h3{
 }
 
 .show-collect{
-    font-size:16px;
+    font-size:1em;
     font-family: 'Avenir_Heavy';
     color: #2C2B57;
     display: flex;
@@ -124,7 +124,7 @@ button:disabled{
 .input-collect-title{
     display: flex;
     font-family: 'Avenir_Heavy';
-    font-size:16px;
+    font-size:1em;
     color: #2C2B57;
     box-sizing: border-box;
     background-color: transparent;
@@ -135,7 +135,7 @@ button:disabled{
 
 .input-collect-title input{
     font-family: 'Avenir_Heavy';
-    font-size:16px;
+    font-size:1em;
     color: #2C2B57;
     padding: 10px;
     padding-right:40px;
@@ -195,7 +195,7 @@ button:disabled{
 
 .withholding-overview{
     font-family: 'Avenir_Roman';
-    font-size:16px;
+    font-size:1em;
     text-align: left;
     color: #2C2B57;
     min-height:210px;
@@ -209,7 +209,7 @@ button:disabled{
     display: inline-block;
     text-align: left;
     font-family: Avenir_Heavy;
-    font-size: 16px;
+    font-size: 1em;
     margin-bottom: 26px;
 }
 
@@ -237,7 +237,7 @@ button:disabled{
 }
 
 .withholding-stats .stat-comp{
-    width: 330px;
+    max-width: 330px;
     text-align: center;
 }
 
@@ -300,7 +300,7 @@ button:disabled{
     box-sizing: border-box;
     opacity: 1;
     font-family: 'Avenir_Roman';
-    font-size: 16px;
+    font-size: 1em;
     margin-top: 4px;
 }
 
@@ -459,7 +459,7 @@ button:disabled{
 .till{
     align-self:center;
     font-family: 'Avenir_Heavy';
-    font-size:16px;
+    font-size:1em;
     color: #2C2B57;
 }
 
@@ -481,7 +481,7 @@ button:disabled{
 
 .overview-payout{
     margin-left: 0;
-    width: 330px;
+    max-width: 330px;
     font-family: Avenir_Heavy;
     font-size: 18px;
 }
@@ -615,7 +615,7 @@ button:disabled{
 @media only screen
 and (max-device-width: 480px){
     h2{
-      font-size: 16px !important;
+      font-size: 1em !important;
     }
    .search-payouts {
      display: block;
@@ -631,10 +631,10 @@ and (max-device-width: 480px){
   }
   .collection-buttons > .total-payed {
     margin-right: 0;
-    margin-top: 16px;
+    margin-top: 1em;
   }
   .collection-buttons > .icon {
-    margin-top: 16px;
+    margin-top: 1em;
   }
   #big {
     margin: unset;
@@ -645,6 +645,7 @@ and (max-device-width: 480px){
   .mobile-text-info {
     display: block;
     font-size: 10px;
+    margin-bottom: 10px;
   }
   .mobile-text-info td {
     padding: 0px !important;
@@ -663,6 +664,113 @@ and (max-device-width: 480px){
     display:none;
   }
   .till {
-    margin: 16px auto !important;
+    margin: 1em auto !important;
   }
+}
+@media only screen
+and (min-device-width: 481px)
+and (max-device-width: 1024px){
+  .search-payouts {
+    display: block;
+    max-width: 320px;
+    margin: 0 auto;
+  }
+  .withholding-overview {
+    max-width: 400px
+  }
+  #big {
+    margin: 0;
+  }
+  .withholding-stats{
+    display:block !important;
+  }
+  .mobile-text-info {
+    display: block;
+    font-size: 10px;
+    margin-bottom: 10px;
+  }
+  .mobile-text-info td {
+    padding: 0px !important;
+    border: none !important;
+  }
+  .text-info {
+    text-indent: -30000px;
+  }
+  .stat-calc alt-stat {
+    padding: unset;
+  }
+  .stat-calc table tr td:nth-child(5) {
+    display:none;
+  }
+  .stat-calc table tr td:nth-child(4) {
+    display:none;
+  }
+  .till {
+    margin: 1em auto !important;
+  }
+  .withholding-stats .stat-comp {
+    width: auto;
+    max-width: 420px;
+  }
+  .withholding-stats .stat-calc {
+    padding: 0;
+    display:grid;
+    padding-right: 20px;
+  }
+  .alloc {
+    max-width: 420px;
+  }
+  .withholding-overview table {
+    max-width: 420px;
+  }
+  .last-row, .overview-payout-top {
+    width: 380px;
+  }
+}
+
+@media only screen
+  and (min-device-width: 481px)
+  and (max-device-width: 1200px){
+  .show-payout {
+    width: 70vw;
+    max-width: 800px;
+    display: block;
+    margin: 0 auto;
+  }
+  .collection-buttons > .total-payed {
+    margin-right: auto;
+  }
+  .collection-buttons > .icon {
+    margin-top: -16px;
+  }
+}
+
+@media only screen
+and (min-device-width: 1025px){
+  .search-payouts {
+    max-width: 760px;
+  }
+  .show-payout {
+    width: 70vw;
+    max-width: 960px;
+  }
+  .show-payout span.date {
+    margin-top: 6px;
+  }
+  .withholding-overview {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .withholding-overview table.alloc {
+    width: 70vw;
+    max-width: 1200px;
+  }
+  .icon-download{
+    margin: 0 0 0 20px !important;
+  }
+}
+
+
+.icon-download {
+  margin: 20px;
 }

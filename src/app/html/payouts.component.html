@@ -2,13 +2,13 @@
   <my-navigation></my-navigation>
   <div class="global-layout-content">
     <my-titlebar></my-titlebar>
-    <section class="section-collects bottom-flex" *ngIf="payouts.length == 0">
+    <section class="section-collects" *ngIf="payouts.length == 0">
       <p class="text section-collects-nopayments">{{ "Payout_NoPayouts" | translate }}</p>
       <div class="placeholder-line"></div>
       <div class="placeholder-line"></div>
       <div class="placeholder-line"></div>
     </section>
-    <section *ngIf="payouts.length > 0" class="section-collects bottom-flex">
+    <section *ngIf="payouts.length > 0" class="section-collects">
       <h2 *ngIf="openAllocations" class="red">{{ "OpenAllocationsMessage" | translate}}</h2>
       <h2>{{"Payout_OverviewPayouts" | translate}}</h2>
       <p class="text">{{"Text_Export" | translate}}</p>
@@ -16,7 +16,7 @@
         <p-calendar inputStyleClass="date-picker-input" [(ngModel)]="dateBegin" dateFormat="dd/mm/yy"></p-calendar>
           <p style="margin: 0 20px;" class="till">{{"Text_TotEnMet" | translate}}</p>
         <p-calendar inputStyleClass="date-picker-input" [(ngModel)]="dateEnd" dateFormat="dd/mm/yy"></p-calendar>
-        <button style="margin-left: 20px;" class="icon" (click)="exportCSV()">
+        <button style="margin-left: 20px;" class="icon icon-download" (click)="exportCSV()">
           <svg width="33px" height="33px" viewBox="0 0 33 33" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
             <!-- Generator: Sketch 46.1 (44463) - http://www.bohemiancoding.com/sketch -->
             <desc>Created with Sketch.</desc>
