@@ -27,8 +27,8 @@ export class PayoutComponent implements OnInit{
     return euro + (this.isSafari ? (x).toFixed(2) : (x).toLocaleString(navigator.language,{minimumFractionDigits: 2,maximumFractionDigits:2}));
   }
 
-  dtBegin: Date;
-  dtEnd : Date;
+  dtBegin: Date
+  dtEnd : Date
   isSafari: boolean;
   @Input() childData: any;
   @Input() loader: object;
@@ -45,10 +45,10 @@ export class PayoutComponent implements OnInit{
   }
 
   doSomeFancyStuff(){
-    this.dtBegin = new Date(this.childData.BeginDate);
-    this.dtEnd =  new Date(this.childData.EndDate);
+    this.dtBegin = this.childData.BeginDate;
+    this.dtEnd = this.childData.EndDate
     let x = this.childData;
-    x.BeginDate = this.datePipe.transform(new Date(this.childData.BeginDate), "d MMMM y");
+    x.BeginDate = this.datePipe.transform(new Date(this.childData.BeginDate), "d MMMM y");;
     x.EndDate = this.datePipe.transform(new Date(this.childData.EndDate), "d MMMM y");
 
     x.Mandaatkosten = x.MandateCost;
