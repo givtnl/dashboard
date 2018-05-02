@@ -58,6 +58,10 @@
   padding: 15px 15px;
     cursor: pointer;
 }
+.nav-title-dropdown ul li:hover {
+    background: #8B86AB;
+    color:white;
+}
 .hidden {
   display:none;
 }
