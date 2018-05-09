@@ -96,7 +96,7 @@
 
 <body>
 <div id="ie-disclaimer" class="ie-disclaimer">
-  <p>{{ "IE_Disclaimer" | translate }}</p>
+  <p id="disclaimer">Please use another browser (e.g. Chrome, FireFox, Safari, ...)</p>
 </div>
 <app-root>
   <div style="width: 100%; display: flex; justify-content: center; flex-direction: column; padding-top:200px; box-sizing: border-box;">
@@ -122,11 +122,16 @@
 </app-root>
 <script>
   var quote = document.getElementById("quote");
+  var disclaimer = document.getElementById("disclaimer");
+
   var lang = navigator.language;
+
   if(lang.indexOf("nl") !== -1){
   	quote.innerText = "Een ogenblik geduld alsjeblieft...";
+  	disclaimer.innerText = "Gelieve een andere browser dan Internet Explorer te gebruiken.";
   } else {
     quote.innerText = "We'll be with you in a second...";
+    disclaimer.innerText = "Please use another browser (e.g. Chrome, FireFox, Safari, ...)"
   }
 </script>
 <script>
