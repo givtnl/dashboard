@@ -39,6 +39,7 @@ export class Payout{
     G_BTW: any;
     RTransactionAmount: any;
     GestorneerdeBedragen: any;
+    TotaalKosten: any;
     TotaalInhoudingen: any;
     ToegezegdBedrag: any;
     hidden: boolean;

@@ -119,7 +119,7 @@
     "ClickToViewMoreInformation": "Klik om meer informatie weer te geven",
     "SessionExpiredTitle": "Sessie verlopen",
     "SessionExpiredMessage": "Wegens veiligheidsredenen is je sessie verlopen. Log opnieuw in om je sessie te verlengen.",
-    "Ok": "",
+    "Ok": "Ok",
     "Relog": "Opnieuw inloggen",
     "SaveAll": "Opslaan",
     "DeleteAll": "Verwijderen",
@@ -131,5 +131,6 @@
     "Wednesday": "Woensdag",
     "Thursday": "Donderdag",
     "Friday": "Vrijdag",
-    "Saturday": "Zaterdag"
+    "Saturday": "Zaterdag",
+    "IE_Disclaimer": "Gelieve een andere browser dan Internet Explorer te gebruiken."
 }

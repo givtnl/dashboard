@@ -29,6 +29,7 @@
   color:#2C2B57;
   margin: 0;
   display: inline-flex;
+    cursor: pointer;
 }
 .nav-title-heading i {
   margin-left: 10px;
@@ -55,6 +56,11 @@
 }
 .nav-title-dropdown ul li {
   padding: 15px 15px;
+    cursor: pointer;
+}
+.nav-title-dropdown ul li:hover {
+    background: #8B86AB;
+    color:white;
 }
 .hidden {
   display:none;
