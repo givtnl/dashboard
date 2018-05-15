@@ -62,8 +62,8 @@ export class PayoutComponent implements OnInit{
     x.G_Total_Incl = x.GivtServiceFee + x.GivtServiceFeeTaxes;
 
     //tr fee + storno fee + givt fee + storno bedragen
-    x.TotaalInhoudingen = x.T_Total_Incl + x.SK_Total_Incl + x.G_Total_Incl + x.RTransactionAmount;
-
+    x.TotaalKosten = x.T_Total_Incl + x.SK_Total_Incl + x.G_Total_Incl;
+    x.TotaalInhoudingen = x.TotaalKosten + x.RTransactionAmount
     x.ToegezegdBedrag = x.TotaalInhoudingen + x.TotalPaid;
 
     this.pledgedAmount = x.ToegezegdBedrag;
@@ -87,6 +87,7 @@ export class PayoutComponent implements OnInit{
     x.G_Total_Incl = this.displayValue(x.G_Total_Incl);
 
     x.GestorneerdeBedragen = this.displayValue(x.RTransactionAmount);
+    x.TotaalKosten = this.displayValue(x.TotaalKosten);
     x.TotaalInhoudingen = this.displayValue(x.TotaalInhoudingen);
 
     x.ToegezegdBedrag = this.displayValue(x.ToegezegdBedrag);
@@ -144,35 +145,41 @@ export class PayoutComponent implements OnInit{
       this.apiClient.getData('Payments/PayoutDetail?payoutID='+this.childData.Id)
         .then( (resp) => {
           let allocsCount: number = resp.Details.length;
-          for(let i = 0; i < allocsCount; i++){
-            resp.Details[i].Status = 1;
-            if(resp.Details[i].Amount !== 0)
-              resp.Details[i].Amount = this.displayValue(resp.Details[i].Amount);
-            if(resp.Details[i].Name.includes("_ERRNAC")){
-              if(resp.Details[i].Name.includes("1"))
-                resp.Details[i].Name = res + " 1";
-              if(resp.Details[i].Name.includes("2"))
-                resp.Details[i].Name = res + " 2";
-              if(resp.Details[i].Name.includes("3"))
-                resp.Details[i].Name = res + " 3";
-              resp.Details[i].Status = 2;
-            }
+          let paidDetails = [];
+          for(let i = 0; i < allocsCount; i++) {
+              let detail =  resp.Details[i];
+              detail.Status = 1;
+              if (detail.Amount !== 0 && detail.Amount > detail.StornoAmount) {
+                  detail.Amount = this.displayValue(detail.Amount);
+                  if (detail.Name.includes("_ERRNAC")) {
+                      if (detail.Name.includes("1"))
+                          detail.Name = res + " 1";
+                      if (detail.Name.includes("2"))
+                          detail.Name = res + " 2";
+                      if (detail.Name.includes("3"))
+                          detail.Name = res + " 3";
+                      detail.Status = 2;
+                  }
+                  paidDetails.push(detail);
+              }
           }
+          paidDetails.sort((a, b) => a.Name.localeCompare(b.Name));
 
+          let costDetails = [];
           this.translate.get('Stornos').subscribe((res: string) => {
-            for(let i = 0; i < allocsCount; i++){
-              if(resp.Details[i].StornoAmount == 0)
-                continue;
-              let copy = JSON.parse(JSON.stringify(resp.Details[i])); //copy object
-              copy.Name += ": " + res;
-              copy.Amount = "- " +  this.displayValue(resp.Details[i].StornoAmount);
-              copy.Status = 0;
-              resp.Details.push(copy);
-            }
-
-          resp.Details.sort((a, b) => a.Name.localeCompare(b.Name)); //sort by name A-Z
-          this.childData.details = resp.Details;
+              for (let i = 0; i < allocsCount; i++) {
+                  if (resp.Details[i].StornoAmount == 0)
+                      continue;
+                  let copy = JSON.parse(JSON.stringify(resp.Details[i])); //copy object
+                  copy.Name += ": " + res;
+                  copy.Amount = "- " + this.displayValue(resp.Details[i].StornoAmount);
+                  copy.Status = 0;
+                  costDetails.push(copy);
+              }
           });
+          costDetails.sort((a, b) => a.Name.localeCompare(b.Name));
+
+          this.childData.details = paidDetails.concat(costDetails);
         });
     });
   }
