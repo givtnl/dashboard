@@ -3,6 +3,8 @@ import { UserService } from 'app/services/user.service';
 import {Router} from "@angular/router";
 import {forEach} from "@angular/router/src/utils/collection";
 import {childOfKind} from "tslint";
+import {ApiClientService} from "../services/api-client.service";
+import {DataService} from "../services/data.service";
 
 @Component({
     selector: 'my-navigation',
@@ -17,7 +19,8 @@ export class NavigationComponent implements OnInit {
     toggleSidebar = false;
     currentCollectGroup: any = {Name:"", GUID:""};
     collectGroups : Array<any> = null;
-    constructor(userService: UserService, private router: Router) {
+    showCelebrations = false;
+    constructor(private apiService: ApiClientService, private dataService: DataService, userService: UserService, private router: Router) {
       this.userService = userService;
     }
 
@@ -37,6 +40,17 @@ export class NavigationComponent implements OnInit {
               this.currentCollectGroup = this.userService.CurrentCollectGroup;
           }
       }
+
+	    let currentCollectGroup = this.dataService.getData("CurrentCollectGroup");
+	    if (currentCollectGroup) {
+		    let guid = JSON.parse(currentCollectGroup).GUID;
+		    this.apiService.getData('v2/collectgroups/celebration/' + guid)
+			    .then(resp => {
+			    	if(resp.Celebrations != null) {
+					    this.showCelebrations = resp.Celebrations;
+				    }
+			    })
+	    }
     }
 
     logout(){

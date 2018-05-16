@@ -132,5 +132,7 @@
     "Thursday": "Thursday",
     "Friday": "Friday",
     "Saturday": "Saturday",
-    "IE_Disclaimer": "Please use another browser (e.g. Chrome, FireFox, Safari, ...)"
+    "IE_Disclaimer": "Please use another browser (e.g. Chrome, FireFox, Safari, ...)",
+    "SetPartyGivt": "Festival gift",
+    "Manual": "Manual"
 }
