@@ -22,6 +22,10 @@ export class NavigationComponent implements OnInit {
     showCelebrations = false;
     constructor(private apiService: ApiClientService, private dataService: DataService, userService: UserService, private router: Router) {
       this.userService = userService;
+
+	    this.userService.collectGroupChanged.subscribe(() => {
+		    this.ngOnInit();
+	    });
     }
 
     ngOnInit() {
@@ -41,17 +45,22 @@ export class NavigationComponent implements OnInit {
           }
       }
 
-	    let currentCollectGroup = this.dataService.getData("CurrentCollectGroup");
-	    if (currentCollectGroup) {
-		    let guid = JSON.parse(currentCollectGroup).GUID;
-		    this.apiService.getData('v2/collectgroups/celebration/' + guid)
-			    .then(resp => {
-			    	if(resp.Celebrations != null) {
-					    this.showCelebrations = resp.Celebrations;
-				    }
-			    })
-	    }
+      this.loadCelebration();
+
     }
+
+	loadCelebration() {
+		let currentCollectGroup = this.dataService.getData("CurrentCollectGroup");
+		if (currentCollectGroup) {
+			let guid = JSON.parse(currentCollectGroup).GUID;
+			this.apiService.getData('v2/collectgroups/celebration/' + guid)
+				.then(resp => {
+					if(resp.Celebrations != null) {
+						this.showCelebrations = resp.Celebrations;
+					}
+				})
+		}
+	}
 
     logout(){
         this.userService.logout();
