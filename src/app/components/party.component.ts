@@ -36,7 +36,7 @@ export class PartyComponent implements OnInit {
 	}
 
 	showSetTime(date: Date) {
-		this.timeSet = "Het feestmoment werd ingesteld op: " + this.datePipe.transform(date, 'medium');
+		this.timeSet = this.datePipe.transform(date, 'medium');
 	}
 
 	save() {

@@ -25,7 +25,7 @@
                 <button [class.disabled]="!allowSaving" class="save" (click)="save()">Opslaan</button>
             </div>
             <div *ngIf="timeSet != ''" style="text-align: center;">
-                <p class="text heavy">{{ timeSet }}</p>
+                <p class="text heavy">Het feestmoment werd ingesteld op: <span style="white-space: nowrap">{{ timeSet }}</span></p>
                 <p class="text heavy" style="font-size: 40px; color: #46bc8f;"> 30</p>
                 <button (click)="delete()" class="save">Verwijder geefmoment</button>
             </div>
