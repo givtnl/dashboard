@@ -14,6 +14,7 @@ export class PartyComponent implements OnInit {
 	public selectedValue: string = "-1";
 	public timeSet: string = "";
 	public guid = "";
+	public timeRemaining: string = "";
 	private timer = null;
 	ngOnInit(): void {
 		let currentCollectGroup = this.dataService.getData("CurrentCollectGroup");
@@ -24,6 +25,8 @@ export class PartyComponent implements OnInit {
 					console.log(resp);
 					if(resp.Celebrations && resp.dt_Celebration != null) {
 						let newDate = new Date(resp.dt_Celebration);
+
+						this.countdownTimer(Number(resp.SecondsRemaining));
 						this.showSetTime(newDate);
 					}
 				})
@@ -33,6 +36,30 @@ export class PartyComponent implements OnInit {
 
 	get allowSaving(): boolean {
 		return parseInt(this.selectedValue) > 0;
+	}
+
+	countdownTimer(seconds: number) {
+		seconds = 61;
+		this.timeRemaining = this.calculateMinAndSeconds(seconds);
+		var downloadTimer = setInterval(function(){
+			seconds--;
+			this.timeRemaining = this.calculateMinAndSeconds(seconds);
+			if(seconds <= 0) {
+				clearInterval(downloadTimer);
+				this.timeRemaining = null;
+			}
+
+		}.bind(this),1000);
+	}
+
+	calculateMinAndSeconds(secondsLeft: number): string {
+		let minutes: number = Math.trunc(secondsLeft / 60);
+		let seconds: number = secondsLeft % 60;
+		if (minutes == 0) {
+			return seconds + "s";
+		} else {
+			return minutes +"m" + " " + seconds + "s"
+		}
 	}
 
 	showSetTime(date: Date) {
