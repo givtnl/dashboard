@@ -668,3 +668,8 @@ button:disabled{
   }
 
 }
+@media only screen and (max-width: 480px){
+    .section-collects{
+        width: 100vw;
+    }
+}

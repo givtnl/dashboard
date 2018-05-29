@@ -4,10 +4,7 @@
     <div class="global-layout-content">
         <my-titlebar></my-titlebar>
         <section class="section-collects" style="width: 100vw; max-width: 960px; margin: 0 auto; padding: 20px; box-sizing: border-box;">
-            <h2>Feestmoment instellen</h2>
-            <p class="text">Op deze pagina kan je een geefmoment instellen. Een geefmoment is een tijdstip die je instelt. Als dit is ingesteld en gevers aan jouw organisatie geven, dan zal er een timer aftellen in de app. Als de timer 0 bereikt, zullen alle gebruikers die hun app nog open hadden staan het feestmoment met flash en trilfunctie meemaken.</p>
-            <p class="text">Gebruik dit dus best niet op zondagochtend... 😉</p>
-            <hr class="collect-hr"/>
+
 
             <div style="text-align: center" >
                 <h2>Stel een feestgift in over:</h2>
@@ -24,14 +21,15 @@
                 </select>
                 <button [class.disabled]="!allowSaving" class="save" (click)="save()">Opslaan</button>
             </div>
+
+            <p class="text" style="color:darkred; padding-top: 20px;"><span style="font-family: Avenir_Heavy">Let op:</span> slechts 1 geefmoment wordt opgeslagen. Een nieuwe opslaan terwijl er een moment loopt, zal de oude verwijderen.</p>
+
             <div *ngIf="timeSet != ''" style="text-align: center;">
                 <p class="text heavy">Het feestmoment werd ingesteld op: <span style="white-space: nowrap">{{ timeSet }}</span></p>
                 <p class="text heavy" style="font-size: 40px; color: #46bc8f;"> 30</p>
                 <button (click)="delete()" class="save">Verwijder geefmoment</button>
             </div>
 
-
-            <p class="text" style="color:darkred;"><span style="font-family: Avenir_Heavy">Let op:</span> slechts 1 geefmoment wordt opgeslagen. Een nieuwe opslaan terwijl er een moment loopt, zal de oude verwijderen.</p>
         </section>
         <my-footer></my-footer>
     </div>

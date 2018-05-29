@@ -791,3 +791,8 @@ max-width only screen and (min-width: 481px) and (max-width: 1024px){
     max-width: 750px;
   }
 }
+@media only screen and (max-width: 480px){
+    .section-collects{
+        width: 100vw;
+    }
+}
