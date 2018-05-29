@@ -688,6 +688,7 @@ button:disabled{
         display: flex;
         padding: 20px;
         box-sizing: border-box;
+        cursor: pointer;
     }
     .back-to-overview p {
         margin: 0;
