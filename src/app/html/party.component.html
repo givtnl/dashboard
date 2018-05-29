@@ -22,7 +22,7 @@
                 <button [class.disabled]="!allowSaving" class="save" (click)="save()">Opslaan</button>
             </div>
 
-            <p class="text" style="color:darkred; padding-top: 20px;"><span style="font-family: Avenir_Heavy">Let op:</span> slechts 1 geefmoment wordt opgeslagen. Een nieuwe opslaan terwijl er een moment loopt, zal de oude verwijderen.</p>
+            <p class="text warning-text" style="color: #bc1414; padding-top: 20px; background-color: #bcb9c8;"><span style="font-family: Avenir_Heavy">Let op:</span> slechts 1 geefmoment wordt opgeslagen. Een nieuwe opslaan terwijl er een moment loopt, zal de oude verwijderen.</p>
 
             <div *ngIf="timeSet != ''" style="text-align: center;">
                 <p class="text heavy">Het feestmoment werd ingesteld op: <span style="white-space: nowrap">{{ timeSet }}</span></p>
