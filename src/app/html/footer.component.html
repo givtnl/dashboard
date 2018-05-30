@@ -8,7 +8,7 @@
     -->
     <footer id="bottom-bar" style="display: none;">
         <a routerLink="/dashboard" routerLinkActive="active">
-            <span class="sidebar-icon"><i class="fa fa-area-chart"></i></span>
+            <span class="sidebar-icon"><i class="fas fa-chart-area"></i></span>
             <span class="sidebar-title">{{"Menu_Overview" | translate}}</span>
         </a>
         <a routerLink="/collects" routerLinkActive="active">
@@ -20,15 +20,15 @@
             <span class="sidebar-title">{{"Payout_Title" | translate}}</span>
         </a>
         <a routerLink="/assign" routerLinkActive="active">
-            <span class="sidebar-icon"><i class="fa fa-calendar-check-o"></i></span>
+            <span class="sidebar-icon"><i class="far fa-calendar-check"></i></span>
             <span class="sidebar-title">{{"Menu_Allocate" | translate}}</span>
         </a>
-        <a routerLink="/party" routerLinkActive="active">
+        <a *ngIf="showCelebrations" routerLink="/party" routerLinkActive="active">
             <span class="sidebar-icon"><i class="fa fa-bolt"></i></span>
             <span class="sidebar-title">{{"SetPartyGivt" | translate}}</span>
         </a>
         <a *ngIf="showMandateLink" routerLink="/mandate" routerLinkActive="active">
-            <span class="sidebar-icon"><i class="fa fa-file-text-o"></i></span>
+            <span class="sidebar-icon"><i class="far fa-file-alt"></i></span>
             <span class="sidebar-title">Mandaten</span>
         </a>
     </footer>
