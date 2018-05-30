@@ -600,6 +600,20 @@ p-schedule button
   overflow: auto;
   display: flex;
   flex-direction: column;
+    max-width: 100%;
+}
+
+.global-layout-main {
+    flex-grow: 100;
+    display: flex;
+    flex-direction: column;
+}
+
+.padding-20 {
+    padding: 20px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 .bottom-flex {

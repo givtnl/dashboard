@@ -1,5 +1,5 @@
 .section-collects{
-    width: 960px;
+    max-width: 960px;
     margin: 0 auto;
     position: relative;
 }
@@ -670,6 +670,9 @@ button:disabled{
 }
 
 @media only screen and (max-width: 480px){
+    .collects-list {
+        width: unset !important;
+    }
     .collection-buttons {
         width: 100%;
         justify-content: space-between;
@@ -681,7 +684,6 @@ button:disabled{
         display: none;
     }
     .show-collect {
-        flex-wrap: wrap;
         padding: 0;
     }
     .back-to-overview {
@@ -709,6 +711,7 @@ button:disabled{
         width: 100vw;
         padding: 20px;
         box-sizing: border-box;
+        margin: 0;
     }
   .section-collects h2:first-of-type{
     padding-bottom: 0;
@@ -766,7 +769,7 @@ button:disabled{
   }
 }
 
-max-width only screen and (min-width: 481px) and (max-width: 1024px){
+@media only screen and (min-width:481px) and (max-width: 1024px){
   .section-collects {
     width: 70vw;
   }
