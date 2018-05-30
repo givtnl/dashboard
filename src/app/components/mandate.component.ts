@@ -123,7 +123,6 @@ export class MandateComponent implements OnInit {
                                 }
                             }
                         }
-                        console.log(this.filteredOrganisations);
                         this.showFiltered = true;
                         this.searchBtn = "Zoeken";
                         this.disabled = false;
@@ -170,7 +169,6 @@ export class MandateComponent implements OnInit {
                 Amount: this.selectedOrganisation.cf_value_92583,
                 CrmId: this.selectedOrganisation.id
             };
-            console.log(body);
             this.apiClient.postData("Organisation/StartupFee", body)
                 .then(res => {
                     alert("Incassoproces is gestart.");
@@ -406,7 +404,6 @@ export class MandateComponent implements OnInit {
         this.apiClient.postData("Organisation/SendMandateMail", email)
             .then(d => {
                 alert("Mandaat is verzonden.");
-                console.log(d);
             }).catch(error => {
                 console.log(error);
                 alert("Mandaat niet verzonden, controleer alle gegevens.");
@@ -433,7 +430,6 @@ export class MandateComponent implements OnInit {
             .then(res => {
                 if (res)
                     alert("Gelukt!");
-                console.log(res);
             }).catch(res => {
             alert("Mislukt!");
         });

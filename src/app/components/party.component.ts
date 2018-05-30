@@ -22,7 +22,6 @@ export class PartyComponent implements OnInit {
 			this.guid = JSON.parse(currentCollectGroup).GUID;
 			this.apiService.getData('v2/collectgroups/celebration/' + this.guid)
 				.then(resp => {
-					console.log(resp);
 					if(resp.Celebrations && resp.dt_Celebration != null) {
 						let newDate = new Date(resp.dt_Celebration);
 						this.countdownTimer(Number(resp.SecondsRemaining));
@@ -75,7 +74,6 @@ export class PartyComponent implements OnInit {
 		let dateToSend = currentDate.toISOString();
 		this.apiService.postData('v2/collectgroups/celebration/' + this.guid  + "?dtCelebration=" + dateToSend, null)
 			.then(resp => {
-        console.log(resp);
 				if(resp != "") {
 
           this.countdownTimer(Number(resp.SecondsRemaining));
@@ -88,7 +86,7 @@ export class PartyComponent implements OnInit {
 		this.apiService.delete('v2/collectgroups/celebration/' + this.guid)
 			.then(resp => {
 				let r = resp as any;
-				console.log((r as Response).status);
+				//console.log((r as Response).status);
 				if((r as Response).status) {
 					this.timeSet = "";
 				}

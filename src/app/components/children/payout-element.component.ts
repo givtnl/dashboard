@@ -14,8 +14,6 @@ import {ISODatePipe} from "../../pipes/iso.datepipe";
 
 export class PayoutComponent implements OnInit{
   ngOnInit(): void {
-    console.log(this.childData);
-    console.log(this.loader);
     this.doSomeFancyStuff();
   }
 

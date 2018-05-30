@@ -113,7 +113,6 @@ export class ForgotPasswordComponent  implements OnInit{
         this.resetNav();
         if(res.ok)
         {
-          console.log(res);
           this.saved = true;
         }else{
           this.wrong = true;

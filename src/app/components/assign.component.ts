@@ -156,7 +156,7 @@ export class AssignComponent implements OnInit {
 			start.stripTime();
 			end.stripTime();
 		}
-		
+
 		this.startTime = new Date(this.event.start);
 		this.endTime = new Date(this.event.end);
 		this.fillData(event);
@@ -428,7 +428,6 @@ export class AssignComponent implements OnInit {
     }
 
     for(let i = 0; i < collections.length; i++) {
-      console.log(collections[i].name);
       let current = collections[i];
 
       if(current.amountOfGivts > 0 && current.name != "") {
@@ -653,7 +652,6 @@ export class AssignComponent implements OnInit {
   }
 
   handleEventClick(e) {
-    console.log(e);
     let start = e.calEvent.start;
     let end = e.calEvent.end;
     if(e.view.name === 'month') {
@@ -734,7 +732,6 @@ export class AssignComponent implements OnInit {
         resolve();
         return;
       }
-      console.log(collectId);
       let event = new MyEvent();
       event.id = this.idGen++;
       event.title = title;
@@ -865,7 +862,7 @@ export class AssignComponent implements OnInit {
             coll3 = true;
             break;
           default:
-            console.log("unknown coll");
+            //console.log("unknown coll");
             break;
         }
       }
