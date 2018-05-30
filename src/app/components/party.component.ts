@@ -16,6 +16,7 @@ export class PartyComponent implements OnInit {
 	public guid = "";
 	public timeRemaining: string = "";
 	private timer = null;
+	private countdownInterval: number;
 	ngOnInit(): void {
 		let currentCollectGroup = this.dataService.getData("CurrentCollectGroup");
 		if (currentCollectGroup) {
@@ -38,16 +39,16 @@ export class PartyComponent implements OnInit {
 
 	countdownTimer(seconds: number) {
 		this.timeRemaining = this.calculateMinAndSeconds(seconds);
-		var downloadTimer = setInterval(function(){
+		this.countdownInterval = setInterval(function(){
 			seconds--;
 			this.timeRemaining = this.calculateMinAndSeconds(seconds);
 			if(seconds <= 0) {
-				clearInterval(downloadTimer);
+				clearInterval(this.countdownInterval);
 				this.timeRemaining = null;
 				document.getElementById("delete-button").style.display = "none";
-        setTimeout(()=>{
-          this.clearPartyMoment();
-        }, 10000);
+				setTimeout(()=>{
+				this.clearPartyMoment();
+				}, 10000);
 			}
 
 		}.bind(this),1000);
@@ -74,6 +75,8 @@ export class PartyComponent implements OnInit {
 	}
 
 	save() {
+		clearInterval(this.countdownInterval);
+
 		if(!this.allowSaving) {
 			return;
 		}
@@ -90,9 +93,11 @@ export class PartyComponent implements OnInit {
           this.showSetTime(currentDate);
 				}
 			})
+
 	}
 
 	delete() {
+		clearInterval(this.countdownInterval);
 		this.apiService.delete('v2/collectgroups/celebration/' + this.guid)
 			.then(resp => {
 				let r = resp as any;
