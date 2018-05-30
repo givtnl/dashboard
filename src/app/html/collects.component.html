@@ -4,9 +4,9 @@
   <my-navigation></my-navigation>
   <div class="global-layout-content">
     <my-titlebar></my-titlebar>
-      <div class="back-to-overview" *ngIf="isVisible">
+      <div class="back-to-overview" *ngIf="isVisible" (click)="isVisible = false">
           <img style="height: 20px" src="images/left-back.png" alt="">
-          <p class="avenir-light font-size-16" (click)="isVisible = false">
+          <p class="avenir-light font-size-16">
             {{"Back_To_Overview" | translate}}
           </p>
       </div>
