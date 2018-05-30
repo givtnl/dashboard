@@ -22,7 +22,7 @@ export class PartyComponent implements OnInit {
 			this.guid = JSON.parse(currentCollectGroup).GUID;
 			this.apiService.getData('v2/collectgroups/celebration/' + this.guid)
 				.then(resp => {
-					if(resp.Celebrations && resp.dt_Celebration != null) {
+					if(resp.Celebrations && resp.dt_Celebration != null && resp.SecondsRemaining > 0) {
 						let newDate = new Date(resp.dt_Celebration);
 						this.countdownTimer(Number(resp.SecondsRemaining));
 						this.showSetTime(newDate);
@@ -44,10 +44,20 @@ export class PartyComponent implements OnInit {
 			if(seconds <= 0) {
 				clearInterval(downloadTimer);
 				this.timeRemaining = null;
+				document.getElementById("delete-button").style.display = "none";
+        setTimeout(()=>{
+          this.clearPartyMoment();
+        }, 10000);
 			}
 
 		}.bind(this),1000);
 	}
+
+	clearPartyMoment(){
+	this.timeSet = '';
+	var partytime = document.getElementById("selected-partytime") as HTMLSelectElement;
+	partytime.selectedIndex = 0;
+  }
 
 	calculateMinAndSeconds(secondsLeft: number): string {
 		let minutes: number = Math.trunc(secondsLeft / 60);

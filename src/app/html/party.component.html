@@ -8,7 +8,7 @@
 
             <div style="text-align: center" >
                 <h2>Stel een feestgift in over:</h2>
-                <select [(ngModel)]="selectedValue" name="selectedValue" class="dropdown">
+                <select id="selected-partytime" [(ngModel)]="selectedValue" name="selectedValue" class="dropdown">
                     <option value="-1">-- Tik of klik om een tijd te kiezen --</option>
                     <option value="30">30 seconden</option>
                     <option value="60">1 minuut</option>
@@ -26,11 +26,11 @@
 
             <div *ngIf="timeSet != ''" style="text-align: center;">
                 <span *ngIf="timeRemaining != null"><p class="text heavy">Het feestmoment werd ingesteld op: <span style="white-space: nowrap">{{ timeSet }}</span></p></span>
-              <p *ngIf="timeRemaining == null" class="text heavy">Het feestmoment is afgelopen</p>
+              <p *ngIf="timeRemaining == null" class="text heavy">Het feestmoment is begonnen</p>
                 <p *ngIf="timeRemaining != null" class="text heavy" style="font-size: 40px; color: #46bc8f;">{{ timeRemaining }}</p>
                 <img *ngIf="timeRemaining == null" src="images/Givy-Feest.png" style="max-width: 300px; margin-bottom: 10px;" />
                 <br>
-              <button (click)="delete()" class="save">Verwijder geefmoment</button>
+              <button id="delete-button" (click)="delete()" class="save">Verwijder geefmoment</button>
             </div>
 
         </section>
