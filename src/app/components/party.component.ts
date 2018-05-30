@@ -25,7 +25,6 @@ export class PartyComponent implements OnInit {
 					console.log(resp);
 					if(resp.Celebrations && resp.dt_Celebration != null) {
 						let newDate = new Date(resp.dt_Celebration);
-
 						this.countdownTimer(Number(resp.SecondsRemaining));
 						this.showSetTime(newDate);
 					}
@@ -39,7 +38,6 @@ export class PartyComponent implements OnInit {
 	}
 
 	countdownTimer(seconds: number) {
-		seconds = 61;
 		this.timeRemaining = this.calculateMinAndSeconds(seconds);
 		var downloadTimer = setInterval(function(){
 			seconds--;
