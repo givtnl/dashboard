@@ -75,8 +75,11 @@ export class PartyComponent implements OnInit {
 		let dateToSend = currentDate.toISOString();
 		this.apiService.postData('v2/collectgroups/celebration/' + this.guid  + "?dtCelebration=" + dateToSend, null)
 			.then(resp => {
-				if(resp == "") {
-					this.showSetTime(currentDate);
+        console.log(resp);
+				if(resp != "") {
+
+          this.countdownTimer(Number(resp.SecondsRemaining));
+          this.showSetTime(currentDate);
 				}
 			})
 	}
