@@ -120,10 +120,12 @@ export class DashboardComponent implements OnInit, OnDestroy{
             {
                 if(resp){
                     let collectSum = resp.TotalAmount;
+                    let average = collectSum / resp.TransactionCount;
                     this.thisMonthCard.value = this.euro + "<span class='fat-emphasis'>" + (this.isSafari ? collectSum.toFixed(2) : collectSum.toLocaleString(navigator.language,{minimumFractionDigits: 2})) + "</span>";
                     this.translate.get("Text_ThisMonth").subscribe(value => { this.thisMonthCard.title = value;});
                     this.translate.get("Text_Given").subscribe(value => { this.thisMonthCard.footer = value;});
                     this.thisMonthCard.subtitle = this.datePipe.transform(date, 'MMMM yyyy');
+                    this.translate.get("Text_Given").subscribe(value => { this.thisMonthCard.average = value + " " + this.euro + " " + average.toFixed(2).toString(); });
                     let cardIsInCards = false;
                     for(let i in this.cards){
                         if(this.cards[i].title === this.thisMonthCard.title){
@@ -158,11 +160,13 @@ export class DashboardComponent implements OnInit, OnDestroy{
                 let displayDate = new Date(highest.Date);
 
                 let collectSum = highest.Sum;
+                let average = collectSum / highest.Count;
                 this.lastSundaySum = collectSum;
                 this.lastSundayCard.value = this.euro+ "<span class='fat-emphasis'>" + (this.isSafari ? collectSum.toFixed(2) : collectSum.toLocaleString(navigator.language,{minimumFractionDigits: 2})) + "</span>";
                 this.translate.get(this.daysOfWeek[displayDate.getDay()]).subscribe(value => { this.lastSundayCard.title = value;});
                 this.translate.get("Text_Given").subscribe(value => { this.lastSundayCard.footer = value;});
                 this.lastSundayCard.subtitle = this.datePipe.transform(displayDate, 'dd-MM-yyyy');
+                this.translate.get("Text_Given").subscribe(value => { this.lastSundayCard.average = value + " " + this.euro + " " + average.toFixed(2).toString(); });
                 let cardIsInCards = false;
                 for(let i in this.cards){
                     if(this.cards[i].title === this.lastSundayCard.title){
@@ -173,5 +177,6 @@ export class DashboardComponent implements OnInit, OnDestroy{
                     this.cards.push(this.lastSundayCard);
                 }
             });
+            
     }
 }
