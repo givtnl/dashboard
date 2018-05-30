@@ -100,7 +100,6 @@ export class UserService {
 			let guid = JSON.parse(currentCollectGroup).GUID;
 			this.apiService.getData('v2/collectgroups/celebration/' + guid)
 				.then(resp => {
-					console.log(resp);
 					if(resp == undefined) {
 						this.showCelebrations = false;
 					} else if(resp.Celebrations != null) {
@@ -154,7 +153,5 @@ export class UserService {
             this.collectGroupChanged.emit(null);
             this.loadCelebration();
         }
-        else
-            console.log("Collect group does not exist");
     }
 }
