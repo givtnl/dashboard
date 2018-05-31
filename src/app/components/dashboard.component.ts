@@ -160,7 +160,10 @@ export class DashboardComponent implements OnInit, OnDestroy{
                 let displayDate = new Date(highest.Date);
 
                 let collectSum = highest.Sum;
-                let average = collectSum / highest.Count;
+                let average = 0;
+                if(collectSum != 0){
+                    average = collectSum / highest.Count;        
+                }
                 this.lastSundaySum = collectSum;
                 this.lastSundayCard.value = this.euro+ "<span class='fat-emphasis'>" + (this.isSafari ? collectSum.toFixed(2) : collectSum.toLocaleString(navigator.language,{minimumFractionDigits: 2})) + "</span>";
                 this.translate.get(this.daysOfWeek[displayDate.getDay()]).subscribe(value => { this.lastSundayCard.title = value;});
