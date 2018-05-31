@@ -120,7 +120,10 @@ export class DashboardComponent implements OnInit, OnDestroy{
             {
                 if(resp){
                     let collectSum = resp.TotalAmount;
-                    let average = collectSum / resp.TransactionCount;
+                    let average = 0;
+                    if(collectSum != 0){
+                        average = collectSum / resp.TransactionCount;        
+                    }
                     this.thisMonthCard.value = this.euro + "<span class='fat-emphasis'>" + (this.isSafari ? collectSum.toFixed(2) : collectSum.toLocaleString(navigator.language,{minimumFractionDigits: 2})) + "</span>";
                     this.translate.get("Text_ThisMonth").subscribe(value => { this.thisMonthCard.title = value;});
                     this.translate.get("Text_Given").subscribe(value => { this.thisMonthCard.footer = value;});
