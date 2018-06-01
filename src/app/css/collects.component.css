@@ -1,5 +1,5 @@
 .section-collects{
-    width: 960px;
+    max-width: 960px;
     margin: 0 auto;
     position: relative;
 }
@@ -7,6 +7,7 @@
 .collection-buttons{
   display: flex;
   align-items: center;
+    margin-top: 10px;
 }
 
 .collection-buttons > span{
@@ -118,7 +119,7 @@ h3 {
 .collects-list{
     margin: 0 auto;
     display: block;
-    width: 960px;
+    max-width: 960px;
 }
 
 button:disabled{
@@ -177,7 +178,7 @@ button:disabled{
 }
 
 .collects-list .show-collect{
-    padding: 20px;
+    padding: 20px 30px;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
@@ -200,6 +201,7 @@ button:disabled{
 
 .collects-list .show-collect:hover .arrow-right{
  border-left-color: #2E2957;
+    opacity: 1;
 
 }
 
@@ -214,8 +216,9 @@ button:disabled{
     height: 0;
     border-top: 13px solid transparent;
     border-bottom: 13px solid transparent;
-    border-left: 18px solid #BCB9C8;
+    border-left: 12px solid #BCB9C8;
     transition: 0.3s;
+    opacity: 0.3;
 }
 
 .withholding-overview{
@@ -517,6 +520,7 @@ button:disabled{
 }
 
 .green-arrow{
+    opacity: 1;
     border-left-color: #41c98e !important;
 }
 
@@ -661,11 +665,54 @@ button:disabled{
   text-align: right;
 }
 
+.back-to-overview {
+    display: none;
+}
+
 @media only screen and (max-width: 480px){
+    .collects-list {
+        width: unset !important;
+    }
+    .collection-buttons {
+        width: 100%;
+        justify-content: space-between;
+    }
+    .rectangle {
+        display: none !important;
+    }
+    .graph-overview tr td:first-child {
+        display: none;
+    }
+    .show-collect {
+        padding: 0;
+    }
+    .back-to-overview {
+        display: flex;
+        padding: 20px;
+        box-sizing: border-box;
+        cursor: pointer;
+    }
+    .back-to-overview p {
+        margin: 0;
+        margin-left: 10px;
+        margin-top: 2px;
+    }
+    .hide-element-on-mobile {
+        display: none;
+    }
+    .red {
+        display: none;
+    }
   h2, h3 {
     font-size: 16px;
 
   }
+    .section-collects{
+        width: 100vw;
+        padding: 20px;
+        box-sizing: border-box;
+        margin: 0;
+    }
   .section-collects h2:first-of-type{
     padding-bottom: 0;
   }
@@ -678,16 +725,8 @@ button:disabled{
     width: 80vw;
     max-width: 320px;
   }
-  .show-collect, .graph-section{
-    display: block !important;
-  }
   .collection-buttons > span {
     font-size: 16px;
-  }
-  .arrow-right {
-    float: right;
-    margin-top: -40px;
-    margin-right: -12px;
   }
   input[name=bjorn]{
     margin-bottom: 10px;
@@ -696,7 +735,7 @@ button:disabled{
     display: flex;
     flex: auto;
     justify-content:  space-between;
-    margin-bottom: 30px;
+    margin-bottom: 10px;
     margin-top: 10px;
   }
   body > app-root > div > my-collects > div > div > section:nth-child(4) > section {
@@ -713,9 +752,7 @@ button:disabled{
   }
 
   .graph {
-    margin: 0 auto;
-    display: block !important;
-    margin-bottom: 20px;
+    display: none;
   }
   table.graph-overview {
     font-size: 12px;
@@ -732,7 +769,7 @@ button:disabled{
   }
 }
 
-max-width only screen and (min-width: 481px) and (max-width: 1024px){
+@media only screen and (min-width:481px) and (max-width: 1024px){
   .section-collects {
     width: 70vw;
   }

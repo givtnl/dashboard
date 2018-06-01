@@ -218,10 +218,10 @@ export class CollectsComponent implements OnInit{
                     this.savedCollects[i].BeginDate = new Date(resp[i].BeginDate);
                     this.savedCollects[i].EndDate =  new Date(resp[i].EndDate);
 
-                    this.savedCollects[i].BeginDateString = this.datePipe.transform(this.savedCollects[i].BeginDate, 'd MMMM y');
-                    this.savedCollects[i].EndDateString = this.datePipe.transform(this.savedCollects[i].EndDate, 'd MMMM y');
-                    this.savedCollects[i].BeginTimeString = this.datePipe.transform(this.savedCollects[i].BeginDate, 'shortTime');
-                    this.savedCollects[i].EndTimeString = this.datePipe.transform(this.savedCollects[i].EndDate, 'shortTime');
+                    let start = this.savedCollects[i].BeginDate;
+                    let end = this.savedCollects[i].EndDate;
+                    this.savedCollects[i].BeginDateString = this.datePipe.transform(start, 'd MMMM y') + " " + this.datePipe.transform(start, 'shortTime');
+                    this.savedCollects[i].EndDateString = this.datePipe.transform(end, 'd MMMM y') + " " + this.datePipe.transform(end, 'shortTime');
                     if(this.savedCollects[i].CollectId) {
                         this.savedCollects[i].MultipleCollects = true;
                     } else {
@@ -301,11 +301,8 @@ export class CollectsComponent implements OnInit{
             this.sameDate = ( new Date(this.dateBeginRange).getDate() ===  new Date(this.dateEndRange).getDate());
             this.dateBeginRange = new Object();
             this.dateEndRange = new Object();
-            this.dateBeginRange.string = this.datePipe.transform(this.dateBegin, 'd MMMM y');
-            this.dateEndRange.string = this.datePipe.transform(this.dateEnd, 'd MMMM y');
-            this.dateBeginRange.time = this.datePipe.transform(beginTime, 'shortTime');
-            this.dateEndRange.time = this.datePipe.transform(endTime,'shortTime');
-
+            this.dateBeginRange.string = this.datePipe.transform(this.dateBegin, 'd MMMM y') + " " + this.datePipe.transform(beginTime, 'shortTime');
+            this.dateEndRange.string = this.datePipe.transform(this.dateEnd, 'd MMMM y') + " " + this.datePipe.transform(endTime,'shortTime');
             this.isVisible = true;
 
             let euro =  "€";

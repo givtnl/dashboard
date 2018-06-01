@@ -130,7 +130,6 @@ ul.sidebar-nav-bottom li:first-child a {
     font-size: 0.8em;
   }
   #sidemenu > li:nth-child(4) > a > span.sidebar-title {
-    float: right;
     margin-left: 2px;
   }
 }

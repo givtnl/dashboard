@@ -19,7 +19,6 @@ export class LoginComponent  {
     constructor(private userService: UserService, private router: Router, private translate:TranslateService){
         this.passwordHidden = true;
         this.eyeColor = "#BCB9C9";
-        console.log("logging in.");
     }
 
     login(){

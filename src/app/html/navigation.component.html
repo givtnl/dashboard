@@ -31,7 +31,7 @@
     </li>
     <li *ngIf="showDashboardItems" routerLinkActive="active-menu-item">
       <a routerLink="/dashboard">
-        <span class="sidebar-icon"><i class="fa fa-area-chart"></i></span>
+        <span class="sidebar-icon"><i class="fas fa-chart-area"></i></span>
         <span class="sidebar-title">{{"Menu_Overview" | translate}}</span>
       </a>
     </li>
@@ -49,10 +49,11 @@
     </li>
     <li *ngIf="showDashboardItems" routerLinkActive="active-menu-item">
       <a routerLink="/assign">
-        <span class="sidebar-icon"><i class="fa fa-calendar-check-o"></i></span>
+        <span class="sidebar-icon"><i class="far fa-calendar-check"></i></span>
         <span class="sidebar-title">{{"Menu_Allocate" | translate}}</span>
       </a>
-    </li><li *ngIf="showDashboardItems && showCelebrations" routerLinkActive="active-menu-item">
+    </li>
+      <li *ngIf="showDashboardItems && showCelebrations" routerLinkActive="active-menu-item">
       <a routerLink="/party">
         <span class="sidebar-icon"><i class="fa fa-bolt"></i></span>
         <span class="sidebar-title">{{"SetPartyGivt" | translate}}</span>
@@ -60,13 +61,19 @@
     </li>
     <li *ngIf="showMandateLink" routerLinkActive="active-menu-item">
       <a routerLink="/mandate">
-        <span class="sidebar-icon"><i class="fa fa-file-text-o"></i></span>
+        <span class="sidebar-icon"><i class="far fa-file-alt"></i></span>
         <span class="sidebar-title">Mandaten</span>
       </a>
     </li>
     <li>
       <ul class="sidebar-nav-bottom">
         <li>
+          <a href="#">
+            <span class="sidebar-icon"><i class="fas fa-sliders-h"></i></span>
+            <span class="sidebar-title">Voorkeuren</span>
+          </a>
+        </li>
+          <li>
           <a href="https://www.givtapp.net/wp-content/uploads/2017/07/Handleiding_Givt_Dashboard.pdf">
             <span class="sidebar-icon"><i class="fa fa-book"></i></span>
             <span class="sidebar-title">{{ "Manual" | translate }}</span>
@@ -85,4 +92,5 @@
     </li>
   </ul>
 </aside>
+
 

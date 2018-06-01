@@ -52,6 +52,33 @@ h1 {
     font-weight: normal;
 }
 
+h2{
+    margin: 0;
+    font-family: 'Avenir_Black';
+    font-size:18px;
+    color: #2C2B57;
+    text-align: center;
+    font-weight: normal;
+    padding: 25px 0;
+    box-sizing: border-box;
+}
+
+.text{
+    font-family: Avenir_Light;
+    font-size: 16px;
+    color: #2E2957;
+    text-align: center;
+}
+
+.avenir-light {
+    font-family: Avenir_Light;
+    color: #2E2957;
+}
+
+.font-size-16 {
+    font-size: 16px;
+}
+
 .date-picker-input{
     width: 320px;
     padding: 8px 16px;
@@ -573,6 +600,20 @@ p-schedule button
   overflow: auto;
   display: flex;
   flex-direction: column;
+    max-width: 100%;
+}
+
+.global-layout-main {
+    flex-grow: 100;
+    display: flex;
+    flex-direction: column;
+}
+
+.padding-20 {
+    padding: 20px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 .bottom-flex {

@@ -53,8 +53,6 @@ export class DataService {
 			sessionStorage.setItem('payoutDateBegin', payoutDateBegin);
 			sessionStorage.setItem('payoutDateEnd', payoutDateEnd);
 		}
-
-        console.log(sessionStorage);
         localStorage.clear();
     }
 

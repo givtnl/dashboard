@@ -3,15 +3,12 @@
     <my-navigation></my-navigation>
     <div class="global-layout-content">
         <my-titlebar></my-titlebar>
-        <section class="section-collects" style="width: 100vw; max-width: 960px; margin: 0 auto;">
-            <h2>Feestmoment instellen</h2>
-            <p class="text">Op deze pagina kan je een geefmoment instellen. Een geefmoment is een tijdstip die je instelt. Als dit is ingesteld en gevers aan jouw organisatie geven, dan zal er een timer aftellen in de app. Als de timer 0 bereikt, zullen alle gebruikers die hun app nog open hadden staan het feestmoment met flash en trilfunctie meemaken.</p>
-            <p class="text">Gebruik dit dus best niet op zondagochtend... 😉</p>
-            <hr class="collect-hr"/>
+        <section class="section-collects" style="width: 100vw; max-width: 960px; margin: 0 auto; padding: 20px; box-sizing: border-box;">
 
-            <div style="text-align: center" *ngIf="timeSet == ''">
+
+            <div style="text-align: center" >
                 <h2>Stel een feestgift in over:</h2>
-                <select [(ngModel)]="selectedValue" name="selectedValue" class="dropdown">
+                <select id="selected-partytime" [(ngModel)]="selectedValue" name="selectedValue" class="dropdown">
                     <option value="-1">-- Tik of klik om een tijd te kiezen --</option>
                     <option value="30">30 seconden</option>
                     <option value="60">1 minuut</option>
@@ -24,12 +21,18 @@
                 </select>
                 <button [class.disabled]="!allowSaving" class="save" (click)="save()">Opslaan</button>
             </div>
+
+            <p class="text warning-text" style="color: #bc1414; padding-top: 10px; background-color: #bcb9c8;"><span style="font-family: Avenir_Heavy">Let op:</span> slechts 1 geefmoment wordt opgeslagen. Een nieuwe opslaan terwijl er een moment loopt, zal de oude verwijderen.</p>
+
             <div *ngIf="timeSet != ''" style="text-align: center;">
-                <p class="text heavy">{{ timeSet }}</p>
-                <button (click)="delete()" class="save">Verwijder geefmoment</button>
+                <span *ngIf="timeRemaining != null"><p class="text heavy">Het feestmoment werd ingesteld op: <span style="white-space: nowrap">{{ timeSet }}</span></p></span>
+              <p *ngIf="timeRemaining == null" class="text heavy">Het feestmoment is begonnen</p>
+                <p *ngIf="timeRemaining != null" class="text heavy" style="font-size: 40px; color: #46bc8f;">{{ timeRemaining }}</p>
+                <img *ngIf="timeRemaining == null" src="images/Givy-Feest.png" style="max-width: 300px; margin-bottom: 10px;" />
+                <br>
+              <button id="delete-button" (click)="delete()" class="save">Verwijder geefmoment</button>
             </div>
 
-            <p class="text" style="color:darkred;"><span style="font-family: Avenir_Heavy">Let op:</span> een moment kan niet meer geannuleerd worden als gebruikers al gegeven hebben aan deze organisatie. De teller zal dan gewoon wel verder aftellen.</p>
         </section>
         <my-footer></my-footer>
     </div>

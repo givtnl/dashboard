@@ -13,9 +13,12 @@ import { EventEmitter, Output } from "@angular/core";
 @Injectable()
 export class UserService {
     @Output() collectGroupChanged: EventEmitter<any> = new EventEmitter();
+	@Output() showCelebrationChanged: EventEmitter<any> = new EventEmitter();
 
-    //this has to become environment variable in story 2461
+
+	//this has to become environment variable in story 2461
     private apiUrl = environment.apiUrl + '/oauth2/token';
+    public showCelebrations: boolean = false;
 
     constructor(private dataService: DataService, private apiService: ApiClientService, private http: Http, private router: Router){
         this.loggedIn = !!dataService.getData("accessToken");
@@ -25,6 +28,7 @@ export class UserService {
         this.CollectGroups = d && d != 'undefined' ? JSON.parse(d) : [];
         d = dataService.getData("CurrentCollectGroup")
         this.CurrentCollectGroup = d && d != 'undefined' ? JSON.parse(d) : null;
+        this.loadCelebration()
     }
 
     loggedIn: boolean = false;
@@ -90,6 +94,24 @@ export class UserService {
             })
     }
 
+	loadCelebration() {
+		let currentCollectGroup = this.dataService.getData("CurrentCollectGroup");
+		if (currentCollectGroup) {
+			let guid = JSON.parse(currentCollectGroup).GUID;
+			this.apiService.getData('v2/collectgroups/celebration/' + guid)
+				.then(resp => {
+					if(resp == undefined) {
+						this.showCelebrations = false;
+					} else if(resp.Celebrations != null) {
+						this.showCelebrations = resp.Celebrations;
+					} else {
+						this.showCelebrations = false;
+					}
+					this.showCelebrationChanged.emit(null);
+				})
+		}
+	}
+
     startTimedLogout(ms){
         setTimeout(()=>{
             this.logout();
@@ -129,8 +151,7 @@ export class UserService {
             this.dataService.writeData("CurrentCollectGroup", JSON.stringify(cg));
             this.CurrentCollectGroup = cg;
             this.collectGroupChanged.emit(null);
+            this.loadCelebration();
         }
-        else
-            console.log("Collect group does not exist");
     }
 }
