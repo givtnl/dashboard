@@ -128,7 +128,7 @@ export class DashboardComponent implements OnInit, OnDestroy{
                     this.translate.get("Text_ThisMonth").subscribe(value => { this.thisMonthCard.title = value;});
                     this.translate.get("Text_Given").subscribe(value => { this.thisMonthCard.footer = value;});
                     this.thisMonthCard.subtitle = this.datePipe.transform(date, 'MMMM yyyy');
-                    this.translate.get("AverageCard").subscribe(value => { this.thisMonthCard.average = value + " " + this.euro + " " + average.toFixed(2).toString(); });
+                    this.translate.get("AverageCard").subscribe(value => { this.thisMonthCard.average = value + " " + this.euro + " " + average.toLocaleString(navigator.language,{minimumFractionDigits: 2}) });
                     let cardIsInCards = false;
                     for(let i in this.cards){
                         if(this.cards[i].title === this.thisMonthCard.title){
@@ -172,7 +172,7 @@ export class DashboardComponent implements OnInit, OnDestroy{
                 this.translate.get(this.daysOfWeek[displayDate.getDay()]).subscribe(value => { this.lastSundayCard.title = value;});
                 this.translate.get("Text_Given").subscribe(value => { this.lastSundayCard.footer = value;});
                 this.lastSundayCard.subtitle = this.datePipe.transform(displayDate, 'dd-MM-yyyy');
-                this.translate.get("AverageCard").subscribe(value => { this.lastSundayCard.average = value + " " + this.euro + " " + average.toFixed(2).toString(); });
+                this.translate.get("AverageCard").subscribe(value => { this.lastSundayCard.average = value + " " + this.euro + " " + average.toLocaleString(navigator.language,{minimumFractionDigits: 2}); });
                 let cardIsInCards = false;
                 for(let i in this.cards){
                     if(this.cards[i].title === this.lastSundayCard.title){
