@@ -6,6 +6,7 @@ import 'fullcalendar';
 import 'fullcalendar/dist/locale/nl';
 import {AllocationTimeSpanItem, Transaction} from "../models/allocationTimeSpanItem";
 import {UserService} from "../services/user.service";
+import {DataService} from "../services/data.service";
 
 
 @Component({
@@ -46,6 +47,7 @@ export class AssignComponent implements OnInit {
   startTime: Date;
   endTime: Date;
   oldJsEvent: any;
+  private firstDay: number = 1;
 
   get allowButton(): boolean {
     if(this.firstCollection.amountOfGivts > 0 && this.firstCollection.allocated == false)
@@ -90,11 +92,8 @@ export class AssignComponent implements OnInit {
     return filtered
   }
 
-
-
-
   @ViewChild('calendar') calendar: ElementRef;
-  public constructor(public ts: TranslateService, private cd: ChangeDetectorRef, private apiService: ApiClientService, private userService: UserService) {
+  public constructor(public ts: TranslateService, private cd: ChangeDetectorRef, private apiService: ApiClientService, private userService: UserService, private dataService: DataService) {
     this.isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
     this.ts.get('Collection').subscribe((res: string) => {
         this.collectionTranslation = res;
@@ -118,6 +117,11 @@ export class AssignComponent implements OnInit {
   }
 
   ngOnInit(): void {
+	  let firstDayFromStorage = this.dataService.getData("FirstDayOfWeek");
+	  if(!isNaN(this.firstDay)) {
+		  this.firstDay = firstDayFromStorage
+	  }
+
     this.events = [];
     this.headerConfig = {
       left: 'prev,next today',
@@ -162,6 +166,7 @@ export class AssignComponent implements OnInit {
 		this.fillData(event);
 		this.openDialog();
     }.bind(this);
+    this.options['firstDay'] = this.firstDay;
     this.options['slotDuration'] = '00:30:00';
     this.options['timezone'] = 'local';
     this.options['defaultView'] = 'agendaWeek';
