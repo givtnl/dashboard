@@ -67,7 +67,7 @@
     </li>
     <li>
       <ul class="sidebar-nav-bottom">
-        <li (click)="isSettingsVisible = true">
+        <li (click)="isSettingsVisible = true" routerLinkActive="active-menu-item">
           <a routerLink="/settings" >
             <span class="sidebar-icon"><i class="fas fa-sliders-h"></i></span>
             <span class="sidebar-title">{{ "Preferences" | translate }}</span>
