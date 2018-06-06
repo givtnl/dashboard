@@ -34,6 +34,7 @@ import * as jQuery from 'jquery';
 import { AutoCompleteModule, ScheduleModule, DialogModule, CalendarModule, DropdownModule } from 'primeng/primeng';
 import { LoggedOutComponent } from 'app/components/loggedout.component';
 import {ISODatePipe} from "./pipes/iso.datepipe";
+import {SettingsComponent} from "./components/settings.component";
 (window as any).jQuery = (window as any).$ = jQuery; // This is needed to resolve issue.
 
 export function createTranslateLoader(http: Http) {
@@ -59,7 +60,8 @@ export function createTranslateLoader(http: Http) {
     FooterComponent,
     AlertComponent,
     LoggedOutComponent,
-    PartyComponent
+    PartyComponent,
+	  SettingsComponent
   ],
   imports: [
     AutoCompleteModule,

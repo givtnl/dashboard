@@ -67,8 +67,8 @@
     </li>
     <li>
       <ul class="sidebar-nav-bottom">
-        <li>
-          <a href="#">
+        <li (click)="isSettingsVisible = true">
+          <a routerLink="/settings" >
             <span class="sidebar-icon"><i class="fas fa-sliders-h"></i></span>
             <span class="sidebar-title">Voorkeuren</span>
           </a>
@@ -91,6 +91,7 @@
       </ul>
     </li>
   </ul>
+
 </aside>
 
 
