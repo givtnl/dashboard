@@ -609,6 +609,15 @@ button:disabled{
 .mobile-text-info {
   display: none;
 }
+.allocation-column-date{
+  width:1%;
+  white-space:nowrap;
+}
+.allocation-date{
+  font-family: Avenir_Light;
+  font-size: 16px;
+  padding-right: 20px;
+}
 @media only screen and (max-width: 480px){
     .collects-list {
         width: 100% !important;
