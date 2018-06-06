@@ -10,7 +10,6 @@ my-alert {
   flex: 0 0 auto;
   padding-right: 25px;
   height: 100%;
-    position: relative;
 }
 
 .sidebar .sidebar-nav {
@@ -139,3 +138,8 @@ ul.sidebar-nav-bottom li:first-child a {
     display:none;
   }
 }
+
+
+
+
+

@@ -136,11 +136,5 @@
     "SetPartyGivt": "Feestgift",
     "Manual": "Handleiding",
     "Back_To_Overview": "Terug naar overzicht",
-    "AverageCard": "Gemiddeld",
-    "Zondag": "Zondag",
-    "Preferences": "Voorkeuren",
-    "FirstDayOfWeek": "Eerste dag van de week",
-    "SelectPreferenceFromList": "Uit het tabblad links kan je kiezen om een voorkeur naar jouw hand te zetten",
-    "SetFirstDayOfWeek": "Standaard is zondag als eerste dag van de week geselecteerd. Als je liever een andere dag instelt, kun je dat hieronder doen.",
-    "FirstDayOfWeekChoice": "Eerste dag van de week:"
+    "AverageCard": "Gemiddeld"
 }
