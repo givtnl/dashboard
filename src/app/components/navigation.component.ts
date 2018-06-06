@@ -20,6 +20,7 @@ export class NavigationComponent implements OnInit {
     currentCollectGroup: any = {Name:"", GUID:""};
     collectGroups : Array<any> = null;
     showCelebrations = false;
+
     constructor(private apiService: ApiClientService, private dataService: DataService, userService: UserService, private router: Router) {
       this.userService = userService;
 
