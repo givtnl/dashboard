@@ -692,8 +692,14 @@ button:disabled{
     .graph-overview tr td:first-child {
         display: none;
     }
+    .section-collects .show-collect {
+        flex-direction: column;
+    }
     .show-collect {
         padding: 0;
+    }
+    .collections-buttons > span {
+        margin-right: unset;
     }
     .back-to-overview {
         display: flex;
