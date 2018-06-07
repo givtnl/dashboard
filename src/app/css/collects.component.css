@@ -698,8 +698,9 @@ button:disabled{
     .show-collect {
         padding: 0;
     }
-    .collections-buttons > span {
+    .collection-buttons > span {
         margin-right: unset;
+        white-space: nowrap;
     }
     .back-to-overview {
         display: flex;
