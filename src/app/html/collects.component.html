@@ -16,10 +16,11 @@
 
               <h2>{{"Text_Collectes_Title" | translate}}</h2>
               <h3>{{"Text_Collectes_Subtitle" | translate}}</h3>
-              <section class="collects-pickdate">
-                  <p-calendar inputStyleClass="date-picker-input" [(ngModel)]="dateBegin" (ngModelChange)="onDateBeginChange($event)" showTime="showTime" dateFormat="dd/mm/yy"></p-calendar>
+              <section class="collects-pickdate" id="collectPage">
+                    <p-calendar showIcon="true" inputStyleClass="date-picker-input" [(ngModel)]="dateBegin" (ngModelChange)="onDateBeginChange($event)" showTime="showTime" dateFormat="dd/mm/yy">
+                  </p-calendar>
                   <p class="till">{{"Text_TotEnMet" | translate}}</p>
-                  <p-calendar inputStyleClass="date-picker-input" [(ngModel)]="dateEnd"  (ngModelChange)="onDateEndChange($event)" showTime="showTime" dateFormat="dd/mm/yy"></p-calendar>
+                  <p-calendar showIcon="true" inputStyleClass="date-picker-input" [(ngModel)]="dateEnd"  (ngModelChange)="onDateEndChange($event)" showTime="showTime" dateFormat="dd/mm/yy"></p-calendar>
               </section>
               <button [class.green-button]="SearchButtonGreen" (click)="filterCollect(0);SearchButtonGreen = true;collectId = null;collectName = null;multipleCollectsId = '0'" class="search-collect">{{"Text_Collectes_FilterButton" | translate}}</button>
           </section>

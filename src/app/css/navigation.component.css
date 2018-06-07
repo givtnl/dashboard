@@ -77,12 +77,13 @@ ul.sidebar-nav-bottom li:first-child a {
   border-left: 4px solid #41C98E !important;
 }
 
-.sidebar-nav li:first-child {
-  text-align: center;
+.sidebar-nav li {
+  text-align: left;
   border-left: 4px solid transparent;
 }
-.sidebar-nav li:first-child:hover {
-  border-left: 4px solid transparent !important;
+
+.transparent-border:hover {
+    border-color: transparent;
 }
 
 .sidebar .sidebar-nav li a .sidebar-icon {
