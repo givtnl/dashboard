@@ -146,6 +146,7 @@ export class PayoutComponent implements OnInit{
           let paidDetails = [];
           for(let i = 0; i < allocsCount; i++) {
               let detail =  resp.Details[i];
+              detail.Date = this.datePipe.transform(new Date(detail.Date), "dd-MM-yyyy");
               detail.Status = 1;
               if (detail.Amount !== 0 && detail.Amount > detail.StornoAmount) {
                   detail.Amount = this.displayValue(detail.Amount);
@@ -161,7 +162,6 @@ export class PayoutComponent implements OnInit{
                   paidDetails.push(detail);
               }
           }
-          paidDetails.sort((a, b) => a.Name.localeCompare(b.Name));
 
           let costDetails = [];
           this.translate.get('Stornos').subscribe((res: string) => {
@@ -175,7 +175,6 @@ export class PayoutComponent implements OnInit{
                   costDetails.push(copy);
               }
           });
-          costDetails.sort((a, b) => a.Name.localeCompare(b.Name));
 
           this.childData.details = paidDetails.concat(costDetails);
         });

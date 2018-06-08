@@ -669,6 +669,15 @@ button:disabled{
     display: none;
 }
 
+#collectPage .date-picker-input {
+    width: 80vw;
+    max-width: 320px;
+    background: none;
+}
+#collectPage .date-picker-input:focus {
+    background: none;
+}
+
 @media only screen and (max-width: 480px){
     .collects-list {
         width: unset !important;
@@ -683,8 +692,15 @@ button:disabled{
     .graph-overview tr td:first-child {
         display: none;
     }
+    .section-collects .show-collect {
+        flex-direction: column;
+    }
     .show-collect {
         padding: 0;
+    }
+    .collection-buttons > span {
+        margin-right: unset;
+        white-space: nowrap;
     }
     .back-to-overview {
         display: flex;
@@ -713,6 +729,8 @@ button:disabled{
         box-sizing: border-box;
         margin: 0;
     }
+
+
   .section-collects h2:first-of-type{
     padding-bottom: 0;
   }
@@ -721,10 +739,7 @@ button:disabled{
     max-width: 320px;
     margin: 0 auto;
   }
-  .date-picker-input {
-    width: 80vw;
-    max-width: 320px;
-  }
+
   .collection-buttons > span {
     font-size: 16px;
   }

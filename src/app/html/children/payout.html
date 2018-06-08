@@ -72,16 +72,23 @@
     <table class="collect__table alloc" style="margin-bottom: 0;    border-collapse: collapse;">
       <ng-container *ngFor="let item of childData.details">
         <tr  style="font-family: Avenir_Medium; font-size: 20px;"  [class.red]="item.Status == 0" [class.yellow]="item.Status == 2" *ngIf="item.Amount != 0">
-          <td >{{item.Name}}</td><td style="text-align: right;">{{item.Amount}}</td>
+          <td class="allocation-column-date">
+            <span class="allocation-date">{{item.Date}}</span>
+          </td>
+          <td class="allocation-title">
+            {{item.Name}}
+          </td>
+          <td style="text-align: right;">{{item.Amount}}</td>
         </tr>
       </ng-container>
 
       <tr class="collect__table__footer" style="font-size: 20px;font-family: Avenir_Medium">
-        <td style="text-align:left;" class="special-last-cell" >{{"TermCosts" | translate}} ({{"INCL_BTW" | translate}})</td><td style="text-align:right;" class="special-last-cell" >- {{childData.TotaalKosten}}</td>
+        <td colspan="2" style="text-align:left;" class="special-last-cell" >{{"TermCosts" | translate}} ({{"INCL_BTW" | translate}})</td>
+        <td style="text-align:right;" class="special-last-cell" >- {{childData.TotaalKosten}}</td>
       </tr>
       <tr  style="font-family: Avenir_Black; font-size: 22px;">
-        <td style="text-align:left;">{{"Payout_TotalPayedOut" | translate}}</td><td style="text-align:right;white-space: nowrap;">{{childData.TotalPaidText}}</td>
-
+        <td colspan="2" style="text-align:left;">{{"Payout_TotalPayedOut" | translate}}</td>
+        <td style="text-align:right;white-space: nowrap;">{{childData.TotalPaidText}}</td>
       </tr>
     </table>
 

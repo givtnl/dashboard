@@ -5,7 +5,7 @@
   <div class="global-layout-content">
     <my-titlebar></my-titlebar>
       <div class="global-layout-main">
-          <div class="back-to-overview" *ngIf="isVisible" (click)="isVisible = false">
+          <div class="back-to-overview" *ngIf="isVisible" (click)="isVisible = false; collectId = 0">
               <img style="height: 20px" src="images/left-back.png" alt="">
               <p class="avenir-light font-size-16">
                   {{"Back_To_Overview" | translate}}
@@ -16,10 +16,11 @@
 
               <h2>{{"Text_Collectes_Title" | translate}}</h2>
               <h3>{{"Text_Collectes_Subtitle" | translate}}</h3>
-              <section class="collects-pickdate">
-                  <p-calendar inputStyleClass="date-picker-input" [(ngModel)]="dateBegin" (ngModelChange)="onDateBeginChange($event)" showTime="showTime" dateFormat="dd/mm/yy"></p-calendar>
+              <section class="collects-pickdate" id="collectPage">
+                    <p-calendar showIcon="true" inputStyleClass="date-picker-input" [(ngModel)]="dateBegin" (ngModelChange)="onDateBeginChange($event)" showTime="showTime" dateFormat="dd/mm/yy">
+                  </p-calendar>
                   <p class="till">{{"Text_TotEnMet" | translate}}</p>
-                  <p-calendar inputStyleClass="date-picker-input" [(ngModel)]="dateEnd"  (ngModelChange)="onDateEndChange($event)" showTime="showTime" dateFormat="dd/mm/yy"></p-calendar>
+                  <p-calendar showIcon="true" inputStyleClass="date-picker-input" [(ngModel)]="dateEnd"  (ngModelChange)="onDateEndChange($event)" showTime="showTime" dateFormat="dd/mm/yy"></p-calendar>
               </section>
               <button [class.green-button]="SearchButtonGreen" (click)="filterCollect(0);SearchButtonGreen = true;collectId = null;collectName = null;multipleCollectsId = '0'" class="search-collect">{{"Text_Collectes_FilterButton" | translate}}</button>
           </section>
@@ -100,8 +101,8 @@
                                   <td class="cell-amount">{{ displayValue(infoToProcess.totalAmount) }}</td>
                                   <td class="align-right">
                 <span class="tooltip">
-                  <button class="info-button" (click)="resetInfoButtonsPopovers(); infoButtonShouldHavePopover[0] = true;" (mouseleave)="resetInfoButtonsPopovers()"><img class="" src="/images/blueinfo.png" alt=""></button>
-                  <span class="tooltiptext-alter" [class.tooltiptext--visible]="infoButtonShouldHavePopover[0]">
+                  <button class="info-button"><img class="" src="/images/blueinfo.png" alt=""></button>
+                  <span class="tooltiptext-alter">
                                  {{"ToProcessExplanation" | translate }}
               </span>
                 </span></td>
@@ -114,8 +115,8 @@
                                   <td class="cell-amount">{{ displayValue(infoProcessed.totalAmount) }}</td>
                                   <td class="align-right">
                 <span class="tooltip">
-                  <button class="info-button" (click)="resetInfoButtonsPopovers(); infoButtonShouldHavePopover[1] = true;" (mouseleave)="resetInfoButtonsPopovers()"><img class="" src="/images/blueinfo.png" alt=""></button>
-                  <span class="tooltiptext-alter" [class.tooltiptext--visible]="infoButtonShouldHavePopover[1]">
+                  <button class="info-button"><img class="" src="/images/blueinfo.png" alt=""></button>
+                  <span class="tooltiptext-alter">
                                  {{"ProcessedExplanation" | translate }}
               </span>
                 </span></td>
@@ -128,8 +129,8 @@
                                   <td class="cell-amount">{{ displayValue(infoCancelledByBank.totalAmount) }}</td>
                                   <td class="align-right">
                 <span class="tooltip">
-                  <button class="info-button" (click)="resetInfoButtonsPopovers(); infoButtonShouldHavePopover[2] = true;" (mouseleave)="resetInfoButtonsPopovers()"><img class="" src="/images/blueinfo.png" alt=""></button>
-                  <span class="tooltiptext-alter" [class.tooltiptext--visible]="infoButtonShouldHavePopover[2]">
+                  <button class="info-button"><img class="" src="/images/blueinfo.png" alt=""></button>
+                  <span class="tooltiptext-alter">
                                  {{"CancelByBankExplanation" | translate }}
               </span>
                 </span></td>
@@ -141,9 +142,9 @@
                                   <td>{{ infoCancelledByUser.numberOfUsers }}</td>
                                   <td class="cell-amount">{{ displayValue(infoCancelledByUser.totalAmount) }}</td>
                                   <td class="align-right">
-                <span class="tooltip" (click)="resetInfoButtonsPopovers(); infoButtonShouldHavePopover[3] = true;" (mouseleave)="resetInfoButtonsPopovers()">
+                <span class="tooltip">
                   <button class="info-button"><img class="" src="/images/blueinfo.png" alt=""></button>
-                  <span class="tooltiptext-alter" [class.tooltiptext--visible]="infoButtonShouldHavePopover[3]">
+                  <span class="tooltiptext-alter">
                                  {{"CancelByUserExplanation" | translate }}
               </span>
                 </span></td>

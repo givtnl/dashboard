@@ -148,8 +148,8 @@ export class CollectsComponent implements OnInit{
       //console.log(e);
     }
 
-    public resetInfoButtonsPopovers() {
-      this.infoButtonShouldHavePopover = [false, false, false, false];
+    public resetInfoButtonsPopovers(position: number) {
+    		this.infoButtonShouldHavePopover = [false, false, false, false];
     }
 
 

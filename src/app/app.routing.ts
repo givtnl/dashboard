@@ -14,6 +14,7 @@ import {ForgotPasswordComponent} from "./components/forgotpassword.component";
 import {UnAuthorizeComponent} from "./components/unauthorized.component";
 import { LoggedOutComponent } from 'app/components/loggedout.component';
 import {PartyComponent} from "./components/party.component";
+import {SettingsComponent} from "./components/settings.component";
 const routes: Routes = [
     { path: '', component: LoginComponent, pathMatch: 'full', canActivate: [LoginComponentGuard] },
     { path: 'dashboard', component: DashboardComponent, canActivate: [LoggedInGuard] },
@@ -22,6 +23,7 @@ const routes: Routes = [
   { path: 'payouts', component: PayoutsComponent, canActivate: [LoggedInGuard]},
   { path: 'assign', component: AssignComponent, canActivate: [LoggedInGuard]},
   { path: 'party', component: PartyComponent, canActivate: [LoggedInGuard]},
+  { path: 'settings', component: SettingsComponent, canActivate: [LoggedInGuard]},
     { path: 'mandate', component: MandateComponent, canActivate: [LoggedInGuard, OperationsGuard]},
     { path: 'forgotpassword',  component: ForgotPasswordComponent, canActivate: [LoginComponentGuard] },
     { path: 'unauthorized', component: UnAuthorizeComponent },
