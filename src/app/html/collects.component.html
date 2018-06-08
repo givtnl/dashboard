@@ -5,7 +5,7 @@
   <div class="global-layout-content">
     <my-titlebar></my-titlebar>
       <div class="global-layout-main">
-          <div class="back-to-overview" *ngIf="isVisible" (click)="isVisible = false">
+          <div class="back-to-overview" *ngIf="isVisible" (click)="isVisible = false; collectId = 0">
               <img style="height: 20px" src="images/left-back.png" alt="">
               <p class="avenir-light font-size-16">
                   {{"Back_To_Overview" | translate}}
