@@ -67,6 +67,12 @@
     </li>
     <li>
       <ul class="sidebar-nav-bottom">
+        <li (click)="isSettingsVisible = true" routerLinkActive="active-menu-item">
+          <a routerLink="/settings" >
+            <span class="sidebar-icon"><i class="fas fa-sliders-h"></i></span>
+            <span class="sidebar-title">{{ "Preferences" | translate }}</span>
+          </a>
+        </li>
           <li>
           <a href="https://www.givtapp.net/wp-content/uploads/2017/07/Handleiding_Givt_Dashboard.pdf">
             <span class="sidebar-icon"><i class="fa fa-book"></i></span>
