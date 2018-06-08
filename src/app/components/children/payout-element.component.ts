@@ -162,7 +162,6 @@ export class PayoutComponent implements OnInit{
                   paidDetails.push(detail);
               }
           }
-          paidDetails.sort((a, b) => a.Name.localeCompare(b.Name));
 
           let costDetails = [];
           this.translate.get('Stornos').subscribe((res: string) => {
@@ -176,7 +175,6 @@ export class PayoutComponent implements OnInit{
                   costDetails.push(copy);
               }
           });
-          costDetails.sort((a, b) => a.Name.localeCompare(b.Name));
 
           this.childData.details = paidDetails.concat(costDetails);
         });
