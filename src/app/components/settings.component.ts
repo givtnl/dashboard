@@ -11,6 +11,7 @@ import {LangChangeEvent, TranslateService} from "ng2-translate";
 export class SettingsComponent implements OnInit {
 	private _firstDay: number = 1;
 	private days = [];
+	isSettingsDetailVisible = false;
 	get firstDay(): number {
 		return this._firstDay;
 	}
@@ -43,7 +44,7 @@ export class SettingsComponent implements OnInit {
 		this.days.push(this.translateService.instant("Monday").toString());
 		this.days.push(this.translateService.instant("Tuesday").toString());
 		this.days.push(this.translateService.instant("Wednesday").toString());
-		this.days.push(this.translateService.instant("Tuesday").toString());
+		this.days.push(this.translateService.instant("Thursday").toString());
 		this.days.push(this.translateService.instant("Friday").toString());
 		this.days.push(this.translateService.instant("Saturday").toString());
 	}
