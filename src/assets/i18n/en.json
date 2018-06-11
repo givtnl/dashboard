@@ -136,11 +136,13 @@
     "SetPartyGivt": "Festival gift",
     "Manual": "Manual",
     "Back_To_Overview": "Back to overview",
-    "AverageCard": "Average",
+    "Card_Average": "Average",
     "Zondag": "Sunday",
     "Preferences": "Preferences",
     "FirstDayOfWeek": "First day of the week",
     "SelectPreferenceFromList": "From the tab to your left, you can change your preferences",
     "SetFirstDayOfWeek": "By default, first day of the week is set to Sunday. If you'd like to set an other day, set a different one below.",
-    "FirstDayOfWeekChoice": "First day of the week:"
+    "FirstDayOfWeekChoice": "First day of the week:",
+    "Card_AverageGivers": "Average givers",
+    "Card_Weekly": "weekly"
 }
