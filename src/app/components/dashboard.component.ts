@@ -29,6 +29,7 @@ export class DashboardComponent implements OnInit, OnDestroy{
     lastSundayCard: Card = new Card();
     thisMonthCard: Card = new Card();
     thisMonthGiversCard: Card = new Card();
+    averageGiversCard: Card = new Card();
     isSafari: boolean;
     translate: TranslateService;
 
@@ -60,9 +61,11 @@ export class DashboardComponent implements OnInit, OnDestroy{
             this.fetchThisMonthGivts();
             this.fetchThisMonthGivers();
             this.fetchLastDayGivts();
-            if (this.ShowLoadingAnimation)
+
+          if (this.ShowLoadingAnimation)
                 this.ShowLoadingAnimation = false;
         }, 3000);
+      this.fetchAverageGivers();
     }
 
     fetchThisMonthGivers(){
@@ -85,7 +88,7 @@ export class DashboardComponent implements OnInit, OnDestroy{
             {
                 this.thisMonthGiversCard.value = "<span class='fat-emphasis'>" + resp + "</span>";
                 this.translate.get("Text_Givers").subscribe(value => { this.thisMonthGiversCard.title = value;});
-                this.thisMonthGiversCard.subtitle = this.datePipe.transform(date, 'MMMM yyyy');
+                this.thisMonthGiversCard.subtitle = new Date().toLocaleDateString(navigator.language, { year: 'numeric', month: 'long'});
                 this.translate.get("Text_GiversLowercase").subscribe(value => { this.thisMonthGiversCard.footer = value;});
                 let cardIsInCards = false;
                 for(let i in this.cards){
@@ -98,6 +101,26 @@ export class DashboardComponent implements OnInit, OnDestroy{
                 }
 
             });
+    }
+
+    fetchAverageGivers(){
+      return this.apiService.getData("v2/collectgroups/"+this.userService.CurrentCollectGroup.GUID+"/cards/user-average")
+        .then(resp =>
+        {
+          this.averageGiversCard.value = "<span class='fat-emphasis'>" + resp + "</span>";
+          //this.averageGiversCard.subtitle = new Date().toLocaleDateString(navigator.language, { year: 'numeric', month: 'long'});
+          this.translate.get("Card_AverageGivers").subscribe(value => { this.averageGiversCard.title = value;});
+          this.translate.get("Card_Weekly").subscribe(value => { this.averageGiversCard.footer = value;});
+          let cardIsInCards = false;
+          for(let i in this.cards){
+            if(this.cards[i].title === this.averageGiversCard.title){
+              cardIsInCards = true;
+            }
+          }
+          if(!cardIsInCards){
+            this.cards.push(this.averageGiversCard);
+          }
+        });
     }
 
     fetchThisMonthGivts(){
@@ -115,20 +138,23 @@ export class DashboardComponent implements OnInit, OnDestroy{
         let dateEnd = new Date(sprintf("%4i-%02i-01T00:00:00.000%s", secondYear, nextMonth, this.datePipe.getLocalTimeZoneISOString()));
         let params = "DateBegin=" + this.datePipe.toISODateUTC(new Date(dateBegin)) + "&DateEnd=" + this.datePipe.toISODateUTC(new Date(dateEnd));
 
-        return this.apiService.getData("Cards/Givts/?"+params)
+
+
+
+      return this.apiService.getData("Cards/Givts/?"+params)
             .then(resp =>
             {
                 if(resp){
                     let collectSum = resp.TotalAmount;
                     let average = 0;
                     if(collectSum != 0){
-                        average = collectSum / resp.TransactionCount;        
+                        average = collectSum / resp.TransactionCount;
                     }
                     this.thisMonthCard.value = this.euro + "<span class='fat-emphasis'>" + (this.isSafari ? collectSum.toFixed(2) : collectSum.toLocaleString(navigator.language,{minimumFractionDigits: 2})) + "</span>";
                     this.translate.get("Text_ThisMonth").subscribe(value => { this.thisMonthCard.title = value;});
                     this.translate.get("Text_Given").subscribe(value => { this.thisMonthCard.footer = value;});
-                    this.thisMonthCard.subtitle = this.datePipe.transform(date, 'MMMM yyyy');
-                    this.translate.get("AverageCard").subscribe(value => { this.thisMonthCard.average = value + " " + this.euro + " " + average.toLocaleString(navigator.language,{minimumFractionDigits: 2, maximumFractionDigits: 2}) });
+                    this.thisMonthCard.subtitle = new Date().toLocaleDateString(navigator.language, { year: 'numeric', month: 'long'});
+                    this.translate.get("Card_Average").subscribe(value => { this.thisMonthCard.average = value + " " + this.euro + " " + average.toLocaleString(navigator.language,{minimumFractionDigits: 2, maximumFractionDigits: 2}) });
                     let cardIsInCards = false;
                     for(let i in this.cards){
                         if(this.cards[i].title === this.thisMonthCard.title){
@@ -165,14 +191,14 @@ export class DashboardComponent implements OnInit, OnDestroy{
                 let collectSum = highest.Sum;
                 let average = 0;
                 if(collectSum != 0){
-                    average = collectSum / highest.Count;        
+                    average = collectSum / highest.Count;
                 }
                 this.lastSundaySum = collectSum;
                 this.lastSundayCard.value = this.euro+ "<span class='fat-emphasis'>" + (this.isSafari ? collectSum.toFixed(2) : collectSum.toLocaleString(navigator.language,{minimumFractionDigits: 2})) + "</span>";
                 this.translate.get(this.daysOfWeek[displayDate.getDay()]).subscribe(value => { this.lastSundayCard.title = value;});
                 this.translate.get("Text_Given").subscribe(value => { this.lastSundayCard.footer = value;});
-                this.lastSundayCard.subtitle = this.datePipe.transform(displayDate, 'dd-MM-yyyy');
-                this.translate.get("AverageCard").subscribe(value => { this.lastSundayCard.average = value + " " + this.euro + " " + average.toLocaleString(navigator.language,{minimumFractionDigits: 2, maximumFractionDigits: 2}); });
+                this.lastSundayCard.subtitle = new Date().toLocaleDateString(navigator.language, { day:'numeric', year: 'numeric', month: 'long'});
+                this.translate.get("Card_Average").subscribe(value => { this.lastSundayCard.average = value + " " + this.euro + " " + average.toLocaleString(navigator.language,{minimumFractionDigits: 2, maximumFractionDigits: 2}); });
                 let cardIsInCards = false;
                 for(let i in this.cards){
                     if(this.cards[i].title === this.lastSundayCard.title){
@@ -183,6 +209,6 @@ export class DashboardComponent implements OnInit, OnDestroy{
                     this.cards.push(this.lastSundayCard);
                 }
             });
-            
+
     }
 }
