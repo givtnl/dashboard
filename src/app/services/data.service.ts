@@ -53,7 +53,14 @@ export class DataService {
 			sessionStorage.setItem('payoutDateBegin', payoutDateBegin);
 			sessionStorage.setItem('payoutDateEnd', payoutDateEnd);
 		}
+
+		//don't delete first Day Of Week
+		let firstDayOfWeek = localStorage.getItem("FirstDayOfWeek");
         localStorage.clear();
+
+        if(firstDayOfWeek && !isNaN(Number(firstDayOfWeek))) {
+        	localStorage.setItem("FirstDayOfWeek", firstDayOfWeek);
+        }
     }
 
     removeOne (key: string) {
