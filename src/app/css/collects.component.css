@@ -682,6 +682,9 @@ button:disabled{
     .collects-list {
         width: unset !important;
     }
+    #collectPage .date-picker-input {
+        max-width: calc(320px - 2em);
+    }
     .collection-buttons {
         width: 100%;
         justify-content: space-between;
