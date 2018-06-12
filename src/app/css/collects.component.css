@@ -687,7 +687,6 @@ button:disabled{
     }
     .collection-buttons {
         width: 100%;
-        justify-content: space-between;
     }
     .rectangle {
         display: none !important;
@@ -745,6 +744,7 @@ button:disabled{
 
   .collection-buttons > span {
     font-size: 16px;
+      flex-grow: 1;
   }
   input[name=bjorn]{
     margin-bottom: 10px;
