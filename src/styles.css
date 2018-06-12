@@ -617,6 +617,11 @@ p-schedule button
     box-sizing: border-box;
 }
 
+my-navigation {
+    flex-shrink: 0;
+}
+
+
 .bottom-flex {
   margin-bottom: auto !important;
 }
@@ -627,6 +632,9 @@ p-schedule button
     }
     my-titlebar {
         position: unset;
+    }
+    .mobile-width-100pct {
+        width: 100%;
     }
 }
 

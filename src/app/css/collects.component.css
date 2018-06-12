@@ -679,6 +679,9 @@ button:disabled{
 }
 
 @media only screen and (max-width: 480px){
+    .input-collect-title {
+        justify-content: unset;
+    }
     .collects-list {
         width: unset !important;
     }
@@ -752,7 +755,6 @@ button:disabled{
   .choose_collecte {
     display: flex;
     flex: auto;
-    justify-content:  space-between;
     margin-bottom: 10px;
     margin-top: 10px;
   }
@@ -764,6 +766,7 @@ button:disabled{
   }
   .choose_collecte span:first-of-type {
     margin-top: 8px;
+      flex-grow: 1;
   }
   .search-collect {
     margin-top: 20px;
