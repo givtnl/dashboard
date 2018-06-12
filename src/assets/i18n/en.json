@@ -144,5 +144,6 @@
     "SetFirstDayOfWeek": "By default, first day of the week is set to Sunday. If you'd like to set an other day, set a different one below.",
     "FirstDayOfWeekChoice": "First day of the week:",
     "Card_AverageGivers": "Average number of givers",
-    "Card_Weekly": "weekly"
+    "Card_Weekly": "weekly",
+    "LastCollectDay": "Last collection"
 }

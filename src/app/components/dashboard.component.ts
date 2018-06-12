@@ -195,9 +195,12 @@ export class DashboardComponent implements OnInit, OnDestroy{
                 }
                 this.lastSundaySum = collectSum;
                 this.lastSundayCard.value = this.euro+ "<span class='fat-emphasis'>" + (this.isSafari ? collectSum.toFixed(2) : collectSum.toLocaleString(navigator.language,{minimumFractionDigits: 2})) + "</span>";
-                this.translate.get(this.daysOfWeek[displayDate.getDay()]).subscribe(value => { this.lastSundayCard.title = value;});
                 this.translate.get("Text_Given").subscribe(value => { this.lastSundayCard.footer = value;});
-                this.lastSundayCard.subtitle = new Date().toLocaleDateString(navigator.language, { day:'numeric', year: 'numeric', month: 'long'});
+                this.translate.get(["LastCollectDay",this.daysOfWeek[displayDate.getDay()]]).subscribe(val => {
+	                this.lastSundayCard.title = val["LastCollectDay"];
+	                this.lastSundayCard.subtitle = val[this.daysOfWeek[displayDate.getDay()]] + " " + new Date().toLocaleDateString(navigator.language, { day:'numeric', year: 'numeric', month: 'long'});
+                });
+                this.translate.get("LastCollectDay",this.daysOfWeek[displayDate.getDay()]).subscribe(value => { console.log(value) });
                 this.translate.get("Card_Average").subscribe(value => { this.lastSundayCard.average = value + " " + this.euro + " " + average.toLocaleString(navigator.language,{minimumFractionDigits: 2, maximumFractionDigits: 2}); });
                 let cardIsInCards = false;
                 for(let i in this.cards){

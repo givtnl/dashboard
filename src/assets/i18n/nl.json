@@ -144,5 +144,6 @@
     "SetFirstDayOfWeek": "Standaard is zondag als eerste dag van de week geselecteerd. Als je liever een andere dag instelt, kun je dat hieronder doen.",
     "FirstDayOfWeekChoice": "Eerste dag van de week:",
     "Card_AverageGivers": "Gemiddeld aantal gevers",
-    "Card_Weekly": "per week"
+    "Card_Weekly": "per week",
+    "LastCollectDay": "Laatste collecte"
 }
