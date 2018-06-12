@@ -47,7 +47,7 @@ export class AssignComponent implements OnInit {
   startTime: Date;
   endTime: Date;
   oldJsEvent: any;
-  private firstDay: number = 1;
+  private firstDay: number = 0;
 
   get allowButton(): boolean {
     if(this.firstCollection.amountOfGivts > 0 && this.firstCollection.allocated == false)
@@ -117,11 +117,8 @@ export class AssignComponent implements OnInit {
   }
 
   ngOnInit(): void {
-	  let firstDayFromStorage = this.dataService.getData("FirstDayOfWeek");
-	  if(!isNaN(this.firstDay)) {
-		  this.firstDay = firstDayFromStorage
-	  }
-
+  	let firstDayFromStorage = this.dataService.getData("FirstDayOfWeek");
+	this.firstDay = !isNaN(firstDayFromStorage) ? firstDayFromStorage : 0;
     this.events = [];
     this.headerConfig = {
       left: 'prev,next today',

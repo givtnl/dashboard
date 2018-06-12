@@ -9,7 +9,7 @@ import {LangChangeEvent, TranslateService} from "ng2-translate";
 })
 
 export class SettingsComponent implements OnInit {
-	private _firstDay: number = 1;
+	private _firstDay: number = 0;
 	private days = [];
 	isSettingsDetailVisible = false;
 	get firstDay(): number {
@@ -18,7 +18,7 @@ export class SettingsComponent implements OnInit {
 
 	set firstDay(value: number) {
 		this._firstDay = value;
-		this.dataService.writeData("FirstDayOfWeek", value);
+		this.dataService.writeData("FirstDayOfWeek", value, true);
 	}
 
 	ngOnInit() {
