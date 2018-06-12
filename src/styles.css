@@ -110,7 +110,7 @@ my-collects{
 my-titlebar {
   position: sticky;
   display: block;
-  top: 1;
+  top: 0;
   z-index: 99;
 }
 my-footer {
@@ -622,11 +622,11 @@ p-schedule button
 }
 
 @media only screen and (max-width : 480px) {
-  body {
-    margin-bottom: 60px;
-  }
     .global-layout {
         height: calc(100vh - 52px); /* viewport height - nav bar */
+    }
+    my-titlebar {
+        position: unset;
     }
 }
 
