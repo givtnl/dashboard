@@ -6,11 +6,6 @@ a {
     color: #2E2957;
     text-decoration: none;
 }
-
-a:hover{
-    font-family: "Avenir_Heavy";
-}
-
 .floating-settings-icon {
     display: none;
 }
@@ -44,7 +39,6 @@ a:hover{
     position: fixed;
     bottom: 0;
     z-index: 2000;
-    justify-content: space-around;
   }
   footer a {
       color:white;
@@ -53,6 +47,12 @@ a:hover{
       flex-direction: column;
       align-self: center;
       font-size: 0.8em;
+      flex-grow: 1;
+      height: 100%;
+      justify-content: center;
+  }
+  footer a.active {
+      background: #5A5387;
   }
 }
 
