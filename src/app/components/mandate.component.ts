@@ -242,6 +242,8 @@ export class MandateComponent implements OnInit {
                         this.selectedOrganisation.status = "Kerk";
                     } else if (status.indexOf("Stichting") > -1) {
                         this.selectedOrganisation.status = "Stichting";
+                    } else if (status.indexOf("Artiest") > -1) {
+                        this.selectedOrganisation.status = "Artiest";
                     }
 
                 }).catch(err => {
@@ -267,6 +269,8 @@ export class MandateComponent implements OnInit {
                 this.selectedOrganisation.status = "Kerk";
             } else if (this.selectedOrganisation.status.indexOf("Stichting") > -1) {
                 this.selectedOrganisation.status = "Stichting";
+            } else if (this.selectedOrganisation.status.indexOf("Artiest") > -1) {
+                this.selectedOrganisation.status = "Artiest";
             } else {
                 this.selectedOrganisation.status = "";
             }
