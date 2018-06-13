@@ -11,7 +11,7 @@ import {LangChangeEvent, TranslateService} from "ng2-translate";
 export class SettingsComponent implements OnInit {
 	private _firstDay: number = 0;
 	private days = [];
-	isSettingsDetailVisible = false;
+	public isSettingsDetailVisible = false;
 	get firstDay(): number {
 		return this._firstDay;
 	}
