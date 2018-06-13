@@ -565,8 +565,8 @@ p-schedule button
 
 .ui-widget-header .ui-state-highlight, .ui-widget-content .ui-state-highlight, .ui-state-highlight{
   background-color: white;
-  border-width:2px;
-  border-color: #2E2957;
+  border-width:0px;
+  border-color: transparent;
 }
 
 .fc-agenda-view .fc-day-grid .fc-row{
@@ -642,6 +642,11 @@ my-navigation {
     }
     .mobile-width-100pct {
         width: 100%;
+    }
+    .loading-wrapper {
+        position: fixed;
+        top: calc(50% - 100px);
+        left: calc(50% - 50px);
     }
 }
 

@@ -163,6 +163,7 @@ export class AssignComponent implements OnInit {
 		this.fillData(event);
 		this.openDialog();
     }.bind(this);
+    this.options['nowIndicator'] = false;
     this.options['firstDay'] = this.firstDay;
     this.options['slotDuration'] = '00:30:00';
     this.options['timezone'] = 'local';

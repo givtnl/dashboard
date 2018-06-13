@@ -61,11 +61,11 @@ export class DashboardComponent implements OnInit, OnDestroy{
             this.fetchThisMonthGivts();
             this.fetchThisMonthGivers();
             this.fetchLastDayGivts();
-
+	        this.fetchAverageGivers();
           if (this.ShowLoadingAnimation)
                 this.ShowLoadingAnimation = false;
         }, 3000);
-      this.fetchAverageGivers();
+
     }
 
     fetchThisMonthGivers(){
