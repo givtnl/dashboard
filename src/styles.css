@@ -627,8 +627,15 @@ my-navigation {
 }
 
 @media only screen and (max-width : 480px) {
+    body {
+        height: unset;
+        padding-bottom: 52px;
+    }
     .global-layout {
-        height: calc(100vh - 52px); /* viewport height - nav bar */
+        height: 100%;
+    }
+    .body-container {
+        height: unset;
     }
     my-titlebar {
         position: unset;
