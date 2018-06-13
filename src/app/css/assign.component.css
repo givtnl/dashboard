@@ -690,9 +690,8 @@ h3{
 
 .sidebar-collection-popup {
     margin-top: 208px;
-    top: 20px;
+    top: 50px;
     position: sticky;
-    position: -webkit-sticky;
 }
 
 @media only screen and (max-width : 1366px) {
