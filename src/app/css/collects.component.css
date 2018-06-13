@@ -625,6 +625,7 @@ button:disabled{
 .graph-overview tr .cell-amount {
   text-align: right;
   white-space: nowrap;
+  padding-left: 20px;
 }
 
 .graph {
