@@ -692,11 +692,14 @@ h3{
     margin-top: 208px;
     top: 50px;
     position: sticky;
+    margin-bottom: -1000px;
+
 }
 
 @media only screen and (max-width : 1366px) {
     .sidebar-collection {
         padding-left: 20px;
+
     }
 }
 
