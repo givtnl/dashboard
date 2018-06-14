@@ -193,7 +193,6 @@ export class PayoutComponent implements OnInit{
               this.loader["show"] = false;
                 var csvContent = "data:text/csv;charset=utf-8,";
                 csvContent += resp;
-
                 var encodedUri = encodeURI(csvContent);
                 var link = document.createElement("a");
                 link.setAttribute("href", encodedUri);
@@ -202,9 +201,14 @@ export class PayoutComponent implements OnInit{
 
                 let fileName = this.userService.CurrentCollectGroup.Name + " - " + beginDate + " - " + endDate + ".csv";
                 link.setAttribute("download", fileName);
+                link.setAttribute("target","_blank");
                 document.body.appendChild(link); // Required for FF
-
-                link.click(); // This will download the data file named "my_data.csv".
+	            if (window.navigator.msSaveOrOpenBlob && navigator.userAgent.match(/Edge/g)) { // for IE and Edge
+		            var csvData = new Blob([csvContent],{type: "text/csv;charset=utf-8;"});
+		            window.navigator.msSaveBlob(csvData, fileName);
+	            } else {
+		            link.click(); // This will download the data file named "my_data.csv".
+	            }
             });
     }
 }

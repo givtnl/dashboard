@@ -107,7 +107,12 @@ export class PayoutsComponent implements OnInit{
           link.setAttribute("download", fileName);
           document.body.appendChild(link); // Required for FF
 
-          link.click(); // This will download the data file named "my_data.csv".
+	        if (window.navigator.msSaveOrOpenBlob && navigator.userAgent.match(/Edge/g)) { // for IE and Edge
+		        var csvData = new Blob([resp],{type: "text/csv;charset=utf-8;"});
+		        window.navigator.msSaveBlob(csvData, fileName);
+	        } else {
+		        link.click(); // This will download the data file named "my_data.csv".
+	        }
         });
     }
 
