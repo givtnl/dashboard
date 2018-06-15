@@ -94,7 +94,10 @@ export class PayoutsComponent implements OnInit{
         .then(resp =>
         {
           this.loader["show"] = false;
-          var csvContent = "data:text/csv;charset=utf-8,";
+          var csvContent = "";
+          if(!navigator.userAgent.match(/Edge/g)){
+            csvContent += "data:text/csv;charset=utf-8,";
+          }
           csvContent += resp;
 
           var encodedUri = encodeURI(csvContent);
