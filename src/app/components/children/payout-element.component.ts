@@ -183,35 +183,36 @@ export class PayoutComponent implements OnInit{
 
   exportCSV() {
     this.loader["show"] = true;
-        let start = this.datePipe.toISODateUTC(this.dtBegin);
-        let end = this.datePipe.toISODateUTC(this.dtEnd);
+    let start = this.datePipe.toISODateUTC(this.dtBegin);
+    let end = this.datePipe.toISODateUTC(this.dtEnd);
 
-        let apiUrl = 'Payments/CSV?dtBegin=' + start + '&dtEnd=' + end;
-        this.apiClient.getData(apiUrl)
-            .then(resp =>
-            {
-              this.loader["show"] = false;
-                var csvContent = "";
-                if(!navigator.userAgent.match(/Edge/g)){
-                    csvContent += "data:text/csv;charset=utf-8,";
-                }
-                csvContent += resp;
-                var encodedUri = encodeURI(csvContent);
-                var link = document.createElement("a");
-                link.setAttribute("href", encodedUri);
-                let beginDate = this.datePipe.transform(this.dtBegin, "dd-MM-yyyy");
-                let endDate = this.datePipe.transform(this.dtEnd, "dd-MM-yyyy");
+    let apiUrl = 'Payments/CSV?dtBegin=' + start + '&dtEnd=' + end;
+    this.apiClient.getData(apiUrl)
+      .then(resp =>
+      {
+        this.loader["show"] = false;
+        var csvContent = "";
+        if(!navigator.userAgent.match(/Edge/g)){
+          csvContent += "data:text/csv;charset=utf-8,";
+        }
+        csvContent += resp;
 
-                let fileName = this.userService.CurrentCollectGroup.Name + " - " + beginDate + " - " + endDate + ".csv";
-                link.setAttribute("download", fileName);
-                link.setAttribute("target","_blank");
-                document.body.appendChild(link); // Required for FF
-	            if (window.navigator.msSaveOrOpenBlob && navigator.userAgent.match(/Edge/g)) { // for IE and Edge
-		            var csvData = new Blob([csvContent],{type: "text/csv;charset=utf-8;"});
-		            window.navigator.msSaveBlob(csvData, fileName);
-	            } else {
-		            link.click(); // This will download the data file named "my_data.csv".
-	            }
-            });
-    }
+        var encodedUri = encodeURI(csvContent);
+        var link = document.createElement("a");
+        link.setAttribute("href", encodedUri);
+        let beginDate = this.datePipe.transform(new Date(this.dtBegin), "dd-MM-yyyy");
+        let endDate = this.datePipe.transform(new Date(this.dtEnd), "dd-MM-yyyy");
+
+        let fileName = this.userService.CurrentCollectGroup.Name + " - " + beginDate + " - " + endDate + ".csv";
+        link.setAttribute("download", fileName);
+        document.body.appendChild(link); // Required for FF
+
+        if (window.navigator.msSaveOrOpenBlob && navigator.userAgent.match(/Edge/g)) { // for IE and Edge
+          var csvData = new Blob([resp],{type: "text/csv;charset=utf-8;"});
+          window.navigator.msSaveBlob(csvData, fileName);
+        } else {
+          link.click(); // This will download the data file named "my_data.csv".
+        }
+      });
+  }
 }
