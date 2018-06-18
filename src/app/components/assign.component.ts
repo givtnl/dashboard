@@ -493,6 +493,8 @@ export class AssignComponent implements OnInit {
     }
 
     for(let i = 0; i < buckets.length; i++) {
+    	//todo: DETERMINE WHETHER OR NOT TO SEE ENABLED OR DISABLED ALLOCATION
+	    //use className = allocation-disabled when disabled.
       let event = new MyEvent();
       event.id = buckets[i].allocationId;
       event.title = buckets[i].allocationName;

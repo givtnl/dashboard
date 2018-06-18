@@ -504,6 +504,10 @@ p-schedule button
     left: 5% !important;
 }
 
+.allocation-disabled {
+    background-color: #918FA6 !important;
+}
+
 .allocation, .money {
   border: 1px solid #FEFEFE !important;
   display: flex !important;
