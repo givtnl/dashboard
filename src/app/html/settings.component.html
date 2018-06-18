@@ -41,7 +41,7 @@
                     </li>
                 </ul>
             </div>
-            <div (click)="goBackToSettings()" class="only-show-on-mobile go-back" style="">
+            <div *ngIf="isSettingsDetailVisible" (click)="goBackToSettings()" class="only-show-on-mobile go-back" style="">
                     <span style="display: flex;transform: scaleX(-1);">
                     <svg width="11px" height="19px" viewBox="0 0 11 19" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                         <!-- Generator: Sketch 50 (54983) - http://www.bohemiancoding.com/sketch -->
