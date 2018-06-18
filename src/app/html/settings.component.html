@@ -18,7 +18,7 @@
                         </g>
                     </svg>
                 </span>
-                    <p style="margin:0;">Terug naar vorige pagina</p>
+                    <p style="margin:0;">{{ "BackToPreviousPage" | translate }}</p>
                 </div>
 
                 <ul class="settings-list">
@@ -54,7 +54,7 @@
                         </g>
                     </svg>
                 </span>
-                <p style="margin:0;">Terug naar instellingen</p>
+                <p style="margin:0;">{{ "BackToSettings" | translate }}</p>
             </div>
             <div class="setting" *ngIf="!isSettingsDetailVisible" [class.settings-pane-hidden]="!isSettingsDetailVisible">
                 <p class="text">{{ "SelectPreferenceFromList" | translate }}</p>
