@@ -90,6 +90,9 @@
 }
 
 .go-back {
+    color: white;
+    box-sizing: border-box;
+    font-family: Avenir_Light;
     cursor:pointer;padding: 20px;display: flex;align-items: center;justify-content: space-between;
     background-color: #4D98CF;
 }
@@ -97,7 +100,14 @@
     background-color: #246AB1;
 }
 
+.only-show-on-mobile {
+    display: none;
+}
+
 @media only screen and (max-width : 480px) {
+    .only-show-on-mobile {
+        display: flex;
+    }
     .go-back p {
         margin: 0 auto !important;
     }

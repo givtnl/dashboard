@@ -53,4 +53,8 @@ export class SettingsComponent implements OnInit {
 		window.history.back();
 	}
 
+	goBackToSettings() {
+		this.isSettingsDetailVisible = false;
+	}
+
 }
