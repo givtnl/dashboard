@@ -49,4 +49,8 @@ export class SettingsComponent implements OnInit {
 		this.days.push(this.translateService.instant("Saturday").toString());
 	}
 
+	goBack() {
+		window.history.back();
+	}
+
 }

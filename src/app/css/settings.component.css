@@ -89,7 +89,18 @@
     flex-direction: row;
 }
 
+.go-back {
+    cursor:pointer;padding: 20px;display: flex;align-items: center;justify-content: space-between;
+    background-color: #4D98CF;
+}
+.go-back:hover {
+    background-color: #246AB1;
+}
+
 @media only screen and (max-width : 480px) {
+    .go-back p {
+        margin: 0 auto !important;
+    }
     .column-wrapper {
         grid-template-columns: auto;
     }
