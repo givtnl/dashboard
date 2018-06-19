@@ -167,18 +167,18 @@
           <div class="mobile-calendar__header">
               <span class="mobile-calendar__header-navigation" (click)="prevPeriod()">
                    <span class="mobile-calendar__arrow mobile-calendar__arrow--left"></span>
-                  Vorige week
+                    {{"PreviousWeek" | translate}}
               </span>
               <span class="mobile-calendar__header-title">{{ this.currentViewStart  | date:'d' }} - {{ this.currentViewEnd  | date:'d MMMM' }}</span>
               <span class="mobile-calendar__header-navigation" (click)="nextPeriod()">
-                  Volgende week
+                  {{"NextWeek" | translate}}
                   <span class="mobile-calendar__arrow mobile-calendar__arrow--right"></span>
 
               </span>
           </div>
           <div class="mobile-calendar__body">
               <div *ngIf="this.events.length == 0 && !isLoading">
-                  <p class="light lightpurple" style="text-align: center">Er zijn geen toewijzingen beschikbaar voor deze week.</p>
+                  <p class="light lightpurple" style="text-align: center">{{"NoAllocationsAvailable" | translate }}</p>
               </div>
               <table class="mobile-calendar__table" cellspacing="0" cellpadding="0">
 
@@ -189,7 +189,7 @@
                                 {{ event.start | date:'d' }}
                               </span>
                           </td>
-                          <td class="mobile-calendar__period">Van {{ event.start | date:'H:mm' }} tot {{ event.end | date:'H:mm' }}</td>
+                          <td class="mobile-calendar__period">{{"From" | translate}} {{ event.start | date:'H:mm' }} {{"To"|translate}} {{ event.end | date:'H:mm' }}</td>
                           <td class="">
                               <span class="mobile-calendar__status mobile-calendar__status--ok" *ngIf="event.allocated"></span>
                               <span class="mobile-calendar__status mobile-calendar__status--nok" *ngIf="!event.allocated"></span>
