@@ -128,7 +128,6 @@ export class AssignComponent implements OnInit {
     };
     this.options['viewRender'] = function(view, element) {
       this.isMonthView = view["type"] === "month";
-      console.log(view);
       this.currentViewStart = view.start['_d'].toISOString();
       this.currentViewEnd = view.end['_d'].toISOString();
       this.events.length = 0;
@@ -401,7 +400,6 @@ export class AssignComponent implements OnInit {
 	isLoading: boolean = false;
 
   checkAllocations(){
-  	console.log(this.events);
     let apiUrl = 'Allocations/AllocationCheck';
     if(this.currentViewStart !== null && this.currentViewEnd !== null){
       apiUrl += "?dtBegin=" + this.currentViewStart + "&dtEnd=" + this.currentViewEnd;
@@ -411,7 +409,6 @@ export class AssignComponent implements OnInit {
     this.apiService.getData(apiUrl)
       .then(resp => {
       	this.isLoading = false;
-      	console.log(resp);
         this.allGivts = resp;
 
         this.openGivts = resp.filter((ts) => {
@@ -430,7 +427,6 @@ export class AssignComponent implements OnInit {
         this.events.sort(function(a,b) {
         	return a.start.getTime() - b.end.getTime()
         });
-        console.log(this.events);
       });
   }
 
@@ -469,7 +465,6 @@ export class AssignComponent implements OnInit {
     }
     Promise.all(promises.map(p => p.catch(e => e)))
       .then(results => {
-        console.log(results);
         let promisesWithResults = results.filter((e) => e != undefined);
         if(promisesWithResults.length == promises.length) {
           //all went good
@@ -500,21 +495,16 @@ export class AssignComponent implements OnInit {
     let buckets: Bucket[] = [];
 
     let noFixed = this.allocatedGivts.filter((ts) => ts.Fixed == null);
-    console.log(noFixed);
     for(let x = 0; x < noFixed.length; x++) {
       let startTime = new Date(noFixed[x]['dtBegin']);
       let endTime = new Date(noFixed[x]['dtEnd']);
       noFixed[x]['dtBegin'] = startTime;
       noFixed[x]['dtEnd'] = endTime;
       let filteredBuckets = buckets.filter((b) => b.startTime.getTime() == noFixed[x]['dtBegin'].getTime() && b.endTime.getTime() == noFixed[x]['dtEnd'].getTime());
-      console.log(filteredBuckets);
       if(filteredBuckets.length == 0) {
-	      console.log(filteredBuckets);
-	      console.log(noFixed[x]);
         //transaction does not fit into bucket
         //create new bucket and add to array
         let newBucket = new Bucket();
-        console.log(startTime);
 
         newBucket.startTime = startTime;
         newBucket.endTime = endTime;
@@ -527,7 +517,6 @@ export class AssignComponent implements OnInit {
       let currentBucket = buckets.filter((b) => b.startTime.getTime() == noFixed[x]['dtBegin'].getTime() && b.endTime.getTime() ==noFixed[x]['dtEnd'].getTime())[0];
       currentBucket.transactions.push(noFixed[x]);
     }
-	console.log(buckets);
     for(let i = 0; i < buckets.length; i++) {
     	//todo: DETERMINE WHETHER OR NOT TO SEE ENABLED OR DISABLED ALLOCATION
 	    //use className = allocation-disabled when disabled.
@@ -540,7 +529,6 @@ export class AssignComponent implements OnInit {
       event.allocated = true;
       event.amount = null;
       event.transactions = buckets[i].transactions;
-      console.log(event);
       this.events.push(event);
     }
 
@@ -663,8 +651,6 @@ export class AssignComponent implements OnInit {
       event.transactions = buckets;
       this.events.push(event);
     }
-    console.log("...");
-    console.log(this.events);
   }
 
   resetAll(reload: boolean = true){
