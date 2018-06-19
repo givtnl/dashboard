@@ -147,5 +147,8 @@
     "Card_Weekly": "weekly",
     "LastCollectDay": "Last collection",
     "BackToSettings": "Back to preferences",
-    "BackToPreviousPage": "Back to previous page"
+    "BackToPreviousPage": "Back to previous page",
+    "NoAllocationsAvailable": "No allocations are available for this week.",
+    "PreviousWeek": "Previous week",
+    "NextWeek": "Next week"
 }
