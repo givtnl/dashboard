@@ -716,6 +716,10 @@ h3{
         background: white;
     }
 
+    .incasso-state-table {
+        min-width: 100%;
+    }
+
     .assign__button {
         padding: 0 10px;
     }
