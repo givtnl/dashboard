@@ -147,5 +147,8 @@
     "Card_Weekly": "per week",
     "LastCollectDay": "Laatste collecte",
     "BackToSettings": "Terug naar voorkeuren",
-    "BackToPreviousPage": "Terug naar vorige pagina"
+    "BackToPreviousPage": "Terug naar vorige pagina",
+    "NoAllocationsAvailable": "Er zijn geen toewijzingen beschikbaar voor deze week.",
+    "PreviousWeek": "Vorige week",
+    "NextWeek": "Volgende week"
 }
