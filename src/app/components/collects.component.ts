@@ -225,8 +225,8 @@ export class CollectsComponent implements OnInit{
 
                     let start = this.savedCollects[i].BeginDate;
                     let end = this.savedCollects[i].EndDate;
-                    this.savedCollects[i].BeginDateString = start.toLocaleDateString(navigator.language, { year: 'numeric', month: 'long'}) + " " + this.datePipe.transform(start, 'shortTime');
-                    this.savedCollects[i].EndDateString = end.toLocaleDateString(navigator.language, { year: 'numeric', month: 'long'}) + " " + this.datePipe.transform(end, 'shortTime');
+                    this.savedCollects[i].BeginDateString = start.toLocaleDateString(navigator.language, { day: "numeric", year: 'numeric', month: 'long'}) + " " + this.datePipe.transform(start, 'shortTime');
+                    this.savedCollects[i].EndDateString = end.toLocaleDateString(navigator.language, { day: "numeric", year: 'numeric', month: 'long'}) + " " + this.datePipe.transform(end, 'shortTime');
                     if(this.savedCollects[i].CollectId) {
                         this.savedCollects[i].MultipleCollects = true;
                     } else {
