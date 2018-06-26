@@ -22,6 +22,7 @@ export class SettingsComponent implements OnInit {
 	}
 
 	ngOnInit() {
+		window.scrollTo(0,0);
 		console.log("init settings");
 		let localDay = this.dataService.getData("FirstDayOfWeek");
 		if(!isNaN(localDay)) {
