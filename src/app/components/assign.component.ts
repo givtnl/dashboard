@@ -49,6 +49,7 @@ export class AssignComponent implements OnInit {
   oldJsEvent: any;
   openedMobileEventId = -1;
   private firstDay: number = 0;
+  isAssignInputFieldVisisble = false;
 
   get allowButton(): boolean {
     if(this.firstCollection.amountOfGivts > 0 && this.firstCollection.allocated == false)
@@ -186,6 +187,12 @@ export class AssignComponent implements OnInit {
   }
 
   loadDialog(event) {
+	  if (event.id == this.openedMobileEventId) {
+	  	this.closeDialog();
+	  	this.openedMobileEventId = -1;
+		  return
+	  }
+	  this.openedMobileEventId = event.id;
 	  this.event = event;
 	  this.startTime = new Date(this.event.start);
 	  this.endTime = new Date(this.event.end);

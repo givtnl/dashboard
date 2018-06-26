@@ -6,17 +6,22 @@
     <my-titlebar></my-titlebar>
       <div class="section-page bottom-flex">
 
-        <div class="schedule">
+        <div class="schedule" (click)="isAssignInputFieldVisisble = true">
             <h2>{{ "TitleAllocate" | translate }}</h2>
             <div class="assign__button" [class.showElement]="numberOfFilteredEvents > 0" [class.mobile-hidden]="numberOfFilteredEvents == 0" >
-                <span style="font-family: Avenir_Medium; font-size: 17px;">{{'AssignOpenCollectes' | translate}}</span>
-                <div class="wrapping_inputlist">
+                <div class="mobile-flex">
+                    <span style="font-family: Avenir_Medium; font-size: 17px;">{{'AssignOpenCollectes' | translate}}</span>
+
+                    <span class="mobile-calendar__arrow mobile-calendar__arrow--right mobile-calendar__arrow--dark mobile-visible"></span>
+                </div>
+                <div class="wrapping_inputlist" [class.set-hidden-assigncollectinput]="!isAssignInputFieldVisisble">
                     <input (focus)="focusAllCollectsTyping(true)" (focusout)="focusAllCollectsTyping(false)" (ngModelChange)="allCollectNameChanging($event)" class="allocation__input" type="text" name="allocationWeekName" [(ngModel)]="allocateWeekName"/>
                     <ul *ngIf="allCollectTyping" class="schedule__dialog__form__list">
                         <li *ngFor="let item of filteredUsedTags" class="schedule__dialog__form__listitem" [innerHTML]="item" (click)="setWeekName(item)">yoo</li>
                     </ul>
+                    <button [disabled]="allocateWeekName === ''" class="assign-green-button" (click)="allocateWeek()"></button>
+
                 </div>
-                <button [disabled]="allocateWeekName === ''" class="assign-green-button" (click)="allocateWeek()"></button>
             </div>
           <p-schedule #calendar [events]="events" locale="locale" [nowIndicator]="false" [header]="headerConfig" [editable]="true" (onDayClick)="handleDayClick($event)" (onEventClick)="handleEventClick($event)" [options]="options" id="calendar"></p-schedule>
         </div>
@@ -183,7 +188,7 @@
               <table class="mobile-calendar__table" cellspacing="0" cellpadding="0">
 
                   <ng-container *ngFor="let event of this.events">
-                      <tr class="mobile-calendar__row" (click)="loadDialog(event);openedMobileEventId=event.id">
+                      <tr class="mobile-calendar__row" (click)="loadDialog(event);">
                           <td class="mobile-calendar__day">
                               <span class="mobile-calendar__calendar-icon">
                                 {{ event.start | date:'d' }}

@@ -700,6 +700,10 @@ h3{
     display: none;
 }
 
+.mobile-visible {
+    display: none;
+}
+
 @media only screen and (max-width : 1366px) {
     .sidebar-collection {
         padding-left: 20px;
@@ -708,6 +712,30 @@ h3{
 }
 
 @media only screen and (max-width : 480px) {
+    .mobile-calendar__arrow--dark {
+        border-left-color: #2E2957 !important;
+    }
+    .mobile-flex {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    .wrapping_inputlist {
+        display: flex;
+        justify-content: center;
+        padding-top:10px;
+    }
+    .set-hidden-assigncollectinput {
+        display: none;
+    }
+    .mobile-visible {
+        display: block;
+    }
+    .assign__button {
+        padding: 20px 10px;
+        background-color: #E3E2E7;
+        color: #2E2957;
+    }
     .mobile-hidden {
         display:none;
     }
@@ -718,10 +746,6 @@ h3{
 
     .incasso-state-table {
         min-width: 100%;
-    }
-
-    .assign__button {
-        padding: 0 10px;
     }
 
     .sidebar-collection {
