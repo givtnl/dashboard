@@ -742,6 +742,7 @@ h3{
     .mobile-calendar {
         display: block;
         background: white;
+        margin-bottom: 80px;
     }
 
     .incasso-state-table {
