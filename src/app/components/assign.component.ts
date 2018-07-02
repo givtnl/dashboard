@@ -7,6 +7,7 @@ import 'fullcalendar/dist/locale/nl';
 import {AllocationTimeSpanItem, Transaction} from "../models/allocationTimeSpanItem";
 import {UserService} from "../services/user.service";
 import {DataService} from "../services/data.service";
+import {AgendaView} from "fullcalendar";
 
 
 @Component({
@@ -50,6 +51,7 @@ export class AssignComponent implements OnInit {
   openedMobileEventId = -1;
   private firstDay: number = 0;
   isAssignInputFieldVisisble = false;
+	agendaView: AgendaView;
 
   get allowButton(): boolean {
     if(this.firstCollection.amountOfGivts > 0 && this.firstCollection.allocated == false)
@@ -128,9 +130,12 @@ export class AssignComponent implements OnInit {
       right: 'agendaWeek,agendaDay'
     };
     this.options['viewRender'] = function(view, element) {
-      this.isMonthView = view["type"] === "month";
+      this.agendaView = view;
+    	this.isMonthView = view["type"] === "month";
       this.currentViewStart = view.start['_d'].toISOString();
       this.currentViewEnd = view.end['_d'].toISOString();
+      console.log(this.currentViewStart);
+      console.log(this.currentViewEnd);
       this.events.length = 0;
       this.checkAllocations();
     }.bind(this);

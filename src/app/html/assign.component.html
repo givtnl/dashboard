@@ -174,8 +174,8 @@
                    <span class="mobile-calendar__arrow mobile-calendar__arrow--left"></span>
                     {{"PreviousWeek" | translate}}
               </span>
-              <span class="mobile-calendar__header-title">{{ this.currentViewStart  | date:'d' }} - {{ this.currentViewEnd  | date:'d MMMM' }}</span>
-              <span class="mobile-calendar__header-navigation" (click)="nextPeriod()">
+              <span class="mobile-calendar__header-title" style="text-align: center"><ng-container *ngIf="agendaView != undefined">{{ agendaView.title }}</ng-container> </span>
+              <span class="mobile-calendar__header-navigation" style="text-align: right" (click)="nextPeriod()">
                   {{"NextWeek" | translate}}
                   <span class="mobile-calendar__arrow mobile-calendar__arrow--right"></span>
 
