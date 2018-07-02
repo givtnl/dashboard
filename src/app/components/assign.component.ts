@@ -530,14 +530,13 @@ export class AssignComponent implements OnInit {
       currentBucket.transactions.push(noFixed[x]);
     }
     for(let i = 0; i < buckets.length; i++) {
-    	//todo: DETERMINE WHETHER OR NOT TO SEE ENABLED OR DISABLED ALLOCATION
-	    //use className = allocation-disabled when disabled.
       let event = new MyEvent();
       event.id = buckets[i].allocationId;
       event.title = buckets[i].allocationName;
       event.start = buckets[i].startTime;
       event.end = buckets[i].endTime;
-      event.className = "allocation";
+      // STATUS == 0 MEANS ALLOC IS ASSIGNED FOR OTHER COLLECTGR
+      event.className = buckets[i].transactions[0].Status == 0 ? "allocation-disabled" : "allocation";
       event.allocated = true;
       event.amount = null;
       event.transactions = buckets[i].transactions;

@@ -495,7 +495,7 @@ p-schedule button
   border: 1px solid #F5F5F5 !important;
 }
 
-.allocation{
+.allocation, .allocation-disabled {
   background-color: #41C98E !important;
   background-image: url(images/check.png);
   background-position: center;
@@ -508,7 +508,7 @@ p-schedule button
     background-color: #918FA6 !important;
 }
 
-.allocation, .money {
+.allocation, .money, .allocation-disabled {
   border: 1px solid #FEFEFE !important;
   display: flex !important;
   flex-direction: column !important;
@@ -517,7 +517,7 @@ p-schedule button
   cursor: pointer;
 }
 
-.allocation *, .money * {
+.allocation *, .money *, .allocation-disabled {
   pointer-events: none !important;
 }
 
