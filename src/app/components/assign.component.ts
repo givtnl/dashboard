@@ -257,7 +257,7 @@ export class AssignComponent implements OnInit {
       }
     }
 
-    let normalGivts = this.allGivts.filter((g) => {
+    let normalGivts = event.transactions.filter((g) => {
       return g.Fixed == null && (new Date(g["dt_Confirmed"])) >= this.startTime && (new Date(g["dt_Confirmed"])) < this.endTime;
     });
     if (fcEvent.allocated) {
