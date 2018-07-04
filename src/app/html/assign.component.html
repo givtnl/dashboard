@@ -196,7 +196,7 @@
                           </td>
                           <td class="mobile-calendar__period">{{"From" | translate}} {{ event.start | date:'H:mm' }} {{"To"|translate}} {{ event.end | date:'H:mm' }}</td>
                           <td class="">
-                              <span class="mobile-calendar__status mobile-calendar__status--ok" [class.mobile-calendar__status--ok-disabled]="event.transactions[0].Status == 0" *ngIf="event.allocated"></span>
+                              <span class="mobile-calendar__status mobile-calendar__status--ok" [class.mobile-calendar__status--ok-disabled]="event.transactions != undefined && event.transactions[0].Status == 0" *ngIf="event.allocated"></span>
                               <span class="mobile-calendar__status mobile-calendar__status--nok" *ngIf="!event.allocated"></span>
                           </td>
                           <td class="mobile-calendar__big-arrow">

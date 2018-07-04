@@ -256,10 +256,13 @@ export class AssignComponent implements OnInit {
         this.fixedAllocations.push(fixedAllocation);
       }
     }
+	let normalGivts = [];
+    if(event.transactions != undefined) {
+	    normalGivts = event.transactions.filter((g) => {
+		    return g.Fixed == null && (new Date(g["dt_Confirmed"])) >= this.startTime && (new Date(g["dt_Confirmed"])) < this.endTime;
+	    });
+    }
 
-    let normalGivts = event.transactions.filter((g) => {
-      return g.Fixed == null && (new Date(g["dt_Confirmed"])) >= this.startTime && (new Date(g["dt_Confirmed"])) < this.endTime;
-    });
     if (fcEvent.allocated) {
       if (normalGivts.length > 0) {
         for (let i = 0; i < normalGivts.length; i++) {
@@ -590,7 +593,7 @@ export class AssignComponent implements OnInit {
       event.allocated = true;
       event.amount = null;
       let temp = this.events.filter((e) => {
-        return e.start.getTime() <= this.fixedAllocations[i].dtBegin.getTime() && this.fixedAllocations[i].dtBegin.getTime() <= e.end.getTime();
+        return e.start.getTime() <= this.fixedAllocations[i].dtBegin.getTime() && this.fixedAllocations[i].dtEnd.getTime() <= e.end.getTime();
       })
       if(temp.length == 0) {
         this.events.push(event);
