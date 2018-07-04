@@ -309,6 +309,7 @@ h3{
   margin:0;
   overflow: hidden;
   z-index: 999999999;
+    left: 0;
 }
 
 .schedule__dialog__form__listitem{
