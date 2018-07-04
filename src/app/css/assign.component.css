@@ -718,6 +718,12 @@ h3{
 }
 
 @media only screen and (max-width : 480px) {
+    .info-table-cell--money {
+        white-space: nowrap;
+    }
+    .info-table__input {
+        width: 100%;
+    }
     .mobile-calendar__arrow--dark {
         border-left-color: #2E2957 !important;
     }
@@ -729,7 +735,6 @@ h3{
     .wrapping_inputlist {
         display: flex;
         justify-content: center;
-        padding-top:10px;
     }
     .set-hidden-assigncollectinput {
         display: none;
