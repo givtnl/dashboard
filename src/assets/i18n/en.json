@@ -103,7 +103,7 @@
     "TermCosts": "Costs",
     "TransactionCostsMultipleCollects": "When a user gives to multiple collections at once, they will be merged into one transaction for cost optimisation. These transaction costs are therefore only visible by choosing the overview \"All\"",
     "Users": "users",
-    "AssignOpenCollectes": "Assign all non-allocated collections",
+    "AssignOpenCollectes": "Assign all non-allocated collections: ",
     "InvalidToken": "This link is not valid anymore. Try requesting a new password.",
     "Text_Export": "Enter a start and end date and click on the download-button to obtain an export.",
     "Loading": "Loading",
@@ -150,5 +150,6 @@
     "BackToPreviousPage": "Back to previous page",
     "NoAllocationsAvailable": "No allocations are available for this week.",
     "PreviousWeek": "Previous week",
-    "NextWeek": "Next week"
+    "NextWeek": "Next week",
+    "Text_Donation": "donation"
 }
