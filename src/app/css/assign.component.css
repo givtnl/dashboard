@@ -848,10 +848,6 @@ h3{
         background: #1DA96C url("/images/check.svg") center no-repeat;
     }
 
-    .mobile-calendar__status--ok-disabled {
-        background: #918FA6 url("/images/check.svg") center no-repeat;
-    }
-
     .mobile-calendar__status--nok {
         background: #F16F56 url("/images/question_mark.svg") center no-repeat;
     }

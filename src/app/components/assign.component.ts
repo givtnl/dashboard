@@ -532,15 +532,14 @@ export class AssignComponent implements OnInit {
       let currentBucket = buckets.filter((b) => b.startTime.getTime() == noFixed[x]['dtBegin'].getTime() && b.endTime.getTime() ==noFixed[x]['dtEnd'].getTime())[0];
       currentBucket.transactions.push(noFixed[x]);
     }
-    let currentCollectGroupId = JSON.parse(this.dataService.getData("CurrentCollectGroup")).GUID;
+    
     for(let i = 0; i < buckets.length; i++) {
       let event = new MyEvent();
       event.id = buckets[i].allocationId;
       event.title = buckets[i].allocationName;
       event.start = buckets[i].startTime;
       event.end = buckets[i].endTime;
-      // STATUS == 0 MEANS ALLOC IS ASSIGNED FOR OTHER COLLECTGR
-      event.className = buckets[i].transactions[0].CollectGroupId == currentCollectGroupId ? "allocation" : "allocation-disabled";
+      event.className = "allocation";
       event.allocated = true;
       event.amount = null;
       event.transactions = buckets[i].transactions;
