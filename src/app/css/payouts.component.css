@@ -638,9 +638,6 @@ button:disabled{
     margin-right: 0;
     margin-top: 16px;
   }
-  .collection-buttons > .icon {
-    margin-top: 16px;
-  }
   #big {
     margin: unset;
     font-size: 22px;

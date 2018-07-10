@@ -625,6 +625,7 @@ button:disabled{
 .graph-overview tr .cell-amount {
   text-align: right;
   white-space: nowrap;
+  padding-left: 20px;
 }
 
 .graph {
@@ -679,12 +680,20 @@ button:disabled{
 }
 
 @media only screen and (max-width: 480px){
+    .tooltiptext-alter {
+        width: calc(320px - 100px) !important;
+    }
+    .input-collect-title {
+        justify-content: unset;
+    }
     .collects-list {
         width: unset !important;
     }
+    #collectPage .date-picker-input {
+        max-width: calc(320px - 2em);
+    }
     .collection-buttons {
         width: 100%;
-        justify-content: space-between;
     }
     .rectangle {
         display: none !important;
@@ -742,6 +751,7 @@ button:disabled{
 
   .collection-buttons > span {
     font-size: 16px;
+      flex-grow: 1;
   }
   input[name=bjorn]{
     margin-bottom: 10px;
@@ -749,7 +759,6 @@ button:disabled{
   .choose_collecte {
     display: flex;
     flex: auto;
-    justify-content:  space-between;
     margin-bottom: 10px;
     margin-top: 10px;
   }
@@ -761,6 +770,7 @@ button:disabled{
   }
   .choose_collecte span:first-of-type {
     margin-top: 8px;
+      flex-grow: 1;
   }
   .search-collect {
     margin-top: 20px;
