@@ -438,7 +438,7 @@ export class AssignComponent implements OnInit {
         this.renderAllocatedGivts();
 
         this.events.sort(function(a,b) {
-        	return a.start.getTime() - b.end.getTime()
+        	return a.start.getTime() - b.start.getTime()
         });
       });
   }
