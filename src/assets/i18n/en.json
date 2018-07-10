@@ -151,5 +151,6 @@
     "NoAllocationsAvailable": "No allocations are available for this week.",
     "PreviousWeek": "Previous week",
     "NextWeek": "Next week",
-    "Text_Donation": "donation"
+    "Text_Donation": "donation",
+    "NoTransactionsYet": "This allocation has no transactions yet."
 }
