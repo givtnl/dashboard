@@ -74,13 +74,11 @@ export class AssignComponent implements OnInit {
     return false;
   }
 
-  get allocations(): Array<AssignedCollection> {
-    return [this.firstCollection, this.secondCollection, this.thirdCollection];
-  }
+  get allocations(): Array<AssignedCollection> { return [this.firstCollection, this.secondCollection, this.thirdCollection]; }
 
-  get areAllocationsEmpty(): boolean {
-    return this.allocations.filter((ac) => ac.amountOfGivts == 0).length == 3; // all allocs are empty
-  }
+  get areAllocationsEmpty(): boolean { return this.allocations.filter((ac) => ac.amountOfGivts == 0).length == 3; }
+
+  get areFixedAllocationsEmpty(): boolean { return this.fixedAllocations.length == 0; }
 
   filteredEvents() {
     if(this.events == undefined)
@@ -217,6 +215,7 @@ export class AssignComponent implements OnInit {
 
 
   private openDialog() {
+    console.log(this.event);
     this.isDialogOpen = true;
     if(this.allocations.filter((ts) => ts.amountOfGivts > 0).length > 0) {
       this.currentTab = SelectedTab.Collects;
@@ -226,7 +225,6 @@ export class AssignComponent implements OnInit {
 	    if(this.oldJsEvent != undefined) {
 		    this.oldJsEvent.target.style.boxShadow = "0px 0px 15px transparent";
 	    }
-    	this.isDialogOpen = false;
     }
   }
 
@@ -573,9 +571,6 @@ export class AssignComponent implements OnInit {
       } else {
         let fixedAllocation = new AssignedCollection();
         fixedAllocation.name = g.Fixed;
-
-
-
         fixedAllocation.dtBegin = new Date(startTime);
         fixedAllocation.dtEnd = new Date(endTime);
         this.fillCollectBy(fixedAllocation, g.Status, g.Amount);
