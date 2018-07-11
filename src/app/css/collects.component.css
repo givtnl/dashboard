@@ -680,6 +680,9 @@ button:disabled{
 }
 
 @media only screen and (max-width: 480px){
+    .tooltiptext-alter {
+        width: calc(320px - 100px) !important;
+    }
     .input-collect-title {
         justify-content: unset;
     }

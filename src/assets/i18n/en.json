@@ -145,5 +145,12 @@
     "FirstDayOfWeekChoice": "First day of the week:",
     "Card_AverageGivers": "Average number of givers",
     "Card_Weekly": "weekly",
-    "LastCollectDay": "Last collection"
+    "LastCollectDay": "Last collection",
+    "BackToSettings": "Back to preferences",
+    "BackToPreviousPage": "Back to previous page",
+    "NoAllocationsAvailable": "No allocations are available for this week.",
+    "PreviousWeek": "Previous week",
+    "NextWeek": "Next week",
+    "Text_Donation": "donation",
+    "NoTransactionsYet": "This allocation has no transactions."
 }

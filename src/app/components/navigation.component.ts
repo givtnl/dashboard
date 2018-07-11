@@ -48,6 +48,9 @@ export class NavigationComponent implements OnInit {
           if (this.userService.CurrentCollectGroup) {
               this.collectGroups = this.userService.CollectGroups;
               this.currentCollectGroup = this.userService.CurrentCollectGroup;
+              if(!this.currentCollectGroup.Celebrations){
+                this.showCelebrations = false;
+            }
           }
       }
 

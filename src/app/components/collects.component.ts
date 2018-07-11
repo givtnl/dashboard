@@ -225,8 +225,8 @@ export class CollectsComponent implements OnInit{
 
                     let start = this.savedCollects[i].BeginDate;
                     let end = this.savedCollects[i].EndDate;
-                    this.savedCollects[i].BeginDateString = this.datePipe.transform(start, 'd MMMM y') + " " + this.datePipe.transform(start, 'shortTime');
-                    this.savedCollects[i].EndDateString = this.datePipe.transform(end, 'd MMMM y') + " " + this.datePipe.transform(end, 'shortTime');
+                    this.savedCollects[i].BeginDateString = start.toLocaleDateString(navigator.language, { day: "numeric", year: 'numeric', month: 'long'}) + " " + this.datePipe.transform(start, 'shortTime');
+                    this.savedCollects[i].EndDateString = end.toLocaleDateString(navigator.language, { day: "numeric", year: 'numeric', month: 'long'}) + " " + this.datePipe.transform(end, 'shortTime');
                     if(this.savedCollects[i].CollectId) {
                         this.savedCollects[i].MultipleCollects = true;
                     } else {
@@ -289,7 +289,6 @@ export class CollectsComponent implements OnInit{
     fetchCollect() {
 		this.dataService.writeData("collectDateBegin", Math.round(this.dateBegin.getTime() / 1000));
 		this.dataService.writeData("collectDateEnd", Math.round(this.dateEnd.getTime() / 1000));
-        this.ShowLoadingAnimation = true;
         this.showCosts = false;
         if(this.dateBegin !== null && this.dateEnd !== null){
             var dateBegin = this.datePipe.toISODateUTC(this.dateBegin);
@@ -300,25 +299,22 @@ export class CollectsComponent implements OnInit{
             }else{
                 params = "DateBegin=" + dateBegin + "&DateEnd=" + dateEnd + "&Status=2";
             }
-
+            //.toLocaleDateString(navigator.language, { year: 'numeric', month: 'long'});
             let beginTime = new Date(this.dateBegin.valueOf()).getTime();
             let endTime = new Date(this.dateEnd.valueOf()).getTime();
             this.sameDate = ( new Date(this.dateBeginRange).getDate() ===  new Date(this.dateEndRange).getDate());
             this.dateBeginRange = new Object();
             this.dateEndRange = new Object();
-            this.dateBeginRange.string = this.datePipe.transform(this.dateBegin, 'd MMMM y') + " " + this.datePipe.transform(beginTime, 'shortTime');
-            this.dateEndRange.string = this.datePipe.transform(this.dateEnd, 'd MMMM y') + " " + this.datePipe.transform(endTime,'shortTime');
+            this.dateBeginRange.string = this.dateBegin.toLocaleDateString(navigator.language, { year: 'numeric', month: 'long'}) + " " + this.datePipe.transform(beginTime, 'shortTime');
+            this.dateEndRange.string = this.dateEnd.toLocaleDateString(navigator.language, { year: 'numeric', month: 'long'}) + " " + this.datePipe.transform(endTime,'shortTime');
+
+            console.log(navigator.language);
+
             this.isVisible = true;
 
             let euro =  "€";
             if(!navigator.language.includes('en'))
                 euro += " ";
-
-            this.apiService.getData("Cards/Givts/?"+params)
-                .then(resp =>
-                {
-                  this.ShowLoadingAnimation = false;
-                });
         }
 
     }

@@ -22,6 +22,7 @@ export class SettingsComponent implements OnInit {
 	}
 
 	ngOnInit() {
+		window.scrollTo(0,0);
 		console.log("init settings");
 		let localDay = this.dataService.getData("FirstDayOfWeek");
 		if(!isNaN(localDay)) {
@@ -47,6 +48,14 @@ export class SettingsComponent implements OnInit {
 		this.days.push(this.translateService.instant("Thursday").toString());
 		this.days.push(this.translateService.instant("Friday").toString());
 		this.days.push(this.translateService.instant("Saturday").toString());
+	}
+
+	goBack() {
+		window.history.back();
+	}
+
+	goBackToSettings() {
+		this.isSettingsDetailVisible = false;
 	}
 
 }

@@ -7,6 +7,7 @@ import 'fullcalendar/dist/locale/nl';
 import {AllocationTimeSpanItem, Transaction} from "../models/allocationTimeSpanItem";
 import {UserService} from "../services/user.service";
 import {DataService} from "../services/data.service";
+import {AgendaView} from "fullcalendar";
 
 
 @Component({
@@ -47,7 +48,10 @@ export class AssignComponent implements OnInit {
   startTime: Date;
   endTime: Date;
   oldJsEvent: any;
+  openedMobileEventId = -1;
   private firstDay: number = 0;
+  isAssignInputFieldVisisble = false;
+	agendaView: AgendaView;
 
   get allowButton(): boolean {
     if(this.firstCollection.amountOfGivts > 0 && this.firstCollection.allocated == false)
@@ -70,13 +74,11 @@ export class AssignComponent implements OnInit {
     return false;
   }
 
-  get allocations(): Array<AssignedCollection> {
-    return [this.firstCollection, this.secondCollection, this.thirdCollection];
-  }
+  get allocations(): Array<AssignedCollection> { return [this.firstCollection, this.secondCollection, this.thirdCollection]; }
 
-  get areAllocationsEmpty(): boolean {
-    return this.allocations.filter((ac) => ac.amountOfGivts == 0).length == 3; // all allocs are empty
-  }
+  get areAllocationsEmpty(): boolean { return this.allocations.filter((ac) => ac.amountOfGivts == 0).length == 3; }
+
+  get areFixedAllocationsEmpty(): boolean { return this.fixedAllocations.length == 0; }
 
   filteredEvents() {
     if(this.events == undefined)
@@ -126,9 +128,12 @@ export class AssignComponent implements OnInit {
       right: 'agendaWeek,agendaDay'
     };
     this.options['viewRender'] = function(view, element) {
-      this.isMonthView = view["type"] === "month";
+      this.agendaView = view;
+    	this.isMonthView = view["type"] === "month";
       this.currentViewStart = view.start['_d'].toISOString();
       this.currentViewEnd = view.end['_d'].toISOString();
+      console.log(this.currentViewStart);
+      console.log(this.currentViewEnd);
       this.events.length = 0;
       this.checkAllocations();
     }.bind(this);
@@ -149,7 +154,7 @@ export class AssignComponent implements OnInit {
 		jsEvent.target.style.boxShadow = "0px 0px 15px #2E2957";
 
 		this.oldJsEvent = jsEvent;
-        this.event = event;
+
 
 		let start = event.start;
 		let end = event.end;
@@ -158,10 +163,9 @@ export class AssignComponent implements OnInit {
 			end.stripTime();
 		}
 
-		this.startTime = new Date(this.event.start);
-		this.endTime = new Date(this.event.end);
-		this.fillData(event);
-		this.openDialog();
+		this.loadDialog(event);
+
+
     }.bind(this);
     this.options['nowIndicator'] = false;
     this.options['firstDay'] = this.firstDay;
@@ -185,8 +189,33 @@ export class AssignComponent implements OnInit {
         });
   }
 
+  loadDialog(event) {
+	  if (event.id == this.openedMobileEventId) {
+	  	this.closeDialog();
+	  	this.openedMobileEventId = -1;
+		  return
+	  }
+	  this.openedMobileEventId = event.id;
+	  this.event = event;
+	  this.startTime = new Date(this.event.start);
+	  this.endTime = new Date(this.event.end);
+	  this.fillData(event);
+	  this.openDialog();
+  }
+
+  prevPeriod() {
+	  var nativeElement = jQuery(this.calendar["el"]["nativeElement"].children[0]);
+	  nativeElement.fullCalendar('prev');
+	}
+
+  nextPeriod() {
+  	var nativeElement = jQuery(this.calendar["el"]["nativeElement"].children[0]);
+  	nativeElement.fullCalendar('next');
+  }
+
 
   private openDialog() {
+    console.log(this.event);
     this.isDialogOpen = true;
     if(this.allocations.filter((ts) => ts.amountOfGivts > 0).length > 0) {
       this.currentTab = SelectedTab.Collects;
@@ -196,7 +225,6 @@ export class AssignComponent implements OnInit {
 	    if(this.oldJsEvent != undefined) {
 		    this.oldJsEvent.target.style.boxShadow = "0px 0px 15px transparent";
 	    }
-    	this.isDialogOpen = false;
     }
   }
 
@@ -226,10 +254,13 @@ export class AssignComponent implements OnInit {
         this.fixedAllocations.push(fixedAllocation);
       }
     }
+	let normalGivts = [];
+    if(event.transactions != undefined) {
+	    normalGivts = event.transactions.filter((g) => {
+		    return g.Fixed == null && (new Date(g["dt_Confirmed"])) >= this.startTime && (new Date(g["dt_Confirmed"])) < this.endTime;
+	    });
+    }
 
-    let normalGivts = this.allGivts.filter((g) => {
-      return g.Fixed == null && (new Date(g["dt_Confirmed"])) >= this.startTime && (new Date(g["dt_Confirmed"])) < this.endTime;
-    });
     if (fcEvent.allocated) {
       if (normalGivts.length > 0) {
         for (let i = 0; i < normalGivts.length; i++) {
@@ -379,28 +410,36 @@ export class AssignComponent implements OnInit {
     }
   }
 
+	isLoading: boolean = false;
+
   checkAllocations(){
     let apiUrl = 'Allocations/AllocationCheck';
     if(this.currentViewStart !== null && this.currentViewEnd !== null){
       apiUrl += "?dtBegin=" + this.currentViewStart + "&dtEnd=" + this.currentViewEnd;
     }
 
+    this.isLoading = true;
     this.apiService.getData(apiUrl)
       .then(resp => {
+      	this.isLoading = false;
         this.allGivts = resp;
 
         this.openGivts = resp.filter((ts) => {
           return ts.AllocationName == null && ts.Fixed == null;
         });
 
-        this.allocatedGivts = resp;
+        this.allocatedGivts = resp.filter((ts) => {
+	        return !(ts.AllocationName == null && ts.Fixed == null)
+        });
 
         this.openGivtsBucket = [];
 
         this.renderOpenGivts();
         this.renderAllocatedGivts();
 
-
+        this.events.sort(function(a,b) {
+        	return a.start.getTime() - b.start.getTime()
+        });
       });
   }
 
@@ -439,7 +478,6 @@ export class AssignComponent implements OnInit {
     }
     Promise.all(promises.map(p => p.catch(e => e)))
       .then(results => {
-        console.log(results);
         let promisesWithResults = results.filter((e) => e != undefined);
         if(promisesWithResults.length == promises.length) {
           //all went good
@@ -480,6 +518,7 @@ export class AssignComponent implements OnInit {
         //transaction does not fit into bucket
         //create new bucket and add to array
         let newBucket = new Bucket();
+
         newBucket.startTime = startTime;
         newBucket.endTime = endTime;
         newBucket.allocationName = noFixed[x].AllocationName;
@@ -491,7 +530,7 @@ export class AssignComponent implements OnInit {
       let currentBucket = buckets.filter((b) => b.startTime.getTime() == noFixed[x]['dtBegin'].getTime() && b.endTime.getTime() ==noFixed[x]['dtEnd'].getTime())[0];
       currentBucket.transactions.push(noFixed[x]);
     }
-
+    
     for(let i = 0; i < buckets.length; i++) {
       let event = new MyEvent();
       event.id = buckets[i].allocationId;
@@ -532,9 +571,6 @@ export class AssignComponent implements OnInit {
       } else {
         let fixedAllocation = new AssignedCollection();
         fixedAllocation.name = g.Fixed;
-
-
-
         fixedAllocation.dtBegin = new Date(startTime);
         fixedAllocation.dtEnd = new Date(endTime);
         this.fillCollectBy(fixedAllocation, g.Status, g.Amount);
@@ -551,7 +587,7 @@ export class AssignComponent implements OnInit {
       event.allocated = true;
       event.amount = null;
       let temp = this.events.filter((e) => {
-        return e.start.getTime() <= this.fixedAllocations[i].dtBegin.getTime() && this.fixedAllocations[i].dtBegin.getTime() <= e.end.getTime();
+        return e.start.getTime() <= this.fixedAllocations[i].dtBegin.getTime() && this.fixedAllocations[i].dtEnd.getTime() <= e.end.getTime();
       })
       if(temp.length == 0) {
         this.events.push(event);

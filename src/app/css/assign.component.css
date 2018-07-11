@@ -309,6 +309,7 @@ h3{
   margin:0;
   overflow: hidden;
   z-index: 999999999;
+    left: 0;
 }
 
 .schedule__dialog__form__listitem{
@@ -696,6 +697,14 @@ h3{
 
 }
 
+.mobile-calendar {
+    display: none;
+}
+
+.mobile-visible {
+    display: none;
+}
+
 @media only screen and (max-width : 1366px) {
     .sidebar-collection {
         padding-left: 20px;
@@ -703,21 +712,181 @@ h3{
     }
 }
 
+@media only screen and (max-width : 376px) {
+    .hide-me {
+        display: none;
+    }
+}
+
 @media only screen and (max-width : 480px) {
+    .info-table-cell--money {
+        white-space: nowrap;
+    }
+    .info-table__input {
+        width: 100%;
+        height: 40px;
+    }
+    .mobile-calendar__arrow--dark {
+        border-left-color: #2E2957 !important;
+    }
+    .mobile-flex {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    .wrapping_inputlist {
+        display: flex;
+        justify-content: center;
+    }
+    .set-hidden-assigncollectinput {
+        display: none;
+    }
+    .mobile-visible {
+        display: block;
+    }
+    .assign__button {
+        padding: 20px 10px;
+        background-color: #E3E2E7;
+        color: #2E2957;
+    }
+    .mobile-hidden {
+        display:none;
+    }
+    .mobile-calendar {
+        display: block;
+        background: white;
+        margin-bottom: 80px;
+    }
+
+    .incasso-state-table {
+        min-width: 100%;
+    }
+
+    .sidebar-collection {
+        display: none !important;
+    }
+
+    #calendar {
+        opacity: 0;
+    }
+
+    #calendar > div {
+        visibility: hidden;
+        height: 0;
+        overflow: hidden;
+    }
+
+
+    .mobile-calendar__table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .mobile-calendar__header {
+        display: flex;
+        height: 44px;
+        background-color: #2E2957;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .mobile-calendar__header-title {
+        font-family: Avenir_Heavy;
+        font-size: 15px;
+        color:white;
+    }
+
+    .mobile-calendar__status {
+        display: inline-block;
+        width: 30px;
+        height: 50px;
+        border-radius: 4px;
+        background-color: black;
+
+    }
+
+    .mobile-calendar__calendar-icon {
+        width: 45px;
+        height: 45px;
+        border-radius: 4px;
+        display: inline-block;
+        box-shadow: 0px -5px 0px 0px #2E2957;
+        background: #EFEFF4;
+        font-family: Avenir_Heavy;
+        font-size: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        -webkit-transform: translateZ(0);
+    }
+
+    .mobile-calendar__row {
+        height: 70px;
+    }
+
+    .mobile-calendar__row td {
+        border-bottom: 1px solid #A19FB5;
+    }
+
+    .mobile-calendar__day {
+        width: 45px;
+        padding-left: 15px;
+    }
+
+    .mobile-calendar__period {
+        font-family: Avenir_Heavy;
+        font-size: 16px;
+        text-align: center;
+    }
+
+    .mobile-calendar__popup {
+        position: unset;
+        margin-bottom: unset;
+    }
+
+    .mobile-calendar__status--ok {
+        background: #1DA96C url("/images/check.svg") center no-repeat;
+    }
+
+    .mobile-calendar__status--nok {
+        background: #F16F56 url("/images/question_mark.svg") center no-repeat;
+    }
+
+    .mobile-calendar__header-navigation {
+        font-family: Avenir_Light;
+        font-size: 12px;
+        color:white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 0 15px;
+        height: 100%;
+    }
+
+    .mobile-calendar__arrow {
+        width: 0;
+        height: 0;
+        border-top: 5px solid transparent;
+        border-bottom: 5px solid transparent;
+        display: block;
+    }
+
+    .mobile-calendar__arrow--left {
+        border-right:8px solid white;
+        margin-right: 10px;
+    }
+
+    .mobile-calendar__arrow--right {
+        border-left:8px solid white;
+        margin-left: 10px;
+    }
+
     .section-page {
         width: 100vw;
         font-size: 10px;
     }
     h2{
         font-size: 14px;
-    }
-    .sidebar-collection {
-        width: 100vw;
-        display: block;
-        position: absolute;
-        z-index: 2001;
-        top: 0;
-        padding-left: 0;
     }
 
     .sidebar-collection-popup {

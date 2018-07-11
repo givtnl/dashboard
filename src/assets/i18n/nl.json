@@ -92,7 +92,7 @@
     "OverlapError": "Er zit al een toegewezen collecte in dit tijdslot. Los dit conflict op door die toewijzingen te verwijderen. Probeer daarna opnieuw.",
     "YesImSure": "Ja, ik weet het zeker.",
     "NoNeverMind": "Nee, dat wil ik niet.",
-    "OpenAllocationsMessage": "Er zijn nog transacties die niet toegewezen zijn aan een collecte.\nGa naar het tabblad 'Toewijzen' om dit in orde te maken.",
+    "OpenAllocationsMessage": "Er zijn nog transacties die niet toegewezen zijn aan een collecte.\nGa naar de pagina 'Toewijzen' om dit in orde te maken.",
     "From": "Van",
     "To": "tot",
     "NotYetAllocated": "Nog niet toegewezen",
@@ -145,5 +145,12 @@
     "FirstDayOfWeekChoice": "Eerste dag van de week:",
     "Card_AverageGivers": "Gemiddeld aantal gevers",
     "Card_Weekly": "per week",
-    "LastCollectDay": "Laatste collecte"
+    "LastCollectDay": "Laatste collecte",
+    "BackToSettings": "Terug naar voorkeuren",
+    "BackToPreviousPage": "Terug naar vorige pagina",
+    "NoAllocationsAvailable": "Er zijn geen toewijzingen beschikbaar voor deze week.",
+    "PreviousWeek": "Vorige week",
+    "NextWeek": "Volgende week",
+    "Text_Donation": "gift",
+    "NoTransactionsYet": "Er zijn geen transacties voor deze toewijzing."
 }
