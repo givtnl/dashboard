@@ -289,7 +289,6 @@ export class CollectsComponent implements OnInit{
     fetchCollect() {
 		this.dataService.writeData("collectDateBegin", Math.round(this.dateBegin.getTime() / 1000));
 		this.dataService.writeData("collectDateEnd", Math.round(this.dateEnd.getTime() / 1000));
-        this.ShowLoadingAnimation = true;
         this.showCosts = false;
         if(this.dateBegin !== null && this.dateEnd !== null){
             var dateBegin = this.datePipe.toISODateUTC(this.dateBegin);
@@ -316,12 +315,6 @@ export class CollectsComponent implements OnInit{
             let euro =  "€";
             if(!navigator.language.includes('en'))
                 euro += " ";
-
-            this.apiService.getData("Cards/Givts/?"+params)
-                .then(resp =>
-                {
-                  this.ShowLoadingAnimation = false;
-                });
         }
 
     }
