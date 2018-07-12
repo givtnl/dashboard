@@ -26,7 +26,7 @@ export class TerminateComponent implements OnInit {
     }
 
     terminate() {
-        this.apiClientService.delete("v2/users/" + this.params.guid + "?token=" + this.params.token)
+        this.apiClientService.delete("v2/users/" + this.params.guid + "?token=" + encodeURIComponent(this.params.token))
         .then( resp => {
             this.terminateState = TerminateState.Terminated;
         }).catch( resp => {
