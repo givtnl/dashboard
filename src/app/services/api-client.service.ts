@@ -34,9 +34,10 @@ export class ApiClientService {
             .toPromise()
             .then(res => {
                 return res;
-            }).catch(
-                err => console.log(err)
-            );
+            }).catch(err => { 
+                console.log(err);
+                return reject(err);
+            });
     }
 
     postData(path: string, body: any){

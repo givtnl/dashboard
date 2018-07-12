@@ -11,13 +11,13 @@
     <ng-container>
         <section *ngIf="terminateState == TerminateState.Undecided" class="terminate-section">
             <p class="text">
-                We zullen je account met emailadres <span class="text--fat">givy@gmail.com</span> verwijderen. 
+                We zullen je account met emailadres <span class="text--fat">{{params.email}}</span> verwijderen. 
                 Zo zal je van ons geen mailtjes meer ontvangen.
             </p>
             <p class="text text--fat">Al je gegevens gaan verloren, dit proces is onomkeerbaar.</p>
             <p class="text text--fat">Weet je het zeker?</p>
             <section class="btn-group">
-                <button class="btn" (click)="terminate()">Ja, ik ben het zeker</button>
+                <button class="btn" (click)="terminate()">Ja, ik weet het zeker</button>
                 <button class="btn btn--cancel" (click)="cancelTerminate()">Nee</button>
             </section>
         </section>

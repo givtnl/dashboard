@@ -13,8 +13,12 @@ export class TerminateComponent implements OnInit {
     TerminateState = TerminateState;
     terminateState: TerminateState = TerminateState.Undecided;
 
+    params: any
+
     ngOnInit() {
         this.terminateState = TerminateState.Undecided
+        let token = this.route.snapshot.queryParams["token"]
+        this.params = JSON.parse(atob(token))
     }
 
     constructor(private translateService: TranslateService, private dataService: DataService, private apiClientService: ApiClientService, private route : ActivatedRoute) {
@@ -22,17 +26,16 @@ export class TerminateComponent implements OnInit {
     }
 
     terminate() {
-        this.terminateState = TerminateState.Terminated;
-        let guid = this.route.snapshot.queryParams["guid"];
-        let token = this.route.snapshot.queryParams["token"]
-        this.apiClientService.delete("v2/users/" + guid + "?token=" + token)
-        .then(resp => {
-            console.log("User is deleted");
+        this.apiClientService.delete("v2/users/" + this.params.guid + "?token=" + this.params.token)
+        .then( resp => {
+            this.terminateState = TerminateState.Terminated;
+        }).catch( resp => {
+            this.translateService.get("WoopsContactSupport").subscribe((res) => alert(res))
         });
     }
 
     cancelTerminate() {
-        this.terminateState = TerminateState.CancelledTermination;
+        this.terminateState = TerminateState.CancelledTermination
     }
 }
 
