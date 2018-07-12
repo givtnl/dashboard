@@ -1,0 +1,40 @@
+.logo{
+    margin: 100px auto 0 auto;
+    display: block;
+    width: 200px;
+    padding:26px;
+}
+
+.terminate-section {
+    width: 360px;
+    margin: 0 auto;
+    background: white;
+    border: 1px solid #E3E2E7;
+    border-radius: 2px;
+    padding: 20px;
+}
+
+.btn {
+    background: #41C98E;
+    border: 1px solid #41C98E;
+    font-family: 'Avenir_Black';
+    font-size: 1em;
+    color: #FFFFFF;
+    text-align: center;
+    padding: 0px 20px;
+    height: 44px;
+    cursor: pointer;
+    display: inline-block;
+}
+
+.btn--cancel {
+    background: none;
+    color: #E6412C;
+    border-color: #E6412C;
+    font-family: Avenir_Light;
+}
+
+.btn-group {
+    display: flex;
+    justify-content: space-around;
+}

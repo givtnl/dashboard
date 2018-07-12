@@ -19,11 +19,10 @@ export class ApiClientService {
     }
 
     delete(path: string){
-        if(!this.dataService.getData("accessToken")){
-            return;
-        }
         let headers = new Headers();
-        headers.append('authorization', 'Bearer '+ this.dataService.getData("accessToken"));
+        if(this.dataService.getData("accessToken")){
+            headers.append('authorization', 'Bearer '+ this.dataService.getData("accessToken"));
+        }
         if (this.dataService.getData("CurrentCollectGroup"))
             headers.append('CollectGroupId', JSON.parse(this.dataService.getData("CurrentCollectGroup")).GUID);
 
