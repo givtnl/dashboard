@@ -697,6 +697,28 @@ h3{
 
 }
 
+.upload-csv{
+  text-align: center;
+  padding-bottom: 12px;
+}
+
+.upload-csv-button{
+  padding: 8px 22px;
+  box-sizing: border-box;
+  color: white;
+  font-family: 'Avenir_Black';
+  background-color: #2C2B57;
+  border: 0;
+  font-size: 18px;
+  cursor: pointer;
+  transition: 0.3s;
+  border-radius: 3px;
+}
+
+.upload-csv-button:hover{
+  background-color: #41c98e;
+}
+
 .mobile-calendar {
     display: none;
 }

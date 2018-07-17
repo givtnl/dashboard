@@ -8,7 +8,7 @@
 
         <div class="schedule" (click)="isAssignInputFieldVisisble = true">
             <h2>{{ "TitleAllocate" | translate }}</h2>
-            <div class="assign__button" [class.showElement]="numberOfFilteredEvents > 0" [class.mobile-hidden]="numberOfFilteredEvents == 0" >
+            <div *ngIf="numberOfFilteredEvents > 0" class="assign__button" [class.showElement]="numberOfFilteredEvents > 0" [class.mobile-hidden]="numberOfFilteredEvents == 0" >
                 <div class="mobile-flex">
                     <span style="font-family: Avenir_Medium; font-size: 17px;">{{'AssignOpenCollectes' | translate}}</span>
 
@@ -20,9 +20,12 @@
                         <li *ngFor="let item of filteredUsedTags" class="schedule__dialog__form__listitem" [innerHTML]="item" (click)="setWeekName(item)">yoo</li>
                     </ul>
                     <button [disabled]="allocateWeekName === ''" class="assign-green-button" (click)="allocateWeek()"></button>
-
                 </div>
             </div>
+          <div class="upload-csv">
+            <button class="upload-csv-button" (click)="uploadCSV()">Upload CSV</button>
+            <input type="file" (change)="fileChange($event)" placeholder="Upload csv" accept=".csv">
+          </div>
           <p-schedule #calendar [events]="events" locale="locale" [nowIndicator]="false" [header]="headerConfig" [editable]="true" (onDayClick)="handleDayClick($event)" (onEventClick)="handleEventClick($event)" [options]="options" id="calendar"></p-schedule>
         </div>
           <aside class="sidebar-collection" *ngIf="isDialogOpen">
@@ -67,9 +70,9 @@
                                                         <li *ngFor="let item of filteredUsedTags" class="schedule__dialog__form__listitem" (click)="setCollectNameOf(item, alloc)" [innerHTML]="item"></li>
                                                     </ul>
                                                 </div>
-          
+
                                                 <button style="cursor:pointer;background: #2E2957; border:0;margin-left: auto;display:  flex;justify-content:  center;" class="icon" [class.fill-green]="!alloc.isStatsHidden" (click)="alloc.isStatsHidden = !alloc.isStatsHidden">
-          
+
                                                     <svg width="23px" height="23px" viewBox="8 8 23 23" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                                                         <!-- Generator: Sketch 40.3 (33839) - http://www.bohemiancoding.com/sketch -->
                                                         <desc>Created with Sketch.</desc>
@@ -78,9 +81,9 @@
                                                     </svg>
                                                 </button>
                                                 <span style="font-family: Avenir_Light;display: flex;flex-direction: row;align-items:  center;margin-left: 15px;">
-          
+
                                               <img src="images/personal-blue.png" alt=""> <span style="padding-left: 5px;padding-top: 5px;">{{ alloc.amountOfGivts }}</span></span>
-          
+
                                             </div>
                                             <table class="incasso-state-table" *ngIf="!alloc.isStatsHidden">
                                                 <tr [class.incasso-state-table__row--disabled]="alloc.toProcessTotal == 0">
@@ -110,7 +113,7 @@
                                                 </tr>
                                             </table>
                                         </div>
-          
+
                                     </ng-container>
                                     <button *ngIf="allowButton && currentTab == SelectedTab.Collects" style="height: 50px;width: 100%;" class="info-table__button" [disabled]="disableSaveButton" [class.info-table__button--disabled]="disableSaveButton" (click)="saveAllEvents()">{{ "SaveAll" | translate }}</button>
                                     <button *ngIf="!allowButton && currentTab == SelectedTab.Collects" style="height: 50px;width: 100%;" class="info-table__button info-table__button--danger" (click)="deleteEvent()">{{ "DeleteAll" | translate }}</button>
@@ -123,7 +126,7 @@
                                                     <span style="align-self: center;font-family: Avenir_Heavy; font-size: 18px;">{{alloc.name}}</span>
                                                 </div>
                                                 <button style="cursor:pointer;background: #2E2957; border:0;margin-left: auto;display:  flex;justify-content:  center;" class="icon" [class.fill-green]="!alloc.isStatsHidden" (click)="alloc.isStatsHidden = !alloc.isStatsHidden">
-          
+
                                                     <svg width="23px" height="23px" viewBox="8 8 23 23" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                                                         <!-- Generator: Sketch 40.3 (33839) - http://www.bohemiancoding.com/sketch -->
                                                         <desc>Created with Sketch.</desc>
@@ -132,9 +135,9 @@
                                                     </svg>
                                                 </button>
                                                 <span style="font-family: Avenir_Light;display: flex;flex-direction: row;align-items:  center;margin-left: 15px;">
-          
+
                                               <img src="images/personal-blue.png" alt=""> <span style="padding-left: 5px;padding-top: 5px;">{{ alloc.amountOfGivts }}</span></span>
-          
+
                                             </div>
                                             <table class="incasso-state-table" *ngIf="!alloc.isStatsHidden">
                                                 <tr [class.incasso-state-table__row--disabled]="alloc.toProcessTotal == 0">
@@ -164,11 +167,11 @@
                                                 </tr>
                                             </table>
                                         </div>
-          
+
                                     </ng-container>
                                 </ng-container>
                       </ng-container>
-                      
+
                   </div>
               </div>
           </aside>
@@ -237,9 +240,9 @@
                                                                             <li *ngFor="let item of filteredUsedTags" class="schedule__dialog__form__listitem" (click)="setCollectNameOf(item, alloc)" [innerHTML]="item"></li>
                                                                         </ul>
                                                                     </div>
-              
+
                                                                     <button style="cursor:pointer;background: #2E2957; border:0;margin-left: auto;display:  flex;justify-content:  center;" class="icon" [class.fill-green]="!alloc.isStatsHidden" (click)="alloc.isStatsHidden = !alloc.isStatsHidden">
-              
+
                                                                         <svg width="23px" height="23px" viewBox="8 8 23 23" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                                                                             <!-- Generator: Sketch 40.3 (33839) - http://www.bohemiancoding.com/sketch -->
                                                                             <desc>Created with Sketch.</desc>
@@ -248,9 +251,9 @@
                                                                         </svg>
                                                                     </button>
                                                                     <span style="font-family: Avenir_Light;display: flex;flex-direction: row;align-items:  center;margin-left: 15px;">
-              
+
                                                   <img src="images/personal-blue.png" alt=""> <span style="padding-left: 5px;padding-top: 5px;">{{ alloc.amountOfGivts }}</span></span>
-              
+
                                                                 </div>
                                                                 <table class="incasso-state-table" *ngIf="!alloc.isStatsHidden">
                                                                     <tr [class.incasso-state-table__row--disabled]="alloc.toProcessTotal == 0">
@@ -280,7 +283,7 @@
                                                                     </tr>
                                                                 </table>
                                                             </div>
-              
+
                                                         </ng-container>
                                                         <button *ngIf="allowButton && currentTab == SelectedTab.Collects" style="height: 50px;width: 100%;" class="info-table__button" [disabled]="disableSaveButton" [class.info-table__button--disabled]="disableSaveButton" (click)="saveAllEvents()">{{ "SaveAll" | translate }}</button>
                                                         <button *ngIf="!allowButton && currentTab == SelectedTab.Collects" style="height: 50px;width: 100%;" class="info-table__button info-table__button--danger" (click)="deleteEvent()">{{ "DeleteAll" | translate }}</button>
@@ -293,7 +296,7 @@
                                                                         <span style="align-self: center;font-family: Avenir_Heavy; font-size: 18px;">{{alloc.name}}</span>
                                                                     </div>
                                                                     <button style="cursor:pointer;background: #2E2957; border:0;margin-left: auto;display:  flex;justify-content:  center;" class="icon" [class.fill-green]="!alloc.isStatsHidden" (click)="alloc.isStatsHidden = !alloc.isStatsHidden">
-              
+
                                                                         <svg width="23px" height="23px" viewBox="8 8 23 23" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                                                                             <!-- Generator: Sketch 40.3 (33839) - http://www.bohemiancoding.com/sketch -->
                                                                             <desc>Created with Sketch.</desc>
@@ -302,9 +305,9 @@
                                                                         </svg>
                                                                     </button>
                                                                     <span style="font-family: Avenir_Light;display: flex;flex-direction: row;align-items:  center;margin-left: 15px;">
-              
+
                                                   <img src="images/personal-blue.png" alt=""> <span style="padding-left: 5px;padding-top: 5px;">{{ alloc.amountOfGivts }}</span></span>
-              
+
                                                                 </div>
                                                                 <table class="incasso-state-table" *ngIf="!alloc.isStatsHidden">
                                                                     <tr [class.incasso-state-table__row--disabled]="alloc.toProcessTotal == 0">
@@ -334,11 +337,11 @@
                                                                     </tr>
                                                                 </table>
                                                             </div>
-              
+
                                                         </ng-container>
                                                     </ng-container>
                                         </ng-container>
-                                      
+
                                   </div>
                               </div>
                           </td>
