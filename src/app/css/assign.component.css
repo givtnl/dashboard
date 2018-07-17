@@ -719,6 +719,14 @@ h3{
   background-color: #41c98e;
 }
 
+.upload-csv-uploaded{
+    color: #1CA96C;
+}
+
+.upload-csv-error{
+    color: #B91A24;
+}
+
 .mobile-calendar {
     display: none;
 }

@@ -8,6 +8,7 @@ import {AllocationTimeSpanItem} from "../models/allocationTimeSpanItem";
 import {UserService} from "../services/user.service";
 import {DataService} from "../services/data.service";
 import {AgendaView} from "fullcalendar";
+import {ISODatePipe} from "../pipes/iso.datepipe";
 
 @Component({
     selector: 'app-assign-collects',
@@ -49,8 +50,9 @@ export class AssignComponent implements OnInit {
     openedMobileEventId = -1;
     private firstDay = 0;
     agendaView: AgendaView;
-    csvFile: File;
 
+    csvFile: File;
+    addedAllocations: Array<Object> = [];
     firstCollection = new AssignedCollection();
     secondCollection = new AssignedCollection();
     thirdCollection = new AssignedCollection();
@@ -102,7 +104,7 @@ export class AssignComponent implements OnInit {
         return filtered;
     }
 
-    public constructor(public ts: TranslateService, private cd: ChangeDetectorRef, private apiService: ApiClientService, private userService: UserService, private dataService: DataService) {
+    public constructor(public ts: TranslateService, private datePipe: ISODatePipe, private cd: ChangeDetectorRef, private apiService: ApiClientService, private userService: UserService, private dataService: DataService) {
         this.isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
         this.ts.get('Collection').subscribe((res: string) => {
             this.collectionTranslation = res;
@@ -927,6 +929,7 @@ export class AssignComponent implements OnInit {
 
     uploadCSV() {
         if (this.csvFile) {
+            this.addedAllocations = [];
             let reader: FileReader = new FileReader();
             reader.readAsText(this.csvFile);
             reader.onload = (e) => {
@@ -938,9 +941,24 @@ export class AssignComponent implements OnInit {
                         name: props[2],
                         dtBegin: new Date(props[0]),
                         dtEnd: new Date(props[1]),
-                        collectId: props[3]
+                        collectId: props[3],
+                        dtBeginString: new Date(props[0]).toLocaleDateString(navigator.language, { day:'numeric', year: 'numeric', month: 'long', hour:'numeric', minute:'numeric'}),
+                        dtEndString: new Date(props[1]).toLocaleDateString(navigator.language, { day:'numeric', year: 'numeric', month: 'long', hour:'numeric', minute:'numeric'}),
+                        uploading: true,
+                        uploaded: false,
+                        error: false
                     };
-                    this.saveAllocation(alloc.name, alloc.collectId, alloc.dtBegin, alloc.dtEnd);
+                    this.saveAllocation(alloc.name, alloc.collectId, alloc.dtBegin, alloc.dtEnd)
+                        .then( () => {
+                            alloc.uploaded = true;
+                            alloc.uploading = false;
+                            alloc.error = false;
+                        }).catch(() => {
+                            alloc.uploading = false;
+                            alloc.uploaded = false;
+                            alloc.error = true;
+                    });
+                    this.addedAllocations.push(alloc);
                     console.log(alloc);
                 }
             };
@@ -950,9 +968,28 @@ export class AssignComponent implements OnInit {
     }
 
     fileChange(event) {
+        this.addedAllocations = [];
         let fileList: FileList = event.target.files;
         if (fileList.length > 0) {
             this.csvFile = fileList[0];
+            let reader: FileReader = new FileReader();
+            reader.readAsText(this.csvFile);
+            reader.onload = (e) => {
+                let csv: string = reader.result;
+                let lineByLine = csv.split('\n');
+                for (let i = 1; i < lineByLine.length; i++) {
+                    let props = lineByLine[i].split(',');
+                    let alloc = {
+                        name: props[2],
+                        dtBegin: new Date(props[0]),
+                        dtEnd: new Date(props[1]),
+                        collectId: props[3],
+                        dtBeginString: new Date(props[0]).toLocaleDateString(navigator.language, { day:'numeric', year: 'numeric', month: 'long', hour:'numeric', minute:'numeric'}),
+                        dtEndString: new Date(props[1]).toLocaleDateString(navigator.language, { day:'numeric', year: 'numeric', month: 'long', hour:'numeric', minute:'numeric'})
+                    };
+                    this.addedAllocations.push(alloc);
+                }
+            };
         }
     }
 }
