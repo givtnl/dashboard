@@ -34,7 +34,7 @@
                     <button class="upload-csv-button" (click)="uploadCSV()">Upload CSV</button>
                     <input type="file" (change)="fileChange($event)" placeholder="Upload csv" accept=".csv">
                     <ul>
-                        <li *ngFor="let item of addedAllocations" [class.upload-csv-error]="item.error" [class.upload-csv-uploaded]="item.uploaded" >{{item.name}} ( {{item.dtBeginString}} - {{item.dtEndString}} )</li>
+                        <li *ngFor="let item of addedAllocations" [class.upload-csv-error]="item.error" [class.upload-csv-uploaded]="item.uploaded" class="allocation-list" >{{item.name}} ( {{item.dtBeginString}} - {{item.dtEndString}} )</li>
                     </ul>
                 </div>
                 <p-schedule #calendar [events]="events" locale="locale" [nowIndicator]="false" [header]="headerConfig"

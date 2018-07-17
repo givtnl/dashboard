@@ -720,11 +720,19 @@ h3{
 }
 
 .upload-csv-uploaded{
-    color: #1CA96C;
+    color: #1CA96C !important;
 }
 
 .upload-csv-error{
-    color: #B91A24;
+    color: #B91A24 !important;
+}
+
+.allocation-list{
+    font-family: Avenir;
+    list-style-type: none;
+    text-align: center;
+    color: #2E2957;
+    font-weight: bold;
 }
 
 .mobile-calendar {
