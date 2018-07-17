@@ -7,7 +7,7 @@
 
             <div class="schedule" (click)="isAssignInputFieldVisisble = true">
                 <h2>{{ "TitleAllocate" | translate }}</h2>
-                <div *ngIf="numberOfFilteredEvents > 0" class="assign__button"
+                <div *ngIf="numberOfFilteredEvents > 0" class="assign__button" style="text-align: center;"
                      [class.showElement]="numberOfFilteredEvents > 0"
                      [class.mobile-hidden]="numberOfFilteredEvents == 0">
                     <div class="mobile-flex">
@@ -31,8 +31,8 @@
                     </div>
                 </div>
                 <div class="upload-csv">
-                    <button class="upload-csv-button" (click)="uploadCSV()">Upload CSV</button>
-                    <input type="file" (change)="fileChange($event)" placeholder="Upload csv" accept=".csv">
+                    <button class="upload-csv-button" (click)="uploadCSV()" [disabled]="addedAllocations.length == 0" [class.ui-state-disabled]="addedAllocations.length == 0" >Upload CSV</button>
+                    <input class="input-csv-file" type="file" (change)="fileChange($event)" placeholder="Upload csv" accept=".csv">
                     <ul>
                         <li *ngFor="let item of addedAllocations" [class.upload-csv-error]="item.error" [class.upload-csv-uploaded]="item.uploaded" class="allocation-list" >{{item.name}} ( {{item.dtBeginString}} - {{item.dtEndString}} )</li>
                     </ul>

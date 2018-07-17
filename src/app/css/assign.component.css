@@ -735,6 +735,17 @@ h3{
     font-weight: bold;
 }
 
+.input-csv-file{
+    padding-left: 15px;
+    box-sizing: border-box;
+    font-family: 'Avenir_Black';
+    color: #2C2B57;
+    border: 0;
+    font-size: 15px;
+    transition: 0.3s;
+    border-radius: 3px;
+}
+
 .mobile-calendar {
     display: none;
 }

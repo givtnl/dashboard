@@ -9,6 +9,7 @@ import {UserService} from "../services/user.service";
 import {DataService} from "../services/data.service";
 import {AgendaView} from "fullcalendar";
 import {ISODatePipe} from "../pipes/iso.datepipe";
+import {forEach} from "@angular/router/src/utils/collection";
 
 @Component({
     selector: 'app-assign-collects',
@@ -52,7 +53,7 @@ export class AssignComponent implements OnInit {
     agendaView: AgendaView;
 
     csvFile: File;
-    addedAllocations: Array<Object> = [];
+    addedAllocations: Array<any> = [];
     firstCollection = new AssignedCollection();
     secondCollection = new AssignedCollection();
     thirdCollection = new AssignedCollection();
@@ -928,42 +929,30 @@ export class AssignComponent implements OnInit {
     }
 
     uploadCSV() {
-        if (this.csvFile) {
-            this.addedAllocations = [];
-            let reader: FileReader = new FileReader();
-            reader.readAsText(this.csvFile);
-            reader.onload = (e) => {
-                let csv: string = reader.result;
-                let lineByLine = csv.split('\n');
-                for (let i = 1; i < lineByLine.length; i++) {
-                    let props = lineByLine[i].split(',');
-                    let alloc = {
-                        name: props[2],
-                        dtBegin: new Date(props[0]),
-                        dtEnd: new Date(props[1]),
-                        collectId: props[3],
-                        dtBeginString: new Date(props[0]).toLocaleDateString(navigator.language, { day:'numeric', year: 'numeric', month: 'long', hour:'numeric', minute:'numeric'}),
-                        dtEndString: new Date(props[1]).toLocaleDateString(navigator.language, { day:'numeric', year: 'numeric', month: 'long', hour:'numeric', minute:'numeric'}),
-                        uploading: true,
-                        uploaded: false,
-                        error: false
-                    };
-                    this.saveAllocation(alloc.name, alloc.collectId, alloc.dtBegin, alloc.dtEnd)
-                        .then( () => {
-                            alloc.uploaded = true;
-                            alloc.uploading = false;
-                            alloc.error = false;
-                        }).catch(() => {
-                            alloc.uploading = false;
-                            alloc.uploaded = false;
-                            alloc.error = true;
-                    });
-                    this.addedAllocations.push(alloc);
-                    console.log(alloc);
+        if (this.addedAllocations.length > 0){
+            for (let i = 0; i < this.addedAllocations.length; i++) {
+                let alloc = this.addedAllocations[i];
+                if (alloc.error) {
+                    alert('Er zit nog een fout in de csv.');
+                    return;
                 }
-            };
-        } else {
-            alert('No file selected.');
+            }
+
+            for (let i = 0; i < this.addedAllocations.length; i++){
+                let alloc = this.addedAllocations[i];
+                alloc.uploaded = false;
+                alloc.uploading = true;
+                this.saveAllocation(alloc.name, alloc.collectId, alloc.dtBegin, alloc.dtEnd)
+                    .then( () => {
+                        alloc.uploaded = true;
+                        alloc.uploading = false;
+                        alloc.error = false;
+                    }).catch(() => {
+                    alloc.uploading = false;
+                    alloc.uploaded = false;
+                    alloc.error = true;
+                });
+            }
         }
     }
 
@@ -979,18 +968,37 @@ export class AssignComponent implements OnInit {
                 let lineByLine = csv.split('\n');
                 for (let i = 1; i < lineByLine.length; i++) {
                     let props = lineByLine[i].split(',');
-                    let alloc = {
-                        name: props[2],
-                        dtBegin: new Date(props[0]),
-                        dtEnd: new Date(props[1]),
-                        collectId: props[3],
-                        dtBeginString: new Date(props[0]).toLocaleDateString(navigator.language, { day:'numeric', year: 'numeric', month: 'long', hour:'numeric', minute:'numeric'}),
-                        dtEndString: new Date(props[1]).toLocaleDateString(navigator.language, { day:'numeric', year: 'numeric', month: 'long', hour:'numeric', minute:'numeric'})
-                    };
+                    let dtBegin = new Date(props[0]);
+                    let dtEnd = new Date(props[1]);
+                    let alloc;
+                    if (!this.isValidDate(dtBegin) || !this.isValidDate(dtEnd)){
+                        alloc = {
+                            name: props[2],
+                            dtBegin: dtBegin,
+                            dtEnd: dtEnd,
+                            collectId: props[3],
+                            dtBeginString: new Date(props[0]).toLocaleDateString(navigator.language, { day:'numeric', year: 'numeric', month: 'long', hour:'numeric', minute:'numeric'}),
+                            dtEndString: new Date(props[1]).toLocaleDateString(navigator.language, { day:'numeric', year: 'numeric', month: 'long', hour:'numeric', minute:'numeric'}),
+                            error: true
+                        };
+                    } else {
+                        alloc = {
+                            name: props[2],
+                            dtBegin: dtBegin,
+                            dtEnd: dtEnd,
+                            collectId: props[3],
+                            dtBeginString: new Date(props[0]).toLocaleDateString(navigator.language, { day:'numeric', year: 'numeric', month: 'long', hour:'numeric', minute:'numeric'}),
+                            dtEndString: new Date(props[1]).toLocaleDateString(navigator.language, { day:'numeric', year: 'numeric', month: 'long', hour:'numeric', minute:'numeric'})
+                        };
+                    }
                     this.addedAllocations.push(alloc);
                 }
             };
         }
+    }
+
+    isValidDate(d) {
+        return d instanceof Date && !isNaN(d.getTime());
     }
 }
 
