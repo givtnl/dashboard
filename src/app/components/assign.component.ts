@@ -48,6 +48,7 @@ export class AssignComponent implements OnInit {
     oldJsEvent: any;
     openedMobileEventId = -1;
     private firstDay = 0;
+    isAssignInputFieldVisisble = false;
     agendaView: AgendaView;
     csvFile: File;
 
