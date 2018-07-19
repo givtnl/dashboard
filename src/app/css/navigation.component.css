@@ -32,6 +32,11 @@ my-alert {
 .sidebar .sidebar-nav li:hover {
   border-left: 4px solid #41C98E;
 }
+
+.sidebar .sidebar-nav li:first-child:hover {
+  border-left: 4px solid transparent;
+}
+
 li.list-org a {
    background: none !important;
 }

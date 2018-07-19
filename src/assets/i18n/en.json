@@ -152,5 +152,6 @@
     "PreviousWeek": "Previous week",
     "NextWeek": "Next week",
     "Text_Donation": "donation",
-    "NoTransactionsYet": "This allocation has no transactions."
+    "NoTransactionsYet": "This allocation has no transactions.",
+    "WoopsContactSupport": "Something went wrong! Please send an e-mail to support@givtapp.net"
 }

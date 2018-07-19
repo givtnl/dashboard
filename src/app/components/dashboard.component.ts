@@ -58,17 +58,19 @@ export class DashboardComponent implements OnInit, OnDestroy{
 
     ngOnInit() : void{
         this.continuousData = setInterval(() => {
-            this.fetchThisMonthGivts();
-            this.fetchThisMonthGivers();
-            this.fetchLastDayGivts();
-	        this.fetchAverageGivers();
-          if (this.ShowLoadingAnimation)
-                this.ShowLoadingAnimation = false;
+            let f1 = this.fetchThisMonthGivts();
+            let f2 = this.fetchThisMonthGivers();
+            let f3 = this.fetchLastDayGivts();
+            let f4 = this.fetchAverageGivers();
+            Promise.all([f1, f2, f3, f4]).then(() => {
+                if (this.ShowLoadingAnimation)
+                    this.ShowLoadingAnimation = false;
+            });
         }, 3000);
 
     }
 
-    fetchThisMonthGivers(){
+    fetchThisMonthGivers() : Promise<void> {
         let date = new Date();
         let month = date.getUTCMonth()+1;
         let year = date.getFullYear();
@@ -99,11 +101,10 @@ export class DashboardComponent implements OnInit, OnDestroy{
                 if(!cardIsInCards){
                     this.cards.push(this.thisMonthGiversCard);
                 }
-
             });
     }
 
-    fetchAverageGivers(){
+    fetchAverageGivers() : Promise<void> {
       return this.apiService.getData("v2/collectgroups/"+this.userService.CurrentCollectGroup.GUID+"/cards/user-average")
         .then(resp =>
         {
@@ -123,7 +124,7 @@ export class DashboardComponent implements OnInit, OnDestroy{
         });
     }
 
-    fetchThisMonthGivts(){
+    fetchThisMonthGivts() : Promise<void> {
         let date = new Date();
         let month = date.getUTCMonth()+1;
         let year = date.getFullYear();
@@ -170,7 +171,7 @@ export class DashboardComponent implements OnInit, OnDestroy{
             });
     }
 
-    fetchLastDayGivts(){
+    fetchLastDayGivts() : Promise<void> {
         let dtEnd = this.datePipe.transform(new Date(), "yyyy-MM-ddT23:59:59.999" + this.datePipe.getLocalTimeZoneISOString());
         let dtBegin = this.datePipe.transform(new Date().setDate(new Date().getDate() - 6), "yyyy-MM-ddT00:00:00.000" + this.datePipe.getLocalTimeZoneISOString());
         let dateEnd = new Date(dtEnd);

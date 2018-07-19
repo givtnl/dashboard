@@ -71,6 +71,14 @@ h2{
     text-align: center;
 }
 
+.text--fat {
+    font-family: Avenir_Heavy;
+}
+
+.text--danger {
+    color: #E6412C;
+}
+
 .avenir-light {
     font-family: Avenir_Light;
     color: #2E2957;
