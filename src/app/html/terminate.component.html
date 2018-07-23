@@ -10,31 +10,27 @@
     </svg>
     <ng-container>
         <section *ngIf="terminateState == TerminateState.Undecided" class="terminate-section">
-            <p class="text">
-                We zullen je account met emailadres <span class="text--fat">{{params.email}}</span> verwijderen. 
-                Zo zal je van ons geen mailtjes meer ontvangen.
-            </p>
-            <p class="text text--fat">Al je gegevens gaan verloren, dit proces is onomkeerbaar.</p>
-            <p class="text text--fat">Weet je het zeker?</p>
+            <p class="text" [innerHTML]=terminateUndecided></p>
+            <p class="text text--fat">{{"AreYouSure" | translate}}</p>
             <section class="btn-group">
-                <button class="btn" (click)="terminate()">Ja, ik weet het zeker</button>
-                <button class="btn btn--cancel" (click)="cancelTerminate()">Nee</button>
+                <button class="btn" (click)="terminate()">{{"YesImSure" | translate}}</button>
+                <button class="btn btn--cancel" (click)="cancelTerminate()">{{"No" | translate}}</button>
             </section>
         </section>
         <section *ngIf="terminateState == TerminateState.Terminated" class="terminate-section">
             <p class="text text--fat">
-                Jammer dat je gaat. 😔
+                {{"TerminateTerminated_Sad" | translate}}
             </p>
-            <p class="text">Je gegevens zijn bij ons verwijderd. Zo zal je dus geen mailtjes meer van ons ontvangen. Misschien tot in de toekomst?</p>
-            <p class="text">(Deze pagina kan je nu sluiten.)</p>
+            <p class="text">{{"TerminateTerminated_Removed" | translate}}</p>
+            <p class="text">{{"ClosePage" | translate}}</p>
     
         </section>
         <section *ngIf="terminateState == TerminateState.CancelledTermination" class="terminate-section">
             <p class="text text--fat">
-                Bedankt voor het vertrouwen in Givt! 😀
+                {{"TerminateCancelled_ThankYou" | translate}}
             </p>
-            <p class="text">Je gegevens zijn <span class="text--fat">niet</span> verwijderd. Je kan gewoon blijven geven!</p>
-            <p class="text">(Deze pagina kan je nu sluiten.)</p>
+            <p class="text">{{"TerminateCancelled_NotRemoved" | translate}}</p>
+            <p class="text">{{"ClosePage" | translate}}</p>
         </section>
     </ng-container>
     

@@ -14,11 +14,16 @@ export class TerminateComponent implements OnInit {
     terminateState: TerminateState = TerminateState.Undecided;
 
     params: any
+    
+    terminateUndecided: string
 
     ngOnInit() {
         this.terminateState = TerminateState.Undecided
         let token = this.route.snapshot.queryParams["token"]
         this.params = JSON.parse(atob(token))
+        this.translateService.get("TerminateUndecided_WillRemove").subscribe((res) => {
+            this.terminateUndecided = res.replace("{0}", `<span class="text--fat">${this.params.email}</span>`)
+        });
     }
 
     constructor(private translateService: TranslateService, private dataService: DataService, private apiClientService: ApiClientService, private route : ActivatedRoute) {
