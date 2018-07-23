@@ -153,5 +153,13 @@
     "NextWeek": "Next week",
     "Text_Donation": "donation",
     "NoTransactionsYet": "This allocation has no transactions.",
-    "WoopsContactSupport": "Something went wrong! Please send an e-mail to support@givtapp.net"
+    "WoopsContactSupport": "Something went wrong! Please send an e-mail to support@givtapp.net",
+    "TerminateUndecided_WillRemove": "We will delete your account with e-mail address {0}. You will not receive e-mails from us anymore. <br /><br />\nAll your data will be lost. You will not be able to recover them.",
+    "AreYouSure": "Are you sure?",
+    "TerminateTerminated_Sad": "Sad to see you leave. 😔",
+    "TerminateTerminated_Removed": "Your account has been deleted. Maybe we will meet each other again in the future?",
+    "TerminateCancelled_ThankYou": "Thanks for your confidence in Givt! 😀",
+    "TerminateCancelled_NotRemoved": "Your account has not been removed. Just keep on giving!",
+    "ClosePage": "(You can now close this page)",
+    "No": "No"
 }

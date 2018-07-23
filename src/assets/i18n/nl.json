@@ -153,5 +153,13 @@
     "NextWeek": "Volgende week",
     "Text_Donation": "gift",
     "NoTransactionsYet": "Er zijn geen transacties voor deze toewijzing.",
-    "WoopsContactSupport": "Er ging iets mis! Stuur gauw een mailtje naar support@givtapp.net"
+    "WoopsContactSupport": "Er ging iets mis! Stuur gauw een mailtje naar support@givtapp.net",
+    "TerminateUndecided_WillRemove": "We zullen je account met emailadres {0} verwijderen. Zo zal je van ons geen mailtjes meer ontvangen. <br /> <br />\nAl je gegevens gaan verloren. Je kunt dit niet ongedaan maken.",
+    "AreYouSure": "Weet je het zeker?",
+    "TerminateTerminated_Sad": "Jammer dat je gaat. 😔",
+    "TerminateTerminated_Removed": "Je gegevens zijn bij ons verwijderd. Misschien tot in de toekomst?",
+    "TerminateCancelled_ThankYou": "Bedankt voor het vertrouwen in Givt! 😀",
+    "TerminateCancelled_NotRemoved": "Je gegevens zijn niet verwijderd. Je kan gewoon blijven geven!",
+    "ClosePage": "(Deze pagina kan je nu sluiten.)",
+    "No": "Nee"
 }
