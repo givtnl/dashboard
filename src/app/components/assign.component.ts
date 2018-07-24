@@ -1,15 +1,15 @@
-import {Component, OnInit, ViewEncapsulation, ElementRef} from '@angular/core';
-import {ApiClientService} from "app/services/api-client.service";
-import {TranslateService} from "ng2-translate";
-import {ViewChild, ChangeDetectorRef} from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, ElementRef } from '@angular/core';
+import { ApiClientService } from "app/services/api-client.service";
+import { TranslateService } from "ng2-translate";
+import { ViewChild, ChangeDetectorRef } from '@angular/core';
 import 'fullcalendar';
 import 'fullcalendar/dist/locale/nl';
-import {AllocationTimeSpanItem} from "../models/allocationTimeSpanItem";
-import {UserService} from "../services/user.service";
-import {DataService} from "../services/data.service";
-import {AgendaView} from "fullcalendar";
-import {ISODatePipe} from "../pipes/iso.datepipe";
-import {forEach} from "@angular/router/src/utils/collection";
+import { AllocationTimeSpanItem } from "../models/allocationTimeSpanItem";
+import { UserService } from "../services/user.service";
+import { DataService } from "../services/data.service";
+import { AgendaView } from "fullcalendar";
+import { ISODatePipe } from "../pipes/iso.datepipe";
+import { forEach } from "@angular/router/src/utils/collection";
 
 @Component({
     selector: 'app-assign-collects',
@@ -53,10 +53,15 @@ export class AssignComponent implements OnInit {
     agendaView: AgendaView;
 
     csvFile: File;
+    csvFileName: string = ""
+    selectedCSV: boolean = false;
+    showCsvPopup: boolean = false;
+    csvError: boolean = true
     addedAllocations: Array<any> = [];
     firstCollection = new AssignedCollection();
     secondCollection = new AssignedCollection();
     thirdCollection = new AssignedCollection();
+    isShowAllocation: boolean = false;
 
     isLoading = false;
 
@@ -221,6 +226,7 @@ export class AssignComponent implements OnInit {
 
     private openDialog() {
         console.log(this.event);
+        this.isShowAllocation = true;
         this.isDialogOpen = true;
         if (this.allocations.filter((ts) => ts.amountOfGivts > 0).length > 0) {
             this.currentTab = SelectedTab.Collects;
@@ -771,7 +777,6 @@ export class AssignComponent implements OnInit {
             body["CollectId"] = collectId;
             this.apiService.postData("Allocations/Allocation", body)
                 .then(resp => {
-                    resolve(resp);
                     if (resp.status === 409) {
                         this.toggleError(true, "Je zit met een overlapping");
                     }
@@ -781,9 +786,19 @@ export class AssignComponent implements OnInit {
                     })) {
                         this.usedTags.push(title);
                     }
-
+                    resolve(resp);
                 })
                 .catch(err => {
+                    // if (err.status === 409) {
+                    //     for (var i = 0; i < this.addedAllocations.length; i++) {
+                    //         console.log(this.addedAllocations[i])
+                    //         if(this.addedAllocations[i].error)
+                    //             this.ts.get('OverlapError').subscribe((res: string) => {
+                    //                 this.addedAllocations[i].errorMsg = res;
+                    //             });
+
+                    //     }
+                    // }
                     console.log(err);
                     reject();
                 });
@@ -858,7 +873,7 @@ export class AssignComponent implements OnInit {
         if (!navigator.language.includes('en'))
             euro += " ";
         return euro + (this.isSafari ? parseFloat(x).toFixed(2) : (x).toLocaleString(
-                navigator.language, {minimumFractionDigits: 2, maximumFractionDigits: 2})
+            navigator.language, { minimumFractionDigits: 2, maximumFractionDigits: 2 })
         );
     }
 
@@ -927,36 +942,52 @@ export class AssignComponent implements OnInit {
             this.oldJsEvent.target.style.boxShadow = "0px 0px 15px transparent";
         }
     }
+    closeCSVBox() {
+        this.selectedCSV = false;
+        if (!this.isShowAllocation) {
+            this.isDialogOpen = false;
+        }
+    }
 
     uploadCSV() {
-        if (this.addedAllocations.length > 0){
+        if (this.addedAllocations.length > 0) {
             for (let i = 0; i < this.addedAllocations.length; i++) {
                 let alloc = this.addedAllocations[i];
                 if (alloc.error) {
-                    alert('Er zit nog een fout in de csv.');
+                    this.csvError = true;
+                    this.showCsvPopup = true;
+                    this.csvFileName = 'Er zit nog een fout in de csv.';
                     return;
                 }
             }
+            this.showCsvPopup = true;
+            this.csvFileName = "'"+this.csvFile.name + "' uploaded.";
+            this.isDialogOpen = true;
+            this.csvError = false;
 
-            for (let i = 0; i < this.addedAllocations.length; i++){
+            for (let i = 0; i < this.addedAllocations.length; i++) {
                 let alloc = this.addedAllocations[i];
                 alloc.uploaded = false;
                 alloc.uploading = true;
                 this.saveAllocation(alloc.name, alloc.collectId, alloc.dtBegin, alloc.dtEnd)
-                    .then( () => {
+                    .then(() => {
                         alloc.uploaded = true;
                         alloc.uploading = false;
                         alloc.error = false;
                     }).catch(() => {
-                    alloc.uploading = false;
-                    alloc.uploaded = false;
-                    alloc.error = true;
-                });
+                        alloc.uploading = false;
+                        alloc.uploaded = false;
+                        alloc.error = true;
+                            this.ts.get('OverlapError').subscribe((res: string) => {
+                                alloc.errorMsg = res;
+                            });
+                    });
             }
         }
     }
 
     fileChange(event) {
+        this.selectedCSV = true;
         this.addedAllocations = [];
         let fileList: FileList = event.target.files;
         if (fileList.length > 0) {
@@ -971,14 +1002,14 @@ export class AssignComponent implements OnInit {
                     let dtBegin = new Date(props[0]);
                     let dtEnd = new Date(props[1]);
                     let alloc;
-                    if (!this.isValidDate(dtBegin) || !this.isValidDate(dtEnd)){
+                    if (!this.isValidDate(dtBegin) || !this.isValidDate(dtEnd)) {
                         alloc = {
                             name: props[2],
                             dtBegin: dtBegin,
                             dtEnd: dtEnd,
                             collectId: props[3],
-                            dtBeginString: new Date(props[0]).toLocaleDateString(navigator.language, { day:'numeric', year: 'numeric', month: 'long', hour:'numeric', minute:'numeric'}),
-                            dtEndString: new Date(props[1]).toLocaleDateString(navigator.language, { day:'numeric', year: 'numeric', month: 'long', hour:'numeric', minute:'numeric'}),
+                            dtBeginString: new Date(props[0]).toLocaleDateString(navigator.language, { day: 'numeric', year: 'numeric', month: 'numeric', hour: 'numeric', minute: 'numeric' }),
+                            dtEndString: new Date(props[1]).toLocaleDateString(navigator.language, { day: 'numeric', year: 'numeric', month: 'numeric', hour: 'numeric', minute: 'numeric' }),
                             error: true
                         };
                     } else {
@@ -987,18 +1018,22 @@ export class AssignComponent implements OnInit {
                             dtBegin: dtBegin,
                             dtEnd: dtEnd,
                             collectId: props[3],
-                            dtBeginString: new Date(props[0]).toLocaleDateString(navigator.language, { day:'numeric', year: 'numeric', month: 'long', hour:'numeric', minute:'numeric'}),
-                            dtEndString: new Date(props[1]).toLocaleDateString(navigator.language, { day:'numeric', year: 'numeric', month: 'long', hour:'numeric', minute:'numeric'})
+                            dtBeginString: new Date(props[0]).toLocaleDateString(navigator.language, { day: 'numeric', year: 'numeric', month: 'numeric', hour: 'numeric', minute: 'numeric' }),
+                            dtEndString: new Date(props[1]).toLocaleDateString(navigator.language, { day: 'numeric', year: 'numeric', month: 'numeric', hour: 'numeric', minute: 'numeric' })
                         };
                     }
                     this.addedAllocations.push(alloc);
                 }
+                this.uploadCSV();
             };
         }
     }
 
     isValidDate(d) {
         return d instanceof Date && !isNaN(d.getTime());
+    }
+    closePopup() {
+        this.showCsvPopup = false;
     }
 }
 
