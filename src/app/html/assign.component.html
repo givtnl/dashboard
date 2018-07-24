@@ -37,7 +37,7 @@
                   </g>
                 </g>
               </svg>
-            <p>'{{this.csvFileName}}'</p>
+            <p>{{this.csvFileName}}</p>
             <svg (click)="closePopup()" style='cursor:pointer' class="csv-popup-close" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                 height="25.789246432142136" width="25.789246432143045">
                 <defs>
@@ -112,7 +112,7 @@
             <aside class="sidebar-collection" *ngIf="isDialogOpen">
                 <div class="sidebar-csv-box" *ngIf="selectedCSV">
                     <span class="sidebar-csv-box-header">
-                        <p class="sidebar-csv-box-title"> Uploaded allocations: </p>
+                        <p class="sidebar-csv-box-title">{{ "AllocationsAddedTitle" | translate }}</p>
                         <svg (click)="closeCSVBox()" style='cursor: pointer;' class="csv-popup-close" width="19px" height="19px" viewBox="0 0 19 19" version="1.1" xmlns="http://www.w3.org/2000/svg"
                             xmlns:xlink="http://www.w3.org/1999/xlink">
                             <!-- Generator: Sketch 49.1 (51147) - http://www.bohemiancoding.com/sketch -->
@@ -138,7 +138,7 @@
                                             {{item.name}}
                                         </span>
                                         <br/>{{item.dtBeginString}} - {{item.dtEndString}}
-                                        <br/>{{item.errorMsg||"This allocation has been added"}}
+                                        <br/>{{item.errorMsg || "AllocationAdded"|translate }}
                                     </p>
                                 </div>
                             </li>

@@ -956,12 +956,17 @@ export class AssignComponent implements OnInit {
                 if (alloc.error) {
                     this.csvError = true;
                     this.showCsvPopup = true;
-                    this.csvFileName = 'Er zit nog een fout in de csv.';
+                    alloc.error = true;
+                            this.ts.get('CsvError').subscribe((res: string) => {
+                                this.csvFileName = res;
+                            });
                     return;
                 }
             }
             this.showCsvPopup = true;
-            this.csvFileName = "'"+this.csvFile.name + "' uploaded.";
+            this.ts.get('CsvSuccess').subscribe((res: string) => {
+                this.csvFileName = "'"+this.csvFile.name + "'" + res;
+            });
             this.isDialogOpen = true;
             this.csvError = false;
 

@@ -165,5 +165,5 @@
     "AllocationAdded": "This allocation has been added.",
     "AllocationsAddedTitle": "Uploaded allocations:",
     "CsvError": "There is an error in the csv.",
-    "CsvSuccess": " succesfully uploaded.\n"
+    "CsvSuccess": " succesfully uploaded."
 }
