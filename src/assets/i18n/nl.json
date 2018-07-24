@@ -161,5 +161,9 @@
     "TerminateCancelled_ThankYou": "Bedankt voor het vertrouwen in Givt! 😀",
     "TerminateCancelled_NotRemoved": "Je gegevens zijn niet verwijderd. Je kan gewoon blijven geven!",
     "ClosePage": "(Deze pagina kan je nu sluiten.)",
-    "No": "Nee"
+    "No": "Nee",
+    "AllocationAdded": "Deze toewijzing is toegevoegd.\n",
+    "AllocationsAddedTitle": "Geuploade toewijzingen:",
+    "CsvError": "Er zit nog een fout in de csv.",
+    "CsvSuccess\n": " succesvol geupload."
 }
