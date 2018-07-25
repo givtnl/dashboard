@@ -957,15 +957,15 @@ export class AssignComponent implements OnInit {
                     this.csvError = true;
                     this.showCsvPopup = true;
                     alloc.error = true;
-                            this.ts.get('CsvError').subscribe((res: string) => {
-                                this.csvFileName = res;
-                            });
+                    this.ts.get('CsvError').subscribe((res: string) => {
+                        this.csvFileName = res;
+                    });
                     return;
                 }
             }
             this.showCsvPopup = true;
             this.ts.get('CsvSuccess').subscribe((res: string) => {
-                this.csvFileName = "'"+this.csvFile.name + "'" + res;
+                this.csvFileName = "'" + this.csvFile.name + "'" + res;
             });
             this.isDialogOpen = true;
             this.csvError = false;
@@ -983,14 +983,16 @@ export class AssignComponent implements OnInit {
                         alloc.uploading = false;
                         alloc.uploaded = false;
                         alloc.error = true;
-                            this.ts.get('OverlapError').subscribe((res: string) => {
-                                alloc.errorMsg = res;
-                            });
+                        this.ts.get('OverlapError').subscribe((res: string) => {
+                            alloc.errorMsg = res;
+                        });
                     });
             }
         }
     }
-
+    downloadExampleCSV(){
+        window.open('assets/Voorbeeld.csv')
+    }
     fileChange(event) {
         this.selectedCSV = true;
         this.addedAllocations = [];
