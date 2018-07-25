@@ -699,11 +699,41 @@ h3{
 }
 
 .upload-csv{
-  text-align: center;
   padding-bottom: 12px;
+  flex-direction: column;
+  display: flex;
+  width: fit-content;
+  float: right;
 }
 
+
+.csv-cell {
+  text-align: right;
+  display: table-cell;
+  font-family: "Avenir";
+  font-size: 12px;
+}
+
+
 .upload-csv-button{
+  padding: 8px 22px 8px 22px !important;
+  box-sizing: border-box;
+  color: white;
+  font-family: 'Avenir_Black';
+  background-color: #2C2B57;
+  border: 0;
+  font-size: 18px;
+  cursor: pointer;
+  transition: 0.3s;
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 4px;
+}
+.csv-download-example {
+  cursor: pointer;
+}
+.download-csv-button{
   padding: 8px 22px;
   box-sizing: border-box;
   color: white;
@@ -947,11 +977,10 @@ h3{
 
     }
     .upload-csv-button {
-      font-size: 0;
-      padding: 20px 16px 10px 16px !important
+      display: none;
     }
-    .upload-csv-button i {
-      font-size: 16px
+    .download-csv-button {
+      display: none;
     }
 }
 
@@ -1017,8 +1046,9 @@ h3{
   align-self: flex-end;
 }
 
-.upload-csv {
-  text-align: right;
+.download-csv{
+  text-align: left;
+  margin-bottom: 16px;
 }
 
 .assign-csv-table {

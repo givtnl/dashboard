@@ -19,27 +19,29 @@
                     </g>
                 </g>
             </svg>
-            <svg *ngIf="csvError" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" height="48" width="48">
+            <svg *ngIf="csvError" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" height="48"
+                width="48">
                 <defs>
-                  <ellipse id="ellipse-0" opacity="1" rx="24" ry="24" cx="24" cy="24"/>
-                  <path id="path-1" opacity="1" d="M31.27987579009734,29.02705551949748 L25.49955501720231,23.246734746602456 L31.27987579009734,17.46641397370743 C31.90393798686472,16.84235177694005 31.90393798686472,15.837655899874832 31.27987579009734,15.21359370310745 C30.655813593329956,14.58953150634007 29.651117716264743,14.58953150634007 29.027055519497363,15.21359370310745 L23.246734746602336,20.99391447600248 L17.46641397370731,15.21359370310745 C16.842351776939932,14.58953150634007 15.837655899874717,14.58953150634007 15.213593703107337,15.21359370310745 C14.589531506339956,15.83765589987483 14.589531506339956,16.842351776940045 15.213593703107337,17.46641397370743 L20.993914476002363,23.246734746602456 L15.213593703107337,29.02705551949748 C14.589531506339956,29.651117716264864 14.589531506339956,30.65581359333008 15.213593703107337,31.27987579009746 C15.837655899874717,31.90393798686484 16.842351776939932,31.90393798686484 17.46641397370731,31.27987579009746 L23.246734746602336,25.499555017202432 L29.027055519497363,31.27987579009746 C29.651117716264743,31.90393798686484 30.65581359332996,31.90393798686484 31.27987579009734,31.27987579009746 C31.899512013838002,30.655813593330077 31.899512013838002,29.646691743238144 31.27987579009734,29.02705551949748Z"/>
+                    <ellipse id="ellipse-0" opacity="1" rx="24" ry="24" cx="24" cy="24" />
+                    <path id="path-1" opacity="1" d="M31.27987579009734,29.02705551949748 L25.49955501720231,23.246734746602456 L31.27987579009734,17.46641397370743 C31.90393798686472,16.84235177694005 31.90393798686472,15.837655899874832 31.27987579009734,15.21359370310745 C30.655813593329956,14.58953150634007 29.651117716264743,14.58953150634007 29.027055519497363,15.21359370310745 L23.246734746602336,20.99391447600248 L17.46641397370731,15.21359370310745 C16.842351776939932,14.58953150634007 15.837655899874717,14.58953150634007 15.213593703107337,15.21359370310745 C14.589531506339956,15.83765589987483 14.589531506339956,16.842351776940045 15.213593703107337,17.46641397370743 L20.993914476002363,23.246734746602456 L15.213593703107337,29.02705551949748 C14.589531506339956,29.651117716264864 14.589531506339956,30.65581359333008 15.213593703107337,31.27987579009746 C15.837655899874717,31.90393798686484 16.842351776939932,31.90393798686484 17.46641397370731,31.27987579009746 L23.246734746602336,25.499555017202432 L29.027055519497363,31.27987579009746 C29.651117716264743,31.90393798686484 30.65581359332996,31.90393798686484 31.27987579009734,31.27987579009746 C31.899512013838002,30.655813593330077 31.899512013838002,29.646691743238144 31.27987579009734,29.02705551949748Z"
+                    />
                 </defs>
                 <g transform="translate(0, 0) " opacity="1">
-                  <g transform="translate(0, 0) ">
-                    <use xlink:href="#ellipse-0" fill="rgb(213,61,76)" fill-opacity="1"/>
-                  </g>
-                  <g transform="translate(0, 0) " opacity="1">
-                    <g transform="translate(0, 0) " opacity="1">
-                      <g transform="translate(0, 0) ">
-                        <use xlink:href="#path-1" fill="rgb(255,255,255)" fill-opacity="1"/>
-                      </g>
+                    <g transform="translate(0, 0) ">
+                        <use xlink:href="#ellipse-0" fill="rgb(213,61,76)" fill-opacity="1" />
                     </g>
-                  </g>
+                    <g transform="translate(0, 0) " opacity="1">
+                        <g transform="translate(0, 0) " opacity="1">
+                            <g transform="translate(0, 0) ">
+                                <use xlink:href="#path-1" fill="rgb(255,255,255)" fill-opacity="1" />
+                            </g>
+                        </g>
+                    </g>
                 </g>
-              </svg>
+            </svg>
             <p>{{this.csvFileName}}</p>
-            <svg (click)="closePopup()" style='cursor:pointer' class="csv-popup-close" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-                height="25.789246432142136" width="25.789246432143045">
+            <svg (click)="closePopup()" style='cursor:pointer' class="csv-popup-close" version="1.1" xmlns="http://www.w3.org/2000/svg"
+                xmlns:xlink="http://www.w3.org/1999/xlink" height="25.789246432142136" width="25.789246432143045">
                 <defs>
                     <path id="path-0" opacity="1" d="M25.07931208092531,21.662228537007625 L16.31170675998871,12.894623216071022 L25.07931208092531,4.127017895134421 C26.025891215880947,3.1804387601787854 26.025891215880947,1.6565134861721935 25.07931208092531,0.7099343512165567 C24.13273294596967,-0.2366447837390796 22.60880767196308,-0.2366447837390796 21.662228537007447,0.7099343512165567 L12.894623216070848,9.47753967215316 L4.12701789513425,0.7099343512165567 C3.180438760178614,-0.2366447837390796 1.6565134861720225,-0.2366447837390796 0.7099343512163859,0.7099343512165567 C-0.23664478373925008,1.6565134861721926 -0.23664478373925008,3.180438760178784 0.7099343512163859,4.127017895134421 L9.477539672152986,12.894623216071022 L0.7099343512163859,21.662228537007625 C-0.23664478373925008,22.608807671963262 -0.23664478373925008,24.132732945969856 0.7099343512163859,25.079312080925487 C1.6565134861720217,26.025891215881124 3.1804387601786126,26.025891215881124 4.12701789513425,25.079312080925487 L12.894623216070848,16.311706759988883 L21.662228537007447,25.079312080925487 C22.608807671963085,26.025891215881124 24.13273294596968,26.025891215881124 25.07931208092531,25.079312080925487 C26.01917788868268,24.13273294596985 26.01917788868268,22.602094344764993 25.07931208092531,21.662228537007625Z"
                     />
@@ -75,7 +77,8 @@
                             <td></td>
                         </tr>
                         <tr>
-                            <td></td>
+                            <td>
+                            </td>
                             <td>
                                 <div *ngIf="numberOfFilteredEvents > 0" class="assign__button" style="text-align: center;" [class.showElement]="numberOfFilteredEvents > 0"
                                     [class.mobile-hidden]="numberOfFilteredEvents == 0">
@@ -92,12 +95,13 @@
                                     </div>
                                 </div>
                             </td>
-                            <td>
+                            <td class="csv-cell">
                                 <div class="upload-csv">
                                     <input type="file" style="display:none;" (change)="fileChange($event)" id="inputfile" accept=".csv" />
                                     <a class="upload-csv-button btn-csv" href="javascript:document.getElementById('inputfile').click(); ">Upload CSV
-                                        <i class="fas fa-upload"></i>
+                                        <i class="fas fa-upload" style="margin-left: 10px; margin-top: -2px;"></i>
                                     </a>
+                                    <a class="csv-download-example" (click)="downloadExampleCSV()">Download example</a>
                                     <!-- <button class="upload-csv-button" (click)="uploadCSV()" [disabled]="addedAllocations.length == 0" [class.ui-state-disabled]="addedAllocations.length == 0">Upload CSV</button>
                                 <input class="input-csv-file" type="file" (change)="fileChange($event)" placeholder="Upload csv" accept=".csv"> -->
 
@@ -113,8 +117,8 @@
                 <div class="sidebar-csv-box" *ngIf="selectedCSV">
                     <span class="sidebar-csv-box-header">
                         <p class="sidebar-csv-box-title">{{ "AllocationsAddedTitle" | translate }}</p>
-                        <svg (click)="closeCSVBox()" style='cursor: pointer;' class="csv-popup-close" width="19px" height="19px" viewBox="0 0 19 19" version="1.1" xmlns="http://www.w3.org/2000/svg"
-                            xmlns:xlink="http://www.w3.org/1999/xlink">
+                        <svg (click)="closeCSVBox()" style='cursor: pointer;' class="csv-popup-close" width="19px" height="19px" viewBox="0 0 19 19"
+                            version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                             <!-- Generator: Sketch 49.1 (51147) - http://www.bohemiancoding.com/sketch -->
                             <desc>Created with Sketch.</desc>
                             <defs></defs>
