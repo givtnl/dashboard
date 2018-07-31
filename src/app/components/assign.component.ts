@@ -877,6 +877,10 @@ export class AssignComponent implements OnInit {
         );
     }
 
+    showDate(x){
+        return x.toLocaleDateString(navigator.language, {weekday: 'short', day:'numeric', month: 'numeric', year: 'numeric'})
+    }
+
     setWeekName(item) {
         this.allocateWeekName = item.replace("<span class='autocomplete'>", "").replace("</span>", "");
     }
