@@ -165,5 +165,6 @@
     "AllocationAdded": "Deze toewijzing is toegevoegd.\n",
     "AllocationsAddedTitle": "Geuploade toewijzingen:",
     "CsvError": "Er zit nog een fout in de csv.",
-    "CsvSuccess": " succesvol geupload."
+    "CsvSuccess": " succesvol geupload.",
+    "DownloadExample": "Voorbeeld downloaden"
 }
