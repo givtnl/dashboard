@@ -939,7 +939,7 @@ export class AssignComponent implements OnInit {
                         name: props[2],
                         dtBegin: new Date(props[0]),
                         dtEnd: new Date(props[1]),
-                        collectId: props[3]
+                        collectId: props[3].trim()
                     };
                     this.saveAllocation(alloc.name, alloc.collectId, alloc.dtBegin, alloc.dtEnd);
                     console.log(alloc);
