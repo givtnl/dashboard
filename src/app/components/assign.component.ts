@@ -978,7 +978,7 @@ export class AssignComponent implements OnInit {
                 let alloc = this.addedAllocations[i];
                 alloc.uploaded = false;
                 alloc.uploading = true;
-                this.saveAllocation(alloc.name, alloc.collectId, alloc.dtBegin, alloc.dtEnd)
+                this.saveAllocation(alloc.name.trim(), alloc.collectId.trim(), alloc.dtBegin.trim(), alloc.dtEnd.trim())
                     .then(() => {
                         alloc.uploaded = true;
                         alloc.uploading = false;
