@@ -159,26 +159,6 @@ export class MandateComponent implements OnInit {
             });
     }
 
-    startIncasso() {
-        if (!this.selectedOrganisation.mandate_status) {
-            alert("Kan mandaatstatus niet checken, probeer later opnieuw.");
-            return;
-        }
-        if (this.selectedOrganisation.mandate_status.PayProvMandateStatus === "closed.completed" && !this.incassoStatus) {
-            let body = {
-                Amount: this.selectedOrganisation.cf_value_92583,
-                CrmId: this.selectedOrganisation.id
-            };
-            this.apiClient.postData("Organisation/StartupFee", body)
-                .then(res => {
-                    alert("Incassoproces is gestart.");
-                })
-                .catch(err => console.log(err))
-        }
-
-        if (this.incassoStatus) alert("Incassoproces is al opgestart.");
-    }
-
     checkIncassoStatus(id, selectedMandate = null) {
         this.apiClient.getData("Debit/Org/" + id)
             .then(data => {
