@@ -1013,7 +1013,9 @@ export class AssignComponent implements OnInit {
                     let dtBegin = new Date(props[0]);
                     let dtEnd = new Date(props[1]);
                     let alloc;
-                    if (!this.isValidDate(dtBegin) || !this.isValidDate(dtEnd)) {
+                    let CollectId = props[3];
+
+                    if (!this.isValidDate(dtBegin) || !this.isValidDate(dtEnd) || Number(CollectId) > 3 ) {
                         alloc = {
                             name: props[2],
                             dtBegin: dtBegin,
