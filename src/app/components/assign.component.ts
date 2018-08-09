@@ -963,8 +963,9 @@ export class AssignComponent implements OnInit {
                     alloc.error = true;
                     this.ts.get('CsvError').subscribe((res: string) => {
                         this.csvFileName = res;
+                        alloc.errorMsg = res;
                     });
-                    return;
+                    continue;
                 }
             }
             this.showCsvPopup = true;
@@ -987,9 +988,11 @@ export class AssignComponent implements OnInit {
                         alloc.uploading = false;
                         alloc.uploaded = false;
                         alloc.error = true;
-                        this.ts.get('OverlapError').subscribe((res: string) => {
-                            alloc.errorMsg = res;
-                        });
+                        if(!alloc.errorMsg) {
+                            this.ts.get('OverlapError').subscribe((res: string) => {
+                                alloc.errorMsg = res;
+                            });
+                        }
                     });
             }
         }
