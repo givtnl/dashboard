@@ -1037,6 +1037,7 @@ export class AssignComponent implements OnInit {
                     }
                     this.addedAllocations.push(alloc);
                 }
+                (<HTMLInputElement>document.getElementById("inputfile")).value = '';
                 this.uploadCSV();
             };
         }
