@@ -1010,6 +1010,9 @@ export class AssignComponent implements OnInit {
                 let lineByLine = csv.split('\n');
                 for (let i = 1; i < lineByLine.length; i++) {
                     let props = lineByLine[i].split(',');
+                    if(props.length == 1) { // skip empty lines
+                        continue;
+                    }
                     let dtBegin = new Date(props[0]);
                     let dtEnd = new Date(props[1]);
                     let alloc;
