@@ -9,7 +9,8 @@
     "buildprod": "ng b -prod",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "deploydev": "node deploy"
   },
   "private": true,
   "dependencies": {
@@ -47,6 +48,7 @@
     "@types/moment": "^2.13.0",
     "@types/node": "~6.0.60",
     "codelyzer": "~2.0.0",
+    "ftp-deploy": "^2.1.2",
     "jasmine-core": "~2.5.2",
     "jasmine-spec-reporter": "~3.2.0",
     "karma": "~1.4.1",

@@ -161,5 +161,10 @@
     "TerminateCancelled_ThankYou": "Thanks for your confidence in Givt! 😀",
     "TerminateCancelled_NotRemoved": "Your account has not been removed. Just keep on giving!",
     "ClosePage": "(You can now close this page)",
-    "No": "No"
+    "No": "No",
+    "AllocationAdded": "This allocation has been added.",
+    "AllocationsAddedTitle": "Uploaded allocations:",
+    "CsvError": "There is an error in the csv.",
+    "CsvSuccess": " succesfully uploaded.",
+    "DownloadExample": "Download example"
 }
