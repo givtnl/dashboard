@@ -1151,3 +1151,11 @@ h3{
 .csv-not-uploaded-name {
   font-size: 16px;
 }
+
+.deleteAlloc {
+  padding: 8px;
+  background: #2e2957;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+}

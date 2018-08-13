@@ -62,6 +62,7 @@ export class AssignComponent implements OnInit {
     secondCollection = new AssignedCollection();
     thirdCollection = new AssignedCollection();
     isShowAllocation: boolean = false;
+    selectedAllocation: number = 0
 
     isLoading = false;
 
@@ -225,7 +226,8 @@ export class AssignComponent implements OnInit {
 
 
     private openDialog() {
-        console.log(this.event);
+        console.log(this.event.transactions[0].AllocationId);
+        this.selectedAllocation = this.event.transactions[0].AllocationId
         this.isShowAllocation = true;
         this.isDialogOpen = true;
         if (this.allocations.filter((ts) => ts.amountOfGivts > 0).length > 0) {
@@ -877,8 +879,8 @@ export class AssignComponent implements OnInit {
         );
     }
 
-    showDate(x){
-        return x.toLocaleDateString(navigator.language, {weekday: 'short', day:'numeric', month: 'numeric', year: 'numeric'})
+    showDate(x) {
+        return x.toLocaleDateString(navigator.language, { weekday: 'short', day: 'numeric', month: 'numeric', year: 'numeric' })
     }
 
     setWeekName(item) {
@@ -997,7 +999,7 @@ export class AssignComponent implements OnInit {
             }
         }
     }
-    downloadExampleCSV(){
+    downloadExampleCSV() {
         window.open('assets/Voorbeeld.csv')
     }
     fileChange(event) {
@@ -1054,6 +1056,19 @@ export class AssignComponent implements OnInit {
     }
     closePopup() {
         this.showCsvPopup = false;
+    }
+    deleteFutureAllocation(id) {
+        console.log(this.events);
+        if (confirm('Are you sure you want to delete this allocation?')) {
+            this.apiService.deleteData('Allocations/Allocation?Id=' + id);
+            for(var i = 0; i < this.events.length; i++){
+                if(this.events[i].id == id){
+                    this.events.splice(this.events.indexOf(this.events[i]),1);
+                    break;
+                }
+            }
+            this.closeDialog()
+        };
     }
 }
 
