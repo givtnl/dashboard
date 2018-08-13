@@ -226,8 +226,8 @@ export class AssignComponent implements OnInit {
 
 
     private openDialog() {
-        console.log(this.event.transactions[0].AllocationId);
-        this.selectedAllocation = this.event.transactions[0].AllocationId
+        if(this.event.transactions != undefined && this.event.transactions.length > 0)
+            this.selectedAllocation = this.event.transactions[0].AllocationId
         this.isShowAllocation = true;
         this.isDialogOpen = true;
         if (this.allocations.filter((ts) => ts.amountOfGivts > 0).length > 0) {
@@ -1058,17 +1058,16 @@ export class AssignComponent implements OnInit {
         this.showCsvPopup = false;
     }
     deleteFutureAllocation(id) {
-        let confirmMessage;
-        this.ts.get('RemoveAllocationConfirm').subscribe((res: string) => { confirmMessage = res; });
-        if (confirm(confirmMessage)) {
+        console.log(this.events);
+        if (confirm('Are you sure you want to delete this allocation?')) {
             this.apiService.deleteData('Allocations/Allocation?Id=' + id);
             for(var i = 0; i < this.events.length; i++){
-                if(this.events[i].id == id){
+                if(this.events[i].id === id){
                     this.events.splice(this.events.indexOf(this.events[i]),1);
                     break;
                 }
             }
-            this.closeDialog()
+            this.closeDialog();
         };
     }
 }
