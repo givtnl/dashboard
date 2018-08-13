@@ -171,7 +171,7 @@
                         </button>
                         <div *ngIf="areAllocationsEmpty && areFixedAllocationsEmpty">
                             <p class="text">{{ "NoTransactionsYet" | translate }}</p>
-                            <button class="deleteAlloc" (click)="deleteFutureAllocation(this.selectedAllocation)">Remove this allocation</button>
+                            <button class="deleteAlloc" (click)="deleteFutureAllocation(this.selectedAllocation)">{{ "RemoveAllocation" | translate }}</button>
                         </div>
                         <ng-container *ngIf="!(areAllocationsEmpty && areFixedAllocationsEmpty)">
                             <div style="margin-top: 6px;" *ngIf="currentTab == SelectedTab.Collects || currentTab == SelectedTab.Fixed">
@@ -405,7 +405,7 @@
                                     <div class="list-collections">
                                         <div *ngIf="areAllocationsEmpty && areFixedAllocationsEmpty">
                                             <p class="text">{{ "NoTransactionsYet" | translate }}</p>
-                                            <button class="deleteAlloc" (click)="deleteFutureAllocation(this.selectedAllocation)">Remove this allocation</button>
+                                            <button class="deleteAlloc" (click)="deleteFutureAllocation(this.selectedAllocation)">{{ "RemoveAllocation" | translate }}</button>
                                         </div>
                                         <ng-container *ngIf="!(areAllocationsEmpty && areFixedAllocationsEmpty)">
                                             <ng-container *ngIf="currentTab == SelectedTab.Collects">

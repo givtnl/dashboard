@@ -1058,8 +1058,9 @@ export class AssignComponent implements OnInit {
         this.showCsvPopup = false;
     }
     deleteFutureAllocation(id) {
-        console.log(this.events);
-        if (confirm('Are you sure you want to delete this allocation?')) {
+        let confirmMessage;
+        this.ts.get('RemoveAllocationConfirm').subscribe((res: string) => { confirmMessage = res; });
+        if (confirm(confirmMessage)) {
             this.apiService.deleteData('Allocations/Allocation?Id=' + id);
             for(var i = 0; i < this.events.length; i++){
                 if(this.events[i].id == id){
