@@ -166,5 +166,8 @@
     "AllocationsAddedTitle": "Uploaded allocations:",
     "CsvError": "There is an error in the csv.",
     "CsvSuccess": " succesfully uploaded.",
-    "DownloadExample": "Download example"
+    "DownloadExample": "Download example",
+    "Example": "Example",
+    "RemoveAllocation": "Remove this allocation",
+    "RemoveAllocationConfirm": "Are you sure you want to delete this allocation?"
 }
