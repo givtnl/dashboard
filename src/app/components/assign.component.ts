@@ -227,9 +227,11 @@ export class AssignComponent implements OnInit {
 
     private openDialog() {
         if(this.event.transactions != undefined && this.event.transactions.length > 0)
-            this.selectedAllocation = this.event.transactions[0].AllocationId
+            this.selectedAllocation = this.event.transactions[0].AllocationId;
+
         this.isShowAllocation = true;
         this.isDialogOpen = true;
+
         if (this.allocations.filter((ts) => ts.amountOfGivts > 0).length > 0) {
             this.currentTab = SelectedTab.Collects;
         } else if (this.fixedAllocations.length > 0) {
@@ -238,6 +240,13 @@ export class AssignComponent implements OnInit {
             if (this.oldJsEvent !== undefined) {
                 this.oldJsEvent.target.style.boxShadow = "0px 0px 15px transparent";
             }
+        }
+    }
+
+    closeDialog() {
+        this.resetAll(false);
+        if (this.oldJsEvent !== undefined) {
+            this.oldJsEvent.target.style.boxShadow = "0px 0px 15px transparent";
         }
     }
 
@@ -665,6 +674,7 @@ export class AssignComponent implements OnInit {
         this.event = new MyEvent();
         this.startTime = new Date();
         this.endTime = new Date();
+        this.selectedAllocation = 0;
         this.filteredUsedTags = [];
         if (reload) {
             this.reloadEvents();
@@ -942,12 +952,6 @@ export class AssignComponent implements OnInit {
         this.filterTags(event);
     }
 
-    closeDialog() {
-        this.isDialogOpen = false;
-        if (this.oldJsEvent !== undefined) {
-            this.oldJsEvent.target.style.boxShadow = "0px 0px 15px transparent";
-        }
-    }
     closeCSVBox() {
         this.selectedCSV = false;
         if (!this.isShowAllocation) {
@@ -1058,8 +1062,9 @@ export class AssignComponent implements OnInit {
         this.showCsvPopup = false;
     }
     deleteFutureAllocation(id) {
-        console.log(this.events);
-        if (confirm('Are you sure you want to delete this allocation?')) {
+        let confirmMessage;
+        this.ts.get('RemoveAllocationConfirm').subscribe((res: string) => { confirmMessage = res; });
+        if (confirm(confirmMessage)) {
             this.apiService.deleteData('Allocations/Allocation?Id=' + id);
             for(var i = 0; i < this.events.length; i++){
                 if(this.events[i].id === id){
