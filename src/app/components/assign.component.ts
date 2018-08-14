@@ -687,6 +687,7 @@ export class AssignComponent implements OnInit {
     }
 
     handleDayClick(event) {
+        this.resetAll(false)
         this.event = new MyEvent();
         this.event.start = event.date.format();
 
