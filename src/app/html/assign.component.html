@@ -113,7 +113,7 @@
                 <p-schedule #calendar [events]="events" locale="locale" [nowIndicator]="false" [header]="headerConfig" [editable]="true"
                     (onDayClick)="handleDayClick($event)" (onEventClick)="handleEventClick($event)" [options]="options" id="calendar"></p-schedule>
             </div>
-            <aside class="sidebar-collection" *ngIf="isDialogOpen && selectedAllocation > 0 || event.allocated == false">
+            <aside class="sidebar-collection" *ngIf="isDialogOpen">
                 <div class="sidebar-csv-box" *ngIf="selectedCSV">
                     <span class="sidebar-csv-box-header">
                         <p class="sidebar-csv-box-title">{{ "AllocationsAddedTitle" | translate }}</p>
