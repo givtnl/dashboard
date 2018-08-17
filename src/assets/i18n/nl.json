@@ -166,5 +166,8 @@
     "AllocationsAddedTitle": "Geuploade toewijzingen:",
     "CsvError": "Er zit nog een fout in de csv.",
     "CsvSuccess": " succesvol geupload.",
-    "DownloadExample": "Voorbeeld downloaden"
+    "DownloadExample": "Voorbeeld downloaden",
+    "Example": "Voorbeeld",
+    "RemoveAllocation": "Verwijder deze toewijzing",
+    "RemoveAllocationConfirm": "Weet je het zeker dat je deze toewijzing wil verwijderen?"
 }

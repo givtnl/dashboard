@@ -13,7 +13,6 @@ import {UserService} from "../services/user.service";
 export class FooterComponent implements OnInit {
     isChrome =  this.checkChrome();
     userService: UserService;
-    showMandateLink = false;
     showDashboardItems = true;
     showCelebrations = false;
     constructor(userService: UserService, private router: Router) {
@@ -42,9 +41,7 @@ export class FooterComponent implements OnInit {
         }
     }
 
-
     ngOnInit() {
         this.showDashboardItems = true;
-	    this.showMandateLink = this.userService.GivtOperations;
     }
 }
