@@ -367,13 +367,23 @@ export class AssignComponent implements OnInit {
         let openGivts = this.openGivts.filter((ts) => {
             return ts.Fixed == null;
         });
+
+        let allocations = this.events.filter((event) => {
+            return event.start >= new Date(start) && new Date(end) >= event.end;
+        })
+
+        if(allocations.length == 0) {
+            this.resetAll(false);
+            return; // do not open dialog when there is no allocations found between selected time period
+        }
+
         let fixedGivts = this.allGivts.filter((ts) => {
             return ts.Fixed != null && (new Date(ts["dt_Confirmed"])) >= new Date(start) && (new Date(ts["dt_Confirmed"])) < new Date(end);
         });
         if (openGivts.length === 0 && fixedGivts.length === 0) {
             this.openDialog();
             return;
-        }
+        } 
 
         let check = false;
         this.firstCollection = new AssignedCollection();
@@ -676,6 +686,7 @@ export class AssignComponent implements OnInit {
         this.endTime = new Date();
         this.selectedAllocation = 0;
         this.filteredUsedTags = [];
+        this.openedMobileEventId = -1;
         if (reload) {
             this.reloadEvents();
         }
