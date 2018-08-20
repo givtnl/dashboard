@@ -128,6 +128,11 @@ export class AssignComponent implements OnInit {
             if (this.isDialogOpen && evt.keyCode === 27) {
                 this.resetAll(false);
             }
+            if(evt.keyCode == 37)
+                this.prevPeriod();
+
+            if(evt.keyCode == 39)
+                this.nextPeriod();
         }.bind(this);
         this.userService.collectGroupChanged.subscribe(() => {
             this.ngOnInit();
@@ -687,6 +692,9 @@ export class AssignComponent implements OnInit {
         this.selectedAllocation = 0;
         this.filteredUsedTags = [];
         this.openedMobileEventId = -1;
+        if (this.oldJsEvent !== undefined) {
+            this.oldJsEvent.target.style.boxShadow = "0px 0px 15px transparent";
+        }
         if (reload) {
             this.reloadEvents();
         }
