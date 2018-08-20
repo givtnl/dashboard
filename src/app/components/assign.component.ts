@@ -139,6 +139,10 @@ export class AssignComponent implements OnInit {
         });
     }
 
+    ngAfterViewInit() {
+        this.cd.detectChanges();
+    }
+
     ngOnInit(): void {
         let firstDayFromStorage = this.dataService.getData("FirstDayOfWeek");
         this.firstDay = !isNaN(firstDayFromStorage) ? firstDayFromStorage : 0;
