@@ -153,9 +153,8 @@ export class AssignComponent implements OnInit {
             this.isMonthView = view["type"] === "month";
             this.currentViewStart = view.start['_d'].toISOString();
             this.currentViewEnd = view.end['_d'].toISOString();
-            console.log(this.currentViewStart);
-            console.log(this.currentViewEnd);
             this.events.length = 0;
+            this.cd.detectChanges();
             this.checkAllocations();
         }.bind(this);
         this.options['eventAfterRender'] = function (event, element, view) {
@@ -458,6 +457,10 @@ export class AssignComponent implements OnInit {
         this.apiService.getData(apiUrl)
             .then(resp => {
                 this.isLoading = false;
+                
+                if(resp == undefined) {
+                    return;
+                }
                 this.allGivts = resp;
 
                 this.openGivts = resp.filter((ts) => {
@@ -476,6 +479,7 @@ export class AssignComponent implements OnInit {
                 this.events.sort(function (a, b) {
                     return a.start.getTime() - b.start.getTime();
                 });
+                this.cd.detectChanges();
             });
     }
 
