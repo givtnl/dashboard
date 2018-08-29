@@ -27,8 +27,8 @@ export class AssignComponent implements OnInit {
     idGen = 100;
     errorShown: boolean;
     errorMessage: string;
-    currentViewStart: any;
-    currentViewEnd: any;
+    currentViewStart: string; //UTC ISO date representation of current view start
+    currentViewEnd: string; //UTC ISO date representation of current view end
     allGivts: any;
     openGivts: any;
     openGivtsBucket: Array<AllocationTimeSpanItem> = [];
@@ -155,8 +155,10 @@ export class AssignComponent implements OnInit {
         this.options['viewRender'] = function (view, element) {
             this.agendaView = view;
             this.isMonthView = view["type"] === "month";
-            this.currentViewStart = view.start['_d'].toISOString();
-            this.currentViewEnd = view.end['_d'].toISOString();
+            let start = new Date(view.start['_d'].toISOString());
+            let end = new Date(view.end['_d'].toISOString());
+            this.currentViewStart = this.datePipe.toISODateUTC(new Date(start.getFullYear(), start.getMonth(), start.getDate(), 0, 0, 0));
+            this.currentViewEnd = this.datePipe.toISODateUTC(new Date(end.getFullYear(), end.getMonth(), end.getDate(), 0, 0, 0));
             this.events.length = 0;
             this.cd.detectChanges();
             this.checkAllocations();
