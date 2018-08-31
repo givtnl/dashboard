@@ -27,8 +27,8 @@ export class AssignComponent implements OnInit {
     idGen = 100;
     errorShown: boolean;
     errorMessage: string;
-    currentViewStart: any;
-    currentViewEnd: any;
+    currentViewStart: string; //UTC ISO date representation of current view start
+    currentViewEnd: string; //UTC ISO date representation of current view end
     allGivts: any;
     openGivts: any;
     openGivtsBucket: Array<AllocationTimeSpanItem> = [];
@@ -129,10 +129,19 @@ export class AssignComponent implements OnInit {
             if (this.isDialogOpen && evt.keyCode === 27) {
                 this.resetAll(false);
             }
+            if(evt.keyCode == 37)
+                this.prevPeriod();
+
+            if(evt.keyCode == 39)
+                this.nextPeriod();
         }.bind(this);
         this.userService.collectGroupChanged.subscribe(() => {
             this.ngOnInit();
         });
+    }
+
+    ngAfterViewInit() {
+        this.cd.detectChanges();
     }
 
     ngOnInit(): void {
@@ -147,11 +156,12 @@ export class AssignComponent implements OnInit {
         this.options['viewRender'] = function (view, element) {
             this.agendaView = view;
             this.isMonthView = view["type"] === "month";
-            this.currentViewStart = view.start['_d'].toISOString();
-            this.currentViewEnd = view.end['_d'].toISOString();
-            console.log(this.currentViewStart);
-            console.log(this.currentViewEnd);
+            let start = new Date(view.start['_d'].toISOString());
+            let end = new Date(view.end['_d'].toISOString());
+            this.currentViewStart = this.datePipe.toISODateUTC(new Date(start.getFullYear(), start.getMonth(), start.getDate(), 0, 0, 0));
+            this.currentViewEnd = this.datePipe.toISODateUTC(new Date(end.getFullYear(), end.getMonth(), end.getDate(), 0, 0, 0));
             this.events.length = 0;
+            this.cd.detectChanges();
             this.checkAllocations();
         }.bind(this);
         this.options['eventAfterRender'] = function (event, element, view) {
@@ -368,13 +378,23 @@ export class AssignComponent implements OnInit {
         let openGivts = this.openGivts.filter((ts) => {
             return ts.Fixed == null;
         });
+
+        let allocations = this.events.filter((event) => {
+            return event.start >= new Date(start) && new Date(end) >= event.end;
+        })
+
+        if(allocations.length == 0) {
+            this.resetAll(false);
+            return; // do not open dialog when there is no allocations found between selected time period
+        }
+
         let fixedGivts = this.allGivts.filter((ts) => {
             return ts.Fixed != null && (new Date(ts["dt_Confirmed"])) >= new Date(start) && (new Date(ts["dt_Confirmed"])) < new Date(end);
         });
         if (openGivts.length === 0 && fixedGivts.length === 0) {
             this.openDialog();
             return;
-        }
+        } 
 
         let check = false;
         this.firstCollection = new AssignedCollection();
@@ -444,6 +464,10 @@ export class AssignComponent implements OnInit {
         this.apiService.getData(apiUrl)
             .then(resp => {
                 this.isLoading = false;
+                
+                if(resp == undefined) {
+                    return;
+                }
                 this.allGivts = resp;
 
                 this.openGivts = resp.filter((ts) => {
@@ -462,6 +486,7 @@ export class AssignComponent implements OnInit {
                 this.events.sort(function (a, b) {
                     return a.start.getTime() - b.start.getTime();
                 });
+                this.cd.detectChanges();
             });
     }
 
@@ -677,6 +702,10 @@ export class AssignComponent implements OnInit {
         this.endTime = new Date();
         this.selectedAllocation = 0;
         this.filteredUsedTags = [];
+        this.openedMobileEventId = -1;
+        if (this.oldJsEvent !== undefined) {
+            this.oldJsEvent.target.style.boxShadow = "0px 0px 15px transparent";
+        }
         if (reload) {
             this.reloadEvents();
         }
