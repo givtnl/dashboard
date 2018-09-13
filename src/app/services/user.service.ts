@@ -82,12 +82,19 @@ export class UserService {
                                     this.dataService.writeData("CurrentCollectGroup", JSON.stringify(res[0]));
                                 this.CurrentCollectGroup = JSON.parse(this.dataService.getData("CurrentCollectGroup"));
                                 this.CollectGroups = JSON.parse(this.dataService.getData("CollectGroups"));
-                            }).catch(err => console.log(err));
+                                return true;
+                            }).catch( _ => {
+                                err => console.log(err);
+                                return false;
+                            });
                     } else {
                         this.dataService.removeOne("CurrentCollectGroup");
+                        if (!this.GivtOperations && !this.SiteAdmin)
+                            return false;
                     }
+                    return true;
                 }
-                else{
+                else {
                     return false;
                 }
             })
