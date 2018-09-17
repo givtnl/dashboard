@@ -1047,7 +1047,7 @@ export class AssignComponent implements OnInit {
                 let csv: string = reader.result;
                 let lineByLine = csv.split('\n');
                 for (let i = 1; i < lineByLine.length; i++) {
-                    let props = lineByLine[i].split(',');
+                    let props = lineByLine[i].split(';');
                     if(props.length == 1) { // skip empty lines
                         continue;
                     }
