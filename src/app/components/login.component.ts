@@ -31,10 +31,14 @@ export class LoginComponent  {
         this.userService.login(this.userName, this.password)
             .then(resp => {
             	this.ShowLoadingAnimation = false;
-                if (this.userService.GivtOperations)
-                    this.router.navigate(['/mandate']);
-                else
-                    this.router.navigate(['/dashboard']);
+                if (resp) {
+                    if (this.userService.GivtOperations)
+                        this.router.navigate(['/mandate']);
+                    else
+                        this.router.navigate(['/dashboard']);
+                } else {
+                    this.router.navigate(['/unauthorized']);
+                }
             },
             error => {
             	this.ShowLoadingAnimation = false;

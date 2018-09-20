@@ -673,10 +673,9 @@ button:disabled{
 #collectPage .date-picker-input {
     width: 80vw;
     max-width: 320px;
-    background: none;
+    background: white;
 }
 #collectPage .date-picker-input:focus {
-    background: none;
 }
 
 @media only screen and (max-width: 480px){
