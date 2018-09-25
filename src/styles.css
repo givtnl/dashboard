@@ -516,7 +516,7 @@ p-schedule button
     background-color: #918FA6 !important;
 }
 
-.allocation, .money, .allocation-disabled {
+.allocation, .money, .allocation-disabled, .allocation-mixed {
   border: 1px solid #FEFEFE !important;
   display: flex !important;
   flex-direction: column !important;
@@ -525,7 +525,13 @@ p-schedule button
   cursor: pointer;
 }
 
-.allocation *, .money *, .allocation-disabled {
+.allocation-mixed {
+    background:-webkit-linear-gradient(-22deg, #41C98E 50%, #41C98E 50%, #F17057 50%);
+    width: 90% !important;
+    left: 5% !important;
+}
+
+.allocation *, .money *, .allocation-disabled, .allocation-mixed * {
   pointer-events: none !important;
 }
 
@@ -546,6 +552,11 @@ p-schedule button
 
 .money:hover{
   background-color: #E6412C !important;
+}
+
+.allocation-mixed:hover {
+    background:-webkit-linear-gradient(-22deg, #1CA96C 50%, #1CA96C 50%, #E6412C 50%) !important;
+
 }
 
 .fc-scroller{

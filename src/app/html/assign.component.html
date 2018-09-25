@@ -149,7 +149,7 @@
                         </ul>
                     </div>
                 </div>
-                <div class="schedule__dialog sidebar-collection-popup" *ngIf="isShowAllocation">
+                <div class="schedule__dialog sidebar-collection-popup">
 
                     <div class="list-collections">
                         <button style="background: none;border:none;position: absolute;top:1px;right:1px;margin: 0;padding: 10px;cursor:  pointer;"
@@ -169,43 +169,46 @@
                                 </g>
                             </svg>
                         </button>
-                        <div *ngIf="areAllocationsEmpty && areFixedAllocationsEmpty">
+                        <div *ngIf="selectedCard.Collects.length <= 0">
                             <p class="text">{{ "NoTransactionsYet" | translate }}</p>
                             <button *ngIf="selectedAllocation > 0" class="deleteAlloc" (click)="deleteFutureAllocation(this.selectedAllocation)">{{ "RemoveAllocation" | translate }}</button>
                         </div>
-                        <ng-container *ngIf="!(areAllocationsEmpty && areFixedAllocationsEmpty)">
-                            <div style="margin-top: 6px;" *ngIf="currentTab == SelectedTab.Collects || currentTab == SelectedTab.Fixed">
+                        <ng-container>
+                            <div style="margin-top: 6px;">
                                 <span class="text">
-                                    {{showDate(startTime)}}
+                                    {{showDate(selectedCard.dtBegin)}}
                                 </span>
 
-                                <div style="margin-top:15px; margin-bottom: 30px" class="flex-col" *ngIf="currentTab == SelectedTab.Collects">
+                                <div style="margin-top:15px; margin-bottom: 30px" class="flex-col">
                                     <span style="margin-left: 0" class="text">{{'From' | translate}}</span>
-                                    <p-calendar [(ngModel)]="startTime" showTime="showTime" [timeOnly]="true" name="startTime" [stepMinute]="10" class="time-picker"></p-calendar>
+                                    <p-calendar [(ngModel)]="selectedCard.dtBegin" showTime="showTime" [timeOnly]="true" name="startTime" [stepMinute]="10" class="time-picker"></p-calendar>
                                     <span class="text">{{'To' | translate}}</span>
-                                    <p-calendar [(ngModel)]="endTime" showTime="showTime" [timeOnly]="true" name="endTime" [stepMinute]="10"></p-calendar>
+                                    <p-calendar [(ngModel)]="selectedCard.dtEnd" showTime="showTime" [timeOnly]="true" name="endTime" [stepMinute]="10"></p-calendar>
                                 </div>
-                                <span *ngIf="!areAllocationsEmpty" class="tab__element" (click)="currentTab = SelectedTab.Collects" [class.tab__element--active]="currentTab == SelectedTab.Collects">{{ "Menu_Collectes" | translate}}</span>
-                                <span *ngIf="fixedAllocations.length > 0" class="tab__element" (click)="currentTab = SelectedTab.Fixed" [class.tab__element--active]="currentTab == SelectedTab.Fixed">{{"FixedPoints" | translate}}</span>
+                                <span *ngIf="selectedCard.Collects[0].total != 0" class="tab__element" (click)="currentTab = SelectedTab.Collects" [class.tab__element--active]="currentTab == SelectedTab.Collects">{{ "Menu_Collectes" | translate}}</span>
+                                <span *ngIf="selectedCard.Fixed.total != 0" class="tab__element" (click)="currentTab = SelectedTab.Fixed" [class.tab__element--active]="currentTab == SelectedTab.Fixed">{{"FixedPoints" | translate}}</span>
                             </div>
                             <ng-container *ngIf="currentTab == SelectedTab.Collects">
-                                <ng-container *ngFor="let alloc of allocations">
-                                    <div *ngIf="alloc.amountOfGivts != 0" style="padding: 15px;">
+                                <ng-container *ngFor="let alloc of selectedCard.Collects">
+                                    <div *ngIf="alloc.total != 0" style="padding: 15px;">
+                                        <div *ngIf="alloc.showActions" class="alloc-actions-container">
+                                            <span class="alloc-actions-btn" (click)="saveThisAllocation(alloc.allocationName, alloc.collectId, selectedCard.dtBegin, selectedCard.dtEnd)">Naam wijzigen</span>
+                                            <span class="alloc-actions-btn" (click)="removeThisAllocation(alloc.allocationId)">Toewijzing annuleren</span>
+                                        </div>
                                         <div style="height: 40px;margin-left: 10px;display:flex;">
                                             <div class="wrapping_inputlist" style="display: flex;">
-                                                <span style="align-self: center;font-family: Avenir_Heavy; font-size: 18px;" *ngIf="!allowButton">{{alloc.name}}</span>
-                                                <input *ngIf="allowButton" (focus)="alloc.isTyping=true" (focusout)="onFocusOutOf(alloc);" autocomplete="off" class="info-table__input"
-                                                    [class.info-table__input--false]="alloc.name == ''" (ngModelChange)="this.filterTags($event)"
-                                                    type="text" name="collectName{{alloc.collectionNumber}}" [(ngModel)]="alloc.name"
-                                                    placeholder="{{ 'Collection' | translate }} {{ alloc.collectionNumber }}">
+                                                <input type="text" name="collectName{{alloc.collectionNumber}}" [(ngModel)]="alloc.allocationName" placeholder="{{ 'Collection' | translate }} {{ alloc.collectionNumber }}">
                                                 <ul *ngIf="alloc.isTyping" class="schedule__dialog__form__list">
                                                     <li *ngFor="let item of filteredUsedTags" class="schedule__dialog__form__listitem" (click)="setCollectNameOf(item, alloc)"
                                                         [innerHTML]="item"></li>
                                                 </ul>
                                             </div>
-
+                                            <span class="alloc-givt-count">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" data-prefix="fas" data-icon="user" class="svg-inline--fa fa-user fa-w-14" role="img" viewBox="0 0 448 512"><path fill="white" d="M224 256c70.7 0 128-57.3 128-128S294.7 0 224 0 96 57.3 96 128s57.3 128 128 128zm89.6 32h-16.7c-22.2 10.2-46.9 16-72.9 16s-50.6-5.8-72.9-16h-16.7C60.2 288 0 348.2 0 422.4V464c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48v-41.6c0-74.2-60.2-134.4-134.4-134.4z"/></svg>
+                                                <span>{{ alloc.numberOfTransactions }}</span>
+                                            </span>
                                             <button style="cursor:pointer;background: #2E2957; border:0;margin-left: auto;display:  flex;justify-content:  center;" class="icon"
-                                                [class.fill-green]="!alloc.isStatsHidden" (click)="alloc.isStatsHidden = !alloc.isStatsHidden">
+                                                [class.fill-green]="!alloc.showDetails" (click)="showAllocDetails(alloc)">
 
                                                 <svg width="23px" height="23px" viewBox="8 8 23 23" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                                                     <!-- Generator: Sketch 40.3 (33839) - http://www.bohemiancoding.com/sketch -->
@@ -216,19 +219,16 @@
                                                 </svg>
                                             </button>
                                             <span style="font-family: Avenir_Light;display: flex;flex-direction: row;align-items:  center;margin-left: 15px;">
-
-                                                <img src="images/personal-blue.png" alt="">
-                                                <span style="padding-left: 5px;padding-top: 5px;">{{ alloc.amountOfGivts }}</span>
+                                                <span (click)="showAllocActions(alloc);" style="padding-left: 5px;padding-top: 5px; background-color:#2E2957">|</span>
                                             </span>
-
                                         </div>
-                                        <table class="incasso-state-table" *ngIf="!alloc.isStatsHidden">
+                                        <table class="incasso-state-table" *ngIf="alloc.showDetails">
                                             <tr [class.incasso-state-table__row--disabled]="alloc.toProcessTotal == 0">
                                                 <td>
                                                     <span class="bullet bullet--blue"></span>
                                                 </td>
                                                 <td>{{ "Processing" | translate }}</td>
-                                                <td class="info-table-cell--money">{{ displayValue(alloc.toProcessTotal) }}
+                                                <td class="info-table-cell--money">{{ displayValue(alloc.toProcess) }}
                                                 </td>
                                             </tr>
                                             <tr [class.incasso-state-table__row--disabled]="alloc.processedTotal == 0">
@@ -236,7 +236,7 @@
                                                     <span class="bullet bullet--green"></span>
                                                 </td>
                                                 <td>{{ "Processed" | translate }}</td>
-                                                <td class="info-table-cell--money">{{ displayValue(alloc.processedTotal) }}
+                                                <td class="info-table-cell--money">{{ displayValue(alloc.processed) }}
                                                 </td>
                                             </tr>
                                             <tr [class.incasso-state-table__row--disabled]="alloc.refusedBank == 0">
@@ -244,7 +244,7 @@
                                                     <span class="bullet bullet--red"></span>
                                                 </td>
                                                 <td>{{"CancelledByBank" | translate}}</td>
-                                                <td class="info-table-cell--money">{{ displayValue(alloc.refusedBank) }}
+                                                <td class="info-table-cell--money">{{ displayValue(alloc.refusedByBank) }}
                                                 </td>
                                             </tr>
                                             <tr [class.incasso-state-table__row--disabled]="alloc.cancelByGiver == 0">
@@ -252,33 +252,29 @@
                                                     <span class="bullet bullet--grey"></span>
                                                 </td>
                                                 <td>{{ "CancelledByUser" | translate}}</td>
-                                                <td class="info-table-cell--money">{{ displayValue(alloc.cancelByGiver) }}
+                                                <td class="info-table-cell--money">{{ displayValue(alloc.cancelledByUser) }}
                                                 </td>
                                             </tr>
                                             <tr class="incasso-state-table__row--em">
                                                 <td></td>
                                                 <td>{{ "Text_Fee_Total" | translate}}</td>
-                                                <td class="info-table-cell--money">{{ displayValue(alloc.toProcessTotal + alloc.processedTotal + alloc.refusedBank
-                                                    + alloc.cancelByGiver) }}
+                                                <td class="info-table-cell--money">{{ displayValue(alloc.total) }}
                                                 </td>
                                             </tr>
                                         </table>
                                     </div>
 
                                 </ng-container>
-                                <button *ngIf="allowButton && currentTab == SelectedTab.Collects" style="height: 50px;width: 100%;" class="info-table__button"
+                                <button *ngIf="currentTab == SelectedTab.Collects && !allowButton" style="height: 50px;width: 100%;" class="info-table__button"
                                     [disabled]="disableSaveButton" [class.info-table__button--disabled]="disableSaveButton" (click)="saveAllEvents()">{{ "SaveAll" | translate }}
-                                </button>
-                                <button *ngIf="!allowButton && currentTab == SelectedTab.Collects" style="height: 50px;width: 100%;" class="info-table__button info-table__button--danger"
-                                    (click)="deleteEvent()">{{ "DeleteAll" | translate }}
                                 </button>
                             </ng-container>
                             <ng-container *ngIf="currentTab == SelectedTab.Fixed">
-                                <ng-container *ngFor="let alloc of fixedAllocations">
+                                <ng-container *ngFor="let alloc of selectedCard.Fixed">
                                     <div *ngIf="alloc.amountOfGivts != 0" style="padding: 15px;">
                                         <div style="height: 40px;display: flex;margin-left: 10px;">
                                             <div class="wrapping_inputlist" style="display: flex;">
-                                                <span style="align-self: center;font-family: Avenir_Heavy; font-size: 18px;">{{alloc.name}}</span>
+                                                <span style="align-self: center;font-family: Avenir_Heavy; font-size: 18px;">{{alloc.allocationName}}</span>
                                             </div>
                                             <button style="cursor:pointer;background: #2E2957; border:0;margin-left: auto;display:  flex;justify-content:  center;" class="icon"
                                                 [class.fill-green]="!alloc.isStatsHidden" (click)="alloc.isStatsHidden = !alloc.isStatsHidden">
@@ -294,7 +290,7 @@
                                             <span style="font-family: Avenir_Light;display: flex;flex-direction: row;align-items:  center;margin-left: 15px;">
 
                                                 <img src="images/personal-blue.png" alt="">
-                                                <span style="padding-left: 5px;padding-top: 5px;">{{ alloc.amountOfGivts }}</span>
+                                                <span style="padding-left: 5px;padding-top: 5px;">{{ alloc.numberOfTransactions }}</span>
                                             </span>
 
                                         </div>
@@ -304,7 +300,7 @@
                                                     <span class="bullet bullet--blue"></span>
                                                 </td>
                                                 <td>{{ "Processing" | translate }}</td>
-                                                <td class="info-table-cell--money">{{ displayValue(alloc.toProcessTotal) }}
+                                                <td class="info-table-cell--money">{{ displayValue(alloc.toProcess) }}
                                                 </td>
                                             </tr>
                                             <tr [class.incasso-state-table__row--disabled]="alloc.processedTotal == 0">
@@ -312,7 +308,7 @@
                                                     <span class="bullet bullet--green"></span>
                                                 </td>
                                                 <td>{{ "Processed" | translate }}</td>
-                                                <td class="info-table-cell--money">{{ displayValue(alloc.processedTotal) }}
+                                                <td class="info-table-cell--money">{{ displayValue(alloc.processed) }}
                                                 </td>
                                             </tr>
                                             <tr [class.incasso-state-table__row--disabled]="alloc.refusedBank == 0">
@@ -320,7 +316,7 @@
                                                     <span class="bullet bullet--red"></span>
                                                 </td>
                                                 <td>{{"CancelledByBank" | translate}}</td>
-                                                <td class="info-table-cell--money">{{ displayValue(alloc.refusedBank) }}
+                                                <td class="info-table-cell--money">{{ displayValue(alloc.refusedByBank) }}
                                                 </td>
                                             </tr>
                                             <tr [class.incasso-state-table__row--disabled]="alloc.cancelByGiver == 0">
@@ -328,14 +324,13 @@
                                                     <span class="bullet bullet--grey"></span>
                                                 </td>
                                                 <td>{{ "CancelledByUser" | translate}}</td>
-                                                <td class="info-table-cell--money">{{ displayValue(alloc.cancelByGiver) }}
+                                                <td class="info-table-cell--money">{{ displayValue(alloc.cancelledByUser) }}
                                                 </td>
                                             </tr>
                                             <tr class="incasso-state-table__row--em">
                                                 <td></td>
                                                 <td>{{ "Text_Fee_Total" | translate}}</td>
-                                                <td class="info-table-cell--money">{{ displayValue(alloc.toProcessTotal + alloc.processedTotal + alloc.refusedBank
-                                                    + alloc.cancelByGiver) }}
+                                                <td class="info-table-cell--money">{{ displayValue(alloc.total) }}
                                                 </td>
                                             </tr>
                                         </table>
@@ -399,56 +394,46 @@
                                 </svg>
                             </td>
                         </tr>
-                        <tr *ngIf="isDialogOpen && openedMobileEventId==event.id">
+                        <tr *ngIf="isMobileDialogOpen">
                             <td colspan="4">
                                 <div class="schedule__dialog sidebar-collection-popup mobile-calendar__popup">
                                     <div class="list-collections">
-                                        <div *ngIf="areAllocationsEmpty && areFixedAllocationsEmpty">
+                                        <div *ngIf="selectedCard.Collects.length <= 0">
                                             <p class="text">{{ "NoTransactionsYet" | translate }}</p>
                                             <button *ngIf="selectedAllocation > 0" class="deleteAlloc" (click)="deleteFutureAllocation(this.selectedAllocation)">{{ "RemoveAllocation" | translate }}</button>
                                         </div>
-                                        <ng-container *ngIf="!(areAllocationsEmpty && areFixedAllocationsEmpty)">
+                                        <ng-container *ngIf="alloc.transactions != null">
                                             <ng-container *ngIf="currentTab == SelectedTab.Collects">
-                                                <ng-container *ngFor="let alloc of allocations">
-                                                    <div *ngIf="alloc.amountOfGivts != 0" style="padding: 15px;">
+                                                <ng-container *ngFor="let alloc of selectedCard.Collects">
+                                                    <div *ngIf="alloc.total != 0 != 0" style="padding: 15px;">
                                                         <div style="height: 40px;margin-left: 10px;display:flex;">
                                                             <div class="wrapping_inputlist" style="display: flex;">
-                                                                <span style="align-self: center;font-family: Avenir_Heavy; font-size: 18px;" *ngIf="!allowButton">{{alloc.name}}</span>
+                                                                <span style="align-self: center;font-family: Avenir_Heavy; font-size: 18px;" *ngIf="!allowButton">{{alloc.AllocationName}}</span>
                                                                 <input *ngIf="allowButton" (focus)="alloc.isTyping=true" (focusout)="onFocusOutOf(alloc);" autocomplete="off" class="info-table__input"
                                                                     [class.info-table__input--false]="alloc.name == ''" (ngModelChange)="this.filterTags($event)"
-                                                                    type="text" name="collectName{{alloc.collectionNumber}}"
-                                                                    [(ngModel)]="alloc.name" placeholder="{{ 'Collection' | translate }} {{ alloc.collectionNumber }}">
+                                                                    type="text" name="collectName{{alloc.collectId}}"
+                                                                    [(ngModel)]="alloc.allocationName" placeholder="{{ 'Collection' | translate }} {{ alloc.collectId }}">
                                                                 <ul *ngIf="alloc.isTyping" class="schedule__dialog__form__list">
                                                                     <li *ngFor="let item of filteredUsedTags" class="schedule__dialog__form__listitem" (click)="setCollectNameOf(item, alloc)"
                                                                         [innerHTML]="item"></li>
                                                                 </ul>
                                                             </div>
 
-                                                            <button style="cursor:pointer;background: #2E2957; border:0;margin-left: auto;display:  flex;justify-content:  center;" class="icon"
-                                                                [class.fill-green]="!alloc.isStatsHidden" (click)="alloc.isStatsHidden = !alloc.isStatsHidden">
-
-                                                                <svg width="23px" height="23px" viewBox="8 8 23 23" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                                                                    <!-- Generator: Sketch 40.3 (33839) - http://www.bohemiancoding.com/sketch -->
-                                                                    <desc>Created with Sketch.</desc>
-                                                                    <defs></defs>
-                                                                    <path d="M9.00761688,21.0025814 C9.53265354,26.5888828 14.2352667,30.9603199 19.9588837,30.9603199 C22.6363805,30.9603199 25.090446,30.0036964 26.9979399,28.4135896 L19.5869317,21.0025814 L9.00761688,21.0025814 Z M9,19.0025814 C9.45855668,13.6859391 13.6990295,9.4505879 19.0179464,9 L19.0179464,19.0018685 C19.0177045,19.0021045 19.0174628,19.0023406 19.0172212,19.0025769 L9,19.0025814 Z M28.4121534,26.9993761 C30.0022602,25.0918822 30.9588837,22.6378167 30.9588837,19.9603199 C30.9588837,14.2424422 26.5962091,9.54352172 21.0179464,9.01064508 L21.0179464,19.5461063 C21.0179464,19.5653854 21.0174008,19.5845372 21.0163242,19.6035469 L28.4121534,26.9993761 Z"
-                                                                        id="Combined-Shape" stroke="none" fill="#FFFFFF " fill-rule="evenodd"></path>
-                                                                </svg>
-                                                            </button>
+                                                            
                                                             <span style="font-family: Avenir_Light;display: flex;flex-direction: row;align-items:  center;margin-left: 15px;">
 
                                                                 <img src="images/personal-blue.png" alt="">
-                                                                <span style="padding-left: 5px;padding-top: 5px;">{{ alloc.amountOfGivts }}</span>
+                                                                <span style="padding-left: 5px;padding-top: 5px;">{{ alloc.numberOfTransactions }}</span>
                                                             </span>
 
                                                         </div>
-                                                        <table class="incasso-state-table" *ngIf="!alloc.isStatsHidden">
+                                                        <table class="incasso-state-table" *ngIf="alloc.showDetails">
                                                             <tr [class.incasso-state-table__row--disabled]="alloc.toProcessTotal == 0">
                                                                 <td>
                                                                     <span class="bullet bullet--blue"></span>
                                                                 </td>
                                                                 <td>{{ "Processing" | translate }}</td>
-                                                                <td class="info-table-cell--money">{{ displayValue(alloc.toProcessTotal) }}
+                                                                <td class="info-table-cell--money">{{ displayValue(alloc.toProcess) }}
                                                                 </td>
                                                             </tr>
                                                             <tr [class.incasso-state-table__row--disabled]="alloc.processedTotal == 0">
@@ -456,7 +441,7 @@
                                                                     <span class="bullet bullet--green"></span>
                                                                 </td>
                                                                 <td>{{ "Processed" | translate }}</td>
-                                                                <td class="info-table-cell--money">{{ displayValue(alloc.processedTotal) }}
+                                                                <td class="info-table-cell--money">{{ displayValue(alloc.processed) }}
                                                                 </td>
                                                             </tr>
                                                             <tr [class.incasso-state-table__row--disabled]="alloc.refusedBank == 0">
@@ -464,7 +449,7 @@
                                                                     <span class="bullet bullet--red"></span>
                                                                 </td>
                                                                 <td>{{"CancelledByBank" | translate}}</td>
-                                                                <td class="info-table-cell--money">{{ displayValue(alloc.refusedBank) }}
+                                                                <td class="info-table-cell--money">{{ displayValue(alloc.refusedByBank) }}
                                                                 </td>
                                                             </tr>
                                                             <tr [class.incasso-state-table__row--disabled]="alloc.cancelByGiver == 0">
@@ -472,14 +457,13 @@
                                                                     <span class="bullet bullet--grey"></span>
                                                                 </td>
                                                                 <td>{{ "CancelledByUser" | translate}}</td>
-                                                                <td class="info-table-cell--money">{{ displayValue(alloc.cancelByGiver) }}
+                                                                <td class="info-table-cell--money">{{ displayValue(alloc.cancelledByUser) }}
                                                                 </td>
                                                             </tr>
                                                             <tr class="incasso-state-table__row--em">
                                                                 <td></td>
                                                                 <td>{{ "Text_Fee_Total" | translate}}</td>
-                                                                <td class="info-table-cell--money">{{ displayValue(alloc.toProcessTotal + alloc.processedTotal
-                                                                    + alloc.refusedBank + alloc.cancelByGiver) }}
+                                                                <td class="info-table-cell--money">{{ displayValue(alloc.total) }}
                                                                 </td>
                                                             </tr>
                                                         </table>
@@ -499,7 +483,7 @@
                                                     <div *ngIf="alloc.amountOfGivts != 0" style="padding: 15px;">
                                                         <div style="height: 40px;display: flex;margin-left: 10px;">
                                                             <div class="wrapping_inputlist" style="display: flex;">
-                                                                <span style="align-self: center;font-family: Avenir_Heavy; font-size: 18px;">{{alloc.name}}</span>
+                                                                <span style="align-self: center;font-family: Avenir_Heavy; font-size: 18px;">{{alloc.allocationName}}</span>
                                                             </div>
                                                             <button style="cursor:pointer;background: #2E2957; border:0;margin-left: auto;display:  flex;justify-content:  center;" class="icon"
                                                                 [class.fill-green]="!alloc.isStatsHidden" (click)="alloc.isStatsHidden = !alloc.isStatsHidden">

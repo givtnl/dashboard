@@ -7,7 +7,7 @@ import 'fullcalendar/dist/locale/nl';
 import { AllocationTimeSpanItem } from "../models/allocationTimeSpanItem";
 import { UserService } from "../services/user.service";
 import { DataService } from "../services/data.service";
-import { AgendaView } from "fullcalendar";
+import { AgendaView, moment } from "fullcalendar";
 import { ISODatePipe } from "../pipes/iso.datepipe";
 import { forEach } from "@angular/router/src/utils/collection";
 
@@ -18,110 +18,63 @@ import { forEach } from "@angular/router/src/utils/collection";
     encapsulation: ViewEncapsulation.None
 })
 export class AssignComponent implements OnInit {
-    events: any[];
+    events: MyEvent[];
     headerConfig: any;
     options: Object = {};
     isDialogOpen: boolean;
-    showDelete = false;
+
     event: MyEvent = new MyEvent();
-    idGen = 100;
     errorShown: boolean;
     errorMessage: string;
     currentViewStart: string; //UTC ISO date representation of current view start
     currentViewEnd: string; //UTC ISO date representation of current view end
-    allGivts: any;
-    openGivts: any;
-    openGivtsBucket: Array<AllocationTimeSpanItem> = [];
     isSafari: boolean;
-    collectionTranslation: string;
-    usersTransalation: string;
-    notYetAllocated: string;
     allCollectTyping = false;
     usedTags: string[];
     filteredUsedTags: string[];
     allocateWeekName = "";
-    numberOfFilteredEvents = 0;
     SelectedTab = SelectedTab;
     currentTab: SelectedTab = SelectedTab.Collects;
-    allocatedGivts: any;
-    fixedAllocations: Array<AssignedCollection> = [];
     startTime: Date;
     endTime: Date;
     oldJsEvent: any;
     openedMobileEventId = -1;
     private firstDay = 0;
     agendaView: AgendaView;
-
+    selectedCard: BucketCard;
     csvFile: File;
     csvFileName: string = ""
+    addedAllocations: any[];
     selectedCSV: boolean = false;
     showCsvPopup: boolean = false;
     csvError: boolean = true
-    addedAllocations: Array<any> = [];
-    firstCollection = new AssignedCollection();
-    secondCollection = new AssignedCollection();
-    thirdCollection = new AssignedCollection();
-    isShowAllocation: boolean = false;
-    selectedAllocation: number = 0
-
     isLoading = false;
 
+    selectedAllocationDates = [];
+
     @ViewChild('calendar') calendar: ElementRef;
+    // TODO: Rework
+    // get allowButton(): boolean {
+    //     if (this.firstCollection.amountOfGivts > 0 && this.firstCollection.allocated === false)
+    //         return true;
 
-    get allowButton(): boolean {
-        if (this.firstCollection.amountOfGivts > 0 && this.firstCollection.allocated === false)
-            return true;
+    //     if (this.secondCollection.amountOfGivts > 0 && this.secondCollection.allocated === false)
+    //         return true;
 
-        if (this.secondCollection.amountOfGivts > 0 && this.secondCollection.allocated === false)
-            return true;
+    //     return this.thirdCollection.amountOfGivts > 0 && this.thirdCollection.allocated === false;
+    // }
+    // get disableSaveButton(): boolean {
+    //     for (let alloc of this.allocations) {
+    //         if (alloc.amountOfGivts > 0 && alloc.name === "")
+    //             return true;
+    //     }
+    //     return false;
+    // }
 
-        return this.thirdCollection.amountOfGivts > 0 && this.thirdCollection.allocated === false;
-    }
 
-    get disableSaveButton(): boolean {
-        for (let alloc of this.allocations) {
-            if (alloc.amountOfGivts > 0 && alloc.name === "")
-                return true;
-        }
-        return false;
-    }
-
-    get allocations(): Array<AssignedCollection> {
-        return [this.firstCollection, this.secondCollection, this.thirdCollection];
-    }
-
-    get areAllocationsEmpty(): boolean {
-        return this.allocations.filter((ac) => ac.amountOfGivts === 0).length === 3;
-    }
-
-    get areFixedAllocationsEmpty(): boolean {
-        return this.fixedAllocations.length === 0;
-    }
-
-    filteredEvents() {
-        if (this.events === undefined) {
-            this.numberOfFilteredEvents = 0;
-            return [];
-        }
-
-        let filtered = this.events.filter(
-            events => events.allocated === false
-        );
-        this.numberOfFilteredEvents = filtered.length;
-        return filtered;
-    }
 
     public constructor(public ts: TranslateService, private datePipe: ISODatePipe, private cd: ChangeDetectorRef, private apiService: ApiClientService, private userService: UserService, private dataService: DataService) {
         this.isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
-        this.ts.get('Collection').subscribe((res: string) => {
-            this.collectionTranslation = res;
-        });
-        this.ts.get('NotYetAllocated').subscribe((res: string) => {
-            this.notYetAllocated = res;
-        });
-        this.ts.get('Users').subscribe((res: string) => {
-            this.usersTransalation = res;
-        });
 
         document.onkeydown = function (evt) {
             evt = evt || window.event;
@@ -161,7 +114,7 @@ export class AssignComponent implements OnInit {
             this.currentViewEnd = this.datePipe.toISODateUTC(new Date(end.getFullYear(), end.getMonth(), end.getDate(), 0, 0, 0));
             this.events.length = 0;
             this.cd.detectChanges();
-            this.checkAllocations();
+            this.checkAllocationsV2();
         }.bind(this);
         this.options['eventAfterRender'] = function (event, element, view) {
             this.eventAfterRender(event, element, view);
@@ -170,10 +123,11 @@ export class AssignComponent implements OnInit {
             this.eventRender(this, event, element, view);
         }.bind(this);
         this.options['eventAfterAllRender'] = function (view) {
-            this.filteredEvents();
+            // this.filteredEvents();
         }.bind(this);
         this.options["contentHeight"] = "auto";
         this.options["eventClick"] = function (event, jsEvent, view) {
+            this.openBucket(event);
             if (this.oldJsEvent !== undefined) {
                 this.oldJsEvent.target.style.boxShadow = "0px 0px 15px transparent";
             }
@@ -186,7 +140,6 @@ export class AssignComponent implements OnInit {
                 start.stripTime();
                 end.stripTime();
             }
-            this.loadDialog(event);
         }.bind(this);
         this.options['nowIndicator'] = false;
         this.options['firstDay'] = this.firstDay;
@@ -201,7 +154,8 @@ export class AssignComponent implements OnInit {
         this.options['selectable'] = true;
         this.options['scrollTime'] = '08:00:00';
         this.options['select'] = function (start, end, jsEvent, view, resource) {
-            this.addAllocation(start["_d"], end["_d"]);
+            this.createBucketWithRange(start["_d"], end["_d"]);
+
         }.bind(this);
 
         this.apiService.getData('Allocations/AllocationTags')
@@ -209,19 +163,224 @@ export class AssignComponent implements OnInit {
                 this.usedTags = data;
             });
     }
+    get allowButton(): Boolean {
+        let retVal = true;
+        this.selectedCard.Collects.forEach(collect => {
+            if(collect.allocationId === 0)
+                retVal = false;
+        });
+        return retVal;
+    }
+    createBucketWithRange(start: Date, end: Date){        
+        let bigEvent = new MyEvent();
+        bigEvent.start = new moment(start);
+        bigEvent.end = new moment(end);   
+        let countOfTransactions = this.events.filter((tx) => { return new Date(tx.start) >= start && new Date(tx.end) <= end;})
+            .map((tx) => tx.transactions.length)
+            .reduce((sum, amount) => sum + amount, 0);
+
+        if(countOfTransactions > 0){
+            bigEvent.transactions = this.events
+                .filter((tx) => { return new Date(tx.start) >= start && new Date(tx.end) <= end;})
+                .map((tx) => tx.transactions)
+                .reduce((p,s) => p.concat(s));
+            this.openBucket(bigEvent);
+        }
+    }
+    openBucket(event: MyEvent){
+        let bucketCard = new BucketCard();
+
+        bucketCard.dtBegin = event.start["_d"];
+        bucketCard.dtEnd = event.end["_d"];
+        
+        this.selectedAllocationDates = [event.start, event.end];
+
+        bucketCard.Collects = [];
+        for(let i = 0; i < 3; i++){
+            if(event.transactions.filter((tx) => {
+                return tx.CollectId === String(i+1);
+            }).length > 0){
+                bucketCard.Collects[i] = new BucketCardRow();
+                bucketCard.Collects[i].allocationId = event.transactions.filter((tx) => {
+                    return tx.CollectId === String(i+1);
+                })[0].AllocationId;
+                bucketCard.Collects[i].transactions = event.transactions.filter((tx) => {
+                    return tx.CollectId === String(i+1);
+                });
+                bucketCard.Collects[i].allocationName = bucketCard.Collects[i].transactions[0].AllocationName;
+                bucketCard.Collects[i].allocated = bucketCard.Collects[i].allocationName !== null;
+                bucketCard.Collects[i].collectId = String(i+1);
+            } 
+        }
+
+        bucketCard.Fixed = [];
+
+        let fixedTransactions = event.transactions.filter((tx) => {
+            return tx.CollectId === null;
+        });
+
+        let fixedNames = fixedTransactions.map((tx) => tx.AllocationName);
+        fixedNames.forEach(name => {
+            let fixedRow = new BucketCardRow();
+            fixedRow.allocationName = name;
+            fixedRow.transactions = fixedTransactions.filter((tx) => {
+                return tx.AllocationName === name;
+            });
+            bucketCard.Fixed.push(fixedRow);
+        });
+
+        this.selectedCard = bucketCard;
+        this.isDialogOpen = true;
+        console.log(bucketCard);
+    }
+    renderBuckets(bucketCollection: BucketCollection){
+        this.events = [];
+
+        let buckets: Bucket[] = [];
+        
+
+        for(let i = 0; i < bucketCollection.Allocated.length; i++){
+            let bucket = new Bucket();
+            bucket.bucketType = BucketType.Allocated;
+            bucket.dtBegin = bucketCollection.Allocated[i].dtBegin;
+            bucket.dtEnd = bucketCollection.Allocated[i].dtEnd;
+            bucket.Transactions = bucketCollection.Allocated[i].Transactions;
+
+            let nonAllocated = bucketCollection.NonAllocated.filter((nonAllocation) => {
+                return new Date(nonAllocation.dtBegin) >= new Date(bucket.dtBegin) && new Date(nonAllocation.dtEnd) <= new Date(bucket.dtEnd);
+            });
+            //filter out currently used non allocs
+            bucketCollection.NonAllocated = bucketCollection.NonAllocated.filter((nonAllocation) => {
+                return !(new Date(nonAllocation.dtBegin) >= new Date(bucket.dtBegin) && new Date(nonAllocation.dtEnd) <= new Date(bucket.dtEnd));
+            });
+
+            if(nonAllocated.length > 0)
+                bucket.bucketType = BucketType.AllocatedWithNonAllocated;
+
+            nonAllocated.forEach((b) => {
+                bucket.Transactions = bucket.Transactions.concat(b.Transactions);
+            });
+
+            let fixed = bucketCollection.Fixed.filter((fixedAllocation) => {
+                return new Date(fixedAllocation.dtBegin) >= new Date(bucket.dtBegin) && new Date(fixedAllocation.dtEnd) <= new Date(bucket.dtEnd);
+            });
+            bucketCollection.Fixed = bucketCollection.Fixed.filter((fixedAllocation) => {
+                return !(new Date(fixedAllocation.dtBegin) >= new Date(bucket.dtBegin) && new Date(fixedAllocation.dtEnd) <= new Date(bucket.dtEnd));
+            });
+            fixed.forEach((f) => {
+                bucket.Transactions = bucket.Transactions.concat(f.Transactions);
+            });
+
+            buckets.push(bucket);
+        }
+
+        for(let i = 0; i < bucketCollection.Fixed.length; i++){
+            let bucket = new Bucket();
+            bucket.bucketType = BucketType.Fixed;
+            bucket.dtBegin = bucketCollection.Fixed[i].dtBegin;
+            bucket.dtEnd = bucketCollection.Fixed[i].dtEnd;
+            bucket.Transactions = bucketCollection.Fixed[i].Transactions;
+
+            let nonAllocated = bucketCollection.NonAllocated.filter((nonAllocation) => {
+                return new Date(nonAllocation.dtBegin) >= new Date(bucket.dtBegin) && new Date(nonAllocation.dtEnd) <= new Date(bucket.dtEnd);
+            });
+            //filter out currently used non allocs
+            bucketCollection.NonAllocated = bucketCollection.NonAllocated.filter((nonAllocation) => {
+                return !(new Date(nonAllocation.dtBegin) >= new Date(bucket.dtBegin) && new Date(nonAllocation.dtEnd) <= new Date(bucket.dtEnd));
+            });
+
+            if(nonAllocated.length > 0)
+                bucket.bucketType = BucketType.AllocatedWithNonAllocated;
+
+            nonAllocated.forEach((b) => {
+                bucket.Transactions = bucket.Transactions.concat(b.Transactions);
+            });
+
+            buckets.push(bucket);
+        }
+
+        //render overgebleven non allocs
+        for(let i = 0; i < bucketCollection.NonAllocated.length; i++) {
+            let bucket = new Bucket();
+            bucket.bucketType = BucketType.NonAllocated;
+            bucket.dtBegin = bucketCollection.NonAllocated[i].dtBegin;
+            bucket.dtEnd = bucketCollection.NonAllocated[i].dtEnd;
+            bucket.Transactions = bucketCollection.NonAllocated[i].Transactions;
+            buckets.push(bucket);
+        }
+
+        for(let i = 0; i < buckets.length; i++){
+            let event = new MyEvent();
+            event.id = i;
+            event.start = new moment(new Date(buckets[i].dtBegin));
+            event.end = new moment(new Date(buckets[i].dtEnd));
+            event.transactions = buckets[i].Transactions;
+            switch (buckets[i].bucketType) {
+                case BucketType.Allocated:
+                    event.className = "allocation";
+                    break;
+                case BucketType.AllocatedWithNonAllocated:
+                    event.className = "allocation-mixed";
+                    break;
+                case BucketType.NonAllocated:
+                    event.className = "money";
+                    break;
+                case BucketType.Fixed:
+                    event.className = "allocation";
+                    break;
+            }
+            this.events.push(event);
+        }
+
+    }
+    checkAllocationsV2(){
+        return new Promise((resolve, reject) => {
+            let apiUrl = 'v2/CollectGroup/Buckets';
+        if (this.currentViewStart !== null && this.currentViewEnd !== null) {
+            apiUrl += "?dtBegin=" + this.currentViewStart + "&dtEnd=" + this.currentViewEnd;
+        }
+
+        this.isLoading = true;
+        this.apiService.getData(apiUrl)
+            .then(resp => {
+                this.isLoading = false;
+
+                if(resp === undefined) {
+                    return;
+                }
+
+                let bucketCollection = resp as BucketCollection;
+
+                this.renderBuckets(bucketCollection);
+
+                console.log(this.events);
+
+                // this.events.sort(function (a, b) {
+                //     return a.start.getTime() - b.start.getTime();
+                // });
+                this.cd.detectChanges();
+
+                resolve();
+            })
+            .catch(r => {
+                reject();
+            });
+        });
+        
+        
+    }
 
     loadDialog(event) {
-        if (event.id === this.openedMobileEventId) {
-            this.closeDialog();
-            this.openedMobileEventId = -1;
-            return;
-        }
-        this.openedMobileEventId = event.id;
-        this.event = event;
-        this.startTime = new Date(this.event.start);
-        this.endTime = new Date(this.event.end);
-        this.fillData(event);
-        this.openDialog();
+        // if (event.id === this.openedMobileEventId) {
+        //     this.closeDialog();
+        //     this.openedMobileEventId = -1;
+        //     return;
+        // }
+        // this.openedMobileEventId = event.id;
+        // this.event = event;
+        // this.startTime = new Date(this.event.start);
+        // this.endTime = new Date(this.event.end);
+        // this.openDialog();
     }
 
     prevPeriod() {
@@ -234,122 +393,10 @@ export class AssignComponent implements OnInit {
         nativeElement.fullCalendar('next');
     }
 
-
-    private openDialog() {
-        if(this.event.transactions != undefined && this.event.transactions.length > 0)
-            this.selectedAllocation = this.event.transactions[0].AllocationId;
-
-        this.isShowAllocation = true;
-        this.isDialogOpen = true;
-
-        if (this.allocations.filter((ts) => ts.amountOfGivts > 0).length > 0) {
-            this.currentTab = SelectedTab.Collects;
-        } else if (this.fixedAllocations.length > 0) {
-            this.currentTab = SelectedTab.Fixed;
-        } else {
-            if (this.oldJsEvent !== undefined) {
-                this.oldJsEvent.target.style.boxShadow = "0px 0px 15px transparent";
-            }
-        }
-    }
-
     closeDialog() {
         this.resetAll(false);
         if (this.oldJsEvent !== undefined) {
             this.oldJsEvent.target.style.boxShadow = "0px 0px 15px transparent";
-        }
-    }
-
-    private fillData(event) {
-
-        let fcEvent = event;
-
-        let div = document.createElement("div");
-        this.firstCollection = new AssignedCollection();
-        this.secondCollection = new AssignedCollection();
-        this.thirdCollection = new AssignedCollection();
-        this.fixedAllocations = [];
-
-        let fixedGivts = this.allGivts.filter((ts) => {
-            return ts.Fixed != null && (new Date(ts["dt_Confirmed"])) >= this.startTime && (new Date(ts["dt_Confirmed"])) < this.endTime;
-        });
-
-        for (let g of fixedGivts) {
-            let filteredFixedAllocations = this.fixedAllocations.filter((ts) => {
-                return ts.name === g.Fixed;
-            });
-            if (filteredFixedAllocations.length > 0) {
-                //name is in array, add to it.
-                this.fillCollectBy(filteredFixedAllocations[0], g.Status, g.Amount);
-            } else {
-                let fixedAllocation = new AssignedCollection();
-                fixedAllocation.name = g.Fixed;
-                this.fillCollectBy(fixedAllocation, g.Status, g.Amount);
-                this.fixedAllocations.push(fixedAllocation);
-            }
-        }
-        let normalGivts = [];
-        if (event.transactions !== undefined) {
-            normalGivts = event.transactions.filter((g) => {
-                return g.Fixed == null && (new Date(g["dt_Confirmed"])) >= this.startTime && (new Date(g["dt_Confirmed"])) < this.endTime;
-            });
-        }
-
-        if (fcEvent.allocated) {
-            if (normalGivts.length > 0) {
-                for (let i = 0; i < normalGivts.length; i++) {
-                    let tr = normalGivts[i];
-                    if (tr.CollectId === "1") {
-                        this.fillCollectBy(this.firstCollection, tr.Status, tr.Amount);
-                        this.firstCollection.name = normalGivts[i].AllocationName;
-                        this.firstCollection.allocated = true;
-                        this.firstCollection.collectionNumber = 1;
-                    } else if (tr.CollectId === "2") {
-                        this.fillCollectBy(this.secondCollection, tr.Status, tr.Amount);
-                        this.secondCollection.name = normalGivts[i].AllocationName;
-                        this.secondCollection.allocated = true;
-                        this.secondCollection.collectionNumber = 2;
-                    } else if (tr.CollectId === "3") {
-                        this.fillCollectBy(this.thirdCollection, tr.Status, tr.Amount);
-                        this.thirdCollection.name = normalGivts[i].AllocationName;
-                        this.thirdCollection.allocated = true;
-                        this.thirdCollection.collectionNumber = 3;
-                    }
-                }
-            }
-            if (!fcEvent.amount) {
-                this.ts.get('Loading').subscribe((res) => {
-                    div.innerHTML = "<span class='fat-font'>" + res + "...</span>";
-                });
-            } else {
-                div.innerHTML = "<span><img src='images/user.png' height='15px' width='15px' style='padding-top: 2px'> " + fcEvent.noTransactions + "</span>"
-                    + "<span style='margin-left:15px' class='fat-font'>" + this.displayValue(fcEvent.amount) + "</span> <span>" + this.collectionTranslation + " " + fcEvent.collectId + "</span><br/>"
-                    + "<span class='fat-font'>" + fcEvent.title + "</span>";
-            }
-            div.className = "balloon balloon_alter";
-        } else {
-            div.innerHTML = this.notYetAllocated + "<br/>";
-            if (normalGivts.length > 0) {
-                this.firstCollection = new AssignedCollection();
-
-                for (let i = 0; i < normalGivts.length; i++) {
-                    let transaction = normalGivts[i];
-                    if (transaction.CollectId === "1") {
-                        //////
-                        this.fillCollectBy(this.firstCollection, transaction.Status, transaction.Amount);
-                        this.firstCollection.collectionNumber = 1;
-                    } else if (transaction.CollectId === "2") {
-                        this.fillCollectBy(this.secondCollection, transaction.Status, transaction.Amount);
-                        this.secondCollection.collectionNumber = 2;
-                    } else if (transaction.CollectId === "3") {
-                        this.fillCollectBy(this.thirdCollection, transaction.Status, transaction.Amount);
-                        this.thirdCollection.collectionNumber = 3;
-                    }
-                }
-
-            }
-            div.innerHTML = "<span>Click the item to view more information</span>";
-            div.className = "balloon";
         }
     }
 
@@ -364,361 +411,59 @@ export class AssignComponent implements OnInit {
         }, this);
     }
 
-    setCollectNameOf(item, aCollection: AssignedCollection) {
-        aCollection.name = item.replace("<span class='autocomplete'>", "").replace("</span>", "");
-        aCollection.isTyping = false;
-    }
+    // setCollectNameOf(item, aCollection: AssignedCollection) {
+    //     aCollection.name = item.replace("<span class='autocomplete'>", "").replace("</span>", "");
+    //     aCollection.isTyping = false;
+    // }
 
-    addAllocation(start, end) {
-        this.fixedAllocations = [];
-        this.firstCollection = new AssignedCollection();
-        this.secondCollection = new AssignedCollection();
-        this.thirdCollection = new AssignedCollection();
-        let openGivts = this.openGivts.filter((ts) => {
-            return ts.Fixed == null;
+    saveAllEvents() {  
+        return new Promise((resolve,reject) => {
+            this.selectedCard.Collects.forEach(collect => {
+                if(collect.allocationName !== null && collect.allocationName !== ""){
+                    this.saveAllocation(collect.allocationName, collect.collectId, this.selectedCard.dtBegin, this.selectedCard.dtEnd);
+                }
+            });
+            resolve();
+        }).then(x => {
+            this.checkAllocationsV2().then(a => {
+                let currentEvent = this.events.filter((e) => {
+                    return new Date(e.start).getTime() === new Date(this.selectedAllocationDates[0]).getTime() && 
+                            new Date(e.end).getTime() === new Date(this.selectedAllocationDates[1]).getTime();
+                })[0];
+                this.createBucketWithRange(currentEvent.start, currentEvent.end);
+            });
         });
-
-        let allocations = this.events.filter((event) => {
-            return event.start >= new Date(start) && new Date(end) >= event.end;
-        })
-
-        if(allocations.length == 0) {
-            this.resetAll(false);
-            return; // do not open dialog when there is no allocations found between selected time period
-        }
-
-        let fixedGivts = this.allGivts.filter((ts) => {
-            return ts.Fixed != null && (new Date(ts["dt_Confirmed"])) >= new Date(start) && (new Date(ts["dt_Confirmed"])) < new Date(end);
-        });
-        if (openGivts.length === 0 && fixedGivts.length === 0) {
-            this.openDialog();
-            return;
-        } 
-
-        let check = false;
-        this.firstCollection = new AssignedCollection();
-        this.secondCollection = new AssignedCollection();
-        this.thirdCollection = new AssignedCollection();
-
-        for (let g of fixedGivts) {
-            check = true;
-            let filteredFixedAllocations = this.fixedAllocations.filter((ts) => {
-                return ts.name === g.Fixed;
-            });
-            if (filteredFixedAllocations.length > 0) {
-                //name is in array, add to it.
-                this.fillCollectBy(filteredFixedAllocations[0], g.Status, g.Amount);
-            } else {
-                let fixedAllocation = new AssignedCollection();
-                fixedAllocation.name = g.Fixed;
-                this.fillCollectBy(fixedAllocation, g.Status, g.Amount);
-                this.fixedAllocations.push(fixedAllocation);
-            }
-        }
-
-
-        for (let i = 0; i < openGivts.length; i++) {
-            let dtConfirmed = new Date(openGivts[i]["dt_Confirmed"]);
-            let dtStart = new Date(start);
-            let dtEnd = new Date(end);
-            if (dtConfirmed > dtStart && dtConfirmed < dtEnd) {
-
-
-                check = true;
-                switch (openGivts[i].CollectId) {
-                    case "1":
-                        this.fillCollectBy(this.firstCollection, openGivts[i].Status, openGivts[i].Amount);
-                        this.firstCollection.collectionNumber = 1;
-                        break;
-                    case "2":
-                        this.fillCollectBy(this.secondCollection, openGivts[i].Status, openGivts[i].Amount);
-                        this.secondCollection.collectionNumber = 2;
-
-                        break;
-                    case "3":
-                        this.fillCollectBy(this.thirdCollection, openGivts[i].Status, openGivts[i].Amount);
-                        this.thirdCollection.collectionNumber = 3;
-
-                        break;
-                    default:
-                        break;
-                }
-            }
-        }
-        this.openDialog();
-        if (check) {
-            this.startTime = new Date(start);
-            this.endTime = new Date(end);
-
-        }
-    }
-
-    checkAllocations() {
-        let apiUrl = 'Allocations/AllocationCheck';
-        if (this.currentViewStart !== null && this.currentViewEnd !== null) {
-            apiUrl += "?dtBegin=" + this.currentViewStart + "&dtEnd=" + this.currentViewEnd;
-        }
-
-        this.isLoading = true;
-        this.apiService.getData(apiUrl)
-            .then(resp => {
-                this.isLoading = false;
-                
-                if(resp == undefined) {
-                    return;
-                }
-                this.allGivts = resp;
-
-                this.openGivts = resp.filter((ts) => {
-                    return ts.AllocationName == null && ts.Fixed == null;
-                });
-
-                this.allocatedGivts = resp.filter((ts) => {
-                    return !(ts.AllocationName == null && ts.Fixed == null);
-                });
-
-                this.openGivtsBucket = [];
-
-                this.renderOpenGivts();
-                this.renderAllocatedGivts();
-
-                this.events.sort(function (a, b) {
-                    return a.start.getTime() - b.start.getTime();
-                });
-                this.cd.detectChanges();
-            });
-    }
-
-    saveAllEvents() {
-        let promises = [];
-        let collections: Array<AssignedCollection> = [this.firstCollection, this.secondCollection, this.thirdCollection];
-
-        //count number of collections that have givts + count the collections with a name. when it's not equal
-        //this means that there are still open allocations
-        let allocationsWithGivts = collections.filter((d) => d.amountOfGivts !== 0).length;
-        let allocationsWithNames = collections.filter((d) => d.name !== "").length;
-        if (allocationsWithGivts !== allocationsWithNames) {
-            //err: has open allocs
-            return;
-        }
-
-        for (let i = 0; i < collections.length; i++) {
-            let current = collections[i];
-
-            if (current.amountOfGivts > 0 && current.name !== "") {
-                promises.push(this.saveAllocation(current.name, String(i + 1)));
-            }
-        }
-        Promise.all(promises.map(p => p.catch(e => e)))
-            .then(results => {
-                let promisesWithResults = results.filter((e) => e !== undefined);
-                if (promisesWithResults.length === promises.length) {
-                    //all went good
-                    this.isDialogOpen = false;
-                    this.reloadEvents();
-                } else {
-                    //cancel previous allocs
-                    this.errorShown = true;
-                    if (promisesWithResults.length > 0) {
-
-                        let cancelPromises = [];
-                        for (let p of promisesWithResults) {
-                            cancelPromises.push(this.apiService.deleteData('Allocations/Allocation?Id=' + p.id));
-                        }
-
-                        //delete previous added allocations
-                        Promise.all(cancelPromises).then(() => {
-                            //promises
-                        });
-
-                    }
-                }
-            }).catch(e => console.log(e));
-    }
-
-    renderAllocatedGivts() {
-        this.isDialogOpen = false;
-        let buckets: Bucket[] = [];
-
-        let noFixed = this.allocatedGivts.filter((ts) => ts.Fixed == null);
-        for (let x = 0; x < noFixed.length; x++) {
-            let startTime = new Date(noFixed[x]['dtBegin']);
-            let endTime = new Date(noFixed[x]['dtEnd']);
-            noFixed[x]['dtBegin'] = startTime;
-            noFixed[x]['dtEnd'] = endTime;
-            let filteredBuckets = buckets.filter((b) => b.startTime.getTime() === noFixed[x]['dtBegin'].getTime() && b.endTime.getTime() === noFixed[x]['dtEnd'].getTime());
-            if (filteredBuckets.length === 0) {
-                //transaction does not fit into bucket
-                //create new bucket and add to array
-                let newBucket = new Bucket();
-
-                newBucket.startTime = startTime;
-                newBucket.endTime = endTime;
-                newBucket.allocationName = noFixed[x].AllocationName;
-                newBucket.allocationId = noFixed[x].AllocationId;
-                newBucket.transactions = [];
-                buckets.push(newBucket);
-            }
-
-            let currentBucket = buckets.filter((b) => b.startTime.getTime() === noFixed[x]['dtBegin'].getTime() && b.endTime.getTime() === noFixed[x]['dtEnd'].getTime())[0];
-            currentBucket.transactions.push(noFixed[x]);
-        }
-
-        for (let i = 0; i < buckets.length; i++) {
-            let event = new MyEvent();
-            event.id = buckets[i].allocationId;
-            event.title = buckets[i].allocationName;
-            event.start = buckets[i].startTime;
-            event.end = buckets[i].endTime;
-            event.className = "allocation";
-            event.allocated = true;
-            event.amount = null;
-            event.transactions = buckets[i].transactions;
-            this.events.push(event);
-        }
-
-        let fixedGivts = this.allGivts.filter((ts) => {
-            return ts.Fixed != null;
-        });
-        this.fixedAllocations = [];
-        for (let g of fixedGivts) {
-
-            let startTime = new Date(g['dt_Confirmed']);
-            let endTime = new Date(g['dt_Confirmed']);
-            if (startTime.getMinutes() < 30) {
-                startTime.setMinutes(0, 0, 0);
-                endTime.setMinutes(30, 0, 0);
-            } else {
-                startTime.setMinutes(30, 0, 0);
-                endTime.setHours(endTime.getHours() + 1, 0, 0, 0);
-            }
-
-            g.dtBegin = new Date(startTime);
-            g.dtEnd = new Date(endTime);
-
-            let filteredFixedAllocations = this.fixedAllocations.filter((ts) => {
-                return ts.name === g.Fixed && ts.dtBegin.getTime() === g.dtBegin.getTime() && ts.dtEnd.getTime() === g.dtEnd.getTime();
-            });
-            if (filteredFixedAllocations.length > 0) {
-                //name is in array, add to it.
-                this.fillCollectBy(filteredFixedAllocations[0], g.Status, g.Amount);
-            } else {
-                let fixedAllocation = new AssignedCollection();
-                fixedAllocation.name = g.Fixed;
-                fixedAllocation.dtBegin = new Date(startTime);
-                fixedAllocation.dtEnd = new Date(endTime);
-                this.fillCollectBy(fixedAllocation, g.Status, g.Amount);
-                this.fixedAllocations.push(fixedAllocation);
-            }
-        }
-
-
-        for (let i = 0; i < this.fixedAllocations.length; i++) {
-            let event = new MyEvent();
-            event.start = this.fixedAllocations[i].dtBegin;
-            event.end = this.fixedAllocations[i].dtEnd;
-            event.className = "allocation";
-            event.allocated = true;
-            event.amount = null;
-            let temp = this.events.filter((e) => {
-                return e.start.getTime() <= this.fixedAllocations[i].dtBegin.getTime() && this.fixedAllocations[i].dtEnd.getTime() <= e.end.getTime();
-            });
-            if (temp.length === 0) {
-                this.events.push(event);
-            }
-
-        }
-    }
-
-    renderOpenGivts() {
-        for (let x = 0; x < this.openGivts.length; x++) {
-            let startTime = new Date(this.openGivts[x]['dt_Confirmed']);
-            let endTime = new Date(this.openGivts[x]['dt_Confirmed']);
-            if (startTime.getMinutes() < 30) {
-                startTime.setMinutes(0, 0, 0);
-                endTime.setMinutes(30, 0, 0);
-            } else {
-                startTime.setMinutes(30, 0, 0);
-                endTime.setHours(endTime.getHours() + 1, 0, 0, 0);
-            }
-
-            let check = false;
-            for (let i = 0; i < this.openGivtsBucket.length; i++) {
-                if (this.openGivtsBucket[i].dtStart.getTime() === startTime.getTime()) {
-                    this.openGivtsBucket[i].transactions.push(this.openGivts[x]);
-                    check = false;
-                    break;
-                }
-                check = true;
-            }
-            if (check) {
-                let item = new AllocationTimeSpanItem();
-                item.dtEnd = endTime;
-                item.dtStart = startTime;
-                item.transactions = [];
-                item.transactions.push(this.openGivts[x]);
-                this.openGivtsBucket.push(item);
-            }
-            if (this.openGivtsBucket.length === 0) {
-                let item = new AllocationTimeSpanItem();
-                item.dtEnd = endTime;
-                item.dtStart = startTime;
-                item.transactions = [];
-                item.transactions.push(this.openGivts[x]);
-                this.openGivtsBucket.push(item);
-            }
-        }
-        for (let count = 0; count < this.openGivtsBucket.length; count++) {
-            let buckets = <any>this.openGivtsBucket[count]['transactions'];
-            let amount = 0;
-            for (let tr = 0; tr < buckets.length; tr++) {
-                amount += buckets[tr].Amount;
-            }
-
-            //total amount == amount
-
-            let event = new MyEvent();
-            event.id = count;
-            event.title = (Math.round(amount * 100) / 100).toString();
-            event.start = this.openGivtsBucket[count].dtStart;
-            event.end = this.openGivtsBucket[count].dtEnd;
-            event.collectId = "1"; //what
-            event.className = "money";
-            event.allocated = false;
-            event.transactions = buckets;
-            this.events.push(event);
-        }
+        
     }
 
     resetAll(reload: boolean = true) {
-        this.firstCollection = new AssignedCollection();
-        this.secondCollection = new AssignedCollection();
-        this.thirdCollection = new AssignedCollection();
-        this.showDelete = false;
-        this.isDialogOpen = false;
-        this.event = new MyEvent();
-        this.startTime = new Date();
-        this.endTime = new Date();
-        this.selectedAllocation = 0;
-        this.filteredUsedTags = [];
-        this.openedMobileEventId = -1;
-        if (this.oldJsEvent !== undefined) {
-            this.oldJsEvent.target.style.boxShadow = "0px 0px 15px transparent";
-        }
-        if (reload) {
-            this.reloadEvents();
-        }
+        // this.firstCollection = new AssignedCollection();
+        // this.secondCollection = new AssignedCollection();
+        // this.thirdCollection = new AssignedCollection();
+        // this.showDelete = false;
+        // this.isDialogOpen = false;
+        // this.event = new MyEvent();
+        // this.startTime = new Date();
+        // this.endTime = new Date();
+        // this.selectedAllocation = 0;
+        // this.filteredUsedTags = [];
+        // this.openedMobileEventId = -1;
+        // if (this.oldJsEvent !== undefined) {
+        //     this.oldJsEvent.target.style.boxShadow = "0px 0px 15px transparent";
+        // }
+        // if (reload) {
+        //     this.reloadEvents();
+        // }
     }
 
     reloadEvents() {
         this.events.length = 0;
-        this.checkAllocations();
+        this.checkAllocationsV2();
     }
 
     handleDayClick(event) {
         this.event = new MyEvent();
         this.event.start = event.date.format();
-
         //trigger detection manually as somehow only moving the mouse quickly after click triggers the automatic detection
         this.cd.detectChanges();
     }
@@ -737,16 +482,10 @@ export class AssignComponent implements OnInit {
 
         this.event.id = e.calEvent.id;
         this.event.start = start.format();
-        if (!e.calEvent.allocated) {
-            let dStart = new Date(this.event.start);
-            let dEnd = new Date(this.event.end);
-            this.addAllocation(dStart, dEnd);
-        } else {
-
-            this.openDialog();
-        }
+        this.openBucket(e);
     }
-
+    
+    
     deleteEvent() {
         let eventId = this.event.id;
         let index: number = this.findEventIndexById(eventId);
@@ -796,6 +535,7 @@ export class AssignComponent implements OnInit {
         this.errorMessage = msg;
     }
 
+    
 
     saveAllocation(title: string, collectId: string, startTime: Date = null, endTime: Date = null) {
         return new Promise((resolve, reject) => {
@@ -803,14 +543,7 @@ export class AssignComponent implements OnInit {
                 resolve();
                 return;
             }
-            let event = new MyEvent();
-            event.id = this.idGen++;
-            event.title = title;
-            event.collectId = collectId;
-
-            event.start = startTime == null ? this.startTime : startTime;
-            event.end = endTime == null ? this.endTime : endTime;
-
+            
             let body = {};
             body["name"] = title;
             body["dtBegin"] = startTime == null ? this.startTime.toISOString() : startTime;
@@ -827,49 +560,109 @@ export class AssignComponent implements OnInit {
                     })) {
                         this.usedTags.push(title);
                     }
-                    resolve(resp);
+                    resolve(resp); // <- this returns integer of added row id
                 })
                 .catch(err => {
-                    // if (err.status === 409) {
-                    //     for (var i = 0; i < this.addedAllocations.length; i++) {
-                    //         console.log(this.addedAllocations[i])
-                    //         if(this.addedAllocations[i].error)
-                    //             this.ts.get('OverlapError').subscribe((res: string) => {
-                    //                 this.addedAllocations[i].errorMsg = res;
-                    //             });
-
-                    //     }
-                    // }
                     console.log(err);
                     reject();
                 });
         });
-
+    }
+    showAllocActions(alloc: BucketCardRow){
+        if(alloc.showActions)
+            alloc.showActions = false;
+        else if(!alloc.showActions && !alloc.showDetails){
+            alloc.showDetails = true;
+            alloc.showActions = true;            
+        } 
+        else
+            alloc.showActions = true;
+    }
+    showAllocDetails(alloc: BucketCardRow){
+        if(alloc.showDetails){
+            alloc.showDetails = false; 
+            if(alloc.showActions)
+                alloc.showActions = false;
+        }
+        else
+            alloc.showDetails = true;
+        
+    }
+    removeThisAllocation(id: Number){
+        console.log("Deleting allocation...");
+        // this.apiService.deleteData('Allocations/Allocation?Id=' + id)
+        return new Promise((resolve, reject) => {
+            if (id <= 0) {
+                resolve();
+                return;
+            }
+            this.apiService.deleteData('Allocations/Allocation?Id=' + id)
+                .then(resp => {
+                    if (resp.status !== 200) {
+                        console.log(resp);
+                        return;
+                    }
+                    this.checkAllocationsV2().then(a => {
+                        let currentEvent = this.events.filter((e) => {
+                            return new Date(e.start).getTime() === new Date(this.selectedAllocationDates[0]).getTime() && 
+                                    new Date(e.end).getTime() === new Date(this.selectedAllocationDates[1]).getTime();
+                        })[0];
+                        if(currentEvent !== undefined)
+                            this.openBucket(currentEvent);
+                        resolve(resp);
+                    });
+                })
+                .catch(err => {
+                    console.log(err);
+                    reject();
+                });
+        });
+    }
+    updateThisAllocation(id: Number){
+        console.log("Updating allocation...");
+        return new Promise((resolve, reject) => {
+            if (id <= 0) {
+                resolve();
+                return;
+            }
+            this.apiService.deleteData('v2/Allocations/Allocation/Update?Id=' + id)
+                .then(resp => {
+                    if (resp.status !== 200) {
+                        console.log("Response code: 200;");
+                        return;
+                    }
+                    else {
+                        resolve(resp);
+                        console.log(resp);
+                    }
+                })
+                .catch(err => {
+                    console.log(err);
+                    reject();
+                });
+        });
+    }
+    saveThisAllocation(name: string, collectId:string, dtBegin: Date, dtEnd: Date){
+        console.log("Saving allocation...");
+        return new Promise((resolve, reject) => {
+            if(name !== null && collectId !== null && dtBegin !== null, dtEnd !== null){
+                this.saveAllocation(name, collectId, dtBegin, dtEnd)
+                .then(resp => {
+                    this.checkAllocationsV2().then(c => {
+                        let currentEvent = this.events.filter((e) => {
+                            return new Date(e.start).getTime() === new Date(this.selectedAllocationDates[0]).getTime() && 
+                                    new Date(e.end).getTime() === new Date(this.selectedAllocationDates[1]).getTime();
+                        })[0];
+                        this.openBucket(currentEvent);
+                    });
+                });
+            }
+        });
+            
     }
 
     eventAfterRender(event: any, element: any, view: any) {
 
-    }
-
-    fillCollectBy(collection, statusId, amount) {
-        switch (statusId) {
-            case 1:
-            case 2:
-                collection.toProcessTotal += amount;
-                break;
-            case 3:
-                collection.processedTotal += amount;
-                break;
-            case 4:
-                collection.refusedBank += amount;
-                break;
-            case 5: //cancelbyuser
-                collection.cancelByGiver += amount;
-                break;
-            default:
-                break;
-        }
-        collection.amountOfGivts++;
     }
 
     eventRender(that: any, event: any, element: any, view: any) {
@@ -901,12 +694,12 @@ export class AssignComponent implements OnInit {
         element[0].innerHTML = "";
     }
 
-    onFocusOutOf(aCollection: AssignedCollection) {
-        setTimeout(() => {
-            aCollection.isTyping = false;
-            this.filteredUsedTags = [];
-        }, 200);
-    }
+    // onFocusOutOf(aCollection: AssignedCollection) {
+    //     setTimeout(() => {
+    //         aCollection.isTyping = false;
+    //         this.filteredUsedTags = [];
+    //     }, 200);
+    // }
 
     displayValue(x) {
         if (x === undefined) x = 0;
@@ -919,7 +712,7 @@ export class AssignComponent implements OnInit {
     }
 
     showDate(x) {
-        return x.toLocaleDateString(navigator.language, { weekday: 'short', day: 'numeric', month: 'numeric', year: 'numeric' })
+        return x.toLocaleDateString(navigator.language, { weekday: 'short', day: 'numeric', month: 'numeric', year: 'numeric' });
     }
 
     setWeekName(item) {
@@ -927,54 +720,18 @@ export class AssignComponent implements OnInit {
     }
 
     allocateWeek() {
-        for (let i = 0; i < this.filteredEvents().length; i++) {
-            let obj = this.filteredEvents()[i];
-            let coll1 = false, coll2 = false, coll3 = false;
-            for (let idx = 0; i < obj.transactions.length; i++) {
-                switch (obj.transactions[idx].CollectId) {
-                    case "1":
-                        coll1 = true;
-                        break;
-                    case "2":
-                        coll2 = true;
-                        break;
-                    case "3":
-                        coll3 = true;
-                        break;
-                    default:
-                        //console.log("unknown coll");
-                        break;
-                }
-            }
-            if (coll1) {
-                this.saveAllocation(this.allocateWeekName, "1", obj.start, obj.end).then(function () {
-                });
-            }
-            if (coll2) {
-                this.saveAllocation(this.allocateWeekName, "2", obj.start, obj.end).then(function () {
-                });
-            }
-            if (coll3) {
-                this.saveAllocation(this.allocateWeekName, "3", obj.start, obj.end).then(function () {
-                });
-            }
-        }
-        setTimeout(() => {
-            this.allocateWeekName = "";
-            this.resetAll();
-            this.filterTags("");
-        }, 250);
+        // TODO: Implement api call to save non allocations
     }
 
     focusAllCollectsTyping(focus) {
-        if (!focus) {
-            let that = this;
-            setTimeout(() => {
-                that.allCollectTyping = focus;
-            }, 150);
-        } else {
-            this.allCollectTyping = focus;
-        }
+        // if (!focus) {
+        //     let that = this;
+        //     setTimeout(() => {
+        //         that.allCollectTyping = focus;
+        //     }, 150);
+        // } else {
+        //     this.allCollectTyping = focus;
+        // }
     }
 
     allCollectNameChanging(event) {
@@ -983,9 +740,7 @@ export class AssignComponent implements OnInit {
 
     closeCSVBox() {
         this.selectedCSV = false;
-        if (!this.isShowAllocation) {
-            this.isDialogOpen = false;
-        }
+        this.checkAllocationsV2();
     }
 
     uploadCSV() {
@@ -1033,7 +788,7 @@ export class AssignComponent implements OnInit {
         }
     }
     downloadExampleCSV() {
-        window.open('assets/Voorbeeld.csv')
+        window.open('assets/Voorbeeld.csv');
     }
     fileChange(event) {
         this.selectedCSV = true;
@@ -1130,40 +885,78 @@ export class MyEvent {
     amount: any;
 }
 
-export class Bucket {
-    startTime: Date;
-    endTime: Date;
-    allocationName: string;
-    transactions: any;
-    allocationId: number;
-    collectId: string;
+export enum BucketType {
+    Allocated,
+    NonAllocated,
+    Fixed,
+    AllocatedWithNonAllocated,
 }
 
-export class AssignedCollection {
-    toProcessTotal: number;
-    processedTotal: number;
-    refusedBank: number;
-    cancelByGiver: number;
-    amountOfGivts: number;
-    name: string;
-    isTyping: boolean;
-    state: ButtonState;
-    allocated: boolean;
-    collectionNumber: number;
+export class BucketCollection {
+    Allocated: Bucket[];
+    NonAllocated: Bucket[];
+    Fixed: Bucket[];
+}
+
+export class Bucket {
     dtBegin: Date;
     dtEnd: Date;
-    isStatsHidden = true;
+    Transactions: BucketTransaction[];
+    bucketType: BucketType;
+}
 
-    constructor(toProcessTotal = 0, processedTotal = 0, refusedByBank = 0, cancelByGiver = 0, amountOfGivts = 0, name = "", isTyping = false, state = ButtonState.Enabled, allocated = false, collectionNumber = 1) {
-        this.toProcessTotal = toProcessTotal;
-        this.processedTotal = processedTotal;
-        this.refusedBank = refusedByBank;
-        this.cancelByGiver = cancelByGiver;
-        this.amountOfGivts = amountOfGivts;
-        this.name = name;
-        this.isTyping = false;
-        this.state = state;
-        this.allocated = allocated;
-        this.collectionNumber = collectionNumber;
+export class BucketTransaction {
+    AllocationName: string = null;
+    Sum: number;
+    Count: number;
+    CollectId: string;
+    Status: number;
+    Fixed: boolean;
+}
+export class BucketCard {
+    dtBegin: Date;
+    dtEnd: Date;
+    Collects: BucketCardRow[];
+    Fixed: BucketCardRow[];
+}
+export class BucketCardRow {
+    allocationName: string;
+    allocationId: number;
+    transactions: BucketTransaction[];
+    collectId: string;
+    allocated: boolean;
+    showActions: boolean;
+    showDetails: boolean;
+
+    get numberOfTransactions(): number {
+        return this.transactions.map((tx) => tx.Count)
+                                .reduce((sum, amount) => sum + amount, 0);
+    }
+    get toProcess():number {
+        return this.transactions.filter((tx) => { return tx.Status === 1 || tx.Status === 2; })
+                                .map((tx) => tx.Sum)
+                                .reduce((sum, amount) => sum + amount, 0);
+    }
+
+    get processed():number {
+        return this.transactions.filter((tx) => { return tx.Status === 3; })
+                                .map((tx) => tx.Sum)
+                                .reduce((sum, amount) => sum + amount, 0);
+    }
+
+    get refusedByBank():number {
+        return this.transactions.filter((tx) => { return tx.Status === 4; })
+                                .map((tx) => tx.Sum)
+                                .reduce((sum, amount) => sum + amount, 0);
+    }
+
+    get cancelledByUser():number {
+        return this.transactions.filter((tx) => { return tx.Status === 5; })
+                                .map((tx) => tx.Sum)
+                                .reduce((sum, amount) => sum + amount, 0);
+    }
+
+    get total():Number {
+        return this.toProcess+this.processed+this.refusedByBank+this.cancelledByUser;
     }
 }
