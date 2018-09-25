@@ -371,16 +371,16 @@ export class AssignComponent implements OnInit {
     }
 
     loadDialog(event) {
-        // if (event.id === this.openedMobileEventId) {
-        //     this.closeDialog();
-        //     this.openedMobileEventId = -1;
-        //     return;
-        // }
-        // this.openedMobileEventId = event.id;
-        // this.event = event;
-        // this.startTime = new Date(this.event.start);
-        // this.endTime = new Date(this.event.end);
-        // this.openDialog();
+        if (event.id === this.openedMobileEventId) {
+            this.closeDialog();
+            this.openedMobileEventId = -1;
+            return;
+        }
+        this.openedMobileEventId = event.id;
+        this.event = event;
+        this.startTime = new Date(this.event.start);
+        this.endTime = new Date(this.event.end);
+        this.openBucket(event);
     }
 
     prevPeriod() {
@@ -694,12 +694,12 @@ export class AssignComponent implements OnInit {
         element[0].innerHTML = "";
     }
 
-    // onFocusOutOf(aCollection: AssignedCollection) {
-    //     setTimeout(() => {
-    //         aCollection.isTyping = false;
-    //         this.filteredUsedTags = [];
-    //     }, 200);
-    // }
+    onFocusOutOf(bucketRow: BucketCardRow) {
+        setTimeout(() => {
+            bucketRow.isTyping = false;
+            this.filteredUsedTags = [];
+        }, 200);
+    }
 
     displayValue(x) {
         if (x === undefined) x = 0;
@@ -927,6 +927,7 @@ export class BucketCardRow {
     allocated: boolean;
     showActions: boolean;
     showDetails: boolean;
+    isTyping: boolean;
 
     get numberOfTransactions(): number {
         return this.transactions.map((tx) => tx.Count)
