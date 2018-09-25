@@ -195,10 +195,10 @@
                                     <p-calendar [(ngModel)]="selectedCard.dtEnd" showTime="showTime" [timeOnly]="true"
                                         name="endTime" [stepMinute]="10"></p-calendar>
                                 </div>
-                                <span *ngIf="selectedCard.Collects[0].total != 0" class="tab__element" (click)="currentTab = SelectedTab.Collects"
+                                <span *ngIf="selectedCard.Collects.length > 0" class="tab__element" (click)="currentTab = SelectedTab.Collects"
                                     [class.tab__element--active]="currentTab == SelectedTab.Collects">{{
                                     "Menu_Collectes" | translate}}</span>
-                                <span *ngIf="selectedCard.Fixed.total != 0" class="tab__element" (click)="currentTab = SelectedTab.Fixed"
+                                <span *ngIf="selectedCard.Fixed.length > 0" class="tab__element" (click)="currentTab = SelectedTab.Fixed"
                                     [class.tab__element--active]="currentTab == SelectedTab.Fixed">{{"FixedPoints" |
                                     translate}}</span>
                             </div>
