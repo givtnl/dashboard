@@ -1211,3 +1211,9 @@ h3{
   font-family: 'Avenir_Medium';
   color: white;
 }
+.input-border-green {
+  border: 1px solid green;
+}
+.input-border-red {
+  border-color: #b91a24;
+}

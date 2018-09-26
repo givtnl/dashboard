@@ -195,10 +195,10 @@
                                     <p-calendar [(ngModel)]="selectedCard.dtEnd" showTime="showTime" [timeOnly]="true"
                                         name="endTime" [stepMinute]="10"></p-calendar>
                                 </div>
-                                <span *ngIf="selectedCard.Collects.length > 0" class="tab__element" (click)="currentTab = SelectedTab.Collects"
+                                <span *ngIf="selectedCard.Collects != null" class="tab__element" (click)="currentTab = SelectedTab.Collects"
                                     [class.tab__element--active]="currentTab == SelectedTab.Collects">{{
                                     "Menu_Collectes" | translate}}</span>
-                                <span *ngIf="selectedCard.Fixed.length > 0" class="tab__element" (click)="currentTab = SelectedTab.Fixed"
+                                <span *ngIf="selectedCard.Fixed != null" class="tab__element" (click)="currentTab = SelectedTab.Fixed"
                                     [class.tab__element--active]="currentTab == SelectedTab.Fixed">{{"FixedPoints" |
                                     translate}}</span>
                             </div>
@@ -215,7 +215,7 @@
                                             <div class="wrapping_inputlist" style="display: flex;">
                                                 <input (focus)="alloc.isTyping=true" (focusout)="onFocusOutOf(alloc);"
                                                     autocomplete="off" class="info-table__input"
-                                                    [class.info-table__input--false]="alloc.name == ''" (ngModelChange)="this.filterTags($event)"
+                                                    [class.input-border-green]="alloc.name != ''"
                                                     type="text" name="collectName{{alloc.collectId}}" [(ngModel)]="alloc.allocationName"
                                                     placeholder="{{ 'Collection' | translate }} {{ alloc.collectId }}">
                                                 <ul *ngIf="alloc.isTyping" class="schedule__dialog__form__list">
@@ -446,7 +446,7 @@
                                                         <div style="height: 40px;margin-left: 10px;display:flex;">
                                                             <div class="wrapping_inputlist" style="display: flex;">
                                                                 <input (focus)="alloc.isTyping=true" (focusout)="onFocusOutOf(alloc);"
-                                                                    autocomplete="off" class="info-table__input"
+                                                                    autocomplete="off" class="info-table__input" 
                                                                     [class.info-table__input--false]="alloc.name == ''"
                                                                     (ngModelChange)="this.filterTags($event)" type="text"
                                                                     name="collectName{{alloc.collectId}}" [(ngModel)]="alloc.allocationName"
