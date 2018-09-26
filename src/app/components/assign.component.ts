@@ -184,8 +184,12 @@ export class AssignComponent implements OnInit {
                 .filter((tx) => { return new Date(tx.start) >= start && new Date(tx.end) <= end;})
                 .map((tx) => tx.transactions)
                 .reduce((p,s) => p.concat(s));
+            console.log(new Set(bigEvent.transactions.map((tx) => tx.AllocationId).filter((idx => { return idx !== 0; }))));
             this.openBucket(bigEvent);
         }
+
+        console.log("sleept");
+
     }
     openBucket(event: MyEvent){
         let bucketCard = new BucketCard();
@@ -626,7 +630,7 @@ export class AssignComponent implements OnInit {
                 resolve();
                 return;
             }
-            this.apiService.deleteData('v2/Allocations/Allocation/Update?Id=' + id)
+            this.apiService.deleteData('Allocations/Allocation/Update?Id=' + id)
                 .then(resp => {
                     if (resp.status !== 200) {
                         console.log("Response code: 200;");
@@ -882,7 +886,7 @@ export class MyEvent {
     collectId: string;
     className: string;
     allocated = true;
-    transactions: any;
+    transactions: BucketTransaction[];
     amount: any;
 }
 
@@ -907,6 +911,7 @@ export class Bucket {
 }
 
 export class BucketTransaction {
+    AllocationId: number;
     AllocationName: string = null;
     Sum: number;
     Count: number;
