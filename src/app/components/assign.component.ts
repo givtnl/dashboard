@@ -423,11 +423,16 @@ export class AssignComponent implements OnInit {
 
     saveAllEvents() {  
         return new Promise((resolve,reject) => {
+            this.saveBigEvent().then(r => {
+                console.log("succesfully saved");
+            }).catch(e => console.log(e));
+            /*
             this.selectedCard.Collects.forEach(collect => {
                 if(collect.allocationName !== null && collect.allocationName !== ""){
                     this.saveAllocation(collect.allocationName, collect.collectId, this.selectedCard.dtBegin, this.selectedCard.dtEnd);
                 }
             });
+            */
             resolve();
         }).then(x => {
             this.checkAllocationsV2().then(a => {
@@ -439,6 +444,33 @@ export class AssignComponent implements OnInit {
             });
         });
         
+    }
+
+    deleteAllEvents() {
+        return new Promise((resolve, reject) => {
+            let allocationIdsToDelete = this.selectedCard.Collects.map(c => c.allocationId).filter(f => f !== 0).join();
+            this.apiService.deleteData("v2/Allocations/Allocations/" + allocationIdsToDelete)
+                .then(resp => console.log(resp));
+        })
+    }
+
+    saveBigEvent() {
+        return new Promise((resolve, reject) => {
+            let dataAllocations = [];
+            this.selectedCard.Collects.forEach(collect => {
+                if(collect.allocationName === null || collect.allocationName === undefined || collect.allocationName === ""){
+                    reject();
+                    return;
+                } else {
+                    dataAllocations.push({name: collect.allocationName, dtBegin: this.selectedCard.dtBegin.toISOString(), dtEnd: this.selectedCard.dtEnd.toISOString(), CollectId: collect.collectId});
+                }
+            })
+            this.apiService.postData("v2/Allocations/Allocation", dataAllocations)
+            .then(resp => {
+                console.log(resp);
+            })
+            console.log(dataAllocations);
+        });
     }
 
     resetAll(reload: boolean = true) {
@@ -646,24 +678,6 @@ export class AssignComponent implements OnInit {
                     reject();
                 });
         });
-    }
-    saveThisAllocation(name: string, collectId:string, dtBegin: Date, dtEnd: Date){
-        console.log("Saving allocation...");
-        return new Promise((resolve, reject) => {
-            if(name !== null && collectId !== null && dtBegin !== null, dtEnd !== null){
-                this.saveAllocation(name, collectId, dtBegin, dtEnd)
-                .then(resp => {
-                    this.checkAllocationsV2().then(c => {
-                        let currentEvent = this.events.filter((e) => {
-                            return new Date(e.start).getTime() === new Date(this.selectedAllocationDates[0]).getTime() && 
-                                    new Date(e.end).getTime() === new Date(this.selectedAllocationDates[1]).getTime();
-                        })[0];
-                        this.openBucket(currentEvent);
-                    });
-                });
-            }
-        });
-            
     }
 
     eventAfterRender(event: any, element: any, view: any) {

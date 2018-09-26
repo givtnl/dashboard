@@ -673,3 +673,19 @@ my-navigation {
     }
 }
 
+.action-button {
+    padding: 10px 20px;
+    font-size: 18px;
+    background:#1DA96C;
+    color:white;
+    border: 0;
+    border-radius: 4px;
+}
+
+.action-button__secundary {
+    background: #E6412C;
+}
+
+.action-button:hover {
+    opacity: 0.9;
+}

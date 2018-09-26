@@ -200,12 +200,12 @@
                             <ng-container *ngIf="currentTab == SelectedTab.Collects">
                                 <ng-container *ngFor="let alloc of selectedCard.Collects">
                                     <div style="padding: 15px;">
-                                        <div *ngIf="alloc.showActions" class="alloc-actions-container">
+                                        <!--<div *ngIf="alloc.showActions" class="alloc-actions-container">
                                             <span class="alloc-actions-btn" (click)="saveThisAllocation(alloc.allocationName, alloc.collectId, selectedCard.dtBegin, selectedCard.dtEnd)">Naam
                                                 wijzigen</span>
                                             <span class="alloc-actions-btn" (click)="removeThisAllocation(alloc.allocationId)">Toewijzing
                                                 annuleren</span>
-                                        </div>
+                                        </div>-->
                                         <div style="height: 40px;margin-left: 10px;display:flex;">
                                             <div class="wrapping_inputlist" style="display: flex;">
                                                 <input (focus)="alloc.isTyping=true" (focusout)="onFocusOutOf(alloc);"
@@ -286,10 +286,21 @@
                                     </div>
 
                                 </ng-container>
-                                <button *ngIf="currentTab == SelectedTab.Collects && !allowButton" style="height: 50px;width: 100%;"
+                                <div *ngIf="currentTab == SelectedTab.Collects">
+                                    <button class="action-button" (click)="saveAllEvents()"><i class="fas fa-check"></i> {{
+                                        "SaveAll" | translate }}</button>
+                                    <button class="action-button action-button__secundary" (click)="deleteAllEvents()"><i class="fas fa-eraser"></i> {{
+                                        "DeleteAll" | translate }}</button>
+                                </div>
+                                <button *ngIf="currentTab == SelectedTab.Collects" style="height: 50px;width: 100%;"
                                     class="info-table__button" [disabled]="disableSaveButton"
                                     [class.info-table__button--disabled]="disableSaveButton" (click)="saveAllEvents()">{{
                                     "SaveAll" | translate }}
+                                </button>
+                                <button *ngIf="currentTab == SelectedTab.Collects" style="height: 50px;width: 100%;"
+                                    class="info-table__button" [disabled]="disableSaveButton"
+                                    [class.info-table__button--disabled]="disableSaveButton" (click)="deleteAllEvents()">{{
+                                    "DeleteAll" | translate }}
                                 </button>
                             </ng-container>
                             <ng-container *ngIf="currentTab == SelectedTab.Fixed">
