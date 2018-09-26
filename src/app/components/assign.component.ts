@@ -51,6 +51,7 @@ export class AssignComponent implements OnInit {
     isLoading = false;
 
     selectedAllocationDates = [];
+    allocLoader: object = { show: false };
 
     @ViewChild('calendar') calendar: ElementRef;
     // TODO: Rework
@@ -187,9 +188,6 @@ export class AssignComponent implements OnInit {
             console.log(new Set(bigEvent.transactions.map((tx) => tx.AllocationId).filter((idx => { return idx !== 0; }))));
             this.openBucket(bigEvent);
         }
-
-        console.log("sleept");
-
     }
     openBucket(event: MyEvent){
         let bucketCard = new BucketCard();
@@ -421,40 +419,37 @@ export class AssignComponent implements OnInit {
     //     aCollection.isTyping = false;
     // }
 
-    saveAllEvents() {  
+    saveAllEvents() {
         return new Promise((resolve,reject) => {
             this.saveBigEvent().then(r => {
                 console.log("succesfully saved");
             }).catch(e => console.log(e));
-            /*
-            this.selectedCard.Collects.forEach(collect => {
-                if(collect.allocationName !== null && collect.allocationName !== ""){
-                    this.saveAllocation(collect.allocationName, collect.collectId, this.selectedCard.dtBegin, this.selectedCard.dtEnd);
-                }
-            });
-            */
             resolve();
-        }).then(x => {
-            this.checkAllocationsV2().then(a => {
-                let currentEvent = this.events.filter((e) => {
-                    return new Date(e.start).getTime() === new Date(this.selectedAllocationDates[0]).getTime() && 
-                            new Date(e.end).getTime() === new Date(this.selectedAllocationDates[1]).getTime();
-                })[0];
-                this.createBucketWithRange(currentEvent.start, currentEvent.end);
-            });
-        });
-        
+        })
     }
 
     deleteAllEvents() {
+        this.allocLoader["show"] = true;
         return new Promise((resolve, reject) => {
             let allocationIdsToDelete = this.selectedCard.Collects.map(c => c.allocationId).filter(f => f !== 0).join();
             this.apiService.deleteData("v2/Allocations/Allocations/" + allocationIdsToDelete)
-                .then(resp => console.log(resp));
+            .then(resp => {
+                if(resp["status"] === 200){
+                    this.checkAllocationsV2().then(a => {
+                        let currentEvent = this.events.filter((e) => {
+                            return new Date(e.start).getTime() === new Date(this.selectedAllocationDates[0]).getTime() && 
+                                    new Date(e.end).getTime() === new Date(this.selectedAllocationDates[1]).getTime();
+                        })[0];
+                        this.createBucketWithRange(currentEvent.start, currentEvent.end);
+                        this.allocLoader["show"] = false;
+                    });
+                }
+            });
         })
     }
 
     saveBigEvent() {
+        this.allocLoader["show"] = true;
         return new Promise((resolve, reject) => {
             let dataAllocations = [];
             this.selectedCard.Collects.forEach(collect => {
@@ -467,9 +462,19 @@ export class AssignComponent implements OnInit {
             })
             this.apiService.postData("v2/Allocations/Allocation", dataAllocations)
             .then(resp => {
-                console.log(resp);
-            })
+                if(resp === 200){
+                    this.checkAllocationsV2().then(a => {
+                        let currentEvent = this.events.filter((e) => {
+                            return new Date(e.start).getTime() === new Date(this.selectedAllocationDates[0]).getTime() && 
+                                    new Date(e.end).getTime() === new Date(this.selectedAllocationDates[1]).getTime();
+                        })[0];
+                        this.createBucketWithRange(currentEvent.start, currentEvent.end);
+                        this.allocLoader["show"] = false;
+                    });
+                }
+            });
             console.log(dataAllocations);
+
         });
     }
 

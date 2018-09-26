@@ -1217,3 +1217,14 @@ h3{
 .input-border-red {
   border-color: #b91a24;
 }
+
+.alloc-loader {
+  background: #2C2B57;
+  box-sizing: unset;
+  padding: none;
+  border: none;
+  margin: none;
+  position: absolute;
+  width: 100%;
+  z-index: 2;
+}

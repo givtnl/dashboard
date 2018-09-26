@@ -197,6 +197,11 @@
                                     [class.tab__element--active]="currentTab == SelectedTab.Fixed">{{"FixedPoints" |
                                     translate}}</span>
                             </div>
+                            <div *ngIf="allocLoader['show']" class="alloc-loader" [style.height.px]="selectedCard.Collects.length * 71">
+                                <svg class="circular" style="width: 65%; height: 65%" viewBox="25 25 50 50" >
+                                    <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="5" stroke-miterlimit="10"/>
+                                  </svg>
+                            </div>
                             <ng-container *ngIf="currentTab == SelectedTab.Collects">
                                 <ng-container *ngFor="let alloc of selectedCard.Collects">
                                     <div style="padding: 15px;">
@@ -292,16 +297,6 @@
                                     <button class="action-button action-button__secundary" (click)="deleteAllEvents()"><i class="fas fa-eraser"></i> {{
                                         "DeleteAll" | translate }}</button>
                                 </div>
-                                <button *ngIf="currentTab == SelectedTab.Collects" style="height: 50px;width: 100%;"
-                                    class="info-table__button" [disabled]="disableSaveButton"
-                                    [class.info-table__button--disabled]="disableSaveButton" (click)="saveAllEvents()">{{
-                                    "SaveAll" | translate }}
-                                </button>
-                                <button *ngIf="currentTab == SelectedTab.Collects" style="height: 50px;width: 100%;"
-                                    class="info-table__button" [disabled]="disableSaveButton"
-                                    [class.info-table__button--disabled]="disableSaveButton" (click)="deleteAllEvents()">{{
-                                    "DeleteAll" | translate }}
-                                </button>
                             </ng-container>
                             <ng-container *ngIf="currentTab == SelectedTab.Fixed">
                                 <ng-container *ngFor="let alloc of selectedCard.Fixed">
