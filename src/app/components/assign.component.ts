@@ -200,16 +200,17 @@ export class AssignComponent implements OnInit {
             if(event.transactions.filter((tx) => {
                 return tx.CollectId === String(i+1);
             }).length > 0){
-                bucketCard.Collects[i] = new BucketCardRow();
-                bucketCard.Collects[i].allocationId = event.transactions.filter((tx) => {
+                let bcr = new BucketCardRow();
+                bcr.allocationId = event.transactions.filter((tx) => {
                     return tx.CollectId === String(i+1);
                 })[0].AllocationId;
-                bucketCard.Collects[i].transactions = event.transactions.filter((tx) => {
+                bcr.transactions = event.transactions.filter((tx) => {
                     return tx.CollectId === String(i+1);
                 });
-                bucketCard.Collects[i].allocationName = bucketCard.Collects[i].transactions[0].AllocationName;
-                bucketCard.Collects[i].allocated = bucketCard.Collects[i].allocationName !== null;
-                bucketCard.Collects[i].collectId = String(i+1);
+                bcr.allocationName = bcr.transactions[0].AllocationName;
+                bcr.allocated = bcr.allocationName !== null;
+                bcr.collectId = String(i+1);
+                bucketCard.Collects.push(bcr);
             } 
         }
 
