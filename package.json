@@ -5,7 +5,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve --host 0.0.0.0",
-    "build": "npm rum builddemo && ng b",
+    "build": "npm run builddemo && ng b",
     "buildprod": "npm run builddemo && ng b -prod",
     "builddemo": "ng b -op dist-demo --bh /demo/",
     "dockerbuild": "docker build -t givtnl/givtdashboarddebug:latest .",
