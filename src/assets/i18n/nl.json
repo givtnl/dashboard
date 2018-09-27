@@ -177,5 +177,6 @@
     "CancelAllocation": {
         "one": "Toewijzing annuleren",
         "other": "Toewijzingen annuleren"
-    }
+    },
+    "FirstOpenAllocationMessage": "De eerst volgende transactie die nog niet toegewezen is:"
 }
