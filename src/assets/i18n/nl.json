@@ -169,5 +169,13 @@
     "DownloadExample": "Voorbeeld downloaden",
     "Example": "Voorbeeld",
     "RemoveAllocation": "Verwijder deze toewijzing",
-    "RemoveAllocationConfirm": "Weet je het zeker dat je deze toewijzing wil verwijderen?"
+    "RemoveAllocationConfirm": "Weet je het zeker dat je deze toewijzing wil verwijderen?",
+    "SaveAllocation": {
+        "one": "Toewijzing opslaan",
+        "other": "Toewijzingen opslaan"
+    },
+    "CancelAllocation": {
+        "one": "Toewijzing annuleren",
+        "other": "Toewijzingen annuleren"
+    }
 }
