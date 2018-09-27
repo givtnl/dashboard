@@ -169,5 +169,13 @@
     "DownloadExample": "Download example",
     "Example": "Example",
     "RemoveAllocation": "Remove this allocation",
-    "RemoveAllocationConfirm": "Are you sure you want to delete this allocation?"
+    "RemoveAllocationConfirm": "Are you sure you want to delete this allocation?",
+    "SaveAllocation": {
+        "one": "Save allocation",
+        "other": "Save allocations"
+    },
+    "CancelAllocation": {
+        "one": "Cancel allocation",
+        "other": "Cancel allocations"
+    }
 }
