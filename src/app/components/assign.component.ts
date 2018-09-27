@@ -205,6 +205,7 @@ export class AssignComponent implements OnInit {
         }
     }
     openBucket(event: MyEvent){
+        
         let bucketCard = new BucketCard();
 
         bucketCard.dtBegin = event.start["_d"];
@@ -249,7 +250,7 @@ export class AssignComponent implements OnInit {
 
         this.selectedCard = bucketCard;
         this.isDialogOpen = true;
-        console.log(bucketCard);
+        this.openedMobileEventId = event.id;
     }
     renderBuckets(bucketCollection: BucketCollection){
         this.events = [];
@@ -380,11 +381,13 @@ export class AssignComponent implements OnInit {
     }
 
     prevPeriod() {
+        this.openedMobileEventId = -1;
         let nativeElement = jQuery(this.calendar["el"]["nativeElement"].children[0]);
         nativeElement.fullCalendar('prev');
     }
 
     nextPeriod() {
+        this.openedMobileEventId = -1;
         let nativeElement = jQuery(this.calendar["el"]["nativeElement"].children[0]);
         nativeElement.fullCalendar('next');
     }

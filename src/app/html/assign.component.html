@@ -398,7 +398,7 @@
                 <table class="mobile-calendar__table" cellspacing="0" cellpadding="0">
 
                     <ng-container *ngFor="let event of this.events">
-                        <tr class="mobile-calendar__row" (click)="loadDialog(event);">
+                        <tr class="mobile-calendar__row" (click)="openBucket(event);">
                             <td class="mobile-calendar__day">
                                 <span class="mobile-calendar__calendar-icon">
                                     {{ event.start | date:'d' }}
@@ -428,7 +428,7 @@
                                 </svg>
                             </td>
                         </tr>
-                        <tr *ngIf="isDialogOpen && openedMobileEventId==event.id">
+                        <tr *ngIf="isDialogOpen && openedMobileEventId == event.id">
                             <td colspan="4">
                                 <div class="schedule__dialog sidebar-collection-popup mobile-calendar__popup">
                                     <div class="list-collections">
