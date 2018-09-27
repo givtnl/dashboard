@@ -178,5 +178,6 @@
         "one": "Cancel allocation",
         "other": "Cancel allocations"
     },
-    "FirstOpenAllocationMessage": "The next transaction that has not yet been allocated:"
+    "FirstOpenAllocationMessage": "The next transaction that has not yet been allocated:",
+    "CsvDownload": "Download csv"
 }
