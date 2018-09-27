@@ -205,12 +205,6 @@
                             <ng-container *ngIf="currentTab == SelectedTab.Collects">
                                 <ng-container *ngFor="let alloc of selectedCard.Collects">
                                     <div style="padding: 15px;">
-                                        <!--<div *ngIf="alloc.showActions" class="alloc-actions-container">
-                                            <span class="alloc-actions-btn" (click)="saveThisAllocation(alloc.allocationName, alloc.collectId, selectedCard.dtBegin, selectedCard.dtEnd)">Naam
-                                                wijzigen</span>
-                                            <span class="alloc-actions-btn" (click)="removeThisAllocation(alloc.allocationId)">Toewijzing
-                                                annuleren</span>
-                                        </div>-->
                                         <div style="height: 40px;margin-left: 10px;display:flex;">
                                             <div class="wrapping_inputlist" style="display: flex;">
                                                 <input (focus)="alloc.isTyping=true" (focusout)="onFocusOutOf(alloc);"
@@ -432,8 +426,8 @@
                             <td colspan="4">
                                 <div class="schedule__dialog sidebar-collection-popup mobile-calendar__popup">
                                     <div class="list-collections">
-                                        <div style="margin-top: 6px;">
-                                            <span *ngIf="selectedCard.Collects.length > 0" class="tab__element" (click)="currentTab = SelectedTab.Collects"
+                                        <div *ngIf="selectedCard" style="margin-top: 6px;">
+                                            <span *ngIf="selectedCard.Collects && selectedCard.Collects.length > 0" class="tab__element" (click)="currentTab = SelectedTab.Collects"
                                                 [class.tab__element--active]="currentTab == SelectedTab.Collects">{{
                                                 "Menu_Collectes" | translate}}</span>
                                             <span *ngIf="selectedCard.Fixed.length > 0" class="tab__element" (click)="currentTab = SelectedTab.Fixed"
