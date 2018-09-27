@@ -231,7 +231,7 @@
                                                 <span>{{ alloc.numberOfTransactions }}</span>
                                             </span>
                                             <button style="cursor:pointer;background: #2E2957; border:0;margin-left: auto;display:  flex;justify-content:  center;"
-                                                class="icon" [class.fill-green]="!alloc.showDetails" (click)="showAllocDetails(alloc)">
+                                                class="icon" [class.fill-green]="alloc.showDetails" (click)="showAllocDetails(alloc)">
 
                                                 <svg width="23px" height="23px" viewBox="8 8 23 23" version="1.1" xmlns="http://www.w3.org/2000/svg"
                                                     xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -299,11 +299,18 @@
                                 <ng-container *ngFor="let alloc of selectedCard.Fixed">
                                     <div *ngIf="alloc.amountOfGivts != 0" style="padding: 15px;">
                                         <div style="height: 40px;display: flex;margin-left: 10px;">
-                                            <div class="wrapping_inputlist" style="display: flex;">
+                                            <div class="wrapping_inputlist" style="display: flex; width: calc(50% + 2px);">
                                                 <span style="align-self: center;font-family: Avenir_Heavy; font-size: 18px;">{{alloc.allocationName}}</span>
                                             </div>
+                                            <span class="alloc-givt-count">
+                                                <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" data-prefix="fas"
+                                                    data-icon="user" class="svg-inline--fa fa-user fa-w-14" role="img"
+                                                    viewBox="0 0 448 512">
+                                                    <path fill="white" d="M224 256c70.7 0 128-57.3 128-128S294.7 0 224 0 96 57.3 96 128s57.3 128 128 128zm89.6 32h-16.7c-22.2 10.2-46.9 16-72.9 16s-50.6-5.8-72.9-16h-16.7C60.2 288 0 348.2 0 422.4V464c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48v-41.6c0-74.2-60.2-134.4-134.4-134.4z" /></svg>
+                                                <span>{{ alloc.numberOfTransactions }}</span>
+                                            </span>
                                             <button style="cursor:pointer;background: #2E2957; border:0;margin-left: auto;display:  flex;justify-content:  center;"
-                                                class="icon" [class.fill-green]="!alloc.isStatsHidden" (click)="alloc.isStatsHidden = !alloc.isStatsHidden">
+                                                class="icon" [class.fill-green]="alloc.showDetails" (click)="showAllocDetails(alloc)">
 
                                                 <svg width="23px" height="23px" viewBox="8 8 23 23" version="1.1" xmlns="http://www.w3.org/2000/svg"
                                                     xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -314,15 +321,8 @@
                                                         id="Combined-Shape" stroke="none" fill="#FFFFFF " fill-rule="evenodd"></path>
                                                 </svg>
                                             </button>
-                                            <span style="font-family: Avenir_Light;display: flex;flex-direction: row;align-items:  center;margin-left: 15px;">
-
-                                                <img src="images/personal-blue.png" alt="">
-                                                <span style="padding-left: 5px;padding-top: 5px;">{{
-                                                    alloc.numberOfTransactions }}</span>
-                                            </span>
-
                                         </div>
-                                        <table class="incasso-state-table" *ngIf="!alloc.isStatsHidden">
+                                        <table class="incasso-state-table" *ngIf="alloc.showDetails">
                                             <tr [class.incasso-state-table__row--disabled]="alloc.toProcessTotal == 0">
                                                 <td>
                                                     <span class="bullet bullet--blue"></span>
@@ -466,15 +466,13 @@
                                                                         fill-rule="evenodd"></path>
                                                                 </svg>
                                                             </button>
-
-
-                                                            <span style="font-family: Avenir_Light;display: flex;flex-direction: row;align-items:  center;margin-left: 15px;">
-
-                                                                <img src="images/personal-blue.png" alt="">
-                                                                <span style="padding-left: 5px;padding-top: 5px;">{{
-                                                                    alloc.numberOfTransactions }}</span>
+                                                            <span class="alloc-givt-count">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" data-prefix="fas"
+                                                                    data-icon="user" class="svg-inline--fa fa-user fa-w-14" role="img"
+                                                                    viewBox="0 0 448 512">
+                                                                    <path fill="white" d="M224 256c70.7 0 128-57.3 128-128S294.7 0 224 0 96 57.3 96 128s57.3 128 128 128zm89.6 32h-16.7c-22.2 10.2-46.9 16-72.9 16s-50.6-5.8-72.9-16h-16.7C60.2 288 0 348.2 0 422.4V464c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48v-41.6c0-74.2-60.2-134.4-134.4-134.4z" /></svg>
+                                                                <span>{{ alloc.numberOfTransactions }}</span>
                                                             </span>
-
                                                         </div>
                                                         <table class="incasso-state-table" *ngIf="alloc.showDetails">
                                                             <tr [class.incasso-state-table__row--disabled]="alloc.toProcessTotal == 0">
@@ -556,12 +554,13 @@
                                                                         fill-rule="evenodd"></path>
                                                                 </svg>
                                                             </button>
-                                                            <span style="font-family: Avenir_Light;display: flex;flex-direction: row;align-items:  center;margin-left: 15px;">
-
-                                                                <img src="images/personal-blue.png" alt="">
-                                                                <span style="padding-left: 5px;padding-top: 5px;">{{ alloc.numberOfTransactions}}</span>
+                                                            <span class="alloc-givt-count">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" data-prefix="fas"
+                                                                    data-icon="user" class="svg-inline--fa fa-user fa-w-14" role="img"
+                                                                    viewBox="0 0 448 512">
+                                                                    <path fill="white" d="M224 256c70.7 0 128-57.3 128-128S294.7 0 224 0 96 57.3 96 128s57.3 128 128 128zm89.6 32h-16.7c-22.2 10.2-46.9 16-72.9 16s-50.6-5.8-72.9-16h-16.7C60.2 288 0 348.2 0 422.4V464c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48v-41.6c0-74.2-60.2-134.4-134.4-134.4z" /></svg>
+                                                                <span>{{ alloc.numberOfTransactions }}</span>
                                                             </span>
-
                                                         </div>
                                                         <table class="incasso-state-table" *ngIf="alloc.showDetails">
                                                             <tr [class.incasso-state-table__row--disabled]="alloc.toProcess == 0">
