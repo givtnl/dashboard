@@ -22,8 +22,6 @@ export class AssignComponent implements OnInit {
     headerConfig: any;
     options: Object = {};
     isDialogOpen: boolean;
-
-    event: MyEvent = new MyEvent();
     errorShown: boolean;
     errorMessage: string;
     currentViewStart: string; //UTC ISO date representation of current view start
@@ -49,44 +47,33 @@ export class AssignComponent implements OnInit {
     showCsvPopup: boolean = false;
     csvError: boolean = true
     isLoading = false;
+    hasOpenAllocation = false;
 
     selectedAllocationDates = [];
     allocLoader: object = { show: false };
 
     @ViewChild('calendar') calendar: ElementRef;
-    // TODO: Rework
-    // get allowButton(): boolean {
-    //     if (this.firstCollection.amountOfGivts > 0 && this.firstCollection.allocated === false)
-    //         return true;
-
-    //     if (this.secondCollection.amountOfGivts > 0 && this.secondCollection.allocated === false)
-    //         return true;
-
-    //     return this.thirdCollection.amountOfGivts > 0 && this.thirdCollection.allocated === false;
-    // }
-    // get disableSaveButton(): boolean {
-    //     for (let alloc of this.allocations) {
-    //         if (alloc.amountOfGivts > 0 && alloc.name === "")
-    //             return true;
-    //     }
-    //     return false;
-    // }
-
-
-
     public constructor(public ts: TranslateService, private datePipe: ISODatePipe, private cd: ChangeDetectorRef, private apiService: ApiClientService, private userService: UserService, private dataService: DataService) {
         this.isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
 
         document.onkeydown = function (evt) {
             evt = evt || window.event;
             if (this.isDialogOpen && evt.keyCode === 27) {
-                this.selectedCard = null
+                this.selectedCard = null;
+                this.isDialogOpen = false;
             }
             if(evt.keyCode == 37)
                 this.prevPeriod();
 
             if(evt.keyCode == 39)
                 this.nextPeriod();
+
+            if(evt.keyCode == 46 && evt.shiftKey && this.allowDelete)
+                this.deleteAllEvents();
+
+            if(evt.keyCode == 13 && evt.shiftKey && this.allowSave)
+                this.saveAllEvents();
+
         }.bind(this);
         this.userService.collectGroupChanged.subscribe(() => {
             this.ngOnInit();
@@ -185,6 +172,10 @@ export class AssignComponent implements OnInit {
         })
         return returnValue
     }
+    setCollectName(item, allocation: BucketCardRow) {
+        allocation.allocationName = item.replace("<span class='autocomplete'>", "").replace("</span>", "");
+
+    }
     createBucketWithRange(start: Date, end: Date){        
         let bigEvent = new MyEvent();
         bigEvent.start = new moment(start);
@@ -198,10 +189,14 @@ export class AssignComponent implements OnInit {
                 .filter((tx) => { return new Date(tx.start) >= start && new Date(tx.end) <= end;})
                 .map((tx) => tx.transactions)
                 .reduce((p,s) => p.concat(s));
-            console.log(new Set(bigEvent.transactions.map((tx) => tx.AllocationId).filter((idx => { return idx !== 0; }))));
             this.openBucket(bigEvent);
         } else {
+            jQuery(this.calendar["el"]["nativeElement"].children[0]).fullCalendar('unselect');
             this.selectedCard = null;
+            this.isDialogOpen = false;
+            if (this.oldJsEvent !== undefined) {
+                this.oldJsEvent.target.style.boxShadow = "0px 0px 15px transparent";
+            }
         }
     }
     openBucket(event: MyEvent){
@@ -254,10 +249,8 @@ export class AssignComponent implements OnInit {
     }
     renderBuckets(bucketCollection: BucketCollection){
         this.events = [];
-
         let buckets: Bucket[] = [];
-        
-
+        this.hasOpenAllocation = false;
         for(let i = 0; i < bucketCollection.Allocated.length; i++){
             let bucket = new Bucket();
             bucket.bucketType = BucketType.Allocated;
@@ -337,14 +330,18 @@ export class AssignComponent implements OnInit {
             switch (buckets[i].bucketType) {
                 case BucketType.Allocated:
                     event.className = "allocation";
+                    this.hasOpenAllocation = false;
                     break;
                 case BucketType.AllocatedWithNonAllocated:
                     event.className = "allocation-mixed";
+                    this.hasOpenAllocation = true;
                     break;
                 case BucketType.NonAllocated:
+                    this.hasOpenAllocation = true;
                     event.className = "money";
                     break;
                 case BucketType.Fixed:
+                    this.hasOpenAllocation = false;
                     event.className = "allocation";
                     break;
             }
@@ -363,15 +360,12 @@ export class AssignComponent implements OnInit {
         this.apiService.getData(apiUrl)
             .then(resp => {
                 this.isLoading = false;
-
-                if(resp === undefined) {
+                if(resp === undefined)
                     return;
-                }
-
+                
                 let bucketCollection = resp as BucketCollection;
                 this.renderBuckets(bucketCollection);
                 this.cd.detectChanges();
-
                 resolve();
             })
             .catch(r => {
@@ -382,12 +376,16 @@ export class AssignComponent implements OnInit {
 
     prevPeriod() {
         this.openedMobileEventId = -1;
+        this.selectedCard = null;
+        this.isDialogOpen = false;
         let nativeElement = jQuery(this.calendar["el"]["nativeElement"].children[0]);
         nativeElement.fullCalendar('prev');
     }
 
     nextPeriod() {
         this.openedMobileEventId = -1;
+        this.selectedCard = null;
+        this.isDialogOpen = false;
         let nativeElement = jQuery(this.calendar["el"]["nativeElement"].children[0]);
         nativeElement.fullCalendar('next');
     }
@@ -416,7 +414,7 @@ export class AssignComponent implements OnInit {
     deleteAllEvents() {
         this.allocLoader["show"] = true;
         return new Promise((resolve, reject) => {
-            let allocationIdsToDelete = this.selectedCard.Collects.map(c => c.allocationId).filter(f => f !== 0).join();
+            let allocationIdsToDelete = Array.from(new Set(this.selectedCard.Collects.map(t => t.transactions).map(r => r.map(u => u.AllocationId).filter(f => f !== 0)).reduce((a, b) => a.concat(b)))).join();
             this.apiService.deleteData("v2/Allocations/Allocations/" + allocationIdsToDelete)
             .then(resp => {
                 if(resp["status"] === 200){
@@ -427,6 +425,8 @@ export class AssignComponent implements OnInit {
     }
 
     saveAllEvents() {
+        if(!this.selectedCard)
+            return;
         this.allocLoader["show"] = true;
         return new Promise((resolve, reject) => {
             let dataAllocations = [];
@@ -439,18 +439,26 @@ export class AssignComponent implements OnInit {
                 }
             })
             this.apiService.postData("v2/Allocations/Allocation", dataAllocations)
-            .then(resp => {
-                if(resp === 200){
-                    this.reloadEvents();
-                }
-            });
-            console.log(dataAllocations);
-
+                .then(resp => {
+                    if(resp === 200){
+                        this.reloadEvents();
+                        resolve();
+                    } else {
+                        reject();
+                    }
+                })
+                .catch(err => {
+                    reject();
+                });
         });
     }
 
     reloadEvents() {
         this.events.length = 0;
+        this.apiService.getData('Allocations/AllocationTags')
+            .then(data => {
+                this.usedTags = data;
+            });
         this.checkAllocationsV2().then(a => {
             let currentEvent = this.events.filter((e) => {
                 return new Date(e.start).getTime() === new Date(this.selectedAllocationDates[0]).getTime() && 
@@ -465,13 +473,6 @@ export class AssignComponent implements OnInit {
         });
     }
 
-    handleDayClick(event) {
-        this.event = new MyEvent();
-        this.event.start = event.date.format();
-        //trigger detection manually as somehow only moving the mouse quickly after click triggers the automatic detection
-        this.cd.detectChanges();
-    }
-
     findEventIndexById(id: number) {
         let index = -1;
         for (let i = 0; i < this.events.length; i++) {
@@ -480,7 +481,6 @@ export class AssignComponent implements OnInit {
                 break;
             }
         }
-
         return index;
     }
 
@@ -488,8 +488,6 @@ export class AssignComponent implements OnInit {
         this.errorShown = setVisible;
         this.errorMessage = msg;
     }
-
-    
 
     saveAllocation(title: string, collectId: string, startTime: Date = null, endTime: Date = null) {
         return new Promise((resolve, reject) => {
@@ -656,18 +654,25 @@ export class AssignComponent implements OnInit {
     }
 
     allocateWeek() {
-        // TODO: Implement api call to save non allocations
-    }
-
-    focusAllCollectsTyping(focus) {
-        // if (!focus) {
-        //     let that = this;
-        //     setTimeout(() => {
-        //         that.allCollectTyping = focus;
-        //     }, 150);
-        // } else {
-        //     this.allCollectTyping = focus;
-        // }
+        let dataAllocations = [];
+        for(let i = 0; i < this.events.length; i++) {
+            let currentEvent = this.events[i];
+            let collectIdsToAdd = Array.from(new Set(currentEvent.transactions.filter(tx => {
+                return tx.AllocationId == 0 && tx.Fixed == false && tx.CollectId != null;
+            }).map(c => c.CollectId)));
+            collectIdsToAdd.forEach((collectId) => {
+                dataAllocations.push({name: this.allocateWeekName, dtBegin: currentEvent.start.toISOString(), dtEnd: currentEvent.end.toISOString(), CollectId: collectId});                
+            });
+        }
+        this.apiService.postData("v2/Allocations/Allocation", dataAllocations)
+                .then(resp => {
+                    if(resp === 200){
+                        this.reloadEvents();
+                    } 
+                })
+                .catch(err => {
+                    console.log(err);
+                });
     }
 
     allCollectNameChanging(event) {
