@@ -155,7 +155,7 @@
                         </ul>
                     </div>
                 </div>
-                <div class="schedule__dialog sidebar-collection-popup">
+                <div class="schedule__dialog sidebar-collection-popup" *ngIf="selectedCard">
 
                     <div class="list-collections">
                         <button style="background: none;border:none;position: absolute;top:1px;right:1px;margin: 0;padding: 10px;cursor:  pointer;"
@@ -288,10 +288,10 @@
                                     </div>
 
                                 </ng-container>
-                                <div *ngIf="currentTab == SelectedTab.Collects">
-                                    <button class="action-button" (click)="saveAllEvents()"><i class="fas fa-check"></i> {{
+                                <div *ngIf="currentTab == SelectedTab.Collects" class="dialog-button-container">
+                                    <button class="action-button" [class.action-button__disabled]="!allowSave" [disabled]="!allowSave" (click)="saveAllEvents()"><i class="fas fa-check"></i> {{
                                         "SaveAll" | translate }}</button>
-                                    <button class="action-button action-button__secundary" (click)="deleteAllEvents()"><i class="fas fa-eraser"></i> {{
+                                    <button class="action-button action-button__secundary" [class.action-button__disabled]="!allowDelete" [disabled]="!allowDelete" (click)="deleteAllEvents()"><i class="fas fa-eraser"></i> {{
                                         "DeleteAll" | translate }}</button>
                                 </div>
                             </ng-container>

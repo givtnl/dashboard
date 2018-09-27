@@ -80,7 +80,7 @@ export class AssignComponent implements OnInit {
         document.onkeydown = function (evt) {
             evt = evt || window.event;
             if (this.isDialogOpen && evt.keyCode === 27) {
-                this.resetAll(false);
+                this.selectedCard = null
             }
             if(evt.keyCode == 37)
                 this.prevPeriod();
@@ -128,6 +128,8 @@ export class AssignComponent implements OnInit {
         }.bind(this);
         this.options["contentHeight"] = "auto";
         this.options["eventClick"] = function (event, jsEvent, view) {
+            let fullcalendar = jQuery(this.calendar["el"]["nativeElement"].children[0]);
+            fullcalendar.fullCalendar('unselect');
             this.openBucket(event);
             if (this.oldJsEvent !== undefined) {
                 this.oldJsEvent.target.style.boxShadow = "0px 0px 15px transparent";
@@ -151,7 +153,7 @@ export class AssignComponent implements OnInit {
         this.options['eventDurationEditable'] = false;
         this.options['eventStartEditable'] = false;
         this.options['fixedWeekCount'] = false;
-        this.options['unselectAuto'] = true;
+        this.options['unselectAuto'] = false;
         this.options['selectable'] = true;
         this.options['scrollTime'] = '08:00:00';
         this.options['select'] = function (start, end, jsEvent, view, resource) {
@@ -164,13 +166,24 @@ export class AssignComponent implements OnInit {
                 this.usedTags = data;
             });
     }
-    get allowButton(): Boolean {
+    get allowSave(): Boolean {
         let retVal = true;
         this.selectedCard.Collects.forEach(collect => {
-            if(collect.allocationId === 0)
+            if(!(collect.allocationName != null && collect.allocationName != undefined && collect.allocationName != "")) {
                 retVal = false;
+            }
+                
         });
         return retVal;
+    }
+    get allowDelete(): Boolean {
+        let returnValue = false;
+        this.selectedCard.Collects.forEach(collect => {
+            if(collect.allocationId !== 0) {
+                returnValue = true;
+            }
+        })
+        return returnValue
     }
     createBucketWithRange(start: Date, end: Date){        
         let bigEvent = new MyEvent();
@@ -187,6 +200,8 @@ export class AssignComponent implements OnInit {
                 .reduce((p,s) => p.concat(s));
             console.log(new Set(bigEvent.transactions.map((tx) => tx.AllocationId).filter((idx => { return idx !== 0; }))));
             this.openBucket(bigEvent);
+        } else {
+            this.selectedCard = null;
         }
     }
     openBucket(event: MyEvent){
@@ -353,14 +368,7 @@ export class AssignComponent implements OnInit {
                 }
 
                 let bucketCollection = resp as BucketCollection;
-
                 this.renderBuckets(bucketCollection);
-
-                console.log(this.events);
-
-                // this.events.sort(function (a, b) {
-                //     return a.start.getTime() - b.start.getTime();
-                // });
                 this.cd.detectChanges();
 
                 resolve();
@@ -369,21 +377,6 @@ export class AssignComponent implements OnInit {
                 reject();
             });
         });
-        
-        
-    }
-
-    loadDialog(event) {
-        if (event.id === this.openedMobileEventId) {
-            this.closeDialog();
-            this.openedMobileEventId = -1;
-            return;
-        }
-        this.openedMobileEventId = event.id;
-        this.event = event;
-        this.startTime = new Date(this.event.start);
-        this.endTime = new Date(this.event.end);
-        this.openBucket(event);
     }
 
     prevPeriod() {
@@ -397,7 +390,10 @@ export class AssignComponent implements OnInit {
     }
 
     closeDialog() {
-        this.resetAll(false);
+        this.selectedCard = null;
+        if(!this.selectedCSV) {
+            this.isDialogOpen = false;
+        }
         if (this.oldJsEvent !== undefined) {
             this.oldJsEvent.target.style.boxShadow = "0px 0px 15px transparent";
         }
@@ -414,20 +410,6 @@ export class AssignComponent implements OnInit {
         }, this);
     }
 
-    // setCollectNameOf(item, aCollection: AssignedCollection) {
-    //     aCollection.name = item.replace("<span class='autocomplete'>", "").replace("</span>", "");
-    //     aCollection.isTyping = false;
-    // }
-
-    saveAllEvents() {
-        return new Promise((resolve,reject) => {
-            this.saveBigEvent().then(r => {
-                console.log("succesfully saved");
-            }).catch(e => console.log(e));
-            resolve();
-        })
-    }
-
     deleteAllEvents() {
         this.allocLoader["show"] = true;
         return new Promise((resolve, reject) => {
@@ -435,20 +417,13 @@ export class AssignComponent implements OnInit {
             this.apiService.deleteData("v2/Allocations/Allocations/" + allocationIdsToDelete)
             .then(resp => {
                 if(resp["status"] === 200){
-                    this.checkAllocationsV2().then(a => {
-                        let currentEvent = this.events.filter((e) => {
-                            return new Date(e.start).getTime() === new Date(this.selectedAllocationDates[0]).getTime() && 
-                                    new Date(e.end).getTime() === new Date(this.selectedAllocationDates[1]).getTime();
-                        })[0];
-                        this.createBucketWithRange(currentEvent.start, currentEvent.end);
-                        this.allocLoader["show"] = false;
-                    });
+                    this.reloadEvents();
                 }
             });
         })
     }
 
-    saveBigEvent() {
+    saveAllEvents() {
         this.allocLoader["show"] = true;
         return new Promise((resolve, reject) => {
             let dataAllocations = [];
@@ -463,14 +438,7 @@ export class AssignComponent implements OnInit {
             this.apiService.postData("v2/Allocations/Allocation", dataAllocations)
             .then(resp => {
                 if(resp === 200){
-                    this.checkAllocationsV2().then(a => {
-                        let currentEvent = this.events.filter((e) => {
-                            return new Date(e.start).getTime() === new Date(this.selectedAllocationDates[0]).getTime() && 
-                                    new Date(e.end).getTime() === new Date(this.selectedAllocationDates[1]).getTime();
-                        })[0];
-                        this.createBucketWithRange(currentEvent.start, currentEvent.end);
-                        this.allocLoader["show"] = false;
-                    });
+                    this.reloadEvents();
                 }
             });
             console.log(dataAllocations);
@@ -478,29 +446,20 @@ export class AssignComponent implements OnInit {
         });
     }
 
-    resetAll(reload: boolean = true) {
-        // this.firstCollection = new AssignedCollection();
-        // this.secondCollection = new AssignedCollection();
-        // this.thirdCollection = new AssignedCollection();
-        // this.showDelete = false;
-        // this.isDialogOpen = false;
-        // this.event = new MyEvent();
-        // this.startTime = new Date();
-        // this.endTime = new Date();
-        // this.selectedAllocation = 0;
-        // this.filteredUsedTags = [];
-        // this.openedMobileEventId = -1;
-        // if (this.oldJsEvent !== undefined) {
-        //     this.oldJsEvent.target.style.boxShadow = "0px 0px 15px transparent";
-        // }
-        // if (reload) {
-        //     this.reloadEvents();
-        // }
-    }
-
     reloadEvents() {
         this.events.length = 0;
-        this.checkAllocationsV2();
+        this.checkAllocationsV2().then(a => {
+            let currentEvent = this.events.filter((e) => {
+                return new Date(e.start).getTime() === new Date(this.selectedAllocationDates[0]).getTime() && 
+                        new Date(e.end).getTime() === new Date(this.selectedAllocationDates[1]).getTime();
+            })[0];
+            if(currentEvent == undefined) {
+                this.createBucketWithRange(new Date(this.selectedAllocationDates[0]), new Date(this.selectedAllocationDates[1]));
+            } else {
+                this.createBucketWithRange(currentEvent.start, currentEvent.end);
+            }
+            this.allocLoader["show"] = false;
+        });
     }
 
     handleDayClick(event) {
@@ -508,56 +467,6 @@ export class AssignComponent implements OnInit {
         this.event.start = event.date.format();
         //trigger detection manually as somehow only moving the mouse quickly after click triggers the automatic detection
         this.cd.detectChanges();
-    }
-
-    handleEventClick(e) {
-        let start = e.calEvent.start;
-        let end = e.calEvent.end;
-        if (e.view.name === 'month') {
-            start.stripTime();
-            end.stripTime();
-        }
-
-        if (end) {
-            this.event.end = end.format();
-        }
-
-        this.event.id = e.calEvent.id;
-        this.event.start = start.format();
-        this.openBucket(e);
-    }
-    
-    
-    deleteEvent() {
-        let eventId = this.event.id;
-        let index: number = this.findEventIndexById(eventId);
-        let thisEvent = this.event;
-        if (index >= 0) {
-            this.events.splice(index, 1);
-        }
-        let promises = [];
-        let allocationsIds = [];
-        for (let i = 0; i < thisEvent.transactions.length; i++) {
-            allocationsIds.push(thisEvent.transactions[i].AllocationId);
-        }
-
-        allocationsIds = allocationsIds.filter((item, i, ar) => {
-            return ar.indexOf(item) === i;
-        });
-
-        for (let id of allocationsIds) {
-            if (id !== 0) {
-                promises.push(this.apiService.deleteData('Allocations/Allocation?Id=' + id));
-            }
-        }
-
-        Promise.all(promises).then(() => {
-            this.resetAll();
-        }).catch((err) => {
-            console.log(err);
-
-        });
-
     }
 
     findEventIndexById(id: number) {

@@ -680,10 +680,25 @@ my-navigation {
     color:white;
     border: 0;
     border-radius: 4px;
+    cursor: pointer;
+}
+
+.action-button i {
+    margin-right: 7px; 
 }
 
 .action-button__secundary {
     background: #E6412C;
+}
+
+.action-button__disabled {
+    background: #CECECE;
+    opacity: 1;
+    cursor: not-allowed;
+}
+
+.action-button__disabled:hover {
+    opacity: 1 !important;
 }
 
 .action-button:hover {
