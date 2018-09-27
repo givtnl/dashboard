@@ -178,5 +178,6 @@
         "one": "Toewijzing annuleren",
         "other": "Toewijzingen annuleren"
     },
-    "FirstOpenAllocationMessage": "De eerst volgende transactie die nog niet toegewezen is:"
+    "FirstOpenAllocationMessage": "De eerst volgende transactie die nog niet toegewezen is:",
+    "CsvDownload": "CSV downloaden"
 }
