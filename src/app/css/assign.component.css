@@ -785,6 +785,10 @@ h3{
 }
 
 @media only screen and (max-width : 480px) {
+    .alloc-givt-count{
+      margin-left: 10px;
+      margin-right: 10px;
+    }
     .info-table-cell--money {
         white-space: nowrap;
     }
