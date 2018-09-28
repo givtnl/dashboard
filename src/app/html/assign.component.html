@@ -402,8 +402,9 @@
                                 }}
                             </td>
                             <td class="">
-                                <span class="mobile-calendar__status mobile-calendar__status--ok" *ngIf="event.allocated"></span>
-                                <span class="mobile-calendar__status mobile-calendar__status--nok" *ngIf="!event.allocated"></span>
+                                <span class="mobile-calendar__status mobile-calendar__status--ok" *ngIf="event.className == 'allocation'"></span>
+                                <span class="mobile-calendar__status mobile-calendar__status--mixed" *ngIf="event.className == 'allocation-mixed'"></span>
+                                <span class="mobile-calendar__status mobile-calendar__status--nok" *ngIf="event.className == 'money'"></span>
                             </td>
                             <td class="mobile-calendar__big-arrow">
                                 <svg width="10px" height="14px" viewBox="0 0 10 14" version="1.1" xmlns="http://www.w3.org/2000/svg"
