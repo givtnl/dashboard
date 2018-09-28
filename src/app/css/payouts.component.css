@@ -477,6 +477,8 @@ button:disabled{
   text-align: center;
   display:flex;
   max-width: 740px;
+  display: flex;
+  align-items: center;
 }
 .white-bg{
     background-color: white;
@@ -676,3 +678,20 @@ button:disabled{
     text-align: center;
     font-size: 12px;
 }
+
+.download-csv-button{
+    padding: 0px 22px 0px 22px !important;
+    height: 40px;
+    box-sizing: border-box;
+    color: white;
+    font-family: 'Avenir_Black';
+    background-color: #2C2B57;
+    border: 0;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    margin-left: 10px;
+  }
