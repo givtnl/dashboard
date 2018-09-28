@@ -246,6 +246,12 @@ export class AssignComponent implements OnInit {
         this.selectedCard = bucketCard;
         this.isDialogOpen = true;
         this.openedMobileEventId = event.id;
+
+        if(this.selectedCard.Collects.length > 0)
+            this.currentTab = SelectedTab.Collects;
+        else if(this.selectedCard.Fixed.length > 0) {
+            this.currentTab = SelectedTab.Fixed;
+        }
     }
     renderBuckets(bucketCollection: BucketCollection){
         this.events = [];

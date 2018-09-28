@@ -281,7 +281,7 @@
                                     </div>
 
                                 </ng-container>
-                                <div *ngIf="currentTab == SelectedTab.Collects" class="dialog-button-container">
+                                <div *ngIf="currentTab == SelectedTab.Collects && selectedCard.Collects.length > 0" class="dialog-button-container">
                                     <button class="action-button" [class.action-button__disabled]="!allowSave" [disabled]="!allowSave" (click)="saveAllEvents()"><i class="fas fa-check"></i> 
                                         {{ selectedCard.Collects.length == 1 ? ('SaveAllocation.one' | translate) : ('SaveAllocation.other'| translate) }}</button>
                                     <button class="action-button action-button__secundary" [class.action-button__disabled]="!allowDelete" [disabled]="!allowDelete" (click)="deleteAllEvents()"><i class="fas fa-eraser"></i>
