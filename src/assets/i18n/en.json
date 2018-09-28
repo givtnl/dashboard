@@ -71,7 +71,7 @@
     "PW_PlaceholderPW": "New password",
     "PW_GoBack": "Go back",
     "PW_ForgotPassword": "Forgot password?",
-    "PW_RequestedPW": "If you are registered with this account, you would have received an email in your inbox to reset your password. If not, then you are not registered with this account.",
+    "PW_RequestedPW": "You should have received an e-mail with a link to reset your password. In case you do not see the e-mail right away, check your spam.",
     "PW_Saved": "Your password has been saved. You can now login into the app with your new credentials.",
     "Text_Reversals_MoreInfo": "This fee contains the donations that were reversed by the donors. In almost every case this fee will be charged over a payment period which is different than the period in which the donor has given.",
     "Text_Reversals": "Reversals",
