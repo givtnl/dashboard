@@ -759,14 +759,14 @@ export class AssignComponent implements OnInit {
                     let dtBegin = new Date(props[0]);
                     let dtEnd = new Date(props[1]);
                     let alloc;
-                    let CollectId = props[3];
+                    let CollectId = props[3].trim();
 
                     if (!this.isValidDate(dtBegin) || !this.isValidDate(dtEnd) || Number(CollectId) > 3 ) {
                         alloc = {
                             name: props[2],
                             dtBegin: dtBegin,
                             dtEnd: dtEnd,
-                            collectId: props[3],
+                            collectId: props[3].trim(),
                             dtBeginString: new Date(props[0]).toLocaleDateString(navigator.language, { day: 'numeric', year: 'numeric', month: 'numeric', hour: 'numeric', minute: 'numeric' }),
                             dtEndString: new Date(props[1]).toLocaleDateString(navigator.language, { day: 'numeric', year: 'numeric', month: 'numeric', hour: 'numeric', minute: 'numeric' }),
                             error: true
@@ -776,7 +776,7 @@ export class AssignComponent implements OnInit {
                             name: props[2],
                             dtBegin: dtBegin,
                             dtEnd: dtEnd,
-                            collectId: props[3],
+                            collectId: props[3].trim(),
                             dtBeginString: new Date(props[0]).toLocaleDateString(navigator.language, { day: 'numeric', year: 'numeric', month: 'numeric', hour: 'numeric', minute: 'numeric' }),
                             dtEndString: new Date(props[1]).toLocaleDateString(navigator.language, { day: 'numeric', year: 'numeric', month: 'numeric', hour: 'numeric', minute: 'numeric' })
                         };
