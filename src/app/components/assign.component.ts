@@ -691,6 +691,8 @@ export class AssignComponent implements OnInit {
     closeCSVBox() {
         this.selectedCSV = false;
         this.checkAllocationsV2();
+        if(this.selectedCard == null)
+            this.isDialogOpen = false;
     }
 
     uploadCSV() {
