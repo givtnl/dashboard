@@ -430,7 +430,7 @@ export class AssignComponent implements OnInit {
                     reject();
                     return;
                 } else {
-                    dataAllocations.push({name: collect.allocationName, dtBegin: this.selectedCard.dtBegin.toISOString(), dtEnd: this.selectedCard.dtEnd.toISOString(), CollectId: collect.collectId});
+                    dataAllocations.push({name: collect.allocationName, dtBegin: this.selectedCard.dtBegin.toISOString(), dtEnd: this.selectedCard.dtEnd.toISOString(), CollectId: collect.collectId.trim()});
                 }
             })
             this.apiService.postData("v2/Allocations/Allocation", dataAllocations)
@@ -497,7 +497,7 @@ export class AssignComponent implements OnInit {
             body["name"] = title;
             body["dtBegin"] = startTime == null ? this.startTime.toISOString() : startTime;
             body["dtEnd"] = endTime == null ? this.endTime.toISOString() : endTime;
-            body["CollectId"] = collectId;
+            body["CollectId"] = collectId.trim();
             this.apiService.postData("Allocations/Allocation", body)
                 .then(resp => {
                     if (resp.status === 409) {
