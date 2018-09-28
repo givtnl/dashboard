@@ -635,6 +635,13 @@ export class AssignComponent implements OnInit {
         }, 200);
     }
 
+    onFocusOutWeek() {
+        setTimeout(() => {
+            this.allCollectTyping = false;
+            this.filteredUsedTags = [];
+        }, 200);
+    }
+
     displayValue(x) {
         if (x === undefined) x = 0;
         let euro = "€";
@@ -664,6 +671,8 @@ export class AssignComponent implements OnInit {
                 dataAllocations.push({name: this.allocateWeekName, dtBegin: currentEvent.start.toISOString(), dtEnd: currentEvent.end.toISOString(), CollectId: collectId});                
             });
         }
+        this.allocateWeekName = "";
+        this.filteredUsedTags = [];
         this.apiService.postData("v2/Allocations/Allocation", dataAllocations)
                 .then(resp => {
                     if(resp === 200){

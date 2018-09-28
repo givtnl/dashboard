@@ -81,7 +81,7 @@
                                 <div *ngIf="hasOpenAllocation" class="assign__button" style="text-align: center;">
 
                                     <div class="wrapping_inputlist">
-                                        <input (focus)="focusAllCollectsTyping(true)" (focusout)="focusAllCollectsTyping(false)"
+                                        <input (focus)="allCollectTyping = true" (focusout)="onFocusOutWeek()"
                                             (ngModelChange)="allCollectNameChanging($event)" class="allocation__input"
                                             type="text" name="allocationWeekName" [(ngModel)]="allocateWeekName" />
                                         <ul *ngIf="allCollectTyping" class="schedule__dialog__form__list">
