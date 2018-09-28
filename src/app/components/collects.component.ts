@@ -96,6 +96,7 @@ export class CollectsComponent implements OnInit{
 
     inputTitleLength: number = 1;
     openAllocations: boolean = false;
+    dateFirstNonAllocation: string;
 
     public pieChartLabels:string[] = [this.translate.instant("Text_Export").toString(), 'Verwerkt', 'Geweigerd',"Geannuleerd"];
     public pieChartData:number[] = [0,0,0,0];
@@ -149,13 +150,13 @@ export class CollectsComponent implements OnInit{
     }
 
     public resetInfoButtonsPopovers(position: number) {
-    		this.infoButtonShouldHavePopover = [false, false, false, false];
+        this.infoButtonShouldHavePopover = [false, false, false, false];
     }
 
 
     ngOnInit(){
-      this.checkAllocations();
-      this.fetchSavedCollects();
+        this.checkAllocations();
+        this.fetchSavedCollects();
     }
 
     constructor(private apiService: ApiClientService, private translate: TranslateService, private datePipe: ISODatePipe, private dataService: DataService, private userService: UserService) {
@@ -196,12 +197,20 @@ export class CollectsComponent implements OnInit{
     let apiUrl = 'Allocations/AllocationCheck';
     this.apiService.getData(apiUrl)
       .then(resp => {
-        if(resp.filter((ts) => ts.AllocationName == null && ts.Fixed == null).length > 0){
-          this.openAllocations = true;
+        let array = resp.filter((ts) => ts.AllocationName == null && ts.Fixed == null).map(tx => tx.dt_Confirmed).sort(this.date_sort_desc);
+        if(array.length > 0){
+            this.dateFirstNonAllocation = new Date(array[0]).toLocaleDateString(navigator.language, { weekday: 'long', day: 'numeric', month: 'numeric', year: 'numeric' });
+            this.openAllocations = true;
         }
       });
   }
-
+  date_sort_desc = function (date1: Date, date2: Date) {
+    // This is a comparison function that will result in dates being sorted in
+    // DESCENDING order.
+    if (date1 > date2) return -1;
+    if (date1 < date2) return 1;
+    return 0;
+};
     selectRow(row){
         this.activeRow = row;
 	    window.scrollBy({
@@ -434,13 +443,7 @@ export class CollectsComponent implements OnInit{
               }
             });
         }
-
-
         this.isVisible = true;
-
       }
     }
-
-
-
 }

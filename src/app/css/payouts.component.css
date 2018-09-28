@@ -670,3 +670,9 @@ button:disabled{
   }
 
 }
+
+.download-csv-hint {
+    padding: 8px 12px;
+    text-align: center;
+    font-size: 12px;
+}

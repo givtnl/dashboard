@@ -11,6 +11,8 @@
     </section>
     <section *ngIf="payouts.length > 0" class="section-collects">
       <h2 *ngIf="openAllocations" class="red">{{ "OpenAllocationsMessage" | translate}}</h2>
+      <h3 *ngIf="openAllocations" class="red">{{ "FirstOpenAllocationMessage" | translate}} {{ dateFirstNonAllocation }}</h3>
+
       <h2>{{"Payout_OverviewPayouts" | translate}}</h2>
       <p class="text">{{"Text_Export" | translate}}</p>
       <div class="search-payouts">
@@ -35,6 +37,7 @@
             </g>
           </svg>
         </button>
+        <a class="download-csv-hint text">{{"CsvDownload" | translate}}</a>
       </div>
 
       <hr class="collect-hr"/>

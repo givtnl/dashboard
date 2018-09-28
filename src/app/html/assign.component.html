@@ -65,7 +65,7 @@
                         <tr>
                             <td></td>
                             <td>
-                                <div class="mobile-flex">
+                                <div *ngIf="numberOfFilteredEvents > 0" class="mobile-flex">
                                     <span style="font-family: Avenir_Medium; font-size: 17px;">{{'AssignOpenCollectes'
                                         | translate}}</span>
 
@@ -78,9 +78,10 @@
                             <td>
                             </td>
                             <td>
-                                <div *ngIf="hasOpenAllocation" class="assign__button" style="text-align: center;">
+                                <div *ngIf="numberOfFilteredEvents > 0" class="assign__button" style="text-align: center;"
+                                    [class.showElement]="numberOfFilteredEvents > 0" [class.mobile-hidden]="numberOfFilteredEvents == 0">
 
-                                    <div class="wrapping_inputlist">
+                                    <div class="wrapping_inputlist" [class.set-hidden-assigncollectinput]="!isAssignInputFieldVisisble">
                                         <input (focus)="focusAllCollectsTyping(true)" (focusout)="focusAllCollectsTyping(false)"
                                             (ngModelChange)="allCollectNameChanging($event)" class="allocation__input"
                                             type="text" name="allocationWeekName" [(ngModel)]="allocateWeekName" />
@@ -113,7 +114,8 @@
                     </tbody>
                 </table>
                 <p-schedule #calendar [events]="events" locale="locale" [nowIndicator]="false" [header]="headerConfig"
-                    [editable]="true" [options]="options" id="calendar"></p-schedule>
+                    [editable]="true" (onDayClick)="handleDayClick($event)" (onEventClick)="handleEventClick($event)"
+                    [options]="options" id="calendar"></p-schedule>
             </div>
             <aside class="sidebar-collection" *ngIf="isDialogOpen">
                 <div class="sidebar-csv-box" *ngIf="selectedCSV">
@@ -179,7 +181,7 @@
                                 <span class="text">
                                     {{showDate(selectedCard.dtBegin)}}
                                 </span>
-
+x
                                 <div style="margin-top:15px; margin-bottom: 30px" class="flex-col">
                                     <span style="margin-left: 0" class="text">{{'From' | translate}}</span>
                                     <p-calendar [(ngModel)]="selectedCard.dtBegin" showTime="showTime" [timeOnly]="true"
@@ -208,12 +210,11 @@
                                                 <input (focus)="alloc.isTyping=true" (focusout)="onFocusOutOf(alloc);"
                                                     autocomplete="off" class="info-table__input"
                                                     [class.input-border-green]="alloc.name != ''"
-                                                    (ngModelChange)="this.filterTags($event)"
                                                     type="text" name="collectName{{alloc.collectId}}" [(ngModel)]="alloc.allocationName"
                                                     placeholder="{{ 'Collection' | translate }} {{ alloc.collectId }}">
                                                 <ul *ngIf="alloc.isTyping" class="schedule__dialog__form__list">
                                                     <li *ngFor="let item of filteredUsedTags" class="schedule__dialog__form__listitem"
-                                                        (click)="setCollectName(item, alloc)" [innerHTML]="item"></li>
+                                                        (click)="setCollectNameOf(item, alloc)" [innerHTML]="item"></li>
                                                 </ul>
                                             </div>
                                             <span class="alloc-givt-count">
@@ -282,10 +283,10 @@
 
                                 </ng-container>
                                 <div *ngIf="currentTab == SelectedTab.Collects" class="dialog-button-container">
-                                    <button class="action-button" [class.action-button__disabled]="!allowSave" [disabled]="!allowSave" (click)="saveAllEvents()"><i class="fas fa-check"></i> 
-                                        {{ selectedCard.Collects.length == 1 ? ('SaveAllocation.one' | translate) : ('SaveAllocation.other'| translate) }}</button>
-                                    <button class="action-button action-button__secundary" [class.action-button__disabled]="!allowDelete" [disabled]="!allowDelete" (click)="deleteAllEvents()"><i class="fas fa-eraser"></i>
-                                        {{ selectedCard.Collects.length == 1 ? ('CancelAllocation.one' | translate) : ('CancelAllocation.other'| translate) }}</button>
+                                    <button class="action-button" [class.action-button__disabled]="!allowSave" [disabled]="!allowSave" (click)="saveAllEvents()"><i class="fas fa-check"></i> {{
+                                        "SaveAll" | translate }}</button>
+                                    <button class="action-button action-button__secundary" [class.action-button__disabled]="!allowDelete" [disabled]="!allowDelete" (click)="deleteAllEvents()"><i class="fas fa-eraser"></i> {{
+                                        "DeleteAll" | translate }}</button>
                                 </div>
                             </ng-container>
                             <ng-container *ngIf="currentTab == SelectedTab.Fixed">
@@ -421,11 +422,11 @@
                                 </svg>
                             </td>
                         </tr>
-                        <tr *ngIf="isDialogOpen && openedMobileEventId == event.id && selectedCard">
+                        <tr *ngIf="isDialogOpen && openedMobileEventId == event.id">
                             <td colspan="4">
                                 <div class="schedule__dialog sidebar-collection-popup mobile-calendar__popup">
                                     <div class="list-collections">
-                                        <div style="margin-top: 6px;">
+                                        <div *ngIf="selectedCard" style="margin-top: 6px;">
                                             <span *ngIf="selectedCard.Collects && selectedCard.Collects.length > 0" class="tab__element" (click)="currentTab = SelectedTab.Collects"
                                                 [class.tab__element--active]="currentTab == SelectedTab.Collects">{{
                                                 "Menu_Collectes" | translate}}</span>
@@ -451,7 +452,7 @@
                                                                 placeholder="{{ 'Collection' | translate }} {{ alloc.collectId }}">
                                                             <ul *ngIf="alloc.isTyping" class="schedule__dialog__form__list">
                                                                 <li *ngFor="let item of filteredUsedTags" class="schedule__dialog__form__listitem"
-                                                                    (click)="setCollectName(item, alloc)"
+                                                                    (click)="setCollectNameOf(item, alloc)"
                                                                     [innerHTML]="item"></li>
                                                             </ul>
                                                         </div>
@@ -530,10 +531,10 @@
 
                                             </ng-container>
                                             <div *ngIf="currentTab == SelectedTab.Collects" class="dialog-button-container">
-                                                <button class="action-button" [class.action-button__disabled]="!allowSave" [disabled]="!allowSave" (click)="saveAllEvents()"><i class="fas fa-check"></i> 
-                                                    {{ selectedCard.Collects.length == 1 ? ('SaveAllocation.one' | translate) : ('SaveAllocation.other'| translate) }}</button>
-                                                <button class="action-button action-button__secundary" [class.action-button__disabled]="!allowDelete" [disabled]="!allowDelete" (click)="deleteAllEvents()"><i class="fas fa-eraser"></i> 
-                                                    {{ selectedCard.Collects.length == 1 ? ('CancelAllocation.one' | translate) : ('CancelAllocation.other'| translate) }}</button>
+                                                <button class="action-button" [class.action-button__disabled]="!allowSave" [disabled]="!allowSave" (click)="saveAllEvents()"><i class="fas fa-check"></i> {{
+                                                    "SaveAll" | translate }}</button>
+                                                <button class="action-button action-button__secundary" [class.action-button__disabled]="!allowDelete" [disabled]="!allowDelete" (click)="deleteAllEvents()"><i class="fas fa-eraser"></i> {{
+                                                    "DeleteAll" | translate }}</button>
                                             </div>
                                         </ng-container>
                                         <ng-container *ngIf="currentTab == SelectedTab.Fixed">
