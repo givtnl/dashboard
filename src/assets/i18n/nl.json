@@ -71,7 +71,7 @@
     "PW_PlaceholderPW": "Nieuw wachtwoord",
     "PW_GoBack": "Ga terug",
     "PW_ForgotPassword": "Wachtwoord vergeten?",
-    "PW_RequestedPW": "Als je geregistreerd bent met dit account, dan zou je een mail moeten gehad hebben om je wachtwoord te herstellen.",
+    "PW_RequestedPW": "Je krijgt een e-mail met daarin een link om je wachtwoord opnieuw in te stellen. Heb je na 5 minuten nog steeds de e-mail niet ontvangen? Kijk dan even in je spam.",
     "PW_Saved": "Je wachtwoord werd opgeslagen. Je kan nu opnieuw inloggen met je nieuw wachtwoord.",
     "Text_Reversals_MoreInfo": "Deze kostenpost bestaat uit de bedragen die gevers ingetrokken hebben. Deze kosten worden vrijwel altijd verrekend over een uitbetaalperiode die anders is dan de periode waarin de gift door de gever gedaan is.",
     "Text_Reversals": "Gestorneerde bedragen",
@@ -169,5 +169,15 @@
     "DownloadExample": "Voorbeeld downloaden",
     "Example": "Voorbeeld",
     "RemoveAllocation": "Verwijder deze toewijzing",
-    "RemoveAllocationConfirm": "Weet je het zeker dat je deze toewijzing wil verwijderen?"
+    "RemoveAllocationConfirm": "Weet je het zeker dat je deze toewijzing wil verwijderen?",
+    "SaveAllocation": {
+        "one": "Toewijzing opslaan",
+        "other": "Toewijzingen opslaan"
+    },
+    "CancelAllocation": {
+        "one": "Toewijzing annuleren",
+        "other": "Toewijzingen annuleren"
+    },
+    "FirstOpenAllocationMessage": "De meest recente transactie die nog niet toegewezen is:",
+    "CsvDownload": "CSV downloaden"
 }

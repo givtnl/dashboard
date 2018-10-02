@@ -1,7 +1,6 @@
 import {Component, OnInit} from "@angular/core";
 import {ApiClientService} from "../services/api-client.service";
 import {DataService} from "../services/data.service";
-import {AssignedCollection} from "./assign.component";
 import {ISODatePipe} from "../pipes/iso.datepipe";
 
 @Component({

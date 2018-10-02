@@ -516,7 +516,7 @@ p-schedule button
     background-color: #918FA6 !important;
 }
 
-.allocation, .money, .allocation-disabled {
+.allocation, .money, .allocation-disabled, .allocation-mixed {
   border: 1px solid #FEFEFE !important;
   display: flex !important;
   flex-direction: column !important;
@@ -525,7 +525,16 @@ p-schedule button
   cursor: pointer;
 }
 
-.allocation *, .money *, .allocation-disabled {
+.allocation-mixed {
+    width: 90% !important;
+    left: 5% !important;
+    background: url(images/check.png) calc(50% - 25%) 50% no-repeat,
+                url(images/question_mark.png) calc(50% + 25%) 50% no-repeat,
+                -webkit-linear-gradient(-22deg, #41C98E 50%, #41C98E 50%, #F17057 50%) center no-repeat;
+    
+}
+
+.allocation *, .money *, .allocation-disabled, .allocation-mixed * {
   pointer-events: none !important;
 }
 
@@ -546,6 +555,10 @@ p-schedule button
 
 .money:hover{
   background-color: #E6412C !important;
+}
+
+.allocation-mixed:hover {
+    background-image: url(images/check.png), url(images/question_mark.png), -webkit-linear-gradient(-22deg, #1CA96C 50%, #1CA96C 50%, #E6412C 50%) !important;
 }
 
 .fc-scroller{
@@ -662,3 +675,34 @@ my-navigation {
     }
 }
 
+.action-button {
+    padding: 10px 20px;
+    font-size: 18px;
+    background:#1DA96C;
+    color:white;
+    border: 0;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.action-button i {
+    margin-right: 7px; 
+}
+
+.action-button__secundary {
+    background: #E6412C;
+}
+
+.action-button__disabled {
+    background: #CECECE;
+    opacity: 1;
+    cursor: not-allowed;
+}
+
+.action-button__disabled:hover {
+    opacity: 1 !important;
+}
+
+.action-button:hover {
+    opacity: 0.9;
+}

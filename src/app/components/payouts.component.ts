@@ -1,12 +1,12 @@
-import { Component,OnInit,isDevMode } from '@angular/core';
+import { Component, OnInit, isDevMode } from '@angular/core';
 
 import { ApiClientService } from "app/services/api-client.service";
-import {Payout} from "../models/payout";
-import {TranslateService} from "ng2-translate";
-import {ViewEncapsulation} from '@angular/core';
-import {DataService} from "../services/data.service";
-import {UserService} from "../services/user.service";
-import {ISODatePipe} from "../pipes/iso.datepipe";
+import { Payout } from "../models/payout";
+import { TranslateService } from "ng2-translate";
+import { ViewEncapsulation } from '@angular/core';
+import { DataService } from "../services/data.service";
+import { UserService } from "../services/user.service";
+import { ISODatePipe } from "../pipes/iso.datepipe";
 
 
 @Component({
@@ -16,10 +16,10 @@ import {ISODatePipe} from "../pipes/iso.datepipe";
     encapsulation: ViewEncapsulation.None
 })
 
-export class PayoutsComponent implements OnInit{
+export class PayoutsComponent implements OnInit {
 
     openAllocations: boolean = false;
-    payouts : Payout[] = [];
+    payouts: Payout[] = [];
     isSafari: boolean;
 
     transactionCost = 0.08;
@@ -30,8 +30,9 @@ export class PayoutsComponent implements OnInit{
 
     dateBegin: Date = null;
     dateEnd: Date = null;
-    loader: object = {show: false};
-    constructor(private apiService: ApiClientService,private dataService: DataService, translate: TranslateService, private datePipe: ISODatePipe, private userService: UserService) {
+    loader: object = { show: false };
+    dateFirstNonAllocation: string;
+    constructor(private apiService: ApiClientService, private dataService: DataService, translate: TranslateService, private datePipe: ISODatePipe, private userService: UserService) {
         this.isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
         this.translate = translate;
 
@@ -43,80 +44,88 @@ export class PayoutsComponent implements OnInit{
             this.ngOnInit();
         });
 
-	    if (!!this.dataService.getData('payoutDateBegin') && !!this.dataService.getData('payoutDateEnd')) {
-		    this.dateBegin = new Date(Number(this.dataService.getData('payoutDateBegin')) * 1000);
-		    this.dateEnd = new Date(Number(this.dataService.getData('payoutDateEnd')) * 1000);
-	    }
-    }
-
-  checkAllocations(){
-    let apiUrl = 'Allocations/AllocationCheck';
-    this.apiService.getData(apiUrl)
-      .then(resp => {
-        if(resp.filter((ts) => ts.AllocationName == null && ts.Fixed == null).length > 0){
-          this.openAllocations = true;
+        if (!!this.dataService.getData('payoutDateBegin') && !!this.dataService.getData('payoutDateEnd')) {
+            this.dateBegin = new Date(Number(this.dataService.getData('payoutDateBegin')) * 1000);
+            this.dateEnd = new Date(Number(this.dataService.getData('payoutDateEnd')) * 1000);
         }
-      });
-  }
-
-    ngOnInit(){
-      this.checkAllocations();
-      //this.payouts = require("../models/payout").testData;
-
-      this.apiService.getData("Payments/Payouts")
-          .then(resp =>
-          {
-          	this.payouts = [];
-          	if(resp.length > 0) {
-	            this.payouts = resp;
-            }
-          });
     }
 
-    displayValue(x)
-    {
-        let euro =  "€";
-        if(!navigator.language.includes('en'))
+    checkAllocations() {
+        let apiUrl = 'Allocations/AllocationCheck';
+        this.apiService.getData(apiUrl)
+            .then(resp => {
+                let array = resp.filter((ts) => ts.AllocationName == null && ts.Fixed == null);
+                let ts = array.map(tx => tx.dt_Confirmed).sort(this.date_sort_desc);
+                let dates: Date[] = [];
+                console.log((ts));
+                if (array.length > 0) {
+                    this.dateFirstNonAllocation = new Date(ts[0]).toLocaleDateString(navigator.language, { weekday: 'long', day: 'numeric', month: 'numeric', year: 'numeric' });
+                    this.openAllocations = true;
+                }
+            });
+    }
+    date_sort_desc = function (date1: Date, date2: Date) {
+        // This is a comparison function that will result in dates being sorted in
+        // DESCENDING order.
+        if (date1 > date2) return -1;
+        if (date1 < date2) return 1;
+        return 0;
+    };
+    ngOnInit() {
+        this.checkAllocations();
+        //this.payouts = require("../models/payout").testData;
+
+        this.apiService.getData("Payments/Payouts")
+            .then(resp => {
+                this.payouts = [];
+                if (resp.length > 0) {
+                    this.payouts = resp;
+                }
+            });
+    }
+
+    displayValue(x) {
+        let euro = "€";
+        if (!navigator.language.includes('en'))
             euro += " ";
-        return euro + (this.isSafari ? (x).toFixed(2) : (x).toLocaleString(navigator.language,{minimumFractionDigits: 2,maximumFractionDigits:2}));
+        return euro + (this.isSafari ? (x).toFixed(2) : (x).toLocaleString(navigator.language, { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
     }
 
     exportCSV() {
-      this.loader["show"] = true;
-      let start = this.datePipe.toISODateUTC(this.dateBegin);
-      let end = this.datePipe.toISODateUTC(this.dateEnd);
+        this.loader["show"] = true;
+        let start = this.datePipe.toISODateUTC(this.dateBegin);
+        let end = this.datePipe.toISODateUTC(this.dateEnd);
 
-	   this.dataService.writeData("payoutDateBegin", Math.round(this.dateBegin.getTime() / 1000));
-	   this.dataService.writeData("payoutDateEnd", Math.round(this.dateEnd.getTime() / 1000));
+        this.dataService.writeData("payoutDateBegin", Math.round(this.dateBegin.getTime() / 1000));
+        this.dataService.writeData("payoutDateEnd", Math.round(this.dateEnd.getTime() / 1000));
 
-      let apiUrl = 'Payments/CSV?dtBegin=' + start + '&dtEnd=' + end;
-      this.apiService.getData(apiUrl)
-        .then(resp =>
-        {
-          this.loader["show"] = false;
-          var csvContent = "";
-          if(!navigator.userAgent.match(/Edge/g)){
-            csvContent += "data:text/csv;charset=utf-8,";
-          }
-          csvContent += resp;
+        let apiUrl = 'Payments/CSV?dtBegin=' + start + '&dtEnd=' + end;
+        this.apiService.getData(apiUrl)
+            .then(resp => {
+                this.loader["show"] = false;
+                var csvContent = "";
+                if (!navigator.userAgent.match(/Edge/g)) {
+                    csvContent += "data:text/csv;charset=utf-8,";
+                }
+                csvContent += resp;
 
-          var encodedUri = encodeURI(csvContent);
-          var link = document.createElement("a");
-          link.setAttribute("href", encodedUri);
-          let beginDate = this.datePipe.transform(new Date(this.dateBegin), "dd-MM-yyyy");
-          let endDate = this.datePipe.transform(new Date(this.dateEnd), "dd-MM-yyyy");
+                var encodedUri = encodeURI(csvContent);
+                var link = document.createElement("a");
+                link.setAttribute("href", encodedUri);
+                let beginDate = this.datePipe.transform(new Date(this.dateBegin), "dd-MM-yyyy");
+                let endDate = this.datePipe.transform(new Date(this.dateEnd), "dd-MM-yyyy");
 
-          let fileName = this.userService.CurrentCollectGroup.Name + " - " + beginDate + " - " + endDate + ".csv";
-          link.setAttribute("download", fileName);
-          document.body.appendChild(link); // Required for FF
+                let fileName = this.userService.CurrentCollectGroup.Name + " - " + beginDate + " - " + endDate + ".csv";
+                link.setAttribute("download", fileName);
+                document.body.appendChild(link); // Required for FF
 
-	        if (window.navigator.msSaveOrOpenBlob && navigator.userAgent.match(/Edge/g)) { // for IE and Edge
-		        var csvData = new Blob([resp],{type: "text/csv;charset=utf-8;"});
-		        window.navigator.msSaveBlob(csvData, fileName);
-	        } else {
-		        link.click(); // This will download the data file named "my_data.csv".
-	        }
-        });
+                if (window.navigator.msSaveOrOpenBlob && navigator.userAgent.match(/Edge/g)) { // for IE and Edge
+                    var csvData = new Blob([resp], { type: "text/csv;charset=utf-8;" });
+                    window.navigator.msSaveBlob(csvData, fileName);
+                } else {
+                    link.click(); // This will download the data file named "my_data.csv".
+                }
+            });
     }
 
 

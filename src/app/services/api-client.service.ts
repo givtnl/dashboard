@@ -100,7 +100,7 @@ export class ApiClientService {
         .toPromise()
         .then(res => {
           try {
-            return res.json();
+            return res;
           } catch (e) {
             return res["_body"];
           }

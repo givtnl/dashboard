@@ -342,8 +342,8 @@ h3{
 
 .assign__button{
   margin: 20px 0px;
-  opacity: 0;
-  visibility: hidden;
+  opacity: 1;
+  visibility: visible;
   transition: 0.5s all;
 }
 
@@ -574,20 +574,6 @@ h3{
   visibility: hidden;
 }
 
-.dialog-button-container {
-  float: right;
-  padding: 15px;
-  box-sizing:border-box;
-}
-
-.dialog-button-container button {
-  margin-right: 15px;
-}
-
-.dialog-button-container button:last-child {
-  margin-right: 0;
-}
-
 .bullet {
   display: inline-block;
   width: 14px;
@@ -618,7 +604,7 @@ h3{
   font-family: Avenir_Light;
   border-collapse: collapse;
   margin-top: 15px;
-  min-width: 375px;
+  min-width: 100%;
 }
 
 .incasso-state-table td {
@@ -799,6 +785,10 @@ h3{
 }
 
 @media only screen and (max-width : 480px) {
+    .alloc-givt-count{
+      margin-left: 10px;
+      margin-right: 10px;
+    }
     .info-table-cell--money {
         white-space: nowrap;
     }
@@ -927,6 +917,12 @@ h3{
     .mobile-calendar__status--ok {
         background: #1DA96C url("/images/check.svg") center no-repeat;
     }
+
+    .mobile-calendar__status--mixed {
+      background: url("/images/check.png") 50% 15% no-repeat,
+                  url("/images/question_mark.png") 50% 85% no-repeat,
+                  -webkit-linear-gradient(-90deg, #41C98E 50%, #41C98E 50%, #F17057 50%) center no-repeat;
+    }   
 
     .mobile-calendar__status--nok {
         background: #F16F56 url("/images/question_mark.svg") center no-repeat;
@@ -1159,4 +1155,84 @@ h3{
   color: white;
   border-radius: 4px;
   cursor: pointer;
+}
+
+.alloc-actions-btn{
+  font-family: 'Avenir';
+  color: #2e2957;
+  background: white;
+  height: 44px;
+  text-align: left;
+  font-family: Avenir;
+  align-items: center;
+  display: flex;
+  padding: 0 10px;
+}
+
+.alloc-actions-container {
+  margin-top: 44px; 
+  border: 1px solid #2e2957; 
+  position: absolute;
+  right: 4px;
+  display: flex;
+  flex-direction: column;
+  -webkit-box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.5);
+  -moz-box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.5);
+  box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.5);
+}
+
+.alloc-actions-container span:first-of-type {
+  border-bottom: 1px solid lightgray;
+}
+
+.alloc-givt-count {
+  font-family: Avenir_Light;
+  display: flex;
+  flex-direction: row;
+  align-items:  center;
+  margin-left: 15px;
+  background: #347dd7;
+  -webkit-border-radius: 44px;
+  -moz-border-radius: 44px;
+  border-radius: 44px;
+  padding: 11px 16px;
+}
+.alloc-givt-count svg {
+  height: 22px;
+  margin-right: 4px;
+}
+.alloc-givt-count span {
+  padding-left: 5px;
+  padding-top: 5px;
+  font-family: 'Avenir_Medium';
+  color: white;
+}
+.input-border-green {
+  border: 1px solid green;
+}
+.input-border-red {
+  border-color: #b91a24;
+}
+
+.alloc-loader {
+  background: #F5F5F5;
+  box-sizing: unset;
+  padding: none;
+  border: none;
+  margin: none;
+  position: absolute;
+  z-index: 2;
+  width: calc(100% - 2px);
+  left:1px;
+}
+
+.dialog-button-container {
+  padding: 10px !important;
+  box-sizing: border-box;
+  flex-direction: column;
+  display: flex;
+}
+
+.dialog-button-container .action-button:first-child {
+  margin-bottom: 10px !important;
 }
