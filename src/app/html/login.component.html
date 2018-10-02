@@ -22,7 +22,7 @@
             <input class="block input-full-width" [(ngModel)]="userName" type="email" name="email" [attr.placeholder]="'Placeholder_Email' | translate" required>
             <div class="password-box">
                 <input id="pass" class="block input-full-width" type="password" [(ngModel)]="password" name="password" [attr.placeholder]="'Placeholder_Password' | translate" required>
-                <span class="pass-eye" (click)="showPass()">
+                <span class="pass-eye" id="pass-eye" (click)="showPass()">
                 <svg width="16px" height="14px" viewBox="273 182 16 14" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                     <desc>Created with Sketch.</desc>
                     <defs></defs>

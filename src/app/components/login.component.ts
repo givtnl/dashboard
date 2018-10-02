@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import {TranslateService} from "ng2-translate";
 import {UserService} from "../services/user.service";
@@ -8,7 +8,7 @@ import {UserService} from "../services/user.service";
     templateUrl: '../html/login.component.html',
     styleUrls: ['../css/login.component.css']
 })
-export class LoginComponent  {
+export class LoginComponent implements OnInit {
     passwordHidden: boolean;
     eyeColor: string;
     userName: string;
@@ -19,6 +19,12 @@ export class LoginComponent  {
     constructor(private userService: UserService, private router: Router, private translate:TranslateService){
         this.passwordHidden = true;
         this.eyeColor = "#BCB9C9";
+    }
+
+    ngOnInit() {
+        document.getElementById("pass-eye").addEventListener("mousedown", (event) => {
+            event.preventDefault(); //prevent dismissal of keyboard
+        });
     }
 
     login(){
