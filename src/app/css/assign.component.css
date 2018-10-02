@@ -1191,7 +1191,6 @@ h3{
   flex-direction: row;
   align-items:  center;
   margin-left: 15px;
-  background: #347dd7;
   -webkit-border-radius: 44px;
   -moz-border-radius: 44px;
   border-radius: 44px;
@@ -1205,7 +1204,7 @@ h3{
   padding-left: 5px;
   padding-top: 5px;
   font-family: 'Avenir_Medium';
-  color: white;
+  color: #2e2957;
 }
 .input-border-green {
   border: 1px solid green;
