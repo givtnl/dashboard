@@ -200,14 +200,10 @@ export class AssignComponent implements OnInit {
         }
     }
     openBucket(event: MyEvent){
-        
         let bucketCard = new BucketCard();
-
         bucketCard.dtBegin = event.start["_d"];
         bucketCard.dtEnd = event.end["_d"];
-        
         this.selectedAllocationDates = [event.start, event.end];
-
         bucketCard.Collects = [];
         for(let i = 0; i < 3; i++){
             if(event.transactions.filter((tx) => {
@@ -224,16 +220,17 @@ export class AssignComponent implements OnInit {
                 bcr.allocated = bcr.allocationName !== null;
                 bcr.collectId = String(i+1);
                 bucketCard.Collects.push(bcr);
-            } 
+            }
         }
 
         bucketCard.Fixed = [];
 
-        let fixedTransactions = event.transactions.filter((tx) => {
-            return tx.CollectId === null;
-        });
+        let fixedTransactions = event.transactions
+            .filter((tx) => {
+                return tx.CollectId === null;
+            });
 
-        let fixedNames = fixedTransactions.map((tx) => tx.AllocationName);
+        let fixedNames = new Set(fixedTransactions.map((tx) => tx.AllocationName));
         fixedNames.forEach(name => {
             let fixedRow = new BucketCardRow();
             fixedRow.allocationName = name;
