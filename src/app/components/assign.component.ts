@@ -155,12 +155,21 @@ export class AssignComponent implements OnInit {
     }
     get allowSave(): Boolean {
         let retVal = true;
-        this.selectedCard.Collects.forEach(collect => {
+        for (const collect of this.selectedCard.Collects) {
             if(!(collect.allocationName != null && collect.allocationName != undefined && collect.allocationName != "")) {
                 retVal = false;
+                break;
             }
-                
-        });
+            
+            if(collect.allocated) {
+                if(collect.nameIsChanged) {
+                    retVal = true; //allow save immediately
+                    break;
+                } else {
+                    retVal = false
+                }
+            }
+        }
         return retVal;
     }
     get allowDelete(): Boolean {
@@ -217,6 +226,7 @@ export class AssignComponent implements OnInit {
                     return tx.CollectId === String(i+1);
                 });
                 bcr.allocationName = bcr.transactions[0].AllocationName;
+                bcr._allocationName = bcr.allocationName
                 bcr.allocated = bcr.allocationName !== null;
                 bcr.collectId = String(i+1);
                 bucketCard.Collects.push(bcr);
@@ -876,6 +886,7 @@ export class BucketCard {
     Fixed: BucketCardRow[];
 }
 export class BucketCardRow {
+    _allocationName: string;
     allocationName: string;
     allocationId: number;
     transactions: BucketTransaction[];
@@ -884,6 +895,10 @@ export class BucketCardRow {
     showActions: boolean;
     showDetails: boolean;
     isTyping: boolean;
+
+    get nameIsChanged(): boolean {
+        return this._allocationName !== this.allocationName
+    }
 
     get numberOfTransactions(): number {
         return this.transactions.map((tx) => tx.Count)
