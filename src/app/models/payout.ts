@@ -2,7 +2,6 @@
  * Created by bjorn_ss08m1t on 3/6/2017.
  */
 export class Payout{
-    dtExecuted: Date;
     BeginDate: Date;
     EndDate: Date;
     TransactionCount: number;
@@ -24,9 +23,7 @@ export class Payout{
     StorneringsKostenT1: any;
     RTransactionT1Cost: any;
     RTransactionT1Count: any;
-    RTransactionT1Amount: any;
     RTransactionT2Count: any;
-    RTransactionT2Amount: any;
     StorneringsKostenT2: any;
     RTransactionT2Cost: any;
     SK_Total_Excl: any;
@@ -48,6 +45,7 @@ export class Payout{
     Text_Info_Type1: string;
     Text_Info_Type2: string;
     activeRow: number;
+    HighGivtWarning: boolean;
 }
 
 export let testData: any = [
