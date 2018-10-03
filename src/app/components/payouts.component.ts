@@ -31,7 +31,7 @@ export class PayoutsComponent implements OnInit {
     dateBegin: Date = null;
     dateEnd: Date = null;
     loader: object = { show: false };
-    dateFirstNonAllocation: string;
+    openAllocationsMessage: string;
     constructor(private apiService: ApiClientService, private dataService: DataService, translate: TranslateService, private datePipe: ISODatePipe, private userService: UserService) {
         this.isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
         this.translate = translate;
@@ -51,26 +51,29 @@ export class PayoutsComponent implements OnInit {
     }
 
     checkAllocations() {
-        let apiUrl = 'Allocations/AllocationCheck';
+        let apiUrl = '/v2/collectgroups/' +
+            this.userService.CurrentCollectGroup.GUID +
+            '/allocations/non-allocated/date-bounds';
+
         this.apiService.getData(apiUrl)
             .then(resp => {
-                let array = resp.filter((ts) => ts.AllocationName == null && ts.Fixed == null);
-                let ts = array.map(tx => tx.dt_Confirmed).sort(this.date_sort_desc);
-                let dates: Date[] = [];
-                console.log((ts));
-                if (array.length > 0) {
-                    this.dateFirstNonAllocation = new Date(ts[0]).toLocaleDateString(navigator.language, { weekday: 'long', day: 'numeric', month: 'numeric', year: 'numeric' });
-                    this.openAllocations = true;
+                if (resp) {
+                    if (resp.length === 2) {
+                        this.openAllocationsMessage = this.translate.instant("OpenAllocationsMessage");
+                        var dtBegin = new Date(resp[0].dt_Confirmed);
+                        var dtEnd = new Date(resp[1].dt_Confirmed);
+                        this.openAllocationsMessage = this.openAllocationsMessage.replace("{0}", dtBegin.toLocaleDateString(navigator.language, {
+                            day: 'numeric', month: 'numeric', year: 'numeric'
+                        }));
+                        this.openAllocationsMessage = this.openAllocationsMessage.replace("{1}", dtEnd.toLocaleDateString(navigator.language, {
+                            day: 'numeric', month: 'numeric', year: 'numeric'
+                        }));
+                        this.openAllocations = true;
+                    }
                 }
             });
     }
-    date_sort_desc = function (date1: Date, date2: Date) {
-        // This is a comparison function that will result in dates being sorted in
-        // DESCENDING order.
-        if (date1 > date2) return -1;
-        if (date1 < date2) return 1;
-        return 0;
-    };
+
     ngOnInit() {
         this.checkAllocations();
         //this.payouts = require("../models/payout").testData;

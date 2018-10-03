@@ -12,9 +12,7 @@
               </p>
           </div>
           <section class="padding-20" [class.hide-element-on-mobile]="isVisible">
-              <h2 *ngIf="openAllocations" class="red">{{ "OpenAllocationsMessage" | translate}}</h2>
-              <h3 *ngIf="openAllocations" class="red">{{ "FirstOpenAllocationMessage" | translate}} {{ dateFirstNonAllocation }}</h3>
-
+              <h2 *ngIf="openAllocations" class="red">{{openAllocationsMessage}}</h2>
               <h2>{{"Text_Collectes_Title" | translate}}</h2>
               <h3>{{"Text_Collectes_Subtitle" | translate}}</h3>
               <section class="collects-pickdate" id="collectPage">
