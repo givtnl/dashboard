@@ -92,7 +92,7 @@
     "OverlapError": "Er zit al een toegewezen collecte in dit tijdslot. Los dit conflict op door die toewijzingen te verwijderen. Probeer daarna opnieuw.",
     "YesImSure": "Ja, ik weet het zeker.",
     "NoNeverMind": "Nee, dat wil ik niet.",
-    "OpenAllocationsMessage": "Er zijn nog transacties die niet toegewezen zijn aan een collecte.\nGa naar de pagina 'Toewijzen' om dit in orde te maken.",
+    "OpenAllocationsMessage": "Er zijn nog transacties tussen {0} en {1} die niet toegewezen zijn aan een collecte.\nGa naar de pagina 'Toewijzen' om dit in orde te maken.",
     "From": "Van",
     "To": "tot",
     "NotYetAllocated": "Nog niet toegewezen",
@@ -178,6 +178,6 @@
         "one": "Toewijzing annuleren",
         "other": "Toewijzingen annuleren"
     },
-    "FirstOpenAllocationMessage": "De meest recente transactie die nog niet toegewezen is:",
+    "FirstOpenAllocationMessage": "Er zijn nog transacties die niet toegewezen zijn tussen {0} en {1]",
     "CsvDownload": "CSV downloaden"
 }
