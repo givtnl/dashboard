@@ -51,7 +51,7 @@ export class PayoutsComponent implements OnInit {
     }
 
     checkAllocations() {
-        let apiUrl = '/v2/collectgroups/' +
+        let apiUrl = 'v2/collectgroups/' +
             this.userService.CurrentCollectGroup.GUID +
             '/allocations/non-allocated/date-bounds';
 
