@@ -4,12 +4,10 @@ import { TranslateService } from "ng2-translate";
 import { ViewChild, ChangeDetectorRef } from '@angular/core';
 import 'fullcalendar';
 import 'fullcalendar/dist/locale/nl';
-import { AllocationTimeSpanItem } from "../models/allocationTimeSpanItem";
 import { UserService } from "../services/user.service";
 import { DataService } from "../services/data.service";
 import { AgendaView, moment } from "fullcalendar";
 import { ISODatePipe } from "../pipes/iso.datepipe";
-import { forEach } from "@angular/router/src/utils/collection";
 
 @Component({
     selector: 'app-assign-collects',
