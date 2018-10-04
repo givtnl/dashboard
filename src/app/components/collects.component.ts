@@ -202,6 +202,8 @@ export class CollectsComponent implements OnInit{
             .then(resp => {
                 if (resp) {
                     if (resp.length === 2) {
+                        this.openAllocations = true;
+
                         this.openAllocationsMessage = this.translate.instant("OpenAllocationsMessage");
                         if(new Date(resp[0].dt_Confirmed).getDay() === new Date(resp[1].dt_Confirmed).getDay()){
                             this.openAllocationsMessage = this.translate.instant("SingleOpenAllocationMessage");
