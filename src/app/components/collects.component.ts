@@ -206,15 +206,15 @@ export class CollectsComponent implements OnInit{
                         if(new Date(resp[0].dt_Confirmed).getDay() === new Date(resp[1].dt_Confirmed).getDay()){
                             this.openAllocationsMessage = this.translate.instant("SingleOpenAllocationMessage");
 
-                            var dtBegin = new Date(resp[0].dt_Confirmed);
+                            let dtBegin = new Date(resp[0].dt_Confirmed);
                             this.openAllocationsMessage = this.openAllocationsMessage.replace("{0}", dtBegin.toLocaleDateString(navigator.language, {
                                 day: 'numeric', month: 'numeric', year: 'numeric'
                             }));
                         }
                         else {
                             this.openAllocationsMessage = this.translate.instant("MultipleOpenAllocationsMessage");
-                            var dtBegin = new Date(resp[0].dt_Confirmed);
-                            var dtEnd = new Date(resp[1].dt_Confirmed);
+                            let dtBegin = new Date(resp[0].dt_Confirmed);
+                            let dtEnd = new Date(resp[1].dt_Confirmed);
                             this.openAllocationsMessage = this.openAllocationsMessage.replace("{0}", dtBegin.toLocaleDateString(navigator.language, {
                                 day: 'numeric', month: 'numeric', year: 'numeric'
                             }));
