@@ -102,7 +102,7 @@ export class PayoutsComponent implements OnInit {
                                 for (let ts of highGivts){
                                     let inPayment = false;
                                     for (let pay of this.payouts){
-                                        if(pay.BeginDate < ts.dt_Confirmed && pay.EndDate > ts.dt_Confirmed){
+                                        if(pay.BeginDate < ts.TimeStamp && pay.EndDate > ts.TimeStamp){
                                             pay.HighGivtWarning = true;
                                             inPayment = true;
                                             break;
@@ -121,9 +121,8 @@ export class PayoutsComponent implements OnInit {
     }
 
     fetchWarningHighGivts() {
-        return this.apiService.getData("v2/collectgroups/" + this.userService.CurrentCollectGroup.GUID + "/cards/highgivtswarning")
+        return this.apiService.getData("v2/collectgroups/" + this.userService.CurrentCollectGroup.GUID + "/payment/givts/outliers")
             .then(resp => {
-
                 return resp;
             });
     }
@@ -147,14 +146,14 @@ export class PayoutsComponent implements OnInit {
         this.apiService.getData(apiUrl)
             .then(resp => {
                 this.loader["show"] = false;
-                var csvContent = "";
+                let csvContent = "";
                 if (!navigator.userAgent.match(/Edge/g)) {
                     csvContent += "data:text/csv;charset=utf-8,";
                 }
                 csvContent += resp;
 
-                var encodedUri = encodeURI(csvContent);
-                var link = document.createElement("a");
+                let encodedUri = encodeURI(csvContent);
+                let link = document.createElement("a");
                 link.setAttribute("href", encodedUri);
                 let beginDate = this.datePipe.transform(new Date(this.dateBegin), "dd-MM-yyyy");
                 let endDate = this.datePipe.transform(new Date(this.dateEnd), "dd-MM-yyyy");
