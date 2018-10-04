@@ -92,7 +92,7 @@
     "OverlapError": "An allocation already exists in the same time period. Solve this error by deleting allocations in this time period. After that, try again.",
     "YesImSure": "Yes, I'm sure.",
     "NoNeverMind": "No, I don't want to.",
-    "OpenAllocationsMessage": "There are still transactions between {0} and {1} that are not allocated to a collection.\nPlease go to the tab 'Allocate' to resolve this issue.",
+    "MultipleOpenAllocationsMessage": "There are still transactions between {0} and {1} that are not allocated to a collection.\nPlease go to the tab 'Allocate' to resolve this issue.",
     "From": "From",
     "To": "to",
     "NotYetAllocated": "Not yet allocated",
@@ -178,6 +178,6 @@
         "one": "Cancel allocation",
         "other": "Cancel allocations"
     },
-    "FirstOpenAllocationMessage": "The most recent transaction that has not yet been allocated:",
-    "CsvDownload": "Download csv"
+    "CsvDownload": "Download csv",
+    "SingleOpenAllocationMessage": "There are still transactions on {0} that are not allocated to a collection.\nPlease go to the tab 'Allocate' to resolve this issue."
 }

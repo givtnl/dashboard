@@ -55,20 +55,31 @@ export class PayoutsComponent implements OnInit {
             this.userService.CurrentCollectGroup.GUID +
             '/allocations/non-allocated/date-bounds';
 
+
         this.apiService.getData(apiUrl)
             .then(resp => {
                 if (resp) {
                     if (resp.length === 2) {
-                        this.openAllocationsMessage = this.translate.instant("OpenAllocationsMessage");
-                        var dtBegin = new Date(resp[0].dt_Confirmed);
-                        var dtEnd = new Date(resp[1].dt_Confirmed);
-                        this.openAllocationsMessage = this.openAllocationsMessage.replace("{0}", dtBegin.toLocaleDateString(navigator.language, {
-                            day: 'numeric', month: 'numeric', year: 'numeric'
-                        }));
-                        this.openAllocationsMessage = this.openAllocationsMessage.replace("{1}", dtEnd.toLocaleDateString(navigator.language, {
-                            day: 'numeric', month: 'numeric', year: 'numeric'
-                        }));
                         this.openAllocations = true;
+                        if(resp[0].dt_Confirmed === resp[1].dt_Confirmed){
+                            this.openAllocationsMessage = this.translate.instant("SingleOpenAllocationMessage");
+
+                            var dtBegin = new Date(resp[0].dt_Confirmed);
+                            this.openAllocationsMessage = this.openAllocationsMessage.replace("{0}", dtBegin.toLocaleDateString(navigator.language, {
+                                day: 'numeric', month: 'numeric', year: 'numeric'
+                            }));
+                        }
+                        else {
+                            this.openAllocationsMessage = this.translate.instant("MultipleOpenAllocationsMessage");
+                            var dtBegin = new Date(resp[0].dt_Confirmed);
+                            var dtEnd = new Date(resp[1].dt_Confirmed);
+                            this.openAllocationsMessage = this.openAllocationsMessage.replace("{0}", dtBegin.toLocaleDateString(navigator.language, {
+                                day: 'numeric', month: 'numeric', year: 'numeric'
+                            }));
+                            this.openAllocationsMessage = this.openAllocationsMessage.replace("{1}", dtEnd.toLocaleDateString(navigator.language, {
+                                day: 'numeric', month: 'numeric', year: 'numeric'
+                            }));
+                        }
                     }
                 }
             });
