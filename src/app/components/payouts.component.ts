@@ -61,25 +61,24 @@ export class PayoutsComponent implements OnInit {
                 if (resp) {
                     if (resp.length === 2) {
                         this.openAllocations = true;
-                        if(new Date(resp[0].dt_Confirmed).getDay() === new Date(resp[1].dt_Confirmed).getDay()){
-                            this.openAllocationsMessage = this.translate.instant("SingleOpenAllocationMessage");
-
-                            let dtBegin = new Date(resp[0].dt_Confirmed);
-                            this.openAllocationsMessage = this.openAllocationsMessage.replace("{0}", dtBegin.toLocaleDateString(navigator.language, {
-                                day: 'numeric', month: 'numeric', year: 'numeric'
-                            }));
-                        }
-                        else {
-                            this.openAllocationsMessage = this.translate.instant("MultipleOpenAllocationsMessage");
-                            let dtBegin = new Date(resp[0].dt_Confirmed);
-                            let dtEnd = new Date(resp[1].dt_Confirmed);
-                            this.openAllocationsMessage = this.openAllocationsMessage.replace("{0}", dtBegin.toLocaleDateString(navigator.language, {
-                                day: 'numeric', month: 'numeric', year: 'numeric'
-                            }));
-                            this.openAllocationsMessage = this.openAllocationsMessage.replace("{1}", dtEnd.toLocaleDateString(navigator.language, {
-                                day: 'numeric', month: 'numeric', year: 'numeric'
-                            }));
-                        }
+                        let dtBegin = new Date(resp[0].dt_Confirmed);
+                        let dtEnd = new Date(resp[1].dt_Confirmed);
+                        this.openAllocationsMessage = this.translate.instant("MultipleOpenAllocationsMessage");
+                        this.openAllocationsMessage = this.openAllocationsMessage.replace("{0}", dtBegin.toLocaleDateString(navigator.language, {
+                            day: 'numeric', month: 'numeric', year: 'numeric'
+                        }));
+                        this.openAllocationsMessage = this.openAllocationsMessage.replace("{1}", dtEnd.toLocaleDateString(navigator.language, {
+                            day: 'numeric', month: 'numeric', year: 'numeric'
+                        }));
+                        
+                    }
+                    else if (resp.length === 1){
+                        this.openAllocations = true;
+                        let dtBegin = new Date(resp[0].dt_Confirmed);
+                        this.openAllocationsMessage = this.translate.instant("SingleOpenAllocationMessage");
+                        this.openAllocationsMessage = this.openAllocationsMessage.replace("{0}", dtBegin.toLocaleDateString(navigator.language, {
+                            day: 'numeric', month: 'numeric', year: 'numeric'
+                        }));
                     }
                 }
             });
