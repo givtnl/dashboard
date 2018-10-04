@@ -22,9 +22,20 @@ export class LoginComponent implements OnInit {
     }
 
     ngOnInit() {
-        document.getElementById("pass-eye").addEventListener("mousedown", (event) => {
-            event.preventDefault(); //prevent dismissal of keyboard
-        });
+        let is_safari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+        if(is_safari){
+            document.getElementById("pass-eye").addEventListener("mousedown", (event) => {
+                let hasFocus = $('#pass').is(':focus');
+                if(hasFocus){
+                    event.preventDefault(); //prevent dismissal of keyboard
+                };
+            });
+        } else {
+            $('#pass-eye').click((event) => {
+                event.preventDefault(); //prevent dismissal of keyboard
+                    $('#pass').focus();
+            });
+        }
     }
 
     login(){

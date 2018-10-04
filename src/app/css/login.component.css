@@ -36,6 +36,7 @@ section{
     position: absolute;
     top:0;
     right:11px;
+    padding: 0 5px;
     display: flex;
     height: 100%;
 }
