@@ -1,6 +1,6 @@
-dtBegin; dtEnd; name; collectId
-2018-07-31 08:00; 2018-07-31 10:30;Groep 1; 1
-2018-07-31 11:00; 2018-07-31 14:00;Groep 2; 1
-2018-07-31 15:00; 2018-07-31 17:00;Groep 3; 1
-2018-07-31 18:00; 2018-07-31 20:00;Groep 1; 2
-2018-07-31 21:00; 2018-07-31 23:00;Groep 2; 2
+Begindatum/Begindate; Einddatum/Enddate; Naam/Name; CollecteId/CollectId
+2018-09-30 08:00; 2018-09-30 10:30;Doel 1e collecte; 1
+2018-09-30 11:00; 2018-09-30 14:00;Doel 2e collecte; 2
+2018-09-30 15:00; 2018-09-30 17:00;Collecte 3; 3
+2018-10-01 00:00; 2018-11-01 00:00;Collecte 1 oktober; 1
+2018-10-01 00:00; 2018-11-01 00:00;Collecte 2 oktober; 2
