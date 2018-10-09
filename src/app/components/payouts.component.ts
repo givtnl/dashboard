@@ -1,4 +1,4 @@
-import { Component, OnInit, isDevMode } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import { ApiClientService } from "app/services/api-client.service";
 import { Payout } from "../models/payout";
@@ -18,27 +18,27 @@ import { ISODatePipe } from "../pipes/iso.datepipe";
 
 export class PayoutsComponent implements OnInit {
 
-    openAllocations: boolean = false;
+    openAllocations = false;
     payouts: Payout[] = [];
     isSafari: boolean;
 
-    transactionCost = 0.08;
-    mandateCost = 0.125;
-    R1Cost = 0.18;
-    R2Cost = 1.20;
     translate: TranslateService;
 
     dateBegin: Date = null;
     dateEnd: Date = null;
     loader: object = { show: false };
+    openAllocationsMessage: string;
     dateFirstNonAllocation: string;
+
+    unPaidHighGivt = false;
+
     constructor(private apiService: ApiClientService, private dataService: DataService, translate: TranslateService, private datePipe: ISODatePipe, private userService: UserService) {
         this.isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
         this.translate = translate;
 
         this.dateBegin = new Date();
         this.dateEnd = new Date();
-        this.dateBegin.setDate(this.dateBegin.getDate() - 7)
+        this.dateBegin.setDate(this.dateBegin.getDate() - 7);
 
         this.userService.collectGroupChanged.subscribe(() => {
             this.ngOnInit();
@@ -51,26 +51,39 @@ export class PayoutsComponent implements OnInit {
     }
 
     checkAllocations() {
-        let apiUrl = 'Allocations/AllocationCheck';
+        let apiUrl = 'v2/collectgroups/' +
+            this.userService.CurrentCollectGroup.GUID +
+            '/allocations/non-allocated/date-bounds';
+
+
         this.apiService.getData(apiUrl)
             .then(resp => {
-                let array = resp.filter((ts) => ts.AllocationName == null && ts.Fixed == null);
-                let ts = array.map(tx => tx.dt_Confirmed).sort(this.date_sort_desc);
-                let dates: Date[] = [];
-                console.log((ts));
-                if (array.length > 0) {
-                    this.dateFirstNonAllocation = new Date(ts[0]).toLocaleDateString(navigator.language, { weekday: 'long', day: 'numeric', month: 'numeric', year: 'numeric' });
-                    this.openAllocations = true;
+                if (resp) {
+                    if (resp.length === 2) {
+                        this.openAllocations = true;
+                        let dtBegin = new Date(resp[0].dt_Confirmed);
+                        let dtEnd = new Date(resp[1].dt_Confirmed);
+                        this.openAllocationsMessage = this.translate.instant("MultipleOpenAllocationsMessage");
+                        this.openAllocationsMessage = this.openAllocationsMessage.replace("{0}", dtBegin.toLocaleDateString(navigator.language, {
+                            day: 'numeric', month: 'numeric', year: 'numeric'
+                        }));
+                        this.openAllocationsMessage = this.openAllocationsMessage.replace("{1}", dtEnd.toLocaleDateString(navigator.language, {
+                            day: 'numeric', month: 'numeric', year: 'numeric'
+                        }));
+                        
+                    }
+                    else if (resp.length === 1){
+                        this.openAllocations = true;
+                        let dtBegin = new Date(resp[0].dt_Confirmed);
+                        this.openAllocationsMessage = this.translate.instant("SingleOpenAllocationMessage");
+                        this.openAllocationsMessage = this.openAllocationsMessage.replace("{0}", dtBegin.toLocaleDateString(navigator.language, {
+                            day: 'numeric', month: 'numeric', year: 'numeric'
+                        }));
+                    }
                 }
             });
     }
-    date_sort_desc = function (date1: Date, date2: Date) {
-        // This is a comparison function that will result in dates being sorted in
-        // DESCENDING order.
-        if (date1 > date2) return -1;
-        if (date1 < date2) return 1;
-        return 0;
-    };
+
     ngOnInit() {
         this.checkAllocations();
         //this.payouts = require("../models/payout").testData;
@@ -78,9 +91,38 @@ export class PayoutsComponent implements OnInit {
         this.apiService.getData("Payments/Payouts")
             .then(resp => {
                 this.payouts = [];
+
                 if (resp.length > 0) {
                     this.payouts = resp;
+                    this.fetchWarningHighGivts()
+                        .then(highGivts => {
+                            console.log(highGivts);
+                            if (highGivts.length > 0){
+                                for (let ts of highGivts){
+                                    let inPayment = false;
+                                    for (let pay of this.payouts){
+                                        if(pay.BeginDate < ts.TimeStamp && pay.EndDate > ts.TimeStamp){
+                                            pay.HighGivtWarning = true;
+                                            inPayment = true;
+                                            break;
+                                        }
+                                    }
+                                    if (!inPayment)
+                                        this.unPaidHighGivt = true;
+                                }
+                                if (this.unPaidHighGivt){
+                                    alert("unpaid high givt.");
+                                }
+                            }
+                        });
                 }
+            });
+    }
+
+    fetchWarningHighGivts() {
+        return this.apiService.getData("v2/collectgroups/" + this.userService.CurrentCollectGroup.GUID + "/payment/givts/outliers")
+            .then(resp => {
+                return resp;
             });
     }
 
@@ -103,14 +145,14 @@ export class PayoutsComponent implements OnInit {
         this.apiService.getData(apiUrl)
             .then(resp => {
                 this.loader["show"] = false;
-                var csvContent = "";
+                let csvContent = "";
                 if (!navigator.userAgent.match(/Edge/g)) {
                     csvContent += "data:text/csv;charset=utf-8,";
                 }
                 csvContent += resp;
 
-                var encodedUri = encodeURI(csvContent);
-                var link = document.createElement("a");
+                let encodedUri = encodeURI(csvContent);
+                let link = document.createElement("a");
                 link.setAttribute("href", encodedUri);
                 let beginDate = this.datePipe.transform(new Date(this.dateBegin), "dd-MM-yyyy");
                 let endDate = this.datePipe.transform(new Date(this.dateEnd), "dd-MM-yyyy");

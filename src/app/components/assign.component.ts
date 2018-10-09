@@ -4,12 +4,10 @@ import { TranslateService } from "ng2-translate";
 import { ViewChild, ChangeDetectorRef } from '@angular/core';
 import 'fullcalendar';
 import 'fullcalendar/dist/locale/nl';
-import { AllocationTimeSpanItem } from "../models/allocationTimeSpanItem";
 import { UserService } from "../services/user.service";
 import { DataService } from "../services/data.service";
 import { AgendaView, moment } from "fullcalendar";
 import { ISODatePipe } from "../pipes/iso.datepipe";
-import { forEach } from "@angular/router/src/utils/collection";
 
 @Component({
     selector: 'app-assign-collects',
@@ -156,12 +154,21 @@ export class AssignComponent implements OnInit {
     }
     get allowSave(): Boolean {
         let retVal = true;
-        this.selectedCard.Collects.forEach(collect => {
+        for (const collect of this.selectedCard.Collects) {
             if(!(collect.allocationName != null && collect.allocationName != undefined && collect.allocationName != "")) {
                 retVal = false;
+                break;
             }
-                
-        });
+            
+            if(collect.allocated) {
+                if(collect.nameIsChanged) {
+                    retVal = true; //allow save immediately
+                    break;
+                } else {
+                    retVal = false
+                }
+            }
+        }
         return retVal;
     }
     get allowDelete(): Boolean {
@@ -201,14 +208,10 @@ export class AssignComponent implements OnInit {
         }
     }
     openBucket(event: MyEvent){
-        
         let bucketCard = new BucketCard();
-
         bucketCard.dtBegin = event.start["_d"];
         bucketCard.dtEnd = event.end["_d"];
-        
         this.selectedAllocationDates = [event.start, event.end];
-
         bucketCard.Collects = [];
         for(let i = 0; i < 3; i++){
             if(event.transactions.filter((tx) => {
@@ -222,19 +225,21 @@ export class AssignComponent implements OnInit {
                     return tx.CollectId === String(i+1);
                 });
                 bcr.allocationName = bcr.transactions[0].AllocationName;
+                bcr._allocationName = bcr.allocationName
                 bcr.allocated = bcr.allocationName !== null;
                 bcr.collectId = String(i+1);
                 bucketCard.Collects.push(bcr);
-            } 
+            }
         }
 
         bucketCard.Fixed = [];
 
-        let fixedTransactions = event.transactions.filter((tx) => {
-            return tx.CollectId === null;
-        });
+        let fixedTransactions = event.transactions
+            .filter((tx) => {
+                return tx.CollectId === null;
+            });
 
-        let fixedNames = fixedTransactions.map((tx) => tx.AllocationName);
+        let fixedNames = new Set(fixedTransactions.map((tx) => tx.AllocationName));
         fixedNames.forEach(name => {
             let fixedRow = new BucketCardRow();
             fixedRow.allocationName = name;
@@ -880,6 +885,7 @@ export class BucketCard {
     Fixed: BucketCardRow[];
 }
 export class BucketCardRow {
+    _allocationName: string;
     allocationName: string;
     allocationId: number;
     transactions: BucketTransaction[];
@@ -888,6 +894,10 @@ export class BucketCardRow {
     showActions: boolean;
     showDetails: boolean;
     isTyping: boolean;
+
+    get nameIsChanged(): boolean {
+        return this._allocationName !== this.allocationName
+    }
 
     get numberOfTransactions(): number {
         return this.transactions.map((tx) => tx.Count)

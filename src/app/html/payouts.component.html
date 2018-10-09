@@ -10,9 +10,7 @@
       <div class="placeholder-line"></div>
     </section>
     <section *ngIf="payouts.length > 0" class="section-collects">
-      <h2 *ngIf="openAllocations" class="red">{{ "OpenAllocationsMessage" | translate}}</h2>
-      <h3 *ngIf="openAllocations" class="red">{{ "FirstOpenAllocationMessage" | translate}} {{ dateFirstNonAllocation }}</h3>
-
+      <h2 *ngIf="openAllocations" class="red">{{ openAllocationsMessage }}</h2>
       <h2>{{"Payout_OverviewPayouts" | translate}}</h2>
       <p class="text">{{"Text_Export" | translate}}</p>
       <div class="search-payouts">

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import {TranslateService} from "ng2-translate";
 import {UserService} from "../services/user.service";
@@ -8,7 +8,7 @@ import {UserService} from "../services/user.service";
     templateUrl: '../html/login.component.html',
     styleUrls: ['../css/login.component.css']
 })
-export class LoginComponent  {
+export class LoginComponent implements OnInit {
     passwordHidden: boolean;
     eyeColor: string;
     userName: string;
@@ -19,6 +19,23 @@ export class LoginComponent  {
     constructor(private userService: UserService, private router: Router, private translate:TranslateService){
         this.passwordHidden = true;
         this.eyeColor = "#BCB9C9";
+    }
+
+    ngOnInit() {
+        let is_safari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+        if(is_safari){
+            document.getElementById("pass-eye").addEventListener("mousedown", (event) => {
+                let hasFocus = $('#pass').is(':focus');
+                if(hasFocus){
+                    event.preventDefault(); //prevent dismissal of keyboard
+                };
+            });
+        } else {
+            $('#pass-eye').click((event) => {
+                event.preventDefault(); //prevent dismissal of keyboard
+                    $('#pass').focus();
+            });
+        }
     }
 
     login(){
