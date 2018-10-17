@@ -1,356 +1,325 @@
-<section class="show-collect center-me">
-    <time>
-        <span class="date">{{childData.BeginDate}} - {{childData.EndDate}}</span>
-        <span *ngIf="showCosts"></span>
-    </time>
-    <div class="collection-buttons">
-        <span class="total-payed" [class.warning-total-amount]="childData.HighGivtWarning">{{"Payout_TotalPayedOut" | translate}}
-            <span id="big">{{childData.TotalPaidText}}</span>
-
-            <svg width="26px" height="26px" viewBox="0 0 26 26" version="1.1" xmlns="http://www.w3.org/2000/svg" class="warning-svg" (click)="openPayout()"
-                 *ngIf="childData.HighGivtWarning">
-                <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                    <g id="Group" transform="translate(-7.000000, 0.000000)">
-                        <circle id="Oval" fill="#F17057" cx="20.1" cy="12.9" r="12.9"></circle>
-                        <text id="!" font-family="Avenir-Black, Avenir" font-size="19.2" font-weight="700" fill="#FFFFFF">
-                            <tspan x="16.1376" y="19.6">!</tspan>
-                        </text>
-                    </g>
-                </g>
-            </svg>
-
-        </span>
-        <button class="icon" [class.fill-green]="childData.hiddenAllocations == false" (click)="openAllocations()">
-            <svg width="27px" height="20px" viewBox="0 0 27 20" version="1.1" xmlns="http://www.w3.org/2000/svg">
-                <g id="Uitbetalingen-incl-BTW" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"
-                   stroke-linecap="square">
-                    <g id="Uitbetalingen-page_Storneringskosten-Incl.-BTW-Copy-3"
-                       transform="translate(-874.000000, -206.000000)" stroke="#FFFFFF" stroke-width="3">
-                        <g id="Group-2" transform="translate(876.000000, 207.000000)">
-                            <path d="M0,1 L22.7700005,1" id="Line"></path>
-                            <path d="M0,9 L22.7700005,9" id="Line-Copy"></path>
-                            <path d="M0,17 L22.7700005,17" id="Line-Copy-5"></path>
-                        </g>
-                    </g>
-                </g>
-            </svg>
-        </button>
-        <button class="icon" [class.fill-green]="childData.hiddenOverview == false" (click)="openPayout()">
-            <svg width="23px" height="23px" viewBox="8 8 23 23" version="1.1" xmlns="http://www.w3.org/2000/svg">
-                <desc>Created with Sketch.</desc>
-                <defs></defs>
-                <path d="M9.00761688,21.0025814 C9.53265354,26.5888828 14.2352667,30.9603199 19.9588837,30.9603199 C22.6363805,30.9603199 25.090446,30.0036964 26.9979399,28.4135896 L19.5869317,21.0025814 L9.00761688,21.0025814 Z M9,19.0025814 C9.45855668,13.6859391 13.6990295,9.4505879 19.0179464,9 L19.0179464,19.0018685 C19.0177045,19.0021045 19.0174628,19.0023406 19.0172212,19.0025769 L9,19.0025814 Z M28.4121534,26.9993761 C30.0022602,25.0918822 30.9588837,22.6378167 30.9588837,19.9603199 C30.9588837,14.2424422 26.5962091,9.54352172 21.0179464,9.01064508 L21.0179464,19.5461063 C21.0179464,19.5653854 21.0174008,19.5845372 21.0163242,19.6035469 L28.4121534,26.9993761 Z"
-                      id="Combined-Shape" stroke="none" fill="#FFFFFF " fill-rule="evenodd"></path>
-            </svg>
-        </button>
-        <button class="icon" (click)="exportCSV()">
-            <svg width="33px" height="33px" viewBox="0 0 33 33" version="1.1" xmlns="http://www.w3.org/2000/svg">
-                <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                    <g id="Artboard" transform="translate(-184.000000, -208.000000)" fill="#FFFFFF">
-                        <g id="download" transform="translate(184.000000, 208.000000)">
-                            <rect id="Rectangle-3" x="0" y="23" width="4" height="6"></rect>
-                            <rect id="Rectangle-2" x="0" y="29" width="33" height="4"></rect>
-                            <rect id="Rectangle-3" x="29" y="23" width="4" height="6"></rect>
-                            <polygon id="Triangle" points="17 23 10 16 24 16"></polygon>
-                            <rect id="Rectangle-4" x="15" y="0" width="4" height="16"></rect>
-                        </g>
-                    </g>
-                </g>
-            </svg>
-        </button>
-    </div>
+<section class="show-collect center-me" >
+  <time>
+    <span class="date">{{childData.BeginDate}} - {{childData.EndDate}}</span>
+    <span *ngIf="showCosts"></span>
+  </time>
+  <div class="collection-buttons">
+    <span class="total-payed">{{"Payout_TotalPayedOut" | translate}} <span id="big">{{childData.TotalPaidText}}</span></span>
+    <button class="icon" [class.fill-green]="childData.hiddenAllocations == false" (click)="openAllocations()">
+      <svg width="27px" height="20px" viewBox="0 0 27 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <!-- Generator: Sketch 44.1 (41455) - http://www.bohemiancoding.com/sketch -->
+        <desc>Created with Sketch.</desc>
+        <defs></defs>
+        <g id="Uitbetalingen-incl-BTW" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="square">
+          <g id="Uitbetalingen-page_Storneringskosten-Incl.-BTW-Copy-3" transform="translate(-874.000000, -206.000000)" stroke="#FFFFFF" stroke-width="3">
+            <g id="Group-2" transform="translate(876.000000, 207.000000)">
+              <path d="M0,1 L22.7700005,1" id="Line"></path>
+              <path d="M0,9 L22.7700005,9" id="Line-Copy"></path>
+              <path d="M0,17 L22.7700005,17" id="Line-Copy-5"></path>
+            </g>
+          </g>
+        </g>
+      </svg>
+    </button>
+    <button class="icon" [class.fill-green]="childData.hiddenOverview == false" (click)="openPayout()">
+      <svg width="23px" height="23px" viewBox="8 8 23 23" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <!-- Generator: Sketch 40.3 (33839) - http://www.bohemiancoding.com/sketch -->
+        <desc>Created with Sketch.</desc>
+        <defs></defs>
+        <path  d="M9.00761688,21.0025814 C9.53265354,26.5888828 14.2352667,30.9603199 19.9588837,30.9603199 C22.6363805,30.9603199 25.090446,30.0036964 26.9979399,28.4135896 L19.5869317,21.0025814 L9.00761688,21.0025814 Z M9,19.0025814 C9.45855668,13.6859391 13.6990295,9.4505879 19.0179464,9 L19.0179464,19.0018685 C19.0177045,19.0021045 19.0174628,19.0023406 19.0172212,19.0025769 L9,19.0025814 Z M28.4121534,26.9993761 C30.0022602,25.0918822 30.9588837,22.6378167 30.9588837,19.9603199 C30.9588837,14.2424422 26.5962091,9.54352172 21.0179464,9.01064508 L21.0179464,19.5461063 C21.0179464,19.5653854 21.0174008,19.5845372 21.0163242,19.6035469 L28.4121534,26.9993761 Z" id="Combined-Shape" stroke="none" fill="#FFFFFF " fill-rule="evenodd"></path>
+      </svg>
+    </button>
+    <button class="icon" (click)="exportCSV()">
+      <svg width="33px" height="33px" viewBox="0 0 33 33" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <!-- Generator: Sketch 46.1 (44463) - http://www.bohemiancoding.com/sketch -->
+        <desc>Created with Sketch.</desc>
+        <defs></defs>
+        <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+          <g id="Artboard" transform="translate(-184.000000, -208.000000)" fill="#FFFFFF">
+            <g id="download" transform="translate(184.000000, 208.000000)">
+              <rect id="Rectangle-3" x="0" y="23" width="4" height="6"></rect>
+              <rect id="Rectangle-2" x="0" y="29" width="33" height="4"></rect>
+              <rect id="Rectangle-3" x="29" y="23" width="4" height="6"></rect>
+              <polygon id="Triangle" points="17 23 10 16 24 16"></polygon>
+              <rect id="Rectangle-4" x="15" y="0" width="4" height="16"></rect>
+            </g>
+          </g>
+        </g>
+      </svg>
+    </button>
+  </div>
 </section>
 <section class="white-bg">
-    <div class="withholding-overview center-me allocation-tab" style="min-height: 0px;"
-         *ngIf="!childData.hiddenAllocations">
-        <button class="close-button" (click)="closeAllocations()">
-            <svg width="19px" height="19px" viewBox="944 525 19 19" version="1.1" xmlns="http://www.w3.org/2000/svg">
-                <desc>Created with Sketch.</desc>
-                <defs></defs>
-                <g id="1477510223_icon-close-round" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"
-                   transform="translate(944.000000, 525.000000)">
-                    <path d="M18.154652,15.6902032 L11.8313314,9.36688256 L18.154652,3.04356195 C18.8373382,2.36087573 18.8373382,1.26179933 18.154652,0.579113112 C17.4719658,-0.10357311 16.3728894,-0.10357311 15.6902032,0.579113112 L9.36688256,6.90243371 L3.04356195,0.579113112 C2.36087573,-0.10357311 1.26179933,-0.10357311 0.579113112,0.579113112 C-0.10357311,1.26179933 -0.10357311,2.36087573 0.579113112,3.04356195 L6.90243371,9.36688256 L0.579113112,15.6902032 C-0.10357311,16.3728894 -0.10357311,17.4719658 0.579113112,18.154652 C1.26179933,18.8373382 2.36087573,18.8373382 3.04356195,18.154652 L9.36688256,11.8313314 L15.6902032,18.154652 C16.3728894,18.8373382 17.4719658,18.8373382 18.154652,18.154652 C18.8324965,17.4719658 18.8324965,16.3680476 18.154652,15.6902032 L18.154652,15.6902032 Z"
-                          id="Shape" fill="#2C2B57 "></path>
-                </g>
-            </svg>
-        </button>
-        <h2 class="black" style="font-size:20px">{{'OverzichtToegewezenCollectes' | translate}}</h2>
-        <div style="width: 400px" *ngIf="childData.details == null">
-            <div class="loader" style="margin-bottom: 5px">
-                <svg class="circular" style="width: 65%; height: 65%" viewBox="25 25 50 50">
-                    <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="5" stroke-miterlimit="10"/>
-                </svg>
-            </div>
-        </div>
-        <table class="collect__table alloc" style="margin-bottom: 0;    border-collapse: collapse;">
-            <ng-container *ngFor="let item of childData.details">
-                <tr style="font-family: Avenir_Medium; font-size: 20px;" [class.red]="item.Status == 0"
-                    [class.yellow]="item.Status == 2" *ngIf="item.Amount != 0">
-                    <td class="allocation-column-date">
-                        <span class="allocation-date">{{item.Date}}</span>
-                    </td>
-                    <td class="allocation-title">
-                        {{item.Name}}
-                    </td>
-                    <td style="text-align: right;">{{item.Amount}}</td>
-                </tr>
-            </ng-container>
-
-            <tr class="collect__table__footer" style="font-size: 20px;font-family: Avenir_Medium">
-                <td colspan="2" style="text-align:left;" class="special-last-cell">{{"TermCosts" | translate}}
-                    ({{"INCL_BTW" | translate}})
-                </td>
-                <td style="text-align:right;" class="special-last-cell">- {{childData.TotaalKosten}}</td>
-            </tr>
-            <tr style="font-family: Avenir_Black; font-size: 22px;">
-                <td colspan="2" style="text-align:left;">{{"Payout_TotalPayedOut" | translate}}</td>
-                <td style="text-align:right;white-space: nowrap;">{{childData.TotalPaidText}}</td>
-            </tr>
-        </table>
-
+  <div class="withholding-overview center-me allocation-tab" style="min-height: 0px;" *ngIf="!childData.hiddenAllocations">
+    <button class="close-button" (click)="closeAllocations()">
+      <svg width="19px" height="19px" viewBox="944 525 19 19" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+      <!-- Generator: Sketch 40.3 (33839) - http://www.bohemiancoding.com/sketch -->
+      <desc>Created with Sketch.</desc>
+      <defs></defs>
+      <g id="1477510223_icon-close-round" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(944.000000, 525.000000)">
+        <path d="M18.154652,15.6902032 L11.8313314,9.36688256 L18.154652,3.04356195 C18.8373382,2.36087573 18.8373382,1.26179933 18.154652,0.579113112 C17.4719658,-0.10357311 16.3728894,-0.10357311 15.6902032,0.579113112 L9.36688256,6.90243371 L3.04356195,0.579113112 C2.36087573,-0.10357311 1.26179933,-0.10357311 0.579113112,0.579113112 C-0.10357311,1.26179933 -0.10357311,2.36087573 0.579113112,3.04356195 L6.90243371,9.36688256 L0.579113112,15.6902032 C-0.10357311,16.3728894 -0.10357311,17.4719658 0.579113112,18.154652 C1.26179933,18.8373382 2.36087573,18.8373382 3.04356195,18.154652 L9.36688256,11.8313314 L15.6902032,18.154652 C16.3728894,18.8373382 17.4719658,18.8373382 18.154652,18.154652 C18.8324965,17.4719658 18.8324965,16.3680476 18.154652,15.6902032 L18.154652,15.6902032 Z" id="Shape" fill="#2C2B57 "></path>
+      </g>
+    </svg>
+    </button>
+    <h2 class="black" style="font-size:20px">{{'OverzichtToegewezenCollectes' | translate}}</h2>
+    <div style="width: 400px" *ngIf="childData.details == null">
+      <div class="loader" style="margin-bottom: 5px" >
+      <svg class="circular" style="width: 65%; height: 65%" viewBox="25 25 50 50">
+        <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="5" stroke-miterlimit="10"/>
+      </svg>
+      </div>
     </div>
-    <hr class="collect-hr" *ngIf="!childData.hiddenAllocations && !childData.hiddenOverview" style="width: 960px;"/>
-    <div class="withholding-overview center-me" *ngIf="!childData.hiddenOverview">
+    <table class="collect__table alloc" style="margin-bottom: 0;    border-collapse: collapse;">
+      <ng-container *ngFor="let item of childData.details">
+        <tr  style="font-family: Avenir_Medium; font-size: 20px;"  [class.red]="item.Status == 0" [class.yellow]="item.Status == 2" *ngIf="item.Amount != 0">
+          <td class="allocation-column-date">
+            <span class="allocation-date">{{item.Date}}</span>
+          </td>
+          <td class="allocation-title">
+            {{item.Name}}
+          </td>
+          <td style="text-align: right;">{{item.Amount}}</td>
+        </tr>
+      </ng-container>
+
+      <tr class="collect__table__footer" style="font-size: 20px;font-family: Avenir_Medium">
+        <td colspan="2" style="text-align:left;" class="special-last-cell" >{{"TermCosts" | translate}} ({{"INCL_BTW" | translate}})</td>
+        <td style="text-align:right;" class="special-last-cell" >- {{childData.TotaalKosten}}</td>
+      </tr>
+      <tr  style="font-family: Avenir_Black; font-size: 22px;">
+        <td colspan="2" style="text-align:left;">{{"Payout_TotalPayedOut" | translate}}</td>
+        <td style="text-align:right;white-space: nowrap;">{{childData.TotalPaidText}}</td>
+      </tr>
+    </table>
+
+  </div>
+  <hr class="collect-hr" *ngIf="!childData.hiddenAllocations && !childData.hiddenOverview" style="width: 960px;"/>
+  <div class="withholding-overview center-me" *ngIf="!childData.hiddenOverview">
 
 
-        <h2 class="black" style="font-size: 20px">{{"Payout_Overview" | translate}}</h2>
-        <button class="close-button" (click)="closeOverview()">
-            <svg width="19px" height="19px" viewBox="944 525 19 19" version="1.1" xmlns="http://www.w3.org/2000/svg">
-                <desc>Created with Sketch.</desc>
-                <defs></defs>
-                <g id="1477510223_icon-close-round" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"
-                   transform="translate(944.000000, 525.000000)">
-                    <path d="M18.154652,15.6902032 L11.8313314,9.36688256 L18.154652,3.04356195 C18.8373382,2.36087573 18.8373382,1.26179933 18.154652,0.579113112 C17.4719658,-0.10357311 16.3728894,-0.10357311 15.6902032,0.579113112 L9.36688256,6.90243371 L3.04356195,0.579113112 C2.36087573,-0.10357311 1.26179933,-0.10357311 0.579113112,0.579113112 C-0.10357311,1.26179933 -0.10357311,2.36087573 0.579113112,3.04356195 L6.90243371,9.36688256 L0.579113112,15.6902032 C-0.10357311,16.3728894 -0.10357311,17.4719658 0.579113112,18.154652 C1.26179933,18.8373382 2.36087573,18.8373382 3.04356195,18.154652 L9.36688256,11.8313314 L15.6902032,18.154652 C16.3728894,18.8373382 17.4719658,18.8373382 18.154652,18.154652 C18.8324965,17.4719658 18.8324965,16.3680476 18.154652,15.6902032 L18.154652,15.6902032 Z"
-                          id="Shape" fill="#2C2B57 "></path>
-                </g>
-            </svg>
-        </button>
-        <table class="table-stats center-me overview-payout" border="0">
-            <tr>
-                <td>{{"Payout_CommittedAmount" | translate}}</td>
-                <td>{{childData.ToegezegdBedrag}}</td>
-            </tr>
-            <tr>
-                <td>{{"Payout_Withholdings" | translate}}</td>
-                <td></td>
-            </tr>
+    <h2 class="black" style="font-size: 20px">{{"Payout_Overview" | translate}}</h2>
+    <button class="close-button" (click)="closeOverview()">
+      <svg width="19px" height="19px" viewBox="944 525 19 19" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+      <!-- Generator: Sketch 40.3 (33839) - http://www.bohemiancoding.com/sketch -->
+      <desc>Created with Sketch.</desc>
+      <defs></defs>
+      <g id="1477510223_icon-close-round" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(944.000000, 525.000000)">
+        <path d="M18.154652,15.6902032 L11.8313314,9.36688256 L18.154652,3.04356195 C18.8373382,2.36087573 18.8373382,1.26179933 18.154652,0.579113112 C17.4719658,-0.10357311 16.3728894,-0.10357311 15.6902032,0.579113112 L9.36688256,6.90243371 L3.04356195,0.579113112 C2.36087573,-0.10357311 1.26179933,-0.10357311 0.579113112,0.579113112 C-0.10357311,1.26179933 -0.10357311,2.36087573 0.579113112,3.04356195 L6.90243371,9.36688256 L0.579113112,15.6902032 C-0.10357311,16.3728894 -0.10357311,17.4719658 0.579113112,18.154652 C1.26179933,18.8373382 2.36087573,18.8373382 3.04356195,18.154652 L9.36688256,11.8313314 L15.6902032,18.154652 C16.3728894,18.8373382 17.4719658,18.8373382 18.154652,18.154652 C18.8324965,17.4719658 18.8324965,16.3680476 18.154652,15.6902032 L18.154652,15.6902032 Z" id="Shape" fill="#2C2B57 "></path>
+      </g>
+    </svg>
+    </button>
+    <table class="table-stats center-me overview-payout"  border="0">
+      <tr>
+        <td>{{"Payout_CommittedAmount" | translate}}</td>
+        <td>{{childData.ToegezegdBedrag}}</td>
+      </tr>
+      <tr>
+        <td>{{"Payout_Withholdings" | translate}}</td>
+        <td></td>
+      </tr>
+    </table>
+    <div class="withholding-stats">
+
+      <div class="stat-comp">
+
+        <table class="table-stats" border="0">
+
+          <tr (click)="selectRow(childData, 1)" class="row" [class.active-row]="1 == childData.activeRow">
+            <td><i class="fa fa-circle givt-blue" aria-hidden="true"></i></td>
+            <td>{{"Text_Transaction_Fee" | translate}}</td>
+            <td>{{childData.T_Total_Incl}}</td>
+          </tr>
+          <tr (click)="selectRow(childData, 2)" class="row" [class.active-row]="2 == childData.activeRow">
+            <td><i class="fa fa-circle givt-orange" aria-hidden="true"></i></td>
+            <td>{{"Text_Stornering_Fee" | translate}}</td>
+            <td>{{childData.SK_Total_Incl}}</td>
+          </tr>
+          <tr (click)="selectRow(childData, 3)" class="row" [class.active-row]="3 == childData.activeRow">
+            <td><i class="fa fa-circle givt-green" aria-hidden="true"></i></td>
+            <td>{{"Text_Givt_Fee" | translate}}</td>
+            <td>{{childData.G_Total_Incl}}</td>
+          </tr>
+          <tr (click)="selectRow(childData, 4)" class="row" [class.active-row]="4 == childData.activeRow">
+            <td><i class="fa fa-circle givt-darkorange" aria-hidden="true"></i></td>
+            <td>{{"Text_Reversals" | translate}}</td>
+            <td>{{childData.GestorneerdeBedragen}}</td>
+          </tr>
         </table>
-        <div class="withholding-stats">
-
-            <div class="stat-comp">
-
-                <table class="table-stats" border="0">
-
-                    <tr (click)="selectRow(childData, 1)" class="row" [class.active-row]="1 == childData.activeRow">
-                        <td><i class="fa fa-circle givt-blue" aria-hidden="true"></i></td>
-                        <td>{{"Text_Transaction_Fee" | translate}}</td>
-                        <td>{{childData.T_Total_Incl}}</td>
-                    </tr>
-                    <tr (click)="selectRow(childData, 2)" class="row" [class.active-row]="2 == childData.activeRow">
-                        <td><i class="fa fa-circle givt-orange" aria-hidden="true"></i></td>
-                        <td>{{"Text_Stornering_Fee" | translate}}</td>
-                        <td>{{childData.SK_Total_Incl}}</td>
-                    </tr>
-                    <tr (click)="selectRow(childData, 3)" class="row" [class.active-row]="3 == childData.activeRow">
-                        <td><i class="fa fa-circle givt-green" aria-hidden="true"></i></td>
-                        <td>{{"Text_Givt_Fee" | translate}}</td>
-                        <td>{{childData.G_Total_Incl}}</td>
-                    </tr>
-                    <tr (click)="selectRow(childData, 4)" class="row" [class.active-row]="4 == childData.activeRow">
-                        <td><i class="fa fa-circle givt-darkorange" aria-hidden="true"></i></td>
-                        <td>{{"Text_Reversals" | translate}}</td>
-                        <td>{{childData.GestorneerdeBedragen}}</td>
-                    </tr>
-                </table>
-            </div>
-            <div class="stat-calc alt-stat" *ngIf="1 == childData.activeRow">
-                <table>
-                    <tr>
-                        <td>{{ "Text_Transaction_Fee_Mandate" | translate}}</td>
-                        <td class="column-spacing-30"></td>
-                        <td>{{childData.Mandaatkosten}}</td>
-                        <td class="column-spacing-40"></td>
-                        <td class="text-info">{{ childData.Text_Info_Mandate }}</td>
-                    </tr>
-                    <tr class="mobile-text-info">
-                        <td colspan="5">
-                            {{ childData.Text_Info_Mandate }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>{{"Text_Transaction_Fee_Transaction" | translate }}</td>
-                        <td class="column-spacing-30"></td>
-                        <td>{{childData.Transactiekosten}}</td>
-                        <td class="column-spacing-40"></td>
-                        <td class="text-info">{{ childData.Text_Info_Transaction}}</td>
-                    </tr>
-                    <tr class="mobile-text-info">
-                        <td colspan="5">
-                            {{ childData.Text_Info_Transaction}}
-                        </td>
-                    </tr>
-                    <tr class="border-bottom">
-                        <td>{{"Payout_PayoutCosts" | translate }}</td>
-                        <td class="column-spacing-30"></td>
-                        <td>{{childData.UitbetalingskostenFormatted}}</td>
-                        <td class="column-spacing-40"></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td class="heavy">{{ "BTW_EXCL" | translate }}</td>
-                        <td class="column-spacing-30"></td>
-                        <td class="heavy">{{childData.T_Total_Excl}}</td>
-                        <td class="column-spacing-40"></td>
-                        <td class="more-info tooltip">
-                        </td>
-                    </tr>
-                    <tr class="border-bottom">
-                        <td class="heavy">{{"BTW_PERCENT" | translate}}</td>
-                        <td class="column-spacing-30"></td>
-                        <td class="heavy">{{childData.T_BTW}}</td>
-                        <td class="column-spacing-40"></td>
-                        <td class="more-info tooltip">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="heavy total">{{"BTW_INCL" | translate}}</td>
-                        <td class="column-spacing-30"></td>
-                        <td class="heavy total">{{childData.T_Total_Incl}}</td>
-                        <td class="column-spacing-40"></td>
-                        <td class="more-info tooltip">{{"Text_Deduction_InfoButton" | translate}}
-                            <span class="green tooltiptext">
+      </div>
+      <div class="stat-calc alt-stat" *ngIf="1 == childData.activeRow">
+        <table>
+          <tr>
+            <td>{{ "Text_Transaction_Fee_Mandate" | translate}}</td>
+            <td class="column-spacing-30"></td>
+            <td>{{childData.Mandaatkosten}}</td>
+            <td class="column-spacing-40"></td>
+            <td class="text-info">{{ childData.Text_Info_Mandate }}</td>
+          </tr>
+          <tr class="mobile-text-info">
+            <td colspan="5">
+              {{ childData.Text_Info_Mandate }}
+            </td>
+          </tr>
+          <tr>
+            <td>{{"Text_Transaction_Fee_Transaction" | translate }}</td>
+            <td class="column-spacing-30"></td>
+            <td>{{childData.Transactiekosten}}</td>
+            <td class="column-spacing-40"></td>
+            <td class="text-info">{{ childData.Text_Info_Transaction}}</td>
+          </tr>
+          <tr class="mobile-text-info">
+            <td colspan="5">
+              {{ childData.Text_Info_Transaction}}
+            </td>
+          </tr>
+          <tr class="border-bottom">
+            <td>{{"Payout_PayoutCosts" | translate }}</td>
+            <td class="column-spacing-30"></td>
+            <td>{{childData.UitbetalingskostenFormatted}}</td>
+            <td class="column-spacing-40"></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td class="heavy">{{ "BTW_EXCL" | translate }}</td>
+            <td class="column-spacing-30"></td>
+            <td class="heavy">{{childData.T_Total_Excl}}</td>
+            <td class="column-spacing-40"></td>
+            <td class="more-info tooltip">
+            </td>
+          </tr>
+          <tr class="border-bottom">
+            <td class="heavy">{{"BTW_PERCENT" | translate}}</td>
+            <td class="column-spacing-30"></td>
+            <td class="heavy">{{childData.T_BTW}} </td>
+            <td class="column-spacing-40"></td>
+            <td class="more-info tooltip">
+            </td>
+          </tr>
+          <tr>
+            <td class="heavy total">{{"BTW_INCL" | translate}}</td>
+            <td class="column-spacing-30"></td>
+            <td class="heavy total">{{childData.T_Total_Incl}}</td>
+            <td class="column-spacing-40"></td>
+            <td class="more-info tooltip">{{"Text_Deduction_InfoButton" | translate}}
+              <span class="green tooltiptext">
                                  {{"Text_TransactionCost_MoreInfo" | translate }}
                             </span>
-                        </td>
-                    </tr>
-                </table>
-            </div>
+            </td>
+          </tr>
+        </table>
+      </div>
 
-            <div class="stat-calc" *ngIf="2 == childData.activeRow">
-                <table>
-                    <tr>
-                        <td>{{"Text_Deduction_Type1" | translate}}</td>
-                        <td class="column-spacing-30"></td>
-                        <td>{{childData.StorneringsKostenT1}}</td>
-                        <td class="column-spacing-40"></td>
-                        <td>{{childData.Text_Info_Type1}}</td>
-                    </tr>
-                    <tr class="border-bottom">
-                        <td>{{"Text_Deduction_Type2" | translate}}</td>
-                        <td class="column-spacing-30"></td>
-                        <td>{{childData.StorneringsKostenT2}}</td>
-                        <td class="column-spacing-40"></td>
-                        <td class="big-cell">{{childData.Text_Info_Type2}}</td>
-                    </tr>
-                    <tr>
-                        <td class="heavy">{{ "BTW_EXCL" | translate }}</td>
-                        <td class="column-spacing-30"></td>
-                        <td class="heavy">{{childData.SK_Total_Excl}}</td>
-                        <td class="column-spacing-40"></td>
-                        <td class="more-info tooltip">
-                        </td>
-                    </tr>
-                    <tr class="border-bottom">
-                        <td class="heavy">{{"BTW_PERCENT" | translate}}</td>
-                        <td class="column-spacing-30"></td>
-                        <td class="heavy">{{childData.SK_BTW}}</td>
-                        <td class="column-spacing-40"></td>
-                        <td class="more-info tooltip">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="heavy total">{{"BTW_INCL" | translate}}</td>
-                        <td class="column-spacing-30"></td>
-                        <td class="heavy total">{{childData.SK_Total_Incl}}</td>
-                        <td class="column-spacing-40"></td>
-                        <td class="more-info tooltip">{{"Text_Deduction_InfoButton" | translate}}
-                            <span class="green tooltiptext" [innerHTML]="'Text_Stornos_MoreInfo' | translate">
+      <div class="stat-calc" *ngIf="2 == childData.activeRow">
+        <table>
+          <tr>
+            <td>{{"Text_Deduction_Type1" | translate}}</td>
+            <td class="column-spacing-30"></td>
+            <td>{{childData.StorneringsKostenT1}}</td>
+            <td class="column-spacing-40"></td>
+            <td>{{childData.Text_Info_Type1}}</td>
+          </tr>
+          <tr class="border-bottom">
+            <td>{{"Text_Deduction_Type2" | translate}}</td>
+            <td class="column-spacing-30"></td>
+            <td>{{childData.StorneringsKostenT2}}</td>
+            <td class="column-spacing-40"></td>
+            <td class="big-cell">{{childData.Text_Info_Type2}}</td>
+          </tr>
+          <tr>
+            <td class="heavy">{{ "BTW_EXCL" | translate }}</td>
+            <td class="column-spacing-30"></td>
+            <td class="heavy">{{childData.SK_Total_Excl}}</td>
+            <td class="column-spacing-40"></td>
+            <td class="more-info tooltip">
+            </td>
+          </tr>
+          <tr class="border-bottom">
+            <td class="heavy">{{"BTW_PERCENT" | translate}}</td>
+            <td class="column-spacing-30"></td>
+            <td class="heavy">{{childData.SK_BTW}}</td>
+            <td class="column-spacing-40"></td>
+            <td class="more-info tooltip">
+            </td>
+          </tr>
+          <tr>
+            <td class="heavy total">{{"BTW_INCL" | translate}}</td>
+            <td class="column-spacing-30"></td>
+            <td class="heavy total">{{childData.SK_Total_Incl}}</td>
+            <td class="column-spacing-40"></td>
+            <td class="more-info tooltip">{{"Text_Deduction_InfoButton" | translate}}
+              <span class="green tooltiptext" [innerHTML]="'Text_Stornos_MoreInfo' | translate">
 
                             </span>
-                        </td>
-                    </tr>
-                </table>
-            </div>
+            </td>
+          </tr>
+        </table>
+      </div>
 
 
-            <div class="stat-calc" *ngIf="3 == childData.activeRow">
-                <table>
-                    <tr>
-                        <td class="heavy">{{ "BTW_EXCL" | translate }}</td>
-                        <td class="column-spacing-30"></td>
-                        <td class="heavy">{{childData.G_Total_Excl}}</td>
-                        <td class="column-spacing-40"></td>
-                        <td class="more-info tooltip">
-                        </td>
-                    </tr>
-                    <tr class="border-bottom">
-                        <td class="heavy">{{"BTW_PERCENT" | translate}}</td>
-                        <td class="column-spacing-30"></td>
-                        <td class="heavy">{{childData.G_BTW}}</td>
-                        <td class="column-spacing-40"></td>
-                        <td class="more-info tooltip">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="heavy total">{{"BTW_INCL" | translate}}</td>
-                        <td class="column-spacing-30"></td>
-                        <td class="heavy total">{{childData.G_Total_Incl}}</td>
-                        <td class="column-spacing-40"></td>
-                        <td class="more-info tooltip">{{"Text_Deduction_InfoButton" | translate }}
-                            <span class="green tooltiptext">
+      <div class="stat-calc" *ngIf="3 == childData.activeRow">
+        <table>
+          <tr>
+            <td class="heavy">{{ "BTW_EXCL" | translate }}</td>
+            <td class="column-spacing-30"></td>
+            <td class="heavy">{{childData.G_Total_Excl}}</td>
+            <td class="column-spacing-40"></td>
+            <td class="more-info tooltip">
+            </td>
+          </tr>
+          <tr class="border-bottom">
+            <td class="heavy">{{"BTW_PERCENT" | translate}}</td>
+            <td class="column-spacing-30"></td>
+            <td class="heavy">{{childData.G_BTW}}</td>
+            <td class="column-spacing-40"></td>
+            <td class="more-info tooltip">
+            </td>
+          </tr>
+          <tr>
+            <td class="heavy total">{{"BTW_INCL" | translate}}</td>
+            <td class="column-spacing-30"></td>
+            <td class="heavy total">{{childData.G_Total_Incl}}</td>
+            <td class="column-spacing-40"></td>
+            <td class="more-info tooltip">{{"Text_Deduction_InfoButton" | translate }}
+              <span class="green tooltiptext">
                                 {{"Text_GivtServiceFee_MoreInfo" | translate }}
                             </span>
-                        </td>
-                    </tr>
-                </table>
-            </div>
+            </td>
+          </tr>
+        </table>
+      </div>
 
-            <div class="stat-calc" *ngIf="4 == childData.activeRow">
-                <table>
-                    <tr>
-                        <td class="heavy total">{{"Text_Fee_Total" | translate}}</td>
-                        <td class="column-spacing-30"></td>
-                        <td class="heavy total">{{childData.GestorneerdeBedragen}}</td>
-                        <td class="column-spacing-40"></td>
-                        <td>{{ childData.RTransactionT1Count + childData.RTransactionT2Count}} {{"Stornos" | translate}}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td class="column-spacing-30"></td>
-                        <td></td>
-                        <td class="column-spacing-40"></td>
-                        <td class="more-info tooltip">{{"Text_Deduction_InfoButton" | translate}}
-                            <span class="green tooltiptext">
+      <div class="stat-calc" *ngIf="4 == childData.activeRow">
+        <table>
+          <tr>
+            <td class="heavy total">{{"Text_Fee_Total" | translate}}</td>
+            <td class="column-spacing-30"></td>
+            <td class="heavy total">{{childData.GestorneerdeBedragen}}</td>
+            <td class="column-spacing-40"></td>
+            <td>{{ childData.RTransactionT1Count + childData.RTransactionT2Count}} {{"Stornos" | translate}}</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td class="column-spacing-30"></td>
+            <td></td>
+            <td class="column-spacing-40"></td>
+            <td class="more-info tooltip">{{"Text_Deduction_InfoButton" | translate}}
+              <span class="green tooltiptext">
                                 {{"Text_Reversals_MoreInfo" | translate }}
                             </span>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-        </div>
-        <table class="table-stats center-me overview-payout last-row" border="0">
-            <tr class="heavy">
-                <td>{{"TotalWithholdings" | translate}}</td>
-                <td style="font-size:26px;">{{childData.TotaalInhoudingen}}</td>
-            </tr>
-            <tr class="black">
-                <td>{{"Payout_PayedOutAmount" | translate}}</td>
-                <td style="font-size:26px; display: block;" class="tooltip">{{childData.TotalPaidText}}
-                    <svg width="26px" height="26px" viewBox="0 0 26 26" version="1.1" xmlns="http://www.w3.org/2000/svg" class="warning-svg"
-                         *ngIf="childData.HighGivtWarning">
-                        <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                            <g id="Group" transform="translate(-7.000000, 0.000000)">
-                                <circle id="Oval" fill="#F17057" cx="20.1" cy="12.9" r="12.9"></circle>
-                                <text id="!" font-family="Avenir-Black, Avenir" font-size="19.2" font-weight="700" fill="#FFFFFF">
-                                    <tspan x="16.1376" y="19.6">!</tspan>
-                                </text>
-                            </g>
-                        </g>
-                    </svg>
-                    <span class="bg-givt-darkorange tooltiptext tooltiptext__orange" [innerHTML]="'Text_Stornos_MoreInfo' | translate"></span>
-                </td>
-            </tr>
+            </td>
+          </tr>
         </table>
+      </div>
     </div>
+    <table class="table-stats center-me overview-payout last-row" border="0">
+      <tr class="heavy">
+        <td>{{"TotalWithholdings" | translate}}</td>
+        <td style="font-size:26px;">{{childData.TotaalInhoudingen}}</td>
+      </tr>
+      <tr class="black">
+        <td>{{"Payout_PayedOutAmount" | translate}}</td>
+        <td style="font-size:26px;">{{childData.TotalPaidText}}</td>
+      </tr>
+    </table>
+  </div>
 </section>

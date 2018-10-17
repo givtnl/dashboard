@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, isDevMode } from '@angular/core';
 
 import { ApiClientService } from "app/services/api-client.service";
 import { Payout } from "../models/payout";
@@ -18,27 +18,27 @@ import { ISODatePipe } from "../pipes/iso.datepipe";
 
 export class PayoutsComponent implements OnInit {
 
-    openAllocations = false;
+    openAllocations: boolean = false;
     payouts: Payout[] = [];
     isSafari: boolean;
 
+    transactionCost = 0.08;
+    mandateCost = 0.125;
+    R1Cost = 0.18;
+    R2Cost = 1.20;
     translate: TranslateService;
 
     dateBegin: Date = null;
     dateEnd: Date = null;
     loader: object = { show: false };
     openAllocationsMessage: string;
-    dateFirstNonAllocation: string;
-
-    unPaidHighGivt = false;
-
     constructor(private apiService: ApiClientService, private dataService: DataService, translate: TranslateService, private datePipe: ISODatePipe, private userService: UserService) {
         this.isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
         this.translate = translate;
 
         this.dateBegin = new Date();
         this.dateEnd = new Date();
-        this.dateBegin.setDate(this.dateBegin.getDate() - 7);
+        this.dateBegin.setDate(this.dateBegin.getDate() - 7)
 
         this.userService.collectGroupChanged.subscribe(() => {
             this.ngOnInit();
@@ -91,39 +91,9 @@ export class PayoutsComponent implements OnInit {
         this.apiService.getData("Payments/Payouts")
             .then(resp => {
                 this.payouts = [];
-
                 if (resp.length > 0) {
                     this.payouts = resp;
-                    this.fetchWarningHighGivts()
-                        .then(highGivts => {
-                            console.log(highGivts);
-                            if (highGivts.length > 0){
-                                for (let ts of highGivts){
-                                    let inPayment = false;
-                                    for (let pay of this.payouts){
-                                        if(pay.BeginDate < ts.dt_Confirmed && pay.EndDate > ts.dt_Confirmed){
-                                            pay.HighGivtWarning = true;
-                                            inPayment = true;
-                                            break;
-                                        }
-                                    }
-                                    if (!inPayment)
-                                        this.unPaidHighGivt = true;
-                                }
-                                if (this.unPaidHighGivt){
-                                    alert("unpaid high givt.");
-                                }
-                            }
-                        });
                 }
-            });
-    }
-
-    fetchWarningHighGivts() {
-        return this.apiService.getData("v2/collectgroups/" + this.userService.CurrentCollectGroup.GUID + "/cards/highgivtswarning")
-            .then(resp => {
-
-                return resp;
             });
     }
 
