@@ -336,7 +336,7 @@
             </tr>
             <tr class="black">
                 <td>{{"Payout_PayedOutAmount" | translate}}</td>
-                <td style="font-size:26px; display: block;" [class.tooltip]="childData.HighGivtWarning">{{childData.TotalPaidText}}
+                <td style="font-size:26px; display: block;" class="tooltip">{{childData.TotalPaidText}}
                     <svg width="26px" height="26px" viewBox="0 0 26 26" version="1.1" xmlns="http://www.w3.org/2000/svg" class="warning-svg"
                          *ngIf="childData.HighGivtWarning">
                         <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -348,7 +348,7 @@
                             </g>
                         </g>
                     </svg>
-                    <span *ngIf="childData.HighGivtWarning" class="bg-givt-darkorange tooltiptext tooltiptext__orange" [innerHTML]="'Text_Stornos_MoreInfo' | translate"></span>
+                    <span class="bg-givt-darkorange tooltiptext tooltiptext__orange" [innerHTML]="'Text_Stornos_MoreInfo' | translate"></span>
                 </td>
             </tr>
         </table>
