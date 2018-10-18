@@ -655,10 +655,10 @@ export class AssignComponent implements OnInit {
 
     displayValue(x) {
         if (x === undefined) x = 0;
-        let euro = "€";
+        let currencySymbol = this.userService.currencySymbol;
         if (!navigator.language.includes('en'))
-            euro += " ";
-        return euro + (this.isSafari ? parseFloat(x).toFixed(2) : (x).toLocaleString(
+            currencySymbol += " ";
+        return currencySymbol + (this.isSafari ? parseFloat(x).toFixed(2) : (x).toLocaleString(
             navigator.language, { minimumFractionDigits: 2, maximumFractionDigits: 2 })
         );
     }
