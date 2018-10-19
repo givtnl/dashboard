@@ -35,7 +35,9 @@ export class DashboardComponent implements OnInit, OnDestroy{
 
     ShowLoadingAnimation = false;
 
-    currencySymbol = this.userService.currencySymbol;
+    get currencySymbol():string {
+        return this.userService.currencySymbol;
+    }
 
     continuousData: any;
 

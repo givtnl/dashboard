@@ -115,6 +115,8 @@ export class AssignComponent implements OnInit {
         this.options["eventClick"] = function (event, jsEvent, view) {
             let fullcalendar = jQuery(this.calendar["el"]["nativeElement"].children[0]);
             fullcalendar.fullCalendar('unselect');
+            let currentDate = new Date();
+            this.martyMcFly = currentDate < event.start["_d"] && currentDate < event.end["_d"];
             this.openBucket(event);
             if (this.oldJsEvent !== undefined) {
                 this.oldJsEvent.target.style.boxShadow = "0px 0px 15px transparent";
@@ -142,6 +144,8 @@ export class AssignComponent implements OnInit {
         this.options['selectable'] = true;
         this.options['scrollTime'] = '08:00:00';
         this.options['select'] = function (start, end, jsEvent, view, resource) {
+            let currentDate = new Date();
+            this.martyMcFly = currentDate < start["_d"] && currentDate < end["_d"];
             this.createBucketWithRange(start["_d"], end["_d"]);
 
         }.bind(this);
@@ -157,8 +161,10 @@ export class AssignComponent implements OnInit {
             if(!(collect.allocationName != null && collect.allocationName != undefined && collect.allocationName != "")) {
                 retVal = false;
                 break;
+            } else if(this.martyMcFly) {
+                break;
             }
-            
+
             if(collect.allocated) {
                 if(collect.nameIsChanged) {
                     retVal = true; //allow save immediately
@@ -173,7 +179,7 @@ export class AssignComponent implements OnInit {
     get allowDelete(): Boolean {
         let returnValue = false;
         this.selectedCard.Collects.forEach(collect => {
-            if(collect.allocationId !== 0) {
+            if(collect.allocationId !== 0 && collect.allocationId != undefined) {
                 returnValue = true;
             }
         })
@@ -183,6 +189,7 @@ export class AssignComponent implements OnInit {
         allocation.allocationName = item.replace("<span class='autocomplete'>", "").replace("</span>", "");
 
     }
+    martyMcFly = false;
     createBucketWithRange(start: Date, end: Date){        
         let bigEvent = new MyEvent();
         bigEvent.start = new moment(start);
@@ -196,6 +203,8 @@ export class AssignComponent implements OnInit {
                 .filter((tx) => { return new Date(tx.start) >= start && new Date(tx.end) <= end;})
                 .map((tx) => tx.transactions)
                 .reduce((p,s) => p.concat(s));
+            this.openBucket(bigEvent);
+        } else if(this.martyMcFly) {
             this.openBucket(bigEvent);
         } else {
             jQuery(this.calendar["el"]["nativeElement"].children[0]).fullCalendar('unselect');
@@ -213,7 +222,7 @@ export class AssignComponent implements OnInit {
         this.selectedAllocationDates = [event.start, event.end];
         bucketCard.Collects = [];
         for(let i = 0; i < 3; i++){
-            if(event.transactions.filter((tx) => {
+            if(event.transactions != undefined && event.transactions.filter((tx) => {
                 return tx.CollectId === String(i+1);
             }).length > 0){
                 let bcr = new BucketCardRow();
@@ -228,15 +237,21 @@ export class AssignComponent implements OnInit {
                 bcr.allocated = bcr.allocationName !== null;
                 bcr.collectId = String(i+1);
                 bucketCard.Collects.push(bcr);
+            } else if(this.martyMcFly) {
+                const element = new BucketCardRow();
+                element.transactions = [];
+                element.allocated = false;
+                element.collectId = String(i+1);
+                bucketCard.Collects.push(element); 
             }
         }
 
         bucketCard.Fixed = [];
 
-        let fixedTransactions = event.transactions
+        let fixedTransactions = event.transactions != undefined ? event.transactions
             .filter((tx) => {
                 return tx.CollectId === null;
-            });
+            }) : [];
 
         let fixedNames = new Set(fixedTransactions.map((tx) => tx.AllocationName));
         fixedNames.forEach(name => {
