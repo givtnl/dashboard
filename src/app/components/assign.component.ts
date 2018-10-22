@@ -160,9 +160,12 @@ export class AssignComponent implements OnInit {
         for (const collect of this.selectedCard.Collects) {
             if(!(collect.allocationName != null && collect.allocationName != undefined && collect.allocationName != "")) {
                 retVal = false;
-                break;
-            } else if(this.martyMcFly) {
-                break;
+                if(!this.martyMcFly) //prevent breaking when editing future
+                    break;
+            } else {
+                if(this.martyMcFly) {
+                    return true;
+                }
             }
 
             if(collect.allocated) {
@@ -240,6 +243,13 @@ export class AssignComponent implements OnInit {
             } else if(this.martyMcFly) {
                 const element = new BucketCardRow();
                 element.transactions = [];
+                let tx = this.events.filter(e => event.start < e.end && event.end >= e.start).map(f => f.transactions);
+                let name = ""
+                if(tx.length > 0) {
+                    let alloc = tx.reduce((p,s) => p.concat(s)).filter(tx => tx.CollectId === String(i+1));
+                    name = alloc.length > 0 ? alloc[0].AllocationName : "";
+                }
+                element.allocationName = name;
                 element.allocated = false;
                 element.collectId = String(i+1);
                 bucketCard.Collects.push(element); 
