@@ -116,11 +116,6 @@ h3{
     display: block;
     width: 960px;
 }
-
-button:disabled{
-    background: #BCB9C8 !important;
-    cursor: not-allowed !important;
-}
 .input-collect-title{
     display: flex;
     font-family: 'Avenir_Heavy';
