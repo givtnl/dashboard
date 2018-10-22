@@ -58,8 +58,7 @@ export class AssignComponent implements OnInit {
         document.onkeydown = function (evt) {
             evt = evt || window.event;
             if (this.isDialogOpen && evt.keyCode === 27) {
-                this.selectedCard = null;
-                this.isDialogOpen = false;
+                this.closeDialog();
             }
             if(evt.keyCode == 37)
                 this.prevPeriod();
@@ -117,7 +116,7 @@ export class AssignComponent implements OnInit {
             let fullcalendar = jQuery(this.calendar["el"]["nativeElement"].children[0]);
             fullcalendar.fullCalendar('unselect');
             let currentDate = new Date();
-            this.martyMcFly = currentDate < event.start["_d"] && currentDate < event.end["_d"];
+            this.isFutureSelection = currentDate < event.start["_d"] && currentDate < event.end["_d"];
             this.openBucket(event);
             if (this.oldJsEvent !== undefined) {
                 this.oldJsEvent.target.style.boxShadow = "0px 0px 15px transparent";
@@ -146,7 +145,7 @@ export class AssignComponent implements OnInit {
         this.options['scrollTime'] = '08:00:00';
         this.options['select'] = function (start, end, jsEvent, view, resource) {
             let currentDate = new Date();
-            this.martyMcFly = currentDate < start["_d"] && currentDate < end["_d"];
+            this.isFutureSelection = currentDate < start["_d"] && currentDate < end["_d"];
             this.createBucketWithRange(start["_d"], end["_d"]);
 
         }.bind(this);
@@ -427,6 +426,7 @@ export class AssignComponent implements OnInit {
     }
 
     closeDialog() {
+        jQuery(this.calendar["el"]["nativeElement"].children[0]).fullCalendar('unselect');
         this.selectedCard = null;
         if(!this.selectedCSV) {
             this.isDialogOpen = false;
