@@ -46,6 +46,7 @@ export class AssignComponent implements OnInit {
     csvError: boolean = true
     isLoading = false;
     hasOpenAllocation = false;
+    isFutureSelection = false;
 
     selectedAllocationDates = [];
     allocLoader: object = { show: false };
@@ -160,10 +161,10 @@ export class AssignComponent implements OnInit {
         for (const collect of this.selectedCard.Collects) {
             if(!(collect.allocationName != null && collect.allocationName != undefined && collect.allocationName != "")) {
                 retVal = false;
-                if(!this.martyMcFly) //prevent breaking when editing future
+                if(!this.isFutureSelection) //prevent breaking when editing future
                     break;
             } else {
-                if(this.martyMcFly) {
+                if(this.isFutureSelection) {
                     return true;
                 }
             }
@@ -192,7 +193,6 @@ export class AssignComponent implements OnInit {
         allocation.allocationName = item.replace("<span class='autocomplete'>", "").replace("</span>", "");
 
     }
-    martyMcFly = false;
     createBucketWithRange(start: Date, end: Date){        
         let bigEvent = new MyEvent();
         bigEvent.start = new moment(start);
@@ -207,7 +207,7 @@ export class AssignComponent implements OnInit {
                 .map((tx) => tx.transactions)
                 .reduce((p,s) => p.concat(s));
             this.openBucket(bigEvent);
-        } else if(this.martyMcFly) {
+        } else if(this.isFutureSelection) {
             this.openBucket(bigEvent);
         } else {
             jQuery(this.calendar["el"]["nativeElement"].children[0]).fullCalendar('unselect');
@@ -240,7 +240,7 @@ export class AssignComponent implements OnInit {
                 bcr.allocated = bcr.allocationName !== null;
                 bcr.collectId = String(i+1);
                 bucketCard.Collects.push(bcr);
-            } else if(this.martyMcFly) {
+            } else if(this.isFutureSelection) {
                 const element = new BucketCardRow();
                 element.transactions = [];
                 let tx = this.events.filter(e => event.start < e.end && event.end >= e.start).map(f => f.transactions);
