@@ -556,6 +556,18 @@ export class AssignComponent implements OnInit {
                 });
         });
     }
+
+    changedTimePicker(e, changed) {
+        if(changed == this.selectedCard.dtBegin && this.selectedCard.dtBegin > this.selectedCard.dtEnd) {
+            this.selectedCard.dtEnd = moment(this.selectedCard.dtBegin).add(30, 'm').toDate();
+        } else if(this.selectedCard.dtEnd < this.selectedCard.dtBegin) {
+            this.selectedCard.dtBegin = moment(this.selectedCard.dtEnd).subtract(30, 'm').toDate();
+        }
+        //update selection
+        let fullcalendar = jQuery(this.calendar["el"]["nativeElement"].children[0]);
+        fullcalendar.fullCalendar("select", this.selectedCard.dtBegin, this.selectedCard.dtEnd);
+    }
+
     showAllocActions(alloc: BucketCardRow){
         if(alloc.showActions)
             alloc.showActions = false;
