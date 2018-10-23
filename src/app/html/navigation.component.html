@@ -80,7 +80,7 @@
           </a>
         </li>
         <li style="text-align: center">
-          <p style="text-align: center; margin: 0 auto; padding-left: 25px; color: white">&copy; Givt {{huidigJaar}} - {{ versionNumber }}</p>
+          <p style="text-align: center; margin: 0 auto; padding-left: 25px; color: white">&copy; Givt {{huidigJaar}}<ng-container *ngIf="versionNumber != ''"> - {{ versionNumber }}</ng-container></p>
         </li>
       </ul>
     </li>
