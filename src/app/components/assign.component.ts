@@ -169,7 +169,7 @@ export class AssignComponent implements OnInit {
             }
 
             if(collect.allocated) {
-                if(collect.nameIsChanged) {
+                if(collect.nameIsChanged && (collect.allocationName != null && collect.allocationName != undefined && collect.allocationName != "")) {
                     retVal = true; //allow save immediately
                     break;
                 } else {
