@@ -158,7 +158,8 @@ export class AssignComponent implements OnInit {
     get allowSave(): Boolean {
         let retVal = true;
         for (const collect of this.selectedCard.Collects) {
-            if(!(collect.allocationName != null && collect.allocationName != undefined && collect.allocationName != "")) {
+            let hasEmptyAllocationName = !(collect.allocationName != null && collect.allocationName != undefined && collect.allocationName != "")
+            if(hasEmptyAllocationName) {
                 retVal = false;
                 if(!this.isFutureSelection) //prevent breaking when editing future
                     break;
@@ -169,7 +170,7 @@ export class AssignComponent implements OnInit {
             }
 
             if(collect.allocated) {
-                if(collect.nameIsChanged && (collect.allocationName != null && collect.allocationName != undefined && collect.allocationName != "")) {
+                if(collect.nameIsChanged && !hasEmptyAllocationName) {
                     retVal = true; //allow save immediately
                     break;
                 } else {
