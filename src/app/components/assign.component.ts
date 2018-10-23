@@ -769,7 +769,8 @@ export class AssignComponent implements OnInit {
                 let alloc = this.addedAllocations[i];
                 alloc.uploaded = false;
                 alloc.uploading = true;
-                this.saveAllocation(alloc.name.trim(), alloc.collectId.trim(), alloc.dtBegin, alloc.dtEnd)
+                if(!alloc.error) {
+                    this.saveAllocation(alloc.name.trim(), alloc.collectId.trim(), alloc.dtBegin, alloc.dtEnd)
                     .then(() => {
                         alloc.uploaded = true;
                         alloc.uploading = false;
@@ -785,6 +786,7 @@ export class AssignComponent implements OnInit {
                             });
                         }
                     });
+                }
             }
         }
     }
@@ -819,7 +821,7 @@ export class AssignComponent implements OnInit {
                         continue;
                     }
 
-                    if (!this.isValidDate(dtBegin) || !this.isValidDate(dtEnd) || Number(CollectId) > 3 ) {
+                    if (!this.isValidDate(dtBegin) || !this.isValidDate(dtEnd) || dtEnd <= dtBegin) {
                         alloc = {
                             name: props[2],
                             dtBegin: dtBegin,
