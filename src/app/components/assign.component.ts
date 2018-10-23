@@ -813,7 +813,7 @@ export class AssignComponent implements OnInit {
                     if(isNaN(CollectId))
                         continue;
 
-                    if(![1,2,3].indexOf(CollectId)) {
+                    if([1,2,3].indexOf(CollectId) == -1) {
                         console.log("Using a non valid CollectId");
                         continue;
                     }
