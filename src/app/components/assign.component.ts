@@ -813,6 +813,11 @@ export class AssignComponent implements OnInit {
                     if(isNaN(CollectId))
                         continue;
 
+                    if(![1,2,3].indexOf(CollectId)) {
+                        console.log("Using a non valid CollectId");
+                        continue;
+                    }
+
                     if (!this.isValidDate(dtBegin) || !this.isValidDate(dtEnd) || Number(CollectId) > 3 ) {
                         alloc = {
                             name: props[2],
