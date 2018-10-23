@@ -809,7 +809,9 @@ export class AssignComponent implements OnInit {
                     let dtBegin = new Date(props[0]);
                     let dtEnd = new Date(props[1]);
                     let alloc;
-                    let CollectId = props[3].trim();
+                    let CollectId = Number(props[3].trim());
+                    if(isNaN(CollectId))
+                        continue;
 
                     if (!this.isValidDate(dtBegin) || !this.isValidDate(dtEnd) || Number(CollectId) > 3 ) {
                         alloc = {
