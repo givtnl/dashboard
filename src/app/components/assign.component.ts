@@ -821,15 +821,14 @@ export class AssignComponent implements OnInit {
                         continue;
                     }
 
-                    if (!this.isValidDate(dtBegin) || !this.isValidDate(dtEnd) || dtEnd <= dtBegin) {
+                    if(this.isValidDate(dtBegin) && this.isValidDate(dtEnd) && dtEnd > dtBegin) {
                         alloc = {
                             name: props[2],
                             dtBegin: dtBegin,
                             dtEnd: dtEnd,
                             collectId: props[3].trim(),
                             dtBeginString: new Date(props[0]).toLocaleDateString(navigator.language, { day: 'numeric', year: 'numeric', month: 'numeric', hour: 'numeric', minute: 'numeric' }),
-                            dtEndString: new Date(props[1]).toLocaleDateString(navigator.language, { day: 'numeric', year: 'numeric', month: 'numeric', hour: 'numeric', minute: 'numeric' }),
-                            error: true
+                            dtEndString: new Date(props[1]).toLocaleDateString(navigator.language, { day: 'numeric', year: 'numeric', month: 'numeric', hour: 'numeric', minute: 'numeric' })
                         };
                     } else {
                         alloc = {
@@ -838,7 +837,8 @@ export class AssignComponent implements OnInit {
                             dtEnd: dtEnd,
                             collectId: props[3].trim(),
                             dtBeginString: new Date(props[0]).toLocaleDateString(navigator.language, { day: 'numeric', year: 'numeric', month: 'numeric', hour: 'numeric', minute: 'numeric' }),
-                            dtEndString: new Date(props[1]).toLocaleDateString(navigator.language, { day: 'numeric', year: 'numeric', month: 'numeric', hour: 'numeric', minute: 'numeric' })
+                            dtEndString: new Date(props[1]).toLocaleDateString(navigator.language, { day: 'numeric', year: 'numeric', month: 'numeric', hour: 'numeric', minute: 'numeric' }),
+                            error: true
                         };
                     }
                     this.addedAllocations.push(alloc);
