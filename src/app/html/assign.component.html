@@ -182,10 +182,10 @@
 
                                 <div style="margin-top:15px; margin-bottom: 30px" class="flex-col">
                                     <span style="margin-left: 0" class="text">{{'From' | translate}}</span>
-                                    <p-calendar [(ngModel)]="selectedCard.dtBegin" showTime="showTime" [timeOnly]="true"
+                                    <p-calendar [(ngModel)]="selectedCard.dtBegin" (ngModelChange)="changedTimePicker($event, this.selectedCard.dtBegin)" showTime="showTime" [timeOnly]="true"
                                         name="startTime" [stepMinute]="10" class="time-picker"></p-calendar>
                                     <span class="text">{{'To' | translate}}</span>
-                                    <p-calendar [(ngModel)]="selectedCard.dtEnd" showTime="showTime" [timeOnly]="true"
+                                    <p-calendar [(ngModel)]="selectedCard.dtEnd" (ngModelChange)="changedTimePicker($event, this.selectedCard.dtEnd)" showTime="showTime" [timeOnly]="true"
                                         name="endTime" [stepMinute]="10"></p-calendar>
                                 </div>
                                 <span *ngIf="selectedCard.Collects.length > 0" class="tab__element" (click)="currentTab = SelectedTab.Collects"

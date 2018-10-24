@@ -45,7 +45,6 @@ body{
     background: #F5F5F5;
     margin: 0;
     padding: 0;
-    overflow-y: scroll;
     height: 100vh;
 }
 
@@ -617,13 +616,11 @@ p-schedule button
 
 .global-layout {
   display: flex;
-  height: 100vh;
-  overflow: hidden;
+  height: auto;
 }
 
 .global-layout-content {
   flex: 1 1 auto;
-  overflow: auto;
   display: flex;
   flex-direction: column;
     max-width: 100%;
@@ -644,6 +641,9 @@ p-schedule button
 
 my-navigation {
     flex-shrink: 0;
+    position: sticky;
+    top: 0;
+    height: 100%;
 }
 
 

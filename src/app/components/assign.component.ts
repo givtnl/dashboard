@@ -47,6 +47,7 @@ export class AssignComponent implements OnInit {
     csvError: boolean = true
     isLoading = false;
     hasOpenAllocation = false;
+    isFutureSelection = false;
 
     selectedAllocationDates = [];
     allocLoader: object = { show: false };
@@ -58,8 +59,7 @@ export class AssignComponent implements OnInit {
         document.onkeydown = function (evt) {
             evt = evt || window.event;
             if (this.isDialogOpen && evt.keyCode === 27) {
-                this.selectedCard = null;
-                this.isDialogOpen = false;
+                this.closeDialog();
             }
             if(evt.keyCode == 37)
                 this.prevPeriod();
@@ -116,6 +116,8 @@ export class AssignComponent implements OnInit {
         this.options["eventClick"] = function (event, jsEvent, view) {
             let fullcalendar = jQuery(this.calendar["el"]["nativeElement"].children[0]);
             fullcalendar.fullCalendar('unselect');
+            let currentDate = new Date();
+            this.isFutureSelection = currentDate < event.start["_d"] && currentDate < event.end["_d"];
             this.openBucket(event);
             if (this.oldJsEvent !== undefined) {
                 this.oldJsEvent.target.style.boxShadow = "0px 0px 15px transparent";
@@ -143,6 +145,8 @@ export class AssignComponent implements OnInit {
         this.options['selectable'] = true;
         this.options['scrollTime'] = '08:00:00';
         this.options['select'] = function (start, end, jsEvent, view, resource) {
+            let currentDate = new Date();
+            this.isFutureSelection = currentDate < start["_d"] && currentDate < end["_d"];
             this.createBucketWithRange(start["_d"], end["_d"]);
 
         }.bind(this);
@@ -155,13 +159,19 @@ export class AssignComponent implements OnInit {
     get allowSave(): Boolean {
         let retVal = true;
         for (const collect of this.selectedCard.Collects) {
-            if(!(collect.allocationName != null && collect.allocationName != undefined && collect.allocationName != "")) {
+            let hasEmptyAllocationName = !(collect.allocationName != null && collect.allocationName != undefined && collect.allocationName != "")
+            if(hasEmptyAllocationName) {
                 retVal = false;
-                break;
+                if(!this.isFutureSelection) //prevent breaking when editing future
+                    break;
+            } else {
+                if(this.isFutureSelection) {
+                    return true;
+                }
             }
-            
+
             if(collect.allocated) {
-                if(collect.nameIsChanged) {
+                if(collect.nameIsChanged && !hasEmptyAllocationName) {
                     retVal = true; //allow save immediately
                     break;
                 } else {
@@ -174,7 +184,7 @@ export class AssignComponent implements OnInit {
     get allowDelete(): Boolean {
         let returnValue = false;
         this.selectedCard.Collects.forEach(collect => {
-            if(collect.allocationId !== 0) {
+            if(collect.allocationId !== 0 && collect.allocationId != undefined) {
                 returnValue = true;
             }
         })
@@ -198,6 +208,8 @@ export class AssignComponent implements OnInit {
                 .map((tx) => tx.transactions)
                 .reduce((p,s) => p.concat(s));
             this.openBucket(bigEvent);
+        } else if(this.isFutureSelection) {
+            this.openBucket(bigEvent);
         } else {
             jQuery(this.calendar["el"]["nativeElement"].children[0]).fullCalendar('unselect');
             this.selectedCard = null;
@@ -214,7 +226,7 @@ export class AssignComponent implements OnInit {
         this.selectedAllocationDates = [event.start, event.end];
         bucketCard.Collects = [];
         for(let i = 0; i < 3; i++){
-            if(event.transactions.filter((tx) => {
+            if(event.transactions != undefined && event.transactions.filter((tx) => {
                 return tx.CollectId === String(i+1);
             }).length > 0){
                 let bcr = new BucketCardRow();
@@ -229,15 +241,28 @@ export class AssignComponent implements OnInit {
                 bcr.allocated = bcr.allocationName !== null;
                 bcr.collectId = String(i+1);
                 bucketCard.Collects.push(bcr);
+            } else if(this.isFutureSelection) {
+                const element = new BucketCardRow();
+                element.transactions = [];
+                let tx = this.events.filter(e => event.start < e.end && event.end >= e.start).map(f => f.transactions);
+                let name = ""
+                if(tx.length > 0) {
+                    let alloc = tx.reduce((p,s) => p.concat(s)).filter(tx => tx.CollectId === String(i+1));
+                    name = alloc.length > 0 ? alloc[0].AllocationName : "";
+                }
+                element.allocationName = name;
+                element.allocated = false;
+                element.collectId = String(i+1);
+                bucketCard.Collects.push(element); 
             }
         }
 
         bucketCard.Fixed = [];
 
-        let fixedTransactions = event.transactions
+        let fixedTransactions = event.transactions != undefined ? event.transactions
             .filter((tx) => {
                 return tx.CollectId === null;
-            });
+            }) : [];
 
         let fixedNames = new Set(fixedTransactions.map((tx) => tx.AllocationName));
         fixedNames.forEach(name => {
@@ -403,6 +428,7 @@ export class AssignComponent implements OnInit {
     }
 
     closeDialog() {
+        jQuery(this.calendar["el"]["nativeElement"].children[0]).fullCalendar('unselect');
         this.selectedCard = null;
         if(!this.selectedCSV) {
             this.isDialogOpen = false;
@@ -532,6 +558,18 @@ export class AssignComponent implements OnInit {
                 });
         });
     }
+
+    changedTimePicker(e, changed) {
+        if(changed == this.selectedCard.dtBegin && this.selectedCard.dtBegin > this.selectedCard.dtEnd) {
+            this.selectedCard.dtEnd = moment(this.selectedCard.dtBegin).add(30, 'm').toDate();
+        } else if(this.selectedCard.dtEnd < this.selectedCard.dtBegin) {
+            this.selectedCard.dtBegin = moment(this.selectedCard.dtEnd).subtract(30, 'm').toDate();
+        }
+        //update selection
+        let fullcalendar = jQuery(this.calendar["el"]["nativeElement"].children[0]);
+        fullcalendar.fullCalendar("select", this.selectedCard.dtBegin, this.selectedCard.dtEnd);
+    }
+
     showAllocActions(alloc: BucketCardRow){
         if(alloc.showActions)
             alloc.showActions = false;
@@ -656,10 +694,10 @@ export class AssignComponent implements OnInit {
 
     displayValue(x) {
         if (x === undefined) x = 0;
-        let euro = "€";
+        let currencySymbol = this.userService.currencySymbol;
         if (!navigator.language.includes('en'))
-            euro += " ";
-        return euro + (this.isSafari ? parseFloat(x).toFixed(2) : (x).toLocaleString(
+            currencySymbol += " ";
+        return currencySymbol + (this.isSafari ? parseFloat(x).toFixed(2) : (x).toLocaleString(
             navigator.language, { minimumFractionDigits: 2, maximumFractionDigits: 2 })
         );
     }
@@ -702,7 +740,6 @@ export class AssignComponent implements OnInit {
 
     closeCSVBox() {
         this.selectedCSV = false;
-        this.checkAllocationsV2();
         if(this.selectedCard == null)
             this.isDialogOpen = false;
     }
@@ -733,11 +770,13 @@ export class AssignComponent implements OnInit {
                 let alloc = this.addedAllocations[i];
                 alloc.uploaded = false;
                 alloc.uploading = true;
-                this.saveAllocation(alloc.name.trim(), alloc.collectId.trim(), alloc.dtBegin, alloc.dtEnd)
+                if(!alloc.error) {
+                    this.saveAllocation(alloc.name.trim(), alloc.collectId.trim(), alloc.dtBegin, alloc.dtEnd)
                     .then(() => {
                         alloc.uploaded = true;
                         alloc.uploading = false;
                         alloc.error = false;
+                        this.checkAllocationsV2();
                     }).catch(() => {
                         alloc.uploading = false;
                         alloc.uploaded = false;
@@ -748,6 +787,7 @@ export class AssignComponent implements OnInit {
                             });
                         }
                     });
+                }
             }
         }
     }
@@ -773,17 +813,23 @@ export class AssignComponent implements OnInit {
                     let dtBegin = new Date(props[0]);
                     let dtEnd = new Date(props[1]);
                     let alloc;
-                    let CollectId = props[3].trim();
+                    let CollectId = Number(props[3].trim());
+                    if(isNaN(CollectId))
+                        continue;
 
-                    if (!this.isValidDate(dtBegin) || !this.isValidDate(dtEnd) || Number(CollectId) > 3 ) {
+                    if([1,2,3].indexOf(CollectId) == -1) {
+                        console.log("Using a non valid CollectId");
+                        continue;
+                    }
+
+                    if(this.isValidDate(dtBegin) && this.isValidDate(dtEnd) && dtEnd > dtBegin) {
                         alloc = {
                             name: props[2],
                             dtBegin: dtBegin,
                             dtEnd: dtEnd,
                             collectId: props[3].trim(),
                             dtBeginString: new Date(props[0]).toLocaleDateString(navigator.language, { day: 'numeric', year: 'numeric', month: 'numeric', hour: 'numeric', minute: 'numeric' }),
-                            dtEndString: new Date(props[1]).toLocaleDateString(navigator.language, { day: 'numeric', year: 'numeric', month: 'numeric', hour: 'numeric', minute: 'numeric' }),
-                            error: true
+                            dtEndString: new Date(props[1]).toLocaleDateString(navigator.language, { day: 'numeric', year: 'numeric', month: 'numeric', hour: 'numeric', minute: 'numeric' })
                         };
                     } else {
                         alloc = {
@@ -792,7 +838,8 @@ export class AssignComponent implements OnInit {
                             dtEnd: dtEnd,
                             collectId: props[3].trim(),
                             dtBeginString: new Date(props[0]).toLocaleDateString(navigator.language, { day: 'numeric', year: 'numeric', month: 'numeric', hour: 'numeric', minute: 'numeric' }),
-                            dtEndString: new Date(props[1]).toLocaleDateString(navigator.language, { day: 'numeric', year: 'numeric', month: 'numeric', hour: 'numeric', minute: 'numeric' })
+                            dtEndString: new Date(props[1]).toLocaleDateString(navigator.language, { day: 'numeric', year: 'numeric', month: 'numeric', hour: 'numeric', minute: 'numeric' }),
+                            error: true
                         };
                     }
                     this.addedAllocations.push(alloc);

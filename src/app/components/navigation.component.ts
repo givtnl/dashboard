@@ -1,10 +1,10 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { UserService } from 'app/services/user.service';
 import {Router} from "@angular/router";
-import {forEach} from "@angular/router/src/utils/collection";
-import {childOfKind} from "tslint";
 import {ApiClientService} from "../services/api-client.service";
 import {DataService} from "../services/data.service";
+import * as pkg from '../../../package.json';
+import { environment } from '../../environments/environment';
 
 @Component({
     selector: 'my-navigation',
@@ -20,6 +20,7 @@ export class NavigationComponent implements OnInit {
     currentCollectGroup: any = {Name:"", GUID:""};
     collectGroups : Array<any> = null;
     showCelebrations = false;
+    versionNumber = "";
 
     constructor(private apiService: ApiClientService, private dataService: DataService, userService: UserService, private router: Router) {
       this.userService = userService;
@@ -35,6 +36,7 @@ export class NavigationComponent implements OnInit {
     }
 
     ngOnInit() {
+      if (!environment.production) this.versionNumber = pkg['version'];
       this.showMandateLink = this.userService.GivtOperations;
       this.huidigJaar = this.huidigJaar;
       if ((!this.userService.CollectGroups || this.userService.CollectGroups.length === 0) && this.userService.GivtOperations) {

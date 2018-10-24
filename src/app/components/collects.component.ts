@@ -334,20 +334,15 @@ export class CollectsComponent implements OnInit{
             console.log(navigator.language);
 
             this.isVisible = true;
-
-            let euro =  "€";
-            if(!navigator.language.includes('en'))
-                euro += " ";
         }
 
     }
 
-    displayValue(x)
-    {
-        let euro =  "€";
+    displayValue(x) {
+        let currencySymbol = this.userService.currencySymbol;
         if(!navigator.language.includes('en'))
-            euro += " ";
-        return euro + (this.isSafari ? parseFloat(x).toFixed(2) : (x).toLocaleString(navigator.language,{minimumFractionDigits: 2,maximumFractionDigits:2}));
+            currencySymbol += " ";
+        return currencySymbol + (this.isSafari ? parseFloat(x).toFixed(2) : (x).toLocaleString(navigator.language,{minimumFractionDigits: 2,maximumFractionDigits:2}));
     }
 
     onDateBeginChange(date){

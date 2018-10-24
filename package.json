@@ -15,7 +15,8 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "deploydev": "node deploy"
+    "deploydev": "node deploy",
+    "buildandpushdockerdev": "npm run build && npm run dockerbuild && npm run dockerpush"
   },
   "private": true,
   "dependencies": {

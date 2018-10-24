@@ -9,6 +9,7 @@ import { User } from '../models/user';
 import { DataService } from "./data.service";
 import { ApiClientService} from "./api-client.service";
 import { EventEmitter, Output } from "@angular/core";
+import { PaymentType } from "../models/paymentType";
 
 @Injectable()
 export class UserService {
@@ -36,6 +37,10 @@ export class UserService {
     public CollectGroups: Array<any> = null;
     public CurrentCollectGroup: any = null;
     user: User = new User();
+
+    get currencySymbol(): string {
+        return this.CurrentCollectGroup.PaymentType == PaymentType.BACS ? "£" : "€";
+    }
 
     login(username: string, password: string) {
         let d = this.dataService.getData("CurrentCollectGroup");

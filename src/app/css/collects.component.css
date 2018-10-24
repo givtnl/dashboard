@@ -122,10 +122,6 @@ h3 {
     max-width: 960px;
 }
 
-button:disabled{
-    background-color: #BCB9C8 !important;
-    cursor: not-allowed !important;
-}
 .input-collect-title{
     display: flex;
     font-family: 'Avenir_Heavy';
