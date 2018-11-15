@@ -14,7 +14,8 @@ import { PaymentType } from "../models/paymentType";
 @Injectable()
 export class UserService {
     @Output() collectGroupChanged: EventEmitter<any> = new EventEmitter();
-	@Output() showCelebrationChanged: EventEmitter<any> = new EventEmitter();
+    @Output() showCelebrationChanged: EventEmitter<any> = new EventEmitter();
+    @Output() userLoggedOut: EventEmitter<any> = new EventEmitter();
 
 	//this has to become environment variable in story 2461
     private apiUrl = environment.apiUrl + '/oauth2/token';
@@ -134,6 +135,7 @@ export class UserService {
         this.loggedIn = false;
         this.SiteAdmin = false;
         this.dataService.clearAll();
+        this.userLoggedOut.emit(null);
     }
 
     requestNewPass(email){
