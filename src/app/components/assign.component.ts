@@ -168,14 +168,11 @@ export class AssignComponent implements OnInit {
                     return true;
                 }
             }
-
-            if(collect.allocated) {
-                if(collect.nameIsChanged && !hasEmptyAllocationName) {
-                    retVal = true; //allow save immediately
-                    break;
-                } else {
-                    retVal = false
-                }
+            if(collect.nameIsChanged && !hasEmptyAllocationName) {
+                retVal = true; //allow save immediately
+                break;
+            } else {
+                retVal = false
             }
         }
         return retVal;
@@ -409,7 +406,6 @@ export class AssignComponent implements OnInit {
             });
         });
     }
-
     prevPeriod() {
         this.openedMobileEventId = -1;
         this.selectedCard = null;
@@ -417,7 +413,6 @@ export class AssignComponent implements OnInit {
         let nativeElement = jQuery(this.calendar["el"]["nativeElement"].children[0]);
         nativeElement.fullCalendar('prev');
     }
-
     nextPeriod() {
         this.openedMobileEventId = -1;
         this.selectedCard = null;
@@ -425,7 +420,6 @@ export class AssignComponent implements OnInit {
         let nativeElement = jQuery(this.calendar["el"]["nativeElement"].children[0]);
         nativeElement.fullCalendar('next');
     }
-
     closeDialog() {
         jQuery(this.calendar["el"]["nativeElement"].children[0]).fullCalendar('unselect');
         this.selectedCard = null;
@@ -436,7 +430,6 @@ export class AssignComponent implements OnInit {
             this.oldJsEvent.target.style.boxShadow = "0px 0px 15px transparent";
         }
     }
-
     filterTags(typed) {
         this.filteredUsedTags = [];
         let regex = new RegExp(typed, "i");
@@ -447,7 +440,6 @@ export class AssignComponent implements OnInit {
             }
         }, this);
     }
-
     deleteAllEvents() {
         this.allocLoader["show"] = true;
         return new Promise((resolve, reject) => {
@@ -460,7 +452,6 @@ export class AssignComponent implements OnInit {
             });
         })
     }
-
     saveAllEvents() {
         if(!this.selectedCard)
             return;
@@ -489,7 +480,6 @@ export class AssignComponent implements OnInit {
                 });
         });
     }
-
     reloadEvents() {
         this.events.length = 0;
         this.apiService.getData('Allocations/AllocationTags')
@@ -509,7 +499,6 @@ export class AssignComponent implements OnInit {
             this.allocLoader["show"] = false;
         });
     }
-
     findEventIndexById(id: number) {
         let index = -1;
         for (let i = 0; i < this.events.length; i++) {
@@ -520,12 +509,10 @@ export class AssignComponent implements OnInit {
         }
         return index;
     }
-
     toggleError(setVisible: boolean, msg: any = "") {
         this.errorShown = setVisible;
         this.errorMessage = msg;
     }
-
     saveAllocation(title: string, collectId: string, startTime: Date = null, endTime: Date = null) {
         return new Promise((resolve, reject) => {
             if (title === "") {
@@ -557,7 +544,6 @@ export class AssignComponent implements OnInit {
                 });
         });
     }
-
     changedTimePicker(e, changed) {
         if(changed == this.selectedCard.dtBegin && this.selectedCard.dtBegin > this.selectedCard.dtEnd) {
             this.selectedCard.dtEnd = moment(this.selectedCard.dtBegin).add(30, 'm').toDate();
@@ -568,7 +554,6 @@ export class AssignComponent implements OnInit {
         let fullcalendar = jQuery(this.calendar["el"]["nativeElement"].children[0]);
         fullcalendar.fullCalendar("select", this.selectedCard.dtBegin, this.selectedCard.dtEnd);
     }
-
     showAllocActions(alloc: BucketCardRow){
         if(alloc.showActions)
             alloc.showActions = false;
@@ -643,11 +628,9 @@ export class AssignComponent implements OnInit {
                 });
         });
     }
-
     eventAfterRender(event: any, element: any, view: any) {
 
     }
-
     eventRender(that: any, event: any, element: any, view: any) {
         element[0].innerText = event.title;
 
@@ -676,21 +659,18 @@ export class AssignComponent implements OnInit {
 
         element[0].innerHTML = "";
     }
-
     onFocusOutOf(bucketRow: BucketCardRow) {
         setTimeout(() => {
             bucketRow.isTyping = false;
             this.filteredUsedTags = [];
         }, 200);
     }
-
     onFocusOutWeek() {
         setTimeout(() => {
             this.allCollectTyping = false;
             this.filteredUsedTags = [];
         }, 200);
     }
-
     displayValue(x) {
         if (x === undefined) x = 0;
         let currencySymbol = this.userService.currencySymbol;
@@ -700,15 +680,12 @@ export class AssignComponent implements OnInit {
             navigator.language, { minimumFractionDigits: 2, maximumFractionDigits: 2 })
         );
     }
-
     showDate(x) {
         return x.toLocaleDateString(navigator.language, { weekday: 'short', day: 'numeric', month: 'numeric', year: 'numeric' });
     }
-
     setWeekName(item) {
         this.allocateWeekName = item.replace("<span class='autocomplete'>", "").replace("</span>", "");
     }
-
     allocateWeek() {
         let dataAllocations = [];
         for(let i = 0; i < this.events.length; i++) {
@@ -732,17 +709,14 @@ export class AssignComponent implements OnInit {
                     console.log(err);
                 });
     }
-
     allCollectNameChanging(event) {
         this.filterTags(event);
     }
-
     closeCSVBox() {
         this.selectedCSV = false;
         if(this.selectedCard == null)
             this.isDialogOpen = false;
     }
-
     uploadCSV() {
         if (this.addedAllocations.length > 0) {
             for (let i = 0; i < this.addedAllocations.length; i++) {
@@ -848,7 +822,6 @@ export class AssignComponent implements OnInit {
             };
         }
     }
-
     isValidDate(d) {
         return d instanceof Date && !isNaN(d.getTime());
     }
@@ -944,7 +917,6 @@ export class BucketCardRow {
     get nameIsChanged(): boolean {
         return this._allocationName !== this.allocationName
     }
-
     get numberOfTransactions(): number {
         return this.transactions.map((tx) => tx.Count)
                                 .reduce((sum, amount) => sum + amount, 0);
@@ -954,25 +926,21 @@ export class BucketCardRow {
                                 .map((tx) => tx.Sum)
                                 .reduce((sum, amount) => sum + amount, 0);
     }
-
     get processed():number {
         return this.transactions.filter((tx) => { return tx.Status === 3; })
                                 .map((tx) => tx.Sum)
                                 .reduce((sum, amount) => sum + amount, 0);
     }
-
     get refusedByBank():number {
         return this.transactions.filter((tx) => { return tx.Status === 4; })
                                 .map((tx) => tx.Sum)
                                 .reduce((sum, amount) => sum + amount, 0);
     }
-
     get cancelledByUser():number {
         return this.transactions.filter((tx) => { return tx.Status === 5; })
                                 .map((tx) => tx.Sum)
                                 .reduce((sum, amount) => sum + amount, 0);
     }
-
     get total():Number {
         return this.toProcess+this.processed+this.refusedByBank+this.cancelledByUser;
     }
