@@ -3,6 +3,7 @@ import { UserService } from 'app/services/user.service';
 import {Router} from "@angular/router";
 import {ApiClientService} from "../services/api-client.service";
 import {DataService} from "../services/data.service";
+import {TranslateService} from "ng2-translate";
 import * as pkg from '../../../package.json';
 import { environment } from '../../environments/environment';
 
@@ -22,7 +23,7 @@ export class NavigationComponent implements OnInit {
     showCelebrations = false;
     versionNumber = "";
 
-    constructor(private apiService: ApiClientService, private dataService: DataService, userService: UserService, private router: Router) {
+    constructor(private apiService: ApiClientService, private dataService: DataService, userService: UserService, private router: Router, private translate: TranslateService) {
       this.userService = userService;
 
 	    this.userService.collectGroupChanged.subscribe(() => {
@@ -31,8 +32,7 @@ export class NavigationComponent implements OnInit {
 	    this.showCelebrations = this.userService.showCelebrations;
 	    this.userService.showCelebrationChanged.subscribe(() => {
 		    this.showCelebrations = this.userService.showCelebrations;
-	    });
-
+      });
     }
 
     ngOnInit() {
