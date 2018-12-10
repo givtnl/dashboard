@@ -23,7 +23,7 @@ export class NavigationComponent implements OnInit {
     showCelebrations = false;
     versionNumber = "";
 
-    constructor(private apiService: ApiClientService, private dataService: DataService, userService: UserService, private router: Router, private translate: TranslateService) {
+    constructor(private apiService: ApiClientService, private dataService: DataService, userService: UserService, private router: Router, public translate: TranslateService) {
       this.userService = userService;
 
 	    this.userService.collectGroupChanged.subscribe(() => {
