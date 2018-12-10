@@ -52,6 +52,10 @@ export class DashboardComponent implements OnInit, OnDestroy{
             this.ShowLoadingAnimation = true;
             this.ngOnInit();
         });
+
+        this.userService.userLoggedOut.subscribe(() => {
+            clearInterval(this.continuousData);
+        });
     }
 
     ngOnDestroy(): void{

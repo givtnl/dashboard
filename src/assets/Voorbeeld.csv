@@ -1,6 +1,6 @@
-Begindatum/Begindate; Einddatum/Enddate; Naam/Name; CollecteId/CollectId
-2018-09-30 08:00; 2018-09-30 10:30;Doel 1e collecte; 1
-2018-09-30 11:00; 2018-09-30 14:00;Doel 2e collecte; 2
-2018-09-30 15:00; 2018-09-30 17:00;Collecte 3; 3
-2018-10-01 00:00; 2018-11-01 00:00;Collecte 1 oktober; 1
-2018-10-01 00:00; 2018-11-01 00:00;Collecte 2 oktober; 2
+Begindatum/Begindate; Einddatum/Enddate; Naam/Name; CollecteId/CollectId;  BELANGRIJK: Er moet een spatie voor de datum! / IMPORTANT : There has to be a space in front of the date.
+ 2018-09-30 08:00; 2018-09-30 10:30;Doel 1e collecte; 1
+ 2018-09-30 11:00; 2018-09-30 14:00;Doel 2e collecte; 2
+ 2018-09-30 15:00; 2018-09-30 17:00;Collecte 3; 3
+ 2018-10-01 00:00; 2018-11-01 00:00;Collecte 1 oktober; 1
+ 2018-10-01 00:00; 2018-11-01 00:00;Collecte 2 oktober; 2
