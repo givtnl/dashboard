@@ -54,42 +54,44 @@ export class CollectsComponent implements OnInit{
 
 
     ShowLoadingAnimation = false;
+    terms: any = {
+        en: {
+            firstDayOfWeek: 0,
+            dayNames: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+            dayNamesShort: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+            dayNamesMin: ["Su","Mo","Tu","We","Th","Fr","Sa"],
+            monthNames: [ "January","February","March","April","May","June","July","August","September","October","November","December" ],
+            monthNamesShort: [ "Jan", "Feb", "Mar", "Apr", "May", "Jun","Jul", "Aug", "Sep", "Oct", "Nov", "Dec" ]
+        },
+        nl: {
+            firstDayOfWeek: 1,
+            closeText: 'Sluiten',
+            prevText: 'Terug',
+            nextText: 'Volgende',
+            currentText: 'Huidig',
+            monthNames: ['Januari', 'Februari', 'Maart', 'April', 'Mei', 'Juni', 'Juli', 'Augustus', 'September', 'Oktober', 'November', 'December' ],
+            monthNamesShort: ['jan', 'feb', 'mrt', 'apr', 'mei', 'jun', 'jul', 'aug', 'sep', 'okt', 'nov', 'dec' ],
+            dayNames: ['Zondag', 'Maandag', 'Dinsdag', 'Woensdag', 'Donderdag', 'Vrijdag', 'Zaterdag'],
+            dayNamesShort: ['zo', 'ma', 'di', 'woe', 'do', 'vr', 'za'],
+            dayNamesMin: ['Zo', 'Ma', 'Di', 'Wo ', 'Do', 'Vr ', 'Za'],
+            weekHeader: 'Week',
+            firstDay: 1,
+            isRTL: false,
+            showMonthAfterYear: false,
+            yearSuffix:'',
+            timeOnlyTitle: 'Alleen tijd',
+            timeText: 'Tijd',
+            hourText: 'Uur',
+            minuteText: 'Minuut',
+            secondText: 'Seconde',
+            ampm: false,
+            month: 'Maand',
+            week: 'week',
+            day: 'Dag',
+            allDayText: 'Alle Dagen'
+        }
+    };
 
-    en: any = {
-        firstDayOfWeek: 0,
-        dayNames: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-        dayNamesShort: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
-        dayNamesMin: ["Su","Mo","Tu","We","Th","Fr","Sa"],
-        monthNames: [ "January","February","March","April","May","June","July","August","September","October","November","December" ],
-        monthNamesShort: [ "Jan", "Feb", "Mar", "Apr", "May", "Jun","Jul", "Aug", "Sep", "Oct", "Nov", "Dec" ]
-    };
-    nl: any = {
-        firstDayOfWeek: 1,
-        closeText: 'Sluiten',
-        prevText: 'Terug',
-        nextText: 'Volgende',
-        currentText: 'Huidig',
-        monthNames: ['Januari', 'Februari', 'Maart', 'April', 'Mei', 'Juni', 'Juli', 'Augustus', 'September', 'Oktober', 'November', 'December' ],
-        monthNamesShort: ['jan', 'feb', 'mrt', 'apr', 'mei', 'jun', 'jul', 'aug', 'sep', 'okt', 'nov', 'dec' ],
-        dayNames: ['Zondag', 'Maandag', 'Dinsdag', 'Woensdag', 'Donderdag', 'Vrijdag', 'Zaterdag'],
-        dayNamesShort: ['zo', 'ma', 'di', 'woe', 'do', 'vr', 'za'],
-        dayNamesMin: ['Zo', 'Ma', 'Di', 'Wo ', 'Do', 'Vr ', 'Za'],
-        weekHeader: 'Week',
-        firstDay: 1,
-        isRTL: false,
-        showMonthAfterYear: false,
-        yearSuffix:'',
-        timeOnlyTitle: 'Alleen tijd',
-        timeText: 'Tijd',
-        hourText: 'Uur',
-        minuteText: 'Minuut',
-        secondText: 'Seconde',
-        ampm: false,
-        month: 'Maand',
-        week: 'week',
-        day: 'Dag',
-        allDayText: 'Alle Dagen'
-    };
     locale: any;
 
     dateRange: Date;
@@ -161,18 +163,18 @@ export class CollectsComponent implements OnInit{
     }
 
     constructor(private apiService: ApiClientService, private translate: TranslateService, private datePipe: ISODatePipe, private dataService: DataService, private userService: UserService) {
-        this.locale = this.nl;
+        this.locale = navigator.language.includes('nl') ? 'nl-NL' : 'en-GB';
 
         this.isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
         switch (this.translate.currentLang){
             case "nl":
-                this.locale = this.nl;
+                this.locale = this.terms.nl;
                 break;
             case "en":
-                this.locale = this.en;
+                this.locale = this.terms.en;
                 break;
             default:
-                this.locale = this.nl;
+                this.locale = this.terms.nl;
                 break;
         }
         this.apiService = apiService;
