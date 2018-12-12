@@ -61,16 +61,16 @@ export class AssignComponent implements OnInit {
             if (this.isDialogOpen && evt.keyCode === 27) {
                 this.closeDialog();
             }
-            if(evt.keyCode == 37)
+            if(evt.keyCode === 37)
                 this.prevPeriod();
 
-            if(evt.keyCode == 39)
+            if(evt.keyCode === 39)
                 this.nextPeriod();
 
-            if(evt.keyCode == 46 && evt.shiftKey && this.allowDelete)
+            if(evt.keyCode === 46 && evt.shiftKey && this.allowDelete)
                 this.deleteAllEvents();
 
-            if(evt.keyCode == 13 && evt.shiftKey && this.allowSave)
+            if(evt.keyCode === 13 && evt.shiftKey && this.allowSave)
                 this.saveAllEvents();
 
         }.bind(this);
@@ -137,7 +137,7 @@ export class AssignComponent implements OnInit {
         this.options['slotDuration'] = '00:30:00';
         this.options['timezone'] = 'local';
         this.options['defaultView'] = 'agendaWeek';
-        this.options['locale'] = this.ts.currentLang;
+        this.options['locale'] = navigator.language.includes('nl') ? 'nl-NL' : 'en-GB';
         this.options['eventDurationEditable'] = false;
         this.options['eventStartEditable'] = false;
         this.options['fixedWeekCount'] = false;
