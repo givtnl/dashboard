@@ -8,6 +8,7 @@ import {UserService} from "../services/user.service";
 import {visualCollection} from "../models/visualCollection";
 import {BaseChartDirective} from "ng2-charts";
 import {ISODatePipe} from "../pipes/iso.datepipe";
+import { isNumeric } from '@angular/common/src/pipes/number_pipe';
 @Component({
     selector: 'my-collects',
     templateUrl: '../html/collects.component.html',
@@ -237,7 +238,7 @@ export class CollectsComponent implements OnInit{
     fetchSavedCollects(){
         return this.apiService.getData("Collects/Collect")
             .then(resp => {
-                if(resp == undefined){
+                if(resp === undefined){
                     this.savedCollects = [];
                     return;
                 }
@@ -328,8 +329,8 @@ export class CollectsComponent implements OnInit{
             this.sameDate = ( new Date(this.dateBeginRange).getDate() ===  new Date(this.dateEndRange).getDate());
             this.dateBeginRange = new Object();
             this.dateEndRange = new Object();
-            this.dateBeginRange.string = this.dateBegin.toLocaleDateString(navigator.language, { year: 'numeric', month: 'long'}) + " " + this.datePipe.transform(beginTime, 'shortTime');
-            this.dateEndRange.string = this.dateEnd.toLocaleDateString(navigator.language, { year: 'numeric', month: 'long'}) + " " + this.datePipe.transform(endTime,'shortTime');
+            this.dateBeginRange.string = this.dateBegin.toLocaleDateString(navigator.language, { day: 'numeric', month: 'long', year: 'numeric'}) + " " + this.datePipe.transform(beginTime, 'shortTime');
+            this.dateEndRange.string = this.dateEnd.toLocaleDateString(navigator.language, { day: 'numeric', month: 'long', year: 'numeric'}) + " " + this.datePipe.transform(endTime,'shortTime');
 
             console.log(navigator.language);
 
