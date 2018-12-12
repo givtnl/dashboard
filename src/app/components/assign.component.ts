@@ -766,7 +766,10 @@ export class AssignComponent implements OnInit {
         }
     }
     downloadExampleCSV() {
-        window.open('assets/Voorbeeld.csv');
+        if (navigator.language.includes('nl'))
+            window.open('assets/Voorbeeld.csv');
+        else
+            window.open('assets/Example.csv');
     }
     fileChange(event) {
         this.selectedCSV = true;
