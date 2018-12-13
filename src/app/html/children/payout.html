@@ -201,9 +201,9 @@
             <td class="heavy total">{{childData.T_Total_Incl}}</td>
             <td class="column-spacing-40"></td>
             <td class="more-info tooltip">{{"Text_Deduction_InfoButton" | translate}}
-              <span class="green tooltiptext">
-                                 {{"Text_TransactionCost_MoreInfo" | translate }}
-                            </span>
+              <span id="cost-tooltip" class="green tooltiptext">
+                {{ moreInfoToolTip }}
+              </span>
             </td>
           </tr>
         </table>

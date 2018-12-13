@@ -36,15 +36,20 @@ export class PayoutComponent implements OnInit {
     paymentType: PaymentType = PaymentType.Undefined;
     showCosts: boolean = false;
     pledgedAmount: number;
+    moreInfoToolTip: any
 
     constructor(private apiClient: ApiClientService, private translate: TranslateService, private datePipe: ISODatePipe, private userService: UserService) {
         this.isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
         this.name = "Testen";
         this.paymentType = this.userService.CurrentCollectGroup.PaymentType;
-        if (this.paymentType == PaymentType.BACS) {
+        this.translate.get('Text_TransactionCost_MoreInfo').subscribe((res: string) => {
+            this.moreInfoToolTip = res;
+        });
+        if (this.paymentType === PaymentType.BACS) {
             this.transactionCost = 0.1;
             this.mandateCost = 0.125;
-        } else if (this.paymentType == PaymentType.SEPA) {
+            this.moreInfoToolTip = this.moreInfoToolTip.replace('SlimPay', 'SmartDebit');
+        } else if (this.paymentType === PaymentType.SEPA) {
             this.transactionCost = 0.08;
             this.mandateCost = 0.125;
         } else {
