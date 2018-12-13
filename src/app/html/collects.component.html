@@ -1,179 +1,195 @@
 <my-alert></my-alert>
 
 <div class="global-layout">
-  <my-navigation></my-navigation>
-  <div class="global-layout-content">
-    <my-titlebar></my-titlebar>
-      <div class="global-layout-main">
-          <div class="back-to-overview" *ngIf="isVisible" (click)="isVisible = false; collectId = 0">
-              <img style="height: 20px" src="images/left-back.png" alt="">
-              <p class="avenir-light font-size-16">
-                  {{"Back_To_Overview" | translate}}
-              </p>
-          </div>
-          <section class="padding-20" [class.hide-element-on-mobile]="isVisible">
-              <h2 *ngIf="openAllocations" class="red">{{openAllocationsMessage}}</h2>
-              <h2>{{"Text_Collectes_Title" | translate}}</h2>
-              <h3>{{"Text_Collectes_Subtitle" | translate}}</h3>
-              <section class="collects-pickdate" id="collectPage">
-                    <p-calendar showIcon="true" inputStyleClass="date-picker-input" [(ngModel)]="dateBegin" (ngModelChange)="onDateBeginChange($event)" showTime="showTime" dateFormat="dd/mm/yy" [locale]="locale">
-                  </p-calendar>
-                  <p class="till">{{"Text_TotEnMet" | translate}}</p>
-                  <p-calendar showIcon="true" inputStyleClass="date-picker-input" [(ngModel)]="dateEnd"  (ngModelChange)="onDateEndChange($event)" showTime="showTime" dateFormat="dd/mm/yy" [locale]="locale"></p-calendar>
-              </section>
-              <button [class.green-button]="SearchButtonGreen" (click)="filterCollect(0);SearchButtonGreen = true;collectId = null;collectName = null;multipleCollectsId = '0'" class="search-collect">{{"Text_Collectes_FilterButton" | translate}}</button>
-          </section>
-          <hr *ngIf="isVisible" class="collect-hr" [class.hide-element-on-mobile]="isVisible"/>
-          <section class="section-collects" *ngIf="isVisible" >
-              <div class="loading-wrapper" [ngClass]="{'show-loading-animation': ShowLoadingAnimation }">
-                  <div class="loader" >
-                      <svg class="circular" viewBox="25 25 50 50">
-                          <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="5" stroke-miterlimit="10"/>
-                      </svg>
-                  </div>
-              </div>
-              <section  class="show-collect">
-                  <time class="mobile-width-100pct">
-                      <div class="input-collect-title">
-                          <input maxlength="50" *ngIf="collectId != null && collectName.length > 0" [size]="inputTitleLength" name="bjorn" [attr.placeholder]="'Placeholder_Offering_Name' | translate" type="text"  [(ngModel)]="collectName"/>
-                          <input maxlength="50" *ngIf="collectId == null" name="bjorn" [attr.placeholder]="'Placeholder_Offering_Name' | translate" type="text"  [(ngModel)]="collectName"/>
-                      </div>
-                      <div class="choose_collecte">
-                          <span style="display:inline-block;padding-right: 5px">{{"Collection" | translate}}</span>
-                          <input class="input__checkbox--collecte" type="radio" id="0" name="collecte" [checked]="this.multipleCollectsId == null || this.multipleCollectsId == '0'"><label (click)="filterCollect(0);collectId = null;collectName = null;multipleCollectsId = '0'" class="label--collecte" for="0">{{"All" | translate }}</label>
-                          <input class="input__checkbox--collecte" type="radio" id="1" name="collecte" [checked]="this.multipleCollectsId == '1'"><label (click)="filterCollect(1);collectId = null;collectName = null;" class="label--collecte" for="1">1</label>
-                          <input class="input__checkbox--collecte" type="radio" id="2" name="collecte" [checked]="this.multipleCollectsId == '2'"><label (click)="filterCollect(2);collectId = null;collectName = null;" class="label--collecte" for="2">2</label>
-                          <input class="input__checkbox--collecte" type="radio" id="3" name="collecte" [checked]="this.multipleCollectsId == '3'"><label (click)="filterCollect(3);collectId = null;collectName = null;" class="label--collecte" for="3">3</label>
-                      </div>
-                      <span *ngIf="!sameDate" class="time">{{ dateBeginRange.string }} - {{ dateEndRange.string }}</span>
-                      <span *ngIf="sameDate" class="time">{{ dateBeginRange.string }}</span>
-                      <span *ngIf="showCosts">
+    <my-navigation></my-navigation>
+    <div class="global-layout-content">
+        <my-titlebar></my-titlebar>
+        <div class="global-layout-main">
+            <div class="back-to-overview" *ngIf="isVisible" (click)="isVisible = false; collectId = 0">
+                <img style="height: 20px" src="images/left-back.png" alt="">
+                <p class="avenir-light font-size-16">
+                    {{"Back_To_Overview" | translate}}
+                </p>
+            </div>
+            <section class="padding-20" [class.hide-element-on-mobile]="isVisible">
+                <h2 *ngIf="openAllocations" class="red">{{openAllocationsMessage}}</h2>
+                <h2>{{"Text_Collectes_Title" | translate}}</h2>
+                <h3>{{"Text_Collectes_Subtitle" | translate}}</h3>
+                <section class="collects-pickdate" id="collectPage">
+                    <p-calendar showIcon="true" inputStyleClass="date-picker-input" [(ngModel)]="dateBegin"
+                        (ngModelChange)="onDateBeginChange($event)" showTime="showTime" dateFormat="dd/mm/yy" [locale]="locale">
+                    </p-calendar>
+                    <p class="till">{{"Text_TotEnMet" | translate}}</p>
+                    <p-calendar showIcon="true" inputStyleClass="date-picker-input" [(ngModel)]="dateEnd"
+                        (ngModelChange)="onDateEndChange($event)" showTime="showTime" dateFormat="dd/mm/yy" [locale]="locale"></p-calendar>
+                </section>
+                <button [class.green-button]="SearchButtonGreen" (click)="filterCollect(0);SearchButtonGreen = true;collectId = null;collectName = null;multipleCollectsId = '0'"
+                    class="search-collect">{{"Text_Collectes_FilterButton" | translate}}</button>
+            </section>
+            <hr *ngIf="isVisible" class="collect-hr" [class.hide-element-on-mobile]="isVisible" />
+            <section class="section-collects" *ngIf="isVisible">
+                <div class="loading-wrapper" [ngClass]="{'show-loading-animation': ShowLoadingAnimation }">
+                    <div class="loader">
+                        <svg class="circular" viewBox="25 25 50 50">
+                            <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="5" stroke-miterlimit="10" />
+                        </svg>
+                    </div>
+                </div>
+                <section class="show-collect">
+                    <time class="mobile-width-100pct">
+                        <div class="input-collect-title">
+                            <input maxlength="50" *ngIf="collectId != null && collectName.length > 0" [size]="inputTitleLength"
+                                name="bjorn" [attr.placeholder]="'Placeholder_Offering_Name' | translate" type="text"
+                                [(ngModel)]="collectName" />
+                            <input maxlength="50" *ngIf="collectId == null" name="bjorn" [attr.placeholder]="'Placeholder_Offering_Name' | translate"
+                                type="text" [(ngModel)]="collectName" />
+                        </div>
+                        <div class="choose_collecte">
+                            <span style="display:inline-block;padding-right: 5px">{{"Collection" | translate}}</span>
+                            <input class="input__checkbox--collecte" type="radio" id="0" name="collecte" [checked]="this.multipleCollectsId == null || this.multipleCollectsId == '0'"><label
+                                (click)="filterCollect(0);collectId = null;collectName = null;multipleCollectsId = '0'"
+                                class="label--collecte" for="0">{{"All" | translate }}</label>
+                            <input class="input__checkbox--collecte" type="radio" id="1" name="collecte" [checked]="this.multipleCollectsId == '1'"><label
+                                (click)="filterCollect(1);collectId = null;collectName = null;" class="label--collecte"
+                                for="1">1</label>
+                            <input class="input__checkbox--collecte" type="radio" id="2" name="collecte" [checked]="this.multipleCollectsId == '2'"><label
+                                (click)="filterCollect(2);collectId = null;collectName = null;" class="label--collecte"
+                                for="2">2</label>
+                            <input class="input__checkbox--collecte" type="radio" id="3" name="collecte" [checked]="this.multipleCollectsId == '3'"><label
+                                (click)="filterCollect(3);collectId = null;collectName = null;" class="label--collecte"
+                                for="3">3</label>
+                        </div>
+                        <span *ngIf="!sameDate" class="time">{{ dateBeginRange.string }} - {{ dateEndRange.string }}</span>
+                        <span *ngIf="sameDate" class="time">{{ dateBeginRange.string }}</span>
+                        <span *ngIf="showCosts">
 
-            </span>
-                  </time>
-                  <div class="collection-buttons">
-                      <span *ngIf="infoToProcess != undefined && infoProcessed != undefined && infoCancelledByUser != undefined && infoCancelledByBank != undefined" >{{ displayValue(totalAmountsCombined) }}</span>
+                        </span>
+                    </time>
+                    <div class="collection-buttons">
+                        <span *ngIf="infoToProcess != undefined && infoProcessed != undefined && infoCancelledByUser != undefined && infoCancelledByBank != undefined">{{
+                            displayValue(totalAmountsCombined) }}</span>
 
-                      <button class="icon" [class.fill-green]="showCosts == true" (click)="showCosts = !showCosts" [disabled]="totalAmountsCombined == 0" >
+                        <button class="icon" [class.fill-green]="showCosts == true" (click)="showCosts = !showCosts"
+                            [disabled]="totalAmountsCombined == 0">
 
-                          <svg width="23px" height="23px" viewBox="8 8 23 23" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                              <!-- Generator: Sketch 40.3 (33839) - http://www.bohemiancoding.com/sketch -->
-                              <desc>Created with Sketch.</desc>
-                              <defs></defs>
-                              <path  d="M9.00761688,21.0025814 C9.53265354,26.5888828 14.2352667,30.9603199 19.9588837,30.9603199 C22.6363805,30.9603199 25.090446,30.0036964 26.9979399,28.4135896 L19.5869317,21.0025814 L9.00761688,21.0025814 Z M9,19.0025814 C9.45855668,13.6859391 13.6990295,9.4505879 19.0179464,9 L19.0179464,19.0018685 C19.0177045,19.0021045 19.0174628,19.0023406 19.0172212,19.0025769 L9,19.0025814 Z M28.4121534,26.9993761 C30.0022602,25.0918822 30.9588837,22.6378167 30.9588837,19.9603199 C30.9588837,14.2424422 26.5962091,9.54352172 21.0179464,9.01064508 L21.0179464,19.5461063 C21.0179464,19.5653854 21.0174008,19.5845372 21.0163242,19.6035469 L28.4121534,26.9993761 Z" id="Combined-Shape" stroke="none" fill="#FFFFFF " fill-rule="evenodd"></path>
-                          </svg>
-                      </button>
-                      <button class="icon delete-btn" (click)="deleteCollect(collectId)" [disabled]="collectId == null">
-                          <svg  width="21px" height="23px" viewBox="9 9 21 23" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                              <!-- Generator: Sketch 40.3 (33839) - http://www.bohemiancoding.com/sketch -->
-                              <desc>Created with Sketch.</desc>
-                              <defs></defs>
-                              <path d="M10.1148951,11 C10.1148951,11 9.59091014,11 9.59090909,12 C9.59090909,13 10.1148951,13 10.1148951,13 L28.9305595,13 C28.9305595,13 29.4545455,13 29.4545455,12 C29.4545455,11 28.9305595,11 28.9305595,11 L10.1148951,11 L10.1148951,11 Z M10.6089257,15 L28.381653,15 L26.2907439,31 L12.6998348,31 L10.6089257,15 Z" id="editor-trash-delete-recycle-bin-glyph" stroke="none" fill="#FFFFFF " fill-rule="evenodd"></path>
-                              <path d="M22,11.5 C22,10.1192881 20.8807119,9 19.5,9 C18.1192881,9 17,10.1192881 17,11.5 C17,12.8807119 22,12.8807119 22,11.5 Z" id="Oval-5" stroke="none" fill="#FFFFFF " fill-rule="evenodd"></path>
-                          </svg>
-                      </button>
-                      <button (click)="saveCollect()" class="search-collect save-collect" [disabled]="!this.collectName || this.collectName.length == 0 || this.collectId != null">{{"Text_Collectes_SaveButton" | translate}}</button>
-                  </div>
+                            <svg width="23px" height="23px" viewBox="8 8 23 23" version="1.1" xmlns="http://www.w3.org/2000/svg"
+                                xmlns:xlink="http://www.w3.org/1999/xlink">
+                                <!-- Generator: Sketch 40.3 (33839) - http://www.bohemiancoding.com/sketch -->
+                                <desc>Created with Sketch.</desc>
+                                <defs></defs>
+                                <path d="M9.00761688,21.0025814 C9.53265354,26.5888828 14.2352667,30.9603199 19.9588837,30.9603199 C22.6363805,30.9603199 25.090446,30.0036964 26.9979399,28.4135896 L19.5869317,21.0025814 L9.00761688,21.0025814 Z M9,19.0025814 C9.45855668,13.6859391 13.6990295,9.4505879 19.0179464,9 L19.0179464,19.0018685 C19.0177045,19.0021045 19.0174628,19.0023406 19.0172212,19.0025769 L9,19.0025814 Z M28.4121534,26.9993761 C30.0022602,25.0918822 30.9588837,22.6378167 30.9588837,19.9603199 C30.9588837,14.2424422 26.5962091,9.54352172 21.0179464,9.01064508 L21.0179464,19.5461063 C21.0179464,19.5653854 21.0174008,19.5845372 21.0163242,19.6035469 L28.4121534,26.9993761 Z"
+                                    id="Combined-Shape" stroke="none" fill="#FFFFFF " fill-rule="evenodd"></path>
+                            </svg>
+                        </button>
+                        <button class="icon delete-btn" (click)="deleteCollect(collectId)" [disabled]="collectId == null">
+                            <svg width="21px" height="23px" viewBox="9 9 21 23" version="1.1" xmlns="http://www.w3.org/2000/svg"
+                                xmlns:xlink="http://www.w3.org/1999/xlink">
+                                <!-- Generator: Sketch 40.3 (33839) - http://www.bohemiancoding.com/sketch -->
+                                <desc>Created with Sketch.</desc>
+                                <defs></defs>
+                                <path d="M10.1148951,11 C10.1148951,11 9.59091014,11 9.59090909,12 C9.59090909,13 10.1148951,13 10.1148951,13 L28.9305595,13 C28.9305595,13 29.4545455,13 29.4545455,12 C29.4545455,11 28.9305595,11 28.9305595,11 L10.1148951,11 L10.1148951,11 Z M10.6089257,15 L28.381653,15 L26.2907439,31 L12.6998348,31 L10.6089257,15 Z"
+                                    id="editor-trash-delete-recycle-bin-glyph" stroke="none" fill="#FFFFFF " fill-rule="evenodd"></path>
+                                <path d="M22,11.5 C22,10.1192881 20.8807119,9 19.5,9 C18.1192881,9 17,10.1192881 17,11.5 C17,12.8807119 22,12.8807119 22,11.5 Z"
+                                    id="Oval-5" stroke="none" fill="#FFFFFF " fill-rule="evenodd"></path>
+                            </svg>
+                        </button>
+                        <button (click)="saveCollect()" class="search-collect save-collect" [disabled]="!this.collectName || this.collectName.length == 0 || this.collectId != null">{{"Text_Collectes_SaveButton"
+                            | translate}}</button>
+                    </div>
 
-              </section>
+                </section>
 
-              <div class="withholding-overview" *ngIf="showCosts">
-                  <div class="graph-section">
-                      <div class="graph" [class.hideElement]="totalAmountsCombined == 0">
-                          <canvas baseChart
-                                  [colors]="chartColors"
-                                  [options]="pieChartOptions"
-                                  [data]="pieChartData"
-                                  [chartType]="pieChartType"
-                                  [labels]="pieChartLabels"
-                                  (chartHover)="chartHovered($event)"
-                                  (chartClick)="chartClicked($event)"></canvas>
+                <div class="withholding-overview" *ngIf="showCosts">
+                    <div class="graph-section">
+                        <div class="graph" [class.hideElement]="totalAmountsCombined == 0">
+                            <canvas baseChart [colors]="chartColors" [options]="pieChartOptions" [data]="pieChartData"
+                                [chartType]="pieChartType" [labels]="pieChartLabels" (chartHover)="chartHovered($event)"
+                                (chartClick)="chartClicked($event)"></canvas>
 
-                      </div>
-                      <div style="width: 100%;">
-                          <table class="graph-overview">
-                              <tr [class.selectRow]="selectedIndex == 0" *ngIf="infoToProcess != undefined">
-                                  <td><span class="rectangle blue"></span></td>
-                                  <td>{{ "Processing" | translate }}</td>
-                                  <td><img class="personal-icon" src="images/personal-blue.png" alt=""></td>
-                                  <td>{{ infoToProcess.numberOfUsers }}</td>
-                                  <td class="cell-amount">{{ displayValue(infoToProcess.totalAmount) }}</td>
-                                  <td class="align-right">
-                <span class="tooltip">
-                  <button class="info-button"><img class="" src="/images/blueinfo.png" alt=""></button>
-                  <span class="tooltiptext-alter">
-                                 {{"ToProcessExplanation" | translate }}
-              </span>
-                </span></td>
-                              </tr>
-                              <tr [class.selectRow]="selectedIndex == 1" *ngIf="infoProcessed != undefined">
-                                  <td><span class="rectangle green"></span></td>
-                                  <td>{{ "Processed" | translate }}</td>
-                                  <td><img class="personal-icon" src="images/personal-green.png" alt=""></td>
-                                  <td>{{ infoProcessed.numberOfUsers }}</td>
-                                  <td class="cell-amount">{{ displayValue(infoProcessed.totalAmount) }}</td>
-                                  <td class="align-right">
-                <span class="tooltip">
-                  <button class="info-button"><img class="" src="/images/blueinfo.png" alt=""></button>
-                  <span class="tooltiptext-alter">
-                                 {{"ProcessedExplanation" | translate }}
-              </span>
-                </span></td>
-                              </tr>
-                              <tr [class.selectRow]="selectedIndex == 2" *ngIf="infoCancelledByBank != undefined">
-                                  <td><span class="rectangle red"></span></td>
-                                  <td>{{ "CancelledByBank" | translate }}</td>
-                                  <td><img class="personal-icon" src="images/personal-red.png" alt=""></td>
-                                  <td>{{ infoCancelledByBank.numberOfUsers }}</td>
-                                  <td class="cell-amount">{{ displayValue(infoCancelledByBank.totalAmount) }}</td>
-                                  <td class="align-right">
-                <span class="tooltip">
-                  <button class="info-button"><img class="" src="/images/blueinfo.png" alt=""></button>
-                  <span class="tooltiptext-alter">
-                                 {{"CancelByBankExplanation" | translate }}
-              </span>
-                </span></td>
-                              </tr>
-                              <tr [class.selectRow]="selectedIndex == 3" *ngIf="infoCancelledByUser != undefined">
-                                  <td><span class="rectangle grey"></span></td>
-                                  <td>{{ "CancelledByUser" | translate }}</td>
-                                  <td><img class="personal-icon" src="images/personal-grey.png" alt=""></td>
-                                  <td>{{ infoCancelledByUser.numberOfUsers }}</td>
-                                  <td class="cell-amount">{{ displayValue(infoCancelledByUser.totalAmount) }}</td>
-                                  <td class="align-right">
-                <span class="tooltip">
-                  <button class="info-button"><img class="" src="/images/blueinfo.png" alt=""></button>
-                  <span class="tooltiptext-alter">
-                                 {{"CancelByUserExplanation" | translate }}
-              </span>
-                </span></td>
-                              </tr>
-                          </table>
-                      </div>
+                        </div>
+                        <div style="width: 100%;">
+                            <table class="graph-overview">
+                                <tr [class.selectRow]="selectedIndex == 0" *ngIf="infoToProcess != undefined">
+                                    <td><span class="rectangle blue"></span></td>
+                                    <td>{{ "Processing" | translate }}</td>
+                                    <td><img class="personal-icon" src="images/personal-blue.png" alt=""></td>
+                                    <td>{{ infoToProcess.numberOfUsers }}</td>
+                                    <td class="cell-amount">{{ displayValue(infoToProcess.totalAmount) }}</td>
+                                    <td class="align-right">
+                                        <span class="tooltip">
+                                            <button class="info-button"><img class="" src="/images/blueinfo.png" alt=""></button>
+                                            <span class="tooltiptext-alter">{{ toProcessExplanation }}</span>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr [class.selectRow]="selectedIndex == 1" *ngIf="infoProcessed != undefined">
+                                    <td><span class="rectangle green"></span></td>
+                                    <td>{{ "Processed" | translate }}</td>
+                                    <td><img class="personal-icon" src="images/personal-green.png" alt=""></td>
+                                    <td>{{ infoProcessed.numberOfUsers }}</td>
+                                    <td class="cell-amount">{{ displayValue(infoProcessed.totalAmount) }}</td>
+                                    <td class="align-right">
+                                        <span class="tooltip">
+                                            <button class="info-button"><img class="" src="/images/blueinfo.png" alt=""></button>
+                                            <span class="tooltiptext-alter">
+                                                {{"ProcessedExplanation" | translate }}
+                                            </span>
+                                        </span></td>
+                                </tr>
+                                <tr [class.selectRow]="selectedIndex == 2" *ngIf="infoCancelledByBank != undefined">
+                                    <td><span class="rectangle red"></span></td>
+                                    <td>{{ "CancelledByBank" | translate }}</td>
+                                    <td><img class="personal-icon" src="images/personal-red.png" alt=""></td>
+                                    <td>{{ infoCancelledByBank.numberOfUsers }}</td>
+                                    <td class="cell-amount">{{ displayValue(infoCancelledByBank.totalAmount) }}</td>
+                                    <td class="align-right">
+                                        <span class="tooltip">
+                                            <button class="info-button"><img class="" src="/images/blueinfo.png" alt=""></button>
+                                            <span class="tooltiptext-alter">
+                                                {{"CancelByBankExplanation" | translate }}
+                                            </span>
+                                        </span></td>
+                                </tr>
+                                <tr [class.selectRow]="selectedIndex == 3" *ngIf="infoCancelledByUser != undefined">
+                                    <td><span class="rectangle grey"></span></td>
+                                    <td>{{ "CancelledByUser" | translate }}</td>
+                                    <td><img class="personal-icon" src="images/personal-grey.png" alt=""></td>
+                                    <td>{{ infoCancelledByUser.numberOfUsers }}</td>
+                                    <td class="cell-amount">{{ displayValue(infoCancelledByUser.totalAmount) }}</td>
+                                    <td class="align-right">
+                                        <span class="tooltip">
+                                            <button class="info-button"><img class="" src="/images/blueinfo.png" alt=""></button>
+                                            <span class="tooltiptext-alter">
+                                                {{"CancelByUserExplanation" | translate }}
+                                            </span>
+                                        </span></td>
+                                </tr>
+                            </table>
+                        </div>
 
-                  </div>
-              </div>
-          </section>
-          <section class="saved-collects">
-              <h2>{{"Text_Saved_collectes" | translate}}</h2>
-              <h3 *ngIf="savedCollects.length == 0">{{"Text_NoSavedCollectes" | translate}}</h3>
+                    </div>
+                </div>
+            </section>
+            <section class="saved-collects">
+                <h2>{{"Text_Saved_collectes" | translate}}</h2>
+                <h3 *ngIf="savedCollects.length == 0">{{"Text_NoSavedCollectes" | translate}}</h3>
 
-              <section class="collects-list" *ngIf="savedCollects.length > 0">
-                  <section *ngFor="let collect of savedCollects | reverse" class="show-collect" (click)="selectCollect(collect)">
-                      <time>
-                          <span class="date">{{collect.Name}}</span>
-                          <span *ngIf="collect.BeginDateString == collect.EndDateString" class="time">{{collect.BeginDateString}}</span>
-                          <span *ngIf="collect.BeginDateString != collect.EndDateString" class="time">{{collect.BeginDateString}} - {{collect.EndDateString}}</span>
-                      </time>
-                      <div class="arrow-right" [class.green-arrow]="collectId == collect.Id"></div>
-                  </section>
-              </section>
+                <section class="collects-list" *ngIf="savedCollects.length > 0">
+                    <section *ngFor="let collect of savedCollects | reverse" class="show-collect" (click)="selectCollect(collect)">
+                        <time>
+                            <span class="date">{{collect.Name}}</span>
+                            <span *ngIf="collect.BeginDateString == collect.EndDateString" class="time">{{collect.BeginDateString}}</span>
+                            <span *ngIf="collect.BeginDateString != collect.EndDateString" class="time">{{collect.BeginDateString}}
+                                - {{collect.EndDateString}}</span>
+                        </time>
+                        <div class="arrow-right" [class.green-arrow]="collectId == collect.Id"></div>
+                    </section>
+                </section>
 
-          </section>
-      </div>
-    <my-footer></my-footer>
-  </div>
+            </section>
+        </div>
+        <my-footer></my-footer>
+    </div>
 
 
 </div>
-
