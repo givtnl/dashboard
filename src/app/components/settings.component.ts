@@ -1,6 +1,7 @@
 import {DataService} from "../services/data.service";
 import {Component, OnInit} from "@angular/core";
 import {LangChangeEvent, TranslateService} from "ng2-translate";
+import {UserService} from "../services/user.service";
 
 @Component({
 	selector: "settings",
@@ -12,6 +13,8 @@ export class SettingsComponent implements OnInit {
 	private _firstDay: number = 0;
 	private days = [];
 	public isSettingsDetailVisible = false;
+	public isDeepLinkVisible = false;
+	public currentCollectGroup;
 	get firstDay(): number {
 		return this._firstDay;
 	}
@@ -35,8 +38,9 @@ export class SettingsComponent implements OnInit {
 
 	}
 
-	constructor(private dataService: DataService, private translateService: TranslateService) {
+	constructor(private dataService: DataService, private translateService: TranslateService, private userService: UserService) {
 		this.loadTerms();
+		this.currentCollectGroup = userService.CurrentCollectGroup;
 	}
 
 	private loadTerms() {
@@ -57,5 +61,10 @@ export class SettingsComponent implements OnInit {
 	goBackToSettings() {
 		this.isSettingsDetailVisible = false;
 	}
-
+    copyNamespace(){
+        let copyText = document.getElementById("cg-namespace") as HTMLInputElement;
+        copyText.focus();
+        copyText.select();
+        document.execCommand("Copy");
+    }
 }
