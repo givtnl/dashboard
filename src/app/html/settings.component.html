@@ -86,10 +86,20 @@
                 </div>
             </div>
             <div class="setting" *ngIf="isDeepLinkVisible" [class.settings-pane-hidden]="!isDeepLinkVisible">
-                <span class="namespace-right">
-                    <input id="cg-namespace" class="nav-title-heading nav-heading-namespace" type="text" value="{{ currentCollectGroup.Namespace }}" readonly />
-                    <i class="fa fa-copy fa-lg copy-ns-icon" (click)="copyNamespace()"></i>
-                </span>
+                <p class="text deeplink-span">
+                    De namespace van {{currentCollectGroup.Name}}:
+                    <input id="cg-namespace" class="deeplink-input text" type="text" value="{{ currentCollectGroup.Namespace }}" readonly />
+                    <i class="fa fa-copy copy-ns-icon" (click)="copyNamespace()"></i>
+                </p>
+                <p class="text">
+                    Stuur ons een mailtje naar support@givtapp.net en vraag ons om een medium id voor de koppeling met Givt
+                </p>
+                <p class="text">
+                    Download <a href="#">hier</a> de Givt knop. Deze is verplicht te gebruiken en mag niet aangepast worden.
+                </p>
+                <p class="text">
+                    Download <a href="#">hier</a> de handleiding voor ontwikkelaars.
+                </p>
             </div>
         </div>
         <my-footer></my-footer>
