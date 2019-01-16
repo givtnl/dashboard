@@ -2,6 +2,7 @@ import {DataService} from "../services/data.service";
 import {Component, OnInit} from "@angular/core";
 import {LangChangeEvent, TranslateService} from "ng2-translate";
 import {UserService} from "../services/user.service";
+import {HtmlParser} from "@angular/compiler";
 
 @Component({
 	selector: "settings",
@@ -15,6 +16,9 @@ export class SettingsComponent implements OnInit {
 	public isSettingsDetailVisible = false;
 	public isDeepLinkVisible = false;
 	public currentCollectGroup;
+	requestMediumIdTitle: String;
+	requestMediumIdBody: String;
+	requestMediumIdManual: String;
 	get firstDay(): number {
 		return this._firstDay;
 	}
@@ -34,6 +38,7 @@ export class SettingsComponent implements OnInit {
 
 		this.translateService.onLangChange.subscribe((event: LangChangeEvent) => {
 			this.loadTerms();
+			this.loadConnectWithGivt();
 		});
 
 	}
@@ -41,6 +46,8 @@ export class SettingsComponent implements OnInit {
 	constructor(private dataService: DataService, private translateService: TranslateService, private userService: UserService) {
 		this.loadTerms();
 		this.currentCollectGroup = userService.CurrentCollectGroup;
+		this.loadConnectWithGivt();
+
 	}
 
 	private loadTerms() {
@@ -53,6 +60,17 @@ export class SettingsComponent implements OnInit {
 		this.days.push(this.translateService.instant("Friday").toString());
 		this.days.push(this.translateService.instant("Saturday").toString());
 	}
+
+	private loadConnectWithGivt(){
+        this.requestMediumIdTitle = this.translateService.instant("RequestMediumIdTitle").toString();
+        this.requestMediumIdTitle = this.requestMediumIdTitle.replace("{0}", this.currentCollectGroup.Name);
+        this.requestMediumIdTitle = this.requestMediumIdTitle.replace("{1}", this.currentCollectGroup.Namespace);
+
+        this.requestMediumIdBody = this.translateService.instant("RequestMediumIdBody");
+
+        this.requestMediumIdManual = this.translateService.instant("RequestMediumIdManual");
+
+    }
 
 	goBack() {
 		window.history.back();
