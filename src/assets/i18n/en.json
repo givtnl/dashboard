@@ -180,7 +180,8 @@
     },
     "CsvDownload": "Download csv",
     "SingleOpenAllocationMessage": "There are still transactions on {0} that are not allocated to a collection.\nPlease go to the tab 'Allocate' to resolve this issue.",
-    "RequestMediumIdTitle": "The namespace of {0}:",
-    "RequestMediumIdBody": "Send us an email to <a href='mailto:support@givtapp.net'>support@givtapp.net</a> and request a medium id to connect an app with Givt",
-    "RequestMediumIdManual": "Download the manual for developers <a href='assets/Manual-Deeplink-Givt.zip'>here</a>."
+    "RequestMediumIdTitle": "The namespace of {0}:\n",
+    "RequestMediumIdBody": "Send us an email to <a href='mailto:support@givtapp.net'>here</a> and request a medium id to connect an app with Givt",
+    "RequestMediumIdManual": "Download the manual for developers <a href='assets/Manual-Deeplink-Givt.zip'>here</a>.",
+    "GivtWithGivtPreferenceTitle": "Integration with Givt"
 }
