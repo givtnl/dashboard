@@ -30,7 +30,6 @@ export class SettingsComponent implements OnInit {
 
 	ngOnInit() {
 		window.scrollTo(0,0);
-		console.log("init settings");
 		let localDay = this.dataService.getData("FirstDayOfWeek");
 		if(!isNaN(localDay)) {
 			this.firstDay = localDay;
@@ -65,11 +64,8 @@ export class SettingsComponent implements OnInit {
         this.requestMediumIdTitle = this.translateService.instant("RequestMediumIdTitle").toString();
         this.requestMediumIdTitle = this.requestMediumIdTitle.replace("{0}", this.currentCollectGroup.Name);
         this.requestMediumIdTitle = this.requestMediumIdTitle.replace("{1}", this.currentCollectGroup.Namespace);
-
         this.requestMediumIdBody = this.translateService.instant("RequestMediumIdBody");
-
         this.requestMediumIdManual = this.translateService.instant("RequestMediumIdManual");
-
     }
 
 	goBack() {
