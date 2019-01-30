@@ -181,6 +181,7 @@
     "CsvDownload": "CSV downloaden",
     "SingleOpenAllocationMessage": "Er zijn nog transacties op {0} die niet toegewezen zijn aan een collecte.\nGa naar de pagina 'Toewijzen' om dit in orde te maken.",
     "RequestMediumIdTitle": "De namespace van {0}:",
-    "RequestMediumIdBody": "Stuur ons een mailtje naar <a href='mailto:support@givtapp.net'>support@givtapp.net</a> en vraag ons naar een medium id voor de koppeling vanuit een andere app naar Givt",
-    "RequestMediumIdManual": "Download <a href='assets/Manual-Deeplink-Givt.zip'>hier</a> de handleiding voor ontwikkelaars"
+    "RequestMediumIdBody": "Stuur ons een mailtje naar <a href='mailto:support@givtapp.net'>hier</a> en vraag ons naar een medium id voor de koppeling vanuit een andere app naar Givt",
+    "RequestMediumIdManual": "Download <a href='assets/Manual-Deeplink-Givt.zip'>hier</a> de handleiding voor ontwikkelaars",
+    "GivtWithGivtPreferenceTitle": "Koppeling met Givt"
 }
