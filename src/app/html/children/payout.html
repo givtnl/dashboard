@@ -83,7 +83,8 @@
       </ng-container>
 
       <tr class="collect__table__footer" style="font-size: 20px;font-family: Avenir_Medium">
-        <td colspan="2" style="text-align:left;" class="special-last-cell" >{{"TermCosts" | translate}} ({{"INCL_BTW" | translate}})</td>
+        <td *ngIf="paymentType == 1" colspan="2" style="text-align:left;" class="special-last-cell" >{{"TermCosts" | translate}} ({{"INCL_BTW" | translate}})</td>
+        <td *ngIf="paymentType == 2" colspan="2" style="text-align:left;" class="special-last-cell" >{{"TermCosts" | translate}}</td>
         <td style="text-align:right;" class="special-last-cell" >- {{childData.TotaalKosten}}</td>
       </tr>
       <tr  style="font-family: Avenir_Black; font-size: 22px;">
@@ -179,7 +180,7 @@
             <td class="column-spacing-40"></td>
             <td></td>
           </tr>
-          <tr>
+          <tr *ngIf="paymentType === 1">
             <td class="heavy">{{ "BTW_EXCL" | translate }}</td>
             <td class="column-spacing-30"></td>
             <td class="heavy">{{childData.T_Total_Excl}}</td>
@@ -187,7 +188,7 @@
             <td class="more-info tooltip">
             </td>
           </tr>
-          <tr class="border-bottom">
+          <tr *ngIf="paymentType === 1" class="border-bottom">
             <td class="heavy">{{"BTW_PERCENT" | translate}}</td>
             <td class="column-spacing-30"></td>
             <td class="heavy">{{childData.T_BTW}} </td>
@@ -196,7 +197,8 @@
             </td>
           </tr>
           <tr>
-            <td class="heavy total">{{"BTW_INCL" | translate}}</td>
+            <td *ngIf="paymentType === 1" class="heavy total">{{"BTW_INCL" | translate}}</td>
+            <td *ngIf="paymentType === 2" class="heavy total">Total</td>
             <td class="column-spacing-30"></td>
             <td class="heavy total">{{childData.T_Total_Incl}}</td>
             <td class="column-spacing-40"></td>
@@ -212,20 +214,21 @@
       <div class="stat-calc" *ngIf="2 == childData.activeRow">
         <table>
           <tr>
-            <td>{{"Text_Deduction_Type1" | translate}}</td>
+            <td *ngIf="paymentType === 1" >{{"Text_Deduction_Type1" | translate}}</td>
+            <td *ngIf="paymentType === 2" >Storno fee</td>
             <td class="column-spacing-30"></td>
             <td>{{childData.StorneringsKostenT1}}</td>
             <td class="column-spacing-40"></td>
             <td>{{childData.Text_Info_Type1}}</td>
           </tr>
-          <tr class="border-bottom">
+          <tr *ngIf="paymentType === 1" class="border-bottom">
             <td>{{"Text_Deduction_Type2" | translate}}</td>
             <td class="column-spacing-30"></td>
             <td>{{childData.StorneringsKostenT2}}</td>
             <td class="column-spacing-40"></td>
             <td class="big-cell">{{childData.Text_Info_Type2}}</td>
           </tr>
-          <tr>
+          <tr *ngIf="paymentType === 1">
             <td class="heavy">{{ "BTW_EXCL" | translate }}</td>
             <td class="column-spacing-30"></td>
             <td class="heavy">{{childData.SK_Total_Excl}}</td>
@@ -233,7 +236,7 @@
             <td class="more-info tooltip">
             </td>
           </tr>
-          <tr class="border-bottom">
+          <tr *ngIf="paymentType === 1" class="border-bottom">
             <td class="heavy">{{"BTW_PERCENT" | translate}}</td>
             <td class="column-spacing-30"></td>
             <td class="heavy">{{childData.SK_BTW}}</td>
@@ -242,7 +245,8 @@
             </td>
           </tr>
           <tr>
-            <td class="heavy total">{{"BTW_INCL" | translate}}</td>
+            <td *ngIf="paymentType === 1" class="heavy total">{{"BTW_INCL" | translate}}</td>
+            <td *ngIf="paymentType === 2" class="heavy total">Total</td>
             <td class="column-spacing-30"></td>
             <td class="heavy total">{{childData.SK_Total_Incl}}</td>
             <td class="column-spacing-40"></td>
@@ -258,7 +262,7 @@
 
       <div class="stat-calc" *ngIf="3 == childData.activeRow">
         <table>
-          <tr>
+          <tr *ngIf="paymentType === 1">
             <td class="heavy">{{ "BTW_EXCL" | translate }}</td>
             <td class="column-spacing-30"></td>
             <td class="heavy">{{childData.G_Total_Excl}}</td>
@@ -266,7 +270,7 @@
             <td class="more-info tooltip">
             </td>
           </tr>
-          <tr class="border-bottom">
+          <tr *ngIf="paymentType === 1" class="border-bottom">
             <td class="heavy">{{"BTW_PERCENT" | translate}}</td>
             <td class="column-spacing-30"></td>
             <td class="heavy">{{childData.G_BTW}}</td>
@@ -275,7 +279,8 @@
             </td>
           </tr>
           <tr>
-            <td class="heavy total">{{"BTW_INCL" | translate}}</td>
+            <td *ngIf="paymentType === 1" class="heavy total">{{"BTW_INCL" | translate}}</td>
+            <td *ngIf="paymentType === 2" class="heavy total">Total</td>
             <td class="column-spacing-30"></td>
             <td class="heavy total">{{childData.G_Total_Incl}}</td>
             <td class="column-spacing-40"></td>
