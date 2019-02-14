@@ -183,5 +183,6 @@
     "RequestMediumIdTitle": "The namespace of {0}:\n",
     "RequestMediumIdBody": "Send us an email at <a href='mailto:support@givtapp.net'>support@givtapp.net</a> with the namespace for which you want an integration and request a medium id to connect an app with Givt.",
     "RequestMediumIdManual": "Download the manual for developers <a href='assets/Manual-Deeplink-Givt.zip'>here</a>.",
-    "GivtWithGivtPreferenceTitle": "Integration with Givt"
+    "GivtWithGivtPreferenceTitle": "Integration with Givt",
+    "Text_TransactionCost_MoreInfo_GB": "These costs are charged by Smart Debit for handling the transactions."
 }
