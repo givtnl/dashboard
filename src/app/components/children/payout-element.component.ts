@@ -15,7 +15,7 @@ import { PaymentType } from "../../models/paymentType";
 
 export class PayoutComponent implements OnInit {
     ngOnInit(): void {
-        this.doSomeFancyStuff();
+        this.doSomeFancyStuff(this.paymentType);
     }
 
     displayValue(x) {
@@ -42,8 +42,8 @@ export class PayoutComponent implements OnInit {
     constructor(private apiClient: ApiClientService, private translate: TranslateService, private datePipe: ISODatePipe, private userService: UserService) {
         this.isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
         this.name = "Testen";
-        this.paymentType = this.userService.CurrentCollectGroup.PaymentType;
-        this.translate.get('Text_TransactionCost_MoreInfo').subscribe((res: string) => {
+        this.paymentType = this.userService.CurrentCollectGroup.PaymentType; console.log(this.paymentType)
+        this.translate.get(this.paymentType === PaymentType.SEPA ? 'Text_TransactionCost_MoreInfo' : 'Text_TransactionCost_MoreInfo_GB').subscribe((res: string) => {
             this.moreInfoToolTip = res;
         });
         this.translate.get('Text_Stornos_MoreInfo').subscribe((res: string) => {
@@ -51,7 +51,7 @@ export class PayoutComponent implements OnInit {
         });
         if (this.paymentType === PaymentType.BACS) {
             this.transactionCost = 0.1;
-            this.mandateCost = 0.125;
+            this.mandateCost = 0;
             this.moreInfoToolTip = this.moreInfoToolTip.replace('SlimPay', 'SmartDebit');
             this.moreInfoStornos = this.moreInfoStornos.replace('SlimPay', 'SmartDebit');
         } else if (this.paymentType === PaymentType.SEPA) {
@@ -63,14 +63,15 @@ export class PayoutComponent implements OnInit {
 
     }
 
-    doSomeFancyStuff() {
+    doSomeFancyStuff(paymentType: PaymentType) {
         this.dtBegin = new Date(this.childData.BeginDate);
         this.dtEnd = new Date(this.childData.EndDate);
         let x = this.childData;
         x.BeginDate = this.datePipe.transform(new Date(this.childData.BeginDate), "d MMMM y");
         x.EndDate = this.datePipe.transform(new Date(this.childData.EndDate), "d MMMM y");
 
-        x.Mandaatkosten = x.MandateCost;
+        paymentType === PaymentType.SEPA ? x.Mandaatkosten = x.MandateCost : x.Mandaatkosten = 0;
+
         x.Transactiekosten = x.TransactionCost;
         x.Uitbetalingskosten = x.PayoutCost;
         x.T_Total_Excl = x.Mandaatkosten + x.Transactiekosten + x.Uitbetalingskosten;
@@ -87,17 +88,18 @@ export class PayoutComponent implements OnInit {
 
         this.pledgedAmount = x.ToegezegdBedrag;
 
-        x.Mandaatkosten = this.displayValue(x.Mandaatkosten);
+        paymentType === PaymentType.SEPA ? x.Mandaatkosten = this.displayValue(x.Mandaatkosten) : x.Mandaatkosten = 0;
         x.Transactiekosten = this.displayValue(x.Transactiekosten);
         x.UitbetalingskostenIncl = this.displayValue(x.PayoutCost + x.PayoutCostTaxes);
         x.UitbetalingskostenFormatted = this.displayValue(x.Uitbetalingskosten);
         x.T_Total_Excl = this.displayValue(x.T_Total_Excl);
         x.T_BTW = this.displayValue(x.T_BTW);
         x.T_Total_Incl = this.displayValue(x.T_Total_Incl);
-
+        
+        // storno kost 
         x.StorneringsKostenT1 = this.displayValue(x.RTransactionT1Cost);
-        x.StorneringsKostenT2 = this.displayValue(x.RTransactionT2Cost);
-        x.SK_Total_Excl = this.displayValue(x.RTransactionT1Cost + x.RTransactionT2Cost);
+        paymentType === PaymentType.SEPA ? x.StorneringsKostenT2 = this.displayValue(x.RTransactionT2Cost) : x.StorneringsKostenT2 = 0;
+        paymentType === PaymentType.SEPA ? x.SK_Total_Excl = this.displayValue(x.RTransactionT1Cost + x.RTransactionT2Cost) : x.SK_Total_Excl = this.displayValue(x.RTransactionT1Cost);
         x.SK_BTW = this.displayValue(x.RTransactionTaxes);
         x.SK_Total_Incl = this.displayValue(x.SK_Total_Incl);
 
@@ -116,9 +118,11 @@ export class PayoutComponent implements OnInit {
         x.hiddenAllocations = true;
         x.TotalPaidText = this.displayValue(x.TotalPaid);
 
-        this.translate.get('Text_Info_Mandate', { 0: x.MandateCostCount, 2: (this.isSafari ? (this.mandateCost).toFixed(3) : (this.mandateCost).toLocaleString(navigator.language, { minimumFractionDigits: 3, maximumFractionDigits: 3 })), 1: this.userService.currencySymbol }).subscribe((res: string) => {
-            x.Text_Info_Mandate = res;
-        });
+        if(paymentType === PaymentType.SEPA){
+            this.translate.get('Text_Info_Mandate', { 0: x.MandateCostCount, 2: (this.isSafari ? (this.mandateCost).toFixed(3) : (this.mandateCost).toLocaleString(navigator.language, { minimumFractionDigits: 3, maximumFractionDigits: 3 })), 1: this.userService.currencySymbol }).subscribe((res: string) => {
+                x.Text_Info_Mandate = res;
+            });
+        }
 
         this.translate.get('Text_Info_Transaction', { 0: x.TransactionCount, 2: (this.isSafari ? (this.transactionCost).toFixed(2) : (this.transactionCost).toLocaleString(navigator.language, { minimumFractionDigits: 2, maximumFractionDigits: 2 })), 1: this.userService.currencySymbol }).subscribe((res: string) => {
             x.Text_Info_Transaction = res;
@@ -133,9 +137,11 @@ export class PayoutComponent implements OnInit {
             x.Text_Info_Type1 = res;
         });
 
-        this.translate.get('Text_Info_Type2', { 0: x.RTransactionT2Count, 2: (this.isSafari ? (1.20).toFixed(2) : (1.20).toLocaleString(navigator.language, { minimumFractionDigits: 2, maximumFractionDigits: 2 })), 1: this.userService.currencySymbol }).subscribe((res: string) => {
-            x.Text_Info_Type2 = res;
-        });
+        if(paymentType === PaymentType.SEPA){
+            this.translate.get('Text_Info_Type2', { 0: x.RTransactionT2Count, 2: (this.isSafari ? (1.20).toFixed(2) : (1.20).toLocaleString(navigator.language, { minimumFractionDigits: 2, maximumFractionDigits: 2 })), 1: this.userService.currencySymbol }).subscribe((res: string) => {
+                x.Text_Info_Type2 = res;
+            });
+        }
 
         x.activeRow = 1;
     }

@@ -130,7 +130,7 @@
             <td>{{"Text_Transaction_Fee" | translate}}</td>
             <td>{{childData.T_Total_Incl}}</td>
           </tr>
-          <tr (click)="selectRow(childData, 2)" class="row" [class.active-row]="2 == childData.activeRow">
+          <tr *ngIf="paymentType === 1" (click)="selectRow(childData, 2)" class="row" [class.active-row]="2 == childData.activeRow">
             <td><i class="fa fa-circle givt-orange" aria-hidden="true"></i></td>
             <td>{{"Text_Stornering_Fee" | translate}}</td>
             <td>{{childData.SK_Total_Incl}}</td>
@@ -149,7 +149,7 @@
       </div>
       <div class="stat-calc alt-stat" *ngIf="1 == childData.activeRow">
         <table>
-          <tr>
+          <tr *ngIf="paymentType === 1">
             <td>{{ "Text_Transaction_Fee_Mandate" | translate}}</td>
             <td class="column-spacing-30"></td>
             <td>{{childData.Mandaatkosten}}</td>
@@ -302,7 +302,7 @@
             <td class="column-spacing-40"></td>
             <td>{{ childData.RTransactionT1Count + childData.RTransactionT2Count}} {{"Stornos" | translate}}</td>
           </tr>
-          <tr>
+          <tr [ngClass]="{'no-bottom-border' : paymentType === 2}">
             <td></td>
             <td class="column-spacing-30"></td>
             <td></td>

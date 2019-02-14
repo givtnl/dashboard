@@ -690,3 +690,7 @@ h3{
     text-decoration: none;
     margin-left: 10px;
   }
+
+  .no-bottom-border{
+    border-bottom: none;
+  }
