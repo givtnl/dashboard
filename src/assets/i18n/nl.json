@@ -183,5 +183,6 @@
     "RequestMediumIdTitle": "De namespace van {0}:",
     "RequestMediumIdBody": "Stuur ons een mailtje naar <a href='mailto:support@givtapp.net'>support@givtapp.net</a> met daarin de namespace waarvoor je een koppeling wil en vraag ons naar een medium id voor de koppeling vanuit een andere app naar Givt.",
     "RequestMediumIdManual": "Download <a href='assets/Manual-Deeplink-Givt.zip'>hier</a> de handleiding voor ontwikkelaars.",
-    "GivtWithGivtPreferenceTitle": "Koppeling met Givt"
+    "GivtWithGivtPreferenceTitle": "Koppeling met Givt",
+    "Text_TransactionCost_MoreInfo_GB": "Dit zijn de kosten die Smart Debit in rekening brengt voor het verwerken van transacties."
 }
