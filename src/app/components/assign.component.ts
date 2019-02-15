@@ -464,7 +464,7 @@ export class AssignComponent implements OnInit {
                     reject();
                     return;
                 } else {
-                    dataAllocations.push({name: collect.allocationName, dtBegin: this.selectedCard.dtBegin.toISOString(), dtEnd: this.selectedCard.dtEnd.toISOString(), CollectId: collect.collectId.trim()});
+                    dataAllocations.push({Name: collect.allocationName, dtBegin: this.selectedCard.dtBegin.toISOString(), dtEnd: this.selectedCard.dtEnd.toISOString(), CollectId: collect.collectId.trim()});
                 }
             })
             this.apiService.postData("v2/Allocations/Allocation", dataAllocations)
@@ -523,7 +523,7 @@ export class AssignComponent implements OnInit {
             
             let allocs = [];
             let alloc = {};
-            alloc["name"] = title;
+            alloc["Name"] = title;
             alloc["dtBegin"] = startTime == null ? this.startTime.toISOString() : startTime;
             alloc["dtEnd"] = endTime == null ? this.endTime.toISOString() : endTime;
             alloc["CollectId"] = collectId.trim();
