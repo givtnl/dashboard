@@ -521,12 +521,14 @@ export class AssignComponent implements OnInit {
                 return;
             }
             
-            let body = {};
-            body["name"] = title;
-            body["dtBegin"] = startTime == null ? this.startTime.toISOString() : startTime;
-            body["dtEnd"] = endTime == null ? this.endTime.toISOString() : endTime;
-            body["CollectId"] = collectId.trim();
-            this.apiService.postData("Allocations/Allocation", body)
+            let allocs = [];
+            let alloc = {};
+            alloc["name"] = title;
+            alloc["dtBegin"] = startTime == null ? this.startTime.toISOString() : startTime;
+            alloc["dtEnd"] = endTime == null ? this.endTime.toISOString() : endTime;
+            alloc["CollectId"] = collectId.trim();
+            allocs.push(alloc);
+            this.apiService.postData("v2/allocations/allocation", alloc)
                 .then(resp => {
                     if (resp.status === 409) {
                         this.toggleError(true, "Je zit met een overlapping");
