@@ -5,6 +5,6 @@
 
 export const environment = {
   production: false,
-  //apiUrl: 'http://192.168.77.110:1699',
+  //apiUrl: 'http://localhost:5000',
   apiUrl: 'https://givtapicoredbg.azurewebsites.net',
 };

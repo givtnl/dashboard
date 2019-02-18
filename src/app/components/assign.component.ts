@@ -447,9 +447,7 @@ export class AssignComponent implements OnInit {
             let allocationIdsToDelete = Array.from(new Set(this.selectedCard.Collects.map(t => t.transactions).map(r => r.map(u => u.AllocationId).filter(f => f !== 0)).reduce((a, b) => a.concat(b)))).join();
             this.apiService.deleteData("v2/Allocations/Allocations/" + allocationIdsToDelete)
             .then(resp => {
-                if(resp["status"] === 200){
-                    this.reloadEvents();
-                }
+                this.reloadEvents();
             });
         })
     }
@@ -469,12 +467,8 @@ export class AssignComponent implements OnInit {
             })
             this.apiService.postData("v2/Allocations/Allocation", dataAllocations)
                 .then(resp => {
-                    if(resp === 200){
-                        this.reloadEvents();
-                        resolve();
-                    } else {
-                        reject();
-                    }
+                    this.reloadEvents();
+                    resolve();
                 })
                 .catch(err => {
                     reject();
@@ -703,10 +697,8 @@ export class AssignComponent implements OnInit {
         this.allocateWeekName = "";
         this.filteredUsedTags = [];
         this.apiService.postData("v2/Allocations/Allocation", dataAllocations)
-                .then(resp => {
-                    if(resp === 200){
-                        this.reloadEvents();
-                    } 
+                .then(resp => {                
+                    this.reloadEvents();
                 })
                 .catch(err => {
                     console.log(err);
