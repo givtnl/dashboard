@@ -774,8 +774,12 @@ export class AssignComponent implements OnInit {
             let reader: FileReader = new FileReader();
             reader.readAsText(this.csvFile);
             reader.onload = (e) => {
-                let csv: string = reader.result;
+                let csv: string = reader.result as string;
                 let lineByLine = csv.split('\n');
+                if ((lineByLine.length == 1) ||
+                    (lineByLine.length == 2 && lineByLine[1].trim().length == 0))
+                    /* Only one line? Maybe \n is not the newline character */
+                    lineByLine = csv.split('\r');
                 for (let i = 1; i < lineByLine.length; i++) {
                     let props = lineByLine[i].split(';');
                     if(props.length == 1) { // skip empty lines
