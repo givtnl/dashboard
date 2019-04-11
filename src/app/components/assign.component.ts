@@ -423,7 +423,9 @@ export class AssignComponent implements OnInit {
     }
     closeDialog() {
         jQuery(this.calendar["el"]["nativeElement"].children[0]).fullCalendar('unselect');
+        this.allocLoader["show"] = false;
         this.selectedCard = null;
+        this.selectedAllocationDates = null;
         if(!this.selectedCSV) {
             this.isDialogOpen = false;
         }
@@ -446,9 +448,10 @@ export class AssignComponent implements OnInit {
         return new Promise((resolve, reject) => {
             let allocationIdsToDelete = Array.from(new Set(this.selectedCard.Collects.map(t => t.transactions).map(r => r.map(u => u.AllocationId).filter(f => f !== 0)).reduce((a, b) => a.concat(b)))).join();
             this.apiService.deleteData("v2/Allocations/Allocations/" + allocationIdsToDelete)
-            .then(resp => {
-                this.reloadEvents();
-            });
+                .then(resp => {
+                    this.reloadEvents();
+                    this.closeDialog();
+                });
         })
     }
     saveAllEvents() {
@@ -782,8 +785,11 @@ export class AssignComponent implements OnInit {
                     lineByLine = csv.split('\r');
                 for (let i = 1; i < lineByLine.length; i++) {
                     let props = lineByLine[i].split(';');
-                    if(props.length == 1) { // skip empty lines
-                        continue;
+                    if (props.length == 1) {
+                        //First try splitting with comma's
+                        props = lineByLine[i].split(',');
+                        if (props.length == 1) // skip empty lines
+                            continue;
                     }
                     let dtBegin = new Date(props[0]);
                     let dtEnd = new Date(props[1]);

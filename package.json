@@ -16,7 +16,8 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "deploydev": "node deploy",
-    "buildandpushdockerdev": "npm run build && npm run dockerbuild && npm run dockerpush"
+    "buildandpushdockerdev": "npm run build && npm run dockerbuild && npm run dockerpush",
+    "buildandpushdockerprod": "npm run buildprod && npm run dockerbuildprod && npm run dockerpushprod"
   },
   "private": true,
   "dependencies": {
