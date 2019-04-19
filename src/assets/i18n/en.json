@@ -71,7 +71,7 @@
     "PW_ForgotPassword": "Forgot password?",
     "PW_RequestedPW": "You should have received an e-mail with a link to reset your password. In case you do not see the e-mail right away, check your spam.",
     "PW_Saved": "Your password has been saved. You can now login into the app with your new credentials.",
-    "Text_Reversals_MoreInfo": "This fee contains the donations that were reversed by the donors. In almost every case this fee will be charged over a payment period which is different than the period in which the donor has given.",
+    "Text_Reversals_MoreInfo": "This fee contains the donations that were reverted by the donors. In almost every case this fee will be charged over a payment period which is different than the period in which the donor has given.",
     "Text_Reversals": "Reversals",
     "BTW_EXCL": "Total excl. VAT",
     "BTW_PERCENT": "VAT (21%)",
