@@ -20,7 +20,7 @@ export class PartyComponent implements OnInit {
 		let currentCollectGroup = this.dataService.getData("CurrentCollectGroup");
 		if (currentCollectGroup) {
 			this.guid = JSON.parse(currentCollectGroup).GUID;
-			this.apiService.getData('v2/collectgroups/celebration/' + this.guid)
+			this.apiService.getData(`v2/collectgroups/${this.guid}/celebration`)
 				.then(resp => {
 					if(resp.Celebrations && resp.dt_Celebration != null && resp.SecondsRemaining > 0) {
 						let newDate = new Date(resp.dt_Celebration);
@@ -84,7 +84,7 @@ export class PartyComponent implements OnInit {
 		currentDate.setSeconds(currentDate.getSeconds() + seconds);
 
 		let dateToSend = currentDate.toISOString();
-		this.apiService.postData('v2/collectgroups/celebration/' + this.guid  + "?dtCelebration=" + dateToSend, null)
+		this.apiService.postData(`v2/collectgroups/${this.guid}/celebration?dtCelebration=${dateToSend}`, null)
 			.then(resp => {
 				if(resp != "") {
 
@@ -97,7 +97,7 @@ export class PartyComponent implements OnInit {
 
 	delete() {
 		clearInterval(this.countdownInterval);
-		this.apiService.delete('v2/collectgroups/celebration/' + this.guid)
+		this.apiService.delete(`v2/collectgroups/${this.guid}/celebration`)
 			.then(resp => {
 				let r = resp as any;
 				//console.log((r as Response).status);
