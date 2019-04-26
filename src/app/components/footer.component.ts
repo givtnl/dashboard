@@ -14,14 +14,8 @@ export class FooterComponent implements OnInit {
     isChrome =  this.checkChrome();
     userService: UserService;
     showDashboardItems = true;
-    showCelebrations = false;
     constructor(userService: UserService, private router: Router) {
       this.userService = userService;
-	    this.showCelebrations = this.userService.showCelebrations;
-
-	    this.userService.showCelebrationChanged.subscribe(() => {
-		    this.showCelebrations = this.userService.showCelebrations;
-	    });
     }
     checkChrome()
     {
