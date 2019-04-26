@@ -1,35 +1,30 @@
-
-    <!-- <p>
+<!-- <p>
       <i class="fa fa-copyright"></i> Givt <i class="fa fa-map-o"></i>
       Noordersluisweg 27, 8243 PR Lelystad
       <br/>
       <a target="_blank" href="https://www.givtapp.net/wp-content/uploads/2017/07/Handleiding_Givt_Dashboard.pdf">{{ "Help_Manual" | translate}}</a>
     </p>
     -->
-    <a routerLink="/settings" routerLinkActive="hide-settings">
-        <div class="floating-settings-icon">
-            <span class="sidebar-icon"><i class="fas fa-sliders-h"></i></span>
-        </div>
+<a routerLink="/settings" routerLinkActive="hide-settings">
+    <div class="floating-settings-icon">
+        <span class="sidebar-icon"><i class="fas fa-sliders-h"></i></span>
+    </div>
+</a>
+<footer id="bottom-bar" style="display: none;">
+    <a routerLink="/dashboard" routerLinkActive="active">
+        <span class="sidebar-icon"><i class="fas fa-chart-area"></i></span>
+        <span class="sidebar-title">{{"Menu_Overview" | translate}}</span>
     </a>
-    <footer id="bottom-bar" style="display: none;">
-        <a routerLink="/dashboard" routerLinkActive="active">
-            <span class="sidebar-icon"><i class="fas fa-chart-area"></i></span>
-            <span class="sidebar-title">{{"Menu_Overview" | translate}}</span>
-        </a>
-        <a routerLink="/collects" routerLinkActive="active">
-            <span class="sidebar-icon"><i class="fa fa-history"></i></span>
-            <span class="sidebar-title">{{"Menu_Collectes" | translate}}</span>
-        </a>
-        <a routerLink="/payouts" routerLinkActive="active">
-            <span class="sidebar-icon"><i class="fa fa-calculator"></i></span>
-            <span class="sidebar-title">{{"Payout_Title" | translate}}</span>
-        </a>
-        <a routerLink="/assign" routerLinkActive="active">
-            <span class="sidebar-icon"><i class="far fa-calendar-check"></i></span>
-            <span class="sidebar-title">{{"Menu_Allocate" | translate}}</span>
-        </a>
-        <a *ngIf="showCelebrations" routerLink="/party" routerLinkActive="active">
-            <span class="sidebar-icon"><i class="fa fa-bolt"></i></span>
-            <span class="sidebar-title">{{"SetPartyGivt" | translate}}</span>
-        </a>
-    </footer>
+    <a routerLink="/collects" routerLinkActive="active">
+        <span class="sidebar-icon"><i class="fa fa-history"></i></span>
+        <span class="sidebar-title">{{"Menu_Collectes" | translate}}</span>
+    </a>
+    <a routerLink="/payouts" routerLinkActive="active">
+        <span class="sidebar-icon"><i class="fa fa-calculator"></i></span>
+        <span class="sidebar-title">{{"Payout_Title" | translate}}</span>
+    </a>
+    <a routerLink="/assign" routerLinkActive="active">
+        <span class="sidebar-icon"><i class="far fa-calendar-check"></i></span>
+        <span class="sidebar-title">{{"Menu_Allocate" | translate}}</span>
+    </a>
+</footer>
