@@ -14,8 +14,26 @@ export class QRCodeComponent implements OnInit {
     constructor(private apiService: ApiClientService, private dataService: DataService, private datePipe: ISODatePipe) {
         
 	}
+
+	slideIndex = 1;
+
+	next(n) {
+		this.showquestion(this.slideIndex += n);
+	}
+	previous(n) {
+		this.showquestion(this.slideIndex -= n)
+	}
+
+	showquestion(n) {
+		var slides = document.getElementsByClassName("questions-component");
+	}
 	
 	ngOnInit(): void {
-		alert('Hi Jonas this component is initialized')
+		var myQRQuestion = 0;
+
+		
+
+
+
 	}
 }
