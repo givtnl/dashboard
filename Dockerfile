@@ -59,6 +59,6 @@ COPY docker/for-apple/apple-app-site-association ./
 COPY docker/img-givy-secret ./img-givy-secret/
 
 COPY ./dist-demo ./demo/
-COPY ./dist-example-give ./demo/give-with-givt-example/
+COPY ./example-give ./demo/give-with-givt-example/
 
 ENTRYPOINT ["/usr/local/bin/init_container.sh"]
