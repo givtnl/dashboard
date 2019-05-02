@@ -39,6 +39,7 @@ export class AssignComponent implements OnInit {
     isAssignInputFieldVisisble = false;
     agendaView: AgendaView;
     selectedCard: BucketCard;
+    cardIsSingleDay = true;
     csvFile: File;
     csvFileName: string = ""
     addedAllocations: any[];
@@ -271,6 +272,7 @@ export class AssignComponent implements OnInit {
             bucketCard.Fixed.push(fixedRow);
         });
 
+        this.cardIsSingleDay = this.showDate(bucketCard.dtBegin) === this.showDate(bucketCard.dtEnd);
         this.selectedCard = bucketCard;
         this.isDialogOpen = true;
         this.openedMobileEventId = event.id;

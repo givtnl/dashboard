@@ -176,8 +176,11 @@
                         </button>
                         <ng-container>
                             <div style="margin-top: 6px;">
-                                <span class="text">
+                                <span class="text" *ngIf="!cardIsSingleDay">
                                     {{showDate(selectedCard.dtBegin)}} {{'To' | translate}} {{showDate(selectedCard.dtEnd)}}
+                                </span>
+                                <span class="text" *ngIf="cardIsSingleDay">
+                                    {{showDate(selectedCard.dtBegin)}}
                                 </span>
 
                                 <div style="margin-top:15px; margin-bottom: 30px" class="flex-col">
