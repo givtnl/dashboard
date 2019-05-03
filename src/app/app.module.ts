@@ -34,6 +34,7 @@ import { LoggedOutComponent } from 'app/components/loggedout.component';
 import {ISODatePipe} from "./pipes/iso.datepipe";
 import {SettingsComponent} from "./components/settings.component";
 import { TerminateComponent } from './components/terminate.component';
+import { QRCodeComponent } from './components/qrcode.component';
 (window as any).jQuery = (window as any).$ = jQuery; // This is needed to resolve issue.
 
 export function createTranslateLoader(http: Http) {
@@ -59,7 +60,8 @@ export function createTranslateLoader(http: Http) {
     AlertComponent,
     LoggedOutComponent,
     SettingsComponent,
-    TerminateComponent
+    TerminateComponent,
+    QRCodeComponent
   ],
   imports: [
     AutoCompleteModule,
