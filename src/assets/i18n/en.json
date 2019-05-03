@@ -183,61 +183,23 @@
     "RequestMediumIdManual": "Download the manual for developers <a href='assets/Manual-Deeplink-Givt.zip'>here</a>.",
     "GivtWithGivtPreferenceTitle": "Integration with Givt",
     "Text_TransactionCost_MoreInfo_GB": "These costs are charged by Smart Debit for handling the transactions.",
-    "request QR code (heading)": {
-        "RequestQRcode1": "Request a QR code"
-    },
-    "navigation title": {
-        "QRcodeNav": "QR code"
-    },
-    "explanation how and when to use a QR code": {
-        "RequestQRcodeBody": "You can also give by a QR code with Givt. Use a QR code in a newsletter, on a website, in print, ... to receive donations in general or for a specific cause. For example a building fund for which you collect multiple times a year or an event with a special collection."
-    },
-    "Do you want a QR-code": {
-        "RequestQRcodeQuestion1": "Do you wish to use a QR code?"
-    },
-    "Just say yes, just say there's nothing holding you back (Request QR code)": {
-        "QRcodeYes": "Yes"
-    },
-    "Just say no, just say there's something holding you back (Request QR code)": {
-        "QRcodeNo": "No"
-    },
-    "second page QR code QuestionnaiRe": {
-        "RequestQRcode2": "Collection causes"
-    },
-    "what collection causes (question 2)": {
-        "RequestQRcodeQuestion2": "What causes do you like to give to with a QR code?"
-    },
-    "placeholder1 2nd question collection causes": {
-        "RequestQRcodeQuestion2Placeholder1": "Building fund"
-    },
-    "placeholder2 2nd question collection causes": {
-        "RequestQRcodeQuestion2PlaceHolder2": "Event"
-    },
-    "only a general QR code is wanted": {
-        "RequestQRcode2OnlyGeneral": "I only wish to have one general QR code"
-    },
-    "third page QR code QuestionnaiRe": {
-        "RequestQRcode3": "General QR code"
-    },
-    "also a general QR code (question 3)": {
-        "RequestQRcodeQuestion3": "Tick the checkbox if you would also like to have a general QR code without a pre-set cause."
-    },
-    "4th page ": {
-        "RequestQRcode4": "Contact details"
-    },
-    "what e-mail address": {
-        "RequestQRcodeQuestion4a": "To which email address can we send the QR code(s)?"
-    },
-    "what phone number": {
-        "RequestQRcodeQuestion4b": "At what number can we contact you (if necessary)?"
-    },
-    "placeholder phone number 4th question contact details": {
-        "RequestQRcodeQuestion4Placeholder": "Phone number"
-    },
-    "send requestQRcode": {
-        "RequestQRcode4Send": "Send"
-    },
-    "QRcodeRequest sent with success ": {
-        "RequestQRcode5": "Got it! We'll react to your request as soon as possible!"
-    }
+    "RequestQRcode1": "Request a QR code",
+    "QRcodeNav": "QR code",
+    "RequestQRcodeBody": "You can also give by a QR code with Givt. Use a QR code in a newsletter, on a website, in print, ... to receive donations in general or for a specific cause. For example a building fund for which you collect multiple times a year or an event with a special collection.",
+    "RequestQRcodeQuestion1": "Do you wish to use a QR code?",
+    "QRcodeYes": "Yes",
+    "QRcodeNo": "No",
+    "RequestQRcode2": "Collection causes",
+    "RequestQRcodeQuestion2": "What causes do you like to give to with a QR code?",
+    "RequestQRcodeQuestion2Placeholder1": "Building fund",
+    "RequestQRcodeQuestion2PlaceHolder2": "Event",
+    "RequestQRcode2OnlyGeneral": "I only wish to have one general QR code",
+    "RequestQRcode3": "General QR code",
+    "RequestQRcodeQuestion3": "Tick the checkbox if you would also like to have a general QR code without a pre-set cause.",
+    "RequestQRcode4": "Contact details",
+    "RequestQRcodeQuestion4a": "To which email address can we send the QR code(s)?",
+    "RequestQRcodeQuestion4b": "At what number can we contact you (if necessary)?",
+    "RequestQRcodeQuestion4Placeholder": "Phone number",
+    "RequestQRcode4Send": "Send",
+    "RequestQRcode5": "Got it! We'll react to your request as soon as possible!"
 }
