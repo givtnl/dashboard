@@ -183,61 +183,23 @@
     "RequestMediumIdManual": "Download <a href='assets/Manual-Deeplink-Givt.zip'>hier</a> de handleiding voor ontwikkelaars.",
     "GivtWithGivtPreferenceTitle": "Koppeling met Givt",
     "Text_TransactionCost_MoreInfo_GB": "Dit zijn de kosten die Smart Debit in rekening brengt voor het verwerken van transacties.",
-    "request QR code (heading)": {
-        "RequestQRcode1": "Vraag een QR-code aan"
-    },
-    "navigation title": {
-        "QRcodeNav": "QR-code"
-    },
-    "explanation how and when to use a QR code": {
-        "RequestQRcodeBody": "Met Givt kan er ook gegeven worden aan een QR-code. Gebruik een QR-code in een nieuwsbrief, op een website, op drukwerk, ... om algemeen te collecteren of voor een specifiek doel of actie. Bijvoorbeeld een bouwfonds waar meerdere keren per jaar voor wordt gecollecteerd of een evenement met een speciale inzamelingsactie."
-    },
-    "Do you want a QR-code": {
-        "RequestQRcodeQuestion1": "Lijkt zo'n QR-code u iets?"
-    },
-    "Just say yes, just say there's nothing holding you back (Request QR code)": {
-        "QRcodeYes": "Ja"
-    },
-    "Just say no, just say there's something holding you back (Request QR code)": {
-        "QRcodeNo": "Nee"
-    },
-    "second page QR code QuestionnaiRe": {
-        "RequestQRcode2": "Collectedoelen"
-    },
-    "what collection causes (question 2)": {
-        "RequestQRcodeQuestion2": "Aan welke collectedoelen wenst u te geven met een QR-code?"
-    },
-    "placeholder1 2nd question collection causes": {
-        "RequestQRcodeQuestion2Placeholder1": "Bouwfonds"
-    },
-    "placeholder2 2nd question collection causes": {
-        "RequestQRcodeQuestion2PlaceHolder2": "Evenement"
-    },
-    "only a general QR code is wanted": {
-        "RequestQRcode2OnlyGeneral": "Ik wil alleen een algemene QR-code"
-    },
-    "third page QR code QuestionnaiRe": {
-        "RequestQRcode3": "Algemene QR-code"
-    },
-    "also a general QR code (question 3)": {
-        "RequestQRcodeQuestion3": "Vink de checkbox aan als u ook graag een algemene QR-code zonder vooraf ingesteld doel wenst."
-    },
-    "4th page ": {
-        "RequestQRcode4": "Contactgegevens"
-    },
-    "what e-mail address": {
-        "RequestQRcodeQuestion4a": "Naar welk e-mailadres mogen wij de QR-code(s) sturen?"
-    },
-    "what phone number": {
-        "RequestQRcodeQuestion4b": "Op welk telefoonnummer mogen wij u (indien nodig) hierover bellen?"
-    },
-    "placeholder phone number 4th question contact details": {
-        "RequestQRcodeQuestion4Placeholder": "Telefoonnummer"
-    },
-    "send requestQRcode": {
-        "RequestQRcode4Send": "Verstuur"
-    },
-    "QRcodeRequest sent with success ": {
-        "RequestQRcode5": "Gelukt! Wij reageren zo spoedig mogelijk op uw aanvraag!"
-    }
+    "RequestQRcode1": "Vraag een QR-code aan",
+    "QRcodeNav": "QR-code",
+    "RequestQRcodeBody": "Met Givt kan er ook gegeven worden aan een QR-code. Gebruik een QR-code in een nieuwsbrief, op een website, op drukwerk, ... om algemeen te collecteren of voor een specifiek doel of actie. Bijvoorbeeld een bouwfonds waar meerdere keren per jaar voor wordt gecollecteerd of een evenement met een speciale inzamelingsactie.",
+    "RequestQRcodeQuestion1": "Lijkt zo'n QR-code u iets?",
+    "QRcodeYes": "Ja",
+    "QRcodeNo": "Nee",
+    "RequestQRcode2": "Collectedoelen",
+    "RequestQRcodeQuestion2": "Aan welke collectedoelen wenst u te geven met een QR-code?",
+    "RequestQRcodeQuestion2Placeholder1": "Bouwfonds",
+    "RequestQRcodeQuestion2PlaceHolder2": "Evenement",
+    "RequestQRcode2OnlyGeneral": "Ik wil alleen een algemene QR-code",
+    "RequestQRcode3": "Algemene QR-code",
+    "RequestQRcodeQuestion3": "Vink de checkbox aan als u ook graag een algemene QR-code zonder vooraf ingesteld doel wenst.",
+    "RequestQRcode4": "Contactgegevens",
+    "RequestQRcodeQuestion4a": "Naar welk e-mailadres mogen wij de QR-code(s) sturen?",
+    "RequestQRcodeQuestion4b": "Op welk telefoonnummer mogen wij u (indien nodig) hierover bellen?",
+    "RequestQRcodeQuestion4Placeholder": "Telefoonnummer",
+    "RequestQRcode4Send": "Verstuur",
+    "RequestQRcode5": "Gelukt! Wij reageren zo spoedig mogelijk op uw aanvraag!"
 }
