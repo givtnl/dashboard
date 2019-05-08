@@ -5,140 +5,68 @@
         <my-titlebar></my-titlebar>
 
         <div class="questions">
-
             <div class="questions-component" *ngIf="currentQuestionId == 1" id="question-1">
-
-                <div class="questions-component-header">
-                    <h2>Aanvraag QR</h2>
+                <div class="header">
+                    <h2>Aanvraag QR code</h2>
                 </div>
-
-                <div class="questions-component-body">
-                    <img id="qrImg"
-                    src="images/QR-sample.png" alt="Sample QR-code">
-
-                    <p class="text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Recusandae aperiam
-                        nostrum consequuntur aliquid ab, alias odit expedita illum sapiente qui labore? Sequi debitis
-                        fugit impedit vero quae totam molestias quidem!</p>
-                    <h2 id="userExampleQuestion">Wil jij ook zo iets?</h2>
-                </div>
-
-                <div class="questions-component-footer">
-                    <div class="question-cancel" (click)="goHome()">
-                        <h2>Nee</h2>
+                <div class="main-v2-body">
+                    <div class="main-v2-left">
+                        <img class="main-v2-qr-sample" src="images/QR-sample.png" alt="Sample QR-code">
                     </div>
-                    <div class="question-proceed" (click)="showNextQuestion()">
-                        <h2>Ja</h2>
+                    <div class="main-v2-right">
+                        <p>Een QR-code kan u gemakkelijk gebruiken in de volgende situaties:</p>
+                        <ul>
+                            <li>Aan de deur</li>
+                            <li>Op een collecte bus</li>
+                            <li>In de kerk</li>
+                        </ul>
+                        <p>Vraag nu je gratis QR-code aan en ontvang ze via mail.</p>
+                        <button class="btn btn-givt" (click)="showNextQuestion()">Vraag hem hier aan</button>
                     </div>
                 </div>
-
             </div>
 
-            <div class="questions-component" *ngIf="currentQuestionId == 2" id="question-2">
-
-                <div class="questions-component-header">
-                    <h2>Collectedoelen</h2>
+            <div class="questions-component questions-component2" *ngIf="currentQuestionId == 2" id="question-1">
+                <div class="header">
+                    <h2>Aanvraag QR code</h2>
                 </div>
-
-                <div class="questions-component-body">
-                    <p class="text">Aan welke collectedoelen wordt er gegeven met de QR-codes?</p>
-                    <table>
-                        <tr *ngFor="let field of fieldArray; let i = index; trackBy:trackByFn">
-                            <td>
-                                <input class="textbox" type="text" name="{{field}}"
-                                    placeholder="Nieuw Collectedoel" [(ngModel)]="fieldArray[i]" (ngModelChange)="onChange($event)"/>
-                            </td>
-                            <td class="delete-row" *ngIf="fieldArray.length>1"><i class="fas fa-minus-circle"
-                                    (click)="deleteFieldValue(i)"></i></td>
-                        </tr>
-                    </table>
-                    <div class="add-row">
-                        <i class="fas fa-plus-circle" (click)="addFieldValue()"></i>
-                    </div>
-                </div>
-
-                <div class="questions-component-footer">
-                    <div class="question-previous" (click)="showPreviousQuestion()">
-                        <i class="fas fa-chevron-left arrow"></i>
-                    </div>
-                    <div class="question-skipCollectPurposes">
-                        <h2 (click)="skipToEnd()">Ik wil enkel een generieke qr</h2>
-                    </div>
-                    <div *ngIf="showNext" class="question-next" (click)="showNextQuestion()">
-                        <i class="fas fa-chevron-right arrow"></i>
-                    </div>
-                </div>
-
-            </div>
-
-            <div class="questions-component" *ngIf="currentQuestionId == 3" id="question-3">
-
-                <div class="questions-component-header">
-                    <h2>Generiek QR</h2>
-                </div>
-
-                <div class="questions-component-body">
-                    <p class="text">Wilt u ook graag een generieke QR-code zonder vooraf ingesteld doel? </p>
-
-                    <td class="containerCheckbox">
-
-                        <h2>Yes I want a generic QR code:</h2>
-                        <div class="form-check">
-                            <input type="checkbox" [checked]="isChecked" (click)="checkboxClicked()"
-                                class="form-check-input" id="exampleCheck1">
+                <div class="main-v2-body_question2">
+                    <div class="main-v2-first">
+                        <div class="main-v2-left">
+                            <img class="main-v2-qr-sample" src="images/QR-sample.png" alt="Sample QR-code">
                         </div>
-                    </td>
-                </div>
-
-                <div class="questions-component-footer">
-                    <div class="question-previous" (click)="showPreviousQuestion()">
-                        <i class="fas fa-chevron-left arrow"></i>
+                        <div class="main-v2-right">
+                            <p class="subtitle">Generieke QR</p>
+                            <p>Het doel van de giften wordt achteraf bepaald</p>
+                        </div>
                     </div>
 
-                    <div class="question-next" (click)="showNextQuestion()">
-                        <i class="fas fa-chevron-right arrow"></i>
+                    <div class="main-v2-second">
+                        <div class="main-v2-left">
+                            <img class="main-v2-qr-sample" src="images/QR-sample.png" alt="Sample QR-code">
+                        </div>
+                        <div class="main-v2-right">
+                            <p class="subtitle">Unieke QR</p>
+                            <p>Iedere QR-code heeft een vooraf bepaald doel</p>
+                        </div>
                     </div>
                 </div>
+                <div class="main-v2-footer">
+                    <div class="main-v2-footer-left">
+                        <div class="btn-previous" (click)="showPreviousQuestion()">
+                            <i class="fas fa-chevron-left arrow"></i>
+                        </div>
+                    </div>
+                    <div class="main-v2-footer-middle">
 
+                    </div>
+                    <div class="main-v2-footer-right">
+                        <div class="btn-next" (click)="showNextQuestion()">
+                            <i class="fas fa-chevron-right arrow"></i>
+                        </div>
+                    </div>
+                </div>
             </div>
-
-            <div class="questions-component" *ngIf="currentQuestionId == 4" id="question-4">
-
-                <div class="questions-component-header">
-                    <h2>Contact gegevens</h2>
-                </div>
-
-                <div class="questions-component-body">
-                    <div class="text" id="contactInfo-Email">
-                        Naar welk email adres mogen mogen wij de QR-code zenden?
-                        
-                        <div class="questions-component-body-textboxquestion">
-                        <i class="fas fa-at"></i> 
-                        <input class="textbox" id="email" type="email" placeholder="Email" [(ngModel)]="email" (ngModelChange)="onEmailchange($event)">
-                    </div>
-                    </div>
-
-
-                    <div class="text" id="contactInfo-Phonenumber">
-                        Op welk telefoonnummer mogen wij u (indien nodig) contacteren?
-                        <div class="questions-component-body-textboxquestion">
-                        <i class="fas fa-phone"></i>
-                        <input class="textbox" id="phonenumber" type="tel" placeholder="Phone number" [(ngModel)]="phonenumber" (ngModelChange)="onPhonenumberChange($event)">
-                    </div>
-                    </div>
-
-                </div>
-
-                <div class="questions-component-footer">
-                    <div class="question-previous" (click)="showPreviousQuestion()">
-                        <i class="fas fa-chevron-left arrow"></i>
-                    </div>
-                    <div *ngIf="showSubmit" class="question-submit" (click)="submit()" >
-                        <h2>Submit</h2>
-                    </div>
-                </div>
-
-            </div>
-
         </div>
         <my-footer></my-footer>
     </div>
