@@ -5,141 +5,43 @@
         <my-titlebar></my-titlebar>
 
         <div class="questions">
-
-            <div class="questions-component" *ngIf="currentQuestionId == 1" id="question-1">
-
+            <div class="questions-component">
+               
                 <div class="questions-component-header">
-                    <h2>Aanvraag QR</h2>
+                    <p class="title">
+                    </p>
                 </div>
 
-                <div class="questions-component-body">
-                    <img id="qrImg"
-                        src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/QR_code_for_mobile_English_Wikipedia.svg/220px-QR_code_for_mobile_English_Wikipedia.svg.png">
-
-                    <p class="text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Recusandae aperiam
-                        nostrum consequuntur aliquid ab, alias odit expedita illum sapiente qui labore? Sequi debitis
-                        fugit impedit vero quae totam molestias quidem!</p>
-                    <h2 id="userExampleQuestion">Wil jij ook zo iets?</h2>
+                <div class="questions-component-body">        
                 </div>
 
-                <div class="questions-component-footer">
-                    <div class="question-cancel" (click)="goHome()">
-                        <h2>Nee</h2>
-                    </div>
-                    <div class="question-proceed" (click)="showNextQuestion()">
-                        <h2>Ja</h2>
-                    </div>
-                </div>
-
-            </div>
-
-            <div class="questions-component" *ngIf="currentQuestionId == 2" id="question-2">
-
-                <div class="questions-component-header">
-                    <h2>Collectedoelen</h2>
-                </div>
-
-                <div class="questions-component-body">
-                    <p class="text">Aan welke collectedoelen wordt er gegeven met de QR-codes?</p>
-                    <table>
-                        <tr *ngFor="let field of fieldArray; let i = index">
-                            <td>
-                                <input [(ngModel)]="field.value" class="textbox" type="text" name="{{field.value}}"
-                                    placeholder="{{field.placeholder}}" />
-                            </td>
-                            <td class="delete-row" *ngIf="fieldArray.length>1"><i class="fas fa-minus-circle"
-                                    (click)="deleteFieldValue(i)"></i></td>
-                        </tr>
-                    </table>
-                    <div class="add-row">
-                        <i class="fas fa-plus-circle" (click)="addFieldValue()"></i>
-                    </div>
-                </div>
-
-                <div class="questions-component-footer">
-                    <div class="question-previous" (click)="showPreviousQuestion()">
-                        <i class="fas fa-chevron-left arrow"></i>
-                    </div>
-                    <div class="question-skipCollectPurposes">
-                        <h2 (click)="skipToEnd()">Ik wil enkel een generieke qr</h2>
-                    </div>
-                    <div class="question-next" (click)="showNextQuestion()">
-                        <i class="fas fa-chevron-right arrow"></i>
-                    </div>
-                </div>
-
-            </div>
-
-            <div class="questions-component" *ngIf="currentQuestionId == 3" id="question-3">
-
-                <div class="questions-component-header">
-                    <h2>Generiek QR</h2>
-                </div>
-
-                <div class="questions-component-body">
-                    <p class="text">Wilt u ook graag een generieke QR-code zonder vooraf ingesteld doel? </p>
-
-                    <td class="containerCheckbox">
-
-                        <h2>Yes I want a generic QR code:</h2>
-                        <div class="form-check">
-                            <input type="checkbox" [checked]="isChecked" (click)="checkboxClicked()"
-                                class="form-check-input" id="exampleCheck1">
-                        </div>
-                    </td>
-                </div>
-
-                <div class="questions-component-footer">
-                    <div class="question-previous" (click)="showPreviousQuestion()">
-                        <i class="fas fa-chevron-left arrow"></i>
+                <div class="questions-component-footer"> 
+                    <div class="question-previous" (click)="previous(-1)">
+                        <i class="fas fa-chevron-left"></i>
                     </div>
 
-                    <div class="question-next" (click)="showNextQuestion()">
-                        <i class="fas fa-chevron-right arrow"></i>
-                    </div>
-                </div>
-
-            </div>
-
-            <div class="questions-component" *ngIf="currentQuestionId == 4" id="question-4">
-
-                <div class="questions-component-header">
-                    <h2>Contact gegevens</h2>
-                </div>
-
-                <div class="questions-component-body">
-                    <div class="text" id="contactInfo-Email">
-                        Naar welk email adres mogen mogen wij de QR-code zenden?
-                        
-                        <div class="questions-component-body-textboxquestion">
-                        <i class="fas fa-at"></i>
-                        <input class="textbox" id="email" type="email" placeholder="Email">
-                    </div>
-                    </div>
-
-
-                    <div class="text" id="contactInfo-Phonenumber">
-                        Op welk telefoonnummer mogen wij u (indien nodig) contacteren?
-                        <div class="questions-component-body-textboxquestion">
-                        <i class="fas fa-phone"></i>
-                        <input class="textbox" id="phonenumber" type="tel" placeholder="Phone number">
-                    </div>
-                    </div>
-
-                </div>
-
-                <div class="questions-component-footer">
-                    <div class="question-previous" (click)="showPreviousQuestion()">
-                        <i class="fas fa-chevron-left arrow"></i>
+                    <div class="question-cancel">
+                        Cancel
                     </div>
                     <div class="question-submit">
-                        <h2 (click)="submit()">Submit</h2>
+                            Submit
+                        </div>
+        
+                    <div class="question-gofurther" >
+                        Go further
                     </div>
+
+                    <div class="question-next" (click)="next(1)">
+                            <i class="fas fa-chevron-right"></i>
+                    </div>
+
                 </div>
 
             </div>
-
+            
         </div>
+       
         <my-footer></my-footer>
     </div>
 </div>
+
