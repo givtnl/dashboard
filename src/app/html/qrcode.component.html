@@ -14,7 +14,7 @@
 
                 <div class="questions-component-body">
                     <img id="qrImg"
-                    src="images/QR-sample.png" alt="Sample QR-code">
+                        src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/QR_code_for_mobile_English_Wikipedia.svg/220px-QR_code_for_mobile_English_Wikipedia.svg.png">
 
                     <p class="text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Recusandae aperiam
                         nostrum consequuntur aliquid ab, alias odit expedita illum sapiente qui labore? Sequi debitis
@@ -42,10 +42,10 @@
                 <div class="questions-component-body">
                     <p class="text">Aan welke collectedoelen wordt er gegeven met de QR-codes?</p>
                     <table>
-                        <tr *ngFor="let field of fieldArray; let i = index; trackBy:trackByFn">
+                        <tr *ngFor="let field of fieldArray; let i = index">
                             <td>
-                                <input class="textbox" type="text" name="{{field}}"
-                                    placeholder="Nieuw Collectedoel" [(ngModel)]="fieldArray[i]" (ngModelChange)="onChange($event)"/>
+                                <input [(ngModel)]="field.value" class="textbox" type="text" name="{{field.value}}"
+                                    placeholder="{{field.placeholder}}" />
                             </td>
                             <td class="delete-row" *ngIf="fieldArray.length>1"><i class="fas fa-minus-circle"
                                     (click)="deleteFieldValue(i)"></i></td>
@@ -63,7 +63,7 @@
                     <div class="question-skipCollectPurposes">
                         <h2 (click)="skipToEnd()">Ik wil enkel een generieke qr</h2>
                     </div>
-                    <div *ngIf="showNext" class="question-next" (click)="showNextQuestion()">
+                    <div class="question-next" (click)="showNextQuestion()">
                         <i class="fas fa-chevron-right arrow"></i>
                     </div>
                 </div>
@@ -112,8 +112,8 @@
                         Naar welk email adres mogen mogen wij de QR-code zenden?
                         
                         <div class="questions-component-body-textboxquestion">
-                        <i class="fas fa-at"></i> 
-                        <input class="textbox" id="email" type="email" placeholder="Email" [(ngModel)]="email" (ngModelChange)="onEmailchange($event)">
+                        <i class="fas fa-at"></i>
+                        <input class="textbox" id="email" type="email" placeholder="Email">
                     </div>
                     </div>
 
@@ -122,7 +122,7 @@
                         Op welk telefoonnummer mogen wij u (indien nodig) contacteren?
                         <div class="questions-component-body-textboxquestion">
                         <i class="fas fa-phone"></i>
-                        <input class="textbox" id="phonenumber" type="tel" placeholder="Phone number" [(ngModel)]="phonenumber" (ngModelChange)="onPhonenumberChange($event)">
+                        <input class="textbox" id="phonenumber" type="tel" placeholder="Phone number">
                     </div>
                     </div>
 
@@ -132,8 +132,8 @@
                     <div class="question-previous" (click)="showPreviousQuestion()">
                         <i class="fas fa-chevron-left arrow"></i>
                     </div>
-                    <div *ngIf="showSubmit" class="question-submit" (click)="submit()" >
-                        <h2>Submit</h2>
+                    <div class="question-submit">
+                        <h2 (click)="submit()">Submit</h2>
                     </div>
                 </div>
 
