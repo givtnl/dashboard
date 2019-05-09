@@ -2,6 +2,12 @@
     box-sizing: border-box;
 }
 
+@media only screen and (max-width: 480px) {
+    .global-layout {
+        min-height: calc(100vh - 52px);
+    }
+}
+
 .QRCode_screen {
     height: 100%;
     width: 100%;
@@ -31,10 +37,10 @@
 /* --------------------------------------------- Titlebar --------------------------------------------- */
 .QRCode_Titlebar {
     width: 100%;
-    padding-right: 10px;
-    padding-left: 10px;
-    padding-top: 10px;
-    padding-bottom: 5px;
+    padding-right: 20px;
+    padding-left: 20px;
+    padding-top: 20px;
+    padding-bottom: 20px;
 
     display: flex;
     flex-direction: row;
@@ -45,7 +51,7 @@
     height: 100%;
 }
 .QRCode_Titlebar_left {
-    width: 15%;
+    width: 5%;
 
     /* H2 */
     margin: 0;
@@ -56,12 +62,12 @@
     font-weight: normal;
 }
 .QRCode_Titlebar_middle {
-    width: 70%;
+    width: 90%;
 } .QRCode_Titlebar_middle h2{
     padding: unset;
 }
 .QRCode_Titlebar_right {
-    width: 15%;
+    width: 5%;
 }
 
 /* --------------------------------------------- Info --------------------------------------------- */
@@ -69,9 +75,8 @@
     width: 100%;
     max-height: 100%;
 
-    padding-left: 10px;
-    padding-right: 10px;
-    padding-top: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
 
      display: flex;
     flex-direction: column;
@@ -96,19 +101,21 @@
     max-height: 100%;
     min-height: fit-content;
 
+    padding-top: 20px;
+
     font-family: 'Avenir_Light';
     color: #2E2957;
     font-size: 0.8em;
     white-space: nowrap;
     word-wrap: break-word;
 
-}.QRCode_Info_Text .subtitle-first {
-    width: 100%;
-
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
 }.QRCode_Info_Text .subtitle {
-    width: 100%;
-    padding-left: 40px;
-    margin-block-end: 0.5em;
+    margin-block-start: 0;
+    margin-block-end: 0;
 
     font-family: 'Avenir_Heavy';
     color: #2E2957;
@@ -117,18 +124,24 @@
     word-wrap: break-word;
 } 
 .QRCode_Info_Text ul {
-    width: 100%;
     margin-block-start: 0.5em;
+    list-style: none;
+    padding-inline-start: 0;
+
 } .QRCode_Info_Text ul li {
     padding-top: 2px;
     padding-bottom: 2px;
+    text-align: center;
 }
 
 /* --------------------------------------------- Buttons --------------------------------------------- */
 .QRCode_Buttons {
     width: 100%;
-    padding-top: 5px;
-    padding-bottom: 10px;
+    padding-top: 10px;
+    padding-bottom: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+    
     margin-top: auto;
     margin-bottom: O;
 
@@ -152,7 +165,7 @@
     font-family: "Avenir_Heavy";
     line-height: 1.5;
     border-radius: .25rem;
-    width: calc(100% - 40px);
+    width: 100%;
     padding-left: 10px;
     padding-right: 10px;
     transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
@@ -171,11 +184,31 @@
     color: #fff;
     background: #2E2957;
 }.QRCode_Buttons .btn-blue:hover{
-    background-color: ;
+    background-color: indigo;
     border-color: rgb(6, 83, 51);
 }
 
-
+/* --------------------------------------------- Desktop --------------------------------------------- */
+@media only screen and (min-width: 481px) {
+    .QRCode {
+        height: unset;
+        width: unset;
+        max-width: 775px;
+        max-height: 550px;
+    }
+    /* --------------------------------------------- Titlebar --------------------------------------------- */
+    /* --------------------------------------------- Info --------------------------------------------- */
+    .QRCode_Info {
+        flex-direction: row;
+    } 
+    .QRCode_Info_Text {
+        justify-content: center;
+    }
+    .QRCode_Info_Picture img {
+        height: unset;
+    }
+    /* --------------------------------------------- Buttons --------------------------------------------- */
+}
 /* ---------------------------------------------  */
 
 .questions {
@@ -212,11 +245,7 @@ h2 {
     padding-top: 15px;
 }
 
-@media only screen and (max-width: 480px) {
-    .global-layout {
-        min-height: calc(100vh - 52px);
-    }
-}
+
 
 .main-v2-body {
     display: flex;
@@ -602,9 +631,7 @@ h2 {
 }
 
 @media only screen and (min-width: 481px) {
-    h2 {
-        font-size: 2em;
-    }
+
     .main-v2-body {
         flex-direction: row;
     }
