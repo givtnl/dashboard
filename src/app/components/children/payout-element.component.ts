@@ -27,6 +27,7 @@ export class PayoutComponent implements OnInit {
 
     dtBegin: Date;
     dtEnd: Date;
+    dtExecuted: Date;
     isSafari: boolean;
     @Input() childData: any;
     @Input() loader: object;
@@ -66,9 +67,12 @@ export class PayoutComponent implements OnInit {
     doSomeFancyStuff(paymentType: PaymentType) {
         this.dtBegin = new Date(this.childData.BeginDate);
         this.dtEnd = new Date(this.childData.EndDate);
+        this.dtExecuted = new Date(this.childData.dtExecuted);
+
         let x = this.childData;
         x.BeginDate = this.datePipe.transform(new Date(this.childData.BeginDate), "d MMMM y");
         x.EndDate = this.datePipe.transform(new Date(this.childData.EndDate), "d MMMM y");
+        x.dtExecuted = this.datePipe.transform(new Date(this.childData.dtExecuted), "d MMMM y");
 
         paymentType === PaymentType.SEPA ? x.Mandaatkosten = x.MandateCost : x.Mandaatkosten = 0;
 
@@ -214,8 +218,11 @@ export class PayoutComponent implements OnInit {
 
     exportCSV() {
         this.loader["show"] = true;
-        let start = this.datePipe.toISODateUTC(this.dtBegin);
-        let end = this.datePipe.toISODateUTC(this.dtEnd);
+        let dtStart = new Date(this.dtEnd);
+        let dtEnd = new Date(this.dtEnd);
+        dtEnd.setDate(dtEnd.getDate() + 1);
+        let start = this.datePipe.toISODateUTC(dtStart);
+        let end = this.datePipe.toISODateUTC(dtEnd);
 
         let apiUrl = 'Payments/CSV?dtBegin=' + start + '&dtEnd=' + end;
         this.apiClient.getData(apiUrl)
@@ -230,10 +237,9 @@ export class PayoutComponent implements OnInit {
                 var encodedUri = encodeURI(csvContent);
                 var link = document.createElement("a");
                 link.setAttribute("href", encodedUri);
-                let beginDate = this.datePipe.transform(new Date(this.dtBegin), "dd-MM-yyyy");
-                let endDate = this.datePipe.transform(new Date(this.dtEnd), "dd-MM-yyyy");
+                let fileDate = this.datePipe.transform(new Date(this.dtExecuted), "dd-MM-yyyy");
 
-                let fileName = this.userService.CurrentCollectGroup.Name + " - " + beginDate + " - " + endDate + ".csv";
+                let fileName = `${this.userService.CurrentCollectGroup.Name}_${fileDate}.csv`
                 link.setAttribute("download", fileName);
                 document.body.appendChild(link); // Required for FF
 

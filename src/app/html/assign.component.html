@@ -176,7 +176,10 @@
                         </button>
                         <ng-container>
                             <div style="margin-top: 6px;">
-                                <span class="text">
+                                <span class="text" *ngIf="!cardIsSingleDay">
+                                    {{showDate(selectedCard.dtBegin)}} {{'To' | translate}} {{showDate(selectedCard.dtEnd)}}
+                                </span>
+                                <span class="text" *ngIf="cardIsSingleDay">
                                     {{showDate(selectedCard.dtBegin)}}
                                 </span>
 
@@ -605,9 +608,7 @@
                                                             <td></td>
                                                             <td>{{ "Text_Fee_Total" | translate}}</td>
                                                             <td class="info-table-cell--money">{{
-                                                                displayValue(alloc.toProcessTotal +
-                                                                alloc.processedTotal
-                                                                + alloc.refusedBank + alloc.cancelByGiver) }}
+                                                                displayValue(alloc.total) }}
                                                             </td>
                                                         </tr>
                                                     </table>

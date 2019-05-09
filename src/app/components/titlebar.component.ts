@@ -19,7 +19,6 @@ export class TitlebarComponent implements OnInit {
   collectGroups: Array<any> = null;
 
   currentUrl = "";
-  showCelebrations;
 
   constructor(userService: UserService, private router: Router) {
     this.userService = userService;
@@ -42,15 +41,7 @@ export class TitlebarComponent implements OnInit {
     this.userService.changeCollectGroup(cg);
     this.currentCollectGroup = cg;
     this.isDropDownOpen = !this.isDropDownOpen;
-
     this.currentUrl = this.router.url;
-
-    if(!this.currentCollectGroup.Celebrations && this.currentUrl === "/party"){
-      this.router.navigateByUrl("/dashboard");
-      this.showCelebrations = false;
-    } else if(this.currentCollectGroup.Celebrations){
-      this.showCelebrations = true;
-    }
   }
   toggleDropdown(){
     this.isDropDownOpen = !this.isDropDownOpen;

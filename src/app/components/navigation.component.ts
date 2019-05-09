@@ -19,8 +19,7 @@ export class NavigationComponent implements OnInit {
     showDashboardItems = true;
     toggleSidebar = false;
     currentCollectGroup: any = {Name:"", GUID:""};
-    collectGroups : Array<any> = null;
-    showCelebrations = false;
+    collectGroups: Array<any> = null;
     versionNumber = "";
 
     constructor(private apiService: ApiClientService, private dataService: DataService, userService: UserService, private router: Router, public translate: TranslateService) {
@@ -29,10 +28,6 @@ export class NavigationComponent implements OnInit {
 	    this.userService.collectGroupChanged.subscribe(() => {
 		    this.ngOnInit();
 	    });
-	    this.showCelebrations = this.userService.showCelebrations;
-	    this.userService.showCelebrationChanged.subscribe(() => {
-		    this.showCelebrations = this.userService.showCelebrations;
-      });
     }
 
     ngOnInit() {
@@ -50,9 +45,6 @@ export class NavigationComponent implements OnInit {
           if (this.userService.CurrentCollectGroup) {
               this.collectGroups = this.userService.CollectGroups;
               this.currentCollectGroup = this.userService.CurrentCollectGroup;
-              if(!this.currentCollectGroup.Celebrations){
-                this.showCelebrations = false;
-            }
           }
       }
 
@@ -67,7 +59,6 @@ export class NavigationComponent implements OnInit {
       this.toggleSidebar = ! this.toggleSidebar;
       let sidebar = document.getElementById('sidebar');
       let sidebarList = document.getElementsByClassName("sidebar-title");
-      let sidebarGivtLogo = document.getElementById("givt-sidebar-logo");
       if(this.toggleSidebar){
         for(let i = 0; i < sidebarList.length; ++i){
           sidebar.setAttribute('style','width: 141px; padding-right: 20px');

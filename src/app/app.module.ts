@@ -26,7 +26,6 @@ import { AssignComponent} from "./components/assign.component";
 import { PayoutComponent } from "./components/children/payout-element.component";
 import { FooterComponent } from "./components/footer.component";
 import { AlertComponent} from "./components/alert.component";
-import { PartyComponent } from "./components/party.component";
 import { ChartsModule } from "ng2-charts";
 
 import * as jQuery from 'jquery';
@@ -59,7 +58,6 @@ export function createTranslateLoader(http: Http) {
     FooterComponent,
     AlertComponent,
     LoggedOutComponent,
-    PartyComponent,
     SettingsComponent,
     TerminateComponent
   ],
