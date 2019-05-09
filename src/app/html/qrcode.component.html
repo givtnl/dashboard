@@ -4,7 +4,7 @@
     <div class="global-layout-content">
         <my-titlebar></my-titlebar>
 
-        <div class="questions">
+        <div class="QRCode_screen">
             <div class="questions-component" *ngIf="currentQuestionId == 1" id="question-1">
                 <div class="header">
                     <h2>Aanvraag QR code</h2>
@@ -26,45 +26,47 @@
                 </div>
             </div>
 
-            <div class="questions-component questions-component2" *ngIf="currentQuestionId == 2" id="question-1">
-                <div class="header">
-                    <h2>Aanvraag QR code</h2>
-                </div>
-                <div class="main-v2-body_question2">
-                    <div class="main-v2-first">
-                        <div class="main-v2-left">
-                            <img class="main-v2-qr-sample" src="images/QR-sample.png" alt="Sample QR-code">
-                        </div>
-                        <div class="main-v2-right">
-                            <p class="subtitle">Generieke QR</p>
-                            <p>Het doel van de giften wordt achteraf bepaald</p>
-                        </div>
-                    </div>
+            <div class="QRCode QRCode2" *ngIf="currentQuestionId == 2" id="question-1">
 
-                    <div class="main-v2-second">
-                        <div class="main-v2-left">
-                            <img class="main-v2-qr-sample" src="images/QR-sample.png" alt="Sample QR-code">
-                        </div>
-                        <div class="main-v2-right">
-                            <p class="subtitle">Unieke QR</p>
-                            <p>Iedere QR-code heeft een vooraf bepaald doel</p>
-                        </div>
+                <div class="QRCode_Titlebar">
+                    <div class="QRCode_Titlebar_left">
+                        <i class="fas fa-chevron-left arrow"></i>
                     </div>
-                </div>
-                <div class="main-v2-footer">
-                    <div class="main-v2-footer-left">
-                        <div class="btn-previous" (click)="showPreviousQuestion()">
-                            <i class="fas fa-chevron-left arrow"></i>
-                        </div>
+                    <div class="QRCode_Titlebar_middle">
+                        <h2>Aanvraag QR code</h2>
                     </div>
-                    <div class="main-v2-footer-middle">
+                    <div class="QRCode_Titlebar_right">
 
                     </div>
-                    <div class="main-v2-footer-right">
-                        <div class="btn-next" (click)="showNextQuestion()">
-                            <i class="fas fa-chevron-right arrow"></i>
-                        </div>
+
+                </div>
+
+                <div class="QRCode_Info">
+
+                    <div class="QRCode_Info_Picture">
+                        <img src="images/QR-sample.png" alt="Sample QR-code">
                     </div>
+
+                    <div class="QRCode_Info_Text">
+                        <p class="subtitle subtitle-first">Generieke QR</p>
+                        <ul>
+                            <li>1 Code voor alles</li>
+                            <li>Giften achteraf toewijzen</li>
+                            <li>Flexibel in gebruik</li>
+                        </ul>
+                        <p class="subtitle">Specifieke QR</p>
+                        <ul>
+                            <li>Meerdere codes mogelijk</li>
+                            <li>Giften vooraf toegewezen</li>
+                            <li>Kan niet gewijzigd worden</li>
+                        </ul>
+                    </div>
+
+                </div>
+
+                <div class="QRCode_Buttons">
+                    <button class="btn btn-green">Generieke QR-code</button>
+                    <button class="btn btn-blue">Specifieke QR-code</button>
                 </div>
             </div>
 
@@ -79,14 +81,14 @@
                             <p>Voorbeeld:</p>
                             <tr>
                                 <td>
-                                    <input class="textbox" type="text" name="" value="Bouwfonds" disabled="disabled"/>
+                                    <input class="textbox" type="text" name="" value="Bouwfonds" disabled="disabled" />
                                 </td>
                                 <td class="delete-row" *ngIf="fieldArray.length>1"><i class="far fa-trash-alt"></i>
                                 </td>
                             </tr>
                             <tr>
                                 <td>
-                                    <input class="textbox" type="text" name="" value="Evenement"  disabled="disabled"/>
+                                    <input class="textbox" type="text" name="" value="Evenement" disabled="disabled" />
                                 </td>
                                 <td class="delete-row" *ngIf="fieldArray.length>1"><i class="far fa-trash-alt"></i>
                                 </td>
@@ -96,8 +98,9 @@
                         <table>
                             <tr *ngFor="let field of fieldArray; let i = index; trackBy:trackByFn">
                                 <td>
-                                    <input class="textbox" type="text" name="{{field}}" placeholder="Typ hier collectedoel"
-                                        [(ngModel)]="fieldArray[i]" (ngModelChange)="onChange($event)" />
+                                    <input class="textbox" type="text" name="{{field}}"
+                                        placeholder="Typ hier collectedoel" [(ngModel)]="fieldArray[i]"
+                                        (ngModelChange)="onChange($event)" />
                                 </td>
                                 <td class="delete-row" *ngIf="fieldArray.length>1"><i class="far fa-trash-alt"
                                         (click)="deleteFieldValue(i)"></i></td>
@@ -124,6 +127,46 @@
                         <div class="btn-next" (click)="showNextQuestion()">
                             <i class="fas fa-chevron-right arrow"></i>
                         </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="questions-component questions-component4" *ngIf="currentQuestionId == 4" id="question-1">
+                <div class="header">
+                    <h2>Aanvraag QR code</h2>
+                </div>
+                <div class="main-v2-body_question4">
+                    <div class="main-v2-left">
+                        <p class="subtitle">De volgende QR-codes vraagt u aan:</p>
+                        <ul>
+                            <li>Bouwfonds</li>
+                            <li>Op een collecte bus</li>
+                            <li>In de kerk</li>
+                        </ul>
+                    </div>
+                    <div class="main-v2-right">
+                        <div class="text" id="contactInfo-Email">
+                            <p class="subtitle">
+                                Uw email adres:
+                            </p>
+                            <div class="questions-component-body-textboxquestion">
+                                <i class="fas fa-at"></i>
+                                <input class="textbox" id="email" type="email" placeholder="Email" [(ngModel)]="email"
+                                    (ngModelChange)="onEmailchange($event)">
+                            </div>
+                        </div>
+                        <div class="text" id="contactInfo-Phonenumber">
+                            <p class="subtitle">
+                                Uw telefoonnummer:
+                            </p>
+                            <div class="questions-component-body-textboxquestion">
+                                <i class="fas fa-phone"></i>
+                                <input class="textbox" id="phonenumber" type="tel" placeholder="Phone number"
+                                    [(ngModel)]="phonenumber" (ngModelChange)="onPhonenumberChange($event)">
+                            </div>
+                        </div>
+
+                        <button class="btn btn-givt" (click)="showNextQuestion()">Vraag hem hier aan</button>
                     </div>
                 </div>
             </div>
