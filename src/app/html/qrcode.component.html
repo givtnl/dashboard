@@ -67,6 +67,66 @@
                     </div>
                 </div>
             </div>
+
+            <div class="questions-component questions-component3" *ngIf="currentQuestionId == 3" id="question-1">
+                <div class="header">
+                    <h2>Aanvraag QR code</h2>
+                </div>
+                <div class="main-v2-body_question3">
+                    <div class="main-v2-right">
+                        <p>Een QR-code kan u gemakkelijk gebruiken in de volgende situaties:</p>
+                        <table class="example">
+                            <p>Voorbeeld:</p>
+                            <tr>
+                                <td>
+                                    <input class="textbox" type="text" name="" value="Bouwfonds" disabled="disabled"/>
+                                </td>
+                                <td class="delete-row" *ngIf="fieldArray.length>1"><i class="far fa-trash-alt"></i>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input class="textbox" type="text" name="" value="Evenement"  disabled="disabled"/>
+                                </td>
+                                <td class="delete-row" *ngIf="fieldArray.length>1"><i class="far fa-trash-alt"></i>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <table>
+                            <tr *ngFor="let field of fieldArray; let i = index; trackBy:trackByFn">
+                                <td>
+                                    <input class="textbox" type="text" name="{{field}}" placeholder="Typ hier collectedoel"
+                                        [(ngModel)]="fieldArray[i]" (ngModelChange)="onChange($event)" />
+                                </td>
+                                <td class="delete-row" *ngIf="fieldArray.length>1"><i class="far fa-trash-alt"
+                                        (click)="deleteFieldValue(i)"></i></td>
+                            </tr>
+                        </table>
+                        <div class="add-row">
+                            <i class="fas fa-plus-circle" (click)="addFieldValue()"></i>
+                        </div>
+
+                        <p class="footertext">1 doel = 1 QR-code</p>
+
+                    </div>
+                </div>
+                <div class="main-v2-footer">
+                    <div class="main-v2-footer-left">
+                        <div class="btn-previous" (click)="showPreviousQuestion()">
+                            <i class="fas fa-chevron-left arrow"></i>
+                        </div>
+                    </div>
+                    <div class="main-v2-footer-middle">
+
+                    </div>
+                    <div class="main-v2-footer-right">
+                        <div class="btn-next" (click)="showNextQuestion()">
+                            <i class="fas fa-chevron-right arrow"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         <my-footer></my-footer>
     </div>
