@@ -321,6 +321,7 @@
     .QRCode_Info_Text {
         justify-content: center;
         margin-left: 20px;
+        margin-right: 20px;
     }
     .QRCode_Info_Text ul li {
         padding-top: 4px;
