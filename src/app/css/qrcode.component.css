@@ -95,6 +95,7 @@
 }
 
 .QRCode_Info_Picture {
+    max-height: 50%;
     width: 100%;
     margin-bottom: 20px;
     display: flex;
@@ -308,6 +309,7 @@
     /* --------------------------------------------- Info --------------------------------------------- */
     .QRCode_Info {
         flex-direction: row;
+        overflow: hidden;
     }
     .QRCode_Info_Picture {
         margin-bottom: unset;

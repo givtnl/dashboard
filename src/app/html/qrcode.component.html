@@ -1,3 +1,5 @@
+
+
 <my-alert></my-alert>
 <div class="global-layout">
     <my-navigation></my-navigation>
@@ -32,7 +34,7 @@
                 </div>
             </div>
 
-            <div class="QRCode QRCode2" *ngIf="currentQuestionId == 2" id="question-1">
+            <div class="QRCode QRCode2" *ngIf="currentQuestionId == 2" id="question-2">
                 <div class="QRCode_Titlebar">
                     <div class="QRCode_Titlebar_left" (click)="showPreviousQuestion()">
                         <i class="fas fa-chevron-left arrow"></i>
@@ -68,7 +70,7 @@
                 </div>
             </div>
 
-            <div class="QRCode QRCode3" *ngIf="currentQuestionId == 3" id="question-1">
+            <div class="QRCode QRCode3" *ngIf="currentQuestionId == 3" id="question-3">
                 <div class="QRCode_Titlebar">
                     <div class="QRCode_Titlebar_left" (click)="showPreviousQuestion()">
                         <i class="fas fa-chevron-left arrow"></i>
@@ -107,7 +109,7 @@
                 </div>
             </div>
 
-            <div class="QRCode QRCode4" *ngIf="currentQuestionId == 4" id="question-1">
+            <div class="QRCode QRCode4" *ngIf="currentQuestionId == 4" id="question-4">
                 <div class="QRCode_Titlebar">
                     <div class="QRCode_Titlebar_left" (click)="showPreviousQuestion()">
                         <i class="fas fa-chevron-left arrow"></i>
@@ -148,13 +150,29 @@
 
                         <div class="ContactInfo" id="contactInfo-Phonenumber">
                             <p class="subtitle">Opmerkingen?</p>
-                            <textarea name="Text1"></textarea>
+                            <textarea rows="4"></textarea>
                         </div>
 
                     </div>
                 </div>
                 <div class="QRCode_Buttons">
                     <button class="btn btn-green" (click)="showNextQuestion()">Generieke QR-code</button>
+                </div>
+            </div>
+            <div class="QRCode QRCode5" *ngIf="currentQuestionId == 5" id="question-5">
+                <div class="QRCode_Titlebar">
+                    <div class="QRCode_Titlebar_middle">
+                        <h2>Aanvraag QR code</h2>
+                    </div>
+                </div>
+                <div class="QRCode_Info">
+                    <div class="QRCode_Info_Picture">
+                        <img src="images/QR-sample.png" alt="Sample QR-code">
+                    </div>
+                    <div class="QRCode_Info_Text">
+                        <p class="subtitle subtitle-first">Bedankt!</p>
+                        <p>Binnen enkele dagen kan u de gevraagde QR-code(s) via mail verwachten</p>
+                    </div>
                 </div>
             </div>
         </div>

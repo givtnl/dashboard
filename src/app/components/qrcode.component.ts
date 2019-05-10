@@ -104,6 +104,9 @@ export class QRCodeComponent implements OnInit {
 				if ((!this.isValidFields && this.isChecked) || (this.isValidFields))
 					this.currentQuestionId++
 				break
+				case 4:
+				this.currentQuestionId++
+				break
 		}
 		//this.arriveOnPage(this.currentQuestionId);
 	}
