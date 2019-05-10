@@ -202,5 +202,5 @@
     "RequestQRcodeQuestion4Placeholder": "Phone number",
     "RequestQRcode4Send": "Send",
     "RequestQRcode5": "Got it! We'll react to your request as soon as possible!",
-    "QuestionsProccessingTransactionsAndPayouts": "Do you have questions about the processing of transactions and payments? We have written a nice and short manual for you that explains the whole process very clearly. Do you find yourself left with questions after reading? Do not hesitate to give us a call, we’d love to help."
+    "QuestionsProccessingTransactionsAndPayouts": "Do you have questions about the payments? <a href=\"{0}\">Here</a> we have put a short manual for you.  Read it and still have questions? Do not hesitate to give us a call, we’d love to help."
 }
