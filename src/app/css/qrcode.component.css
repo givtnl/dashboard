@@ -11,7 +11,6 @@
 .QRCode_screen {
     height: 100%;
     width: 100%;
-
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -27,7 +26,6 @@
     background: #FFFFFF;
     border: 1px solid #E3E2E7;
     border-radius: 2px;
-
     display: flex;
     flex-direction: column;
     /* justify-content: center;
@@ -35,24 +33,26 @@
 }
 
 /* --------------------------------------------- Titlebar --------------------------------------------- */
+
 .QRCode_Titlebar {
     width: 100%;
     padding-right: 20px;
     padding-left: 20px;
     padding-top: 20px;
     padding-bottom: 20px;
-
     display: flex;
     flex-direction: row;
     justify-content: center;
     /* align-items: flex-start; */
-} .QRCode_Titlebar div {
+}
+
+.QRCode_Titlebar div {
     padding: unset;
     height: 100%;
 }
+
 .QRCode_Titlebar_left {
     width: 5%;
-
     /* H2 */
     margin: 0;
     font-family: 'Avenir_Black';
@@ -61,42 +61,49 @@
     text-align: center;
     font-weight: normal;
 }
-.QRCode_Titlebar_left:hover     {
-    background-color:#2C2B57;
+
+.QRCode_Titlebar_left:hover {
+    background-color: #2C2B57;
     color: white;
     border-radius: .25rem;
 }
+
 .QRCode_Titlebar_middle {
     width: 90%;
-} .QRCode_Titlebar_middle h2{
+}
+
+.QRCode_Titlebar_middle h2 {
     padding: unset;
 }
+
 .QRCode_Titlebar_right {
     width: 5%;
 }
 
 /* --------------------------------------------- Info --------------------------------------------- */
+
 .QRCode_Info {
     width: 100%;
     max-height: 100%;
-
     padding-left: 20px;
     padding-right: 20px;
-
-     display: flex;
+    display: flex;
     flex-direction: column;
-    justify-content: center;
+    /* justify-content: center; */
     align-items: center;
-} 
+    overflow: auto;
+}
 
 .QRCode_Info_Picture {
     width: 100%;
-
+    margin-bottom: 20px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-} .QRCode_Info_Picture img {
+}
+
+.QRCode_Info_Picture img {
     height: 100%;
     max-width: 100%;
 }
@@ -105,76 +112,105 @@
     width: 100%;
     max-height: 100%;
     min-height: fit-content;
-
-    padding-top: 20px;
-
     font-family: 'Avenir_Light';
     color: #2E2957;
     font-size: 0.8em;
-    white-space: nowrap;
     word-wrap: break-word;
-
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-} .QRCode_Info_Text p {
+}
+
+.QRCode_Info_Text p {
     text-align: center;
-}.QRCode_Info_Text .subtitle {
+}
+
+.QRCode_Info_Text .subtitle {
     margin-block-start: 0;
     margin-block-end: 0;
-
     font-family: 'Avenir_Heavy';
     color: #2E2957;
     font-size: 1.2em;
-    white-space: nowrap;
-    word-wrap: break-word;
-} .QRCode_Info_Text input, .QRCode_Info_Text .add-row {
+}
+
+.QRCode_Info_Text input, .QRCode_Info_Text .add-row {
     font-family: 'Avenir';
     color: #2E2957;
     font-size: 1.0em;
-    white-space: nowrap;
-    word-wrap: break-word;
-
     border: 1px solid #ccc;
     border-radius: 0.1rem;
     box-sizing: border-box;
-} 
+}
+
 .QRCode_Info_Text ul {
     list-style: none;
     padding-inline-start: 0;
+}
 
-} .QRCode_Info_Text ul li {
+.QRCode_Info_Text ul li {
     padding-top: 2px;
     padding-bottom: 2px;
     text-align: center;
-} .QRCode_Info_Text .add-row {
+}
+
+.QRCode_Info_Text .add-row {
     padding-top: 10px;
     text-align: center;
-}.QRCode_Info_Text td {
+}
+
+.QRCode_Info_Text td {
     padding: 5px;
 }
 
+.QRCode_Info_Text2 {
+    align-items: flex-start;
+}
+
+.QRCode_Info_Text2 div{
+    width: 100%;
+}
+
+.ContactInfo textarea {
+    width: 100%;
+    resize: none;
+    margin-top:10px;
+    margin-bottom: 10px;
+
+    color: #2E2957;
+    font-size: 1.0em;
+    border: 1px solid #ccc;
+    border-radius: 0.1rem;
+    box-sizing: border-box;
+}
+
+.ContactInfo .Textbox {
+    width: 70%;
+    margin-top:10px;
+    margin-left: 10px;
+    margin-bottom: 10px;
+}
+
 /* --------------------------------------------- Buttons --------------------------------------------- */
+
 .QRCode_Buttons {
     width: 100%;
     padding-top: 10px;
     padding-bottom: 20px;
     padding-left: 20px;
     padding-right: 20px;
-    
     margin-top: auto;
     margin-bottom: O;
-
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-} .QRCode_Buttons button {
+}
+
+.QRCode_Buttons button {
     display: inline-block;
     font-weight: 400;
     text-align: center;
-    white-space: nowrap;
     vertical-align: middle;
     -webkit-user-select: none;
     -moz-user-select: none;
@@ -191,55 +227,79 @@
     padding-right: 10px;
     transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
 }
-.QRCode_Buttons .btn-green{
+
+.QRCode_Buttons .btn-green {
     margin-bottom: 5px;
     margin-top: 5px;
     color: #fff;
     background: #06B26B;
-}.QRCode_Buttons .btn-green:hover{
+}
+
+.QRCode_Buttons .btn-green:hover {
     background-color: rgb(11, 158, 97);
     border-color: rgb(6, 83, 51);
-}.QRCode_Buttons .btn-blue{
+}
+
+.QRCode_Buttons .btn-blue {
     margin-bottom: 5px;
     margin-top: 5px;
     color: #fff;
     background: #2E2957;
-}.QRCode_Buttons .btn-blue:hover{
+}
+
+.QRCode_Buttons .btn-blue:hover {
     background-color: indigo;
     border-color: rgb(6, 83, 51);
 }
 
 /* --------------------------------------------- Screen 1 --------------------------------------------- */
+
 /* --------------------------------------------- Info --------------------------------------------- */
+
 .QRCode1 .QRCode_Info_Text p {
     text-align: center;
-} 
+}
 
 /* --------------------------------------------- Screen 2 --------------------------------------------- */
+
 /* --------------------------------------------- Info --------------------------------------------- */
+
 .QRCode2 .QRCode_Info_Picture {
-    display:none;
+    display: none;
 }
 
 /* --------------------------------------------- Screen 3 --------------------------------------------- */
+
 /* --------------------------------------------- Info --------------------------------------------- */
-.QRCode3 .delete-row    {
+
+.QRCode3 .delete-row {
     text-align: center;
-}.QRCode3 .delete-row:hover     {
-    background-color:#2C2B57;
+}
+
+.QRCode3 .delete-row:hover {
+    background-color: #2C2B57;
     color: white;
     border-radius: .1rem;
 }
-.QRCode3 .QRCode_Info_Text .add-row td:hover    {
-    background-color:#2C2B57;
+
+.QRCode3 .QRCode_Info_Text .add-row td:hover {
+    background-color: #2C2B57;
     color: white;
     border-radius: .1rem;
+}
+
+/* --------------------------------------------- Screen 4 --------------------------------------------- */
+
+/* --------------------------------------------- Info --------------------------------------------- */
+
+.QRCode4 .ContactInfo p{
+    text-align: unset;
 }
 
 /* --------------------------------------------- Desktop --------------------------------------------- */
+
 @media only screen and (min-width: 481px) {
     .QRCode {
-
         /* width: unset; */
         max-width: 775px;
         max-height: 550px;
@@ -248,23 +308,33 @@
     /* --------------------------------------------- Info --------------------------------------------- */
     .QRCode_Info {
         flex-direction: row;
-    } 
+    }
+    .QRCode_Info_Picture {
+        margin-bottom: unset;
+    }
     .QRCode_Info_Picture img {
         height: unset;
     }
     .QRCode_Info_Text {
         justify-content: center;
-    } .QRCode_Info_Text ul li {
+    }
+    .QRCode_Info_Text ul li {
         padding-top: 4px;
         padding-bottom: 4px;
     }
     /* --------------------------------------------- Buttons --------------------------------------------- */
-
-
+    /* --------------------------------------------- Screen 1 --------------------------------------------- */
+    .QRCode1 .QRCode_Titlebar {
+        padding-bottom: 0px;
+    }
     /* --------------------------------------------- Screen 2 --------------------------------------------- */
-/* --------------------------------------------- Info --------------------------------------------- */
+    /* --------------------------------------------- Info --------------------------------------------- */
+    .QRCode2 .QRCode_Titlebar {
+        padding-bottom: 0px;
+    }
     .QRCode2 .QRCode_Info_Picture {
         display: flex;
     }
 }
+
 /* ---------------------------------------------  */

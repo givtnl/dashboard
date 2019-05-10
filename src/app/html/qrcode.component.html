@@ -16,14 +16,14 @@
                         <img src="images/QR-sample.png" alt="Sample QR-code">
                     </div>
                     <div class="QRCode_Info_Text">
-                        <p class="subtitle subtitle-first">U kunt Een QR-code<br>gemakkelijk gebruiken<br>in de volgende
+                        <p class="subtitle subtitle-first">U kunt Een QR-code gemakkelijk gebruiken in de volgende
                             situaties:</p>
                         <ul>
                             <li>Aan de deur</li>
                             <li>Op een collecte bus</li>
                             <li>In de kerk</li>
                         </ul>
-                        <p class="subtitle">Vraag nu je gratis QR-code aan <br> en ontvang ze via mail.</p>
+                        <p class="subtitle">Vraag nu je gratis QR-code aan en ontvang ze via mail.</p>
 
                     </div>
                 </div>
@@ -119,33 +119,38 @@
                     </div>
                 </div>
                 <div class="QRCode_Info">
-                    <div class="QRCode_Info_Text">
-                        <p class="subtitle subtitle-first">Generieke QR</p>
+                    <div class="QRCode_Info_Text QRCode_Info_Text1">
+                        <p class="subtitle subtitle-first">De volgende QR-codes worden door u aangevraagd</p>
                         <ul>
-                            <li>1 Code voor alles</li>
+                            <li >1 Code voor alles</li>
                             <li>Giften achteraf toewijzen</li>
                             <li>Flexibel in gebruik</li>
                         </ul>
                     </div>
-                    <div class="QRCode_Info_Text">
-                        <div class="text" id="contactInfo-Email">
-                            Naar welk email adres mogen mogen wij de QR-code zenden?
-
-                            <div class="questions-component-body-textboxquestion">
+                    <div class="QRCode_Info_Text QRCode_Info_Text2">
+                        <div class="ContactInfo" id="contactInfo-Email">
+                            <p class="subtitle">Wat is uw email-adres?</p>
+                            <div>
                                 <i class="fas fa-at"></i>
-                                <input class="textbox" id="email" type="email" placeholder="Email" [(ngModel)]="email"
+                                <input class="Textbox" id="email" type="email" placeholder="Email" [(ngModel)]="email"
                                     (ngModelChange)="onEmailchange($event)">
                             </div>
                         </div>
 
-                        <div class="text" id="contactInfo-Phonenumber">
-                            Op welk telefoonnummer mogen wij u (indien nodig) contacteren?
-                            <div class="questions-component-body-textboxquestion">
+                        <div class="ContactInfo" id="contactInfo-Phonenumber">
+                            <p class="subtitle">Wat is uw telefoonnummer?</p>
+                            <div>
                                 <i class="fas fa-phone"></i>
-                                <input class="textbox" id="phonenumber" type="tel" placeholder="Phone number"
+                                <input class="Textbox" id="phonenumber" type="tel" placeholder="Phone number"
                                     [(ngModel)]="phonenumber" (ngModelChange)="onPhonenumberChange($event)">
                             </div>
                         </div>
+
+                        <div class="ContactInfo" id="contactInfo-Phonenumber">
+                            <p class="subtitle">Opmerkingen?</p>
+                            <textarea name="Text1"></textarea>
+                        </div>
+
                     </div>
                 </div>
                 <div class="QRCode_Buttons">
