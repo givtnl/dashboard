@@ -183,8 +183,8 @@
     "RequestMediumIdManual": "Download the manual for developers <a href='assets/Manual-Deeplink-Givt.zip'>here</a>.",
     "GivtWithGivtPreferenceTitle": "Integration with Givt",
     "Text_TransactionCost_MoreInfo_GB": "These costs are charged by Smart Debit for handling the transactions.",
-    "RequestQRcode1": "Request a QR code",
-    "QRcodeNav": "QR code",
+    "QRCodeREQ_1_title": "Request a QR code",
+    "QRCodeREQ_nav": "QR code",
     "RequestQRcodeBody": "You can also give by a QR code with Givt. Use a QR code in a newsletter, on a website, in print, ... to receive donations in general or for a specific cause. For example a building fund for which you collect multiple times a year or an event with a special collection.",
     "RequestQRcodeQuestion1": "Do you wish to use a QR code?",
     "QRcodeYes": "Yes",
@@ -202,5 +202,5 @@
     "RequestQRcodeQuestion4Placeholder": "Phone number",
     "RequestQRcode4Send": "Send",
     "RequestQRcode5": "Got it! We'll react to your request as soon as possible!",
-    "QuestionsProccessingTransactionsAndPayouts": "Do you have questions about the payments? <a href=\"{0}\">Here</a> we have put a short manual for you.  Read it and still have questions? Do not hesitate to give us a call, we’d love to help."
+    "QuestionsProccessingTransactionsAndPayouts": "Do you have questions about the payments? We have placed a short manual in the menu at the bottom left. Still can't figure it out? Do not hesitate to give us a call, we’d love to help."
 }
