@@ -218,8 +218,9 @@ export class PayoutComponent implements OnInit {
 
     exportCSV() {
         this.loader["show"] = true;
-        let dtStart = new Date(this.dtEnd);
-        let dtEnd = new Date(this.dtEnd);
+        let dtStart = new Date(this.dtExecuted);
+        let dtEnd = new Date(this.dtExecuted);
+        dtStart.setDate(dtStart.getDate() - 1);
         dtEnd.setDate(dtEnd.getDate() + 1);
         let start = this.datePipe.toISODateUTC(dtStart);
         let end = this.datePipe.toISODateUTC(dtEnd);
