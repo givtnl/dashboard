@@ -4,8 +4,6 @@
     <div class="global-layout-content">
         <my-titlebar></my-titlebar>
         <section class="section-collects" *ngIf="payouts.length == 0">
-            <p class="text section-collects-nopayments">{{ "QuestionsProccessingTransactionsAndPayouts" | translate }}
-            </p>
             <p class="text section-collects-nopayments">{{ "Payout_NoPayouts" | translate }}</p>
             <div class="placeholder-line"></div>
             <div class="placeholder-line"></div>
@@ -44,6 +42,11 @@
             </div>
 
             <hr class="collect-hr" />
+            <div id='info-div' class='global-alert-wrapper wrapper-green'>
+              <div class="global-alert"></div>
+              <span class="text section-collects-nopayments">{{ "QuestionsProccessingTransactionsAndPayouts" | translate }}</span>
+            </div>
+
         </section>
         <section *ngFor="let payout of payouts | reverse; let last = last" [ngClass]="{last: last}">
             <payout [childData]="payout" [loader]="loader"></payout>
