@@ -201,5 +201,6 @@
     "RequestQRcodeQuestion4b": "Op welk telefoonnummer mogen wij u (indien nodig) hierover bellen?",
     "RequestQRcodeQuestion4Placeholder": "Telefoonnummer",
     "RequestQRcode4Send": "Verstuur",
-    "RequestQRcode5": "Gelukt! Wij reageren zo spoedig mogelijk op uw aanvraag!"
+    "RequestQRcode5": "Gelukt! Wij reageren zo spoedig mogelijk op uw aanvraag!",
+    "QuestionsProccessingTransactionsAndPayouts": "Heb je vragen over het verwerken van transacties en de uitbetalingen? We hebben een duidelijke, korte handleiding geschreven die het allemaal mooi uitlegt. Als je er dan nog niet uitkomt, bel ons dan gerust even op."
 }
