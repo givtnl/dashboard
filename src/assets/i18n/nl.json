@@ -202,5 +202,5 @@
     "RequestQRcodeQuestion4Placeholder": "Telefoonnummer",
     "RequestQRcode4Send": "Verstuur",
     "RequestQRcode5": "Gelukt! Wij reageren zo spoedig mogelijk op uw aanvraag!",
-    "QuestionsProccessingTransactionsAndPayouts": "Heb je vragen over het verwerken van transacties en de uitbetalingen? We hebben een duidelijke, korte handleiding geschreven die het allemaal mooi uitlegt. Als je er dan nog niet uitkomt, bel ons dan gerust even op."
+    "QuestionsProccessingTransactionsAndPayouts": "Heeft u vragen over de uitbetalingen? <a href=\"{0}\">Hier</a> hebben we een korte handleiding voor u neergezet. Mocht u er nog niet uitkomen, bel ons dan gerust even op."
 }
