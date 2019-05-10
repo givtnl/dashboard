@@ -313,12 +313,14 @@
     }
     .QRCode_Info_Picture {
         margin-bottom: unset;
+        margin-right: 20px;
     }
     .QRCode_Info_Picture img {
         height: unset;
     }
     .QRCode_Info_Text {
         justify-content: center;
+        margin-left: 20px;
     }
     .QRCode_Info_Text ul li {
         padding-top: 4px;
@@ -326,14 +328,8 @@
     }
     /* --------------------------------------------- Buttons --------------------------------------------- */
     /* --------------------------------------------- Screen 1 --------------------------------------------- */
-    .QRCode1 .QRCode_Titlebar {
-        padding-bottom: 0px;
-    }
     /* --------------------------------------------- Screen 2 --------------------------------------------- */
     /* --------------------------------------------- Info --------------------------------------------- */
-    .QRCode2 .QRCode_Titlebar {
-        padding-bottom: 0px;
-    }
     .QRCode2 .QRCode_Info_Picture {
         display: flex;
     }

@@ -20,39 +20,40 @@ export class QRCodeComponent implements OnInit {
 
 	}
 
-	skippedToEnd = false;
-	currentQuestionId = 1;
-	isChecked = false;
-	emailChecked = false;
+	currentQuestionId:number = 1;
 	fieldArray: string[] = [];
-	isValidFields: boolean = true
-	isPhoneValid: boolean = false
-	isEmailValid: boolean = false
-	showSubmit: boolean = this.isPhoneValid && this.isEmailValid
-	showNext = true
-	email = ""
-	phonenumber = ""
-	private newAttribute: string = "";
+
+	showNextQuestion(value: number) {
+		console.log(this.currentQuestionId)
+		this.currentQuestionId+=value;
+	}
+	showPreviousQuestion(value: number = 1) {
+		console.log(this.currentQuestionId)
+		this.currentQuestionId-=value;
+	}
 
 	addFieldValue() {
-			this.fieldArray.push(this.newAttribute)
-			this.newAttribute = "";
+		this.fieldArray.push(this.newAttribute)
+		this.newAttribute = "";
 	}
-	checkFields() {
-		this.isValidFields = true
-		this.fieldArray.forEach(element => {
-			console.log(element)
-			if (element.length <= 3) {
-				this.isValidFields = false;
-			}
-		});
-		if (!this.isValidFields)
-			this.showNext = false
-		else
-			this.showNext = true
+
+	deleteFieldValue(index) {
+		this.fieldArray.splice(index, 1);
 	}
-	onChange() {
-		this.checkFields()
+
+	trackByFn(index: any, item: any) {
+		return index;
+	}
+
+	submit() {
+		let body: QRRequestBody = { generic: this.isChecked, email: this.email, phoneNumber: this.phonenumber, collectGoals: this.fieldArray }
+		let apiUrl = 'v2/collectgroups/' + this.userService.CurrentCollectGroup.GUID + '/qrcodes';
+
+		this.apiService.postData(apiUrl, body)
+			.then(resp => {
+				console.log(resp);
+			});
+		
 	}
 
 	onEmailchange() {
@@ -81,88 +82,45 @@ export class QRCodeComponent implements OnInit {
 		return this.isPhoneValid
 	}
 
-	deleteFieldValue(index) {
-		this.fieldArray.splice(index, 1);
-	}
+
+
+
+
+	skippedToEnd = false;
+
+	isChecked = false;
+	emailChecked = false;
+
+	isValidFields: boolean = true
+	isPhoneValid: boolean = false
+	isEmailValid: boolean = false
+	showSubmit: boolean = this.isPhoneValid && this.isEmailValid
+	showNext = true
+	email = ""
+	phonenumber = ""
+	private newAttribute: string = "";
+
+
+
+	
+
+	
 
 	ngOnInit(): void {
 		this.fieldArray.push("Bouwfonds")
 		this.fieldArray.push("Evenement")
 	}
 
-	showNextQuestion() {
-		console.log(this.currentQuestionId)
-		switch (this.currentQuestionId) {
-			case 1:
-				this.currentQuestionId++
-				break
-			case 2:
-				if (this.isValidFields)
-					this.currentQuestionId++
-				break
-			case 3:
-				if ((!this.isValidFields && this.isChecked) || (this.isValidFields))
-					this.currentQuestionId++
-				break
-				case 4:
-				this.currentQuestionId++
-				break
-		}
-		//this.arriveOnPage(this.currentQuestionId);
-	}
-	trackByFn(index: any, item: any) {
-		return index;
-	}
 
-	arriveOnPage(questionNumber: number) {
-		switch (questionNumber) {
-			case 2:
-				if (this.fieldArray.length == 0) {
-					this.fieldArray.push("")
-				}
 
-			default:
-				break;
-		}
-	}
 
-	showPreviousQuestion() {
-		if (this.skippedToEnd && this.currentQuestionId == 4) {
-			this.currentQuestionId = 2;
-			this.skippedToEnd = false
-		}
-		else
-			this.currentQuestionId--
-		this.arriveOnPage(this.currentQuestionId);
-		this.checkFields()
 
-	}
 
-	checkboxClicked() {
-		this.isChecked = !this.isChecked
-	}
 
-	goHome() {
-		this.router.navigateByUrl('/');
-	}
 
-	skipToEnd() {
-		this.skippedToEnd = true;
-		this.currentQuestionId = 4;
-		this.fieldArray.length = 0;
-		this.isChecked = true;
-	}
+	
 
-	submit() {
-		let body: QRRequestBody = { generic: this.isChecked, email: this.email, phoneNumber: this.phonenumber, collectGoals: this.fieldArray }
-		let apiUrl = 'v2/collectgroups/' + this.userService.CurrentCollectGroup.GUID + '/qrcodes';
 
-		this.apiService.postData(apiUrl, body)
-			.then(resp => {
-				console.log(resp);
-			});
-		
-	}
 }
 
 class QRRequestBody {
