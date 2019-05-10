@@ -99,9 +99,13 @@ h3{
     display: block;
 }
 
+.payouts-time-container {
+    margin-left: 30px;
+}
 .show-collect .time{
     font-family:"Avenir_Roman";
     font-size:12px;
+    padding-left: 20px
 }
 
 .collect-hr{
@@ -709,6 +713,10 @@ h3{
     z-index: 1000;
     margin-top: 20px;
     text-align: center;
+  }
+  .global-alert-wrapper img {
+      float: left;
+      height: 62px;
   }
   .wrapper-green {
     background: #d4edda;

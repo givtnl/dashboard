@@ -32,6 +32,8 @@ export class PayoutsComponent implements OnInit {
     dateEnd: Date = null;
     loader: object = { show: false };
     openAllocationsMessage: string;
+    questionsGoToManualMessage: string
+
     constructor(private apiService: ApiClientService, private dataService: DataService, translate: TranslateService, private datePipe: ISODatePipe, private userService: UserService) {
         this.isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
         this.translate = translate;
@@ -47,6 +49,13 @@ export class PayoutsComponent implements OnInit {
         if (!!this.dataService.getData('payoutDateBegin') && !!this.dataService.getData('payoutDateEnd')) {
             this.dateBegin = new Date(Number(this.dataService.getData('payoutDateBegin')) * 1000);
             this.dateEnd = new Date(Number(this.dataService.getData('payoutDateEnd')) * 1000);
+        }
+        this.translate.get("QuestionsProccessingTransactionsAndPayouts").subscribe(value => {this.questionsGoToManualMessage = value;});
+
+        if(translate.currentLang == 'nl'){
+            this.questionsGoToManualMessage.replace("{0}", "https://www.givtapp.net/wp-content/uploads/2017/07/Handleiding_Givt_Dashboard.pdf")
+        } else {
+            this.questionsGoToManualMessage.replace("{0}", "https://www.givtapp.net/wp-content/uploads/2018/12/Manual_Givt_Dashboard.pdf")
         }
     }
 
