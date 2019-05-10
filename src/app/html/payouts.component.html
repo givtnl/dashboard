@@ -1,57 +1,61 @@
 <my-alert></my-alert>
 <div class="global-layout">
-  <my-navigation></my-navigation>
-  <div class="global-layout-content">
-    <my-titlebar></my-titlebar>
-    <section class="section-collects" *ngIf="payouts.length == 0">
-      <p class="text section-collects-nopayments">{{ "Payout_NoPayouts" | translate }}</p>
-      <div class="placeholder-line"></div>
-      <div class="placeholder-line"></div>
-      <div class="placeholder-line"></div>
-    </section>
-    <section *ngIf="payouts.length > 0" class="section-collects">
-      <h2 *ngIf="openAllocations" class="red">{{ openAllocationsMessage }}</h2>
-      <h2>{{"Payout_OverviewPayouts" | translate}}</h2>
-      <p class="text">{{"Text_Export" | translate}}</p>
-      <div class="search-payouts">
-        <p-calendar inputStyleClass="date-picker-input" [(ngModel)]="dateBegin" dateFormat="dd/mm/yy"></p-calendar>
-          <p style="margin: 0 20px;" class="till">{{"Text_TotEnMet" | translate}}</p>
-        <p-calendar inputStyleClass="date-picker-input" [(ngModel)]="dateEnd" dateFormat="dd/mm/yy"></p-calendar>
-        
-        <a class="download-csv-button btn-csv" (click)="exportCSV()">Download&nbsp;CSV
-          <svg style="margin-left: 10px;" width="20px" height="20px" viewBox="0 0 33 33" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-            <!-- Generator: Sketch 46.1 (44463) - http://www.bohemiancoding.com/sketch -->
-            <desc>Created with Sketch.</desc>
-            <defs></defs>
-            <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-              <g id="Artboard" transform="translate(-184.000000, -208.000000)" fill="#FFFFFF">
-                <g id="download" transform="translate(184.000000, 208.000000)">
-                  <rect id="Rectangle-3" x="0" y="23" width="4" height="6"></rect>
-                  <rect id="Rectangle-2" x="0" y="29" width="33" height="4"></rect>
-                  <rect id="Rectangle-3" x="29" y="23" width="4" height="6"></rect>
-                  <polygon id="Triangle" points="17 23 10 16 24 16"></polygon>
-                  <rect id="Rectangle-4" x="15" y="0" width="4" height="16"></rect>
-                </g>
-              </g>
-            </g>
-          </svg>
-        </a>
-      </div>
+    <my-navigation></my-navigation>
+    <div class="global-layout-content">
+        <my-titlebar></my-titlebar>
+        <section class="section-collects" *ngIf="payouts.length == 0">
+            <p class="text section-collects-nopayments">{{ "QuestionsProccessingTransactionsAndPayouts" | translate }}
+            </p>
+            <p class="text section-collects-nopayments">{{ "Payout_NoPayouts" | translate }}</p>
+            <div class="placeholder-line"></div>
+            <div class="placeholder-line"></div>
+            <div class="placeholder-line"></div>
+        </section>
+        <section *ngIf="payouts.length > 0" class="section-collects">
+            <h2 *ngIf="openAllocations" class="red">{{ openAllocationsMessage }}</h2>
+            <h2>{{"Payout_OverviewPayouts" | translate}}</h2>
+            <p class="text">{{"Text_Export" | translate}}</p>
+            <div class="search-payouts">
+                <p-calendar inputStyleClass="date-picker-input" [(ngModel)]="dateBegin" dateFormat="dd/mm/yy">
+                </p-calendar>
+                <p style="margin: 0 20px;" class="till">{{"Text_TotEnMet" | translate}}</p>
+                <p-calendar inputStyleClass="date-picker-input" [(ngModel)]="dateEnd" dateFormat="dd/mm/yy">
+                </p-calendar>
 
-      <hr class="collect-hr"/>
-    </section>
-    <section *ngFor="let payout of payouts | reverse; let last = last" [ngClass]="{last: last}">
-      <payout [childData]="payout" [loader]="loader" ></payout>
-    </section>
+                <a class="download-csv-button btn-csv" (click)="exportCSV()">Download&nbsp;CSV
+                    <svg style="margin-left: 10px;" width="20px" height="20px" viewBox="0 0 33 33" version="1.1"
+                        xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                        <!-- Generator: Sketch 46.1 (44463) - http://www.bohemiancoding.com/sketch -->
+                        <desc>Created with Sketch.</desc>
+                        <defs></defs>
+                        <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                            <g id="Artboard" transform="translate(-184.000000, -208.000000)" fill="#FFFFFF">
+                                <g id="download" transform="translate(184.000000, 208.000000)">
+                                    <rect id="Rectangle-3" x="0" y="23" width="4" height="6"></rect>
+                                    <rect id="Rectangle-2" x="0" y="29" width="33" height="4"></rect>
+                                    <rect id="Rectangle-3" x="29" y="23" width="4" height="6"></rect>
+                                    <polygon id="Triangle" points="17 23 10 16 24 16"></polygon>
+                                    <rect id="Rectangle-4" x="15" y="0" width="4" height="16"></rect>
+                                </g>
+                            </g>
+                        </g>
+                    </svg>
+                </a>
+            </div>
 
-    <div class="overlay-loader" *ngIf="loader['show']">
-      <div class="loader" style="margin-top: 45vh">
-        <svg class="circular" viewBox="25 25 50 50">
-          <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="5" stroke-miterlimit="10"/>
-        </svg>
-      </div>
+            <hr class="collect-hr" />
+        </section>
+        <section *ngFor="let payout of payouts | reverse; let last = last" [ngClass]="{last: last}">
+            <payout [childData]="payout" [loader]="loader"></payout>
+        </section>
+
+        <div class="overlay-loader" *ngIf="loader['show']">
+            <div class="loader" style="margin-top: 45vh">
+                <svg class="circular" viewBox="25 25 50 50">
+                    <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="5" stroke-miterlimit="10" />
+                </svg>
+            </div>
+        </div>
+        <my-footer></my-footer>
     </div>
-    <my-footer></my-footer>
-  </div>
 </div>
-
