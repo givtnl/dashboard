@@ -35,8 +35,8 @@ export class QRCodeComponent implements OnInit {
 	private newAttribute: string = "";
 
 	addFieldValue() {
-		this.fieldArray.push(this.newAttribute)
-		this.newAttribute = "";
+			this.fieldArray.push(this.newAttribute)
+			this.newAttribute = "";
 	}
 	checkFields() {
 		this.isValidFields = true
