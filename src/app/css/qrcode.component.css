@@ -106,9 +106,12 @@
     max-height: 100%;
     min-height: fit-content;
 
+    padding-top: 20px;
+
     font-family: 'Avenir_Light';
     color: #2E2957;
     font-size: 0.8em;
+    white-space: nowrap;
     word-wrap: break-word;
 
     display: flex;
@@ -117,14 +120,15 @@
     align-items: center;
 } .QRCode_Info_Text p {
     text-align: center;
-} .QRCode_Info_Text:nth-child(1){
-    margin-top: 0 !important;
-}
+}.QRCode_Info_Text .subtitle {
+    margin-block-start: 0;
+    margin-block-end: 0;
 
-.QRCode_Info_Text .subtitle {
     font-family: 'Avenir_Heavy';
     color: #2E2957;
     font-size: 1.2em;
+    white-space: nowrap;
+    word-wrap: break-word;
 } .QRCode_Info_Text input, .QRCode_Info_Text .add-row {
     font-family: 'Avenir';
     color: #2E2957;
