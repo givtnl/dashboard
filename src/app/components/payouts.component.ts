@@ -51,12 +51,6 @@ export class PayoutsComponent implements OnInit {
             this.dateEnd = new Date(Number(this.dataService.getData('payoutDateEnd')) * 1000);
         }
         this.translate.get("QuestionsProccessingTransactionsAndPayouts").subscribe(value => {this.questionsGoToManualMessage = value;});
-
-        if(translate.currentLang == 'nl'){
-            this.questionsGoToManualMessage.replace("{0}", "https://www.givtapp.net/wp-content/uploads/2017/07/Handleiding_Givt_Dashboard.pdf")
-        } else {
-            this.questionsGoToManualMessage.replace("{0}", "https://www.givtapp.net/wp-content/uploads/2018/12/Manual_Givt_Dashboard.pdf")
-        }
     }
 
     checkAllocations() {
