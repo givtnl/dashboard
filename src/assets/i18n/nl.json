@@ -183,9 +183,9 @@
     "RequestMediumIdManual": "Download <a href='assets/Manual-Deeplink-Givt.zip'>hier</a> de handleiding voor ontwikkelaars.",
     "GivtWithGivtPreferenceTitle": "Koppeling met Givt",
     "Text_TransactionCost_MoreInfo_GB": "Dit zijn de kosten die Smart Debit in rekening brengt voor het verwerken van transacties.",
-    "RequestQRcode1": "Vraag een QR-code aan",
-    "QRcodeNav": "QR-code",
-    "RequestQRcodeBody": "Met Givt kan er ook gegeven worden aan een QR-code. Gebruik een QR-code in een nieuwsbrief, op een website, op drukwerk, ... om algemeen te collecteren of voor een specifiek doel of actie. Bijvoorbeeld een bouwfonds waar meerdere keren per jaar voor wordt gecollecteerd of een evenement met een speciale inzamelingsactie.",
+    "QRCodeREQ_1_title": "QR-code aanvragen",
+    "QRCodeREQ_nav": "QR-code",
+    "RequestQRcodeBody": "Met de Givt-app kun je heel eenvoudig geven aan een QR-code die je overal kunt plaatsen.",
     "RequestQRcodeQuestion1": "Lijkt zo'n QR-code u iets?",
     "QRcodeYes": "Ja",
     "QRcodeNo": "Nee",
@@ -202,5 +202,5 @@
     "RequestQRcodeQuestion4Placeholder": "Telefoonnummer",
     "RequestQRcode4Send": "Verstuur",
     "RequestQRcode5": "Gelukt! Wij reageren zo spoedig mogelijk op uw aanvraag!",
-    "QuestionsProccessingTransactionsAndPayouts": "Heeft u vragen over de uitbetalingen? <a href=\"{0}\">Hier</a> hebben we een korte handleiding voor u neergezet. Mocht u er nog niet uitkomen, bel ons dan gerust even op."
+    "QuestionsProccessingTransactionsAndPayouts": "Heeft u vragen over de uitbetalingen? We hebben een korte handleiding in het menu (links onderaan) geplaatst. Mocht u er nog niet uitkomen, bel ons dan gerust even op."
 }
