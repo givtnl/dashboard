@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="364px" height="146px" viewBox="0 0 364 146" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 53.2 (72643) - https://sketchapp.com -->
+    <title>Geef met givt knop</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <filter x="-4.3%" y="-11.4%" width="108.3%" height="122.7%" filterUnits="objectBoundingBox" id="filter-1">
+            <feOffset dx="0" dy="2" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="2" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.5 0" type="matrix" in="shadowBlurOuter1" result="shadowMatrixOuter1"></feColorMatrix>
+            <feMerge>
+                <feMergeNode in="shadowMatrixOuter1"></feMergeNode>
+                <feMergeNode in="SourceGraphic"></feMergeNode>
+            </feMerge>
+        </filter>
+        <rect id="path-2" x="0" y="0" width="350.4" height="132" rx="18.2771712"></rect>
+        <circle id="path-4" cx="80.4" cy="80.4" r="80.4"></circle>
+        <rect id="path-6" x="0" y="0" width="180" height="165.6" rx="7.96153577"></rect>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="A6" transform="translate(-115.000000, -260.000000)">
+            <g id="Geef-met-givt-knop" filter="url(#filter-1)" transform="translate(122.000000, 265.000000)">
+                <g id="Givy-+-Achtergrond">
+                    <mask id="mask-3" fill="white">
+                        <use xlink:href="#path-2"></use>
+                    </mask>
+                    <use id="Mask" stroke="#2E2A54" stroke-width="4.20480011" fill="#2E2A54" xlink:href="#path-2"></use>
+                    <g id="Givy" mask="url(#mask-3)">
+                        <g transform="translate(-24.000000, -14.400000)">
+                            <mask id="mask-5" fill="white">
+                                <use xlink:href="#path-4"></use>
+                            </mask>
+                            <use id="Mask" stroke="none" fill="#E4E4E3" fill-rule="evenodd" xlink:href="#path-4"></use>
+                            <g id="Group" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" mask="url(#mask-5)">
+                                <g transform="translate(-12.000000, -14.400000)">
+                                    <mask id="mask-7" fill="white">
+                                        <use xlink:href="#path-6"></use>
+                                    </mask>
+                                    <g id="Mask" stroke="none" fill="none"></g>
+                                    <g id="Group" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" mask="url(#mask-7)">
+                                        <g transform="translate(50.400000, 40.800000)">
+                                            <path d="M72,98.4 C72,98.4 88.1439302,103.487523 92.6511788,122.915173 C97.1584273,142.342822 84.1438209,153.6 84.1438209,153.6" id="Line-Copy-7" stroke="#2E2957" stroke-width="6.9663438" fill="none" stroke-linecap="round"></path>
+                                            <path d="M0,98.4 C0,98.4 15.5898367,103.389831 18.6511995,122.915173 C21.7125623,142.440515 10.9677433,153.6 10.9677433,153.6" id="Line-Copy-10" stroke="#2E2957" stroke-width="6.9663438" fill="none" stroke-linecap="round" transform="translate(9.600000, 126.000000) scale(-1, 1) translate(-9.600000, -126.000000) "></path>
+                                            <path d="M14.4,0 L47.144086,4.81530677 C64.8480785,7.41883507 79.2,24.03305 79.2,41.920366 L79.2,64.8 L14.4,64.8 L14.4,0 Z" id="Rectangle-2-Copy" stroke="none" fill="#2E2957" fill-rule="evenodd"></path>
+                                            <path d="M17.2096161,48.0041957 C17.2096161,30.9957131 30.9925488,17.2096161 48,17.2096161 C65.0057325,17.2096161 78.7903839,30.995675 78.7903839,48.0041957 L78.7903839,162.790384 L17.2096161,162.790384 L17.2096161,48.0041957 Z" id="Rectangle-Copy" stroke="#2E2957" stroke-width="3.98076789" fill="#FFFFFF" fill-rule="evenodd"></path>
+                                            <circle id="Oval-4-Copy-3" stroke="none" fill-opacity="0.5" fill="#E26952" fill-rule="evenodd" cx="26.4" cy="64.8" r="7.2"></circle>
+                                            <circle id="Oval-4-Copy-2" stroke="none" fill-opacity="0.5" fill="#E26952" fill-rule="evenodd" cx="67.2" cy="64.8" r="7.2"></circle>
+                                            <polygon id="Rectangle-3-Copy" stroke="none" fill="#41C98E" fill-rule="evenodd" points="19.2 79.2 47.7517241 99.3810484 74.4 93.1354839 74.4 136.8 19.2 136.8"></polygon>
+                                            <circle id="Oval-Copy-3" stroke="none" fill="#2E2957" fill-rule="evenodd" cx="34.8" cy="51.6" r="3.6"></circle>
+                                            <path d="M19.2,88.8 L46.0625171,104.586918 C47.0145607,105.146428 48.5623897,105.150641 49.5143927,104.599395 L76.8,88.8" id="Line-Copy-5" stroke="#2E2957" stroke-width="3.98076789" fill="none" stroke-linecap="square"></path>
+                                            <path d="M43.2,73.8760326 C43.2,73.8760326 50.7203008,77.1788271 52.8,67.2" id="Line-Copy-4" stroke="#2E2957" stroke-width="3.98076789" fill="none" stroke-linecap="round"></path>
+                                            <path d="M55.65,52.8 L62.013961,52.8" id="Line" stroke="#2E2957" stroke-width="3.98076789" fill="none" stroke-linecap="round"></path>
+                                        </g>
+                                    </g>
+                                </g>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+                <g id="Givt" transform="translate(175.200000, 60.000000)">
+                    <rect id="Rectangle-1-Copy-2" fill="#41C98E" x="50.4" y="0" width="57.6" height="7.2"></rect>
+                    <path d="M34.7428571,26.028169 L45.6,26.028169 L45.6,44.2093156 C40.589271,49.9364672 34.3752522,52.8 25.5101163,52.8 C18.090383,52.8 11.0483445,49.3182774 6.48777902,44.2093147 C1.92721354,39.1003521 3.22304063e-16,32.3568489 0,26.1762843 C3.18706271e-16,19.9957196 2.1843156,12.9431383 7.31549479,7.8084507 C12.446674,2.67376312 18.2951482,0 25.5462512,0 C32.7973542,0 39.096806,2.44387714 45.6,7.8084507 L38.4808315,16.3053697 C37.7156498,15.2664054 33.7460286,10.4112676 26.0571429,10.4112676 C22.4046968,10.4112676 18.648444,11.7466155 15.7094587,14.7336213 C12.7704734,17.720627 10.9410807,21.2884559 10.9410807,26.1762835 C10.9410807,31.0641112 12.77234,35.0721226 15.4966983,37.7542804 C18.2210565,40.4364382 22.1048177,42.3578764 25.2210372,42.3578751 C29.3729539,42.3578732 32.3757313,41.5926206 34.7428571,40.1577465 L34.7428571,26.028169 Z" id="G" fill="#FFFFFF"></path>
+                    <polygon id="I" fill="#FFFFFF" points="62.4 52.8 50.4 52.8 50.4 12 62.4 12"></polygon>
+                    <path d="M123.526106,20.8186391 L123.526106,37.9196641 C123.526106,37.9196641 124.067421,43.0726746 128.888641,43.1243239 C131.260379,43.1497321 132.821166,41.5063993 133.423459,40.648367 C133.895244,41.5063993 139.2,45.9570079 139.2,45.9570079 C136.374719,49.6764372 131.455744,52.6040583 126.450384,52.7901206 C122.559225,52.934765 119.37517,51.4845142 116.728131,48.8732622 C114.081092,46.2620102 112.757592,42.7035927 112.801036,37.9196641 L112.801036,0 L123.526106,0 L123.526106,12.639888 L132.821166,12.639888 L132.821166,20.8186391 L123.526106,20.8186391 Z" id="T" fill="#FFFFFF"></path>
+                    <polygon id="V" fill="#FFFFFF" points="83.0648276 52.8 67.2 12 79.4151736 12 88.8 37.6888889 98.7806897 12 110.4 12 94.5351724 52.8"></polygon>
+                </g>
+                <text id="Geef-met" font-family="Avenir-Black, Avenir" font-size="38.4" font-weight="700" fill="#FFFFFF">
+                    <tspan x="158.4" y="45.2">Geef met</tspan>
+                </text>
+            </g>
+        </g>
+    </g>
+</svg>

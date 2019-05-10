@@ -39,6 +39,7 @@ export class AssignComponent implements OnInit {
     isAssignInputFieldVisisble = false;
     agendaView: AgendaView;
     selectedCard: BucketCard;
+    cardIsSingleDay = true;
     csvFile: File;
     csvFileName: string = ""
     addedAllocations: any[];
@@ -271,6 +272,7 @@ export class AssignComponent implements OnInit {
             bucketCard.Fixed.push(fixedRow);
         });
 
+        this.cardIsSingleDay = this.showDate(bucketCard.dtBegin) === this.showDate(bucketCard.dtEnd);
         this.selectedCard = bucketCard;
         this.isDialogOpen = true;
         this.openedMobileEventId = event.id;
@@ -791,33 +793,31 @@ export class AssignComponent implements OnInit {
                         if (props.length == 1) // skip empty lines
                             continue;
                     }
+                    let alloc;
+                    let name = props[2].trim();
                     let dtBegin = new Date(props[0]);
                     let dtEnd = new Date(props[1]);
-                    let alloc;
-                    let CollectId = Number(props[3].trim());
-                    if(isNaN(CollectId))
-                        continue;
+                    let collectId = Number(props[3].trim());
 
-                    if([1,2,3].indexOf(CollectId) == -1) {
-                        console.log("Using a non valid CollectId");
-                        continue;
-                    }
-
-                    if(this.isValidDate(dtBegin) && this.isValidDate(dtEnd) && dtEnd > dtBegin) {
+                    if ( (this.isValidDate(dtBegin) && this.isValidDate(dtEnd) && dtEnd > dtBegin)
+                        && (name.length != 0)
+                        && ([1, 2, 3].indexOf(collectId) != -1)
+                        && (!isNaN(collectId)))
+                    {
                         alloc = {
-                            name: props[2],
+                            name: name,
                             dtBegin: dtBegin,
                             dtEnd: dtEnd,
-                            collectId: props[3].trim(),
+                            collectId: collectId.toString(),
                             dtBeginString: new Date(props[0]).toLocaleDateString(navigator.language, { day: 'numeric', year: 'numeric', month: 'numeric', hour: 'numeric', minute: 'numeric' }),
                             dtEndString: new Date(props[1]).toLocaleDateString(navigator.language, { day: 'numeric', year: 'numeric', month: 'numeric', hour: 'numeric', minute: 'numeric' })
                         };
                     } else {
                         alloc = {
-                            name: props[2],
+                            name: name,
                             dtBegin: dtBegin,
                             dtEnd: dtEnd,
-                            collectId: props[3].trim(),
+                            collectId: collectId.toString(),
                             dtBeginString: new Date(props[0]).toLocaleDateString(navigator.language, { day: 'numeric', year: 'numeric', month: 'numeric', hour: 'numeric', minute: 'numeric' }),
                             dtEndString: new Date(props[1]).toLocaleDateString(navigator.language, { day: 'numeric', year: 'numeric', month: 'numeric', hour: 'numeric', minute: 'numeric' }),
                             error: true

@@ -7,6 +7,7 @@ import {TranslateService} from "ng2-translate";
 import {UserService} from "../services/user.service";
 import {ISODatePipe} from "../pipes/iso.datepipe";
 import {sprintf} from 'sprintf-js';
+import { ReadVarExpr } from '@angular/compiler';
 
 @Component({
     selector: 'my-dashboard',
@@ -190,11 +191,23 @@ export class DashboardComponent implements OnInit, OnDestroy{
                 if(resp.statusCode == 500)
                     return;
 
-                let highest = resp.reduce(function(rv, x) {
-                    if (rv && x.Count < rv.Count) return rv;
-                    else return x;
-                }, {Sum:0, Count:0, Date:new Date()});
-
+                let highest = resp.reduce((rv, x) => {
+                    if (rv && rv.length > 0) {
+                        let idx = rv.findIndex(rvx => rvx.Date == x.Date);
+                        if (idx > -1) {
+                            rv[idx] = { Sum: rv[idx].Sum + x.Sum, Count: rv[idx].Count + x.Count, Date: rv[idx].Date };
+                        } else rv.push(x);
+                    }
+                    else {
+                        rv = [];
+                        rv.push(x);
+                    }
+                    return rv;
+                }, []).reduce((rv, x) => {
+                    if (rv && x.Count > rv.Count)
+                        return x;
+                    else return rv;
+                }, { Sum: 0, Count: 0, Date: new Date() });
                 let displayDate = new Date(highest.Date);
 
                 let collectSum = highest.Sum;

@@ -37,6 +37,7 @@ RUN chmod 755 /usr/local/bin/init_container.sh
 WORKDIR /home/site/wwwroot
 COPY ./dist ./
 RUN mkdir ./demo \
+    && mkdir ./demo/give-with-givt-example \
     && mkdir ./img-givy-secret \
     && mkdir ./app \
     && mkdir ./store \
@@ -58,5 +59,6 @@ COPY docker/for-apple/apple-app-site-association ./
 COPY docker/img-givy-secret ./img-givy-secret/
 
 COPY ./dist-demo ./demo/
+COPY ./example-give ./demo/give-with-givt-example/
 
 ENTRYPOINT ["/usr/local/bin/init_container.sh"]
