@@ -13,6 +13,7 @@ import {UnAuthorizeComponent} from "./components/unauthorized.component";
 import {LoggedOutComponent} from 'app/components/loggedout.component';
 import {SettingsComponent} from "./components/settings.component";
 import {TerminateComponent} from './components/terminate.component';
+import { QRCodeComponent } from './components/qrcode.component';
 
 const routes: Routes = [
     {path: '', component: LoginComponent, pathMatch: 'full', canActivate: [LoginComponentGuard]},
@@ -26,6 +27,7 @@ const routes: Routes = [
     {path: 'unauthorized', component: UnAuthorizeComponent},
     {path: 'loggedout', component: LoggedOutComponent},
     {path: 'terminate', component: TerminateComponent},
+    {path: 'qr-code', component: QRCodeComponent},
     {path: '**', component: LoginComponent, pathMatch: 'full', canActivate: [LoginComponentGuard]}
 ];
 
