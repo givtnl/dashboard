@@ -185,15 +185,15 @@
     "Text_TransactionCost_MoreInfo_GB": "Dit zijn de kosten die Smart Debit in rekening brengt voor het verwerken van transacties.",
     "QRCodeREQ_1_title": "QR-code aanvragen",
     "QRCodeREQ_nav": "QR-code",
-    "QRCodeREQ_1_subtext": "Met de Givt-app kun je heel eenvoudig geven aan een QR-code die je overal kunt plaatsen.",
+    "QRCodeREQ_1_subtext": "Met de Givt-app geef je eenvoudig aan een QR-code die je overal kunt plaatsen.",
     "QRCodeREQ_1_sub-subtext1": "Website",
     "QRCodeREQ_nextbutton": "Volgende",
     "QRCodeREQ_2_title": "Kies je type QR-code",
-    "RQRCodeREQ_2_type1_title": "Generieke QR-code",
-    "QRCodeREQ_2_type1_text": "Een generieke QR-code kun je inzetten in verschillende uitingen waarmee je de gevers de mogelijkheid wil bieden om te doneren aan jouw organisatie. Giften die hieraan worden gegeven, kun je achteraf op een eenvoudige manier toewijzen in het dashboard.",
-    "QRCodeREQ_2_type1_title": "Specifieke QR-code",
+    "QRCodeREQ_2_type1_title": "Algemene QR-code",
+    "QRCodeREQ_2_type1_text": "Een generieke QR-code zet je in voor verschillende uitingen waarmee je gevers de mogelijkheid biedt te doneren aan jouw organisatie.  Giften die hieraan worden gegeven, kun je achteraf op een eenvoudige manier toewijzen in het dashboard.",
+    "QRCodeREQ_2_type2_title": "Specifieke QR-code",
     "QRCodeREQ_2_type2_text": "Een specifieke QR-code geef je een specifieke bestemming, bijvoorbeeld de naam van een bepaalde actie die tijdelijk loopt. Deze code kun je achteraf niet wijzigen en de giften die hieraan worden gegeven, worden automatisch toegewezen in het dashboard. In de volgende stap geef je de specifieke bestemming(en) op.",
-    "QRCodeREQ_2_button_generic": "Generieke QR-code",
+    "QRCodeREQ_2_button_generic": "Algemene QR-code",
     "QRCodeREQ_2_button_specific": "Specifieke QR-code",
     "QRCodeREQ_3_title": "Kies bestemming(en)",
     "QRCodeREQ_3_subtext": "Voor elke bestemming of doel krijg je een aparte QR-code",
@@ -206,5 +206,6 @@
     "QRCodeREQ_1_sub-subtext3": "Collectebus",
     "QRCodeREQ_4_placeholder-phone": "Telefoon",
     "QRCodeREQ_4_placeholder-Opmerkingen": "Opmerkingen",
-    "QRCodeREQ_4_sendbutton": "Verstuur"
+    "QRCodeREQ_4_sendbutton": "Verstuur",
+    "QRCodeREQ_1_subtitle-button": "Doorloop een drietal eenvoudige stappen om een gratis QR-code in je mailbox te ontvangen."
 }
