@@ -221,7 +221,7 @@
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    border: 1px solid transparent;
+    border: 0;
     padding: .375rem .75rem;
     font-size: 0.8em;
     font-family: "Avenir_Heavy";
@@ -241,8 +241,8 @@
 }
 
 .QRCode_Buttons .btn-green:hover {
-    background-color: rgb(11, 158, 97);
-    border-color: rgb(6, 83, 51);
+    background: #81ab35;
+    /* border-color: rgb(6, 83, 51); */
 }
 
 .QRCode_Buttons .btn-blue {
@@ -254,7 +254,7 @@
 
 .QRCode_Buttons .btn-blue:hover {
     background-color: indigo;
-    border-color: rgb(6, 83, 51);
+    /* border-color: rgb(6, 83, 51); */
 }
 
 /* --------------------------------------------- Screen 1 --------------------------------------------- */
@@ -318,6 +318,7 @@
     .QRCode_Info_Picture {
         margin-bottom: unset;
         margin-right: 20px;
+        width: 75%;
     }
     .QRCode_Info_Picture img {
         height: unset;
@@ -332,6 +333,9 @@
         padding-bottom: 4px;
     }
     /* --------------------------------------------- Buttons --------------------------------------------- */
+    .QRCode_Buttons button {
+       width: 200px;
+    }
     /* --------------------------------------------- Screen 1 --------------------------------------------- */
     /* --------------------------------------------- Screen 2 --------------------------------------------- */
     /* --------------------------------------------- Info --------------------------------------------- */
