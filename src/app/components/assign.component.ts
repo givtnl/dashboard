@@ -8,6 +8,7 @@ import { UserService } from "../services/user.service";
 import { DataService } from "../services/data.service";
 import { AgendaView, moment } from "fullcalendar";
 import { ISODatePipe } from "../pipes/iso.datepipe";
+import { LoggingProvider } from 'app/services/logging-provider';
 
 @Component({
     selector: 'app-assign-collects',
@@ -54,7 +55,7 @@ export class AssignComponent implements OnInit {
     allocLoader: object = { show: false };
 
     @ViewChild('calendar') calendar: ElementRef;
-    public constructor(public ts: TranslateService, private datePipe: ISODatePipe, private cd: ChangeDetectorRef, private apiService: ApiClientService, private userService: UserService, private dataService: DataService) {
+    public constructor(private loggingProvider: LoggingProvider, public ts: TranslateService, private datePipe: ISODatePipe, private cd: ChangeDetectorRef, private apiService: ApiClientService, private userService: UserService, private dataService: DataService) {
         this.isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
 
         document.onkeydown = function (evt) {
