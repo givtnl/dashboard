@@ -98,7 +98,7 @@
                                 <div class="upload-csv">
                                     <input type="file" style="display:none;" (change)="fileChange($event)" id="inputfile"
                                         accept=".csv" />
-                                    <a class="upload-csv-button btn-csv" href="javascript:document.getElementById('inputfile').click(); ">Upload
+                                    <a class="upload-csv-button btn-csv" (click)="startUpload()">Upload
                                         CSV
                                         <i class="fas fa-upload" style="margin-left: 10px; margin-top: -2px;"></i>
                                     </a>

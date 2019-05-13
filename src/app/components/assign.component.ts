@@ -8,7 +8,7 @@ import { UserService } from "../services/user.service";
 import { DataService } from "../services/data.service";
 import { AgendaView, moment } from "fullcalendar";
 import { ISODatePipe } from "../pipes/iso.datepipe";
-import { LoggingProvider } from 'app/services/logging-provider';
+import { LoggingProvider, LogLevel } from 'app/services/logging-provider';
 
 @Component({
     selector: 'app-assign-collects',
@@ -770,6 +770,10 @@ export class AssignComponent implements OnInit {
             window.open('assets/Voorbeeld.csv');
         else
             window.open('assets/Example.csv');
+    }
+    startUpload(){
+        this.loggingProvider.log(LogLevel.Information, "User trying to upload CSV")
+        document.getElementById('inputfile').click(); 
     }
     fileChange(event) {
         this.selectedCSV = true;
