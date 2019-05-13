@@ -10,7 +10,7 @@
             <div class="QRCode QRCode1" *ngIf="currentQuestionId == 1" id="question-1">
                 <div class="QRCode_Titlebar">
                     <div class="QRCode_Titlebar_middle">
-                        <h2>Aanvraag QR code</h2>
+                        <h2>{{"QRCodeREQ_1_title" | translate}}</h2>
                     </div>
                 </div>
                 <div class="QRCode_Info">
@@ -18,19 +18,17 @@
                         <img src="images/QR-sample.png" alt="Sample QR-code">
                     </div>
                     <div class="QRCode_Info_Text">
-                        <p class="subtitle subtitle-first">U kunt Een QR-code gemakkelijk gebruiken in de volgende
-                            situaties:</p>
+                        <p class="subtitle subtitle-first">{{"QRCodeREQ_1_subtext" | translate}}</p>
                         <ul>
-                            <li>Aan de deur</li>
-                            <li>Op een collecte bus</li>
-                            <li>In de kerk</li>
+                            <li>{{"QRCodeREQ_1_sub-subtext1" | translate}}</li>
+                            <li>{{"QRCodeREQ_1_sub-subtext2" | translate}}</li>
+                            <li>{{"QRCodeREQ_1_sub-subtext3" | translate}}</li>
                         </ul>
-                        <p class="subtitle">Vraag nu je gratis QR-code aan en ontvang ze via mail.</p>
-
+                        <p class="subtitle">{{"QRCodeREQ_1_subtitle-button" | translate}}</p>
                     </div>
                 </div>
                 <div class="QRCode_Buttons">
-                    <button class="btn btn-green" (click)="showNextQuestion(1)">Generieke QR-code</button>
+                    <button class="btn btn-green" (click)="showNextQuestion(1)">{{"QRCodeREQ_nextbutton" | translate}}</button>
                 </div>
             </div>
 
@@ -40,7 +38,7 @@
                         <i class="fas fa-chevron-left arrow"></i>
                     </div>
                     <div class="QRCode_Titlebar_middle">
-                        <h2>Aanvraag QR code</h2>
+                        <h2>{{"QRCodeREQ_2_title" | translate}}</h2>
                     </div>
                     <div class="QRCode_Titlebar_right">
                     </div>
@@ -50,23 +48,15 @@
                         <img src="images/QR-sample.png" alt="Sample QR-code">
                     </div>
                     <div class="QRCode_Info_Text">
-                        <p class="subtitle subtitle-first">Generieke QR</p>
-                        <ul>
-                            <li>1 Code voor alles</li>
-                            <li>Giften achteraf toewijzen</li>
-                            <li>Flexibel in gebruik</li>
-                        </ul>
-                        <p class="subtitle">Specifieke QR</p>
-                        <ul>
-                            <li>Meerdere codes mogelijk</li>
-                            <li>Giften vooraf toegewezen</li>
-                            <li>Kan niet gewijzigd worden</li>
-                        </ul>
+                        <p class="subtitle subtitle-first">{{"QRCodeREQ_2_type1_title" | translate}}</p>
+                        <p>{{"QRCodeREQ_2_type1_text" | translate}}</p>
+                        <p class="subtitle">{{"QRCodeREQ_2_type2_title" | translate}}</p>
+                        <p>{{"QRCodeREQ_2_type2_text" | translate}}</p>
                     </div>
                 </div>
                 <div class="QRCode_Buttons">
-                    <button class="btn btn-green" (click)="showNextQuestion(2)">Generieke QR-code</button>
-                    <button class="btn btn-blue" (click)="showNextQuestion(1)">Specifieke QR-code</button>
+                    <button class="btn btn-green" (click)="flow_generic()">{{"QRCodeREQ_2_button_generic" | translate}}</button>
+                    <button class="btn btn-blue" (click)="flow_specific()">{{"QRCodeREQ_2_button_specific" | translate}}</button>
                 </div>
             </div>
 
@@ -76,21 +66,21 @@
                         <i class="fas fa-chevron-left arrow"></i>
                     </div>
                     <div class="QRCode_Titlebar_middle">
-                        <h2>Aanvraag QR code</h2>
+                        <h2>{{"QRCodeREQ_3_title" | translate}}</h2>
                     </div>
                     <div class="QRCode_Titlebar_right">
                     </div>
                 </div>
                 <div class="QRCode_Info">
                     <div class="QRCode_Info_Text">
-                        <p class="subtitle subtitle-first">Stel hier uw collectedoelen in</p>
-                        <p>Per ingesteld doel ontvangt u<br>1 Specifieke QR-code.</p>
+                        <p class="subtitle subtitle-first">{{"QRCodeREQ_3_subtitle" | translate}}</p>
+                        <p>{{"QRCodeREQ_3_subtext" | translate}}</p>
 
                         <table>
                             <tr *ngFor="let field of fieldArray; let i = index; trackBy:trackByFn">
                                 <td>
                                     <input class="textbox" type="text" name="{{field}}"
-                                        placeholder="Typ hier collectedoel" [(ngModel)]="fieldArray[i]"
+                                    [attr.placeholder]="'QRCodeREQ_3_placeholder' | translate" [(ngModel)]="fieldArray[i]"
                                         (ngModelChange)="onChange($event)" />
                                 </td>
                                 <td class="delete-row" *ngIf="fieldArray.length>1"><i class="far fa-trash-alt"
@@ -105,24 +95,24 @@
                     </div>
                 </div>
                 <div class="QRCode_Buttons">
-                    <button class="btn btn-green" (click)="showNextQuestion(1)">Generieke QR-code</button>
+                    <button class="btn btn-green" (click)="showNextQuestion(1)">{{"QRCodeREQ_nextbutton" | translate}}</button>
                 </div>
             </div>
 
             <div class="QRCode QRCode4" *ngIf="currentQuestionId == 4" id="question-4">
                 <div class="QRCode_Titlebar">
-                    <div class="QRCode_Titlebar_left" (click)="showPreviousQuestion()">
+                    <div class="QRCode_Titlebar_left" (click)="undo_proces()">
                         <i class="fas fa-chevron-left arrow"></i>
                     </div>
                     <div class="QRCode_Titlebar_middle">
-                        <h2>Aanvraag QR code</h2>
+                        <h2>{{"QRCodeREQ_4_title" | translate}}</h2>
                     </div>
                     <div class="QRCode_Titlebar_right">
                     </div>
                 </div>
                 <div class="QRCode_Info">
                     <div class="QRCode_Info_Text QRCode_Info_Text1">
-                        <p class="subtitle subtitle-first">De volgende QR-codes worden door u aangevraagd</p>
+                        <p class="subtitle subtitle-first">{{"QRCodeREQ_4_subtext-order" | translate}}</p>
                         <ul>
                             <li >1 Code voor alles</li>
                             <li>Giften achteraf toewijzen</li>
@@ -130,39 +120,38 @@
                         </ul>
                     </div>
                     <div class="QRCode_Info_Text QRCode_Info_Text2">
+                        <p class="subtitle">{{"QRCodeREQ_4_subtext" | translate}}</p>
                         <div class="ContactInfo" id="contactInfo-Email">
-                            <p class="subtitle">Wat is uw email-adres?</p>
                             <div>
                                 <i class="fas fa-at"></i>
-                                <input class="Textbox" id="email" type="email" placeholder="Email" [(ngModel)]="email"
+                                <input class="Textbox" id="email" type="email" [attr.placeholder]="'QRCodeREQ_4_placeholder-email' | translate" [(ngModel)]="email"
                                     (ngModelChange)="onEmailchange($event)">
                             </div>
                         </div>
 
                         <div class="ContactInfo" id="contactInfo-Phonenumber">
-                            <p class="subtitle">Wat is uw telefoonnummer?</p>
                             <div>
                                 <i class="fas fa-phone"></i>
-                                <input class="Textbox" id="phonenumber" type="tel" placeholder="Phone number"
+                                <input class="Textbox" id="phonenumber" type="tel" [attr.placeholder]="'QRCodeREQ_4_placeholder-phone' | translate"
                                     [(ngModel)]="phonenumber" (ngModelChange)="onPhonenumberChange($event)">
                             </div>
                         </div>
 
                         <div class="ContactInfo" id="contactInfo-Phonenumber">
-                            <p class="subtitle">Opmerkingen?</p>
+                            <p class="subtitle">{{"QRCodeREQ_4_comments" | translate}}</p>
                             <textarea rows="4"></textarea>
                         </div>
 
                     </div>
                 </div>
                 <div class="QRCode_Buttons">
-                    <button class="btn btn-green" (click)="showNextQuestion(1)">Generieke QR-code</button>
+                    <button class="btn btn-green" id="btnSendRequest" (click)="showNextQuestion(1)">{{"QRCodeREQ_4_sendbutton" | translate}}</button>
                 </div>
             </div>
             <div class="QRCode QRCode5" *ngIf="currentQuestionId == 5" id="question-5">
                 <div class="QRCode_Titlebar">
                     <div class="QRCode_Titlebar_middle">
-                        <h2>Aanvraag QR code</h2>
+                        <h2>{{"QRCodeREQ_5_title" | translate}}</h2>
                     </div>
                 </div>
                 <div class="QRCode_Info">
@@ -170,8 +159,8 @@
                         <img src="images/QR-sample.png" alt="Sample QR-code">
                     </div>
                     <div class="QRCode_Info_Text">
-                        <p class="subtitle subtitle-first">Bedankt!</p>
-                        <p>Binnen enkele dagen kan u de gevraagde QR-code(s) via mail verwachten</p>
+                        <p class="subtitle subtitle-first">{{"QRCodeREQ_5_subtitle" | translate}}</p>
+                        <p>{{"QRCodeREQ_5_subtext" | translate}}</p>
                     </div>
                 </div>
             </div>

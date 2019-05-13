@@ -8,6 +8,10 @@
     }
 }
 
+.fa-chevron-left {
+    padding-top: 3px;
+}
+
 .QRCode_screen {
     height: 100%;
     width: 100%;
@@ -145,14 +149,14 @@
 }
 
 .QRCode_Info_Text ul {
-    list-style: none;
+    /* list-style: none; */
     padding-inline-start: 0;
 }
 
 .QRCode_Info_Text ul li {
     padding-top: 2px;
     padding-bottom: 2px;
-    text-align: center;
+    /* text-align: center; */
 }
 
 .QRCode_Info_Text .add-row {

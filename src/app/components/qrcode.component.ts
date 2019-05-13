@@ -20,8 +20,19 @@ export class QRCodeComponent implements OnInit {
 
 	}
 
+	GeneralQR: boolean = false;
 	currentQuestionId:number = 1;
 	fieldArray: string[] = [];
+	isValidFields: boolean = true
+	isPhoneValid: boolean = false
+	isEmailValid: boolean = false
+	isChecked = false;
+
+	showSubmit: boolean = this.isPhoneValid && this.isEmailValid
+	showNext = true
+	email = ""
+	phonenumber = ""
+	private newAttribute: string = "";
 
 	showNextQuestion(value: number) {
 		console.log(this.currentQuestionId)
@@ -79,48 +90,45 @@ export class QRCodeComponent implements OnInit {
 
 		this.showSubmit = this.isPhoneValid && this.isEmailValid
 
+		this.enableSendButton() 
 		return this.isPhoneValid
 	}
 
-
-
-
-
-	skippedToEnd = false;
-
-	isChecked = false;
-	emailChecked = false;
-
-	isValidFields: boolean = true
-	isPhoneValid: boolean = false
-	isEmailValid: boolean = false
-	showSubmit: boolean = this.isPhoneValid && this.isEmailValid
-	showNext = true
-	email = ""
-	phonenumber = ""
-	private newAttribute: string = "";
-
-
-
-	
-
-	
-
-	ngOnInit(): void {
-		this.fieldArray.push("Bouwfonds")
-		this.fieldArray.push("Evenement")
+	flow_generic() {
+		this.GeneralQR = true;
+		this.showNextQuestion(2);
 	}
 
+	flow_specific() {
+		this.GeneralQR = false;
+		this.showNextQuestion(1);
+	}
 
+	undo_proces() {
+		if(this.GeneralQR) {
+			this.showPreviousQuestion(2);
+		}
+		else {
+			this.showPreviousQuestion(1);
+		}
+	}
 
+	enableSendButton() {
+		// var element = <HTMLInputElement> document.getElementById("btnSendRequest");
+		// console.log("Check send button");
+		
+		// if (this.isPhoneValid && this.isEmailValid) {
+		// 	element.disabled = true;
+		// 	console.log("Check send button - true");
+		// } else {
+		// 	element.disabled = true;
+		// 	console.log("Check send button - false");
+		// }
+	}
 
-
-
-
-
-	
-
-
+	ngOnInit(): void {
+		this.fieldArray.push("")
+	}
 }
 
 class QRRequestBody {
