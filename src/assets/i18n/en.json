@@ -207,5 +207,11 @@
     "QRCodeREQ_4_placeholder-phone": "Phonenumber",
     "QRCodeREQ_4_placeholder-Opmerkingen": "Remarks",
     "QRCodeREQ_4_sendbutton": "Send",
-    "QRCodeREQ_1_subtitle-button": "Go through 3 easy steps to get your free QR-code in your mailbox"
+    "QRCodeREQ_1_subtitle-button": "Go through 3 easy steps to get your free QR-code in your mailbox",
+    "QRCodeREQ_4_subtext-order": "The next QR-codes are requested by you:",
+    "QRCodeREQ_3_subtitle": "Setup your collection goals",
+    "QRCodeREQ_4_comments": "Comments?",
+    "QRCodeREQ_5_title": "Sent",
+    "QRCodeREQ_5_subtitle": "Thanks!",
+    "QRCodeREQ_5_subtext": "Within a couple of days, you receive your requested QR-codes by mail"
 }
