@@ -730,6 +730,7 @@ export class AssignComponent implements OnInit {
                         this.csvFileName = res;
                         alloc.errorMsg = res;
                     });
+                    this.loggingProvider.log(LogLevel.Error,  `${alloc.errorMsg} on line: ${i+1}`)
                     continue;
                 }
             }
@@ -776,63 +777,67 @@ export class AssignComponent implements OnInit {
         document.getElementById('inputfile').click(); 
     }
     fileChange(event) {
-        this.selectedCSV = true;
-        this.addedAllocations = [];
-        let fileList: FileList = event.target.files;
-        if (fileList.length > 0) {
-            this.csvFile = fileList[0];
-            let reader: FileReader = new FileReader();
-            reader.readAsText(this.csvFile);
-            reader.onload = (e) => {
-                let csv: string = reader.result as string;
-                let lineByLine = csv.split('\n');
-                if ((lineByLine.length == 1) ||
-                    (lineByLine.length == 2 && lineByLine[1].trim().length == 0))
-                    /* Only one line? Maybe \n is not the newline character */
-                    lineByLine = csv.split('\r');
-                for (let i = 1; i < lineByLine.length; i++) {
-                    let props = lineByLine[i].split(';');
-                    if (props.length == 1) {
-                        //First try splitting with comma's
-                        props = lineByLine[i].split(',');
-                        if (props.length == 1) // skip empty lines
-                            continue;
-                    }
-                    let alloc;
-                    let name = props[2].trim();
-                    let dtBegin = new Date(props[0]);
-                    let dtEnd = new Date(props[1]);
-                    let collectId = Number(props[3].trim());
+        try {
+            this.selectedCSV = true;
+            this.addedAllocations = [];
+            let fileList: FileList = event.target.files;
+            if (fileList.length > 0) {
+                this.csvFile = fileList[0];
+                let reader: FileReader = new FileReader();
+                reader.readAsText(this.csvFile);
+                reader.onload = (e) => {
+                    let csv: string = reader.result as string;
+                    let lineByLine = csv.split('\n');
+                    if ((lineByLine.length == 1) ||
+                        (lineByLine.length == 2 && lineByLine[1].trim().length == 0))
+                        /* Only one line? Maybe \n is not the newline character */
+                        lineByLine = csv.split('\r');
+                    for (let i = 1; i < lineByLine.length; i++) {
+                        let props = lineByLine[i].split(';');
+                        if (props.length == 1) {
+                            //First try splitting with comma's
+                            props = lineByLine[i].split(',');
+                            if (props.length == 1) // skip empty lines
+                                continue;
+                        }
+                        let alloc;
+                        let name = props[2].trim();
+                        let dtBegin = new Date(props[0]);
+                        let dtEnd = new Date(props[1]);
+                        let collectId = Number(props[3].trim());
 
-                    if ( (this.isValidDate(dtBegin) && this.isValidDate(dtEnd) && dtEnd > dtBegin)
-                        && (name.length != 0)
-                        && ([1, 2, 3].indexOf(collectId) != -1)
-                        && (!isNaN(collectId)))
-                    {
-                        alloc = {
-                            name: name,
-                            dtBegin: dtBegin,
-                            dtEnd: dtEnd,
-                            collectId: collectId.toString(),
-                            dtBeginString: new Date(props[0]).toLocaleDateString(navigator.language, { day: 'numeric', year: 'numeric', month: 'numeric', hour: 'numeric', minute: 'numeric' }),
-                            dtEndString: new Date(props[1]).toLocaleDateString(navigator.language, { day: 'numeric', year: 'numeric', month: 'numeric', hour: 'numeric', minute: 'numeric' })
-                        };
-                    } else {
-                        alloc = {
-                            name: name,
-                            dtBegin: dtBegin,
-                            dtEnd: dtEnd,
-                            collectId: collectId.toString(),
-                            dtBeginString: new Date(props[0]).toLocaleDateString(navigator.language, { day: 'numeric', year: 'numeric', month: 'numeric', hour: 'numeric', minute: 'numeric' }),
-                            dtEndString: new Date(props[1]).toLocaleDateString(navigator.language, { day: 'numeric', year: 'numeric', month: 'numeric', hour: 'numeric', minute: 'numeric' }),
-                            error: true
-                        };
+                        if ( (this.isValidDate(dtBegin) && this.isValidDate(dtEnd) && dtEnd > dtBegin)
+                            && (name.length != 0)
+                            && ([1, 2, 3].indexOf(collectId) != -1)
+                            && (!isNaN(collectId)))
+                        {
+                            alloc = {
+                                name: name,
+                                dtBegin: dtBegin,
+                                dtEnd: dtEnd,
+                                collectId: collectId.toString(),
+                                dtBeginString: new Date(props[0]).toLocaleDateString(navigator.language, { day: 'numeric', year: 'numeric', month: 'numeric', hour: 'numeric', minute: 'numeric' }),
+                                dtEndString: new Date(props[1]).toLocaleDateString(navigator.language, { day: 'numeric', year: 'numeric', month: 'numeric', hour: 'numeric', minute: 'numeric' })
+                            };
+                        } else {
+                            alloc = {
+                                name: name,
+                                dtBegin: dtBegin,
+                                dtEnd: dtEnd,
+                                collectId: collectId.toString(),
+                                dtBeginString: new Date(props[0]).toLocaleDateString(navigator.language, { day: 'numeric', year: 'numeric', month: 'numeric', hour: 'numeric', minute: 'numeric' }),
+                                dtEndString: new Date(props[1]).toLocaleDateString(navigator.language, { day: 'numeric', year: 'numeric', month: 'numeric', hour: 'numeric', minute: 'numeric' }),
+                                error: true
+                            };
+                        }
+                        this.addedAllocations.push(alloc);
                     }
-                    this.addedAllocations.push(alloc);
-                }
-                (<HTMLInputElement>document.getElementById("inputfile")).value = '';
-                this.uploadCSV();
-            };
+                    (<HTMLInputElement>document.getElementById("inputfile")).value = '';
+                    this.uploadCSV();
+                };
+            }
+        } catch (error) {
+            this.loggingProvider.log(LogLevel.Error, error)
         }
     }
     isValidDate(d) {
