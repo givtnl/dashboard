@@ -207,5 +207,11 @@
     "QRCodeREQ_4_placeholder-phone": "Telefoon",
     "QRCodeREQ_4_placeholder-Opmerkingen": "Opmerkingen",
     "QRCodeREQ_4_sendbutton": "Verstuur",
-    "QRCodeREQ_1_subtitle-button": "Doorloop een drietal eenvoudige stappen om een gratis QR-code in je mailbox te ontvangen."
+    "QRCodeREQ_1_subtitle-button": "Doorloop een drietal eenvoudige stappen om een gratis QR-code in je mailbox te ontvangen.",
+    "QRCodeREQ_4_subtext-order": "De volgende QR-codes worden door u aangevraagd:",
+    "QRCodeREQ_3_subtitle": "Stel hier uw collectedoelen in",
+    "QRCodeREQ_4_comments": "Opmerkingen?",
+    "QRCodeREQ_5_title": "Verzonden",
+    "QRCodeREQ_5_subtitle": "Bedankt!",
+    "QRCodeREQ_5_subtext": "Binnen enkele dagen kan u de gevraagde QR-code(s) via mail verwachten"
 }
