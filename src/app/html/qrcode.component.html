@@ -129,7 +129,7 @@
                                 <i class="fas fa-at"></i>
                                 <input class="Textbox" id="email" type="email" 
                                 [ngClass]="{'input_invalid' : !isEmailValid && !showEmailValid }"
-                                    [attr.placeholder]="'QRCodeREQ_4_placeholder-email' | translate">
+                                    [attr.placeholder]="'QRCodeREQ_4_placeholder-email' | translate" (input)="resetShowEmailValid()">
                             </div>
                         </div>
 

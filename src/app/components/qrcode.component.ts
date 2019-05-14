@@ -11,6 +11,8 @@ import { sendRequest } from "selenium-webdriver/http";
 import { forEach } from "@angular/router/src/utils/collection";
 import { forEachChild } from "typescript";
 import { Message } from "@angular/compiler/src/i18n/i18n_ast";
+import { TranslateService } from "../../../node_modules/ng2-translate";
+
 
 @Component({
 	selector: 'qr-code',
@@ -19,7 +21,7 @@ import { Message } from "@angular/compiler/src/i18n/i18n_ast";
 })
 export class QRCodeComponent implements OnInit {
 
-	constructor(private apiService: ApiClientService, private dataService: DataService, private datePipe: ISODatePipe, private router: Router, private http: Http, private userService: UserService) {
+	constructor(private translateService :TranslateService, private apiService: ApiClientService, private dataService: DataService, private datePipe: ISODatePipe, private router: Router, private http: Http, private userService: UserService) {
 
 	}
 	public name = "";
@@ -56,7 +58,9 @@ export class QRCodeComponent implements OnInit {
 				} else {
 					this.showEmailValid = false;
 					this.currentQuestionId -= value;
-					alert("Gelieve geldige gegevens in te vullen")
+
+					this.translateService.get("QRCodeREQ_warning_novalidemail").subscribe((res) => alert(res))
+
 				}
 				break;
 
@@ -144,6 +148,12 @@ export class QRCodeComponent implements OnInit {
 		else {
 			this.showPreviousQuestion(1);
 		}
+	}
+
+	resetShowEmailValid() {
+		console.log("ERROR");
+		
+		this.showEmailValid = true;
 	}
 
 	ngOnInit(): void {
