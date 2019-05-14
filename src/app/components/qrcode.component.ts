@@ -8,6 +8,9 @@ import { Router } from '@angular/router';
 import { Http, Headers, URLSearchParams } from '@angular/http';
 import { TimeoutError } from "rxjs";
 import { sendRequest } from "selenium-webdriver/http";
+import { forEach } from "@angular/router/src/utils/collection";
+import { forEachChild } from "typescript";
+import { Message } from "@angular/compiler/src/i18n/i18n_ast";
 
 @Component({
 	selector: 'qr-code',
@@ -19,33 +22,65 @@ export class QRCodeComponent implements OnInit {
 	constructor(private apiService: ApiClientService, private dataService: DataService, private datePipe: ISODatePipe, private router: Router, private http: Http, private userService: UserService) {
 
 	}
-
-	GeneralQR: boolean = false;
-	currentQuestionId:number = 1;
+	public name = "";
+	GenericQR: boolean = false;
+	currentQuestionId: number = 1;
 	fieldArray: string[] = [];
-	isValidFields: boolean = true
-	isPhoneValid: boolean = false
+	giftPurposes: string[] = [];
+	isPhoneValid: boolean = true
 	isEmailValid: boolean = false
-	isChecked = false;
+	showEmailValid: boolean = true;
 
-	showSubmit: boolean = this.isPhoneValid && this.isEmailValid
-	showNext = true
+	showSend: boolean = this.isPhoneValid && this.isEmailValid
 	email = ""
 	phonenumber = ""
 	private newAttribute: string = "";
 
 	showNextQuestion(value: number) {
-		console.log(this.currentQuestionId)
-		this.currentQuestionId+=value;
+		this.currentQuestionId += value;
+
+		switch (this.currentQuestionId) {
+			case 4:
+				this.fieldArray = this.fieldArray.filter(element => element.trim() !== "");
+
+				this.fieldArray.forEach((element, index) => {
+					this.fieldArray[index] = element.trim();
+				})
+				break;
+
+			case 5:
+				
+				if (this.showSend) {
+					this.showEmailValid = true;
+					this.submit();
+				} else {
+					this.showEmailValid = false;
+					this.currentQuestionId -= value;
+					alert("Gelieve geldige gegevens in te vullen")
+				}
+				break;
+
+			default:
+				break;
+		}
 	}
 	showPreviousQuestion(value: number = 1) {
-		console.log(this.currentQuestionId)
-		this.currentQuestionId-=value;
+		this.currentQuestionId -= value;
+
+		switch (this.currentQuestionId) {
+			case 3:
+				if(this.fieldArray[0] == null) {
+					this.fieldArray.push("")
+				} 
+				break;
+
+			default:
+				break;
+		}
 	}
 
 	addFieldValue() {
 		this.fieldArray.push(this.newAttribute)
-		this.newAttribute = "";
 	}
 
 	deleteFieldValue(index) {
@@ -57,73 +92,58 @@ export class QRCodeComponent implements OnInit {
 	}
 
 	submit() {
-		let body: QRRequestBody = { generic: this.isChecked, email: this.email, phoneNumber: this.phonenumber, collectGoals: this.fieldArray }
+		let body: QRRequestBody = { generic: this.GenericQR, email: this.email, phoneNumber: this.phonenumber, collectGoals: this.fieldArray }
 		let apiUrl = 'v2/collectgroups/' + this.userService.CurrentCollectGroup.GUID + '/qrcodes';
 
 		this.apiService.postData(apiUrl, body)
 			.then(resp => {
 				console.log(resp);
 			});
-		
+
 	}
 
-	onEmailchange() {
+	checkEmail() {
 		var emailField = <HTMLInputElement>document.getElementById('email')
-		this.email = emailField.value;	
+		this.email = emailField.value;
 		const regexp = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
 		this.isEmailValid = regexp.test(this.email)
-		this.showSubmit = this.isPhoneValid && this.isEmailValid
+
+		return this.isEmailValid
 	}
 
-	onPhonenumberChange() {
-		this.phonenumber = (<HTMLInputElement>document.getElementById('phonenumber')).value;
+	checkPhoneNumber() {
+		// this.phonenumber = (<HTMLInputElement>document.getElementById('phonenumber')).value;
 
-		var currentValue = this.phonenumber;
-		if (
-			(currentValue.length == 10 && (currentValue.charAt(1) == "6" || currentValue.charAt(1) == "4")) ||
-			(currentValue.length == 11 && currentValue.charAt(1) == "7")
-		) {
-			this.isPhoneValid = true
-		} else {
-			this.isPhoneValid = false
-		}
-
-		this.showSubmit = this.isPhoneValid && this.isEmailValid
-
-		this.enableSendButton() 
+		// var currentValue = this.phonenumber;
+		// if (
+		// 	(currentValue.length == 10 && (currentValue.charAt(1) == "6" || currentValue.charAt(1) == "4")) ||
+		// 	(currentValue.length == 11 && currentValue.charAt(1) == "7")
+		// ) {
+		// 	this.isPhoneValid = true
+		// } else {
+		// 	this.isPhoneValid = false
+		// }
 		return this.isPhoneValid
 	}
 
-	flow_generic() {
-		this.GeneralQR = true;
+	flowGeneric() {
+		this.GenericQR = true;
+		this.fieldArray = [""];
 		this.showNextQuestion(2);
 	}
 
-	flow_specific() {
-		this.GeneralQR = false;
+	flowSpecific() {
+		this.GenericQR = false;
 		this.showNextQuestion(1);
 	}
 
-	undo_proces() {
-		if(this.GeneralQR) {
+	undoProces() {
+		if (this.GenericQR) {
 			this.showPreviousQuestion(2);
 		}
 		else {
 			this.showPreviousQuestion(1);
 		}
-	}
-
-	enableSendButton() {
-		// var element = <HTMLInputElement> document.getElementById("btnSendRequest");
-		// console.log("Check send button");
-		
-		// if (this.isPhoneValid && this.isEmailValid) {
-		// 	element.disabled = true;
-		// 	console.log("Check send button - true");
-		// } else {
-		// 	element.disabled = true;
-		// 	console.log("Check send button - false");
-		// }
 	}
 
 	ngOnInit(): void {

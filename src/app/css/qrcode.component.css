@@ -8,6 +8,13 @@
     }
 }
 
+.input_invalid {
+    border: 1px solid red !important;
+} .input_invalid::placeholder {
+    color: red;
+    opacity: 1; /* Firefox */
+  }
+
 .fa-chevron-left {
     padding-top: 3px;
 }
