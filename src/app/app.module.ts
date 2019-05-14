@@ -10,7 +10,7 @@ import { TranslateModule, TranslateLoader, TranslateStaticLoader} from "ng2-tran
 import { DataService} from "./services/data.service";
 import { UserService} from "./services/user.service";
 import { ApiClientService} from "./services/api-client.service";
-import { LoggingProvider } from "./services/logging-provider";
+import { LoggingService } from "./services/logging.service";
 import { DashboardComponent} from "./components/dashboard.component";
 import { LoginComponentGuard} from "./guards/login.component.guard";
 import { LoggedInGuard} from "./guards/logged-in.guard";
@@ -89,7 +89,7 @@ export function createTranslateLoader(http: Http) {
     DataService,
     UserService,
     ApiClientService,
-    LoggingProvider,
+    LoggingService,
     OperationsGuard,
     LoggedInGuard,
     LoginComponentGuard,

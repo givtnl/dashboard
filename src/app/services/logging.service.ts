@@ -3,17 +3,25 @@ import { environment } from "environments/environment";
 import { DataService } from "./data.service";
 import * as pkg from '../../../package.json';
 import { Http, Headers } from "@angular/http";
+import { ApiClientService } from "./api-client.service";
 
 @Injectable()
-export class LoggingProvider {
+export class LoggingService {
     private logitUrl = "https://api.logit.io/v2"
+    private static logstashApiKey: string = "";
 
-    constructor(private dataService: DataService, private http: Http) {
-        console.log("LoggingProvider initialized")
+    constructor(private dataService: DataService, private http: Http, private apiClient: ApiClientService) {
+        apiClient.getData("v2/keys/logstash")
+            .then(resp => {
+                LoggingService.logstashApiKey = resp.LogstashApiKey
+            })
+            .catch(err => {
+                console.log(err)
+            })
     }
     log(level: LogLevel, message: string){
         let headers = new Headers();
-        headers.append('ApiKey', environment.logstashApiKey);
+        headers.append('ApiKey', LoggingService.logstashApiKey);
         headers.append('Content-Type', 'application/json')
         
         let body = new LogitBody()
@@ -32,9 +40,6 @@ export class LoggingProvider {
         body.message = message
 
         const json = JSON.stringify(body)
-        console.log(json)
-        console.log(this.logitUrl)
-        console.log(headers)
         return this.http
             .put(this.logitUrl, json, { headers })
             .toPromise()
