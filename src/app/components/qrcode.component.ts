@@ -33,15 +33,20 @@ export class QRCodeComponent implements OnInit {
 	isEmailValid: boolean = false
 	showEmailValid: boolean = true;
 
-	showSend: boolean = this.isPhoneValid && this.isEmailValid
 	email = ""
 	phonenumber = ""
+	comments = ""
 	private newAttribute: string = "";
 
 	showNextQuestion(value: number) {
 		this.currentQuestionId += value;
 
 		switch (this.currentQuestionId) {
+			case 3:
+				if(this.fieldArray[0] == null) {
+					this.fieldArray.push("")
+				} 
+				break;
 			case 4:
 				this.fieldArray = this.fieldArray.filter(element => element.trim() !== "");
 
@@ -51,16 +56,21 @@ export class QRCodeComponent implements OnInit {
 				break;
 
 			case 5:
-				
-				if (this.showSend) {
+				this.checkEmail();
+				this.checkPhoneNumber();
+
+				if (this.isEmailValid && this.isPhoneValid) {
+					console.log("1");
+					
 					this.showEmailValid = true;
+					var commentsfield = <HTMLInputElement>document.getElementById('comments');
+					this.comments = commentsfield.value;
 					this.submit();
 				} else {
 					this.showEmailValid = false;
 					this.currentQuestionId -= value;
 
 					this.translateService.get("QRCodeREQ_warning_novalidemail").subscribe((res) => alert(res))
-
 				}
 				break;
 
@@ -96,7 +106,7 @@ export class QRCodeComponent implements OnInit {
 	}
 
 	submit() {
-		let body: QRRequestBody = { generic: this.GenericQR, email: this.email, phoneNumber: this.phonenumber, collectGoals: this.fieldArray }
+		let body: QRRequestBody = { generic: this.GenericQR, email: this.email, phoneNumber: this.phonenumber, collectGoals: this.fieldArray, comments: this.comments}
 		let apiUrl = 'v2/collectgroups/' + this.userService.CurrentCollectGroup.GUID + '/qrcodes';
 
 		this.apiService.postData(apiUrl, body)
@@ -116,7 +126,7 @@ export class QRCodeComponent implements OnInit {
 	}
 
 	checkPhoneNumber() {
-		// this.phonenumber = (<HTMLInputElement>document.getElementById('phonenumber')).value;
+		this.phonenumber = (<HTMLInputElement>document.getElementById('phonenumber')).value;
 
 		// var currentValue = this.phonenumber;
 		// if (
@@ -132,7 +142,9 @@ export class QRCodeComponent implements OnInit {
 
 	flowGeneric() {
 		this.GenericQR = true;
-		this.fieldArray = [""];
+		var respsonse;
+		this.translateService.get("QRCodeREQ_generic").subscribe((res) => respsonse = res)
+		this.fieldArray = [String(respsonse)];
 		this.showNextQuestion(2);
 	}
 
@@ -144,15 +156,14 @@ export class QRCodeComponent implements OnInit {
 	undoProces() {
 		if (this.GenericQR) {
 			this.showPreviousQuestion(2);
+			this.fieldArray = [""];
 		}
 		else {
 			this.showPreviousQuestion(1);
 		}
 	}
 
-	resetShowEmailValid() {
-		console.log("ERROR");
-		
+	resetShowEmailValid() {	
 		this.showEmailValid = true;
 	}
 
@@ -166,4 +177,5 @@ class QRRequestBody {
 	email: string;
 	phoneNumber: string;
 	collectGoals: string[];
+	comments: string;
 }
