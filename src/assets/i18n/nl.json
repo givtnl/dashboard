@@ -214,5 +214,6 @@
     "QRCodeREQ_5_title": "Verzonden",
     "QRCodeREQ_5_subtitle": "Bedankt!",
     "QRCodeREQ_5_subtext": "Binnen enkele dagen kan u de gevraagde QR-code(s) via mail verwachten",
-    "QRCodeREQ_warning_novalidemail": "Gelieve ten minste een geldige email adres op te geven.\nZo kunnen wij je de gevraagde qr-code(s) doorsturen."
+    "QRCodeREQ_warning_novalidemail": "Gelieve ten minste een geldige email adres op te geven.\nZo kunnen wij je de gevraagde QR-code(s) doorsturen.",
+    "QRCodeREQ_generic": "Algemene QR-code"
 }
