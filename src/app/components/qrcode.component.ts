@@ -31,14 +31,15 @@ export class QRCodeComponent implements OnInit {
 	giftPurposes: string[] = [];
 	isPhoneValid: boolean = true
 	isEmailValid: boolean = false
-	showEmailValid: boolean = true;
+	hideEmailIsInvalid: boolean = true;
+	hidePhoneIsInvalid: boolean = true;
 
-	email = ""
+	email = this.dataService.getData('UserEmail');
 	phonenumber = ""
 	comments = ""
 	private newAttribute: string = "";
 
-	showNextQuestion(value: number) {
+	async showNextQuestion(value: number) {
 		this.currentQuestionId += value;
 
 		switch (this.currentQuestionId) {
@@ -59,18 +60,27 @@ export class QRCodeComponent implements OnInit {
 				this.checkEmail();
 				this.checkPhoneNumber();
 
-				if (this.isEmailValid && this.isPhoneValid) {
-					console.log("1");
-					
-					this.showEmailValid = true;
-					var commentsfield = <HTMLInputElement>document.getElementById('comments');
-					this.comments = commentsfield.value;
-					this.submit();
+				if (this.isEmailValid && this.isPhoneValid) {				
+					this.hideEmailIsInvalid = true;
+					this.hidePhoneIsInvalid = true;
+					var submitok = await this.submit();
+					if(submitok==false){
+						this.translateService.get("QRCodeREQ_warning_submitfailed").subscribe((res) => alert(res))
+						this.currentQuestionId -= value;
+					}
 				} else {
-					this.showEmailValid = false;
-					this.currentQuestionId -= value;
-
-					this.translateService.get("QRCodeREQ_warning_novalidemail").subscribe((res) => alert(res))
+					if(!this.isEmailValid && this.isPhoneValid) {
+						this.hideEmailIsInvalid = false;
+						this.translateService.get("QRCodeREQ_warning_novalidemail").subscribe((res) => alert(res))
+					} else if (this.isEmailValid && !this.isPhoneValid){
+						this.hidePhoneIsInvalid = false;
+						this.translateService.get("QRCodeREQ_warning_novalidephone").subscribe((res) => alert(res))
+					} else {
+						this.hideEmailIsInvalid = false;
+						this.hidePhoneIsInvalid = false;
+					}
+					
+					this.currentQuestionId -= value;		
 				}
 				break;
 
@@ -105,15 +115,22 @@ export class QRCodeComponent implements OnInit {
 		return index;
 	}
 
-	submit() {
-		let body: QRRequestBody = { generic: this.GenericQR, email: this.email, phoneNumber: this.phonenumber, collectGoals: this.fieldArray, comments: this.comments}
+	async submit() {
+		var submitSuccessfull = false;
+		let body: QRRequestBody = {email: this.email, phoneNumber: this.phonenumber, collectGoals: this.fieldArray, comments: this.comments}
 		let apiUrl = 'v2/collectgroups/' + this.userService.CurrentCollectGroup.GUID + '/qrcodes';
 
-		this.apiService.postData(apiUrl, body)
+		await this.apiService.postData(apiUrl, body)
 			.then(resp => {
-				console.log(resp);
+				if(Number(resp) > 0) {
+					submitSuccessfull = true;
+				}
+			})
+			.catch(err => {
+				console.log(err);
+				submitSuccessfull = false;
 			});
-
+		return submitSuccessfull;
 	}
 
 	checkEmail() {
@@ -128,15 +145,15 @@ export class QRCodeComponent implements OnInit {
 	checkPhoneNumber() {
 		this.phonenumber = (<HTMLInputElement>document.getElementById('phonenumber')).value;
 
-		// var currentValue = this.phonenumber;
-		// if (
-		// 	(currentValue.length == 10 && (currentValue.charAt(1) == "6" || currentValue.charAt(1) == "4")) ||
-		// 	(currentValue.length == 11 && currentValue.charAt(1) == "7")
-		// ) {
-		// 	this.isPhoneValid = true
-		// } else {
-		// 	this.isPhoneValid = false
-		// }
+		var currentValue = this.phonenumber;
+		if (
+			(currentValue.length == 10 && (currentValue.charAt(1) == "6" || currentValue.charAt(1) == "4")) ||
+			(currentValue.length == 11 && currentValue.charAt(1) == "7")
+		) {
+			this.isPhoneValid = true
+		} else {
+			this.isPhoneValid = false
+		}
 		return this.isPhoneValid
 	}
 
@@ -163,8 +180,11 @@ export class QRCodeComponent implements OnInit {
 		}
 	}
 
-	resetShowEmailValid() {	
-		this.showEmailValid = true;
+	resetShowPhoneValid(){
+		this.hidePhoneIsInvalid = true;
+	}
+	resetShowEmailValid(){
+		this.hideEmailIsInvalid = true;
 	}
 
 	ngOnInit(): void {
@@ -173,7 +193,6 @@ export class QRCodeComponent implements OnInit {
 }
 
 class QRRequestBody {
-	generic: boolean;
 	email: string;
 	phoneNumber: string;
 	collectGoals: string[];

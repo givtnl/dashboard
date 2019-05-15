@@ -127,9 +127,10 @@
                         <div class="ContactInfo" id="contactInfo-Email">
                             <div>
                                 <i class="fas fa-at"></i>
-                                <input class="Textbox" id="email" type="email" 
-                                [ngClass]="{'input_invalid' : !isEmailValid && !showEmailValid }"
-                                    [attr.placeholder]="'QRCodeREQ_4_placeholder-email' | translate" (input)="resetShowEmailValid()">
+                                <input class="Textbox" id="email" type="email"
+                                    [ngClass]="{'input_invalid' : !isEmailValid && !showEmailValid }"
+                                    [attr.placeholder]="'QRCodeREQ_4_placeholder-email' | translate"
+                                    (input)="resetShowEmailValid()" [(ngModel)]="email">
                             </div>
                         </div>
 
@@ -137,13 +138,15 @@
                             <div>
                                 <i class="fas fa-phone"></i>
                                 <input class="Textbox" id="phonenumber" type="tel"
-                                    [attr.placeholder]="'QRCodeREQ_4_placeholder-phone' | translate">
+                                    [ngClass]="{'input_invalid' : !isPhoneValid && !showPhoneValid }"
+                                    [attr.placeholder]="'QRCodeREQ_4_placeholder-phone' | translate"
+                                    (input)="resetShowPhoneValid()" [(ngModel)]="phonenumber">
                             </div>
                         </div>
 
-                        <div class="ContactInfo" id="comments">
+                        <div class="ContactInfo">
                             <p class="subtitle">{{"QRCodeREQ_4_comments" | translate}}</p>
-                            <textarea rows="4"></textarea>
+                            <textarea rows="4" id="comments" [(ngModel)]="comments"></textarea>
                         </div>
 
                     </div>
