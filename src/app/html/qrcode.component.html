@@ -128,7 +128,7 @@
                             <div>
                                 <i class="fas fa-at"></i>
                                 <input class="Textbox" id="email" type="email"
-                                    [ngClass]="{'input_invalid' : !isEmailValid && !showEmailValid }"
+                                    [ngClass]="{'input_invalid' : !isEmailValid && !hideEmailIsInvalid }"
                                     [attr.placeholder]="'QRCodeREQ_4_placeholder-email' | translate"
                                     (input)="resetShowEmailValid()" [(ngModel)]="email">
                             </div>
@@ -138,7 +138,7 @@
                             <div>
                                 <i class="fas fa-phone"></i>
                                 <input class="Textbox" id="phonenumber" type="tel"
-                                    [ngClass]="{'input_invalid' : !isPhoneValid && !showPhoneValid }"
+                                    [ngClass]="{'input_invalid' : !isPhoneValid && !hidePhoneIsInvalid }"
                                     [attr.placeholder]="'QRCodeREQ_4_placeholder-phone' | translate"
                                     (input)="resetShowPhoneValid()" [(ngModel)]="phonenumber">
                             </div>
