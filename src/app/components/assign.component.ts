@@ -730,7 +730,7 @@ export class AssignComponent implements OnInit {
                         this.csvFileName = res;
                         alloc.errorMsg = res;
                     });
-                    this.loggingService.log(LogLevel.Error,  `${alloc.errorMsg} on line: ${i+1}`)
+                    this.loggingService.error(`${alloc.errorMsg} on line: ${i+1}`)
                     continue;
                 }
             }
@@ -773,7 +773,7 @@ export class AssignComponent implements OnInit {
             window.open('assets/Example.csv');
     }
     startUpload(){
-        this.loggingService.log(LogLevel.Information, "User trying to upload CSV")
+        this.loggingService.info("User trying to upload CSV")
         document.getElementById('inputfile').click(); 
     }
     fileChange(event) {
@@ -837,7 +837,7 @@ export class AssignComponent implements OnInit {
                 };
             }
         } catch (error) {
-            this.loggingService.log(LogLevel.Error, error)
+            this.loggingService.error(error)
         }
     }
     isValidDate(d) {

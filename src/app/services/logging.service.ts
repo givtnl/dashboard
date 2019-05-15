@@ -19,7 +19,7 @@ export class LoggingService {
                 console.log(err)
             })
     }
-    log(level: LogLevel, message: string){
+    private log(level: LogLevel, message: string){
         let headers = new Headers();
         headers.append('ApiKey', LoggingService.logstashApiKey);
         headers.append('Content-Type', 'application/json')
@@ -43,6 +43,18 @@ export class LoggingService {
         return this.http
             .put(this.logitUrl, json, { headers })
             .toPromise()
+    }
+
+    error(message: string) {
+        this.log(LogLevel.Error, message)
+    }
+
+    info(message: string) {
+        this.log(LogLevel.Information, message)
+    }
+
+    warning(message: string) {
+        this.log(LogLevel.Warning, message)
     }
 }
 
