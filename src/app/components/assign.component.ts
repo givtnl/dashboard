@@ -55,7 +55,7 @@ export class AssignComponent implements OnInit {
     allocLoader: object = { show: false };
 
     @ViewChild('calendar') calendar: ElementRef;
-    public constructor(private loggingProvider: LoggingService, public ts: TranslateService, private datePipe: ISODatePipe, private cd: ChangeDetectorRef, private apiService: ApiClientService, private userService: UserService, private dataService: DataService) {
+    public constructor(private loggingService: LoggingService, public ts: TranslateService, private datePipe: ISODatePipe, private cd: ChangeDetectorRef, private apiService: ApiClientService, private userService: UserService, private dataService: DataService) {
         this.isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
 
         document.onkeydown = function (evt) {
@@ -730,7 +730,7 @@ export class AssignComponent implements OnInit {
                         this.csvFileName = res;
                         alloc.errorMsg = res;
                     });
-                    this.loggingProvider.log(LogLevel.Error,  `${alloc.errorMsg} on line: ${i+1}`)
+                    this.loggingService.log(LogLevel.Error,  `${alloc.errorMsg} on line: ${i+1}`)
                     continue;
                 }
             }
@@ -773,7 +773,7 @@ export class AssignComponent implements OnInit {
             window.open('assets/Example.csv');
     }
     startUpload(){
-        this.loggingProvider.log(LogLevel.Information, "User trying to upload CSV")
+        this.loggingService.log(LogLevel.Information, "User trying to upload CSV")
         document.getElementById('inputfile').click(); 
     }
     fileChange(event) {
@@ -837,7 +837,7 @@ export class AssignComponent implements OnInit {
                 };
             }
         } catch (error) {
-            this.loggingProvider.log(LogLevel.Error, error)
+            this.loggingService.log(LogLevel.Error, error)
         }
     }
     isValidDate(d) {
