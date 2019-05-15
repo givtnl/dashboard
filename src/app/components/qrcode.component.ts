@@ -40,23 +40,22 @@ export class QRCodeComponent implements OnInit {
 	private newAttribute: string = "";
 
 	async showNextQuestion(value: number) {
-		this.currentQuestionId += value;
-
 		switch (this.currentQuestionId) {
-			case 3:
+			case 2:
 				if(this.fieldArray[0] == null) {
 					this.fieldArray.push("")
-				} 
+				}
+				this.currentQuestionId += value;
 				break;
-			case 4:
+			case 3:
 				this.fieldArray = this.fieldArray.filter(element => element.trim() !== "");
 
 				this.fieldArray.forEach((element, index) => {
 					this.fieldArray[index] = element.trim();
 				})
+				this.currentQuestionId += value;
 				break;
-
-			case 5:
+			case 4:
 				this.checkEmail();
 				this.checkPhoneNumber();
 
@@ -65,26 +64,24 @@ export class QRCodeComponent implements OnInit {
 					this.hidePhoneIsInvalid = true;
 					var submitok = await this.submit();
 					if(submitok==false){
-						this.translateService.get("QRCodeREQ_warning_submitfailed").subscribe((res) => alert(res))
-						this.currentQuestionId -= value;
-					}
+						this.translateService.get("QRCodeREQ_warning_submitfailed").subscribe((res) => setTimeout(() => {alert(res)}, 200))
+					} else 
+						this.currentQuestionId += value;
 				} else {
 					if(!this.isEmailValid && this.isPhoneValid) {
 						this.hideEmailIsInvalid = false;
 						this.translateService.get("QRCodeREQ_warning_novalidemail").subscribe((res) => alert(res))
 					} else if (this.isEmailValid && !this.isPhoneValid){
 						this.hidePhoneIsInvalid = false;
-						this.translateService.get("QRCodeREQ_warning_novalidephone").subscribe((res) => alert(res))
+						this.translateService.get("QRCodeREQ_warning_novalidphone").subscribe((res) => alert(res))
 					} else {
 						this.hideEmailIsInvalid = false;
 						this.hidePhoneIsInvalid = false;
-					}
-					
-					this.currentQuestionId -= value;		
+					}					
 				}
 				break;
-
 			default:
+				this.currentQuestionId += value;
 				break;
 		}
 	}
@@ -127,7 +124,6 @@ export class QRCodeComponent implements OnInit {
 				}
 			})
 			.catch(err => {
-				console.log(err);
 				submitSuccessfull = false;
 			});
 		return submitSuccessfull;
