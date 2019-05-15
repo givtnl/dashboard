@@ -214,6 +214,10 @@
     "QRCodeREQ_5_title": "Verzonden",
     "QRCodeREQ_5_subtitle": "Bedankt!",
     "QRCodeREQ_5_subtext": "Binnen enkele dagen kan u de gevraagde QR-code(s) via mail verwachten",
-    "QRCodeREQ_warning_novalidemail": "Gelieve ten minste een geldige email adres op te geven.\nZo kunnen wij je de gevraagde QR-code(s) doorsturen.",
-    "QRCodeREQ_generic": "Algemene QR-code"
+    "QRCodeREQ_warning_novalidemail": "Gelieve een geldige email adres op te geven.\nZo kunnen wij je de gevraagde QR-code(s) doorsturen",
+    "QRCodeREQ_generic": "Algemene QR-code",
+    "QRCodeREQ_3_addgoal": "Doel toevoegen",
+    "QRCodeREQ_warning_novalidphone": "Gelieve een geldige email adres op te geven.\nZo kunnen wij jou indien nodig gemakkelijk contacteren.",
+    "QRCodeREQ_warning_novaliddata": "Gelieve de onderstaande velden correct in te vullen.",
+    "QRCodeREQ_warning_submitfailed": "Oeps, er ging iets fout. Probeer het nog eens!"
 }
