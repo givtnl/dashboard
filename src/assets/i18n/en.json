@@ -217,7 +217,7 @@
     "QRCodeREQ_warning_novalidemail": "Please, enter a valid email, so that we can send you the requested QR code(s).",
     "QRCodeREQ_generic": "Generic QR code",
     "QRCodeREQ_3_addgoal": "Add goal",
-    "QRCodeREQ_warning_novalidphone": "Please, enter a valid email, so that we can contact you if necessary.",
+    "QRCodeREQ_warning_novalidphone": "Please, enter a valid phone number, so that we can contact you if necessary.",
     "QRCodeREQ_warning_novaliddata": "Please, enter valid data.",
     "QRCodeREQ_warning_submitfailed": "Woops, something went wrong. Please try again!"
 }
