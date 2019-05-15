@@ -19,7 +19,7 @@ import { TranslateService } from "../../../node_modules/ng2-translate";
 	templateUrl: '../html/qrcode.component.html',
 	styleUrls: ['../css/qrcode.component.css']
 })
-export class QRCodeComponent implements OnInit {
+export class QRCodeComponent {
 
 	constructor(private translateService :TranslateService, private apiService: ApiClientService, private dataService: DataService, private datePipe: ISODatePipe, private router: Router, private http: Http, private userService: UserService) {
 
@@ -27,12 +27,10 @@ export class QRCodeComponent implements OnInit {
 	public name = "";
 	GenericQR: boolean = false;
 	currentQuestionId: number = 1;
-	fieldArray: string[] = [];
+	fieldArray: string[] = [""];
 	giftPurposes: string[] = [];
 	isPhoneValid: boolean = true
-	isEmailValid: boolean = false
-	hideEmailIsInvalid: boolean = true;
-	hidePhoneIsInvalid: boolean = true;
+	isEmailValid: boolean = true
 
 	email = this.dataService.getData('UserEmail');
 	phonenumber = ""
@@ -60,8 +58,6 @@ export class QRCodeComponent implements OnInit {
 				this.checkPhoneNumber();
 
 				if (this.isEmailValid && this.isPhoneValid) {				
-					this.hideEmailIsInvalid = true;
-					this.hidePhoneIsInvalid = true;
 					var submitok = await this.submit();
 					if(submitok==false){
 						this.translateService.get("QRCodeREQ_warning_submitfailed").subscribe((res) => setTimeout(() => {alert(res)}, 200))
@@ -69,14 +65,10 @@ export class QRCodeComponent implements OnInit {
 						this.currentQuestionId += value;
 				} else {
 					if(!this.isEmailValid && this.isPhoneValid) {
-						this.hideEmailIsInvalid = false;
 						this.translateService.get("QRCodeREQ_warning_novalidemail").subscribe((res) => alert(res))
 					} else if (this.isEmailValid && !this.isPhoneValid){
-						this.hidePhoneIsInvalid = false;
 						this.translateService.get("QRCodeREQ_warning_novalidphone").subscribe((res) => alert(res))
 					} else {
-						this.hideEmailIsInvalid = false;
-						this.hidePhoneIsInvalid = false;
 						this.translateService.get("QRCodeREQ_warning_novaliddata").subscribe((res) => alert(res))
 					}					
 				}
@@ -175,17 +167,6 @@ export class QRCodeComponent implements OnInit {
 		else {
 			this.showPreviousQuestion(1);
 		}
-	}
-
-	resetShowPhoneValid(){
-		this.hidePhoneIsInvalid = true;
-	}
-	resetShowEmailValid(){
-		this.hideEmailIsInvalid = true;
-	}
-
-	ngOnInit(): void {
-		this.fieldArray.push("")
 	}
 }
 
