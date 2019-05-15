@@ -84,11 +84,10 @@
                                         [attr.placeholder]="'QRCodeREQ_3_placeholder' | translate"
                                         [(ngModel)]="fieldArray[i]" />
                                 </td>
-                                <td class="delete-row" *ngIf="fieldArray.length>1"><i class="far fa-trash-alt"
-                                        (click)="deleteFieldValue(i)"></i></td>
+                                <td class="delete-row" *ngIf="fieldArray.length>1" (click)="deleteFieldValue(i)"><i class="far fa-trash-alt"></i></td>
                             </tr>
                             <tr class="add-row">
-                                <td (click)="addFieldValue()">
+                                <td class="add-row-td" (click)="addFieldValue()">
                                     <i class="fas fa-plus-circle"></i>
                                     Doel toevoegen
                                 </td>

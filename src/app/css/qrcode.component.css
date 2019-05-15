@@ -71,10 +71,11 @@
     color: #2C2B57;
     text-align: center;
     font-weight: normal;
+    cursor: pointer;
 }
 
 .QRCode_Titlebar_left:hover {
-    background-color: #2C2B57;
+    background-color: #41c98e;
     color: white;
     border-radius: .25rem;
 }
@@ -171,6 +172,10 @@
     text-align: center;
 }
 
+.QRCode_Info_Text .add-row-td {
+    cursor: pointer;
+}
+
 .QRCode_Info_Text td {
     padding: 5px;
 }
@@ -238,6 +243,7 @@
     padding-left: 10px;
     padding-right: 10px;
     transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+    cursor: pointer;
 }
 
 .QRCode_Buttons .btn-green {
@@ -248,7 +254,7 @@
 }
 
 .QRCode_Buttons .btn-green:hover {
-    background: #81ab35;
+    background:#41c98e;
     /* border-color: rgb(6, 83, 51); */
 }
 
@@ -260,7 +266,7 @@
 }
 
 .QRCode_Buttons .btn-blue:hover {
-    background-color: indigo;
+    background-color: #41c98e;
     /* border-color: rgb(6, 83, 51); */
 }
 
@@ -286,17 +292,17 @@
 
 .QRCode3 .delete-row {
     text-align: center;
+    cursor: pointer;
 }
 
 .QRCode3 .delete-row:hover {
-    background-color: #2C2B57;
+    background-color: #F16F56;
     color: white;
     border-radius: .1rem;
 }
 
 .QRCode3 .QRCode_Info_Text .add-row td:hover {
-    background-color: #2C2B57;
-    color: white;
+    border-bottom: 1px solid #2C2B57;
     border-radius: .1rem;
 }
 
@@ -325,10 +331,10 @@
     .QRCode_Info_Picture {
         margin-bottom: unset;
         margin-right: 20px;
-        width: 75%;
     }
     .QRCode_Info_Picture img {
         height: unset;
+        max-width: 75%;
     }
     .QRCode_Info_Text {
         justify-content: center;
