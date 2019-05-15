@@ -302,8 +302,7 @@
 }
 
 .QRCode3 .QRCode_Info_Text .add-row td:hover {
-    border-bottom: 1px solid #2C2B57;
-    border-radius: .1rem;
+    border-bottom: 2px solid #2C2B57;
 }
 
 /* --------------------------------------------- Screen 4 --------------------------------------------- */
