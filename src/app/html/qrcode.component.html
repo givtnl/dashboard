@@ -87,7 +87,7 @@
                                 <td class="delete-row" *ngIf="fieldArray.length>1" (click)="deleteFieldValue(i)"><i class="far fa-trash-alt"></i></td>
                             </tr>
                             <tr class="add-row">
-                                <td class="add-row-td" (click)="addFieldValue()">
+                                <td class="add-row-td" (click)="fieldArray.push(newAttribute)">
                                     <i class="fas fa-plus-circle"></i>
                                     {{"QRCodeREQ_3_addgoal" | translate}}
                                 </td>

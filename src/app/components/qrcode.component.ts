@@ -93,10 +93,6 @@ export class QRCodeComponent {
 		}
 	}
 
-	addFieldValue() {
-		this.fieldArray.push(this.newAttribute)
-	}
-
 	deleteFieldValue(index) {
 		this.fieldArray.splice(index, 1);
 	}
