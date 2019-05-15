@@ -54,7 +54,6 @@ export class LoginComponent implements OnInit {
                         this.router.navigate(['/mandate']);
                     else
                         this.router.navigate(['/dashboard']);
-                this.dataService.writeData("UserEmail", this.userName);
                 } else {
                     this.router.navigate(['/unauthorized']);
                 }

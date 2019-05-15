@@ -68,7 +68,7 @@ export class UserService {
                     this.loggedIn = true;
                     this.startTimedLogout(res.json().expires_in * 1000);
                     this.dataService.writeData("accessToken", res.json().access_token);
-
+                    this.dataService.writeData("UserEmail", username);
                     if (res.json().hasOwnProperty("SiteAdmin"))
                         this.dataService.writeData("SiteAdmin", res.json().SiteAdmin);
                     this.SiteAdmin = this.dataService.getData("SiteAdmin") == "True";
