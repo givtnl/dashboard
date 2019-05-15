@@ -217,7 +217,7 @@
     "QRCodeREQ_warning_novalidemail": "Gelieve een geldige email adres op te geven.\nZo kunnen wij je de gevraagde QR-code(s) doorsturen",
     "QRCodeREQ_generic": "Algemene QR-code",
     "QRCodeREQ_3_addgoal": "Doel toevoegen",
-    "QRCodeREQ_warning_novalidphone": "Gelieve een geldige email adres op te geven.\nZo kunnen wij jou indien nodig gemakkelijk contacteren.",
+    "QRCodeREQ_warning_novalidphone": "Gelieve een geldige telefoon nummer op te geven.\nZo kunnen wij jou indien nodig gemakkelijk contacteren.",
     "QRCodeREQ_warning_novaliddata": "Gelieve de onderstaande velden correct in te vullen.",
     "QRCodeREQ_warning_submitfailed": "Oeps, er ging iets fout. Probeer het nog eens!"
 }
