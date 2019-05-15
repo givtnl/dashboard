@@ -77,6 +77,7 @@ export class QRCodeComponent implements OnInit {
 					} else {
 						this.hideEmailIsInvalid = false;
 						this.hidePhoneIsInvalid = false;
+						this.translateService.get("QRCodeREQ_warning_novaliddata").subscribe((res) => alert(res))
 					}					
 				}
 				break;
