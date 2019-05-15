@@ -79,11 +79,10 @@ export class QRCodeComponent {
 				break
 		}
 	}
+	
 	showPreviousQuestion(value: number = 1) {
-		this.currentQuestionId -= value
-
 		switch (this.currentQuestionId) {
-			case 3:
+			case 4:
 				if(this.fieldArray[0] == null) {
 					this.fieldArray.push("")
 				} 
@@ -92,6 +91,7 @@ export class QRCodeComponent {
 			default:
 				break
 		}
+		this.currentQuestionId -= value
 	}
 
 	deleteFieldValue(index) {
