@@ -129,7 +129,8 @@
                                 <input class="Textbox" id="email" type="email"
                                     [ngClass]="{'input_invalid' : !isEmailValid }"
                                     [attr.placeholder]="'QRCodeREQ_4_placeholder-email' | translate"
-                                    (input)="isEmailValid = true" [(ngModel)]="email">
+                                    (input)="isEmailValid = true" [(ngModel)]="email"/>
+                                    <span>*</span>
                             </div>
                         </div>
 
@@ -138,7 +139,7 @@
                                 <i class="fas fa-phone"></i>
                                 <input class="Textbox" id="phonenumber" type="tel"
                                     [attr.placeholder]="'QRCodeREQ_4_placeholder-phone' | translate"
-                                    [(ngModel)]="phonenumber">
+                                    [(ngModel)]="phonenumber"/>
                             </div>
                         </div>
 
