@@ -29,7 +29,6 @@ export class QRCodeComponent {
 	currentQuestionId: number = 1
 	fieldArray: string[] = [""]
 	giftPurposes: string[] = []
-	isPhoneValid: boolean = true
 	isEmailValid: boolean = true
 
 
@@ -56,23 +55,15 @@ export class QRCodeComponent {
 				break
 			case 4:
 				this.checkEmail()
-				this.checkPhoneNumber()
 
-				if (this.isEmailValid && this.isPhoneValid) {				
+				if (this.isEmailValid) {				
 					var submitok = await this.submit()
 					if(submitok==false){
 						this.translateService.get("QRCodeREQ_warning_submitfailed").subscribe((res) => setTimeout(() => {alert(res)}, 200))
 					} else 
 						this.currentQuestionId += value
-				} else {
-					if(!this.isEmailValid && this.isPhoneValid) {
-						this.translateService.get("QRCodeREQ_warning_novalidemail").subscribe((res) => alert(res))
-					} else if (this.isEmailValid && !this.isPhoneValid){
-						this.translateService.get("QRCodeREQ_warning_novalidphone").subscribe((res) => alert(res))
-					} else {
-						this.translateService.get("QRCodeREQ_warning_novaliddata").subscribe((res) => alert(res))
-					}					
-				}
+				} else
+					this.translateService.get("QRCodeREQ_warning_novalidemail").subscribe((res) => alert(res))				
 				break
 			default:
 				this.currentQuestionId += value
@@ -127,21 +118,6 @@ export class QRCodeComponent {
 		this.isEmailValid = regexp.test(this.email)
 
 		return this.isEmailValid
-	}
-
-	checkPhoneNumber() {
-		this.phonenumber = (<HTMLInputElement>document.getElementById('phonenumber')).value
-
-		var currentValue = this.phonenumber
-		if (
-			(currentValue.length == 10 && (currentValue.charAt(1) == "6" || currentValue.charAt(1) == "4")) ||
-			(currentValue.length == 11 && currentValue.charAt(1) == "7")
-		) {
-			this.isPhoneValid = true
-		} else {
-			this.isPhoneValid = false
-		}
-		return this.isPhoneValid
 	}
 
 	flowGeneric() {

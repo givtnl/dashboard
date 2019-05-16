@@ -137,9 +137,8 @@
                             <div>
                                 <i class="fas fa-phone"></i>
                                 <input class="Textbox" id="phonenumber" type="tel"
-                                    [ngClass]="{'input_invalid' : !isPhoneValid }"
                                     [attr.placeholder]="'QRCodeREQ_4_placeholder-phone' | translate"
-                                    (input)="isPhoneValid = true" [(ngModel)]="phonenumber">
+                                    [(ngModel)]="phonenumber">
                             </div>
                         </div>
 
