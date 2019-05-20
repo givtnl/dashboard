@@ -63,12 +63,7 @@ export class AssignComponent implements OnInit {
             if (this.isDialogOpen && evt.keyCode === 27) {
                 this.closeDialog();
             }
-            if(evt.keyCode === 37)
-                this.prevPeriod();
-
-            if(evt.keyCode === 39)
-                this.nextPeriod();
-
+            
             if(evt.keyCode === 46 && evt.shiftKey && this.allowDelete)
                 this.deleteAllEvents();
 
