@@ -9,8 +9,9 @@ import { AppRoutingModule} from "./app.routing";
 import { TranslateModule, TranslateLoader, TranslateStaticLoader} from "ng2-translate";
 import { DataService} from "./services/data.service";
 import { UserService} from "./services/user.service";
-import { DashboardComponent} from "./components/dashboard.component";
 import { ApiClientService} from "./services/api-client.service";
+import { LoggingService } from "./services/logging.service";
+import { DashboardComponent} from "./components/dashboard.component";
 import { LoginComponentGuard} from "./guards/login.component.guard";
 import { LoggedInGuard} from "./guards/logged-in.guard";
 import { OperationsGuard} from "./guards/operations.guard";
@@ -34,6 +35,7 @@ import { LoggedOutComponent } from 'app/components/loggedout.component';
 import {ISODatePipe} from "./pipes/iso.datepipe";
 import {SettingsComponent} from "./components/settings.component";
 import { TerminateComponent } from './components/terminate.component';
+import { QRCodeComponent } from './components/qrcode.component';
 (window as any).jQuery = (window as any).$ = jQuery; // This is needed to resolve issue.
 
 export function createTranslateLoader(http: Http) {
@@ -59,6 +61,7 @@ export function createTranslateLoader(http: Http) {
     AlertComponent,
     LoggedOutComponent,
     SettingsComponent,
+    QRCodeComponent,
     TerminateComponent
   ],
   imports: [
@@ -86,6 +89,7 @@ export function createTranslateLoader(http: Http) {
     DataService,
     UserService,
     ApiClientService,
+    LoggingService,
     OperationsGuard,
     LoggedInGuard,
     LoginComponentGuard,

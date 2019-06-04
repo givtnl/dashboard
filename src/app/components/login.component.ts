@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import {TranslateService} from "ng2-translate";
 import {UserService} from "../services/user.service";
+import { DataService } from 'app/services/data.service';
 
 @Component({
     selector: 'login',
@@ -16,7 +17,7 @@ export class LoginComponent implements OnInit {
     error_message: string;
 	ShowLoadingAnimation: boolean = false;
 
-    constructor(private userService: UserService, private router: Router, private translate:TranslateService){
+    constructor(private userService: UserService, private router: Router, private translate:TranslateService, private dataService:DataService){
         this.passwordHidden = true;
         this.eyeColor = "#BCB9C9";
     }

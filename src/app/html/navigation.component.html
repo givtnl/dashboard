@@ -53,6 +53,12 @@
         <span class="sidebar-title">{{"Menu_Allocate" | translate}}</span>
       </a>
     </li>
+    <li *ngIf="showDashboardItems" routerLinkActive="active-menu-item">
+      <a routerLink="/qr-code">
+        <span class="sidebar-icon"><i class="fas fa-qrcode"></i></span>
+        <span class="sidebar-title">{{"QRCodeREQ_nav" | translate}}</span>
+        </a>
+      </li>
     <li>
       <ul class="sidebar-nav-bottom">
         <li routerLinkActive="active-menu-item">

@@ -99,9 +99,13 @@ h3{
     display: block;
 }
 
+.payouts-time-container {
+    margin-left: 30px;
+}
 .show-collect .time{
     font-family:"Avenir_Roman";
     font-size:12px;
+    padding-left: 20px
 }
 
 .collect-hr{
@@ -693,4 +697,28 @@ h3{
 
   .no-bottom-border{
     border-bottom: none;
+  }
+
+
+.global-alert-wrapper {
+    position: relative !important;
+    width:100%;
+    background-color: #f8d7da;
+    height: auto;
+    border: 1px solid #f5c6cb;
+    border-radius: 5px;
+    padding: 20px;
+    transition: all 0.5s linear;
+    position: absolute;
+    z-index: 1000;
+    margin-top: 20px;
+    text-align: center;
+  }
+  .global-alert-wrapper img {
+      float: left;
+      height: 44px;
+  }
+  .wrapper-green {
+    background: #d4edda;
+    border-color: #c3e6cb;
   }

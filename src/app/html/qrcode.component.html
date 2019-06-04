@@ -1,0 +1,177 @@
+<my-alert></my-alert>
+<div class="global-layout">
+    <my-navigation></my-navigation>
+    <div class="global-layout-content">
+        <my-titlebar></my-titlebar>
+
+        <div class="QRCode_screen">
+            <div class="QRCode QRCode1" *ngIf="currentQuestionId == 1" id="question-1">
+                <div class="QRCode_Titlebar">
+                    <div class="QRCode_Titlebar_middle">
+                        <h2>{{"QRCodeREQ_1_title" | translate}}</h2>
+                    </div>
+                </div>
+                <div class="QRCode_Info">
+                    <div class="QRCode_Info_Picture">
+                        <img src="images/QR-sample.png" alt="Sample QR-code">
+                    </div>
+                    <div class="QRCode_Info_Text">
+                        <p class="subtitle subtitle-first">{{"QRCodeREQ_1_subtext" | translate}}</p>
+                        <ul>
+                            <li>{{"QRCodeREQ_1_sub-subtext1" | translate}}</li>
+                            <li>{{"QRCodeREQ_1_sub-subtext2" | translate}}</li>
+                            <li>{{"QRCodeREQ_1_sub-subtext3" | translate}}</li>
+                        </ul>
+                        <p class="subtitle">{{"QRCodeREQ_1_subtitle-button" | translate}}</p>
+                    </div>
+                </div>
+                <div class="QRCode_Buttons">
+                    <button class="btn btn-green"
+                        (click)="showNextQuestion(1)">{{"QRCodeREQ_nextbutton" | translate}}</button>
+                </div>
+            </div>
+
+            <div class="QRCode QRCode2" *ngIf="currentQuestionId == 2" id="question-2">
+                <div class="QRCode_Titlebar">
+                    <div class="QRCode_Titlebar_left" (click)="showPreviousQuestion()">
+                        <i class="fas fa-chevron-left arrow"></i>
+                    </div>
+                    <div class="QRCode_Titlebar_middle">
+                        <h2>{{"QRCodeREQ_2_title" | translate}}</h2>
+                    </div>
+                    <div class="QRCode_Titlebar_right">
+                    </div>
+                </div>
+                <div class="QRCode_Info">
+                    <div class="QRCode_Info_Picture">
+                        <img src="images/QR-sample.png" alt="Sample QR-code">
+                    </div>
+                    <div class="QRCode_Info_Text">
+                        <p class="subtitle subtitle-first">{{"QRCodeREQ_2_type1_title" | translate}}</p>
+                        <p>{{"QRCodeREQ_2_type1_text" | translate}}</p>
+                        <p class="subtitle">{{"QRCodeREQ_2_type2_title" | translate}}</p>
+                        <p>{{"QRCodeREQ_2_type2_text" | translate}}</p>
+                    </div>
+                </div>
+                <div class="QRCode_Buttons">
+                    <button class="btn btn-blue"
+                        (click)="flowGeneric()">{{"QRCodeREQ_2_button_generic" | translate}}</button>
+                    <button class="btn btn-blue"
+                        (click)="flowSpecific()">{{"QRCodeREQ_2_button_specific" | translate}}</button>
+                </div>
+            </div>
+
+            <div class="QRCode QRCode3" *ngIf="currentQuestionId == 3" id="question-3">
+                <div class="QRCode_Titlebar">
+                    <div class="QRCode_Titlebar_left" (click)="showPreviousQuestion()">
+                        <i class="fas fa-chevron-left arrow"></i>
+                    </div>
+                    <div class="QRCode_Titlebar_middle">
+                        <h2>{{"QRCodeREQ_3_title" | translate}}</h2>
+                    </div>
+                    <div class="QRCode_Titlebar_right">
+                    </div>
+                </div>
+                <div class="QRCode_Info">
+                    <div class="QRCode_Info_Text">
+
+                        <p>{{"QRCodeREQ_3_subtext" | translate}}</p>
+
+                        <table>
+                            <tr *ngFor="let field of fieldArray; let i = index; trackBy:trackByFn">
+                                <td>
+                                    <input class="textbox" type="text" name="{{field}}"
+                                        [attr.placeholder]="'QRCodeREQ_3_placeholder' | translate"
+                                        [(ngModel)]="fieldArray[i]" />
+                                </td>
+                                <td class="delete-row" *ngIf="fieldArray.length>1" (click)="deleteFieldValue(i)"><i class="far fa-trash-alt"></i></td>
+                            </tr>
+                            <tr class="add-row">
+                                <td class="add-row-td" (click)="fieldArray.push(newAttribute)">
+                                    <i class="fas fa-plus-circle"></i>
+                                    {{"QRCodeREQ_3_addgoal" | translate}}
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="QRCode_Buttons">
+                    <button class="btn btn-green"
+                        (click)="showNextQuestion(1)">{{"QRCodeREQ_nextbutton" | translate}}</button>
+                </div>
+            </div>
+
+            <div class="QRCode QRCode4" *ngIf="currentQuestionId == 4" id="question-4">
+                <div class="QRCode_Titlebar">
+                    <div class="QRCode_Titlebar_left" (click)="undoProces()">
+                        <i class="fas fa-chevron-left arrow"></i>
+                    </div>
+                    <div class="QRCode_Titlebar_middle">
+                        <h2>{{"QRCodeREQ_4_title" | translate}}</h2>
+                    </div>
+                    <div class="QRCode_Titlebar_right">
+                    </div>
+                </div>
+                <div class="QRCode_Info">
+                    <div class="QRCode_Info_Text QRCode_Info_Text1">
+                        <p class="subtitle subtitle-first">{{"QRCodeREQ_4_subtext-order" | translate}}</p>
+                        <ul>
+                            <li *ngFor="let element of fieldArray">
+                                {{ element }}
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="QRCode_Info_Text QRCode_Info_Text2">
+                        <p class="subtitle">{{"QRCodeREQ_4_subtext" | translate}}</p>
+                        <div class="ContactInfo" id="contactInfo-Email">
+                            <div>
+                                <i class="fas fa-at"></i>
+                                <input class="Textbox" id="email" type="email"
+                                    [ngClass]="{'input_invalid' : !isEmailValid }"
+                                    [attr.placeholder]="'QRCodeREQ_4_placeholder-email' | translate"
+                                    (input)="isEmailValid = true" [(ngModel)]="email"/>
+                                    <span>*</span>
+                            </div>
+                        </div>
+
+                        <div class="ContactInfo" id="contactInfo-Phonenumber">
+                            <div>
+                                <i class="fas fa-phone"></i>
+                                <input class="Textbox" id="phonenumber" type="tel"
+                                    [attr.placeholder]="'QRCodeREQ_4_placeholder-phone' | translate"
+                                    [(ngModel)]="phonenumber"/>
+                            </div>
+                        </div>
+
+                        <div class="ContactInfo">
+                            <p class="subtitle">{{"QRCodeREQ_4_comments" | translate}}</p>
+                            <textarea rows="4" id="comments" [(ngModel)]="comments"></textarea>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="QRCode_Buttons">
+                    <button class="btn btn-green" id="btnSendRequest"
+                        (click)="showNextQuestion(1)">{{"QRCodeREQ_4_sendbutton" | translate}}</button>
+                </div>
+            </div>
+            <div class="QRCode QRCode5" *ngIf="currentQuestionId == 5" id="question-5">
+                <div class="QRCode_Titlebar">
+                    <div class="QRCode_Titlebar_middle">
+                        <h2>{{"QRCodeREQ_5_title" | translate}}</h2>
+                    </div>
+                </div>
+                <div class="QRCode_Info">
+                    <div class="QRCode_Info_Picture">
+                        <img src="images/QR-scan met Givt logo_UK.png" alt="Sample QR-code">
+                    </div>
+                    <div class="QRCode_Info_Text">
+                        <p class="subtitle subtitle-first">{{"QRCodeREQ_5_subtitle" | translate}}</p>
+                        <p>{{"QRCodeREQ_5_subtext" | translate}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <my-footer></my-footer>
+    </div>
+</div>

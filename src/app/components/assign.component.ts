@@ -8,6 +8,7 @@ import { UserService } from "../services/user.service";
 import { DataService } from "../services/data.service";
 import { AgendaView, moment } from "fullcalendar";
 import { ISODatePipe } from "../pipes/iso.datepipe";
+import { LoggingService, LogLevel } from 'app/services/logging.service';
 
 @Component({
     selector: 'app-assign-collects',
@@ -54,7 +55,7 @@ export class AssignComponent implements OnInit {
     allocLoader: object = { show: false };
 
     @ViewChild('calendar') calendar: ElementRef;
-    public constructor(public ts: TranslateService, private datePipe: ISODatePipe, private cd: ChangeDetectorRef, private apiService: ApiClientService, private userService: UserService, private dataService: DataService) {
+    public constructor(private loggingService: LoggingService, public ts: TranslateService, private datePipe: ISODatePipe, private cd: ChangeDetectorRef, private apiService: ApiClientService, private userService: UserService, private dataService: DataService) {
         this.isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
 
         document.onkeydown = function (evt) {
@@ -62,12 +63,7 @@ export class AssignComponent implements OnInit {
             if (this.isDialogOpen && evt.keyCode === 27) {
                 this.closeDialog();
             }
-            if(evt.keyCode === 37)
-                this.prevPeriod();
-
-            if(evt.keyCode === 39)
-                this.nextPeriod();
-
+            
             if(evt.keyCode === 46 && evt.shiftKey && this.allowDelete)
                 this.deleteAllEvents();
 
@@ -729,6 +725,7 @@ export class AssignComponent implements OnInit {
                         this.csvFileName = res;
                         alloc.errorMsg = res;
                     });
+                    this.loggingService.error(`${alloc.errorMsg} on line: ${i+1}`)
                     continue;
                 }
             }
@@ -770,64 +767,72 @@ export class AssignComponent implements OnInit {
         else
             window.open('assets/Example.csv');
     }
+    startUpload(){
+        this.loggingService.info("User trying to upload CSV")
+        document.getElementById('inputfile').click(); 
+    }
     fileChange(event) {
-        this.selectedCSV = true;
-        this.addedAllocations = [];
-        let fileList: FileList = event.target.files;
-        if (fileList.length > 0) {
-            this.csvFile = fileList[0];
-            let reader: FileReader = new FileReader();
-            reader.readAsText(this.csvFile);
-            reader.onload = (e) => {
-                let csv: string = reader.result as string;
-                let lineByLine = csv.split('\n');
-                if ((lineByLine.length == 1) ||
-                    (lineByLine.length == 2 && lineByLine[1].trim().length == 0))
-                    /* Only one line? Maybe \n is not the newline character */
-                    lineByLine = csv.split('\r');
-                for (let i = 1; i < lineByLine.length; i++) {
-                    let props = lineByLine[i].split(';');
-                    if (props.length == 1) {
-                        //First try splitting with comma's
-                        props = lineByLine[i].split(',');
-                        if (props.length == 1) // skip empty lines
-                            continue;
-                    }
-                    let alloc;
-                    let name = props[2].trim();
-                    let dtBegin = new Date(props[0]);
-                    let dtEnd = new Date(props[1]);
-                    let collectId = Number(props[3].trim());
+        try {
+            this.selectedCSV = true;
+            this.addedAllocations = [];
+            let fileList: FileList = event.target.files;
+            if (fileList.length > 0) {
+                this.csvFile = fileList[0];
+                let reader: FileReader = new FileReader();
+                reader.readAsText(this.csvFile);
+                reader.onload = (e) => {
+                    let csv: string = reader.result as string;
+                    let lineByLine = csv.split('\n');
+                    if ((lineByLine.length == 1) ||
+                        (lineByLine.length == 2 && lineByLine[1].trim().length == 0))
+                        /* Only one line? Maybe \n is not the newline character */
+                        lineByLine = csv.split('\r');
+                    for (let i = 1; i < lineByLine.length; i++) {
+                        let props = lineByLine[i].split(';');
+                        if (props.length == 1) {
+                            //First try splitting with comma's
+                            props = lineByLine[i].split(',');
+                            if (props.length == 1) // skip empty lines
+                                continue;
+                        }
+                        let alloc;
+                        let name = props[2].trim();
+                        let dtBegin = new Date(props[0]);
+                        let dtEnd = new Date(props[1]);
+                        let collectId = Number(props[3].trim());
 
-                    if ( (this.isValidDate(dtBegin) && this.isValidDate(dtEnd) && dtEnd > dtBegin)
-                        && (name.length != 0)
-                        && ([1, 2, 3].indexOf(collectId) != -1)
-                        && (!isNaN(collectId)))
-                    {
-                        alloc = {
-                            name: name,
-                            dtBegin: dtBegin,
-                            dtEnd: dtEnd,
-                            collectId: collectId.toString(),
-                            dtBeginString: new Date(props[0]).toLocaleDateString(navigator.language, { day: 'numeric', year: 'numeric', month: 'numeric', hour: 'numeric', minute: 'numeric' }),
-                            dtEndString: new Date(props[1]).toLocaleDateString(navigator.language, { day: 'numeric', year: 'numeric', month: 'numeric', hour: 'numeric', minute: 'numeric' })
-                        };
-                    } else {
-                        alloc = {
-                            name: name,
-                            dtBegin: dtBegin,
-                            dtEnd: dtEnd,
-                            collectId: collectId.toString(),
-                            dtBeginString: new Date(props[0]).toLocaleDateString(navigator.language, { day: 'numeric', year: 'numeric', month: 'numeric', hour: 'numeric', minute: 'numeric' }),
-                            dtEndString: new Date(props[1]).toLocaleDateString(navigator.language, { day: 'numeric', year: 'numeric', month: 'numeric', hour: 'numeric', minute: 'numeric' }),
-                            error: true
-                        };
+                        if ( (this.isValidDate(dtBegin) && this.isValidDate(dtEnd) && dtEnd > dtBegin)
+                            && (name.length != 0)
+                            && ([1, 2, 3].indexOf(collectId) != -1)
+                            && (!isNaN(collectId)))
+                        {
+                            alloc = {
+                                name: name,
+                                dtBegin: dtBegin,
+                                dtEnd: dtEnd,
+                                collectId: collectId.toString(),
+                                dtBeginString: new Date(props[0]).toLocaleDateString(navigator.language, { day: 'numeric', year: 'numeric', month: 'numeric', hour: 'numeric', minute: 'numeric' }),
+                                dtEndString: new Date(props[1]).toLocaleDateString(navigator.language, { day: 'numeric', year: 'numeric', month: 'numeric', hour: 'numeric', minute: 'numeric' })
+                            };
+                        } else {
+                            alloc = {
+                                name: name,
+                                dtBegin: dtBegin,
+                                dtEnd: dtEnd,
+                                collectId: collectId.toString(),
+                                dtBeginString: new Date(props[0]).toLocaleDateString(navigator.language, { day: 'numeric', year: 'numeric', month: 'numeric', hour: 'numeric', minute: 'numeric' }),
+                                dtEndString: new Date(props[1]).toLocaleDateString(navigator.language, { day: 'numeric', year: 'numeric', month: 'numeric', hour: 'numeric', minute: 'numeric' }),
+                                error: true
+                            };
+                        }
+                        this.addedAllocations.push(alloc);
                     }
-                    this.addedAllocations.push(alloc);
-                }
-                (<HTMLInputElement>document.getElementById("inputfile")).value = '';
-                this.uploadCSV();
-            };
+                    (<HTMLInputElement>document.getElementById("inputfile")).value = '';
+                    this.uploadCSV();
+                };
+            }
+        } catch (error) {
+            this.loggingService.error(error)
         }
     }
     isValidDate(d) {
