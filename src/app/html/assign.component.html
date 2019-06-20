@@ -95,19 +95,7 @@
                                 </div>
                             </td>
                             <td class="csv-cell">
-                                <div class="upload-csv">
-                                    <input type="file" style="display:none;" (change)="fileChange($event)" id="inputfile"
-                                        accept=".csv" />
-                                    <a class="upload-csv-button btn-csv" (click)="startUpload()">Upload
-                                        CSV
-                                        <i class="fas fa-upload" style="margin-left: 10px; margin-top: -2px;"></i>
-                                    </a>
-                                    <a class="csv-download-example" (click)="downloadExampleCSV()">{{"DownloadExample"
-                                        | translate}}</a>
-                                    <!-- <button class="upload-csv-button" (click)="uploadCSV()" [disabled]="addedAllocations.length == 0" [class.ui-state-disabled]="addedAllocations.length == 0">Upload CSV</button>
-                                <input class="input-csv-file" type="file" (change)="fileChange($event)" placeholder="Upload csv" accept=".csv"> -->
-
-                                </div>
+                                <div id="tabulator-div"></div>
                             </td>
                         </tr>
                     </tbody>

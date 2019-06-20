@@ -9,6 +9,8 @@ import { DataService } from "../services/data.service";
 import { AgendaView, moment } from "fullcalendar";
 import { ISODatePipe } from "../pipes/iso.datepipe";
 import { LoggingService, LogLevel } from 'app/services/logging.service';
+import Tabulator from 'tabulator-tables';
+
 
 @Component({
     selector: 'app-assign-collects',
@@ -79,8 +81,32 @@ export class AssignComponent implements OnInit {
     ngAfterViewInit() {
         this.cd.detectChanges();
     }
+    title = 'DemoTabulator';
+  people: IPerson[] = [];
+  columnNames: any[] = [];
+  myTable: Tabulator;
+
 
     ngOnInit(): void {
+        this.people = [
+            { id: 1, firstName: "John", lastName: "Smith", state: "Ohio" },
+            { id: 2, firstName: "Jane", lastName: "Doe", state: "Iowa" },
+            { id: 3, firstName: "Bill", lastName: "Great", state: "Hawaii" },
+            { id: 4, firstName: "Ted", lastName: "Adventure", state: "Arizona" }
+          ];
+      
+          this.columnNames = [
+            { title: "Id", field: "id" },
+            { title: "First Name", field: "firstName" },
+            { title: "Last Name", field: "lastName" },
+            { title: "Location", field: "state" }
+          ];
+      
+          // reference id of div where table is to be displayed (prepend #)
+          this.myTable = new Tabulator("#tabulator-div"); 
+          this.myTable.setColumns(this.columnNames);
+          this.myTable.setData(this.people);
+
         let firstDayFromStorage = this.dataService.getData("FirstDayOfWeek");
         this.firstDay = !isNaN(firstDayFromStorage) ? firstDayFromStorage : 0;
         this.events = [];
@@ -958,3 +984,10 @@ export class BucketCardRow {
         return this.toProcess+this.processed+this.refusedByBank+this.cancelledByUser;
     }
 }
+
+interface IPerson {
+    id: number,
+    firstName: string,
+    lastName: string,
+    state: string
+  }

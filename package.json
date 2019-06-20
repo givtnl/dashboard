@@ -44,6 +44,7 @@
     "q": "^1.5.1",
     "rxjs": "^5.1.0",
     "sprintf-js": "^1.1.1",
+    "tabulator-tables": "^4.2.7",
     "zone.js": "^0.8.4"
   },
   "devDependencies": {
