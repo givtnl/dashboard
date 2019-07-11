@@ -220,5 +220,5 @@
     "QRCodeREQ_warning_novalidphone": "Please enter a valid phone number so that we can contact you if necessary.",
     "QRCodeREQ_warning_novaliddata": "Please enter valid data.",
     "QRCodeREQ_warning_submitfailed": "Woops, something went wrong. Please try again!",
-    "Gift Aid": "Gift Aid"
+    "GiftAid": "Gift Aid"
 }
