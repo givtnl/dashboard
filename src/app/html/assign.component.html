@@ -226,84 +226,20 @@
                                                     <path fill="#2e2957" d="M224 256c70.7 0 128-57.3 128-128S294.7 0 224 0 96 57.3 96 128s57.3 128 128 128zm89.6 32h-16.7c-22.2 10.2-46.9 16-72.9 16s-50.6-5.8-72.9-16h-16.7C60.2 288 0 348.2 0 422.4V464c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48v-41.6c0-74.2-60.2-134.4-134.4-134.4z" /></svg>
                                                 <span>{{ alloc.numberOfTransactions }}</span>
                                             </span>
-                                            <button style="cursor:pointer;background: #2E2957; border:0;margin-left: auto;display:  flex;justify-content:  center;"
-                                                class="icon" [class.fill-green]="alloc.showDetails" (click)="showAllocDetails(alloc)">
-
-                                                <svg width="23px" height="23px" viewBox="8 8 23 23" version="1.1" xmlns="http://www.w3.org/2000/svg"
-                                                    xmlns:xlink="http://www.w3.org/1999/xlink">
-                                                    <!-- Generator: Sketch 40.3 (33839) - http://www.bohemiancoding.com/sketch -->
-                                                    <desc>Created with Sketch.</desc>
-                                                    <defs></defs>
-                                                    <path d="M9.00761688,21.0025814 C9.53265354,26.5888828 14.2352667,30.9603199 19.9588837,30.9603199 C22.6363805,30.9603199 25.090446,30.0036964 26.9979399,28.4135896 L19.5869317,21.0025814 L9.00761688,21.0025814 Z M9,19.0025814 C9.45855668,13.6859391 13.6990295,9.4505879 19.0179464,9 L19.0179464,19.0018685 C19.0177045,19.0021045 19.0174628,19.0023406 19.0172212,19.0025769 L9,19.0025814 Z M28.4121534,26.9993761 C30.0022602,25.0918822 30.9588837,22.6378167 30.9588837,19.9603199 C30.9588837,14.2424422 26.5962091,9.54352172 21.0179464,9.01064508 L21.0179464,19.5461063 C21.0179464,19.5653854 21.0174008,19.5845372 21.0163242,19.6035469 L28.4121534,26.9993761 Z"
-                                                        id="Combined-Shape" stroke="none" fill="#FFFFFF " fill-rule="evenodd"></path>
+                                            <span class="alloc-givt-count alloc-giftAid-count" *ngIf="taxDeductableCollectGroup">
+                                                <svg width="21px" height="19px" viewBox="0 0 21 19" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                                                    <g id="IN5_Mijn-gegevens" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                        <g id="IN3_PI" transform="translate(-21.000000, -476.000000)">
+                                                            <g id="Gift-Aid-geel" transform="translate(22.000000, 477.000000)">
+                                                                <ellipse id="Oval" stroke="#EDA52E" stroke-width="1.5" fill="#FFFFFF" cx="10" cy="12" rx="9" ry="5"></ellipse>
+                                                                <ellipse id="Oval" stroke="#EDA52E" stroke-width="1.5" fill="#FFFFFF" cx="9" cy="8" rx="9" ry="5"></ellipse>
+                                                                <ellipse id="Oval" stroke="#EDA52E" stroke-width="1.5" fill="#FFFFFF" cx="10" cy="5" rx="9" ry="5"></ellipse>
+                                                                <path d="M12.1662116,5.9832636 C13.1588251,5.0376569 13.2203144,4.05857741 12.5878527,3.45606695 C11.9495349,2.84797768 10.9217847,2.84797768 10.292251,3.45606695 C10.1722004,3.57043236 10.0755743,3.69595537 9.99944468,3.82705718 C9.92331503,3.69595537 9.82668894,3.57043236 9.70663834,3.45606695 C9.0771047,2.85634589 8.04935444,2.85634589 7.41689274,3.45606695 C6.77857492,4.05857741 6.84006425,5.0376569 7.83267775,5.9832636 L9.90867471,7.9665272 C9.92917116,7.986053 9.96430792,8 9.99944468,8 C10.0345814,8 10.060934,7.986053 10.0902146,7.9665272 L12.1662116,5.9832636 Z" id="heart" fill="#EDA52E"></path>
+                                                            </g>
+                                                        </g>
+                                                    </g>
                                                 </svg>
-                                            </button>
-                                        </div>
-                                        <table class="incasso-state-table" *ngIf="alloc.showDetails">
-                                            <tr [class.incasso-state-table__row--disabled]="alloc.toProcessTotal == 0">
-                                                <td>
-                                                    <span class="bullet bullet--blue"></span>
-                                                </td>
-                                                <td>{{ "Processing" | translate }}</td>
-                                                <td class="info-table-cell--money">{{ displayValue(alloc.toProcess) }}
-                                                </td>
-                                            </tr>
-                                            <tr [class.incasso-state-table__row--disabled]="alloc.processedTotal == 0">
-                                                <td>
-                                                    <span class="bullet bullet--green"></span>
-                                                </td>
-                                                <td>{{ "Processed" | translate }}</td>
-                                                <td class="info-table-cell--money">{{ displayValue(alloc.processed) }}
-                                                </td>
-                                            </tr>
-                                            <tr [class.incasso-state-table__row--disabled]="alloc.refusedBank == 0">
-                                                <td>
-                                                    <span class="bullet bullet--red"></span>
-                                                </td>
-                                                <td>{{"CancelledByBank" | translate}}</td>
-                                                <td class="info-table-cell--money">{{ displayValue(alloc.refusedByBank)
-                                                    }}
-                                                </td>
-                                            </tr>
-                                            <tr [class.incasso-state-table__row--disabled]="alloc.cancelByGiver == 0">
-                                                <td>
-                                                    <span class="bullet bullet--grey"></span>
-                                                </td>
-                                                <td>{{ "CancelledByUser" | translate}}</td>
-                                                <td class="info-table-cell--money">{{
-                                                    displayValue(alloc.cancelledByUser) }}
-                                                </td>
-                                            </tr>
-                                            <tr class="incasso-state-table__row--em">
-                                                <td></td>
-                                                <td>{{ "Text_Fee_Total" | translate}}</td>
-                                                <td class="info-table-cell--money">{{ displayValue(alloc.total) }}
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </div>
-
-                                </ng-container>
-                                <div *ngIf="currentTab == SelectedTab.Collects && selectedCard.Collects.length > 0" class="dialog-button-container">
-                                    <button class="action-button" [class.action-button__disabled]="!allowSave" [disabled]="!allowSave" (click)="saveAllEvents()"><i class="fas fa-check"></i> 
-                                        {{ selectedCard.Collects.length == 1 ? ('SaveAllocation.one' | translate) : ('SaveAllocation.other'| translate) }}</button>
-                                    <button class="action-button action-button__secundary" [class.action-button__disabled]="!allowDelete" [disabled]="!allowDelete" (click)="deleteAllEvents()"><i class="fas fa-eraser"></i>
-                                        {{ selectedCard.Collects.length == 1 ? ('CancelAllocation.one' | translate) : ('CancelAllocation.other'| translate) }}</button>
-                                </div>
-                            </ng-container>
-                            <ng-container *ngIf="currentTab == SelectedTab.Fixed">
-                                <ng-container *ngFor="let alloc of selectedCard.Fixed">
-                                    <div *ngIf="alloc.amountOfGivts != 0" style="padding: 15px;">
-                                        <div style="height: 40px;display: flex;margin-left: 10px;">
-                                            <div class="wrapping_inputlist" style="display: flex; width: calc(50% + 2px);">
-                                                <span style="align-self: center;font-family: Avenir_Heavy; font-size: 18px;">{{alloc.allocationName}}</span>
-                                            </div>
-                                            <span class="alloc-givt-count">
-                                                <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" data-prefix="fas"
-                                                    data-icon="user" class="svg-inline--fa fa-user fa-w-14" role="img"
-                                                    viewBox="0 0 448 512">
-                                                    <path fill="#2e2957" d="M224 256c70.7 0 128-57.3 128-128S294.7 0 224 0 96 57.3 96 128s57.3 128 128 128zm89.6 32h-16.7c-22.2 10.2-46.9 16-72.9 16s-50.6-5.8-72.9-16h-16.7C60.2 288 0 348.2 0 422.4V464c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48v-41.6c0-74.2-60.2-134.4-134.4-134.4z" /></svg>
-                                                <span>{{ alloc.numberOfTransactions }}</span>
+                                                <span>{{ alloc.giftAidExtraCount }}</span>
                                             </span>
                                             <button style="cursor:pointer;background: #2E2957; border:0;margin-left: auto;display:  flex;justify-content:  center;"
                                                 class="icon" [class.fill-green]="alloc.showDetails" (click)="showAllocDetails(alloc)">
@@ -351,6 +287,118 @@
                                                 <td>{{ "CancelledByUser" | translate}}</td>
                                                 <td class="info-table-cell--money">{{
                                                     displayValue(alloc.cancelledByUser) }}
+                                                </td>
+                                            </tr>
+                                            <tr class="incasso-state-table__row--em incasso-state-table__row--em_giftaid" *ngIf="taxDeductableCollectGroup">
+                                                <td>+</td>   
+                                                <td>{{ "GiftAid" | translate }}</td>
+                                                <td class="info-table-cell--money">{{ displayValue(alloc.giftAidExtraSum) }}
+                                                </td>
+                                            </tr>
+                                            <tr class="incasso-state-table__row--em">
+                                                <td></td>
+                                                <td>{{ "Text_Fee_Total" | translate}}</td>
+                                                <td class="info-table-cell--money">{{ displayValue(alloc.total) }}
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+
+                                </ng-container>
+                                <div *ngIf="currentTab == SelectedTab.Collects && selectedCard.Collects.length > 0" class="dialog-button-container">
+                                    <button class="action-button" [class.action-button__disabled]="!allowSave" [disabled]="!allowSave" (click)="saveAllEvents()"><i class="fas fa-check"></i> 
+                                        {{ selectedCard.Collects.length == 1 ? ('SaveAllocation.one' | translate) : ('SaveAllocation.other'| translate) }}</button>
+                                    <button class="action-button action-button__secundary" [class.action-button__disabled]="!allowDelete" [disabled]="!allowDelete" (click)="deleteAllEvents()"><i class="fas fa-eraser"></i>
+                                        {{ selectedCard.Collects.length == 1 ? ('CancelAllocation.one' | translate) : ('CancelAllocation.other'| translate) }}</button>
+                                </div>
+                            </ng-container>
+                            <ng-container *ngIf="currentTab == SelectedTab.Fixed">
+                                <ng-container *ngFor="let alloc of selectedCard.Fixed">
+                                    <div *ngIf="alloc.amountOfGivts != 0" style="padding: 15px;">
+                                        <div style="height: 40px;display: flex;margin-left: 10px;">
+                                            <div class="wrapping_inputlist" style="display: flex; width: calc(50% + 2px);">
+                                                <span style="align-self: center;font-family: Avenir_Heavy; font-size: 18px;">{{alloc.allocationName}}</span>
+                                            </div>
+                                            <span class="alloc-givt-count">
+                                                <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" data-prefix="fas"
+                                                    data-icon="user" class="svg-inline--fa fa-user fa-w-14" role="img"
+                                                    viewBox="0 0 448 512">
+                                                    <path fill="#2e2957" d="M224 256c70.7 0 128-57.3 128-128S294.7 0 224 0 96 57.3 96 128s57.3 128 128 128zm89.6 32h-16.7c-22.2 10.2-46.9 16-72.9 16s-50.6-5.8-72.9-16h-16.7C60.2 288 0 348.2 0 422.4V464c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48v-41.6c0-74.2-60.2-134.4-134.4-134.4z" /></svg>
+                                                <span>{{ alloc.numberOfTransactions }}</span>
+                                            </span>
+                                            <span class="alloc-givt-count alloc-giftAid-count" *ngIf="taxDeductableCollectGroup">
+                                                <svg width="21px" height="19px" viewBox="0 0 21 19" version="1.1" xmlns="http://www.w3.org/2000/svg"
+                                                    xmlns:xlink="http://www.w3.org/1999/xlink">
+                                                    <g id="IN5_Mijn-gegevens" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                        <g id="IN3_PI" transform="translate(-21.000000, -476.000000)">
+                                                            <g id="Gift-Aid-geel" transform="translate(22.000000, 477.000000)">
+                                                                <ellipse id="Oval" stroke="#EDA52E" stroke-width="1.5" fill="#FFFFFF" cx="10" cy="12" rx="9" ry="5">
+                                                                </ellipse>
+                                                                <ellipse id="Oval" stroke="#EDA52E" stroke-width="1.5" fill="#FFFFFF" cx="9" cy="8" rx="9" ry="5">
+                                                                </ellipse>
+                                                                <ellipse id="Oval" stroke="#EDA52E" stroke-width="1.5" fill="#FFFFFF" cx="10" cy="5" rx="9" ry="5">
+                                                                </ellipse>
+                                                                <path
+                                                                    d="M12.1662116,5.9832636 C13.1588251,5.0376569 13.2203144,4.05857741 12.5878527,3.45606695 C11.9495349,2.84797768 10.9217847,2.84797768 10.292251,3.45606695 C10.1722004,3.57043236 10.0755743,3.69595537 9.99944468,3.82705718 C9.92331503,3.69595537 9.82668894,3.57043236 9.70663834,3.45606695 C9.0771047,2.85634589 8.04935444,2.85634589 7.41689274,3.45606695 C6.77857492,4.05857741 6.84006425,5.0376569 7.83267775,5.9832636 L9.90867471,7.9665272 C9.92917116,7.986053 9.96430792,8 9.99944468,8 C10.0345814,8 10.060934,7.986053 10.0902146,7.9665272 L12.1662116,5.9832636 Z"
+                                                                    id="heart" fill="#EDA52E"></path>
+                                                            </g>
+                                                        </g>
+                                                    </g>
+                                                </svg>
+                                                <span>{{ alloc.giftAidExtraCount }}</span>
+                                            </span>
+                                            <button style="cursor:pointer;background: #2E2957; border:0;margin-left: auto;display:  flex;justify-content:  center;"
+                                                class="icon" [class.fill-green]="alloc.showDetails" (click)="showAllocDetails(alloc)">
+
+                                                <svg width="23px" height="23px" viewBox="8 8 23 23" version="1.1" xmlns="http://www.w3.org/2000/svg"
+                                                    xmlns:xlink="http://www.w3.org/1999/xlink">
+                                                    <!-- Generator: Sketch 40.3 (33839) - http://www.bohemiancoding.com/sketch -->
+                                                    <desc>Created with Sketch.</desc>
+                                                    <defs></defs>
+                                                    <path d="M9.00761688,21.0025814 C9.53265354,26.5888828 14.2352667,30.9603199 19.9588837,30.9603199 C22.6363805,30.9603199 25.090446,30.0036964 26.9979399,28.4135896 L19.5869317,21.0025814 L9.00761688,21.0025814 Z M9,19.0025814 C9.45855668,13.6859391 13.6990295,9.4505879 19.0179464,9 L19.0179464,19.0018685 C19.0177045,19.0021045 19.0174628,19.0023406 19.0172212,19.0025769 L9,19.0025814 Z M28.4121534,26.9993761 C30.0022602,25.0918822 30.9588837,22.6378167 30.9588837,19.9603199 C30.9588837,14.2424422 26.5962091,9.54352172 21.0179464,9.01064508 L21.0179464,19.5461063 C21.0179464,19.5653854 21.0174008,19.5845372 21.0163242,19.6035469 L28.4121534,26.9993761 Z"
+                                                        id="Combined-Shape" stroke="none" fill="#FFFFFF " fill-rule="evenodd"></path>
+                                                </svg>
+                                            </button>
+                                        </div>
+                                        <table class="incasso-state-table" *ngIf="alloc.showDetails">
+                                            <tr [class.incasso-state-table__row--disabled]="alloc.toProcessTotal == 0">
+                                                <td>
+                                                    <span class="bullet bullet--blue"></span>
+                                                </td>
+                                                <td>{{ "Processing" | translate }}</td>
+                                                <td class="info-table-cell--money">{{ displayValue(alloc.toProcess) }}
+                                                </td>
+                                            </tr>
+                                            <tr [class.incasso-state-table__row--disabled]="alloc.processedTotal == 0">
+                                                <td>
+                                                    <span class="bullet bullet--green"></span>
+                                                </td>
+                                                <td>{{ "Processed" | translate }}</td>
+                                                <td class="info-table-cell--money">{{ displayValue(alloc.processed) }}
+                                                </td>
+                                            </tr>
+                                            <tr [class.incasso-state-table__row--disabled]="alloc.refusedBank == 0">
+                                                <td>
+                                                    <span class="bullet bullet--red"></span>
+                                                </td>
+                                                <td>{{"CancelledByBank" | translate}}</td>
+                                                <td class="info-table-cell--money">{{ displayValue(alloc.refusedByBank)
+                                                    }}
+                                                </td>
+                                            </tr>
+                                            <tr [class.incasso-state-table__row--disabled]="alloc.cancelByGiver == 0">
+                                                <td>
+                                                    <span class="bullet bullet--grey"></span>
+                                                </td>
+                                                <td>{{ "CancelledByUser" | translate}}</td>
+                                                <td class="info-table-cell--money">{{
+                                                    displayValue(alloc.cancelledByUser) }}
+                                                </td>
+                                            </tr>
+                                            <tr class="incasso-state-table__row--em incasso-state-table__row--em_giftaid" *ngIf="taxDeductableCollectGroup">
+                                                <td>+</td>
+                                                <td>{{ "GiftAid" | translate }}</td>
+                                                <td class="info-table-cell--money">{{ displayValue(alloc.giftAidExtraSum) }}
                                                 </td>
                                             </tr>
                                             <tr class="incasso-state-table__row--em">
@@ -466,6 +514,27 @@
                                                                 <path fill="#2e2957" d="M224 256c70.7 0 128-57.3 128-128S294.7 0 224 0 96 57.3 96 128s57.3 128 128 128zm89.6 32h-16.7c-22.2 10.2-46.9 16-72.9 16s-50.6-5.8-72.9-16h-16.7C60.2 288 0 348.2 0 422.4V464c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48v-41.6c0-74.2-60.2-134.4-134.4-134.4z" /></svg>
                                                             <span>{{ alloc.numberOfTransactions }}</span>
                                                         </span>
+                                                        <span class="alloc-givt-count alloc-giftAid-count" *ngIf="taxDeductableCollectGroup">
+                                                            <svg width="21px" height="19px" viewBox="0 0 21 19" version="1.1" xmlns="http://www.w3.org/2000/svg"
+                                                                xmlns:xlink="http://www.w3.org/1999/xlink">
+                                                                <g id="IN5_Mijn-gegevens" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                                    <g id="IN3_PI" transform="translate(-21.000000, -476.000000)">
+                                                                        <g id="Gift-Aid-geel" transform="translate(22.000000, 477.000000)">
+                                                                            <ellipse id="Oval" stroke="#EDA52E" stroke-width="1.5" fill="#FFFFFF" cx="10" cy="12" rx="9" ry="5">
+                                                                            </ellipse>
+                                                                            <ellipse id="Oval" stroke="#EDA52E" stroke-width="1.5" fill="#FFFFFF" cx="9" cy="8" rx="9" ry="5">
+                                                                            </ellipse>
+                                                                            <ellipse id="Oval" stroke="#EDA52E" stroke-width="1.5" fill="#FFFFFF" cx="10" cy="5" rx="9" ry="5">
+                                                                            </ellipse>
+                                                                            <path
+                                                                                d="M12.1662116,5.9832636 C13.1588251,5.0376569 13.2203144,4.05857741 12.5878527,3.45606695 C11.9495349,2.84797768 10.9217847,2.84797768 10.292251,3.45606695 C10.1722004,3.57043236 10.0755743,3.69595537 9.99944468,3.82705718 C9.92331503,3.69595537 9.82668894,3.57043236 9.70663834,3.45606695 C9.0771047,2.85634589 8.04935444,2.85634589 7.41689274,3.45606695 C6.77857492,4.05857741 6.84006425,5.0376569 7.83267775,5.9832636 L9.90867471,7.9665272 C9.92917116,7.986053 9.96430792,8 9.99944468,8 C10.0345814,8 10.060934,7.986053 10.0902146,7.9665272 L12.1662116,5.9832636 Z"
+                                                                                id="heart" fill="#EDA52E"></path>
+                                                                        </g>
+                                                                    </g>
+                                                                </g>
+                                                            </svg>
+                                                            <span>{{ alloc.giftAidExtraCount }}</span>
+                                                        </span>
                                                         <button style="cursor:pointer;background: #2E2957; border:0;margin-left: auto;display:  flex;justify-content:  center;"
                                                             class="icon" [class.fill-green]="alloc.showDetails"
                                                             (click)="showAllocDetails(alloc)">
@@ -519,6 +588,12 @@
                                                                 displayValue(alloc.cancelledByUser) }}
                                                             </td>
                                                         </tr>
+                                                        <tr class="incasso-state-table__row--em incasso-state-table__row--em_giftaid" *ngIf="taxDeductableCollectGroup">
+                                                            <td>+</td>
+                                                            <td>{{ "GiftAid" | translate }}</td>
+                                                            <td class="info-table-cell--money">{{ displayValue(alloc.giftAidExtraSum) }}
+                                                            </td>
+                                                        </tr>
                                                         <tr class="incasso-state-table__row--em">
                                                             <td></td>
                                                             <td>{{ "Text_Fee_Total" | translate}}</td>
@@ -550,6 +625,27 @@
                                                                 viewBox="0 0 448 512">
                                                                 <path fill="#2e2957" d="M224 256c70.7 0 128-57.3 128-128S294.7 0 224 0 96 57.3 96 128s57.3 128 128 128zm89.6 32h-16.7c-22.2 10.2-46.9 16-72.9 16s-50.6-5.8-72.9-16h-16.7C60.2 288 0 348.2 0 422.4V464c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48v-41.6c0-74.2-60.2-134.4-134.4-134.4z" /></svg>
                                                             <span>{{ alloc.numberOfTransactions }}</span>
+                                                        </span>
+                                                        <span class="alloc-givt-count alloc-giftAid-count" *ngIf="taxDeductableCollectGroup">
+                                                            <svg width="21px" height="19px" viewBox="0 0 21 19" version="1.1" xmlns="http://www.w3.org/2000/svg"
+                                                                xmlns:xlink="http://www.w3.org/1999/xlink">
+                                                                <g id="IN5_Mijn-gegevens" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                                    <g id="IN3_PI" transform="translate(-21.000000, -476.000000)">
+                                                                        <g id="Gift-Aid-geel" transform="translate(22.000000, 477.000000)">
+                                                                            <ellipse id="Oval" stroke="#EDA52E" stroke-width="1.5" fill="#FFFFFF" cx="10" cy="12" rx="9" ry="5">
+                                                                            </ellipse>
+                                                                            <ellipse id="Oval" stroke="#EDA52E" stroke-width="1.5" fill="#FFFFFF" cx="9" cy="8" rx="9" ry="5">
+                                                                            </ellipse>
+                                                                            <ellipse id="Oval" stroke="#EDA52E" stroke-width="1.5" fill="#FFFFFF" cx="10" cy="5" rx="9" ry="5">
+                                                                            </ellipse>
+                                                                            <path
+                                                                                d="M12.1662116,5.9832636 C13.1588251,5.0376569 13.2203144,4.05857741 12.5878527,3.45606695 C11.9495349,2.84797768 10.9217847,2.84797768 10.292251,3.45606695 C10.1722004,3.57043236 10.0755743,3.69595537 9.99944468,3.82705718 C9.92331503,3.69595537 9.82668894,3.57043236 9.70663834,3.45606695 C9.0771047,2.85634589 8.04935444,2.85634589 7.41689274,3.45606695 C6.77857492,4.05857741 6.84006425,5.0376569 7.83267775,5.9832636 L9.90867471,7.9665272 C9.92917116,7.986053 9.96430792,8 9.99944468,8 C10.0345814,8 10.060934,7.986053 10.0902146,7.9665272 L12.1662116,5.9832636 Z"
+                                                                                id="heart" fill="#EDA52E"></path>
+                                                                        </g>
+                                                                    </g>
+                                                                </g>
+                                                            </svg>
+                                                            <span>{{ alloc.giftAidExtraCount }}</span>
                                                         </span>
                                                         <button style="cursor:pointer;background: #2E2957; border:0;margin-left: auto;display:  flex;justify-content:  center;"
                                                             class="icon" [class.fill-green]="alloc.showDetails"
@@ -602,6 +698,12 @@
                                                             <td>{{ "CancelledByUser" | translate}}</td>
                                                             <td class="info-table-cell--money">{{
                                                                 displayValue(alloc.cancelByGiver) }}
+                                                            </td>
+                                                        </tr>
+                                                        <tr class="incasso-state-table__row--em incasso-state-table__row--em_giftaid" *ngIf="taxDeductableCollectGroup">
+                                                            <td>+</td>
+                                                            <td>{{ "GiftAid" | translate }}</td>
+                                                            <td class="info-table-cell--money">{{ displayValue(alloc.giftAidExtraSum) }}
                                                             </td>
                                                         </tr>
                                                         <tr class="incasso-state-table__row--em">
