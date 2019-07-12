@@ -949,12 +949,14 @@ export class BucketCardRow {
                                 .reduce((sum, amount) => sum + amount, 0);
     }
     get giftAidExtraSum():number {
-        return (this.transactions.filter((tx) => { tx.Status === 3; })
+        // !IMPORTANT: for testing, use Status 1, 2 AND 3
+        return (this.transactions.filter((tx) => { return tx.Status === 3; })
                                 .map((tx) => tx.GiftAidSum)
                                 .reduce((sum, amount) => sum + amount, 0)*0.25)
     }
     get giftAidExtraCount():number {
-        return this.transactions.filter((tx) => { tx.Status === 3; })
+        // !IMPORTANT: for testing, use Status 1, 2 AND 3
+        return this.transactions.filter((tx) => { return tx.Status === 3; })
                                 .map((tx) => tx.GiftAidCount)
                                 .reduce((sum, amount) => sum + amount, 0)
     }
