@@ -935,6 +935,8 @@ export class BucketTransaction {
     CollectId: string;
     Status: number;
     Fixed: boolean;
+    GiftAidCount: number;
+    GiftAidSum: number;
 }
 export class BucketCard {
     dtBegin: Date;
@@ -970,6 +972,16 @@ export class BucketCardRow {
                                 .map((tx) => tx.Sum)
                                 .reduce((sum, amount) => sum + amount, 0);
     }
+    get giftAidExtraSum():number {
+        return (this.transactions.filter((tx) => { return tx.Status < 4 })
+                                .map((tx) => tx.GiftAidSum)
+                                .reduce((sum, amount) => sum + amount, 0)*0.25)
+    }
+    get giftAidExtraCount():number {
+        return this.transactions.filter((tx) => { return tx.Status < 4 })
+                                .map((tx) => tx.GiftAidCount)
+                                .reduce((sum, amount) => sum + amount, 0)
+    }
     get refusedByBank():number {
         return this.transactions.filter((tx) => { return tx.Status === 4; })
                                 .map((tx) => tx.Sum)
@@ -981,7 +993,7 @@ export class BucketCardRow {
                                 .reduce((sum, amount) => sum + amount, 0);
     }
     get total():Number {
-        return this.toProcess+this.processed+this.refusedByBank+this.cancelledByUser;
+        return this.toProcess+this.processed+this.refusedByBank+this.cancelledByUser+this.giftAidExtraSum;
     }
 }
 
