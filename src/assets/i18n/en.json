@@ -201,7 +201,7 @@
     "QRCodeREQ_4_title": "Enter your information",
     "QRCodeREQ_4_subtext": "Almost done! Please enter the e-mail address and phone number of the person who should receive the QR code(s).",
     "QRCodeREQ_4_placeholder-email": "E-mail",
-    "QuestionsProccessingTransactionsAndPayouts": "Do you have questions about the payments? We have placed a short manual in the menu at the bottom left. Still can't figure it out? Do not hesitate to give us a call, we’d love to help.",
+    "QuestionsProccessingTransactionsAndPayouts": "Do you have questions about the payments? We have placed a short manual in the menu at the bottom left. Can't figure it out? Do not hesitate to give us a call, we’d love to help.",
     "QRCodeREQ_1_sub-subtext2": "Newsletter",
     "QRCodeREQ_1_sub-subtext3": "Collection box",
     "QRCodeREQ_4_placeholder-phone": "Phonenumber",
@@ -219,5 +219,6 @@
     "QRCodeREQ_3_addgoal": "Add goal",
     "QRCodeREQ_warning_novalidphone": "Please enter a valid phone number so that we can contact you if necessary.",
     "QRCodeREQ_warning_novaliddata": "Please enter valid data.",
-    "QRCodeREQ_warning_submitfailed": "Woops, something went wrong. Please try again!"
+    "QRCodeREQ_warning_submitfailed": "Woops, something went wrong. Please try again!",
+    "GiftAid": "Gift Aid"
 }

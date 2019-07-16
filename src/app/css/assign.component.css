@@ -580,7 +580,6 @@ h3{
   height: 14px;
   background: black;
   border-radius: 50%;
-  vertical-align: middle;
 }
 
 .bullet--blue {
@@ -611,8 +610,19 @@ h3{
   padding: 7px 5px;
 }
 
-.incasso-state-table__row--em td{
+.incasso-state-table__row--em td {
   font-family: Avenir_Heavy;
+  border-top: 2px solid #2C2B57;
+  padding-top: 10px;
+}
+
+.incasso-state-table tbody tr td:first-child {
+  text-align: center;
+  vertical-align: top;
+}
+
+.incasso-state-table__row--em_giftaid td{
+  font-family: Avenir_Light;
   border-top: 2px solid #2C2B57;
   padding-top: 10px;
 }
@@ -786,6 +796,10 @@ h3{
     .alloc-givt-count{
       margin-left: 10px;
       margin-right: 10px;
+    }
+    .alloc-giftAid-count{
+      margin-left: 4px;
+      margin-right: 4px;
     }
     .info-table-cell--money {
         white-space: nowrap;
@@ -1193,6 +1207,9 @@ h3{
   -moz-border-radius: 44px;
   border-radius: 44px;
   padding: 11px 16px;
+}
+.alloc-giftAid-count {
+  margin-left: 0;
 }
 .alloc-givt-count svg {
   height: 22px;

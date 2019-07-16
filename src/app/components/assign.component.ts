@@ -50,6 +50,7 @@ export class AssignComponent implements OnInit {
     isLoading = false;
     hasOpenAllocation = false;
     isFutureSelection = false;
+    taxDeductableCollectGroup = false;
 
     selectedAllocationDates = [];
     allocLoader: object = { show: false };
@@ -152,6 +153,7 @@ export class AssignComponent implements OnInit {
             .then(data => {
                 this.usedTags = data;
             });
+        this.taxDeductableCollectGroup = this.userService.CurrentCollectGroup.TaxDeductable;
     }
     get allowSave(): Boolean {
         let retVal = true;
@@ -909,6 +911,8 @@ export class BucketTransaction {
     CollectId: string;
     Status: number;
     Fixed: boolean;
+    GiftAidCount: number;
+    GiftAidSum: number;
 }
 export class BucketCard {
     dtBegin: Date;
@@ -944,6 +948,18 @@ export class BucketCardRow {
                                 .map((tx) => tx.Sum)
                                 .reduce((sum, amount) => sum + amount, 0);
     }
+    get giftAidExtraSum():number {
+        // !IMPORTANT: for testing, use Status 1, 2 AND 3
+        return (this.transactions.filter((tx) => { return tx.Status === 3; })
+                                .map((tx) => tx.GiftAidSum)
+                                .reduce((sum, amount) => sum + amount, 0)*0.25)
+    }
+    get giftAidExtraCount():number {
+        // !IMPORTANT: for testing, use Status 1, 2 AND 3
+        return this.transactions.filter((tx) => { return tx.Status === 3; })
+                                .map((tx) => tx.GiftAidCount)
+                                .reduce((sum, amount) => sum + amount, 0)
+    }
     get refusedByBank():number {
         return this.transactions.filter((tx) => { return tx.Status === 4; })
                                 .map((tx) => tx.Sum)
@@ -955,6 +971,6 @@ export class BucketCardRow {
                                 .reduce((sum, amount) => sum + amount, 0);
     }
     get total():Number {
-        return this.toProcess+this.processed+this.refusedByBank+this.cancelledByUser;
+        return this.toProcess+this.processed+this.refusedByBank+this.cancelledByUser+this.giftAidExtraSum;
     }
 }
