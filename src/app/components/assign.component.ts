@@ -50,7 +50,6 @@ export class AssignComponent implements OnInit {
     isLoading = false;
     hasOpenAllocation = false;
     isFutureSelection = false;
-    taxDeductableCollectGroup = false;
 
     selectedAllocationDates = [];
     allocLoader: object = { show: false };
@@ -153,7 +152,6 @@ export class AssignComponent implements OnInit {
             .then(data => {
                 this.usedTags = data;
             });
-        this.taxDeductableCollectGroup = this.userService.CurrentCollectGroup.TaxDeductable;
     }
     get allowSave(): Boolean {
         let retVal = true;
@@ -949,14 +947,12 @@ export class BucketCardRow {
                                 .reduce((sum, amount) => sum + amount, 0);
     }
     get giftAidExtraSum():number {
-        // !IMPORTANT: for testing, use Status 1, 2 AND 3
-        return (this.transactions.filter((tx) => { return tx.Status === 3; })
+        return (this.transactions.filter((tx) => { return tx.Status < 4 })
                                 .map((tx) => tx.GiftAidSum)
                                 .reduce((sum, amount) => sum + amount, 0)*0.25)
     }
     get giftAidExtraCount():number {
-        // !IMPORTANT: for testing, use Status 1, 2 AND 3
-        return this.transactions.filter((tx) => { return tx.Status === 3; })
+        return this.transactions.filter((tx) => { return tx.Status < 4 })
                                 .map((tx) => tx.GiftAidCount)
                                 .reduce((sum, amount) => sum + amount, 0)
     }
