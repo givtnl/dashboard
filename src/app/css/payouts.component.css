@@ -738,5 +738,5 @@ h3{
     border: none !important; display: flex
   }
   .gift-aid-more-info div:first-of-type {
-    display: flex; align-self: flex-end; margin-bottom: 4px; font-size: 14px !important; margin-left: 10px;
+    display: flex; align-self: flex-end; margin-bottom: 2px; font-size: 14px !important; margin-left: 10px;
   }
