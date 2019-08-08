@@ -21,6 +21,7 @@ import { CollectsComponent} from "./components/collects.component";
 import { ReversePipe} from "./pipes/reverse.pipe";
 import { BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import { PayoutsComponent} from "./components/payouts.component";
+import { CSVEditorComponent } from "./components/csveditor.component"
 import { ForgotPasswordComponent} from "./components/forgotpassword.component";
 import { UnAuthorizeComponent} from "./components/unauthorized.component";
 import { AssignComponent} from "./components/assign.component";
@@ -53,6 +54,7 @@ export function createTranslateLoader(http: Http) {
     ReversePipe,
     ISODatePipe,
     PayoutsComponent,
+    CSVEditorComponent,
     ForgotPasswordComponent,
     UnAuthorizeComponent,
     AssignComponent,

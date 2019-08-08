@@ -220,5 +220,7 @@
     "QRCodeREQ_warning_novalidphone": "Please enter a valid phone number so that we can contact you if necessary.",
     "QRCodeREQ_warning_novaliddata": "Please enter valid data.",
     "QRCodeREQ_warning_submitfailed": "Woops, something went wrong. Please try again!",
-    "GiftAid": "Gift Aid"
+    "GiftAid": "Gift Aid",
+    "GiftAidPayout": "Gift Aid claimed on donations",
+    "GiftAidPayoutMoreInfo": "= £{0} * 0.25. This is the amount for which Gift Aid has been claimed on your behalf. We cannot see when and in what amounts the HMRC pays this to you. The amounts may still change due to roundings, cancellations and rejections"
 }
