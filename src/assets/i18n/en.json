@@ -222,5 +222,5 @@
     "QRCodeREQ_warning_submitfailed": "Woops, something went wrong. Please try again!",
     "GiftAid": "Gift Aid",
     "GiftAidPayout": "Gift Aid claimed on donations",
-    "GiftAidPayoutMoreInfo": "= £{0} * 0.25. This is the amount for which Gift Aid has been claimed on your behalf. We cannot see when and in what amounts the HMRC pays this to you. The amounts may still change due to roundings, cancellations and rejections"
+    "GiftAidPayoutMoreInfo": "= £{0} * 0.25. This is the amount for which Gift Aid has been claimed on your behalf. We cannot see when and in what amounts the HMRC will pay this out to you. The amounts may still change due to rounding differences, cancellations, and rejections."
 }
