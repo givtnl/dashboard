@@ -316,22 +316,26 @@
       </div>
     </div>
         <div style="display:inline-flex">
-          <table class="table-stats center-me overview-payout last-row" border="0">
-            <tr class="heavy">
-              <td>{{"TotalWithholdings" | translate}}</td>
-              <td style="font-size:26px;">{{childData.TotaalInhoudingen}}</td>
-            </tr>
-            <tr class="black">
-              <td>{{"Payout_PayedOutAmount" | translate}}</td>
-              <td style="font-size:26px;">{{childData.TotalPaidText}}</td>
-            </tr>
-            <tr *ngIf="userService.CurrentCollectGroup.TaxDeductionType == 'GiftAid'" class="light" style='font-size: 16px; font-family: Avenir_Light'>
-              <td>{{"GiftAidPayout" | translate}}</td>
-              <td>{{childData.extraGiftAidAmount}}</td>
-            </tr>
-          </table>
-          <div class="table-stats center-me overview-payout last-row" style="border: none !important; display: flex" border="0">
-            <div *ngIf="userService.CurrentCollectGroup.TaxDeductionType == 'GiftAid'" class="light" style="display: flex; align-self: flex-end; margin-bottom: 14px; font-size: 14px !important; margin-left: 20px;">
+          <div style="display: inline;">
+            <table class="table-stats center-me overview-payout last-row" border="0">
+              <tr class="heavy">
+                <td>{{"TotalWithholdings" | translate}}</td>
+                <td style="font-size:26px;">{{childData.TotaalInhoudingen}}</td>
+              </tr>
+              <tr class="black">
+                <td>{{"Payout_PayedOutAmount" | translate}}</td>
+                <td style="font-size:26px;">{{childData.TotalPaidText}}</td>
+              </tr>
+            </table>
+            <table class="table-stats gift-aid">
+              <tr *ngIf="userService.CurrentCollectGroup.TaxDeductionType == 'GiftAid'" class="light" style='font-size: 16px; font-family: Avenir_Light; border-top: 1px solid black;'>
+                <td style='text-align: left;'>{{"GiftAidPayout" | translate}}</td>
+                <td style='text-align: right;'>£{{childData.extraGiftAidAmount}}</td>
+              </tr>
+            </table>
+          </div>
+          <div class="table-stats center-me overview-payout last-row gift-aid-more-info" border="0">
+            <div *ngIf="userService.CurrentCollectGroup.TaxDeductionType == 'GiftAid'">
                 <div class="more-info tooltip">{{"Text_Deduction_InfoButton" | translate}}
                     <span id="cost-tooltip" class="green tooltiptext">
                       {{ childData.moreInfoGiftAid }}
