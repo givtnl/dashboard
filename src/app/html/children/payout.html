@@ -328,7 +328,7 @@
               </tr>
             </table>
             <table class="table-stats gift-aid">
-              <tr *ngIf="userService.CurrentCollectGroup.TaxDeductionType == 'GiftAid'" class="light" style='font-size: 16px; font-family: Avenir_Light; border-top: 1px solid black;'>
+              <tr *ngIf="userService.CurrentCollectGroup.TaxDeductionType == 'GiftAid'" class="light">
                 <td style='text-align: left;'>{{"GiftAidPayout" | translate}}</td>
                 <td style='text-align: right;'>£{{childData.extraGiftAidAmount}}</td>
               </tr>
