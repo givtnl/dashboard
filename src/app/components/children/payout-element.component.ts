@@ -147,7 +147,7 @@ export class PayoutComponent implements OnInit {
         })
 
         // extra amount through giftaid
-        x.extraGiftAidAmount = x.GiftAidAmount * 0.25
+        x.extraGiftAidAmount = x.GiftAidAmountPayedByGovernment
         
         if(paymentType === PaymentType.SEPA){
             this.translate.get('Text_Info_Type2', { 0: x.RTransactionT2Count, 2: (this.isSafari ? (1.20).toFixed(2) : (1.20).toLocaleString(navigator.language, { minimumFractionDigits: 2, maximumFractionDigits: 2 })), 1: this.userService.currencySymbol }).subscribe((res: string) => {

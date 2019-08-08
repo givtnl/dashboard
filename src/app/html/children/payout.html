@@ -327,15 +327,15 @@
                 <td style="font-size:26px;">{{childData.TotalPaidText}}</td>
               </tr>
             </table>
-            <table class="table-stats gift-aid">
-              <tr *ngIf="userService.CurrentCollectGroup.TaxDeductionType == 'GiftAid'" class="light">
+            <table  *ngIf="userService.CurrentCollectGroup.TaxDeductionType == 'GiftAid'" class="table-stats gift-aid">
+              <tr class="light">
                 <td style='text-align: left;'>{{"GiftAidPayout" | translate}}</td>
                 <td style='text-align: right;'>£{{childData.extraGiftAidAmount}}</td>
               </tr>
             </table>
           </div>
-          <div class="table-stats center-me overview-payout last-row gift-aid-more-info" border="0">
-            <div *ngIf="userService.CurrentCollectGroup.TaxDeductionType == 'GiftAid'">
+          <div *ngIf="userService.CurrentCollectGroup.TaxDeductionType == 'GiftAid'" class="table-stats center-me overview-payout last-row gift-aid-more-info" border="0">
+            <div>
                 <div class="more-info tooltip">{{"Text_Deduction_InfoButton" | translate}}
                     <span id="cost-tooltip" class="green tooltiptext">
                       {{ childData.moreInfoGiftAid }}
