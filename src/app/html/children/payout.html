@@ -292,7 +292,6 @@
           </tr>
         </table>
       </div>
-
       <div class="stat-calc" *ngIf="4 == childData.activeRow">
         <table>
           <tr>
@@ -316,15 +315,29 @@
         </table>
       </div>
     </div>
-    <table class="table-stats center-me overview-payout last-row" border="0">
-      <tr class="heavy">
-        <td>{{"TotalWithholdings" | translate}}</td>
-        <td style="font-size:26px;">{{childData.TotaalInhoudingen}}</td>
-      </tr>
-      <tr class="black">
-        <td>{{"Payout_PayedOutAmount" | translate}}</td>
-        <td style="font-size:26px;">{{childData.TotalPaidText}}</td>
-      </tr>
-    </table>
+        <div style="display:inline-flex">
+          <table class="table-stats center-me overview-payout last-row" border="0">
+            <tr class="heavy">
+              <td>{{"TotalWithholdings" | translate}}</td>
+              <td style="font-size:26px;">{{childData.TotaalInhoudingen}}</td>
+            </tr>
+            <tr class="black">
+              <td>{{"Payout_PayedOutAmount" | translate}}</td>
+              <td style="font-size:26px;">{{childData.TotalPaidText}}</td>
+            </tr>
+            <tr *ngIf="userService.CurrentCollectGroup.TaxDeductionType == 'GiftAid'" class="light" style='font-size: 16px; font-family: Avenir_Light'>
+              <td>{{"GiftAidPayout" | translate}}</td>
+              <td>{{childData.extraGiftAidAmount}}</td>
+            </tr>
+          </table>
+          <div class="table-stats center-me overview-payout last-row" style="border: none !important; display: flex" border="0">
+            <div *ngIf="userService.CurrentCollectGroup.TaxDeductionType == 'GiftAid'" class="light" style="display: flex; align-self: flex-end; margin-bottom: 14px; font-size: 14px !important; margin-left: 20px;">
+                <div class="more-info tooltip">{{"Text_Deduction_InfoButton" | translate}}
+                    <span id="cost-tooltip" class="green tooltiptext">
+                      {{ childData.moreInfoGiftAid }}
+                    </span>
+                  </div>
+            </div>
+          </div></div>
   </div>
 </section>
