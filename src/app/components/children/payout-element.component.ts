@@ -43,7 +43,7 @@ export class PayoutComponent implements OnInit {
     constructor(private apiClient: ApiClientService, private translate: TranslateService, private datePipe: ISODatePipe, private userService: UserService) {
         this.isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
         this.name = "Testen";
-        this.paymentType = this.userService.CurrentCollectGroup.PaymentType; console.log(this.paymentType)
+        this.paymentType = this.userService.CurrentCollectGroup.PaymentType;
         this.translate.get(this.paymentType === PaymentType.SEPA ? 'Text_TransactionCost_MoreInfo' : 'Text_TransactionCost_MoreInfo_GB').subscribe((res: string) => {
             this.moreInfoToolTip = res;
         });

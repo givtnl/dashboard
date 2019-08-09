@@ -89,7 +89,6 @@ export class PayoutsComponent implements OnInit {
 
     ngOnInit() {
         this.checkAllocations();
-        //this.payouts = require("../models/payout").testData;
 
         this.apiService.getData("Payments/Payouts")
             .then(resp => {
