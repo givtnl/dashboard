@@ -148,12 +148,15 @@ export class PayoutComponent implements OnInit {
                 x.Text_Info_Type2 = res;
             });
         } else if (paymentType === PaymentType.BACS && this.userService.CurrentCollectGroup.TaxDeductionType == 'GiftAid') {
+            // extra amount through giftaid
+            x.extraGiftAidAmount = x.GiftAidAmountPayedByGovernment != undefined ? x.GiftAidAmountPayedByGovernment : 0
             // gift aided more info
             this.translate.get('GiftAidPayoutMoreInfo', { 0: x.GiftAidAmount }).subscribe((res: string) => {
                 x.moreInfoGiftAid = res
             })
-            // extra amount through giftaid
-            x.extraGiftAidAmount = x.GiftAidAmountPayedByGovernment != undefined ? x.GiftAidAmountPayedByGovernment : 0
+            if(x.extraGiftAidAmount == 0){
+                x.moreInfoGiftAid = x.moreInfoGiftAid.substring(this.getPosition(x.moreInfoGiftAid, ".", 2) + 2)
+            }
         }
 
         x.activeRow = 1;
@@ -224,7 +227,9 @@ export class PayoutComponent implements OnInit {
                 });
         });
     }
-
+    getPosition(string: string, subString: string, index: number) {
+        return string.split(subString, index).join(subString).length;
+     }
     exportCSV() {
         this.loader["show"] = true;
         let dtStart = new Date(this.dtExecuted);
