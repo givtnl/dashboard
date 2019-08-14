@@ -91,7 +91,27 @@
     }
 
   </style>
+  <style>
+      .tabulator-col, .tabulator-cell {
+        display: inline-flex !important;
+          justify-content: center;
+          align-items: center;
+      }
+      .tabulator-col { /* To style the table headers */
+          height: 44px !important;
+      }
 
+      .tabulator-col .tabulator-col-content .tabulator-col-title { /* Style table headers title */
+        color:#2E2957;
+        font-family: 'Avenir_Heavy';
+      }
+
+      .tabulator-row .tabulator-cell {
+        height: 40px;
+        font-family: 'Avenir_Light';
+        font-size: 16px;
+      }
+  </style>
 </head>
 
 <body>
