@@ -14,7 +14,7 @@ import {LoggedOutComponent} from 'app/components/loggedout.component';
 import {SettingsComponent} from "./components/settings.component";
 import {TerminateComponent} from './components/terminate.component';
 import { QRCodeComponent } from './components/qrcode.component';
-import { CSVEditorComponent } from './components/csveditor.component';
+import { CollectsShedulerComponent } from './components/collects-scheduler.component';
 
 
 const routes: Routes = [
@@ -30,7 +30,7 @@ const routes: Routes = [
     {path: 'loggedout', component: LoggedOutComponent},
     {path: 'terminate', component: TerminateComponent},
     {path: 'qr-code', component: QRCodeComponent},
-    {path: 'csveditor', component: CSVEditorComponent},
+    {path: 'collects-scheduler', component: CollectsShedulerComponent},
     {path: '**', component: LoginComponent, pathMatch: 'full', canActivate: [LoginComponentGuard]}
 ];
 

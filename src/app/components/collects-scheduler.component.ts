@@ -3,7 +3,6 @@ import * as TabulatorTypes from "tabulator-tables"
 import * as TabulatorTable from "./../../../node_modules/tabulator-tables"
 
 
-import { ISODatePipe } from 'app/pipes/iso.datepipe';
 import * as moment from 'moment'
 
 @Component({
@@ -12,7 +11,7 @@ import * as moment from 'moment'
   styleUrls: ['../css/collects-scheduler.component.css']
 })
 
-export class CSVEditorComponent implements OnInit {
+export class CollectsShedulerComponent implements OnInit {
 
   constructor() { }
 
