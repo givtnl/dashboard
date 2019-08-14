@@ -9,6 +9,7 @@ import { AppRoutingModule} from "./app.routing";
 import { TranslateModule, TranslateLoader, TranslateStaticLoader} from "ng2-translate";
 import { DataService} from "./services/data.service";
 import { UserService} from "./services/user.service";
+import { TabulatorHelper } from "./helpers/tabulator-helper"
 import { ApiClientService} from "./services/api-client.service";
 import { LoggingService } from "./services/logging.service";
 import { DashboardComponent} from "./components/dashboard.component";
@@ -103,7 +104,8 @@ export function createTranslateLoader(http: Http) {
       provide: LocationStrategy,
       useClass: HashLocationStrategy
     },
-    ISODatePipe
+    ISODatePipe,
+    TabulatorHelper
   ],
   bootstrap: [AppComponent]
 })
