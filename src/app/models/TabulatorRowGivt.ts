@@ -3,6 +3,7 @@ export class TabulatorRowGivt {
   endDate: Date
   collectName: string
   collectNumber: number
+  position: number
 }
 
 export class TabulatorRowGivtWithStatus extends TabulatorRowGivt {
@@ -11,9 +12,9 @@ export class TabulatorRowGivtWithStatus extends TabulatorRowGivt {
 }
 
 export enum TabulatorRowStatus {
-  Error = -1
+  Error
 }
 export enum TabulatorRowError {
-  END_IS_HIGHER_THEN_BEGIN = "The end date cannot be before the given startdate",
-  ALLOCATION_ALREADY_EXISTS = "There is already an allocation in the given timeframe"
+  END_IS_HIGHER_THEN_BEGIN, // "The end date cannot be before the given startdate",
+  ALLOCATION_ALREADY_EXISTS // "There is already an allocation in the given timeframe"
 }
