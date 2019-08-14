@@ -9,6 +9,7 @@ import { AppRoutingModule} from "./app.routing";
 import { TranslateModule, TranslateLoader, TranslateStaticLoader} from "ng2-translate";
 import { DataService} from "./services/data.service";
 import { UserService} from "./services/user.service";
+import { TabulatorHelper } from "./helpers/tabulator-helper"
 import { ApiClientService} from "./services/api-client.service";
 import { LoggingService } from "./services/logging.service";
 import { DashboardComponent} from "./components/dashboard.component";
@@ -21,6 +22,7 @@ import { CollectsComponent} from "./components/collects.component";
 import { ReversePipe} from "./pipes/reverse.pipe";
 import { BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import { PayoutsComponent} from "./components/payouts.component";
+import { CollectsShedulerComponent } from "./components/collects-scheduler.component"
 import { ForgotPasswordComponent} from "./components/forgotpassword.component";
 import { UnAuthorizeComponent} from "./components/unauthorized.component";
 import { AssignComponent} from "./components/assign.component";
@@ -53,6 +55,7 @@ export function createTranslateLoader(http: Http) {
     ReversePipe,
     ISODatePipe,
     PayoutsComponent,
+    CollectsShedulerComponent,
     ForgotPasswordComponent,
     UnAuthorizeComponent,
     AssignComponent,
@@ -101,7 +104,8 @@ export function createTranslateLoader(http: Http) {
       provide: LocationStrategy,
       useClass: HashLocationStrategy
     },
-    ISODatePipe
+    ISODatePipe,
+    TabulatorHelper
   ],
   bootstrap: [AppComponent]
 })

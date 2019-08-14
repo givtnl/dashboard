@@ -1,0 +1,18 @@
+<!-- <link href="/dist/css/bootstrap/tabulator_bootstrap4.min.css" rel="stylesheet"> -->
+
+<div class="global-layout">
+    <my-navigation></my-navigation>
+    <div class="global-layout-content">
+        <my-titlebar></my-titlebar>
+        <div class="global-layout-main">
+            <h1>Collecte rooster</h1>
+            <h2>Geen gezeur met je eigen CSV te uploaden!</h2>
+                    <div class="csv-actions">
+                            <button class='action-button csv-editor-btn' id="add-row" (click)="addRow()">Add row</button>
+                            <button class='action-button csv-editor-btn' id="download-csv" (click)="downloadCSV()">Download CSV</button>
+                    </div>
+            <div id="tabulator-div"></div>
+        </div>
+        <my-footer></my-footer>
+    </div>
+</div>

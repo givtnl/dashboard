@@ -1,0 +1,91 @@
+/* START OF TABULATOR CSS */
+.tabulator {
+   font-size: 12px;
+   border: none;
+}
+
+.tabulator .tabulator-header {
+   font-weight: normal;
+   border-bottom: 1px solid;
+   border-bottom-color: rgba(0, 0, 0, 0.12);
+   color: rgba(0, 0, 0, 0.54);
+}
+
+.tabulator .tabulator-header .tabulator-col {
+   height: 48px;
+   background-color: #ffffff;
+   border: none;
+   padding: 0 7px;
+}
+
+.tabulator-row {
+   border-bottom: 1px solid;
+   border-bottom-color: rgba(0, 0, 0, 0.12);
+   min-height: 48px;
+   vertical-align: middle;
+}
+
+.tabulator-row .tabulator-cell {
+   padding: 16px 7px;
+   border-right: none;
+   vertical-align: middle;
+}
+
+.tabulator-row .tabulator-cell:first-of-type,
+.tabulator .tabulator-header .tabulator-col:first-of-type {
+   padding-left: 24px;
+}
+
+.tabulator-row.tabulator-row-even {
+   background-color: #ffffff;
+}
+
+/* END OF TABULATOR CSS */
+
+/* START OF LAYOUT CSS */
+h1 {
+   margin: 0;
+    font-family: 'Avenir_Black';
+    font-size: 20px;
+    color: #2C2B57;
+    text-align: center;
+    font-weight: normal;
+   margin-top: 20px;
+    box-sizing: border-box;
+}
+.global-layout-main {
+   margin: 0 auto;
+   padding: 0 20px;
+   width: -webkit-fill-available;
+}
+.csv-actions { 
+   display: flex;
+   justify-content: space-between;
+   padding-bottom: 20px;
+}
+.csv-editor-btn {
+   box-sizing: border-box;
+   margin: 0;
+   height: 2.1em;
+   padding: 0 .6em;
+   cursor: pointer;
+   max-width: 200px;
+   padding: 8px 22px 8px 22px !important;
+    color: white;
+    font-family: 'Avenir_Medium';
+    font-size: 16px;
+    background-color: #2C2B57;
+    border: 0;
+    transition: 0.3s;
+    border-radius: 3px;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+    align-items: center;
+    margin-bottom: 4px;
+}
+
+/* END OF LAYOUT CSS */
+
+/* BEGIN OF CUSTOM TABULATOR CSS */
+
