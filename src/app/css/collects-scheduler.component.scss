@@ -1,0 +1,93 @@
+
+div.roster-row.row.ng-invalid.ng-touched {
+    color: red;
+}
+
+.roster-form {
+    .roster-controls {
+        display: flex;
+        justify-content: space-between;
+        height: 40px;
+        margin-bottom: 20px;
+        button { 
+            padding-left: 20px;
+            padding-right: 20px;
+            background-color: #2E2957;
+            color: white;
+            border-radius: 4px;
+        }
+    }
+    .roster-body {
+        .roster-header {
+            height: 40px;
+            background: #EEE;
+            display: flex;
+            div {
+                text-align: center;
+                align-self: center;
+            }
+            .header-title {
+                border-right: 1px solid #bbb;
+            }
+            :last-child {
+                border: none;
+            }
+        }
+        .roster-row {
+            height: 40px;
+            input {
+                height: 40px
+            }
+            .row-control { 
+                display:flex;
+                justify-content: center;
+                align-items: center;
+                height: stretch;
+                cursor: pointer;
+                i {
+                    color: red;
+                }
+            }
+        }
+    }
+}
+.givt-red {
+    color: #b91a2b;
+}
+.givt-orange {
+    color: #FFb12A
+}
+.givt-green { 
+    color: #1CA96C;
+}
+.givt-lightgreen { 
+    color: #41C98E;
+}
+.givt-purple { 
+    color: #5A5387
+}
+.givt-blue-purple { 
+    color: #2E2957;
+}
+
+.givt-background-red {
+    background-color: #b91a2b;
+}
+.givt-background-orange {
+    background-color: #FFb12A
+}
+.givt-background-green { 
+    background-color: #1CA96C;
+}
+.givt-background-lightgreen { 
+    background-color: #41C98E;
+}
+.givt-background-purple { 
+    background-color: #5A5387
+}
+.givt-background-green { 
+    background-color: #1CA96C;
+}
+.givt-background-blue-purple { 
+    background-color: #2E2957;
+}
