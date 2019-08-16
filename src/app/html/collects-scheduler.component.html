@@ -4,14 +4,38 @@
     <my-navigation></my-navigation>
     <div class="global-layout-content">
         <my-titlebar></my-titlebar>
-        <div class="global-layout-main">
+        <div class="global-layout-main container">
             <h1>Collecte rooster</h1>
             <h2>Geen gezeur met je eigen CSV te uploaden!</h2>
-                    <div class="csv-actions">
-                            <button class='action-button csv-editor-btn' id="add-row" (click)="addRow()">Add row</button>
-                            <button class='action-button csv-editor-btn' id="download-csv" (click)="downloadCSV()">Download CSV</button>
+            <div id="tabulator-div">
+                <form class="roster-form" [formGroup]="form">
+                    <div class="roster-controls">
+                        <button (click)="addEmptyRow()">Add row</button>
+                        <button (click)="upload()">Send to calendar</button>
                     </div>
-            <div id="tabulator-div"></div>
+                    <div class="items roster-body col-md-12" formArrayName="collects">
+                        <div class="roster-header row">
+                            <div class="header-title col-md-3">StartDate</div>
+                            <div class="header-title col-md-3">EndDate</div>
+                            <div class="header-title col-md-4">Name</div>
+                            <div class="header-title col-md-1">CollectId</div>
+                            <div class="header-title-control col-md-1"></div>
+                        </div>
+                        <div class="roster-row row" 
+                            *ngFor="let control of form.get('collects').controls; 
+                                let i = index" [formGroupName]="i">
+                            <input class="col-md-3" type="datetime-local" formControlName="dtBegin" />
+                            <input class="col-md-3" type="datetime-local" formControlName="dtEnd" />
+                            <input class="col-md-4" type="text" formControlName="Name" />
+                            <input class="col-md-1" type="number" formControlName="CollectId" 
+                                min="1" max="3" step="1" />
+                            <input type="hidden" formControlName="CollectGroupId" value={{currentCollectGroupId}}>
+                            <div class="col-md-1 row-control remove" 
+                                (click)="removeRow(i)"><i class="fa fa-close"></i></div>
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div>
         <my-footer></my-footer>
     </div>

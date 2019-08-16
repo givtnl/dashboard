@@ -1,7 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, LOCALE_ID } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule, Http} from '@angular/http';
+import { HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { AppComponent } from './components/app.component';
 import { LoginComponent } from 'app/components/login.component';
@@ -37,6 +38,7 @@ import {ISODatePipe} from "./pipes/iso.datepipe";
 import {SettingsComponent} from "./components/settings.component";
 import { TerminateComponent } from './components/terminate.component';
 import { QRCodeComponent } from './components/qrcode.component';
+import { BearerTokenInterceptor } from './interceptors/bearer-token-interceptor';
 (window as any).jQuery = (window as any).$ = jQuery; // This is needed to resolve issue.
 
 export function createTranslateLoader(http: Http) {
@@ -78,8 +80,10 @@ export function createTranslateLoader(http: Http) {
     BrowserAnimationsModule,
     FormsModule,
     HttpModule,
+    HttpClientModule,
     AppRoutingModule,
     ScheduleModule,
+    ReactiveFormsModule,
     TranslateModule.forRoot({
       provide: TranslateLoader,
       useFactory: (createTranslateLoader),
@@ -95,6 +99,11 @@ export function createTranslateLoader(http: Http) {
     OperationsGuard,
     LoggedInGuard,
     LoginComponentGuard,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass:BearerTokenInterceptor,
+      multi:true
+    },
     {
       provide: LOCALE_ID,
       useValue: "nl-BE"
