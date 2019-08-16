@@ -2,14 +2,13 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, LOCALE_ID } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule, Http} from '@angular/http';
-import { HashLocationStrategy, LocationStrategy, DatePipe} from '@angular/common';
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { AppComponent } from './components/app.component';
 import { LoginComponent } from 'app/components/login.component';
 import { AppRoutingModule} from "./app.routing";
 import { TranslateModule, TranslateLoader, TranslateStaticLoader} from "ng2-translate";
 import { DataService} from "./services/data.service";
 import { UserService} from "./services/user.service";
-import { TabulatorHelper } from "./helpers/tabulator-helper"
 import { ApiClientService} from "./services/api-client.service";
 import { LoggingService } from "./services/logging.service";
 import { DashboardComponent} from "./components/dashboard.component";
@@ -104,8 +103,7 @@ export function createTranslateLoader(http: Http) {
       provide: LocationStrategy,
       useClass: HashLocationStrategy
     },
-    ISODatePipe,
-    TabulatorHelper
+    ISODatePipe
   ],
   bootstrap: [AppComponent]
 })
