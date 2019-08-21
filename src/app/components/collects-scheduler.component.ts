@@ -71,8 +71,8 @@ export class CollectsShedulerComponent implements OnInit {
     }, { validator: GreaterThanDateValidator });
 
     form.valueChanges
-      .pipe(debounceTime(2000))
-      .pipe(distinctUntilChanged())
+      .pipe(debounceTime(1500))
+      .pipe(distinctUntilChanged((oldValue, newValue) => JSON.stringify(oldValue) === JSON.stringify(newValue)))
       .subscribe(x => this.upload(x));
 
     return form;
