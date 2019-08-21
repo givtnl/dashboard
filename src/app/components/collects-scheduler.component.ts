@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormArray, ValidatorFn } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormArray, ValidatorFn, FormControl } from '@angular/forms';
 import { environment } from 'environments/environment';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { UserService } from 'app/services/user.service';
@@ -63,15 +63,22 @@ export class CollectsShedulerComponent implements OnInit {
 
   buildSingleForm(scheduler: any = null): FormGroup {
     return this.formBuilder.group({
+      Id: [scheduler ? scheduler.Id : 0],
       dtBegin: [scheduler ? scheduler.dtBegin : null, [Validators.required]],
       dtEnd: [scheduler ? scheduler.dtEnd : null, [Validators.required]],
       Name: [scheduler ? scheduler.Name : null, [Validators.required, Validators.maxLength(50), Validators.minLength(3)]],
-      CollectId: [scheduler ? scheduler.CollectId : 1, [Validators.required, Validators.min(1), Validators.max(3)]],
+      CollectId: [scheduler ? scheduler.CollectId : 1, [Validators.required, Validators.min(1), Validators.max(3)]]
     }, { validator: GreaterThanDateValidator })
   }
 
   addEmptyRow() {
-    this.collectsArray.push(this.buildSingleForm());
+    var selectedRow = this.collectsArray.controls.find(x => x.touched == true)
+    if (selectedRow) {
+      this.collectsArray.insert(this.collectsArray.controls.indexOf(selectedRow), this.buildSingleForm(selectedRow.value))
+      selectedRow.markAsUntouched()
+    } else {
+      this.collectsArray.push(this.buildSingleForm());
+    }
   }
 
   removeRow(index: number) {
@@ -98,10 +105,6 @@ export class CollectsShedulerComponent implements OnInit {
         return Observable.throw(error);
       }))
       .subscribe(() => {
-        // this.form = this.formBuilder.group({
-        //   collects: this.formBuilder.array([])
-        // });
-        // this.addEmptyRow()
         localStorage.removeItem(this.cacheKey)
         this.isSuccessfulAllocations = true
       });
