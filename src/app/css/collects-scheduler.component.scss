@@ -1,5 +1,4 @@
-
-div.roster-row.row.ng-invalid.ng-touched {
+.invalid-row {
     color: red;
 }
 
@@ -8,13 +7,16 @@ div.roster-row.row.ng-invalid.ng-touched {
         display: flex;
         justify-content: space-between;
         height: 40px;
-        margin-bottom: 20px;
+        margin-top: 20px;
         button { 
             padding-left: 20px;
             padding-right: 20px;
             background-color: #2E2957;
             color: white;
             border-radius: 4px;
+            i { 
+                margin-right: 20px;
+            }
         }
     }
     .roster-body {
@@ -40,14 +42,31 @@ div.roster-row.row.ng-invalid.ng-touched {
             }
             .row-control { 
                 display:flex;
-                justify-content: center;
+                justify-content: space-around;
                 align-items: center;
                 height: stretch;
-                cursor: pointer;
                 i {
-                    color: red;
+                    cursor: pointer;
+                }
+                :nth-child(1) {
+                    color: #b91a2b;
+                }
+                :nth-child(2) {
+                    color: #2E2957;
                 }
             }
+        }
+    }
+    .roster-footer {
+        margin-top: 20px;
+        font: 16px 'Avenir_Light';
+        color: red;
+    }
+    .roster-controls {
+        a {
+            text-decoration: none;
+            font: 20px 'Avenir_Black';
+            color: #2E2957;
         }
     }
 }
