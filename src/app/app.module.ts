@@ -40,6 +40,7 @@ import { TerminateComponent } from './components/terminate.component';
 import { QRCodeComponent } from './components/qrcode.component';
 import { BearerTokenInterceptor } from './interceptors/bearer-token-interceptor';
 import { AcceptHeaderInterceptor } from './interceptors/accept-header.interceptor';
+import { CollectSchedulerService } from './services/collects-schedulder.service';
 (window as any).jQuery = (window as any).$ = jQuery; // This is needed to resolve issue.
 
 export function createTranslateLoader(http: Http) {
@@ -93,6 +94,7 @@ export function createTranslateLoader(http: Http) {
     CalendarModule
   ],
   providers: [
+    CollectSchedulerService,
     DataService,
     UserService,
     ApiClientService,
