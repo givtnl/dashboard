@@ -26,22 +26,25 @@
                             <input class="col-md-1" type="number" formControlName="CollectId" min="1" max="3"
                                 step="1" />
                             <div class="col-md-1 row-control remove">
-                                <i [class.hidden]="form.get('collects').controls.length == 1" class="fa fa-times" (click)="removeRow(i)"></i>
+                                <i [class.hidden]="form.get('collects').controls.length == 1" class="fa fa-times"
+                                    (click)="removeRow(i)"></i>
                                 <i class="fa fa-copy" (click)="copyRow(i)"></i>
+                                <i class="fa fa-plus" (click)="addEmptyRow(i)"></i>
                             </div>
                         </div>
                         <div class="roster-controls">
-                                <button (click)="addEmptyRow()"><i class="fa fa-plus"></i>Toevoegen</button>
-                                <div class="roster-messages row" *ngIf="hasOverlapErrors" class="roster-footer row">
-                                        Der is een overlappingske i joen liste me toewizingn
-                                    </div>
-                                    <div class="roster-messages row" *ngIf="isSuccessfulAllocations" class="roster-footer row">
-                                        Tis gelukt
-                                    </div>
-                                <button (click)="upload()"><i class="fa fa-check"></i>Opslaan</button>
+                            <button (click)="addEmptyRow()"><i class="fa fa-plus"></i>Toevoegen</button>
+                            <div class="roster-messages row" *ngIf="hasOverlapErrors" class="roster-footer row">
+                                Der is een overlappingske i joen liste me toewizingn
                             </div>
+                            <div class="roster-messages row" *ngIf="isSuccessfulAllocations" class="roster-footer row">
+                                Tis gelukt
+                            </div>
+                            <!-- <button (click)="upload()"><i class="fa fa-check"></i>Opslaan</button> -->
+                        </div>
                         <div class="roster-controls row" style='margin-top:20px;'>
-                            <a href="/#/assign">
+
+                            <a routerLink="/assign">
                                 Terug naar kalender
                             </a>
                         </div>
