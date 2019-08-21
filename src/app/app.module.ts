@@ -39,6 +39,7 @@ import {SettingsComponent} from "./components/settings.component";
 import { TerminateComponent } from './components/terminate.component';
 import { QRCodeComponent } from './components/qrcode.component';
 import { BearerTokenInterceptor } from './interceptors/bearer-token-interceptor';
+import { AcceptHeaderInterceptor } from './interceptors/accept-header.interceptor';
 (window as any).jQuery = (window as any).$ = jQuery; // This is needed to resolve issue.
 
 export function createTranslateLoader(http: Http) {
@@ -102,6 +103,11 @@ export function createTranslateLoader(http: Http) {
     {
       provide: HTTP_INTERCEPTORS,
       useClass:BearerTokenInterceptor,
+      multi:true
+    },
+    {
+      provide:HTTP_INTERCEPTORS,
+      useClass:AcceptHeaderInterceptor,
       multi:true
     },
     {
