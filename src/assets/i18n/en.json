@@ -228,5 +228,9 @@
     "CollectRosterRowsPerPage": "Rows per page",
     "CollectRosterBtnAdd": "Add",
     "CollectRosterToCalendar": "To calendar",
-    "CollectRosterMenu": "Offeringscheduler"
+    "CollectRosterMenu": "Offeringscheduler",
+    "CollectRosterHeaderStartDate": "Start date",
+    "CollectRosterHeaderEndDate": "End date",
+    "CollectRosterHeaderName": "Name",
+    "CollectRosterHeaderCollectId": "Collect number"
 }
