@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormArray, ValidatorFn } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { UserService } from 'app/services/user.service';
 import { isNullOrUndefined } from 'util';
-import { distinctUntilChanged, debounceTime } from 'rxjs/operators';
-import { CollectSchedulerRow } from 'app/models/CollectSchedulerRow';
+import { distinctUntilChanged, debounceTime, catchError } from 'rxjs/operators';
 import { InfrastructurePaginator } from 'app/models/infrastructure-paginator';
+import { CollectSchedulerService } from 'app/services/collects-schedulder.service';
+import { AllocationDetailModel } from 'app/models/collect-scheduler/allocation-detail.model';
+import { Observable } from 'rxjs';
 
 const GreaterThanDateValidator: ValidatorFn = (formGroup: FormGroup) => {
   var retVal = null
@@ -69,11 +71,11 @@ export class CollectsShedulerComponent implements OnInit {
   buildSingleForm(scheduler: any = null, copyId: boolean = false): FormGroup {
     const form = this.formBuilder.group(
       {
-        id: [scheduler && copyId ? scheduler.Id : 0],
+        id: [scheduler && copyId ? scheduler.id : 0],
         dtBegin: [scheduler ? scheduler.dtBegin : null, [Validators.required]],
         dtEnd: [scheduler ? scheduler.dtEnd : null, [Validators.required]],
-        name: [scheduler ? scheduler.Name : null, [Validators.required, Validators.maxLength(50), Validators.minLength(3)]],
-        collectId: [scheduler ? scheduler.CollectId : 1, [Validators.required, Validators.min(1), Validators.max(3)]]
+        name: [scheduler ? scheduler.name : null, [Validators.required, Validators.maxLength(50), Validators.minLength(3)]],
+        collectId: [scheduler ? scheduler.collectId : 1, [Validators.required, Validators.min(1), Validators.max(3)]]
       },
       { validator: GreaterThanDateValidator }
     );
