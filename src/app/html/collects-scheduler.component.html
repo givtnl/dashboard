@@ -8,10 +8,10 @@
                 <form class="roster-form" [formGroup]="form" *ngIf="form">
                     <div class="items roster-body col-md-12" formArrayName="collects">
                         <div class="roster-header row">
-                            <div class="header-title col-md-3">StartDate</div>
-                            <div class="header-title col-md-3">EndDate</div>
-                            <div class="header-title col-md-4">Name</div>
-                            <div class="header-title col-md-1">CollectId</div>
+                            <div class="header-title col-md-3">{{ "CollectRosterHeaderStartDate" | translate }}</div>
+                            <div class="header-title col-md-3">{{ "CollectRosterHeaderEndDate" | translate }}</div>
+                            <div class="header-title col-md-4">{{ "CollectRosterHeaderName" | translate }}</div>
+                            <div class="header-title col-md-1">{{ "CollectRosterHeaderCollectId" | translate }}</div>
                             <div class="header-title-control col-md-1"></div>
                         </div>
                         <div class="roster-container">
