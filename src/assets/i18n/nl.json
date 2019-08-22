@@ -228,5 +228,9 @@
     "CollectRosterRowsPerPage": "Rijen per pagina",
     "CollectRosterBtnAdd": "Toevoegen",
     "CollectRosterToCalendar": "Naar kalender",
-    "CollectRosterMenu": "Collecterooster"
+    "CollectRosterMenu": "Collecterooster",
+    "CollectRosterHeaderStartDate": "Startdatum",
+    "CollectRosterHeaderEndDate": "Einddatum",
+    "CollectRosterHeaderName": "Naam",
+    "CollectRosterHeaderCollectId": "Collecte nummer"
 }
