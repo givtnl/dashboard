@@ -21,9 +21,11 @@
     }
     .roster-body {
         .roster-header {
-            height: 40px;
+            height: 30px;
             background: #EEE;
             display: flex;
+            padding: 0;
+            margin: 0;
             div {
                 text-align: center;
                 align-self: center;
@@ -35,37 +37,64 @@
                 border: none;
             }
         }
-        .roster-row {
-            height: 40px;
-            input {
-                height: 40px
-            }
-            .row-control { 
-                display:flex;
-                justify-content: space-around;
-                align-items: center;
-                height: stretch;
-                border: 1px solid lightgray;
-                .row {
-                    .row-control-sub {
-                        display: flex;
-                        justify-content: center;
-                    }
-                    i {
-                        cursor: pointer;
-                        align-self: center;
-                    }
-                    :nth-child(1) {
-                        i {
-                            color: #41C98E;
+        .roster-container{
+            max-height: 70vh;
+            overflow: scroll;
+        
+            .roster-row {
+                height: 30px;
+                margin: 0;
+                padding: 0;
+                
+                input {
+                    height: 30px;
+                    background: none;
+                    border: 1px solid lightgrey;
+                    border-bottom: none;
+                    border-right: none;
+                }
+                
+                .row-control { 
+                    display:flex;
+                    justify-content: space-around;
+                    align-items: center;
+                    height: stretch;
+                    border: 1px solid lightgrey;
+                    border-bottom: none;
+                    .row {
+                        .row-control-sub {
+                            display: flex;
+                            justify-content: center;
                         }
-                    }
-                    :nth-child(3) {
                         i {
-                            color: #b91a2b;
+                            cursor: pointer;
+                            align-self: center;
+                        }
+                        :nth-child(1) {
+                            i {
+                                color: #41C98E;
+                            }
+                        }
+                        :nth-child(2) {
+                            i {
+                                color: #2E2957
+                            }
+                        }
+                        :nth-child(3) {
+                            i {
+                                color: #b91a2b;
+                            }
                         }
                     }
                 }
+            }
+            .roster-row:last-of-type {
+                input, .row-control {
+                    border-bottom: 1px solid lightgrey;
+                }
+            }
+            .roster-row:hover {
+                background: lightgrey;
             }
         }
     }

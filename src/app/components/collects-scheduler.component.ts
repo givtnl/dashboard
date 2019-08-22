@@ -8,6 +8,7 @@ import { InfrastructurePaginator } from 'app/models/infrastructure-paginator';
 import { CollectSchedulerService } from 'app/services/collects-schedulder.service';
 import { AllocationDetailModel } from 'app/models/collect-scheduler/allocation-detail.model';
 import { Observable } from 'rxjs';
+import { ISODatePipe } from 'app/pipes/iso.datepipe';
 
 const GreaterThanDateValidator: ValidatorFn = (formGroup: FormGroup) => {
   var retVal = null
@@ -35,33 +36,14 @@ export class CollectsShedulerComponent implements OnInit {
 
   public form: FormGroup;
   public cacheKey = 'CollectSchedulerComponent';
-  public hasOverlapErrors = false
-  public isSuccessfulAllocations = false;
 
-  currentCollectGroupId: string
+  currentCollectGroupAllocations = []
 
-  paginatorOptions: InfrastructurePaginator = { currentPage: 1, currentRowsPerPage: 10 }
-
-  constructor(private formBuilder: FormBuilder, private userService: UserService, private service: CollectSchedulerService) { }
-
+  constructor(private formBuilder: FormBuilder, private userService: UserService, private service: CollectSchedulerService, private datePipe: ISODatePipe) {
+  }
+  
   ngOnInit() {
-    // restore from cache if exists
-    const cachedItems = JSON.parse(localStorage.getItem(this.cacheKey))
-
-    this.currentCollectGroupId = this.userService.CurrentCollectGroup.GUID
-
-    this.form = this.formBuilder.group({
-      CollectGroupId: [this.currentCollectGroupId],
-      collects: this.formBuilder.array(cachedItems ? cachedItems.collects.map(x => this.buildSingleForm(x)) : [])
-    });
-    // todo fetch from server?
-    if (!cachedItems || !cachedItems.collects || cachedItems.collects.length === 0) {
-      this.addEmptyRow();
-    }
-    // hook the value change event handler
-    this.form.valueChanges.subscribe(x => {
-      localStorage.setItem(this.cacheKey, JSON.stringify(x))
-    });
+    this.getRows({ currentPage: 1, currentRowsPerPage: 10 }) 
   }
 
   public get collectsArray(): FormArray {
@@ -71,11 +53,11 @@ export class CollectsShedulerComponent implements OnInit {
   buildSingleForm(scheduler: any = null, copyId: boolean = false): FormGroup {
     const form = this.formBuilder.group(
       {
-        id: [scheduler && copyId ? scheduler.id : 0],
-        dtBegin: [scheduler ? scheduler.dtBegin : null, [Validators.required]],
-        dtEnd: [scheduler ? scheduler.dtEnd : null, [Validators.required]],
-        name: [scheduler ? scheduler.name : null, [Validators.required, Validators.maxLength(50), Validators.minLength(3)]],
-        collectId: [scheduler ? scheduler.collectId : 1, [Validators.required, Validators.min(1), Validators.max(3)]]
+        id: [scheduler && copyId ? scheduler.Id : 0],
+        dtBegin: [scheduler ? this.datePipe.transform(new Date(scheduler.dtBegin), "yyyy-MM-ddTHH:mm") : null, [Validators.required]],
+        dtEnd: [scheduler ? this.datePipe.transform(new Date(scheduler.dtEnd), "yyyy-MM-ddTHH:mm") : null, [Validators.required]],
+        name: [scheduler ? scheduler.Name : null, [Validators.required, Validators.maxLength(50), Validators.minLength(3)]],
+        collectId: [scheduler ? scheduler.CollectId : 1, [Validators.required, Validators.min(1), Validators.max(3)]]
       },
       { validator: GreaterThanDateValidator }
     );
@@ -83,7 +65,7 @@ export class CollectsShedulerComponent implements OnInit {
     form.valueChanges
       .pipe(debounceTime(1500))
       .pipe(distinctUntilChanged((oldValue, newValue) => JSON.stringify(oldValue) === JSON.stringify(newValue)))
-      .subscribe((x: AllocationDetailModel) => this.upload(form));
+      .subscribe(x => this.upload(form));
 
     return form;
 
@@ -96,8 +78,9 @@ export class CollectsShedulerComponent implements OnInit {
   removeRow(index: number) {
     const toDeleteFormGroup = this.collectsArray.at(index);
     if (toDeleteFormGroup.value.id > 0) {
-      //  blabladelete
-      // then.
+      this.service.deleteAllocation(this.userService.CurrentCollectGroup.GUID, toDeleteFormGroup.value.id)
+            .pipe(catchError((error: HttpErrorResponse) => this.handleGenericError(error)))
+            .subscribe(x => this.removeRowConfirm(index))
     } else {
       this.removeRowConfirm(index);
     }
@@ -108,39 +91,53 @@ export class CollectsShedulerComponent implements OnInit {
   }
 
   copyRow(index: number) {
-    this.collectsArray.insert(index, this.buildSingleForm(this.collectsArray.at(index).value));
+    var row = this.collectsArray.at(index).value
+  
+    this.collectsArray.insert(index, this.buildSingleForm({
+      CollectId: row.collectId,
+      Name: row.name,
+      dtBegin: row.dtBegin,
+      dtEnd: row.dtEnd,
+    }));
   }
-
+  getRows(options: InfrastructurePaginator) {
+    this.service
+      .getAll(this.userService.CurrentCollectGroup.GUID, options.currentRowsPerPage, options.currentPage)
+      .pipe(catchError((error: HttpErrorResponse) => this.handleGenericError(error)))
+      .subscribe(response => {
+        this.currentCollectGroupAllocations = response
+        this.form = this.formBuilder.group({
+          collects: this.formBuilder.array(this.currentCollectGroupAllocations ? this.currentCollectGroupAllocations.map(x => this.buildSingleForm(x, true)) : [])
+        });
+      })
+  }
   upload(row: FormGroup) {
     if (row.invalid) {
       return;
     }
     if (row.value.id && row.value.id > 0) {
       this.service
-        .updateAllocation(this.currentCollectGroupId, row.value.id, row.value)
+        .updateAllocation(this.userService.CurrentCollectGroup.GUID, row.value.id, row.value)
         .pipe(catchError((error: HttpErrorResponse) => (error.status === 409 ? this.handleConflict(error, row) : this.handleGenericError())))
         .subscribe(x => console.log('AH YEET update GELUKT'));
     } else {
       this.service
-        .createAllocation(this.currentCollectGroupId, row.value)
+        .createAllocation(this.userService.CurrentCollectGroup.GUID, row.value)
         .pipe(catchError((error: HttpErrorResponse) => (error.status === 409 ? this.handleConflict(error, row) : this.handleGenericError())))
         .subscribe(x => row.patchValue({ id: x.Id }));
     }
 
   }
 
-  onPaginatorChanged(e: InfrastructurePaginator) {
-    this.paginatorOptions = e
-  }
+
   handleConflict(error: any, form: FormGroup) {
-    this.hasOverlapErrors = true;
     form.setErrors({ overlap: true });
     return Observable.throw(error);
 
   }
-  handleGenericError() {
-    console.log('generic');
-    return Observable.throw('generic error ofzo');
+  handleGenericError(error: any = null) {
+    console.log(error != null ? error : "generic error");
+    return Observable.throw(error != null ? error : "generic error");
 
   }
 }
