@@ -10,8 +10,8 @@
                         <div class="roster-header row">
                             <div class="header-title col-md-3">{{ "CollectRosterHeaderStartDate" | translate }}</div>
                             <div class="header-title col-md-3">{{ "CollectRosterHeaderEndDate" | translate }}</div>
-                            <div class="header-title col-md-4">{{ "CollectRosterHeaderName" | translate }}</div>
-                            <div class="header-title col-md-1">{{ "CollectRosterHeaderCollectId" | translate }}</div>
+                            <div class="header-title col-md-3">{{ "CollectRosterHeaderName" | translate }}</div>
+                            <div class="header-title col-md-2">{{ "CollectRosterHeaderCollectId" | translate }}</div>
                             <div class="header-title-control col-md-1"></div>
                         </div>
                         <div class="roster-container">
@@ -21,9 +21,10 @@
 
                                 <input class="col-md-3" type="datetime-local" formControlName="dtBegin" />
                                 <input class="col-md-3" type="datetime-local" formControlName="dtEnd" />
-                                <input class="col-md-4" type="text" formControlName="name" />
-                                <input class="col-md-1" type="number" formControlName="collectId" min="1" max="3"
-                                    step="1" />
+                                <input class="col-md-3" type="text" formControlName="name" />
+                                <select formControlName="collectId" id="" class="col-md-2 custom-select custom-select-sm">
+                                    <option *ngFor="let number of [1, 2, 3]" [value]="number">{{number}}</option>
+                                </select>
                                 <div class="col-md-1 row-control remove">
                                     <div class="row">
                                         <div class="col-md-4 row-control-sub">

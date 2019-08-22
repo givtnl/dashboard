@@ -26,8 +26,9 @@
             display: flex;
             padding: 0;
             margin: 0;
+            
             div {
-                text-align: center;
+                text-align: left;
                 align-self: center;
             }
             .header-title {
@@ -53,7 +54,22 @@
                     border-bottom: none;
                     border-right: none;
                 }
-                
+                .custom-select {
+                    line-height: 1.5;
+                    color: #495057;
+                    vertical-align: middle;
+                    border: 1px solid #ced4da;
+                    border-radius: .25rem;
+                    -webkit-appearance: none;
+                    -moz-appearance: none;
+                    appearance: none;
+                }
+                .custom-select-sm {
+                    height: 30px;
+                    padding-top: .375rem;
+                    padding-bottom: .375rem;
+                    font-size: 75%;
+                }
                 .row-control { 
                     display:flex;
                     justify-content: space-around;
