@@ -2,7 +2,7 @@
 
 <div class="givt-paginator">
     <div class="page-up" (click)="paginatorChanges(1)">
-        <i class="fa fa-arrow-up"></i> Page: {{settings.currentPage}}
+        <i class="fa fa-arrow-up"></i> {{ "CollectRosterPage" | translate }} {{settings.currentPage}}
     </div>
     <div class="page-down" (click)="paginatorChanges(0)">
         <i class="fa fa-arrow-down"></i>
@@ -11,6 +11,6 @@
         <select (change)="paginatorChanges($event.target.value)">
             <option *ngFor="let number of [10, 20, 30, 40]" [value]="number">{{number}}</option>
         </select>
-        Rows per page 
+        {{ "CollectRosterRowsPerPage" | translate }}
     </div>
 </div>
