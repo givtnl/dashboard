@@ -45,17 +45,25 @@
                 justify-content: space-around;
                 align-items: center;
                 height: stretch;
-                i {
-                    cursor: pointer;
-                }
-                :nth-child(1) {
-                    color: #b91a2b;
-                }
-                :nth-child(2) {
-                    color: #2E2957;
-                }
-                :nth-child(3) {
-                    color: #1CA96C;
+                .row {
+                    .row-control-sub {
+                        display: flex;
+                        justify-content: center;
+                    }
+                    i {
+                        cursor: pointer;
+                        align-self: center;
+                    }
+                    :nth-child(1) {
+                        i {
+                            color: #41C98E;
+                        }
+                    }
+                    :nth-child(3) {
+                        i {
+                            color: #b91a2b;
+                        }
+                    }
                 }
             }
         }
