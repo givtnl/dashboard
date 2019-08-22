@@ -1,11 +1,11 @@
 <!-- <link href="/dist/css/bootstrap/tabulator_bootstrap4.min.css" rel="stylesheet"> -->
 
 <div class="givt-paginator">
-    <div class="page-up" (click)="paginatorChanges(1)">
-        <i class="fa fa-arrow-up"></i> {{ "CollectRosterPage" | translate }} {{settings.currentPage}}
+    <div class="page-up" (click)="paginatorChanges(0)">
+        <i class="fa fa-arrow-down"></i> {{ "CollectRosterPage" | translate }} {{settings.currentPage}}
     </div>
-    <div class="page-down" (click)="paginatorChanges(0)">
-        <i class="fa fa-arrow-down"></i>
+    <div class="page-down" (click)="paginatorChanges(1)">
+        <i class="fa fa-arrow-up"></i>
     </div>
     <div class="select-items">
         <select (change)="paginatorChanges($event.target.value)">
