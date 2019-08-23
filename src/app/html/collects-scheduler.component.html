@@ -48,9 +48,10 @@
                                 [rowsOnPage]="form.get('collects').controls.length"></my-paginator>
                         </div>
                         <div class="roster-controls row" style='margin-top:20px;'>
-                            <a routerLink="/assign">
+                            <button routerLink="/assign">
+                                <i class="fa fa-arrow-left"></i>
                                 {{ "CollectRosterToCalendar" | translate }}
-                            </a>
+                            </button>
                         </div>
                     </div>
                 </form>
