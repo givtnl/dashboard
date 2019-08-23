@@ -40,10 +40,13 @@ export class CollectsShedulerComponent implements OnInit {
   currentCollectGroupAllocations = []
 
   constructor(private formBuilder: FormBuilder, private userService: UserService, private service: CollectSchedulerService, private datePipe: ISODatePipe) {
+    this.userService.collectGroupChanged.subscribe(() => {
+      this.ngOnInit();
+    });
   }
-  
+
   ngOnInit() {
-    this.getRows({ currentPage: 1, currentRowsPerPage: 10 }) 
+    this.getRows({ currentPage: 1, currentRowsPerPage: 10 })
   }
 
   public get collectsArray(): FormArray {
