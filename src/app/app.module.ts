@@ -1,8 +1,9 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, LOCALE_ID } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule, Http} from '@angular/http';
-import { HashLocationStrategy, LocationStrategy, DatePipe} from '@angular/common';
+import { HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { AppComponent } from './components/app.component';
 import { LoginComponent } from 'app/components/login.component';
 import { AppRoutingModule} from "./app.routing";
@@ -21,6 +22,7 @@ import { CollectsComponent} from "./components/collects.component";
 import { ReversePipe} from "./pipes/reverse.pipe";
 import { BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import { PayoutsComponent} from "./components/payouts.component";
+import { CollectsShedulerComponent } from "./components/collects-scheduler.component"
 import { ForgotPasswordComponent} from "./components/forgotpassword.component";
 import { UnAuthorizeComponent} from "./components/unauthorized.component";
 import { AssignComponent} from "./components/assign.component";
@@ -36,6 +38,10 @@ import {ISODatePipe} from "./pipes/iso.datepipe";
 import {SettingsComponent} from "./components/settings.component";
 import { TerminateComponent } from './components/terminate.component';
 import { QRCodeComponent } from './components/qrcode.component';
+import { BearerTokenInterceptor } from './interceptors/bearer-token-interceptor';
+import { AcceptHeaderInterceptor } from './interceptors/accept-header.interceptor';
+import { PaginatorComponent } from './components/paginator-component';
+import { CollectSchedulerService } from './services/collects-schedulder.service';
 (window as any).jQuery = (window as any).$ = jQuery; // This is needed to resolve issue.
 
 export function createTranslateLoader(http: Http) {
@@ -53,6 +59,7 @@ export function createTranslateLoader(http: Http) {
     ReversePipe,
     ISODatePipe,
     PayoutsComponent,
+    CollectsShedulerComponent,
     ForgotPasswordComponent,
     UnAuthorizeComponent,
     AssignComponent,
@@ -62,7 +69,8 @@ export function createTranslateLoader(http: Http) {
     LoggedOutComponent,
     SettingsComponent,
     QRCodeComponent,
-    TerminateComponent
+    TerminateComponent,
+    PaginatorComponent
   ],
   imports: [
     AutoCompleteModule,
@@ -76,8 +84,10 @@ export function createTranslateLoader(http: Http) {
     BrowserAnimationsModule,
     FormsModule,
     HttpModule,
+    HttpClientModule,
     AppRoutingModule,
     ScheduleModule,
+    ReactiveFormsModule,
     TranslateModule.forRoot({
       provide: TranslateLoader,
       useFactory: (createTranslateLoader),
@@ -90,9 +100,20 @@ export function createTranslateLoader(http: Http) {
     UserService,
     ApiClientService,
     LoggingService,
+    CollectSchedulerService,
     OperationsGuard,
     LoggedInGuard,
     LoginComponentGuard,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass:BearerTokenInterceptor,
+      multi:true
+    },
+    {
+      provide:HTTP_INTERCEPTORS,
+      useClass:AcceptHeaderInterceptor,
+      multi:true
+    },
     {
       provide: LOCALE_ID,
       useValue: "nl-BE"

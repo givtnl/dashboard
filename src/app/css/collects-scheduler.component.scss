@@ -1,0 +1,169 @@
+.invalid-row {
+    color: red;
+}
+
+.roster-form {
+    .roster-controls {
+        display: flex;
+        justify-content: space-between;
+        height: 40px;
+        margin-top: 20px;
+        button { 
+            padding-left: 20px;
+            padding-right: 25px;
+            background-color: #2E2957;
+            color: white;
+            border-radius: 4px;
+            i { 
+                margin-right: 16px;
+            }
+        }
+    }
+    .roster-body {
+        .roster-header {
+            height: 30px;
+            background: #EEE;
+            display: flex;
+            padding: 0;
+            margin: 0;
+            
+            div {
+                text-align: left;
+                align-self: center;
+            }
+            .header-title {
+                border-right: 1px solid #bbb;
+            }
+            :last-child {
+                border: none;
+            }
+        }
+        .roster-container{
+            max-height: 70vh;
+            overflow: scroll;
+        
+            .roster-row {
+                height: 30px;
+                margin: 0;
+                padding: 0;
+                
+                input {
+                    height: 30px;
+                    background: none;
+                    border: 1px solid lightgrey;
+                    border-bottom: none;
+                    border-right: none;
+                }
+                .custom-select {
+                    line-height: 1.5;
+                    color: #495057;
+                    vertical-align: middle;
+                    border: 1px solid #ced4da;
+                    border-radius: .25rem;
+                    -webkit-appearance: none;
+                    -moz-appearance: none;
+                    appearance: none;
+                }
+                .custom-select-sm {
+                    height: 30px;
+                    padding-top: .375rem;
+                    padding-bottom: .375rem;
+                    font-size: 75%;
+                }
+                .row-control { 
+                    display:flex;
+                    justify-content: space-around;
+                    align-items: center;
+                    height: stretch;
+                    border: 1px solid lightgrey;
+                    border-bottom: none;
+                    .row {
+                        .row-control-sub {
+                            display: flex;
+                            justify-content: center;
+                        }
+                        i {
+                            cursor: pointer;
+                            align-self: center;
+                        }
+                        :nth-child(1) {
+                            i {
+                                color: #41C98E;
+                            }
+                        }
+                        :nth-child(2) {
+                            i {
+                                color: #2E2957
+                            }
+                        }
+                        :nth-child(3) {
+                            i {
+                                color: #b91a2b;
+                            }
+                        }
+                    }
+                }
+            }
+            .roster-row:last-of-type {
+                input, .row-control {
+                    border-bottom: 1px solid lightgrey;
+                }
+            }
+            .roster-row:hover {
+                background: lightgrey;
+            }
+        }
+    }
+    .roster-footer {
+        margin-top: 20px;
+        font: 16px 'Avenir_Light';
+        color: red;
+    }
+    .roster-controls {
+        a {
+            text-decoration: none;
+            font: 20px 'Avenir_Black';
+            color: #2E2957;
+        }
+    }
+}
+.givt-red {
+    color: #b91a2b;
+}
+.givt-orange {
+    color: #FFb12A
+}
+.givt-green { 
+    color: #1CA96C;
+}
+.givt-lightgreen { 
+    color: #41C98E;
+}
+.givt-purple { 
+    color: #5A5387
+}
+.givt-blue-purple { 
+    color: #2E2957;
+}
+
+.givt-background-red {
+    background-color: #b91a2b;
+}
+.givt-background-orange {
+    background-color: #FFb12A
+}
+.givt-background-green { 
+    background-color: #1CA96C;
+}
+.givt-background-lightgreen { 
+    background-color: #41C98E;
+}
+.givt-background-purple { 
+    background-color: #5A5387
+}
+.givt-background-green { 
+    background-color: #1CA96C;
+}
+.givt-background-blue-purple { 
+    background-color: #2E2957;
+}
