@@ -9,6 +9,7 @@ import { DataService } from '../services/data.service';
 import { AgendaView, moment } from 'fullcalendar';
 import { ISODatePipe } from '../pipes/iso.datepipe';
 import { LoggingService, LogLevel } from 'app/services/logging.service';
+import { CollectSchedulerService } from 'app/services/collects-schedulder.service';
 
 @Component({
     selector: 'app-assign-collects',
@@ -56,6 +57,7 @@ export class AssignComponent implements OnInit {
 
     @ViewChild('calendar') calendar: ElementRef;
     public constructor(
+        private allocationService: CollectSchedulerService,
         private loggingService: LoggingService,
         public ts: TranslateService,
         private datePipe: ISODatePipe,
@@ -473,18 +475,17 @@ export class AssignComponent implements OnInit {
     }
     deleteAllEvents() {
         this.allocLoader['show'] = true;
-        return new Promise((resolve, reject) => {
-            let allocationIdsToDelete = Array.from(
-                new Set(
-                    this.selectedCard.Collects.map(t => t.transactions)
-                        .map(r => r.map(u => u.AllocationId).filter(f => f !== 0))
-                        .reduce((a, b) => a.concat(b))
-                )
-            ).join();
-            this.apiService.deleteData('v2/Allocations/Allocations/' + allocationIdsToDelete).then(resp => {
-                this.reloadEvents();
-                this.closeDialog();
-            });
+        const toDeleteItems = Array.from(
+            new Set(
+                this.selectedCard.Collects.map(t => t.transactions)
+                    .map(r => r.map(u => u.AllocationId).filter(f => f !== 0))
+                    .reduce((a, b) => a.concat(b))
+            )
+        );
+
+        this.allocationService.deleteAllocations(this.userService.CurrentCollectGroup.GUID, toDeleteItems).subscribe(x => {
+            this.reloadEvents();
+            this.closeDialog();
         });
     }
     saveAllEvents() {
