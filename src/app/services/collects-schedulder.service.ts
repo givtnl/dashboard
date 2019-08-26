@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { CreateAllocationCommand } from 'app/models/collect-scheduler/create-allocation.command';
 import { Observable } from 'rxjs';
 import { AllocationDetailModel } from 'app/models/collect-scheduler/allocation-detail.model';
 import { UpdateAllocationCommand } from 'app/models/collect-scheduler/update-allocation.command';
 import { AllocationListModel } from 'app/models/collect-scheduler/allocation-list.model';
+import { RequestOptions } from '@angular/http';
 
 @Injectable()
 export class CollectSchedulerService {
@@ -32,5 +33,19 @@ export class CollectSchedulerService {
 
     public deleteAllocation(collectGroupId: string, allocationId: number): Observable<object> {
         return this.http.delete(`${this.apiUrl}${collectGroupId}/allocations/${allocationId}`);
+    }
+
+    public deleteAllocations(collectGroupId: string, allocationIds: number[]): Observable<object> {
+        //ty oude angular -_-'
+        const options = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json'
+            }),
+            body: {
+                collectGroupId,
+                ids: allocationIds
+            }
+        };
+        return this.http.delete(`${this.apiUrl}${collectGroupId}/allocations/bulk`, options);
     }
 }
