@@ -46,6 +46,6 @@ export class CollectSchedulerService {
                 ids: allocationIds
             }
         };
-        return this.http.delete(`${this.apiUrl}${collectGroupId}/allocations/bulk`, options);
+        return this.http.delete(`${this.apiUrl}${collectGroupId}/allocations`, options);
     }
 }

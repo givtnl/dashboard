@@ -10,6 +10,8 @@ import { AgendaView, moment } from 'fullcalendar';
 import { ISODatePipe } from '../pipes/iso.datepipe';
 import { LoggingService, LogLevel } from 'app/services/logging.service';
 import { CollectSchedulerService } from 'app/services/collects-schedulder.service';
+import { switchMap } from 'rxjs/operator/switchMap';
+import { tap } from 'rxjs/operators';
 
 @Component({
     selector: 'app-assign-collects',
@@ -483,10 +485,13 @@ export class AssignComponent implements OnInit {
             )
         );
 
-        this.allocationService.deleteAllocations(this.userService.CurrentCollectGroup.GUID, toDeleteItems).subscribe(x => {
-            this.reloadEvents();
-            this.closeDialog();
-        });
+        this.allocationService
+            .deleteAllocations(this.userService.CurrentCollectGroup.GUID, toDeleteItems)
+            .subscribe(x => {
+                this.reloadEvents();
+                this.closeDialog();
+            })
+            .add(() => (this.allocLoader['show'] = false));
     }
     saveAllEvents() {
         if (!this.selectedCard) return;
@@ -615,37 +620,25 @@ export class AssignComponent implements OnInit {
             if (alloc.showActions) alloc.showActions = false;
         } else alloc.showDetails = true;
     }
-    removeThisAllocation(id: Number) {
-        console.log('Deleting allocation...');
-        // this.apiService.deleteData('Allocations/Allocation?Id=' + id)
-        return new Promise((resolve, reject) => {
-            if (id <= 0) {
-                resolve();
-                return;
-            }
-            this.apiService
-                .deleteData('Allocations/Allocation?Id=' + id)
-                .then(resp => {
-                    if (resp.status !== 200) {
-                        console.log(resp);
-                        return;
-                    }
-                    this.checkAllocationsV2().then(a => {
-                        let currentEvent = this.events.filter(e => {
-                            return (
-                                new Date(e.start).getTime() === new Date(this.selectedAllocationDates[0]).getTime() &&
-                                new Date(e.end).getTime() === new Date(this.selectedAllocationDates[1]).getTime()
-                            );
-                        })[0];
-                        if (currentEvent !== undefined) this.openBucket(currentEvent);
-                        resolve(resp);
-                    });
-                })
-                .catch(err => {
-                    console.log(err);
-                    reject();
-                });
-        });
+    removeThisAllocation(id: number) {
+        if (!id || id <= 0) {
+            return;
+        }
+
+        this.allocationService
+            .deleteAllocation(this.userService.CurrentCollectGroup.GUID, id)
+            .pipe(tap(response => this.checkAllocationsV2()))
+            .subscribe(x => {
+                const currentEvent = this.events.filter(e => {
+                    return (
+                        new Date(e.start).getTime() === new Date(this.selectedAllocationDates[0]).getTime() &&
+                        new Date(e.end).getTime() === new Date(this.selectedAllocationDates[1]).getTime()
+                    );
+                })[0];
+                if (currentEvent) {
+                    this.openBucket(currentEvent);
+                }
+            });
     }
     updateThisAllocation(id: Number) {
         console.log('Updating allocation...');
