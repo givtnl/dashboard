@@ -494,8 +494,9 @@ export class AssignComponent implements OnInit {
             .add(() => (this.allocLoader['show'] = false));
     }
     saveAllEvents() {
-        if (!this.selectedCard) return;
+        if (!this.selectedCard || !this.selectedCard.Collects || this.selectedCard.Collects.length === 0) return;
         this.allocLoader['show'] = true;
+
         return new Promise((resolve, reject) => {
             let dataAllocations = [];
             this.selectedCard.Collects.forEach(collect => {
