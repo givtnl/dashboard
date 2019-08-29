@@ -18,6 +18,7 @@ pipelines:
                       - ng b -op dist-demo --bh /demo/
                   artifacts:
                       - dist/**
+                      - dist-demo/**
             - step:
                   name: Login and build the docker image
                   script: # Modify the commands below to build your repository.
