@@ -1,14 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormArray, ValidatorFn } from '@angular/forms';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpErrorResponse } from '@angular/common/http';
 import { UserService } from 'app/services/user.service';
 import { isNullOrUndefined } from 'util';
 import { distinctUntilChanged, debounceTime, catchError } from 'rxjs/operators';
 import { InfrastructurePaginator } from 'app/models/infrastructure-paginator';
 import { CollectSchedulerService } from 'app/services/collects-schedulder.service';
-import { AllocationDetailModel } from 'app/models/collect-scheduler/allocation-detail.model';
 import { Observable } from 'rxjs';
 import { ISODatePipe } from 'app/pipes/iso.datepipe';
+import { LoggingService } from 'app/services/logging.service';
+import { compareRows } from 'app/models/collect-scheduler/row-comparer.function';
 
 const GreaterThanDateValidator: ValidatorFn = (formGroup: FormGroup) => {
   var retVal = null
@@ -39,7 +40,12 @@ export class CollectsShedulerComponent implements OnInit {
 
   currentCollectGroupAllocations = []
 
-  constructor(private formBuilder: FormBuilder, private userService: UserService, private service: CollectSchedulerService, private datePipe: ISODatePipe) {
+  constructor(
+    private formBuilder: FormBuilder,
+    private userService: UserService,
+    private service: CollectSchedulerService,
+    private datePipe: ISODatePipe,
+    private loggingService: LoggingService) {
     this.userService.collectGroupChanged.subscribe(() => {
       this.ngOnInit();
     });
@@ -67,7 +73,7 @@ export class CollectsShedulerComponent implements OnInit {
 
     form.valueChanges
       .pipe(debounceTime(1500))
-      .pipe(distinctUntilChanged((oldValue, newValue) => JSON.stringify(oldValue) === JSON.stringify(newValue)))
+      .pipe(distinctUntilChanged((oldValue: any, newValue: any) => compareRows(oldValue, newValue)))
       .subscribe(x => this.upload(form));
 
     return form;
@@ -82,8 +88,8 @@ export class CollectsShedulerComponent implements OnInit {
     const toDeleteFormGroup = this.collectsArray.at(index);
     if (toDeleteFormGroup.value.id > 0) {
       this.service.deleteAllocation(this.userService.CurrentCollectGroup.GUID, toDeleteFormGroup.value.id)
-            .pipe(catchError((error: HttpErrorResponse) => this.handleGenericError(error)))
-            .subscribe(x => this.removeRowConfirm(index))
+        .pipe(catchError((error: HttpErrorResponse) => this.handleGenericError(error)))
+        .subscribe(x => this.removeRowConfirm(index))
     } else {
       this.removeRowConfirm(index);
     }
@@ -95,7 +101,7 @@ export class CollectsShedulerComponent implements OnInit {
 
   copyRow(index: number) {
     var row = this.collectsArray.at(index).value
-  
+
     this.collectsArray.insert(index, this.buildSingleForm({
       CollectId: row.collectId,
       Name: row.name,
@@ -119,15 +125,21 @@ export class CollectsShedulerComponent implements OnInit {
       return;
     }
     if (row.value.id && row.value.id > 0) {
+      // update existing allocation
       this.service
         .updateAllocation(this.userService.CurrentCollectGroup.GUID, row.value.id, row.value)
         .pipe(catchError((error: HttpErrorResponse) => (error.status === 409 ? this.handleConflict(error, row) : this.handleGenericError())))
-        .subscribe(x => console.log('AH YEET update GELUKT'));
+        .subscribe(x => this.loggingService.info(`Allocation with id '${row.value.id}' was updated for CollectGroup: ${this.userService.CurrentCollectGroup.Name}`));
     } else {
+      // create a new allocation
       this.service
         .createAllocation(this.userService.CurrentCollectGroup.GUID, row.value)
         .pipe(catchError((error: HttpErrorResponse) => (error.status === 409 ? this.handleConflict(error, row) : this.handleGenericError())))
-        .subscribe(x => row.patchValue({ id: x.Id }));
+        .subscribe(x => {
+          this.loggingService.info(`Allocation with id '${x.Id}' was created for CollectGroup: ${this.userService.CurrentCollectGroup.Name}` )
+          row.patchValue({ id: x.Id }
+          )
+        });
     }
 
   }
