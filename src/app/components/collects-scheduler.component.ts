@@ -39,6 +39,7 @@ export class CollectsShedulerComponent implements OnInit {
   public cacheKey = 'CollectSchedulerComponent';
 
   currentCollectGroupAllocations = []
+  currentTotalNumberOfPages: 0
 
   constructor(
     private formBuilder: FormBuilder,
@@ -114,7 +115,8 @@ export class CollectsShedulerComponent implements OnInit {
       .getAll(this.userService.CurrentCollectGroup.GUID, options.currentRowsPerPage, options.currentPage)
       .pipe(catchError((error: HttpErrorResponse) => this.handleGenericError(error)))
       .subscribe(response => {
-        this.currentCollectGroupAllocations = response
+        this.currentCollectGroupAllocations = response.Results
+        this.currentTotalNumberOfPages = response.TotalNumberOfPages
         this.form = this.formBuilder.group({
           collects: this.formBuilder.array(this.currentCollectGroupAllocations ? this.currentCollectGroupAllocations.map(x => this.buildSingleForm(x, true)) : [])
         });

@@ -45,7 +45,8 @@
                             <button (click)="addEmptyRow()"><i
                                     class="fa fa-plus"></i>{{ "CollectRosterBtnAdd" | translate }}</button>
                             <my-paginator (paginatorChanged)="getRows($event)"
-                                [rowsOnPage]="form.get('collects').controls.length"></my-paginator>
+                                [rowsOnPage]="form.get('collects').controls.length" 
+                                [totalNumberOfPages]="currentTotalNumberOfPages"></my-paginator>
                         </div>
                         <div class="roster-controls row" style='margin-top:20px;'>
                             <button routerLink="/assign">
