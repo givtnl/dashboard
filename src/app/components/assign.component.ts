@@ -173,10 +173,6 @@ export class AssignComponent implements OnInit {
                 if (!this.isFutureSelection)
                     //prevent breaking when editing future
                     break;
-            } else {
-                if (this.isFutureSelection) {
-                    return true;
-                }
             }
             if (collect.nameIsChanged && !hasEmptyAllocationName) {
                 retVal = true; //allow save immediately
