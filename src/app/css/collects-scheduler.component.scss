@@ -111,6 +111,9 @@
             }
             .roster-row:hover {
                 background: lightgrey;
+                select {
+                    background: lightgrey;
+                }
             }
         }
     }

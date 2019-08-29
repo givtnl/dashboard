@@ -1,16 +1,16 @@
-<!-- <link href="/dist/css/bootstrap/tabulator_bootstrap4.min.css" rel="stylesheet"> -->
-
 <div class="givt-paginator">
     <div class="page-up" (click)="paginatorChanges(0)">
-        <i class="fa fa-arrow-down"></i> {{ "CollectRosterPage" | translate }} {{settings.currentPage}}
+        <i class="fa fa-arrow-up"></i> {{ "CollectRosterPage" | translate }} {{settings.currentPage}}
     </div>
     <div class="page-down" (click)="paginatorChanges(1)">
-        <i class="fa fa-arrow-up"></i>
+        <i class="fa fa-arrow-down"></i>
     </div>
     <div class="select-items">
-        <select (change)="paginatorChanges($event.target.value)">
-            <option *ngFor="let number of [10, 20, 30, 40]" [value]="number">{{number}}</option>
-        </select>
-        {{ "CollectRosterRowsPerPage" | translate }}
+        <form [formGroup]="currentRowsPerPageForm">
+            <select formControlName="currentRowsPerPageControl">
+                <option *ngFor="let number of rowsPerPage" [value]="number">{{number}}</option>
+            </select>
+            {{ "CollectRosterRowsPerPage" | translate }}
+        </form>
     </div>
 </div>
