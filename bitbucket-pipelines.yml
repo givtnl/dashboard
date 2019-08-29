@@ -14,7 +14,7 @@ pipelines:
                   name: build the angular
                   script:
                       - npm install
-                      - ng build --prod
+                      - ng build
                   artifacts:
                       - dist/**
             - step:
