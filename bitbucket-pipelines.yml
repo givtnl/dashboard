@@ -15,6 +15,7 @@ pipelines:
                   script:
                       - npm install
                       - ng build
+                      - ng b -op dist-demo --bh /demo/
                   artifacts:
                       - dist/**
             - step:
