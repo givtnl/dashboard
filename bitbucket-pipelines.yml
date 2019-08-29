@@ -3,19 +3,25 @@
 # Only use spaces to indent your .yml configuration.
 # -----
 # You can specify a custom docker image from Docker Hub as your build environment.
-image: node:6.9.4
+image: trion/ng-cli
 
 pipelines:
-  branches:
-    pre-master:
-      - step:
-          name: Build dashboard dev
-          script: # Modify the commands below to build your repository.
-            - npm install
-            - ng b --bh /dev/
-      - step:
-          name: Deploy dashboard dev
-          deployment: staging
-          script:
-            - apt-get install ncftp
-            - ncftpput -u givtdashboard\\givtftp -p M00rt-FTP78 waws-prod-am2-125.ftp.azurewebsites.windows.net site/wwwroot/dev dist/*
+    branches:
+        develop:
+            - step:
+                  caches:
+                      - node
+                  name: build the angular
+                  script:
+                      - npm install
+                      - ng build
+                  artifacts:
+                      - dist/**
+            - step:
+                  name: Login and build the docker image
+                  script: # Modify the commands below to build your repository.
+                      - docker login --username $DOCKER_USERNAME --password $DOCKER_PASSWORD
+                      - docker build -t givt/givtdashboarddebug:latest .
+                      - docker push givt/givtdashboarddebug:latest
+                  services:
+                      - docker
