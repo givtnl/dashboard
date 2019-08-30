@@ -34,8 +34,7 @@
                                             <i class="fa fa-copy" (click)="copyRow(i)"></i>
                                         </div>
                                         <div class="col-md-4 row-control-sub">
-                                            <i [class.hidden]="form.get('collects').controls.length == 1"
-                                                class="fa fa-times" (click)="removeRow(i)"></i>
+                                            <i class="fa fa-times" (click)="removeRow(i)"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -45,7 +44,9 @@
                             <button (click)="addEmptyRow()"><i
                                     class="fa fa-plus"></i>{{ "CollectRosterBtnAdd" | translate }}</button>
                             <my-paginator (paginatorChanged)="getRows($event)"
-                                [rowsOnPage]="form.get('collects').controls.length"></my-paginator>
+                                [rowsOnPage]="form.get('collects').controls.length" 
+                                [totalNumberOfPages]="currentTotalNumberOfPages"
+                                [totalCount]="currentTotalCountOfRows"></my-paginator>
                         </div>
                         <div class="roster-controls row" style='margin-top:20px;'>
                             <button routerLink="/assign">

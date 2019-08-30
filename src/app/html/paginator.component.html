@@ -1,7 +1,9 @@
 <div class="givt-paginator">
     <div class="page-up" (click)="paginatorChanges(0)">
-        <i class="fa fa-arrow-up"></i> {{ "CollectRosterPage" | translate }} {{settings.currentPage}}
+        <i class="fa fa-arrow-up"></i>
     </div>
+    {{ pageInfo }}
+    
     <div class="page-down" (click)="paginatorChanges(1)">
         <i class="fa fa-arrow-down"></i>
     </div>
