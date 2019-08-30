@@ -40,7 +40,7 @@
         }
         .roster-container{
             max-height: 70vh;
-            overflow: scroll;
+            overflow: auto;
         
             .roster-row {
                 height: 30px;
@@ -77,10 +77,15 @@
                     height: stretch;
                     border: 1px solid lightgrey;
                     border-bottom: none;
+                    padding-left:0; 
+                    padding-right: 0;
+                    
                     .row {
                         .row-control-sub {
                             display: flex;
                             justify-content: center;
+                            padding-left:0; 
+                            padding-right: 0;
                         }
                         i {
                             cursor: pointer;
