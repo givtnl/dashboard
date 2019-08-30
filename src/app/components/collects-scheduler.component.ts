@@ -112,8 +112,6 @@ export class CollectsShedulerComponent implements OnInit {
       dtBegin: row.dtBegin,
       dtEnd: row.dtEnd,
     }));
-
-    this.handleRowChanges()
   }
   getRows(options: InfrastructurePaginator) {
     this.service
@@ -160,14 +158,5 @@ export class CollectsShedulerComponent implements OnInit {
     console.log(error != null ? error : "generic error");
     return Observable.throw(error != null ? error : "generic error");
 
-  }
-  handleRowChanges() {
-    if((this.currentTotalCountOfRows + 1) % this.pageSettings.currentRowsPerPage === 0) {
-      console.log(`Current: ${this.currentTotalCountOfRows}`)
-      console.log(`Next: ${this.currentTotalCountOfRows + 1}`)
-      console.log("we should update pages")
-    } else { 
-      console.log("we shouldnt update pages")
-    }
   }
 }
