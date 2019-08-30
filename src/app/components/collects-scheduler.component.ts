@@ -41,7 +41,8 @@ export class CollectsShedulerComponent implements OnInit {
   currentCollectGroupAllocations = []
 
   currentTotalNumberOfPages: 0
-  currentTotalNumberOfRows: 0
+  currentTotalCountOfRows: 0
+  pageSettings = { currentPage: 1, currentRowsPerPage: 10 }
 
   constructor(
     private formBuilder: FormBuilder,
@@ -55,7 +56,7 @@ export class CollectsShedulerComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getRows({ currentPage: 1, currentRowsPerPage: 10 })
+    this.getRows(this.pageSettings)
   }
 
   public get collectsArray(): FormArray {
@@ -111,6 +112,8 @@ export class CollectsShedulerComponent implements OnInit {
       dtBegin: row.dtBegin,
       dtEnd: row.dtEnd,
     }));
+
+    this.handleRowChanges()
   }
   getRows(options: InfrastructurePaginator) {
     this.service
@@ -119,7 +122,7 @@ export class CollectsShedulerComponent implements OnInit {
       .subscribe(response => {
         this.currentCollectGroupAllocations = response.Results
         this.currentTotalNumberOfPages = response.TotalNumberOfPages
-        this.currentTotalNumberOfRows = response.TotalCount
+        this.currentTotalCountOfRows = response.TotalCount
         this.form = this.formBuilder.group({
           collects: this.formBuilder.array(this.currentCollectGroupAllocations ? this.currentCollectGroupAllocations.map(x => this.buildSingleForm(x, true)) : [])
         });
@@ -148,8 +151,6 @@ export class CollectsShedulerComponent implements OnInit {
     }
 
   }
-
-
   handleConflict(error: any, form: FormGroup) {
     form.setErrors({ overlap: true });
     return Observable.throw(error);
@@ -159,5 +160,14 @@ export class CollectsShedulerComponent implements OnInit {
     console.log(error != null ? error : "generic error");
     return Observable.throw(error != null ? error : "generic error");
 
+  }
+  handleRowChanges() {
+    if((this.currentTotalCountOfRows + 1) % this.pageSettings.currentRowsPerPage === 0) {
+      console.log(`Current: ${this.currentTotalCountOfRows}`)
+      console.log(`Next: ${this.currentTotalCountOfRows + 1}`)
+      console.log("we should update pages")
+    } else { 
+      console.log("we shouldnt update pages")
+    }
   }
 }

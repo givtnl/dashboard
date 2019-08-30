@@ -49,24 +49,15 @@ export class PaginatorComponent implements OnInit {
     this.translateService.get("CollectRosterPage").subscribe((res: string) =>  {
       this.pageInfo = String.prototype.format(res, this.settings.currentPage.toString(), this.totalNumberOfPages.toString())
     })
+
   }
 
-
-  updatePages(positive: boolean = false) {
-    var currRows = this.settings.currentRowsPerPage;
-
-    if((currRows + (positive ? 1 : -1)) % currRows != 0) {
-      console.log(`Current: ${currRows}\nServer: ${this.totalCount}`)
-    }
-  }
   paginatorChanges(e: any) {
     let oldValue = this.settings.currentPage
     if (e === 0 && this.settings.currentPage > 1) {
       this.settings.currentPage--;
-      this.updatePages()
     } else if (e === 1 && this.settings.currentPage < this.totalNumberOfPages) {
       this.settings.currentPage++
-      this.updatePages(true)
     }
     if (this.settings.currentPage != oldValue) {
       this.translateService.get("CollectRosterPage").subscribe((res: string) =>  {
