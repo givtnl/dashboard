@@ -174,7 +174,7 @@ export class AssignComponent implements OnInit {
                     //prevent breaking when editing future
                     break;
             }
-            if (collect.nameIsChanged && !hasEmptyAllocationName) {
+            if ((collect.nameIsChanged && !hasEmptyAllocationName) || this.selectedCard.hasChangedDates) {
                 retVal = true; //allow save immediately
                 break;
             } else {
@@ -603,6 +603,11 @@ export class AssignComponent implements OnInit {
         //update selection
         let fullcalendar = jQuery(this.calendar['el']['nativeElement'].children[0]);
         fullcalendar.fullCalendar('select', this.selectedCard.dtBegin, this.selectedCard.dtEnd);
+
+        // check if dates changed and allow save
+        if(this.selectedAllocationDates[0] != this.selectedCard.dtBegin || this.selectedAllocationDates[1] != this.selectedCard.dtEnd) {
+            this.selectedCard.hasChangedDates = true
+        }
     }
     showAllocActions(alloc: BucketCardRow) {
         if (alloc.showActions) alloc.showActions = false;
@@ -994,6 +999,7 @@ export class BucketCard {
     dtEnd: Date;
     Collects: BucketCardRow[];
     Fixed: BucketCardRow[];
+    hasChangedDates: boolean
 }
 export class BucketCardRow {
     _allocationName: string;
