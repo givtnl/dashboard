@@ -73,7 +73,7 @@
                             <my-paginator
                                 (paginatorChanged)="getRows($event)"
                                 [rowsOnPage]="form.get('collects').controls.length"
-                                [totalNumberOfPages]="currentTotalNumberOfPages"
+                                [(totalNumberOfPages)]="currentTotalNumberOfPages"
                                 [totalCount]="currentTotalCountOfRows"
                             ></my-paginator>
                         </div>

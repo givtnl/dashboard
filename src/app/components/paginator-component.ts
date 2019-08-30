@@ -4,6 +4,7 @@ import { UserService } from "app/services/user.service";
 import { FormGroup, FormBuilder } from "@angular/forms";
 import { TranslateService } from "ng2-translate";
 import './../extensions/StringExtensions'
+import { tap } from "rxjs/operators";
 
 @Component({
   selector: 'my-paginator',
@@ -19,53 +20,48 @@ export class PaginatorComponent implements OnInit {
   }
   currentRowsPerPageForm: FormGroup;
   rowsPerPage = [10, 20, 30, 40];
-  pageInfo = ""
   
 
   @Output() paginatorChanged = new EventEmitter<InfrastructurePaginator>()
 
-  @Input() rowsOnPage = 0
-  @Input() totalCount = 0
-  @Input() totalNumberOfPages = 1
+  @Input() rowsOnPage = 10;
+  @Input() totalCount = 0;
+  @Input() totalNumberOfPages = 1;
 
-  constructor(private userService: UserService, private formBuilder: FormBuilder, private translateService: TranslateService) {
-    this.userService.collectGroupChanged.subscribe(() => {
-      this.ngOnInit();
-    });
+  constructor( private formBuilder: FormBuilder) {
+
   }
 
   ngOnInit() {
-    console.log("Initiliazing Paginator...")
-
     this.currentRowsPerPageForm = this.formBuilder.group({
       currentRowsPerPageControl: [10]
     });
     
-    this.currentRowsPerPageForm.valueChanges.subscribe(x => {
-      this.settings.currentPage = 1
-      this.settings.currentRowsPerPage = Number(x.currentRowsPerPageControl)
-      this.paginatorChanged.emit(this.settings)
+    this.currentRowsPerPageForm.valueChanges
+    .subscribe(x => {
+      this.settings.currentPage = 1;
+      this.settings.currentRowsPerPage = +x.currentRowsPerPageControl;
+      this.paginatorChanged.emit(this.settings);
     })
-    this.translateService.get("CollectRosterPage").subscribe((res: string) =>  {
-      this.pageInfo = String.prototype.format(res, this.settings.currentPage.toString(), this.totalNumberOfPages.toString())
-    })
-
   }
 
-  paginatorChanges(e: any) {
-    let oldValue = this.settings.currentPage
-    if (e === 0 && this.settings.currentPage > 1) {
-      this.settings.currentPage--;
-    } else if (e === 1 && this.settings.currentPage < this.totalNumberOfPages) {
-      this.settings.currentPage++
+  increasePage(){
+    if(this.settings.currentPage +1 > this.totalNumberOfPages){
+      return;
     }
-    if (this.settings.currentPage != oldValue) {
-      this.translateService.get("CollectRosterPage").subscribe((res: string) =>  {
-        this.pageInfo = String.prototype.format(res, this.settings.currentPage.toString(), this.totalNumberOfPages.toString())
-      })
-      this.paginatorChanged.emit(this.settings)
-    }
+    this.settings.currentPage++;
+    this.paginatorChanged.emit(this.settings)
   }
+
+  decreasePage(){
+    if(this.settings.currentPage <= 1){
+      return;
+    }
+    
+    this.settings.currentPage--;
+    this.paginatorChanged.emit(this.settings)
+  }
+
 }
 
 
