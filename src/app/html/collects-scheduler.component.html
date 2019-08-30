@@ -3,55 +3,84 @@
     <div class="global-layout-content">
         <my-titlebar></my-titlebar>
         <div class="global-layout-main container">
-            <h2>{{ "CollectRosterTitle" | translate }}</h2>
+            <h2>{{ 'CollectRosterTitle' | translate }}</h2>
             <div id="tabulator-div">
                 <form class="roster-form" [formGroup]="form" *ngIf="form">
                     <div class="items roster-body col-md-12" formArrayName="collects">
                         <div class="roster-header row">
-                            <div class="header-title col-md-3">{{ "CollectRosterHeaderStartDate" | translate }}</div>
-                            <div class="header-title col-md-3">{{ "CollectRosterHeaderEndDate" | translate }}</div>
-                            <div class="header-title col-md-3">{{ "CollectRosterHeaderName" | translate }}</div>
-                            <div class="header-title col-md-2">{{ "CollectRosterHeaderCollectId" | translate }}</div>
+                            <div class="header-title col-md-3">{{ 'CollectRosterHeaderStartDate' | translate }}</div>
+                            <div class="header-title col-md-3">{{ 'CollectRosterHeaderEndDate' | translate }}</div>
+                            <div class="header-title col-md-3">{{ 'CollectRosterHeaderName' | translate }}</div>
+                            <div class="header-title col-md-2">{{ 'CollectRosterHeaderCollectId' | translate }}</div>
                             <div class="header-title-control col-md-1"></div>
                         </div>
                         <div class="roster-container">
-                            <div class="roster-row row"
-                                [class.invalid-row]="control.errors?.invalidDate || control.errors?.overlap" *ngFor="let control of form.get('collects').controls; 
-                                    let i = index" [formGroupName]="i">
-
+                            <div
+                                class="roster-row row"
+                                [class.invalid-row]="control.errors?.invalidDate || control.errors?.overlap"
+                                *ngFor="let control of form.get('collects').controls; let i = index"
+                                [formGroupName]="i"
+                            >
                                 <input class="col-md-3" type="datetime-local" formControlName="dtBegin" />
                                 <input class="col-md-3" type="datetime-local" formControlName="dtEnd" />
                                 <input class="col-md-3" type="text" formControlName="name" />
                                 <select formControlName="collectId" id="" class="col-md-2 custom-select custom-select-sm">
-                                    <option *ngFor="let number of [1, 2, 3]" [value]="number">{{number}}</option>
+                                    <option *ngFor="let number of [1, 2, 3]" [value]="number">{{ number }}</option>
                                 </select>
                                 <div class="col-md-1 row-control remove">
                                     <div class="row">
                                         <div class="col-md-4 row-control-sub">
-                                            <i class="fa fa-plus" (click)="addEmptyRow(i)" tooltip="Insert"></i>
+                                            <i
+                                                class="fa fa-plus"
+                                                analytics
+                                                category="Nieuw collecterooster"
+                                                eventName="Collecterooster - Toevoegen nieuwe rij"
+                                                (click)="addEmptyRow(i)"
+                                                tooltip="Insert"
+                                            ></i>
                                         </div>
                                         <div class="col-md-4 row-control-sub">
-                                            <i class="fa fa-copy" (click)="copyRow(i)"></i>
+                                            <i
+                                                class="fa fa-copy"
+                                                analytics
+                                                category="Nieuw collecterooster"
+                                                eventName="Collecterooster - Kopieren rij"
+                                                (click)="copyRow(i)"
+                                            ></i>
                                         </div>
                                         <div class="col-md-4 row-control-sub">
-                                            <i class="fa fa-times" (click)="removeRow(i)"></i>
+                                            <i
+                                                class="fa fa-times"
+                                                analytics
+                                                category="Nieuw collecterooster"
+                                                eventName="Collecterooster - Rij verwijderen"
+                                                (click)="removeRow(i)"
+                                            ></i>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="roster-controls">
-                            <button (click)="addEmptyRow()"><i
-                                    class="fa fa-plus"></i>{{ "CollectRosterBtnAdd" | translate }}</button>
-                            <my-paginator (paginatorChanged)="getRows($event)"
-                                [rowsOnPage]="form.get('collects').controls.length" 
+                            <button
+                                analytics
+                                category="Nieuw collecterooster"
+                                eventName="Collecterooster - Toevoegen nieuwe rij - knop linksonderaan"
+                                (click)="addEmptyRow()"
+                            >
+                                <i class="fa fa-plus"></i>{{ 'CollectRosterBtnAdd' | translate }}
+                            </button>
+                            <my-paginator
+                                (paginatorChanged)="getRows($event)"
+                                [rowsOnPage]="form.get('collects').controls.length"
                                 [totalNumberOfPages]="currentTotalNumberOfPages"
-                                [totalCount]="currentTotalCountOfRows"></my-paginator>
+                                [totalCount]="currentTotalCountOfRows"
+                            ></my-paginator>
                         </div>
-                        <div class="roster-controls row" style='margin-top:20px;'>
+                        <div class="roster-controls row" style="margin-top:20px;">
                             <button routerLink="/assign">
                                 <i class="fa fa-arrow-left"></i>
-                                {{ "CollectRosterToCalendar" | translate }}
+                                {{ 'CollectRosterToCalendar' | translate }}
                             </button>
                         </div>
                     </div>

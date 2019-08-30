@@ -18,10 +18,5 @@ export class GoogleAnalyticsDirective {
             event_category: this.category,
             event_label: this.userService.CurrentCollectGroup.Name
         });
-        // gtag('send', 'event', {
-        //     eventCategory: 'Button',
-        //     eventAction: 'click',
-        //     eventLabel: this.eventName
-        // });
     }
 }
