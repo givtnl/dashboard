@@ -224,7 +224,7 @@
     "GiftAidPayout": "Gift Aid claimed on donations",
     "GiftAidPayoutMoreInfo": "= £{{0}} * 0.25. This is the amount for which Gift Aid has been claimed on your behalf. We cannot see when and in what amounts the HMRC will pay this out to you. The amounts may still change due to rounding differences, cancellations, and rejections.",
     "CollectRosterTitle": "Collecterooster",
-    "CollectRosterPage": "Pagina: {{0}} van {{1}}",
+    "CollectRosterPage": "Pagina:",
     "CollectRosterRowsPerPage": "Rijen per pagina",
     "CollectRosterBtnAdd": "Toevoegen",
     "CollectRosterToCalendar": "Naar kalender",
@@ -232,5 +232,6 @@
     "CollectRosterHeaderStartDate": "Startdatum",
     "CollectRosterHeaderEndDate": "Einddatum",
     "CollectRosterHeaderName": "Naam",
-    "CollectRosterHeaderCollectId": "Collecte nummer"
+    "CollectRosterHeaderCollectId": "Collecte nummer",
+    "CollectRosterOf": "van"
 }
