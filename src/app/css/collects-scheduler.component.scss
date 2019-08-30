@@ -22,17 +22,20 @@
     .roster-body {
         .roster-header {
             height: 30px;
-            background: #EEE;
+            background: #41C98E;
+            color: white;
+            font-family: Avenir_Medium;
             display: flex;
             padding: 0;
             margin: 0;
-            
+            border: 1px solid #2E2957;
+                  
             div {
                 text-align: left;
                 align-self: center;
             }
             .header-title {
-                border-right: 1px solid #bbb;
+                border-left: 1px solid #bbb;
             }
             :last-child {
                 border: none;
@@ -46,6 +49,10 @@
                 height: 30px;
                 margin: 0;
                 padding: 0;
+                color: #2E2957;
+                border-left: 1px solid #2E2957;
+                border-right: 1px solid #2E2957;
+                font-family: Avenir;
                 
                 input {
                     height: 30px;
@@ -56,10 +63,14 @@
                 }
                 .custom-select {
                     line-height: 1.5;
-                    color: #495057;
+                    color: #2E2957;
+                    font-family: Avenir;
                     vertical-align: middle;
                     border: 1px solid #ced4da;
-                    border-radius: .25rem;
+                    outline: 0px;
+                    border-right: 0px;
+                    border-bottom: 0px;
+                    border-radius: 0;
                     -webkit-appearance: none;
                     -moz-appearance: none;
                     appearance: none;
@@ -68,7 +79,6 @@
                     height: 30px;
                     padding-top: .375rem;
                     padding-bottom: .375rem;
-                    font-size: 75%;
                 }
                 .row-control { 
                     display:flex;
@@ -111,7 +121,14 @@
             }
             .roster-row:last-of-type {
                 input, .row-control {
-                    border-bottom: 1px solid lightgrey;
+                    border-bottom: 1px solid #2E2957;
+                }
+
+                .custom-select {
+                    border: 1px solid #ced4da;
+                    border-bottom: 1px solid #2E2957;
+                    outline: 0px;
+                    border-right: 0px;
                 }
             }
             .roster-row:hover {
