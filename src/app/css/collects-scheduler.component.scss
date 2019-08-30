@@ -13,7 +13,6 @@
             padding-right: 25px;
             background-color: #2E2957;
             color: white;
-            border-radius: 4px;
             i { 
                 margin-right: 16px;
             }
@@ -29,48 +28,40 @@
             padding: 0;
             margin: 0;
             border: 1px solid #2E2957;
-                  
+            border-radius: 4px 4px 0 0;     
             div {
                 text-align: left;
                 align-self: center;
-            }
-            .header-title {
-                border-left: 1px solid #bbb;
-            }
-            :last-child {
-                border: none;
+                border-right: 1px solid #2E2957;
             }
         }
         .roster-container{
             max-height: 70vh;
             overflow: auto;
+            border: 1px solid #2E2957;
+            border-radius: 0 0 4px 4px;
+            border-top: none;
         
             .roster-row {
                 height: 30px;
                 margin: 0;
                 padding: 0;
                 color: #2E2957;
-                border-left: 1px solid #2E2957;
-                border-right: 1px solid #2E2957;
                 font-family: Avenir;
+                border-bottom: 1px solid #2E2957;
                 
                 input {
                     height: 30px;
                     background: none;
-                    border: 1px solid lightgrey;
-                    border-bottom: none;
-                    border-right: none;
+                    border: none;
+                    border-right: 1px solid #2E2957;
                 }
                 .custom-select {
                     line-height: 1.5;
                     color: #2E2957;
                     font-family: Avenir;
                     vertical-align: middle;
-                    border: 1px solid #ced4da;
                     outline: 0px;
-                    border-right: 0px;
-                    border-bottom: 0px;
-                    border-radius: 0;
                     -webkit-appearance: none;
                     -moz-appearance: none;
                     appearance: none;
@@ -79,14 +70,17 @@
                     height: 30px;
                     padding-top: .375rem;
                     padding-bottom: .375rem;
+                    background-color: initial;
+                    border: none;
+                    border-radius: 0px;
+                    border-right: 1px solid #2E2957;
+                    border-bottom: 1px solid #2E2957;
                 }
                 .row-control { 
                     display:flex;
                     justify-content: space-around;
                     align-items: center;
                     height: stretch;
-                    border: 1px solid lightgrey;
-                    border-bottom: none;
                     padding-left:0; 
                     padding-right: 0;
                     
@@ -120,15 +114,14 @@
                 }
             }
             .roster-row:last-of-type {
-                input, .row-control {
-                    border-bottom: 1px solid #2E2957;
-                }
+                border: none;
 
                 .custom-select {
-                    border: 1px solid #ced4da;
-                    border-bottom: 1px solid #2E2957;
                     outline: 0px;
-                    border-right: 0px;
+                }
+
+                .custom-select-sm {
+                    border-bottom: none;
                 }
             }
             .roster-row:hover {

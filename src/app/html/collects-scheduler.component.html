@@ -12,7 +12,7 @@
                             <div class="header-title col-md-3">{{ 'CollectRosterHeaderEndDate' | translate }}</div>
                             <div class="header-title col-md-3">{{ 'CollectRosterHeaderName' | translate }}</div>
                             <div class="header-title col-md-2">{{ 'CollectRosterHeaderCollectId' | translate }}</div>
-                            <div class="header-title-control col-md-1"></div>
+                            <div class="header-title header-title-control col-md-1"></div>
                         </div>
                         <div class="roster-container">
                             <div
@@ -76,12 +76,6 @@
                                 [(totalNumberOfPages)]="currentTotalNumberOfPages"
                                 [totalCount]="currentTotalCountOfRows"
                             ></my-paginator>
-                        </div>
-                        <div class="roster-controls row" style="margin-top:20px;">
-                            <button routerLink="/assign">
-                                <i class="fa fa-arrow-left"></i>
-                                {{ 'CollectRosterToCalendar' | translate }}
-                            </button>
                         </div>
                     </div>
                 </form>
