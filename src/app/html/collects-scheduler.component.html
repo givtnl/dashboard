@@ -45,7 +45,8 @@
                                     class="fa fa-plus"></i>{{ "CollectRosterBtnAdd" | translate }}</button>
                             <my-paginator (paginatorChanged)="getRows($event)"
                                 [rowsOnPage]="form.get('collects').controls.length" 
-                                [totalNumberOfPages]="currentTotalNumberOfPages"></my-paginator>
+                                [totalNumberOfPages]="currentTotalNumberOfPages"
+                                [totalCount]="currentTotalCountOfRows"></my-paginator>
                         </div>
                         <div class="roster-controls row" style='margin-top:20px;'>
                             <button routerLink="/assign">
