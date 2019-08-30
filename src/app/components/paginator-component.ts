@@ -2,6 +2,8 @@ import { Component, Output, EventEmitter, Input, OnInit } from "@angular/core";
 import { InfrastructurePaginator } from "app/models/infrastructure-paginator";
 import { UserService } from "app/services/user.service";
 import { FormGroup, FormBuilder } from "@angular/forms";
+import { TranslateService } from "ng2-translate";
+import './../extensions/StringExtensions'
 
 @Component({
   selector: 'my-paginator',
@@ -17,6 +19,8 @@ export class PaginatorComponent implements OnInit {
   }
   currentRowsPerPageForm: FormGroup;
   rowsPerPage = [10, 20, 30, 40];
+  pageInfo = ""
+  
 
   @Output() paginatorChanged = new EventEmitter<InfrastructurePaginator>()
 
@@ -24,7 +28,7 @@ export class PaginatorComponent implements OnInit {
   @Input() totalCount = 0
   @Input() totalNumberOfPages = 1
 
-  constructor(private userService: UserService, private formBuilder: FormBuilder) {
+  constructor(private userService: UserService, private formBuilder: FormBuilder, private translateService: TranslateService) {
     this.userService.collectGroupChanged.subscribe(() => {
       this.ngOnInit();
     });
@@ -41,6 +45,10 @@ export class PaginatorComponent implements OnInit {
       this.settings.currentPage = 1
       this.settings.currentRowsPerPage = Number(x.currentRowsPerPageControl)
       this.paginatorChanged.emit(this.settings)
+    })
+    
+    this.translateService.get("CollectRosterPage").subscribe((res: string) =>  {
+      this.pageInfo = String.prototype.format(res, this.settings.currentPage.toString(), this.totalNumberOfPages.toString())
     })
 
   }
