@@ -16,11 +16,15 @@ export class PaginatorComponent implements OnInit {
     currentRowsPerPage: 10
   }
   currentRowsPerPageForm: FormGroup;
-  rowsPerPage = [10,20,30,40];
+  rowsPerPage = [10, 20, 30, 40];
 
   @Output() paginatorChanged = new EventEmitter<InfrastructurePaginator>()
+
   @Input() rowsOnPage = 0
-  constructor(private userService: UserService, private formBuilder: FormBuilder) { 
+  @Input() totalCount = 0
+  @Input() totalNumberOfPages = 1
+
+  constructor(private userService: UserService, private formBuilder: FormBuilder) {
     this.userService.collectGroupChanged.subscribe(() => {
       this.ngOnInit();
     });
@@ -40,16 +44,17 @@ export class PaginatorComponent implements OnInit {
     })
 
   }
-  
+
   paginatorChanges(e: any) {
-    if (e === 0) { // 0 means page down
-      if (this.settings.currentPage > 1)
-        this.settings.currentPage--
-    } else if (e === 1) {
-      if (this.rowsOnPage == this.settings.currentRowsPerPage)
-        this.settings.currentPage++
+    let oldValue = this.settings.currentPage
+    if (e === 0 && this.settings.currentPage > 1) {
+      this.settings.currentPage--
+    } else if (e === 1 && this.settings.currentPage < this.totalNumberOfPages) {
+      this.settings.currentPage++
     }
-    this.paginatorChanged.emit(this.settings)
+    if (this.settings.currentPage != oldValue) {
+      this.paginatorChanged.emit(this.settings)
+    }
   }
 }
 
