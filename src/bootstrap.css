@@ -1899,3 +1899,12 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
     display: none !important;
   }
 }
+
+.mx-0 {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.w-100 {
+  width: 100%;
+}

@@ -28,15 +28,16 @@
                                     <option *ngFor="let number of [1, 2, 3]" [value]="number">{{ number }}</option>
                                 </select>
                                 <div class="col-md-1 row-control remove">
-                                    <div class="row" style="width: 100%; margin-left:0; margin-right: 0;">
+                                    <div class="row mx-0 w-100">
+                                        <div class="col-md-4 row-control-sub">
                                             <i
-                                                class="fa fa-plus"
-                                                analytics
-                                                category="Nieuw collecterooster"
-                                                eventName="Collecterooster - Toevoegen nieuwe rij"
-                                                (click)="addEmptyRow(i)"
-                                                tooltip="Insert"
-                                            ></i>
+                                            class="fa fa-plus"
+                                            analytics
+                                            category="Nieuw collecterooster"
+                                            eventName="Collecterooster - Toevoegen nieuwe rij"
+                                            (click)="addEmptyRow(i)"
+                                            tooltip="Insert"
+                                        ></i>
                                         </div>
                                         <div class="col-md-4 row-control-sub">
                                             <i
