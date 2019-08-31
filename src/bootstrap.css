@@ -1905,6 +1905,11 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   margin-right: 0;
 }
 
+.px-0 {
+  padding-left: 0;
+  padding-right: 0;
+}
+
 .w-100 {
   width: 100%;
 }
