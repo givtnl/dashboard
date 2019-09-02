@@ -47,6 +47,8 @@
                 text-align: left;
                 align-self: center;
                 border-right: 1px solid #2E2957;
+            } :last-child {
+                border-right: none;
             }
         }
         .roster-container{
