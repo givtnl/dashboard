@@ -61,7 +61,7 @@
                 padding: 0;
                 color: #2E2957;
                 font-family: Avenir;
-                border-bottom: 1px solid #2E2957;
+                border-bottom: 1px solid lightgray;
                 
                 input {
                     height: 30px;
@@ -87,7 +87,6 @@
                     border: none;
                     border-radius: 0px;
                     border-right: 1px solid #2E2957;
-                    border-bottom: 1px solid #2E2957;
                 }
                 .row-control { 
                     display:flex;
