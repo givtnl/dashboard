@@ -22,6 +22,10 @@
     .roster-control {
         display: flex;
         justify-content: flex-end;
+
+        button { 
+            width: auto;
+        }
     }
     .roster-title {
         margin-top: 40px;
