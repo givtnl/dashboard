@@ -4,6 +4,7 @@
         <my-titlebar></my-titlebar>
         <div class="global-layout-main container">
             <div id="tabulator-div">
+                    <h2 *ngIf="hasErrors()" class="text--danger">{{ 'CollectRosterError' | translate }}</h2>
                 <form class="roster-form" [formGroup]="form" *ngIf="form">
                     <div class="items roster-body col-md-12" formArrayName="collects">
                         <div class="roster-controls roster-title">
@@ -26,7 +27,7 @@
                         </div>
                         <div class="roster-container">
                             <div class="roster-row row"
-                                [class.invalid-row]="control.errors?.invalidDate || control.errors?.overlap"
+                                [class.invalid-row]="control.errors?.invalidDate || control.errors?.overlap || control.get('dtBegin').errors?.inValidMinutes || control.get('dtEnd').errors?.inValidMinutes"
                                 *ngFor="let control of form.get('collects').controls; let i = index"
                                 [formGroupName]="i">
                                 <input class="col-sm-3 col-md-3" type="datetime-local" step="1800" formControlName="dtBegin" max="9999-12-31T23:59" />
