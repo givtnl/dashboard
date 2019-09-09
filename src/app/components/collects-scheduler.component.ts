@@ -53,11 +53,11 @@ export class CollectsShedulerComponent implements OnInit {
                 id: [scheduler && copyId ? scheduler.Id : 0],
                 dtBegin: [
                     scheduler && scheduler.dtBegin ? this.datePipe.transform(new Date(scheduler.dtBegin), 'yyyy-MM-ddTHH:mm') : null,
-                    [Validators.required, DateTimeMinutesAllowedValidator([0, 30])]
+                    [Validators.required]
                 ],
                 dtEnd: [
                     scheduler && scheduler.dtEnd ? this.datePipe.transform(new Date(scheduler.dtEnd), 'yyyy-MM-ddTHH:mm') : null,
-                    [Validators.required, DateTimeMinutesAllowedValidator([0, 30])]
+                    [Validators.required]
                 ],
                 name: [scheduler ? scheduler.Name : null, [Validators.required, Validators.maxLength(50), Validators.minLength(3)]],
                 collectId: [scheduler ? scheduler.CollectId : 1, [Validators.required, Validators.min(1), Validators.max(3)]]

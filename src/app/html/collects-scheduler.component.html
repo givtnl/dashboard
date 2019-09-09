@@ -30,8 +30,8 @@
                                 [class.invalid-row]="control.errors?.invalidDate || control.errors?.overlap || control.get('dtBegin').errors?.inValidMinutes || control.get('dtEnd').errors?.inValidMinutes"
                                 *ngFor="let control of form.get('collects').controls; let i = index"
                                 [formGroupName]="i">
-                                <input class="col-sm-3 col-md-3" type="datetime-local" step="1800" formControlName="dtBegin" max="9999-12-31T23:59" />
-                                <input class="col-sm-3 col-md-3" type="datetime-local" step="1800" formControlName="dtEnd" max="9999-12-31T23:59" />
+                                <input class="col-sm-3 col-md-3" type="datetime-local" formControlName="dtBegin" max="9999-12-31T23:59" />
+                                <input class="col-sm-3 col-md-3" type="datetime-local" formControlName="dtEnd" max="9999-12-31T23:59" />
                                 <input class="col-sm-3 col-md-3" type="text" formControlName="name" />
                                 <select formControlName="collectId" id=""
                                     class="col-sm-2 col-md-2 custom-select custom-select-sm">
