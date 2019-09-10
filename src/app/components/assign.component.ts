@@ -52,7 +52,6 @@ export class AssignComponent implements OnInit {
     csvError: boolean = true;
     isLoading = false;
     hasOpenAllocation = false;
-    isFutureSelection = false;
 
     selectedAllocationDates = [];
     allocLoader: object = { show: false };
@@ -123,7 +122,6 @@ export class AssignComponent implements OnInit {
             let fullcalendar = jQuery(this.calendar['el']['nativeElement'].children[0]);
             fullcalendar.fullCalendar('unselect');
             let currentDate = new Date();
-            this.isFutureSelection = currentDate < event.start['_d'] && currentDate < event.end['_d'];
             this.openBucket(event);
             if (this.oldJsEvent !== undefined) {
                 this.oldJsEvent.target.style.boxShadow = '0px 0px 15px transparent';
@@ -152,7 +150,6 @@ export class AssignComponent implements OnInit {
         this.options['scrollTime'] = '08:00:00';
         this.options['select'] = function(start, end, jsEvent, view, resource) {
             let currentDate = new Date();
-            this.isFutureSelection = currentDate < start['_d'] && currentDate < end['_d'];
             this.createBucketWithRange(start['_d'], end['_d']);
         }.bind(this);
 
@@ -161,24 +158,16 @@ export class AssignComponent implements OnInit {
         });
     }
     get allowSave(): Boolean {
-        let retVal = true;
-        for (const collect of this.selectedCard.Collects) {
-            let hasEmptyAllocationName = !(
-                collect.allocationName != null &&
-                collect.allocationName != undefined &&
-                collect.allocationName != ''
-            );
-            if (hasEmptyAllocationName) {
-                retVal = false;
-                if (!this.isFutureSelection)
-                    //prevent breaking when editing future
+        let retVal = false;
+
+        if (this.selectedCard.hasChangedDates) {
+            retVal = true;
+        } else {
+            for (const collect of this.selectedCard.Collects) {
+                if (collect.allocationName && collect.nameIsChanged) {
+                    retVal = true;
                     break;
-            }
-            if ((collect.nameIsChanged && !hasEmptyAllocationName) || this.selectedCard.hasChangedDates) {
-                retVal = true; //allow save immediately
-                break;
-            } else {
-                retVal = false;
+                }
             }
         }
         return retVal;
@@ -217,15 +206,8 @@ export class AssignComponent implements OnInit {
                 .map(tx => tx.transactions)
                 .reduce((p, s) => p.concat(s));
             this.openBucket(bigEvent);
-        } else if (this.isFutureSelection) {
-            this.openBucket(bigEvent);
         } else {
-            jQuery(this.calendar['el']['nativeElement'].children[0]).fullCalendar('unselect');
-            this.selectedCard = null;
-            this.isDialogOpen = false;
-            if (this.oldJsEvent !== undefined) {
-                this.oldJsEvent.target.style.boxShadow = '0px 0px 15px transparent';
-            }
+            this.openBucket(bigEvent);
         }
     }
     openBucket(event: MyEvent) {
@@ -253,7 +235,7 @@ export class AssignComponent implements OnInit {
                 bcr.allocated = bcr.allocationName !== null;
                 bcr.collectId = String(i + 1);
                 bucketCard.Collects.push(bcr);
-            } else if (this.isFutureSelection) {
+            } else {
                 const element = new BucketCardRow();
                 element.transactions = [];
                 let tx = this.events.filter(e => event.start < e.end && event.end >= e.start).map(f => f.transactions);
@@ -600,6 +582,7 @@ export class AssignComponent implements OnInit {
                 .subtract(30, 'm')
                 .toDate();
         }
+
         //update selection
         let fullcalendar = jQuery(this.calendar['el']['nativeElement'].children[0]);
         fullcalendar.fullCalendar('select', this.selectedCard.dtBegin, this.selectedCard.dtEnd);
@@ -608,6 +591,7 @@ export class AssignComponent implements OnInit {
         if(this.selectedAllocationDates[0] != this.selectedCard.dtBegin || this.selectedAllocationDates[1] != this.selectedCard.dtEnd) {
             this.selectedCard.hasChangedDates = true
         }
+
     }
     showAllocActions(alloc: BucketCardRow) {
         if (alloc.showActions) alloc.showActions = false;
@@ -920,22 +904,6 @@ export class AssignComponent implements OnInit {
     }
     closePopup() {
         this.showCsvPopup = false;
-    }
-    deleteFutureAllocation(id) {
-        let confirmMessage;
-        this.ts.get('RemoveAllocationConfirm').subscribe((res: string) => {
-            confirmMessage = res;
-        });
-        if (confirm(confirmMessage)) {
-            this.apiService.deleteData('Allocations/Allocation?Id=' + id);
-            for (var i = 0; i < this.events.length; i++) {
-                if (this.events[i].id === id) {
-                    this.events.splice(this.events.indexOf(this.events[i]), 1);
-                    break;
-                }
-            }
-            this.closeDialog();
-        }
     }
 }
 
