@@ -7,3 +7,6 @@ declare module '*.json' {
   const value: any;
   export default value;
 }
+declare interface String {
+  format(str: string, ...args: string[])
+}

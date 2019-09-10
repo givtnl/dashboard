@@ -722,3 +722,21 @@ h3{
     background: #d4edda;
     border-color: #c3e6cb;
   }
+
+  .light {
+    font-size: 16px; font-family: Avenir_Light; border-top: 1px solid black;
+  }
+  table.table-stats.gift-aid {
+      width: 100%;
+      border-top: #2E2957 1px solid;
+      padding-top: 15px;
+  }
+  table.table-stats.gift-aid tr:first-of-type {
+    font-size: 16px; font-family: Avenir_Light; border-top: 1px solid black;
+  }
+  .gift-aid-more-info {
+    border: none !important; display: flex
+  }
+  .gift-aid-more-info div:first-of-type {
+    display: flex; align-self: flex-end; margin-bottom: 2px; font-size: 14px !important; margin-left: 10px;
+  }
