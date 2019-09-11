@@ -99,7 +99,7 @@ export class CollectsShedulerComponent implements OnInit {
         this.collectsArray.insert(
             index,
             this.buildSingleForm({
-                CollectId: row.collectId,
+                CollectId: null,
                 Name: row.name,
                 dtBegin: row.dtBegin,
                 dtEnd: row.dtEnd
