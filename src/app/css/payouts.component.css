@@ -272,7 +272,7 @@ h3{
     float:left;
     content: '';
     cursor: pointer;
-
+    display: block;
 }
 
 .table-stats .row:hover:after,.table-stats .active-row:after{
