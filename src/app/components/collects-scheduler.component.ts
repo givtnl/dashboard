@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators, FormArray, ValidatorFn } from '@ang
 import { HttpErrorResponse } from '@angular/common/http';
 import { UserService } from 'app/services/user.service';
 import { isNullOrUndefined } from 'util';
-import { distinctUntilChanged, debounceTime, catchError } from 'rxjs/operators';
+import { distinctUntilChanged, debounceTime, catchError, delay } from 'rxjs/operators';
 import { InfrastructurePaginator } from 'app/models/infrastructure-paginator';
 import { CollectSchedulerService } from 'app/services/collects-schedulder.service';
 import { Observable } from 'rxjs';
@@ -20,7 +20,7 @@ import { GreaterThanDateValidator, DateTimeMinutesAllowedValidator } from 'app/v
 export class CollectsShedulerComponent implements OnInit {
     public form: FormGroup;
     public cacheKey = 'CollectSchedulerComponent';
-
+    public loading = false;
     currentCollectGroupAllocations = [];
 
     currentTotalNumberOfPages: 0;
@@ -107,8 +107,10 @@ export class CollectsShedulerComponent implements OnInit {
         );
     }
     getRows(options: InfrastructurePaginator) {
+        this.loading = true;
         this.service
             .getAll(this.userService.CurrentCollectGroup.GUID, options.currentRowsPerPage, options.currentPage)
+            .pipe(delay(500))
             .pipe(catchError((error: HttpErrorResponse) => this.handleGenericError(error)))
             .subscribe(response => {
                 this.currentCollectGroupAllocations = response.Results;
@@ -121,7 +123,7 @@ export class CollectsShedulerComponent implements OnInit {
                             : []
                     )
                 });
-            });
+            }).add(() => this.loading = false);
     }
     upload(row: FormGroup) {
         if (row.invalid) {
@@ -168,8 +170,12 @@ export class CollectsShedulerComponent implements OnInit {
     }
 
     hasErrors(): boolean {
-        return this.form &&  this.collectsArray &&  this.collectsArray.controls.some((formGroup: FormGroup) => {
-            return formGroup.errors !== null || Object.keys(formGroup.controls).some(key => formGroup.get(key).errors !== null);
-        });
+        return (
+            this.form &&
+            this.collectsArray &&
+            this.collectsArray.controls.some((formGroup: FormGroup) => {
+                return formGroup.errors !== null || Object.keys(formGroup.controls).some(key => formGroup.get(key).errors !== null);
+            })
+        );
     }
 }
