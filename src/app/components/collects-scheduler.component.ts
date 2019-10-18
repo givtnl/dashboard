@@ -60,9 +60,11 @@ export class CollectsShedulerComponent implements OnInit {
                     [Validators.required]
                 ],
                 name: [scheduler ? scheduler.Name : null, [Validators.required, Validators.maxLength(50), Validators.minLength(3)]],
-                collectId: [scheduler ? scheduler.CollectId : 1, [Validators.required, Validators.min(1), Validators.max(3)]]
+                collectId: [scheduler ? scheduler.CollectId : 1, [Validators.required, Validators.min(1), Validators.max(3)]],
+                shouldNotShowError: !copyId
             },
-            { validator: GreaterThanDateValidator }
+            { validator: GreaterThanDateValidator },
+
         );
 
         form.valueChanges
@@ -156,11 +158,13 @@ export class CollectsShedulerComponent implements OnInit {
                     this.loggingService.info(
                         `Allocation with id '${x.Id}' was created for CollectGroup: ${this.userService.CurrentCollectGroup.Name}`
                     );
-                    row.patchValue({ id: x.Id });
-                });
+                    row.patchValue({ id: x.Id, shouldNotShowError: false });
+            });
         }
     }
     handleConflict(error: any, form: FormGroup) {
+        if (form.value.shouldNotShowError)
+            form.patchValue({ shouldNotShowError: false });
         form.setErrors({ overlap: true });
         return Observable.throw(error);
     }
@@ -174,7 +178,7 @@ export class CollectsShedulerComponent implements OnInit {
             this.form &&
             this.collectsArray &&
             this.collectsArray.controls.some((formGroup: FormGroup) => {
-                return formGroup.errors !== null || Object.keys(formGroup.controls).some(key => formGroup.get(key).errors !== null);
+                return !formGroup.value.shouldNotShowError && (formGroup.errors !== null || Object.keys(formGroup.controls).some(key => formGroup.get(key).errors !== null));
             })
         );
     }
