@@ -7,6 +7,8 @@ import { ViewEncapsulation } from '@angular/core';
 import { DataService } from '../services/data.service';
 import { UserService } from '../services/user.service';
 import { ISODatePipe } from '../pipes/iso.datepipe';
+import { from } from 'rxjs/observable/from';
+import { delay } from 'rxjs/operators';
 
 @Component({
     selector: 'my-collects',
@@ -16,6 +18,7 @@ import { ISODatePipe } from '../pipes/iso.datepipe';
 })
 export class PayoutsComponent implements OnInit {
     openAllocations: boolean = false;
+    public loading = false;
     payouts: Payout[] = [];
     isSafari: boolean;
 
@@ -103,13 +106,15 @@ export class PayoutsComponent implements OnInit {
 
     ngOnInit() {
         this.checkAllocations();
-
-        this.apiService.getData('Payments/Payouts').then(resp => {
+        this.loading = true;
+        from(this.apiService.getData('Payments/Payouts'))
+        .pipe(delay(500))
+        .subscribe((resp: Payout[]) => {
             this.payouts = [];
             if (resp.length > 0) {
                 this.payouts = resp;
             }
-        });
+        }).add(() => this.loading =false);
     }
 
     displayValue(x) {

@@ -3,7 +3,14 @@
     <my-navigation></my-navigation>
     <div class="global-layout-content">
         <my-titlebar></my-titlebar>
-        <section class="section-collects" *ngIf="payouts.length == 0">
+        <div class="loading-wrapper show-loading-animation" *ngIf="loading">
+            <div class="loader" >
+              <svg class="circular" viewBox="25 25 50 50">
+                <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="5" stroke-miterlimit="10"/>
+              </svg>
+            </div>
+          </div>
+        <section class="section-collects" *ngIf="!loading && payouts.length == 0">
             <p class="text section-collects-nopayments">{{ "Payout_NoPayouts" | translate }}</p>
             <div class="placeholder-line"></div>
             <div class="placeholder-line"></div>

@@ -18,6 +18,13 @@
                                 </button>
                             </div>
                         </div>
+                        <div class="loading-wrapper show-loading-animation" *ngIf="loading">
+                            <div class="loader" >
+                              <svg class="circular" viewBox="25 25 50 50">
+                                <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="5" stroke-miterlimit="10"/>
+                              </svg>
+                            </div>
+                          </div>
                         <div class="roster-header row">
                             <div class="header-title col-sm-3 col-md-3">{{ 'CollectRosterHeaderStartDate' | translate }}</div>
                             <div class="header-title col-sm-3 col-md-3">{{ 'CollectRosterHeaderEndDate' | translate }}</div>
@@ -27,7 +34,7 @@
                         </div>
                         <div class="roster-container">
                             <div class="roster-row row"
-                                [class.invalid-row]="control.errors?.invalidDate || control.errors?.overlap || control.get('dtBegin').errors?.inValidMinutes || control.get('dtEnd').errors?.inValidMinutes"
+                                [class.invalid-row]="control.get('collectId').errors?.required || control.errors?.invalidDate || control.errors?.overlap || control.get('dtBegin').errors?.inValidMinutes || control.get('dtEnd').errors?.inValidMinutes"
                                 *ngFor="let control of form.get('collects').controls; let i = index"
                                 [formGroupName]="i">
                                 <input class="col-sm-3 col-md-3" type="datetime-local" formControlName="dtBegin" max="9999-12-31T23:59" />
