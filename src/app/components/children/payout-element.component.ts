@@ -32,8 +32,6 @@ export class PayoutComponent implements OnInit {
     @Input() childData: any;
     @Input() loader: object;
     name: string = '';
-    transactionCost = 0.08;
-    mandateCost = 0.125;
     paymentType: PaymentType = PaymentType.Undefined;
     showCosts: boolean = false;
     pledgedAmount: number;
@@ -58,13 +56,8 @@ export class PayoutComponent implements OnInit {
             this.moreInfoStornos = res;
         });
         if (this.paymentType === PaymentType.BACS) {
-            this.transactionCost = 0.1;
-            this.mandateCost = 0;
-            this.moreInfoToolTip = this.moreInfoToolTip.replace('SlimPay', 'SmartDebit');
-            this.moreInfoStornos = this.moreInfoStornos.replace('SlimPay', 'SmartDebit');
-        } else if (this.paymentType === PaymentType.SEPA) {
-            this.transactionCost = 0.08;
-            this.mandateCost = 0.125;
+            this.moreInfoToolTip = this.moreInfoToolTip.replace('SlimPay', 'EazyCollect');
+            this.moreInfoStornos = this.moreInfoStornos.replace('SlimPay', 'EazyCollect');
         } else {
             console.log('Undefined payment type');
         }
@@ -129,67 +122,78 @@ export class PayoutComponent implements OnInit {
         x.hiddenAllocations = true;
         x.TotalPaidText = this.displayValue(x.TotalPaid);
 
+        let transactionCost = 0.0;
+        let RTransactionT1Cost = 0.0;
+
         if (paymentType === PaymentType.SEPA) {
+            let mandateCost = x.MandateCostCount > 0 ? x.MandateCost / x.MandateCostCount : 0.0;
             this.translate
                 .get('Text_Info_Mandate', {
                     0: x.MandateCostCount,
                     2: this.isSafari
-                        ? this.mandateCost.toFixed(3)
-                        : this.mandateCost.toLocaleString(navigator.language, { minimumFractionDigits: 3, maximumFractionDigits: 3 }),
+                        ? mandateCost.toFixed(3)
+                        : mandateCost.toLocaleString(navigator.language, { minimumFractionDigits: 3, maximumFractionDigits: 3 }),
                     1: this.userService.currencySymbol
                 })
                 .subscribe((res: string) => {
                     x.Text_Info_Mandate = res;
                 });
+            let RTransactionT2Cost = x.RTransactionT2Count > 0 ? x.RTransactionT2Cost / x.RTransactionT2Count : 1.2;
+            this.translate
+                .get('Text_Info_Type2', {
+                    0: x.RTransactionT2Count,
+                    2: this.isSafari
+                        ? RTransactionT2Cost.toFixed(2)
+                        : RTransactionT2Cost.toLocaleString(navigator.language, { minimumFractionDigits: 2, maximumFractionDigits: 2 }),
+                    1: this.userService.currencySymbol
+                })
+                .subscribe((res: string) => {
+                    x.Text_Info_Type2 = res;
+                });
+            RTransactionT1Cost = x.RTransactionT1Count > 0 ? x.RTransactionT1Cost / x.RTransactionT1Count : 0.18;
+            transactionCost = x.TransactionCount > 0 ? x.TransactionCost / x.TransactionCount : 0.8;
+
+        } else if (paymentType == PaymentType.BACS) {
+            RTransactionT1Cost = x.RTransactionT1Count > 0 ? x.RTransactionT1Cost / x.RTransactionT1Count : 2.0;
+            transactionCost = x.TransactionCount > 0 ? x.TransactionCost / x.TransactionCount : 0.14;
+
+            if (this.userService.CurrentCollectGroup.TaxDeductionType == 'GiftAid') {
+                // extra amount through giftaid
+                x.extraGiftAidAmount = x.GiftAidAmountPayedByGovernment != undefined ? x.GiftAidAmountPayedByGovernment : 0;
+                // gift aided more info
+                this.translate.get('GiftAidPayoutMoreInfo', { 0: x.GiftAidAmount }).subscribe((res: string) => {
+                    x.moreInfoGiftAid = res;
+                });
+                if (x.extraGiftAidAmount == 0) {
+                    x.moreInfoGiftAid = x.moreInfoGiftAid.substring(this.getPosition(x.moreInfoGiftAid, '.', 2) + 2);
+                }
+            }
         }
 
         this.translate
             .get('Text_Info_Transaction', {
                 0: x.TransactionCount,
                 2: this.isSafari
-                    ? this.transactionCost.toFixed(2)
-                    : this.transactionCost.toLocaleString(navigator.language, { minimumFractionDigits: 2, maximumFractionDigits: 2 }),
+                    ? transactionCost.toFixed(2)
+                    : transactionCost.toLocaleString(navigator.language, { minimumFractionDigits: 2, maximumFractionDigits: 2 }),
                 1: this.userService.currencySymbol
             })
             .subscribe((res: string) => {
                 x.Text_Info_Transaction = res;
             });
 
+
         this.translate
             .get('Text_Info_Type1', {
                 0: x.RTransactionT1Count,
                 1: this.userService.currencySymbol,
                 2: this.isSafari
-                    ? (0.18).toFixed(2)
-                    : (0.18).toLocaleString(navigator.language, { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+                    ? RTransactionT1Cost.toFixed(2)
+                    : RTransactionT1Cost.toLocaleString(navigator.language, { minimumFractionDigits: 2, maximumFractionDigits: 2 })
             })
             .subscribe((res: string) => {
                 x.Text_Info_Type1 = res;
             });
-
-        if (paymentType === PaymentType.SEPA) {
-            this.translate
-                .get('Text_Info_Type2', {
-                    0: x.RTransactionT2Count,
-                    2: this.isSafari
-                        ? (1.2).toFixed(2)
-                        : (1.2).toLocaleString(navigator.language, { minimumFractionDigits: 2, maximumFractionDigits: 2 }),
-                    1: this.userService.currencySymbol
-                })
-                .subscribe((res: string) => {
-                    x.Text_Info_Type2 = res;
-                });
-        } else if (paymentType === PaymentType.BACS && this.userService.CurrentCollectGroup.TaxDeductionType == 'GiftAid') {
-            // extra amount through giftaid
-            x.extraGiftAidAmount = x.GiftAidAmountPayedByGovernment != undefined ? x.GiftAidAmountPayedByGovernment : 0;
-            // gift aided more info
-            this.translate.get('GiftAidPayoutMoreInfo', { 0: x.GiftAidAmount }).subscribe((res: string) => {
-                x.moreInfoGiftAid = res;
-            });
-            if (x.extraGiftAidAmount == 0) {
-                x.moreInfoGiftAid = x.moreInfoGiftAid.substring(this.getPosition(x.moreInfoGiftAid, '.', 2) + 2);
-            }
-        }
 
         x.activeRow = 1;
     }
