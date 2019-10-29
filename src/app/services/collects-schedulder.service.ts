@@ -7,6 +7,7 @@ import { AllocationDetailModel } from 'app/models/collect-scheduler/allocation-d
 import { UpdateAllocationCommand } from 'app/models/collect-scheduler/update-allocation.command';
 import { AllocationListModel } from 'app/models/collect-scheduler/allocation-list.model';
 import { RequestOptions } from '@angular/http';
+import { BankAccountModel } from 'app/models/collect-scheduler/bank-account.model';
 
 @Injectable()
 export class CollectSchedulerService {
@@ -47,5 +48,10 @@ export class CollectSchedulerService {
             }
         };
         return this.http.delete(`${this.apiUrl}${collectGroupId}/allocations`, options);
+    }
+
+    public getAllActiveAccounts(collectGroupId: string) : Observable<Array<BankAccountModel>> {
+        return this.http.get<Array<BankAccountModel>>(`${environment.apiUrl}/api/v2/collectgroups/${collectGroupId}/organisation/accounts`)
+            .map(bankAccounts => bankAccounts.filter(bankAccount => bankAccount.Active));
     }
 }

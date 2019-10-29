@@ -4,22 +4,30 @@
         justify-content: flex-end;
         height: 40px;
         margin-top: 20px;
-        button { 
+        button {
             padding-left: 20px;
             padding-right: 25px;
             background-color: #2E2957;
             color: white;
             border-radius: 4px;
-            i { 
+            i {
                 margin-right: 16px;
             }
         }
     }
+    .roster-name {
+        display: flex;
+        flex: 1;
+        min-height: 1px;
+        padding-right: 15px;
+        padding-left: 15px;
+    }
+
     .roster-control {
         display: flex;
         justify-content: flex-end;
 
-        button { 
+        button {
             width: auto;
         }
     }
@@ -42,7 +50,7 @@
             padding: 0;
             margin: 0;
             border: 1px solid #2E2957;
-            border-radius: 4px 4px 0 0;     
+            border-radius: 4px 4px 0 0;
             div {
                 text-align: left;
                 align-self: center;
@@ -62,14 +70,15 @@
             .ng-invalid {
                 color: red !important;
             }
-        
+
             .roster-row {
                 height: 30px;
+                display: flex;
                 margin: 0;
                 padding: 0;
                 font-family: Avenir_Light;
                 border-bottom: 1px solid lightgray;
-                
+
                 input {
                     height: 30px;
                     background: none;
@@ -94,19 +103,19 @@
                     border-radius: 0px;
                     border-right: 1px solid #2E2957;
                 }
-                .row-control { 
+                .row-control {
                     display:flex;
                     justify-content: space-around;
                     align-items: center;
                     height: stretch;
-                    padding-left:0; 
+                    padding-left:0;
                     padding-right: 0;
-                    
+
                     .row {
                         .row-control-sub {
                             display: flex;
                             justify-content: center;
-                            padding-left:0; 
+                            padding-left:0;
                             padding-right: 0;
                         }
                         i {
@@ -169,16 +178,16 @@
 .givt-orange {
     color: #FFb12A
 }
-.givt-green { 
+.givt-green {
     color: #1CA96C;
 }
-.givt-lightgreen { 
+.givt-lightgreen {
     color: #41C98E;
 }
-.givt-purple { 
+.givt-purple {
     color: #5A5387
 }
-.givt-blue-purple { 
+.givt-blue-purple {
     color: #2E2957;
 }
 
@@ -188,18 +197,18 @@
 .givt-background-orange {
     background-color: #FFb12A
 }
-.givt-background-green { 
+.givt-background-green {
     background-color: #1CA96C;
 }
-.givt-background-lightgreen { 
+.givt-background-lightgreen {
     background-color: #41C98E;
 }
-.givt-background-purple { 
+.givt-background-purple {
     background-color: #5A5387
 }
-.givt-background-green { 
+.givt-background-green {
     background-color: #1CA96C;
 }
-.givt-background-blue-purple { 
+.givt-background-blue-purple {
     background-color: #2E2957;
 }
