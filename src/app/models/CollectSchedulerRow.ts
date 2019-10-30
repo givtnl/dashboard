@@ -1,4 +1,3 @@
-
 export class CollectSchedulerRow {
     Id: number
     dtBegin: Date
@@ -6,4 +5,5 @@ export class CollectSchedulerRow {
     Name: string
     CollectId: number
     CollectGroupId: string
+    AccountId: number | null
 }

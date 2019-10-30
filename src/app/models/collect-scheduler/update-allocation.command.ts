@@ -4,4 +4,5 @@ export class UpdateAllocationCommand {
     dtBegin: Date;
     dtEnd: Date;
     collectId: number;
+    accountId: number | null;
 }

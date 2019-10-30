@@ -65,6 +65,9 @@ export class CollectsShedulerComponent implements OnInit {
                 ],
                 name: [scheduler ? scheduler.Name : null, [Validators.required, Validators.maxLength(50), Validators.minLength(3)]],
                 collectId: [scheduler ? scheduler.CollectId : 1, [Validators.required, Validators.min(1), Validators.max(3)]],
+                accountId: [
+                    scheduler && scheduler.AccountId ? scheduler.AccountId : this.bankAccounts.find(a => a.Primary).Id,
+                ],
                 shouldNotShowError: !copyId
             },
             { validator: GreaterThanDateValidator },
@@ -108,7 +111,8 @@ export class CollectsShedulerComponent implements OnInit {
                 CollectId: null,
                 Name: row.name,
                 dtBegin: row.dtBegin,
-                dtEnd: row.dtEnd
+                dtEnd: row.dtEnd,
+                AccountId: row.accountId
             })
         );
     }
