@@ -163,7 +163,7 @@
     "AllocationAdded": "This allocation has been added.",
     "AllocationsAddedTitle": "Uploaded allocations:",
     "CsvError": "There is an error in the csv.",
-    "CsvSuccess": " succesfully uploaded.",
+    "CsvSuccess": " successfully uploaded.",
     "DownloadExample": "Download example",
     "Example": "Example",
     "RemoveAllocation": "Remove this allocation",
@@ -182,7 +182,7 @@
     "RequestMediumIdBody": "Send us an email at <a href='mailto:support@givtapp.net'>support@givtapp.net</a> with the namespace for which you want an integration and request a medium id to connect an app with Givt.",
     "RequestMediumIdManual": "Download the manual for developers <a href='assets/Manual-Deeplink-Givt.zip'>here</a>.",
     "GivtWithGivtPreferenceTitle": "Integration with Givt",
-    "Text_TransactionCost_MoreInfo_GB": "These costs are charged by Smart Debit for handling the transactions.",
+    "Text_TransactionCost_MoreInfo_GB": "These costs are charged by EazyCollect for handling the transactions.",
     "QRCodeREQ_1_title": "Request a QR code",
     "QRCodeREQ_nav": "QR code",
     "QRCodeREQ_1_subtext": "With the Givt app, you can give easily to a QR code which you can place anywhere.",
@@ -214,7 +214,7 @@
     "QRCodeREQ_5_title": "Sent",
     "QRCodeREQ_5_subtitle": "Thanks!",
     "QRCodeREQ_5_subtext": "We will send you the requested QR code(s) within a couple of days.",
-    "QRCodeREQ_warning_novalidemail": "Please enter a valid email address so that we can send you the requested QR code(s).",
+    "QRCodeREQ_warning_novalidemail": "Please enter a valid e-mail address so that we can send you the requested QR code(s).",
     "QRCodeREQ_generic": "Generic QR code",
     "QRCodeREQ_3_addgoal": "Add goal",
     "QRCodeREQ_warning_novalidphone": "Please enter a valid phone number so that we can contact you if necessary.",
@@ -232,7 +232,8 @@
     "CollectRosterHeaderStartDate": "Start date",
     "CollectRosterHeaderEndDate": "End date",
     "CollectRosterHeaderName": "Name",
-    "CollectRosterHeaderCollectId": "Collect number",
+    "CollectRosterHeaderCollectId": "Collection",
     "CollectRosterOf": "of",
-    "CollectRosterError": "There might be already an allocation in the same time period or the beginning or end time of an allocation has an error. The row which is marked in red, has an error."
+    "CollectRosterError": "There might be already an allocation in the same time period or the beginning or end time of an allocation has an error. The row which is marked in red, has an error.",
+    "CollectRosterBankAccount": "Bank account"
 }

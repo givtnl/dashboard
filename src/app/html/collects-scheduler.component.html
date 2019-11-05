@@ -25,12 +25,13 @@
                               </svg>
                             </div>
                           </div>
-                        <div class="roster-header row">
-                            <div class="header-title col-sm-3 col-md-3">{{ 'CollectRosterHeaderStartDate' | translate }}</div>
-                            <div class="header-title col-sm-3 col-md-3">{{ 'CollectRosterHeaderEndDate' | translate }}</div>
-                            <div class="header-title col-sm-3 col-md-3">{{ 'CollectRosterHeaderName' | translate }}</div>
-                            <div class="header-title col-sm-2 col-md-2">{{ 'CollectRosterHeaderCollectId' | translate }}</div>
-                            <div class="header-title col-sm-1 col-md-1 header-title-control"></div>
+                        <div class="roster-header row"  >
+                            <div class="col-sm-3 col-md-3">{{ 'CollectRosterHeaderStartDate' | translate }}</div>
+                            <div class="col-sm-3 col-md-3">{{ 'CollectRosterHeaderEndDate' | translate }}</div>
+                            <div class="roster-name">{{ 'CollectRosterHeaderName' | translate }}</div>
+                            <div class="col-sm-1 col-md-1 text-wrap">{{ 'Collection' | translate }}</div>
+                            <div *ngIf="bankAccounts.length > 1" class="col-sm-2 col-md-2">{{ 'Bank account' | translate }}</div>
+                            <div class="col-sm-1 col-md-1"></div>
                         </div>
                         <div class="roster-container">
                             <div class="roster-row row"
@@ -39,10 +40,16 @@
                                 [formGroupName]="i">
                                 <input class="col-sm-3 col-md-3" type="datetime-local" formControlName="dtBegin" max="9999-12-31T23:59" />
                                 <input class="col-sm-3 col-md-3" type="datetime-local" formControlName="dtEnd" max="9999-12-31T23:59" />
-                                <input class="col-sm-3 col-md-3" type="text" formControlName="name" />
+                                <input class="roster-name" type="text" formControlName="name" />
                                 <select formControlName="collectId" id=""
-                                    class="col-sm-2 col-md-2 custom-select custom-select-sm">
+                                    class="col-sm-1 col-md-1 custom-select custom-select-sm">
                                     <option *ngFor="let number of [1, 2, 3]" [value]="number">{{ number }}</option>
+                                </select>
+                                <select *ngIf="bankAccounts.length > 1" class="col-sm-2 col-md-2 custom-select custom-select-sm" formControlName="accountId">
+                                    <option *ngFor="let account of bankAccounts" [value]="account.Id">
+                                        <span *ngIf="account.Iban">{{ account.Iban }}</span>
+                                        <span *ngIf="account.AccountNumber">{{ account.SortCode }}-{{ account.AccountNumber }}</span>
+                                    </option>
                                 </select>
                                 <div class="col-sm-1 col-md-1 row-control remove">
                                     <div class="row mx-0 w-100">

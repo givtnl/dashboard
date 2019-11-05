@@ -182,7 +182,7 @@
     "RequestMediumIdBody": "Stuur ons een mailtje naar <a href='mailto:support@givtapp.net'>support@givtapp.net</a> met daarin de namespace waarvoor je een koppeling wil en vraag ons naar een medium id voor de koppeling vanuit een andere app naar Givt.",
     "RequestMediumIdManual": "Download <a href='assets/Manual-Deeplink-Givt.zip'>hier</a> de handleiding voor ontwikkelaars.",
     "GivtWithGivtPreferenceTitle": "Koppeling met Givt",
-    "Text_TransactionCost_MoreInfo_GB": "Dit zijn de kosten die Smart Debit in rekening brengt voor het verwerken van transacties.",
+    "Text_TransactionCost_MoreInfo_GB": "Dit zijn de kosten die EazyCollect in rekening brengt voor het verwerken van transacties.",
     "QRCodeREQ_1_title": "QR-code aanvragen",
     "QRCodeREQ_nav": "QR-code",
     "QRCodeREQ_1_subtext": "Met de Givt-app geef je eenvoudig aan een QR-code die je overal kunt plaatsen.",
@@ -232,7 +232,8 @@
     "CollectRosterHeaderStartDate": "Startdatum",
     "CollectRosterHeaderEndDate": "Einddatum",
     "CollectRosterHeaderName": "Naam",
-    "CollectRosterHeaderCollectId": "Collecte nummer",
+    "CollectRosterHeaderCollectId": "Collecte",
     "CollectRosterOf": "van",
-    "CollectRosterError": "Er is mogelijk een overlappende collecte of een begin- of eindtijdstip dat niet correct is ingevoerd. De rij die in het rood aangeduid is, bevat een fout."
+    "CollectRosterError": "Er is mogelijk een overlappende collecte of een begin- of eindtijdstip dat niet correct is ingevoerd. De rij die in het rood aangeduid is, bevat een fout.",
+    "CollectRosterBankAccount": "Bankrekening"
 }

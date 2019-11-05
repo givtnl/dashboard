@@ -3,5 +3,6 @@ export class AllocationDetailModel {
     dtBegin:Date;
     dtEnd:Date;
     collectId:number;
-    name:string;
+    name: string;
+    accountId: number | null;
 }

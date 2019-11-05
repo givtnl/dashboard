@@ -3,4 +3,5 @@ export class CreateAllocationCommand {
     dtBegin: Date;
     dtEnd: Date;
     collectId: number;
+    accountId: number | null;
 }

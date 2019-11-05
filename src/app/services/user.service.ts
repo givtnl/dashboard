@@ -37,7 +37,7 @@ export class UserService {
     user: User = new User();
 
     get currencySymbol(): string {
-        return this.CurrentCollectGroup.PaymentType == PaymentType.BACS ? "£" : "€";
+        return this.CurrentCollectGroup.PaymentType == PaymentType.BACS ? "£" : "€ ";
     }
 
     login(username: string, password: string) {

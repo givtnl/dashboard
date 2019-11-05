@@ -11,6 +11,7 @@ import { ISODatePipe } from 'app/pipes/iso.datepipe';
 import { LoggingService } from 'app/services/logging.service';
 import { compareRows } from 'app/models/collect-scheduler/row-comparer.function';
 import { GreaterThanDateValidator, DateTimeMinutesAllowedValidator } from 'app/validators/allocation.validators';
+import { BankAccountModel } from 'app/models/collect-scheduler/bank-account.model';
 
 @Component({
     selector: 'app-csveditor',
@@ -21,6 +22,9 @@ export class CollectsShedulerComponent implements OnInit {
     public form: FormGroup;
     public cacheKey = 'CollectSchedulerComponent';
     public loading = false;
+
+    public bankAccounts : BankAccountModel[] = [];
+
     currentCollectGroupAllocations = [];
 
     currentTotalNumberOfPages: 0;
@@ -61,6 +65,9 @@ export class CollectsShedulerComponent implements OnInit {
                 ],
                 name: [scheduler ? scheduler.Name : null, [Validators.required, Validators.maxLength(50), Validators.minLength(3)]],
                 collectId: [scheduler ? scheduler.CollectId : 1, [Validators.required, Validators.min(1), Validators.max(3)]],
+                accountId: [
+                    scheduler && scheduler.AccountId ? scheduler.AccountId : (this.bankAccounts.find(a => a.Primary) ? this.bankAccounts.find(a => a.Primary).Id : null) ,
+                ],
                 shouldNotShowError: !copyId
             },
             { validator: GreaterThanDateValidator },
@@ -104,28 +111,35 @@ export class CollectsShedulerComponent implements OnInit {
                 CollectId: null,
                 Name: row.name,
                 dtBegin: row.dtBegin,
-                dtEnd: row.dtEnd
+                dtEnd: row.dtEnd,
+                AccountId: row.accountId
             })
         );
     }
     getRows(options: InfrastructurePaginator) {
         this.loading = true;
-        this.service
-            .getAll(this.userService.CurrentCollectGroup.GUID, options.currentRowsPerPage, options.currentPage)
-            .pipe(delay(500))
+        this.service.getAllActiveAccounts(this.userService.CurrentCollectGroup.GUID)
             .pipe(catchError((error: HttpErrorResponse) => this.handleGenericError(error)))
             .subscribe(response => {
-                this.currentCollectGroupAllocations = response.Results;
-                this.currentTotalNumberOfPages = response.TotalNumberOfPages;
-                this.currentTotalCountOfRows = response.TotalCount;
-                this.form = this.formBuilder.group({
-                    collects: this.formBuilder.array(
-                        this.currentCollectGroupAllocations
-                            ? this.currentCollectGroupAllocations.map(x => this.buildSingleForm(x, true))
-                            : []
-                    )
-                });
-            }).add(() => this.loading = false);
+                this.bankAccounts = response
+            }).add(() => {
+                this.service
+                    .getAll(this.userService.CurrentCollectGroup.GUID, options.currentRowsPerPage, options.currentPage)
+                    .pipe(delay(500))
+                    .pipe(catchError((error: HttpErrorResponse) => this.handleGenericError(error)))
+                    .subscribe(response => {
+                        this.currentCollectGroupAllocations = response.Results;
+                        this.currentTotalNumberOfPages = response.TotalNumberOfPages;
+                        this.currentTotalCountOfRows = response.TotalCount;
+                        this.form = this.formBuilder.group({
+                            collects: this.formBuilder.array(
+                                this.currentCollectGroupAllocations
+                                    ? this.currentCollectGroupAllocations.map(x => this.buildSingleForm(x, true))
+                                    : []
+                            )
+                        });
+                    }).add(() => this.loading = false);
+            });
     }
     upload(row: FormGroup) {
         if (row.invalid) {
