@@ -27,7 +27,7 @@ pipelines:
                       - docker push givt/givtdashboarddebug:latest
                   services:
                       - docker
-         master:
+        master:
             - step:
                 caches:
                     - node
