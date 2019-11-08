@@ -18,7 +18,7 @@ export class AppComponent {
     if(languages.indexOf(browserLanguage) !== -1){
       translate.use(browserLanguage);
     } else {
-      translate.use("nl");
+      translate.use("en");
     }
   }
 }
