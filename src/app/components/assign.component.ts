@@ -58,6 +58,7 @@ export class AssignComponent implements OnInit {
 
     @ViewChild('calendar') calendar: ElementRef;
     public constructor(
+        private translate: TranslateService,
         private allocationService: CollectSchedulerService,
         private loggingService: LoggingService,
         public ts: TranslateService,
@@ -141,7 +142,7 @@ export class AssignComponent implements OnInit {
         this.options['slotDuration'] = '00:30:00';
         this.options['timezone'] = 'local';
         this.options['defaultView'] = 'agendaWeek';
-        this.options['locale'] = navigator.language.includes('nl') ? 'nl-NL' : 'en-GB';
+        this.options['locale'] = this.translate.currentLang;
         this.options['eventDurationEditable'] = false;
         this.options['eventStartEditable'] = false;
         this.options['fixedWeekCount'] = false;

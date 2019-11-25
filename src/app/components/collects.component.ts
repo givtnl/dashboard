@@ -165,7 +165,7 @@ export class CollectsComponent implements OnInit {
                 this.locale = this.terms.en;
                 break;
             default:
-                this.locale = this.terms.nl;
+                this.locale = this.terms.en;
                 break;
         }
         this.apiService = apiService;
