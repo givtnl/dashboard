@@ -43,8 +43,8 @@ pipelines:
                 name: Login and build the docker image
                 script: # Modify the commands below to build your repository.
                     - docker login --username $DOCKER_USERNAME --password $DOCKER_PASSWORD
-                    - docker build -t givt/givtdashboard:master .
-                    - docker push givt/givtdashboard:master
+                    - docker build -t givt/givtdashboard:latest .
+                    - docker push givt/givtdashboard:latest
                 services:
                     - docker
 
