@@ -6,7 +6,6 @@ import { Observable } from 'rxjs';
 import { AllocationDetailModel } from 'app/models/collect-scheduler/allocation-detail.model';
 import { UpdateAllocationCommand } from 'app/models/collect-scheduler/update-allocation.command';
 import { AllocationListModel } from 'app/models/collect-scheduler/allocation-list.model';
-import { RequestOptions } from '@angular/http';
 import { BankAccountModel } from 'app/models/collect-scheduler/bank-account.model';
 
 @Injectable()

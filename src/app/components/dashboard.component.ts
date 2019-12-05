@@ -64,12 +64,12 @@ export class DashboardComponent implements OnInit, OnDestroy{
     }
 
     ngOnInit() : void{
+        this.fetchAverageGivers();
         this.continuousData = setInterval(() => {
             let f1 = this.fetchThisMonthGivts();
             let f2 = this.fetchThisMonthGivers();
             let f3 = this.fetchLastDayGivts();
-            let f4 = this.fetchAverageGivers();
-            Promise.all([f1, f2, f3, f4]).then(() => {
+            Promise.all([f1, f2, f3]).then(() => {
                 if (this.ShowLoadingAnimation)
                     this.ShowLoadingAnimation = false;
             });

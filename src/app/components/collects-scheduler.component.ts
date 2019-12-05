@@ -12,6 +12,8 @@ import { LoggingService } from 'app/services/logging.service';
 import { compareRows } from 'app/models/collect-scheduler/row-comparer.function';
 import { GreaterThanDateValidator, DateTimeMinutesAllowedValidator } from 'app/validators/allocation.validators';
 import { BankAccountModel } from 'app/models/collect-scheduler/bank-account.model';
+import { UpdateAllocationCommand } from 'app/models/collect-scheduler/update-allocation.command';
+import { CreateAllocationCommand } from 'app/models/collect-scheduler/create-allocation.command';
 
 @Component({
     selector: 'app-csveditor',
@@ -146,6 +148,9 @@ export class CollectsShedulerComponent implements OnInit {
             return;
         }
         if (row.value.id && row.value.id > 0) {
+            let command = row.value as UpdateAllocationCommand;
+            command.dtBegin = new Date(command.dtBegin)
+            command.dtEnd = new Date(command.dtEnd)
             // update existing allocation
             this.service
                 .updateAllocation(this.userService.CurrentCollectGroup.GUID, row.value.id, row.value)
@@ -161,6 +166,9 @@ export class CollectsShedulerComponent implements OnInit {
                 );
         } else {
             // create a new allocation
+            let command = row.value as CreateAllocationCommand;
+            command.dtBegin = new Date(command.dtBegin)
+            command.dtEnd = new Date(command.dtEnd)
             this.service
                 .createAllocation(this.userService.CurrentCollectGroup.GUID, row.value)
                 .pipe(
