@@ -232,6 +232,7 @@ export class AssignComponent implements OnInit {
                     return tx.CollectId === String(i + 1);
                 });
                 bcr.allocationName = bcr.transactions[0].AllocationName;
+                bcr.accountId = bcr.transactions[0].AccountId;
                 bcr._allocationName = bcr.allocationName;
                 bcr.allocated = bcr.allocationName !== null;
                 bcr.collectId = String(i + 1);
@@ -487,7 +488,8 @@ export class AssignComponent implements OnInit {
                         Name: collect.allocationName,
                         dtBegin: this.selectedCard.dtBegin.toISOString(),
                         dtEnd: this.selectedCard.dtEnd.toISOString(),
-                        CollectId: collect.collectId.trim()
+                        CollectId: collect.collectId.trim(),
+                        AccountId: collect.accountId
                     });
                 }
             });
@@ -536,7 +538,7 @@ export class AssignComponent implements OnInit {
         this.errorShown = setVisible;
         this.errorMessage = msg;
     }
-    saveAllocation(title: string, collectId: string, startTime: Date = null, endTime: Date = null) {
+    saveAllocation(title: string, collectId: string, startTime: Date = null, endTime: Date = null, accountId: number =null) {
         return new Promise((resolve, reject) => {
             if (title === '') {
                 resolve();
@@ -551,6 +553,7 @@ export class AssignComponent implements OnInit {
             alloc['dtEnd'] =
                 endTime == null ? this.datePipe.toISODateUTC(new Date(this.endTime)) : this.datePipe.toISODateUTC(new Date(endTime));
             alloc['CollectId'] = collectId.trim();
+            alloc['AccountId'] =  accountId;
             allocs.push(alloc);
             this.apiService
                 .postData('v2/allocations/allocation', allocs)
@@ -780,7 +783,7 @@ export class AssignComponent implements OnInit {
                 alloc.uploaded = false;
                 alloc.uploading = true;
                 if (!alloc.error) {
-                    this.saveAllocation(alloc.name.trim(), alloc.collectId.trim(), alloc.dtBegin, alloc.dtEnd)
+                    this.saveAllocation(alloc.name.trim(), alloc.collectId.trim(), alloc.dtBegin, alloc.dtEnd, alloc.accountId)
                         .then(() => {
                             alloc.uploaded = true;
                             alloc.uploading = false;
@@ -954,6 +957,7 @@ export class Bucket {
 
 export class BucketTransaction {
     AllocationId: number;
+    AccountId?: number;
     AllocationName: string = null;
     Sum: number;
     Count: number;
@@ -980,6 +984,7 @@ export class BucketCardRow {
     showActions: boolean;
     showDetails: boolean;
     isTyping: boolean;
+    accountId: number;
 
     get nameIsChanged(): boolean {
         return this._allocationName !== this.allocationName;
