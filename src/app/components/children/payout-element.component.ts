@@ -261,16 +261,14 @@ export class PayoutComponent implements OnInit {
     getPosition(string: string, subString: string, index: number) {
         return string.split(subString, index).join(subString).length;
     }
-    exportCSV() {
+    exportCSV(payoutId: number) {
         this.loader['show'] = true;
         let dtStart = new Date(this.dtExecuted);
         let dtEnd = new Date(this.dtExecuted);
         dtStart.setDate(dtStart.getDate() - 1);
         dtEnd.setDate(dtEnd.getDate() + 1);
-        let start = this.datePipe.toISODateUTC(dtStart);
-        let end = this.datePipe.toISODateUTC(dtEnd);
-
-        let apiUrl = 'Payments/CSV?dtBegin=' + start + '&dtEnd=' + end + '&offSet=' + new Date().getTimezoneOffset() * -1;
+        
+        let apiUrl = `v2/organisations/${this.userService.CurrentCollectGroup.OrgId}/collectGroups/${this.userService.CurrentCollectGroup.GUID}/payouts/${payoutId}/export` + '?dateTimeOffset=' + new Date().getTimezoneOffset() * -1;     
         this.apiClient.getData(apiUrl).then(resp => {
             this.loader['show'] = false;
             var csvContent = '';
