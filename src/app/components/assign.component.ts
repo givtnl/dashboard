@@ -228,6 +228,10 @@ export class AssignComponent implements OnInit {
                 bcr.allocationId = event.transactions.filter(tx => {
                     return tx.CollectId === String(i + 1);
                 })[0].AllocationId;
+                bcr.accountId = event.transactions.filter(tx => {
+                    return tx.CollectId === String(i + 1);
+                })[0].AccountId;
+
                 bcr.transactions = event.transactions.filter(tx => {
                     return tx.CollectId === String(i + 1);
                 });
@@ -487,7 +491,8 @@ export class AssignComponent implements OnInit {
                         Name: collect.allocationName,
                         dtBegin: this.selectedCard.dtBegin.toISOString(),
                         dtEnd: this.selectedCard.dtEnd.toISOString(),
-                        CollectId: collect.collectId.trim()
+                        CollectId: collect.collectId.trim(),
+                        AccountId: collect.accountId
                     });
                 }
             });
@@ -962,6 +967,7 @@ export class BucketTransaction {
     Fixed: boolean;
     GiftAidCount: number;
     GiftAidSum: number;
+    AccountId: number;
 }
 export class BucketCard {
     dtBegin: Date;
@@ -980,6 +986,7 @@ export class BucketCardRow {
     showActions: boolean;
     showDetails: boolean;
     isTyping: boolean;
+    accountId: number;
 
     get nameIsChanged(): boolean {
         return this._allocationName !== this.allocationName;
