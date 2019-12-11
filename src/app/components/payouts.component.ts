@@ -134,7 +134,9 @@ export class PayoutsComponent implements OnInit {
         this.dataService.writeData('payoutDateBegin', Math.round(this.dateBegin.getTime() / 1000));
         this.dataService.writeData('payoutDateEnd', Math.round(this.dateEnd.getTime() / 1000));
 
-        let apiUrl = 'Payments/CSV?dtBegin=' + start + '&dtEnd=' + end + '&offSet=' + new Date().getTimezoneOffset() * -1;
+        let apiUrl = 'v2/organisations/' + this.userService.CurrentCollectGroup.OrgId +
+            '/collectgroups/' + this.userService.CurrentCollectGroup.GUID +
+            '/payments/export?startDate=' + start + '&endDate=' + end + '&dateTimeOffset=' + new Date().getTimezoneOffset() * -1;
         this.apiService.getData(apiUrl).then(resp => {
             this.loader['show'] = false;
             var csvContent = '';

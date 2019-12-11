@@ -2,6 +2,8 @@
  * Created by bjorn_ss08m1t on 3/6/2017.
  */
 export class Payout{
+    Id: number;
+    OrgId: string;
     dtExecuted: Date;
     BeginDate: Date;
     EndDate: Date;
