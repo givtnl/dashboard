@@ -271,7 +271,9 @@ export class PayoutComponent implements OnInit {
         let start = this.datePipe.toISODateUTC(dtStart);
         let end = this.datePipe.toISODateUTC(dtEnd);
 
-        let apiUrl = 'v2/collectgroups/' + this.userService.CurrentCollectGroup.GUID + '/payments/' + this.childData.Id + '/export?dateTimeOffset=' + new Date().getTimezoneOffset() * -1;
+        let apiUrl = 'v2/organisations/' + this.userService.CurrentCollectGroup.OrgId +
+            '/collectgroups/' + this.userService.CurrentCollectGroup.GUID +
+            '/payments/' + this.childData.Id + '/export?dateTimeOffset=' + new Date().getTimezoneOffset() * -1;
         this.apiClient.getData(apiUrl).then(resp => {
             this.loader['show'] = false;
             var csvContent = '';
