@@ -1,6 +1,7 @@
 <section class="show-collect center-me" >
   <time class="payouts-time-container">
     <span class="date">{{childData.dtExecuted}}</span>
+    <span *ngIf="showPayProvExecutionDate" class="date">{{childData.PaymentProviderExcutionDate}}</span>
     <span *ngIf="showCosts"></span>
   </time>
   <div class="collection-buttons">

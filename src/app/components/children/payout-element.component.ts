@@ -28,6 +28,10 @@ export class PayoutComponent implements OnInit {
     dtBegin: Date;
     dtEnd: Date;
     dtExecuted: Date;
+
+    PaymentProviderExcutionDate: Date | null;
+    showPayProvExecutionDate: Boolean = false;
+
     isSafari: boolean;
     @Input() childData: any;
     @Input() loader: object;
@@ -67,6 +71,9 @@ export class PayoutComponent implements OnInit {
         this.dtBegin = new Date(this.childData.BeginDate);
         this.dtEnd = new Date(this.childData.EndDate);
         this.dtExecuted = new Date(this.childData.dtExecuted);
+        this.PaymentProviderExcutionDate = new Date(this.childData.PaymentProviderExcutionDate);
+        this.showPayProvExecutionDate = this.PaymentProviderExcutionDate != null && this.paymentType == PaymentType.BACS;
+
 
         let x = this.childData;
         x.BeginDate = this.datePipe.transform(new Date(this.childData.BeginDate), 'd MMMM y');
