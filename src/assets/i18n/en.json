@@ -235,5 +235,7 @@
     "CollectRosterHeaderCollectId": "Collection",
     "CollectRosterOf": "of",
     "CollectRosterError": "There might be already an allocation in the same time period or the beginning or end time of an allocation has an error. The row which is marked in red, has an error.",
-    "CollectRosterBankAccount": "Bank account"
+    "CollectRosterBankAccount": "Bank account",
+    "Payout_PaidOutDate": "Date paid out",
+    "Payout_ExecutionDate": "Date of execution"
 }
