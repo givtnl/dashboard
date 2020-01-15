@@ -245,11 +245,14 @@ export class PayoutComponent implements OnInit {
                 }
 
                 let costDetails = [];
-                this.translate.get('Stornos').subscribe((res: string) => {
+                this.translate.get('Stornos').subscribe((resStorno: string) => {
                     for (let i = 0; i < allocsCount; i++) {
                         if (resp.Details[i].StornoAmount == 0) continue;
                         let copy = JSON.parse(JSON.stringify(resp.Details[i])); //copy object
-                        copy.Name += ': ' + res;
+                        if (copy.Name.includes("_ERRNAC")) {
+                            copy.Name = copy.Name.replace("_ERRNAC", res);
+                        }
+                        copy.Name += ': ' + resStorno;
                         copy.Amount = '- ' + this.displayValue(resp.Details[i].StornoAmount);
                         copy.Status = 0;
                         costDetails.push(copy);
