@@ -1,7 +1,7 @@
 <section class="show-collect center-me" >
   <time class="payouts-time-container">
     <span *ngIf="!childData.PaymentProviderExecutionDate" class="date">{{childData.dtExecuted}}</span>
-    <span *ngIf="childData.PaymentProviderExecutionDate" class="date">{{'Payout_PaidOutDate' | translate}} {{childData.dtExecuted}} </span>
+    <span *ngIf="childData.PaymentProviderExecutionDate" class="date">{{'Payout_PaidOutDate' | translate}} {{childData.dtExecuted | date: 'd MMMM y'}} </span>
     <span *ngIf="childData.PaymentProviderExecutionDate" class="date">{{'Payout_ExecutionDate' | translate}} {{childData.PaymentProviderExecutionDate | date:'d MMMM y'}}</span>
     <span *ngIf="showCosts"></span>
   </time>
