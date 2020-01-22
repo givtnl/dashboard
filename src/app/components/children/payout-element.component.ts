@@ -13,7 +13,7 @@ import { PaymentType } from '../../models/paymentType';
 })
 export class PayoutComponent implements OnInit {
     ngOnInit(): void {
-        this.doSomeFancyStuff(this.paymentType);
+        this.calculateCosts(this.paymentType);
     }
 
     displayValue(x) {
@@ -64,7 +64,7 @@ export class PayoutComponent implements OnInit {
         }
     }
 
-    doSomeFancyStuff(paymentType: PaymentType) {
+    calculateCosts(paymentType: PaymentType) {
         this.dtBegin = new Date(this.childData.BeginDate);
         this.dtEnd = new Date(this.childData.EndDate);
         this.dtExecuted = new Date(this.childData.dtExecuted);
