@@ -5,6 +5,7 @@ export class Payout{
     Id: number;
     OrgId: string;
     dtExecuted: Date;
+    PaymentProviderExecutionDate: Date | null;
     BeginDate: Date;
     EndDate: Date;
     TransactionCount: number;

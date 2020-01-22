@@ -76,7 +76,7 @@
     "BTW_EXCL": "Total excl. VAT",
     "BTW_PERCENT": "VAT (21%)",
     "BTW_INCL": "Total incl. VAT",
-    "Stornos": "Refusal costs",
+    "Stornos": "Reversals",
     "TotalWithholdings": "Total deductions",
     "Error_LockedOut": "There have been too many attempts at logging in. Due to security reasons your account has been temporarily blocked. Please try again later.",
     "All": "All",
@@ -235,5 +235,8 @@
     "CollectRosterHeaderCollectId": "Collection",
     "CollectRosterOf": "of",
     "CollectRosterError": "There might be already an allocation in the same time period or the beginning or end time of an allocation has an error. The row which is marked in red, has an error.",
-    "CollectRosterBankAccount": "Bank account"
+    "CollectRosterBankAccount": "Bank account",
+    "Payout_PaidOutDate": "Date paid out",
+    "Payout_ExecutionDate": "Date of execution",
+    "UserNotFoundException": "This Givt account no longer exists."
 }

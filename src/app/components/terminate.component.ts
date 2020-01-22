@@ -34,8 +34,12 @@ export class TerminateComponent implements OnInit {
         this.apiClientService.delete("v2/users/" + this.params.guid + "?token=" + encodeURIComponent(this.params.token))
         .then( resp => {
             this.terminateState = TerminateState.Terminated;
-        }).catch( resp => {
-            this.translateService.get("WoopsContactSupport").subscribe((res) => alert(res))
+        }).catch(resp => {
+            if(resp.status == 404) {
+                this.translateService.get("UserNotFoundException").subscribe((res) => alert(res))
+            } else {
+                this.translateService.get("WoopsContactSupport").subscribe((res) => alert(res))
+            }
         });
     }
 

@@ -13,7 +13,7 @@ import { PaymentType } from '../../models/paymentType';
 })
 export class PayoutComponent implements OnInit {
     ngOnInit(): void {
-        this.doSomeFancyStuff(this.paymentType);
+        this.calculateCosts(this.paymentType);
     }
 
     displayValue(x) {
@@ -28,6 +28,7 @@ export class PayoutComponent implements OnInit {
     dtBegin: Date;
     dtEnd: Date;
     dtExecuted: Date;
+
     isSafari: boolean;
     @Input() childData: any;
     @Input() loader: object;
@@ -63,12 +64,13 @@ export class PayoutComponent implements OnInit {
         }
     }
 
-    doSomeFancyStuff(paymentType: PaymentType) {
+    calculateCosts(paymentType: PaymentType) {
         this.dtBegin = new Date(this.childData.BeginDate);
         this.dtEnd = new Date(this.childData.EndDate);
         this.dtExecuted = new Date(this.childData.dtExecuted);
-
         let x = this.childData;
+
+
         x.BeginDate = this.datePipe.transform(new Date(this.childData.BeginDate), 'd MMMM y');
         x.EndDate = this.datePipe.transform(new Date(this.childData.EndDate), 'd MMMM y');
         x.dtExecuted = this.datePipe.transform(new Date(this.childData.dtExecuted), 'd MMMM y');
@@ -230,7 +232,7 @@ export class PayoutComponent implements OnInit {
                     let detail = resp.Details[i];
                     detail.Date = this.datePipe.transform(new Date(detail.Date), 'dd-MM-yyyy');
                     detail.Status = 1;
-                    if (detail.Amount !== 0 && detail.Amount > detail.StornoAmount) {
+                    if (detail.Amount !== 0) {
                         detail.Amount = this.displayValue(detail.Amount);
                         if (detail.Name.includes('_ERRNAC')) {
                             if (detail.Name.includes('1')) detail.Name = res + ' 1';
@@ -243,11 +245,15 @@ export class PayoutComponent implements OnInit {
                 }
 
                 let costDetails = [];
-                this.translate.get('Stornos').subscribe((res: string) => {
+                this.translate.get('Stornos').subscribe((resStorno: string) => {
                     for (let i = 0; i < allocsCount; i++) {
                         if (resp.Details[i].StornoAmount == 0) continue;
                         let copy = JSON.parse(JSON.stringify(resp.Details[i])); //copy object
-                        copy.Name += ': ' + res;
+                        if (copy.Name.includes("_ERRNAC")) {
+                            copy.Name = copy.Name.replace("_ERRNAC", res);
+                        }
+
+                        copy.Name += ': ' + resStorno;
                         copy.Amount = '- ' + this.displayValue(resp.Details[i].StornoAmount);
                         copy.Status = 0;
                         costDetails.push(copy);
