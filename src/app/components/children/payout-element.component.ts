@@ -245,13 +245,20 @@ export class PayoutComponent implements OnInit {
                 }
 
                 let costDetails = [];
+                let stornoDetails = [];
                 this.translate.get('Stornos').subscribe((resStorno: string) => {
+
                     for (let i = 0; i < allocsCount; i++) {
                         if (resp.Details[i].StornoAmount == 0) continue;
                         let copy = JSON.parse(JSON.stringify(resp.Details[i])); //copy object
                         if (copy.Name.includes("_ERRNAC")) {
                             copy.Name = copy.Name.replace("_ERRNAC", res);
                         }
+
+                        // First: storno costs adding to payment
+                        copy.Status = 1;
+                        stornoDetails.push(copy);
+                        // Second: storno costs subtract from payment
                         copy.Name += ': ' + resStorno;
                         copy.Amount = '- ' + this.displayValue(resp.Details[i].StornoAmount);
                         copy.Status = 0;
@@ -259,7 +266,7 @@ export class PayoutComponent implements OnInit {
                     }
                 });
 
-                this.childData.details = paidDetails.concat(costDetails);
+                this.childData.details = stornoDetails.concat(paidDetails, costDetails);
             });
         });
     }

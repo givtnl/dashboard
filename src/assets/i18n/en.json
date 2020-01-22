@@ -76,7 +76,7 @@
     "BTW_EXCL": "Total excl. VAT",
     "BTW_PERCENT": "VAT (21%)",
     "BTW_INCL": "Total incl. VAT",
-    "Stornos": "Refusal costs",
+    "Stornos": "Reversals",
     "TotalWithholdings": "Total deductions",
     "Error_LockedOut": "There have been too many attempts at logging in. Due to security reasons your account has been temporarily blocked. Please try again later.",
     "All": "All",
