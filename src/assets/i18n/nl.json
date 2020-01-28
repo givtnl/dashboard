@@ -238,5 +238,5 @@
     "CollectRosterBankAccount": "Bankrekening",
     "Payout_PaidOutDate": "Opdracht gegeven",
     "Payout_ExecutionDate": "Datum van uitvoering",
-    "UserNotFoundException": "Dit Givt account bestaat niet langer."
+    "UserNotFoundException": "Dit Givt-account bestaat niet meer."
 }

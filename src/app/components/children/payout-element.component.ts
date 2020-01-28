@@ -227,12 +227,14 @@ export class PayoutComponent implements OnInit {
         this.translate.get('NonAllocatedCollect').subscribe((res: string) => {
             this.apiClient.getData('Payments/PayoutDetail?payoutID=' + this.childData.Id).then(resp => {
                 let allocsCount: number = resp.Details.length;
+                let stornoDetails = [];
                 let paidDetails = [];
+
                 for (let i = 0; i < allocsCount; i++) {
                     let detail = resp.Details[i];
                     detail.Date = this.datePipe.transform(new Date(detail.Date), 'dd-MM-yyyy');
                     detail.Status = 1;
-                    if (detail.Amount !== 0) {
+                    if (detail.Amount !== 0 && detail.StornoAmount == 0) {
                         detail.Amount = this.displayValue(detail.Amount);
                         if (detail.Name.includes('_ERRNAC')) {
                             if (detail.Name.includes('1')) detail.Name = res + ' 1';
@@ -242,7 +244,18 @@ export class PayoutComponent implements OnInit {
                         }
                         paidDetails.push(detail);
                     }
+                    if (detail.Amount !== 0 && detail.StornoAmount !== 0) { {
+                        detail.Amount = this.displayValue(detail.Amount);
+                        if (detail.Name.includes('_ERRNAC')) {
+                            if (detail.Name.includes('1')) detail.Name = res + ' 1';
+                            if (detail.Name.includes('2')) detail.Name = res + ' 2';
+                            if (detail.Name.includes('3')) detail.Name = res + ' 3';
+                            detail.Status = 2;
+                        }
+                        stornoDetails.push(detail)
+                    }
                 }
+            }
 
                 let costDetails = [];
                 this.translate.get('Stornos').subscribe((resStorno: string) => {
@@ -260,7 +273,7 @@ export class PayoutComponent implements OnInit {
                     }
                 });
 
-                this.childData.details = paidDetails.concat(costDetails);
+                this.childData.details = paidDetails.concat(stornoDetails, costDetails);
             });
         });
     }
