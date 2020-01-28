@@ -255,6 +255,7 @@ export class PayoutComponent implements OnInit {
                         stornoDetails.push(detail)
                     }
                 }
+            }
 
                 let costDetails = [];
                 this.translate.get('Stornos').subscribe((resStorno: string) => {
