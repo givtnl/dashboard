@@ -244,7 +244,7 @@ export class PayoutComponent implements OnInit {
                         }
                         paidDetails.push(detail);
                     }
-                    else {
+                    if (detail.Amount !== 0 && detail.StornoAmount !== 0) { {
                         detail.Amount = this.displayValue(detail.Amount);
                         if (detail.Name.includes('_ERRNAC')) {
                             if (detail.Name.includes('1')) detail.Name = res + ' 1';
