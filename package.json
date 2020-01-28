@@ -8,16 +8,10 @@
         "build": "npm run builddemo && ng b",
         "buildprod": "npm run builddemo && ng b -prod",
         "builddemo": "ng b -op dist-demo --bh /demo/",
-        "dockerbuild": "docker build -t givt/givtdashboarddebug:latest .",
-        "dockerbuildprod": "docker build -t givt/givtdashboard:latest .",
-        "dockerpush": "docker push givt/givtdashboarddebug:latest",
-        "dockerpushprod": "docker push givt/givtdashboard:latest",
         "test": "ng test",
         "lint": "ng lint",
         "e2e": "ng e2e",
-        "deploydev": "node deploy",
-        "buildandpushdockerdev": "npm run build && npm run dockerbuild && npm run dockerpush",
-        "buildandpushdockerprod": "npm run buildprod && npm run dockerbuildprod && npm run dockerpushprod"
+        "deploydev": "node deploy"
     },
     "private": true,
     "dependencies": {
