@@ -34,6 +34,8 @@ export class PayoutComponent implements OnInit {
     @Input() loader: object;
     name: string = '';
     paymentType: PaymentType = PaymentType.Undefined;
+    giftAid: boolean = false;
+
     showCosts: boolean = false;
     pledgedAmount: number;
     moreInfoToolTip: string;
@@ -45,6 +47,7 @@ export class PayoutComponent implements OnInit {
         private datePipe: ISODatePipe,
         private userService: UserService
     ) {
+        this.giftAid = this.userService.CurrentCollectGroup.TaxDeductionType == 'GiftAid';
         this.isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
         this.name = 'Testen';
         this.paymentType = this.userService.CurrentCollectGroup.PaymentType;
@@ -159,7 +162,7 @@ export class PayoutComponent implements OnInit {
             RTransactionT1Cost = x.RTransactionT1Count > 0 ? x.RTransactionT1Cost / x.RTransactionT1Count : 2.0;
             transactionCost = x.TransactionCount > 0 ? x.TransactionCost / x.TransactionCount : 0.14;
 
-            if (this.userService.CurrentCollectGroup.TaxDeductionType == 'GiftAid') {
+            if (this.giftAid) {
                 // extra amount through giftaid
                 x.extraGiftAidAmount = x.GiftAidAmountPayedByGovernment != undefined ? x.GiftAidAmountPayedByGovernment : 0;
                 // gift aided more info
