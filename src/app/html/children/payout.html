@@ -75,9 +75,9 @@
       <tr>
         <th>&nbsp;</th>
         <th>&nbsp;</th>
-        <th><b>Total collected</b></th>
-        <th><b>Gift Aid</b></th>
-        <th><b>Total</b></th>
+        <th class="py-20 pb-10 text-right"><b>Total collected</b></th>
+        <th class="py-20 pb-10 text-right"><b>Gift Aid</b></th>
+        <th class="py-20 pb-10 text-right"><b>Total</b></th>
       </tr>
       <ng-container *ngFor="let item of childData.details">
         <tr  style="font-family: Avenir_Medium; font-size: 20px;"  [class.red]="item.Status == 0" [class.yellow]="item.Status == 2" *ngIf="item.Amount != 0">
@@ -87,24 +87,24 @@
           <td class="allocation-title">
             {{item.Name}}
           </td>
-          <td style="text-align: right;" class="table-border-right">{{item.Amount}}</td>
-          <td class="table-border-right">GiftAid</td>
-          <td>Total</td>
+          <td class="table-border-right py-20 text-right">{{item.Amount}}</td>
+          <td class="table-border-right py-20 text-right">GiftAid</td>
+          <td class="py-20 text-right">Total</td>
         </tr>
       </ng-container>
 
       <tr class="collect__table__footer" style="font-size: 20px;font-family: Avenir_Medium">
         <td *ngIf="paymentType == 1" colspan="2" style="text-align:left;" class="special-last-cell" >{{"TermCosts" | translate}} ({{"INCL_BTW" | translate}})</td>
         <td *ngIf="paymentType == 2" colspan="2" style="text-align:left;" class="special-last-cell" >{{"TermCosts" | translate}}</td>
-        <td style="text-align:right;" class="special-last-cell table-border-right">- {{childData.TotaalKosten}}</td>
-        <td class="special-last-cell table-border-right">&nbsp;</td>
-        <td class="special-last-cell">&nbsp;</td>
+        <td class="special-last-cell py-20 text-right">- {{childData.TotaalKosten}}</td>
+        <td class="special-last-cell py-20 text-right">&nbsp;</td>
+        <td class="special-last-cell py-20 text-right">&nbsp;</td>
       </tr>
       <tr  style="font-family: Avenir_Black; font-size: 22px;">
         <td colspan="2" style="text-align:left;">{{"Payout_TotalPayedOut" | translate}}</td>
-        <td style="text-align:right;white-space: nowrap;" class="table-border-right">{{childData.TotalPaidText}}</td>
-        <td class="table-border-right"> GiftAid</td>
-        <td>Total</td>
+        <td style="white-space: nowrap;" class="table-border-right py-20 text-right">{{childData.TotalPaidText}}</td>
+        <td class="table-border-right py-20 text-right"> GiftAid</td>
+        <td class="py-20 text-right">Total</td>
       </tr>
     </table>
 
