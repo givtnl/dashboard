@@ -513,6 +513,10 @@ h3{
     padding: 10px 0 10px 0;
 }
 
+.table-border-right{
+    border-right: #2E2957 2px solid;
+}
+
 .stat-calc tr td:nth-child(3){
     text-align: right !important;
 }
