@@ -238,5 +238,8 @@
     "CollectRosterBankAccount": "Bankrekening",
     "Payout_PaidOutDate": "Opdracht gegeven",
     "Payout_ExecutionDate": "Datum van uitvoering",
-    "UserNotFoundException": "Dit Givt-account bestaat niet meer."
+    "UserNotFoundException": "Dit Givt-account bestaat niet meer.",
+    "TotalCollected": "Totaal gecollecteerd",
+    "GifAidCollected": "Gift Aid gecollecteerd",
+    "Total": "Totaal"
 }

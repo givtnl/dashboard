@@ -238,5 +238,8 @@
     "CollectRosterBankAccount": "Bank account",
     "Payout_PaidOutDate": "Date paid out",
     "Payout_ExecutionDate": "Date payment initiated",
-    "UserNotFoundException": "This Givt account no longer exists."
+    "UserNotFoundException": "This Givt account no longer exists.",
+    "TotalCollected": "Total collected",
+    "GifAidCollected": "Gift Aid collected",
+    "Total": "Total"
 }
