@@ -240,6 +240,6 @@
     "Payout_ExecutionDate": "Datum van uitvoering",
     "UserNotFoundException": "Dit Givt-account bestaat niet meer.",
     "TotalCollected": "Totaal gecollecteerd",
-    "GifAidCollected": "Gift Aid gecollecteerd",
+    "GiftAidCollected": "Gift Aid verkregen",
     "Total": "Totaal"
 }

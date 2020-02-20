@@ -240,6 +240,6 @@
     "Payout_ExecutionDate": "Date payment initiated",
     "UserNotFoundException": "This Givt account no longer exists.",
     "TotalCollected": "Total collected",
-    "GifAidCollected": "Gift Aid collected",
+    "GiftAidCollected": "Gift Aid claimed",
     "Total": "Total"
 }
