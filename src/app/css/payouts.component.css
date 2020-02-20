@@ -729,7 +729,7 @@ h3 {
     padding: 20px;
     transition: all 0.5s linear;
     position: absolute;
-    z-index: 1000;
+    z-index: 1;
     margin-top: 20px;
     text-align: center;
 }
