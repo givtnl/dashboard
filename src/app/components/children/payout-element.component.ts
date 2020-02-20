@@ -166,6 +166,7 @@ export class PayoutComponent implements OnInit {
             if (this.giftAid) {
                 // extra amount through giftaid
                 x.extraGiftAidAmount = isNullOrUndefined(x.GiftAidAmountPayedByGovernment) ? 0 : x.GiftAidAmountPayedByGovernment;
+                x.extraGiftAidedByGovernment = this.displayValue(x.GiftAidAmountPayedByGovernment)
                 // gift aided more info
                 this.translate.get('GiftAidPayoutMoreInfo', { 0: x.GiftAidAmount }).subscribe((res: string) => {
                     x.moreInfoGiftAid = res;

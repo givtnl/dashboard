@@ -341,9 +341,9 @@
               </tr>
             </table>
             <table  *ngIf="userService.CurrentCollectGroup.TaxDeductionType == 'GiftAid'" class="table-stats gift-aid">
-              <tr class="light">
+              <tr class="light" style='padding-bottom: 10px; line-height: 400%;'>
                 <td style='text-align: left;'>{{"GiftAidPayout" | translate}}</td>
-                <td style='text-align: right;'>£{{childData.extraGiftAidAmount}}</td>
+                <td style='text-align: right;'>{{childData.extraGiftAidedByGovernment}}</td>
               </tr>
             </table>
           </div>

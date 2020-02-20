@@ -772,7 +772,7 @@ table.table-stats.gift-aid tr:first-of-type {
 .gift-aid-more-info div:first-of-type {
     display: flex;
     align-self: flex-end;
-    margin-bottom: 2px;
+    margin-bottom: 12px;
     font-size: 14px !important;
     margin-left: 10px;
 }
