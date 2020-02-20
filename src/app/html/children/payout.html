@@ -91,7 +91,7 @@
             {{item.Name}}
           </td>
           <td [class.table-border-right]="giftAid" class="py-20 text-right">{{item.Amount}}</td>
-          <td *ngIf="giftAid" class="table-border-right py-20 text-right">{{item.GiftAidClaimAmount}}</td>
+          <td *ngIf="giftAid" class="table-border-right py-20 text-right">{{item.GiftAidClaimAmountFromGovernment}}</td>
           <td *ngIf="giftAid" class="py-20 text-right">{{item.Total}}</td>
         </tr>
       </ng-container>

@@ -165,7 +165,7 @@ export class PayoutComponent implements OnInit {
 
             if (this.giftAid) {
                 // extra amount through giftaid
-                x.extraGiftAidAmount = x.GiftAidAmountPayedByGovernment != undefined ? x.GiftAidAmountPayedByGovernment : 0;
+                x.extraGiftAidAmount = isNullOrUndefined(x.GiftAidAmountPayedByGovernment) ? 0 : x.GiftAidAmountPayedByGovernment;
                 // gift aided more info
                 this.translate.get('GiftAidPayoutMoreInfo', { 0: x.GiftAidAmount }).subscribe((res: string) => {
                     x.moreInfoGiftAid = res;
@@ -242,11 +242,11 @@ export class PayoutComponent implements OnInit {
                     detail.Status = 1;
                     // PAID details
                     if (detail.Amount !== 0 && detail.StornoAmount == 0) {
-                        if (isNullOrUndefined(detail.GiftAidClaimAmount))
-                            detail.GiftAidClaimAmount = 0.00;
-                        detail.Total = detail.GiftAidClaimAmount + detail.Amount;
+                        if (isNullOrUndefined(detail.GiftAidClaimAmountFromGovernment))
+                            detail.GiftAidClaimAmountFromGovernment  = 0.00;
+                        detail.Total = detail.GiftAidClaimAmountFromGovernment + detail.Amount;
                         detail.Amount = this.displayValue(detail.Amount);
-                        detail.GiftAidClaimAmount = this.displayValue(detail.GiftAidClaimAmount);
+                        detail.GiftAidClaimAmountFromGovernment = this.displayValue(detail.GiftAidClaimAmountFromGovernment);
                         detail.Total = this.displayValue(detail.Total);
 
                         if (detail.Name.includes('_ERRNAC')) {
@@ -260,11 +260,11 @@ export class PayoutComponent implements OnInit {
                     // STORNO details
                     if (detail.Amount !== 0 && detail.StornoAmount !== 0) {
 
-                        if (isNullOrUndefined(detail.GiftAidClaimAmount))
-                            detail.GiftAidClaimAmount = 0.00;
-                        detail.Total = detail.GiftAidClaimAmount + detail.Amount;
+                        if (isNullOrUndefined(detail.GiftAidClaimAmountFromGovernment))
+                            detail.GiftAidClaimAmountFromGovernment = 0.00;
+                        detail.Total = detail.GiftAidClaimAmountFromGovernment + detail.Amount;
                         detail.Amount = this.displayValue(detail.Amount);
-                        detail.GiftAidClaimAmount = this.displayValue(detail.GiftAidClaimAmount);
+                        detail.GiftAidClaimAmountFromGovernment = this.displayValue(detail.GiftAidClaimAmountFromGovernment);
                         detail.Total = this.displayValue(detail.Total);
 
                         if (detail.Name.includes('_ERRNAC')) {
@@ -288,10 +288,10 @@ export class PayoutComponent implements OnInit {
 
                         copy.Name += ': ' + resStorno;
                         copy.Amount = '- ' + this.displayValue(resp.Details[i].StornoAmount);
-                        if (isNullOrUndefined(copy.GiftAidClaimReturnedAmount))
-                            copy.GiftAidClaimReturnedAmount = 0.00;
-                        copy.Total = copy.GiftAidClaimReturnedAmount + resp.Details[i].StornoAmount;
-                        copy.GiftAidClaimAmount = '- ' + this.displayValue(copy.GiftAidClaimReturnedAmount);
+                        if (isNullOrUndefined(copy.GiftAidClaimReturnedAmountFromGovernment))
+                            copy.GiftAidClaimReturnedAmountFromGovernment = 0.00;
+                        copy.Total = copy.GiftAidClaimReturnedAmountFromGovernment + resp.Details[i].StornoAmount;
+                        copy.GiftAidClaimAmountFromGovernment = '- ' + this.displayValue(copy.GiftAidClaimReturnedAmountFromGovernment);
                         copy.Total = '- ' + this.displayValue(copy.Total);
 
                         copy.Status = 0;
