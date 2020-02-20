@@ -5,6 +5,7 @@ import { ViewEncapsulation } from '@angular/core';
 import { UserService } from '../../services/user.service';
 import { ISODatePipe } from '../../pipes/iso.datepipe';
 import { PaymentType } from '../../models/paymentType';
+import { isNullOrUndefined } from 'util';
 
 @Component({
     selector: 'payout',
@@ -126,7 +127,7 @@ export class PayoutComponent implements OnInit {
         x.hiddenOverview = true;
         x.hiddenAllocations = true;
         x.TotalPaidText = this.displayValue(x.TotalPaid);
-
+        
         let transactionCost = 0.0;
         let RTransactionT1Cost = 0.0;
 
@@ -172,6 +173,8 @@ export class PayoutComponent implements OnInit {
                 if (x.extraGiftAidAmount == 0) {
                     x.moreInfoGiftAid = x.moreInfoGiftAid.substring(this.getPosition(x.moreInfoGiftAid, '.', 2) + 2);
                 }
+                x.TotalText = this.displayValue(x.extraGiftAidAmount + x.TotalPaid);
+                x.GiftAidAmountText = this.displayValue(x.extraGiftAidAmount);
             }
         }
 
@@ -237,8 +240,15 @@ export class PayoutComponent implements OnInit {
                     let detail = resp.Details[i];
                     detail.Date = this.datePipe.transform(new Date(detail.Date), 'dd-MM-yyyy');
                     detail.Status = 1;
+                    // PAID details
                     if (detail.Amount !== 0 && detail.StornoAmount == 0) {
+                        if (isNullOrUndefined(detail.GiftAidClaimAmount))
+                            detail.GiftAidClaimAmount = 0.00;
+                        detail.Total = detail.GiftAidClaimAmount + detail.Amount;
                         detail.Amount = this.displayValue(detail.Amount);
+                        detail.GiftAidClaimAmount = this.displayValue(detail.GiftAidClaimAmount);
+                        detail.Total = this.displayValue(detail.Total);
+
                         if (detail.Name.includes('_ERRNAC')) {
                             if (detail.Name.includes('1')) detail.Name = res + ' 1';
                             if (detail.Name.includes('2')) detail.Name = res + ' 2';
@@ -247,8 +257,16 @@ export class PayoutComponent implements OnInit {
                         }
                         paidDetails.push(detail);
                     }
-                    if (detail.Amount !== 0 && detail.StornoAmount !== 0) { {
+                    // STORNO details
+                    if (detail.Amount !== 0 && detail.StornoAmount !== 0) {
+
+                        if (isNullOrUndefined(detail.GiftAidClaimAmount))
+                            detail.GiftAidClaimAmount = 0.00;
+                        detail.Total = detail.GiftAidClaimAmount + detail.Amount;
                         detail.Amount = this.displayValue(detail.Amount);
+                        detail.GiftAidClaimAmount = this.displayValue(detail.GiftAidClaimAmount);
+                        detail.Total = this.displayValue(detail.Total);
+
                         if (detail.Name.includes('_ERRNAC')) {
                             if (detail.Name.includes('1')) detail.Name = res + ' 1';
                             if (detail.Name.includes('2')) detail.Name = res + ' 2';
@@ -258,7 +276,6 @@ export class PayoutComponent implements OnInit {
                         stornoDetails.push(detail)
                     }
                 }
-            }
 
                 let costDetails = [];
                 this.translate.get('Stornos').subscribe((resStorno: string) => {
@@ -271,6 +288,12 @@ export class PayoutComponent implements OnInit {
 
                         copy.Name += ': ' + resStorno;
                         copy.Amount = '- ' + this.displayValue(resp.Details[i].StornoAmount);
+                        if (isNullOrUndefined(copy.GiftAidClaimReturnedAmount))
+                            copy.GiftAidClaimReturnedAmount = 0.00;
+                        copy.Total = copy.GiftAidClaimReturnedAmount + resp.Details[i].StornoAmount;
+                        copy.GiftAidClaimAmount = '- ' + this.displayValue(copy.GiftAidClaimReturnedAmount);
+                        copy.Total = '- ' + this.displayValue(copy.Total);
+
                         copy.Status = 0;
                         costDetails.push(copy);
                     }

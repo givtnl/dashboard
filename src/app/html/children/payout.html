@@ -74,7 +74,7 @@
       </svg>
       </div>
     </div>
-    <table class="collect__table alloc" style="margin-bottom: 0;    border-collapse: collapse;">
+    <table class="collect__table alloc" style="margin-bottom: 0; border-collapse: collapse;">
       <tr *ngIf="giftAid">
         <th>&nbsp;</th>
         <th>&nbsp;</th>
@@ -91,8 +91,8 @@
             {{item.Name}}
           </td>
           <td [class.table-border-right]="giftAid" class="py-20 text-right">{{item.Amount}}</td>
-          <td *ngIf="giftAid" class="table-border-right py-20 text-right">GiftAid</td>
-          <td *ngIf="giftAid" class="py-20 text-right">Total</td>
+          <td *ngIf="giftAid" class="table-border-right py-20 text-right">{{item.GiftAidClaimAmount}}</td>
+          <td *ngIf="giftAid" class="py-20 text-right">{{item.Total}}</td>
         </tr>
       </ng-container>
 
@@ -106,8 +106,8 @@
       <tr  style="font-family: Avenir_Black; font-size: 22px;">
         <td colspan="2" style="text-align:left;">{{"Payout_TotalPayedOut" | translate}}</td>
         <td style="white-space: nowrap;" [class.table-border-right]="giftAid" class="py-20 text-right">{{childData.TotalPaidText}}</td>
-        <td *ngIf="giftAid" class="table-border-right py-20 text-right"> GiftAid</td>
-        <td *ngIf="giftAid" class="py-20 text-right">Total</td>
+        <td *ngIf="giftAid" class="table-border-right py-20 text-right">{{childData.GiftAidAmountText}}</td>
+        <td *ngIf="giftAid" class="py-20 text-right">{{childData.TotalText}}</td>
       </tr>
     </table>
   </div>
