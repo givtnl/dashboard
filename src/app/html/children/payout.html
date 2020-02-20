@@ -6,7 +6,10 @@
     <span *ngIf="showCosts"></span>
   </time>
   <div class="collection-buttons">
-    <span class="total-payed">{{"Payout_TotalPayedOut" | translate}} <span id="big">{{childData.TotalPaidText}}</span></span>
+    <div>
+      <span class="total-payed">{{"Payout_TotalPayedOut" | translate}} <span id="big">{{childData.TotalPaidText}}</span></span>
+      <span>{{"Payout_GiftAidClaimed"}}<span class="gift-aid-amount">{{childData.GiftAidAmount}}</span></span>
+    </div>
     <button class="icon" [class.fill-green]="childData.hiddenAllocations == false" (click)="openAllocations()">
       <svg width="27px" height="20px" viewBox="0 0 27 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
         <!-- Generator: Sketch 44.1 (41455) - http://www.bohemiancoding.com/sketch -->
