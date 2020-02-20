@@ -1,14 +1,14 @@
 <section class="show-collect center-me" >
   <time class="payouts-time-container">
-    <span *ngIf="!childData.PaymentProviderExecutionDate" class="date">{{childData.dtExecuted}}</span>
-    <span *ngIf="childData.PaymentProviderExecutionDate" class="date">{{'Payout_PaidOutDate' | translate}} {{childData.dtExecuted | date: 'd MMMM y'}} </span>
+    <span *ngIf="!childData.PaymentProviderExecutionDate" class="date">{{childData.dtExecuted}}<span style="font-size: 26px; display: inline;">&nbsp;</span></span>
+    <span *ngIf="childData.PaymentProviderExecutionDate" class="date">{{'Payout_PaidOutDate' | translate}} {{childData.dtExecuted | date: 'd MMMM y'}} <span style="font-size: 26px; display: inline;">&nbsp;</span></span>
     <span *ngIf="childData.PaymentProviderExecutionDate" class="date">{{'Payout_ExecutionDate' | translate}} {{childData.PaymentProviderExecutionDate | date:'d MMMM y'}}</span>
     <span *ngIf="showCosts"></span>
   </time>
   <div class="collection-buttons">
     <div>
       <span class="total-payed">{{"Payout_TotalPayedOut" | translate}} <span id="big">{{childData.TotalPaidText}}</span></span>
-      <span *ngIf="giftAid" >{{"Payout_GiftAidClaimed"}}<span class="gift-aid-amount">{{childData.GiftAidAmount}}</span></span>
+      <span *ngIf="giftAid" >{{"GiftAidCollected"|translate}}:<span class="gift-aid-amount">{{childData.GiftAidAmountText}}</span></span>
     </div>
     <button class="icon" [class.fill-green]="childData.hiddenAllocations == false" (click)="openAllocations()">
       <svg width="27px" height="20px" viewBox="0 0 27 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
