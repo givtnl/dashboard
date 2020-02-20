@@ -75,9 +75,9 @@
       <tr *ngIf="giftAid">
         <th>&nbsp;</th>
         <th>&nbsp;</th>
-        <th class="py-20 pb-10 text-right"><b>Total collected</b></th>
-        <th class="py-20 pb-10 text-right"><b>Gift Aid</b></th>
-        <th class="py-20 pb-10 text-right"><b>Total</b></th>
+        <th class="py-20 pb-10 text-right"><b>{{'TotalCollected'|translate}}</b></th>
+        <th class="py-20 pb-10 text-right"><b>{{'GiftAidCollected'|translate}}</b></th>
+        <th class="py-20 pb-10 text-right"><b>{{'Total'|translate}}</b></th>
       </tr>
       <ng-container *ngFor="let item of childData.details">
         <tr  style="font-family: Avenir_Medium; font-size: 20px;"  [class.red]="item.Status == 0" [class.yellow]="item.Status == 2" *ngIf="item.Amount != 0">
@@ -107,12 +107,9 @@
         <td *ngIf="giftAid" class="py-20 text-right">Total</td>
       </tr>
     </table>
-
   </div>
   <hr class="collect-hr" *ngIf="!childData.hiddenAllocations && !childData.hiddenOverview" style="width: 960px;"/>
   <div class="withholding-overview center-me" *ngIf="!childData.hiddenOverview">
-
-
     <h2 class="black" style="font-size: 20px">{{"Payout_Overview" | translate}}</h2>
     <button class="close-button" (click)="closeOverview()">
       <svg width="19px" height="19px" viewBox="944 525 19 19" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
