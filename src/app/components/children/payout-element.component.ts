@@ -78,7 +78,8 @@ export class PayoutComponent implements OnInit {
         x.BeginDate = this.datePipe.transform(new Date(this.childData.BeginDate), 'd MMMM y');
         x.EndDate = this.datePipe.transform(new Date(this.childData.EndDate), 'd MMMM y');
         x.dtExecuted = this.datePipe.transform(new Date(this.childData.dtExecuted), 'd MMMM y');
-        x.PaymentProviderExecutionDate = this.datePipe.transform(new Date(this.childData.PaymentProviderExecutionDate), 'd MMMM y');
+        if (!isNullOrUndefined(x.PaymentProviderExecutionDate))
+            x.PaymentProviderExecutionDate = this.datePipe.transform(new Date(this.childData.PaymentProviderExecutionDate), 'd MMMM y');
 
         paymentType === PaymentType.SEPA ? (x.Mandaatkosten = x.MandateCost) : (x.Mandaatkosten = 0);
 
