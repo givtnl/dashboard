@@ -3,6 +3,7 @@ export class BankAccountModel {
     Iban: string;
     SortCode: string;
     AccountNumber: string;
+    AccountName: string;
     Primary: boolean;
     Active: boolean;
 }
