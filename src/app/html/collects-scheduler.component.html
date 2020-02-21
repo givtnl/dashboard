@@ -47,8 +47,16 @@
                                 </select>
                                 <select *ngIf="bankAccounts.length > 1" class="col-sm-2 col-md-2 custom-select custom-select-sm" formControlName="accountId">
                                     <option *ngFor="let account of bankAccounts" [value]="account.Id">
-                                        <span *ngIf="account.Iban">{{ account.Iban }}</span>
-                                        <span *ngIf="account.AccountNumber">{{ account.SortCode }}-{{ account.AccountNumber }}</span>
+                                        <ng-template *ngIf="account.AccountName; then showAccountName; else showNumber">
+                                        </ng-template>
+                                        <ng-template #showAccountName>
+                                            <span *ngIf="account.Iban">{{ account.AccountName }} (...{{account.Iban.substr(account.Iban.length - 4)}})</span>
+                                            <span *ngIf="account.AccountNumber">{{ account.AccountName }} (...{{account.AccountNumber.substr(account.AccountNumber.length - 4)}})</span>
+                                        </ng-template>
+                                        <ng-template #showNumber>
+                                            <span *ngIf="account.Iban">{{ account.Iban }}</span>
+                                            <span *ngIf="account.AccountNumber">{{ account.SortCode }}-{{ account.AccountNumber }}</span>
+                                        </ng-template>
                                     </option>
                                 </select>
                                 <div class="col-sm-1 col-md-1 row-control remove">
