@@ -5,6 +5,7 @@ import { ViewEncapsulation } from '@angular/core';
 import { UserService } from '../../services/user.service';
 import { ISODatePipe } from '../../pipes/iso.datepipe';
 import { PaymentType } from '../../models/paymentType';
+import { isNullOrUndefined } from 'util';
 
 @Component({
     selector: 'payout',
@@ -34,6 +35,8 @@ export class PayoutComponent implements OnInit {
     @Input() loader: object;
     name: string = '';
     paymentType: PaymentType = PaymentType.Undefined;
+    giftAid: boolean = false;
+
     showCosts: boolean = false;
     pledgedAmount: number;
     moreInfoToolTip: string;
@@ -45,6 +48,7 @@ export class PayoutComponent implements OnInit {
         private datePipe: ISODatePipe,
         private userService: UserService
     ) {
+        this.giftAid = this.userService.CurrentCollectGroup.TaxDeductionType == 'GiftAid';
         this.isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
         this.name = 'Testen';
         this.paymentType = this.userService.CurrentCollectGroup.PaymentType;
@@ -74,6 +78,8 @@ export class PayoutComponent implements OnInit {
         x.BeginDate = this.datePipe.transform(new Date(this.childData.BeginDate), 'd MMMM y');
         x.EndDate = this.datePipe.transform(new Date(this.childData.EndDate), 'd MMMM y');
         x.dtExecuted = this.datePipe.transform(new Date(this.childData.dtExecuted), 'd MMMM y');
+        if (!isNullOrUndefined(x.PaymentProviderExecutionDate))
+            x.PaymentProviderExecutionDate = this.datePipe.transform(new Date(this.childData.PaymentProviderExecutionDate), 'd MMMM y');
 
         paymentType === PaymentType.SEPA ? (x.Mandaatkosten = x.MandateCost) : (x.Mandaatkosten = 0);
 
@@ -159,9 +165,10 @@ export class PayoutComponent implements OnInit {
             RTransactionT1Cost = x.RTransactionT1Count > 0 ? x.RTransactionT1Cost / x.RTransactionT1Count : 2.0;
             transactionCost = x.TransactionCount > 0 ? x.TransactionCost / x.TransactionCount : 0.14;
 
-            if (this.userService.CurrentCollectGroup.TaxDeductionType == 'GiftAid') {
+            if (this.giftAid) {
                 // extra amount through giftaid
-                x.extraGiftAidAmount = x.GiftAidAmountPayedByGovernment != undefined ? x.GiftAidAmountPayedByGovernment : 0;
+                x.extraGiftAidAmount = isNullOrUndefined(x.GiftAidAmountPayedByGovernment) ? 0 : x.GiftAidAmountPayedByGovernment;
+                x.extraGiftAidedByGovernment = this.displayValue(x.GiftAidAmountPayedByGovernment)
                 // gift aided more info
                 this.translate.get('GiftAidPayoutMoreInfo', { 0: x.GiftAidAmount }).subscribe((res: string) => {
                     x.moreInfoGiftAid = res;
@@ -169,6 +176,8 @@ export class PayoutComponent implements OnInit {
                 if (x.extraGiftAidAmount == 0) {
                     x.moreInfoGiftAid = x.moreInfoGiftAid.substring(this.getPosition(x.moreInfoGiftAid, '.', 2) + 2);
                 }
+                x.TotalText = this.displayValue(x.extraGiftAidAmount + x.TotalPaid);
+                x.GiftAidAmountText = this.displayValue(x.extraGiftAidAmount);
             }
         }
 
@@ -234,8 +243,15 @@ export class PayoutComponent implements OnInit {
                     let detail = resp.Details[i];
                     detail.Date = this.datePipe.transform(new Date(detail.Date), 'dd-MM-yyyy');
                     detail.Status = 1;
+                    // PAID details
                     if (detail.Amount !== 0 && detail.StornoAmount == 0) {
+                        if (isNullOrUndefined(detail.GiftAidClaimAmountFromGovernment))
+                            detail.GiftAidClaimAmountFromGovernment  = 0.00;
+                        detail.Total = detail.GiftAidClaimAmountFromGovernment + detail.Amount;
                         detail.Amount = this.displayValue(detail.Amount);
+                        detail.GiftAidClaimAmountFromGovernment = this.displayValue(detail.GiftAidClaimAmountFromGovernment);
+                        detail.Total = this.displayValue(detail.Total);
+
                         if (detail.Name.includes('_ERRNAC')) {
                             if (detail.Name.includes('1')) detail.Name = res + ' 1';
                             if (detail.Name.includes('2')) detail.Name = res + ' 2';
@@ -244,8 +260,16 @@ export class PayoutComponent implements OnInit {
                         }
                         paidDetails.push(detail);
                     }
-                    if (detail.Amount !== 0 && detail.StornoAmount !== 0) { {
+                    // STORNO details
+                    if (detail.Amount !== 0 && detail.StornoAmount !== 0) {
+
+                        if (isNullOrUndefined(detail.GiftAidClaimAmountFromGovernment))
+                            detail.GiftAidClaimAmountFromGovernment = 0.00;
+                        detail.Total = detail.GiftAidClaimAmountFromGovernment + detail.Amount;
                         detail.Amount = this.displayValue(detail.Amount);
+                        detail.GiftAidClaimAmountFromGovernment = this.displayValue(detail.GiftAidClaimAmountFromGovernment);
+                        detail.Total = this.displayValue(detail.Total);
+
                         if (detail.Name.includes('_ERRNAC')) {
                             if (detail.Name.includes('1')) detail.Name = res + ' 1';
                             if (detail.Name.includes('2')) detail.Name = res + ' 2';
@@ -255,7 +279,6 @@ export class PayoutComponent implements OnInit {
                         stornoDetails.push(detail)
                     }
                 }
-            }
 
                 let costDetails = [];
                 this.translate.get('Stornos').subscribe((resStorno: string) => {
@@ -268,6 +291,12 @@ export class PayoutComponent implements OnInit {
 
                         copy.Name += ': ' + resStorno;
                         copy.Amount = '- ' + this.displayValue(resp.Details[i].StornoAmount);
+                        if (isNullOrUndefined(copy.GiftAidClaimReturnedAmountFromGovernment))
+                            copy.GiftAidClaimReturnedAmountFromGovernment = 0.00;
+                        copy.Total = copy.GiftAidClaimReturnedAmountFromGovernment + resp.Details[i].StornoAmount;
+                        copy.GiftAidClaimAmountFromGovernment = '- ' + this.displayValue(copy.GiftAidClaimReturnedAmountFromGovernment);
+                        copy.Total = '- ' + this.displayValue(copy.Total);
+
                         copy.Status = 0;
                         costDetails.push(copy);
                     }

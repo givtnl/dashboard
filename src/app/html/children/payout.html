@@ -1,12 +1,15 @@
 <section class="show-collect center-me" >
   <time class="payouts-time-container">
-    <span *ngIf="!childData.PaymentProviderExecutionDate" class="date">{{childData.dtExecuted}}</span>
-    <span *ngIf="childData.PaymentProviderExecutionDate" class="date">{{'Payout_PaidOutDate' | translate}} {{childData.dtExecuted | date: 'd MMMM y'}} </span>
-    <span *ngIf="childData.PaymentProviderExecutionDate" class="date">{{'Payout_ExecutionDate' | translate}} {{childData.PaymentProviderExecutionDate | date:'d MMMM y'}}</span>
+    <span *ngIf="!childData.PaymentProviderExecutionDate" class="date">{{childData.dtExecuted}}<span style="font-size: 26px; display: inline;">&nbsp;</span></span>
+    <span *ngIf="childData.PaymentProviderExecutionDate" class="date">{{'Payout_PaidOutDate' | translate}} {{childData.dtExecuted}} <span style="font-size: 26px; display: inline;">&nbsp;</span></span>
+    <span *ngIf="childData.PaymentProviderExecutionDate" class="date">{{'Payout_ExecutionDate' | translate}} {{childData.PaymentProviderExecutionDate}}</span>
     <span *ngIf="showCosts"></span>
   </time>
   <div class="collection-buttons">
-    <span class="total-payed">{{"Payout_TotalPayedOut" | translate}} <span id="big">{{childData.TotalPaidText}}</span></span>
+    <div>
+      <span class="total-payed">{{"Payout_TotalPayedOut" | translate}} <span id="big">{{childData.TotalPaidText}}</span></span>
+      <span *ngIf="giftAid" >{{"GiftAidCollected"|translate}}:<span class="gift-aid-amount">{{childData.GiftAidAmountText}}</span></span>
+    </div>
     <button class="icon" [class.fill-green]="childData.hiddenAllocations == false" (click)="openAllocations()">
       <svg width="27px" height="20px" viewBox="0 0 27 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
         <!-- Generator: Sketch 44.1 (41455) - http://www.bohemiancoding.com/sketch -->
@@ -71,7 +74,14 @@
       </svg>
       </div>
     </div>
-    <table class="collect__table alloc" style="margin-bottom: 0;    border-collapse: collapse;">
+    <table class="collect__table alloc" style="margin-bottom: 0; border-collapse: collapse;">
+      <tr *ngIf="giftAid">
+        <th>&nbsp;</th>
+        <th>&nbsp;</th>
+        <th class="py-20 pb-10 text-right"><b>{{'TotalCollected'|translate}}</b></th>
+        <th class="py-20 pb-10 text-right"><b>{{'GiftAidCollected'|translate}}</b></th>
+        <th class="py-20 pb-10 text-right"><b>{{'Total'|translate}}</b></th>
+      </tr>
       <ng-container *ngFor="let item of childData.details">
         <tr  style="font-family: Avenir_Medium; font-size: 20px;"  [class.red]="item.Status == 0" [class.yellow]="item.Status == 2" *ngIf="item.Amount != 0">
           <td class="allocation-column-date">
@@ -80,26 +90,29 @@
           <td class="allocation-title">
             {{item.Name}}
           </td>
-          <td style="text-align: right;">{{item.Amount}}</td>
+          <td [class.table-border-right]="giftAid" class="py-20 text-right">{{item.Amount}}</td>
+          <td *ngIf="giftAid" class="table-border-right py-20 text-right">{{item.GiftAidClaimAmountFromGovernment}}</td>
+          <td *ngIf="giftAid" class="py-20 text-right">{{item.Total}}</td>
         </tr>
       </ng-container>
 
       <tr class="collect__table__footer" style="font-size: 20px;font-family: Avenir_Medium">
         <td *ngIf="paymentType == 1" colspan="2" style="text-align:left;" class="special-last-cell" >{{"TermCosts" | translate}} ({{"INCL_BTW" | translate}})</td>
         <td *ngIf="paymentType == 2" colspan="2" style="text-align:left;" class="special-last-cell" >{{"TermCosts" | translate}}</td>
-        <td style="text-align:right;" class="special-last-cell" >- {{childData.TotaalKosten}}</td>
+        <td class="special-last-cell py-20 text-right">- {{childData.TotaalKosten}}</td>
+        <td *ngIf="giftAid" class="special-last-cell py-20 text-right">&nbsp;</td>
+        <td *ngIf="giftAid" class="special-last-cell py-20 text-right">&nbsp;</td>
       </tr>
       <tr  style="font-family: Avenir_Black; font-size: 22px;">
         <td colspan="2" style="text-align:left;">{{"Payout_TotalPayedOut" | translate}}</td>
-        <td style="text-align:right;white-space: nowrap;">{{childData.TotalPaidText}}</td>
+        <td style="white-space: nowrap;" [class.table-border-right]="giftAid" class="py-20 text-right">{{childData.TotalPaidText}}</td>
+        <td *ngIf="giftAid" class="table-border-right py-20 text-right">{{childData.GiftAidAmountText}}</td>
+        <td *ngIf="giftAid" class="py-20 text-right">{{childData.TotalText}}</td>
       </tr>
     </table>
-
   </div>
   <hr class="collect-hr" *ngIf="!childData.hiddenAllocations && !childData.hiddenOverview" style="width: 960px;"/>
   <div class="withholding-overview center-me" *ngIf="!childData.hiddenOverview">
-
-
     <h2 class="black" style="font-size: 20px">{{"Payout_Overview" | translate}}</h2>
     <button class="close-button" (click)="closeOverview()">
       <svg width="19px" height="19px" viewBox="944 525 19 19" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -328,9 +341,9 @@
               </tr>
             </table>
             <table  *ngIf="userService.CurrentCollectGroup.TaxDeductionType == 'GiftAid'" class="table-stats gift-aid">
-              <tr class="light">
+              <tr class="light" style='padding-bottom: 10px; line-height: 400%;'>
                 <td style='text-align: left;'>{{"GiftAidPayout" | translate}}</td>
-                <td style='text-align: right;'>£{{childData.extraGiftAidAmount}}</td>
+                <td style='text-align: right;'>{{childData.extraGiftAidedByGovernment}}</td>
               </tr>
             </table>
           </div>

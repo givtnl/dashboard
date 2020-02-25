@@ -236,7 +236,10 @@
     "CollectRosterOf": "van",
     "CollectRosterError": "Er is mogelijk een overlappende collecte of een begin- of eindtijdstip dat niet correct is ingevoerd. De rij die in het rood aangeduid is, bevat een fout.",
     "CollectRosterBankAccount": "Bankrekening",
-    "Payout_PaidOutDate": "Opdracht gegeven",
-    "Payout_ExecutionDate": "Datum van uitvoering",
-    "UserNotFoundException": "Dit Givt-account bestaat niet meer."
+    "Payout_PaidOutDate": "Betalingsopdracht:",
+    "Payout_ExecutionDate": "Betalingsverwerking:",
+    "UserNotFoundException": "Dit Givt-account bestaat niet meer.",
+    "TotalCollected": "Totaal gecollecteerd",
+    "GiftAidCollected": "Gift Aid verkregen",
+    "Total": "Totaal"
 }
