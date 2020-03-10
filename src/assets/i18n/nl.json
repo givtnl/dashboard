@@ -222,7 +222,7 @@
     "QRCodeREQ_warning_submitfailed": "Oeps, er ging iets fout. Probeer het nog eens!",
     "GiftAid": "Gift Aid",
     "GiftAidPayout": "Gift Aid claimed on donations",
-    "GiftAidPayoutMoreInfo": "= £{{0}} * 0.25. This is the amount for which Gift Aid has been claimed on your behalf. We cannot see when and in what amounts the HMRC will pay this out to you. The amounts may still change due to rounding differences, cancellations, and rejections.",
+    "GiftAidPayoutMoreInfo": "This is the amount we expect HMRC to pay based on the Gift Aid claims we have sent on your behalf. We cannot see when and in what amounts the HMRC will pay this out to you. The amounts may still change due to rounding differences, cancellations, and rejections.",
     "CollectRosterTitle": "Rooster",
     "CollectRosterPage": "Pagina:",
     "CollectRosterRowsPerPage": "Rijen per pagina",
