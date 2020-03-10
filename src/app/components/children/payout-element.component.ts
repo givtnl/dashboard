@@ -170,12 +170,9 @@ export class PayoutComponent implements OnInit {
                 x.extraGiftAidAmount = isNullOrUndefined(x.GiftAidAmountPayedByGovernment) ? 0 : x.GiftAidAmountPayedByGovernment;
                 x.extraGiftAidedByGovernment = this.displayValue(x.GiftAidAmountPayedByGovernment)
                 // gift aided more info
-                this.translate.get('GiftAidPayoutMoreInfo', { 0: x.GiftAidAmount }).subscribe((res: string) => {
+                this.translate.get('GiftAidPayoutMoreInfo').subscribe((res: string) => {
                     x.moreInfoGiftAid = res;
                 });
-                if (x.extraGiftAidAmount == 0) {
-                    x.moreInfoGiftAid = x.moreInfoGiftAid.substring(this.getPosition(x.moreInfoGiftAid, '.', 2) + 2);
-                }
                 x.TotalText = this.displayValue(x.extraGiftAidAmount + x.TotalPaid);
                 x.GiftAidAmountText = this.displayValue(x.extraGiftAidAmount);
             }
@@ -244,7 +241,7 @@ export class PayoutComponent implements OnInit {
                     detail.Date = this.datePipe.transform(new Date(detail.Date), 'dd-MM-yyyy');
                     detail.Status = 1;
                     // PAID details
-                    if (detail.Amount !== 0 && detail.StornoAmount == 0) {
+                    if ((detail.Amount !== 0 || detail.GiftAidClaimAmount !== 0) && detail.StornoAmount == 0) {
                         if (isNullOrUndefined(detail.GiftAidClaimAmountFromGovernment))
                             detail.GiftAidClaimAmountFromGovernment  = 0.00;
                         detail.Total = detail.GiftAidClaimAmountFromGovernment + detail.Amount;

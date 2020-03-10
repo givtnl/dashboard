@@ -99,9 +99,9 @@
       <tr class="collect__table__footer" style="font-size: 20px;font-family: Avenir_Medium">
         <td *ngIf="paymentType == 1" colspan="2" style="text-align:left;" class="special-last-cell" >{{"TermCosts" | translate}} ({{"INCL_BTW" | translate}})</td>
         <td *ngIf="paymentType == 2" colspan="2" style="text-align:left;" class="special-last-cell" >{{"TermCosts" | translate}}</td>
-        <td class="special-last-cell py-20 text-right">- {{childData.TotaalKosten}}</td>
-        <td *ngIf="giftAid" class="special-last-cell py-20 text-right">&nbsp;</td>
-        <td *ngIf="giftAid" class="special-last-cell py-20 text-right">&nbsp;</td>
+        <td [class.table-border-right]="giftAid" class="special-last-cell py-20 text-right">- {{childData.TotaalKosten}}</td>
+        <td *ngIf="giftAid" class="table-border-right special-last-cell py-20 text-right">- {{displayValue(0)}}</td>
+        <td *ngIf="giftAid" class="special-last-cell py-20 text-right">- {{childData.TotaalKosten}}</td>
       </tr>
       <tr  style="font-family: Avenir_Black; font-size: 22px;">
         <td colspan="2" style="text-align:left;">{{"Payout_TotalPayedOut" | translate}}</td>
