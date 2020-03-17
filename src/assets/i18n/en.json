@@ -242,6 +242,6 @@
     "TotalCollected": "Total collected",
     "GiftAidCollected": "Gift Aid claimed",
     "Total": "Total",
-    "todaysGiversCard.title": "Today",
+    "Text_Today": "Today",
     "todaysGiversCard.footer": "given per donation"
 }
