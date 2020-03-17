@@ -213,7 +213,7 @@
     "QRCodeREQ_4_comments": "Opmerkingen?",
     "QRCodeREQ_5_title": "Verzonden",
     "QRCodeREQ_5_subtitle": "Bedankt!",
-    "QRCodeREQ_5_subtext": "Wij sturen je binnen enkele dagen een mail met de gevraagde QR-codes",
+    "QRCodeREQ_5_subtext": "Wij sturen je zo snel mogelijk een mail met de gevraagde QR-codes. Gezien de huidige omstandigheden geven wij hier veel voorrang aan om jullie zo snel mogelijk van dienst te zijn.",
     "QRCodeREQ_warning_novalidemail": "Wil je aub een geldig e-mailadres opgeven? Dan kunnen wij je de gevraagde QR-code(s) sturen.",
     "QRCodeREQ_generic": "Algemene QR-code",
     "QRCodeREQ_3_addgoal": "Doel toevoegen",
@@ -241,5 +241,7 @@
     "UserNotFoundException": "Dit Givt-account bestaat niet meer.",
     "TotalCollected": "Totaal gecollecteerd",
     "GiftAidCollected": "Gift Aid verkregen",
-    "Total": "Totaal"
+    "Total": "Totaal",
+    "todaysGiversCard.title": "Vandaag",
+    "todaysGiversCard.footer": "gegeven per gift"
 }
