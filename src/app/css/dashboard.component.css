@@ -61,7 +61,11 @@
     font-family: "Avenir_Roman";
     font-size:13px;
     color:#2C2B57;
+}
 
+.card-disclaimer{
+    font-style: italic;
+    font-size:11px;
 }
 
 .section-dashboard article .wistjedat{
