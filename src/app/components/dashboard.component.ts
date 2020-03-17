@@ -31,6 +31,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     thisMonthCard: Card = new Card();
     thisMonthGiversCard: Card = new Card();
     todaysCard: Card = new Card();
+    todaysGiversCard: Card = new Card();
     averageGiversCard: Card = new Card();
     isSafari: boolean;
     translate: TranslateService;
@@ -71,12 +72,35 @@ export class DashboardComponent implements OnInit, OnDestroy {
             let f2 = this.fetchThisMonthGivers();
             let f3 = this.fetchLastDayGivts();
             let f4 = this.fetchTodayGivts();
-            Promise.all([f1, f2, f3, f4]).then(() => {
+            let f5 = this.fetchTodayGivers();
+            Promise.all([f1, f2, f3, f4, f5]).then(() => {
                 if (this.ShowLoadingAnimation)
                     this.ShowLoadingAnimation = false;
             });
         }, 3000);
 
+    }
+
+    fetchTodayGivers(): Promise<void> {
+        let dtEnd = this.datePipe.transform(new Date().setDate(new Date().getDate()), "yyyy-MM-ddT23:59:59.999" + this.datePipe.getLocalTimeZoneISOString());
+        let dtBegin = this.datePipe.transform(new Date().setDate(new Date().getDate()), "yyyy-MM-ddT00:00:00.000" + this.datePipe.getLocalTimeZoneISOString());
+
+        let params = "DateBegin=" + this.datePipe.toISODateUTC(new Date(dtBegin)) + "&DateEnd=" + this.datePipe.toISODateUTC(new Date(dtEnd));
+        return this.apiService.getData("Cards/Users/?" + params)
+            .then(resp => {
+                this.todaysGiversCard.value = "<span class='fat-emphasis'>" + resp + "</span>";
+                this.translate.get("Text_Today_Givers").subscribe(value => { this.todaysGiversCard.title = value; });
+                this.translate.get("todaysCard_Disclaimer").subscribe(value => { this.todaysGiversCard.disclaimer = value; });
+                let cardIsInCards = false;
+                for (let i in this.cards) {
+                    if (this.cards[i].title === this.todaysGiversCard.title) {
+                        cardIsInCards = true;
+                    }
+                }
+                if (!cardIsInCards) {
+                    this.cards.push(this.todaysGiversCard)
+                }
+            })
     }
 
     fetchTodayGivts(): Promise<void> {
