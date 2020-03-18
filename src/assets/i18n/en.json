@@ -213,7 +213,7 @@
     "QRCodeREQ_4_comments": "Comments?",
     "QRCodeREQ_5_title": "Sent",
     "QRCodeREQ_5_subtitle": "Thanks!",
-    "QRCodeREQ_5_subtext": "We will send you the requested QR code(s) within a couple of days.",
+    "QRCodeREQ_5_subtext": "We will send you an email with the requested QR codes as soon as possible. Given the current circumstances, we give this a lot of priority to assist you as soon as possible.",
     "QRCodeREQ_warning_novalidemail": "Please enter a valid e-mail address so that we can send you the requested QR code(s).",
     "QRCodeREQ_generic": "Generic QR code",
     "QRCodeREQ_3_addgoal": "Add goal",
@@ -241,5 +241,7 @@
     "UserNotFoundException": "This Givt account no longer exists.",
     "TotalCollected": "Total collected",
     "GiftAidCollected": "Gift Aid claimed",
-    "Total": "Total"
+    "Total": "Total",
+    "Text_Today": "Today",
+    "Text_Today_Givers": "Givers today"
 }
