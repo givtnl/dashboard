@@ -4,5 +4,4 @@ export class Card {
     value: string;
     average: string;
     footer: string;
-    disclaimer: string  = '';
 };

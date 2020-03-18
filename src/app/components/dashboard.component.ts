@@ -90,7 +90,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
             .then(resp => {
                 this.todaysGiversCard.value = "<span class='fat-emphasis'>" + resp + "</span>";
                 this.translate.get("Text_Today_Givers").subscribe(value => { this.todaysGiversCard.title = value; });
-                this.translate.get("todaysCard_Disclaimer").subscribe(value => { this.todaysGiversCard.disclaimer = value; });
                 let cardIsInCards = false;
                 for (let i in this.cards) {
                     if (this.cards[i].title === this.todaysGiversCard.title) {
@@ -121,7 +120,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
                     var donation = "";
                     this.translate.get("Text_Donation").subscribe(value => { donation = value; });                    
                     this.translate.get("Text_Given").subscribe(value => { this.todaysCard.footer = value + " per " + donation; });
-                    this.translate.get("todaysCard_Disclaimer").subscribe(value => { this.todaysCard.disclaimer = value; });
                     this.translate.get("Card_Average").subscribe(value => { this.todaysCard.average = value + " " + this.currencySymbol + average.toLocaleString(navigator.language, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) });
                     let cardIsInCards = false;
                     for (let i in this.cards) {
