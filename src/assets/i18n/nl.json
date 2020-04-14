@@ -123,7 +123,7 @@
     "DeleteAll": "Verwijderen",
     "AllocationConflict": "Conflict bij toewijzing",
     "FixedPoints": "Vaste punten",
-    "Payout_NoPayouts": "Er zijn nog geen uitbetalingen voor uw organisatie beschikbaar. De eerste uitbetaling kunt u verwachten op de tweede donderdag na de eerste keer dat er gecollecteerd is.",
+    "Payout_NoPayouts": "Er zijn nog geen uitbetalingen voor uw organisatie beschikbaar. De eerste uitbetaling kunt u verwachten op de tweede donderdag na de eerste keer dat er gecollecteerd is en nadat de bankrekening is geverifieerd.",
     "Monday": "Maandag",
     "Tuesday": "Dinsdag",
     "Wednesday": "Woensdag",
@@ -243,5 +243,8 @@
     "GiftAidCollected": "Gift Aid verkregen",
     "Total": "Totaal",
     "Text_Today": "Vandaag",
-    "Text_Today_Givers": "Gevers vandaag"
+    "Text_Today_Givers": "Gevers vandaag",
+    "QRCodeREQ_List_Title": "Lijst met QR codes voor {0}",
+    "QRCode": "QR-Code",
+    "QRCodes": "QR-Codes"
 }
