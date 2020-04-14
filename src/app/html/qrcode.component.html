@@ -20,7 +20,7 @@
                     </div>
                 </div>
                 <div class="QRCodeListInfo">
-                    <p>Hiernaast vind je de reeds bestaande qr codes terug. Je kan ze opnieuw downloaden door op het QR code icoontje te drukken.</p>
+                    <p>{{"QRCodeREQ_List_Info" | translate }}</p>
                 </div>
                 <div class="QRCode_ListContainer">
                     <table class="table">
@@ -31,7 +31,7 @@
                     </table>
                 </div>
                 <div class="QRCode_Buttons">
-                    <button class="btn btn-green" (click)="showNextQuestion(1)">{{"QRCodeREQ_START_FLOW" | translate}}</button>
+                    <button class="btn btn-green" (click)="showNextQuestion(1)">{{"QRCodeREQ_StartFlow" | translate}}</button>
                 </div>
             </div>
             <div class="QRCode QRCode1" *ngIf="currentQuestionId == 1" id="question-1">
