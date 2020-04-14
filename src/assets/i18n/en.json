@@ -123,7 +123,7 @@
     "DeleteAll": "Delete",
     "AllocationConflict": "Allocation conflict",
     "FixedPoints": "Predefined",
-    "Payout_NoPayouts": "No payments are available for your organisation yet. You can expect the first payment on the second Thursday after the first time there has been a collection. (Currently, pilot organisations in the UK are paid later. In the future this will be the same.)",
+    "Payout_NoPayouts": "No payments are available for your organisation yet. You can expect the first payment to be initiated on the second Thursday after the first time there has been a collection and after your bank account details are known and verified.",
     "Monday": "Monday",
     "Tuesday": "Tuesday",
     "Wednesday": "Wednesday",
@@ -243,5 +243,8 @@
     "GiftAidCollected": "Gift Aid claimed",
     "Total": "Total",
     "Text_Today": "Today",
-    "Text_Today_Givers": "Givers today"
+    "Text_Today_Givers": "Givers today",
+    "QRCodeREQ_List_Title": "List with QR codes for {0}",
+    "QRCode": "QR Code",
+    "QRCodes": "QR Codes"
 }
