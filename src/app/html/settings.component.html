@@ -22,7 +22,7 @@
                 </div>
 
                 <ul class="settings-list">
-                    <li [class.settings-list-item-active]="isSettingsDetailVisible" class="settings-list-item" (click)="isSettingsDetailVisible = true; isDeepLinkVisible = false;">
+                    <li [class.settings-list-item-active]="isSettingsDetailVisible" class="settings-list-item" (click)="isSettingsDetailVisible = true; isDeepLinkVisible = false; isQRCodeSettingVisible = false;">
                         <span>
                             {{ "FirstDayOfWeek" | translate }}
                         </span>
@@ -39,7 +39,7 @@
                             </svg>
                         </span>
                     </li>
-                    <li [class.settings-list-item-active]="isDeepLinkVisible" class="settings-list-item" (click)="isDeepLinkVisible = true; isSettingsDetailVisible = false">
+                    <li [class.settings-list-item-active]="isDeepLinkVisible" class="settings-list-item" (click)="isDeepLinkVisible = true; isSettingsDetailVisible = false; isQRCodeSettingVisible = false;">
                         <span>
                             {{ "GivtWithGivtPreferenceTitle" | translate }}
                         </span>
@@ -56,9 +56,9 @@
                             </svg>
                         </span>
                     </li>
-                    <li [class.settings-list-item-active]="isQRCodeSettingVisible" class="settings-list-item" (click)="isQRCodeSettingVisible = true; isSettingsDetailVisible = false">
+                    <li [class.settings-list-item-active]="isQRCodeSettingVisible" class="settings-list-item" (click)="isQRCodeSettingVisible = true; isSettingsDetailVisible = false; isDeepLinkVisible = false;">
                         <span>
-                            {{ "QR_CODE_SETTING_TITLE" | translate }}
+                            {{ "QRCodeLanguagePreference" | translate }}
                         </span>
                         <span style="display: flex;">
                             <svg width="11px" height="19px" viewBox="0 0 11 19" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -115,11 +115,13 @@
                 </p>
             </div>
             <div class="setting" *ngIf="isQRCodeSettingVisible" [class.settings-pane-hidden]="!isQRCodeSettingVisible">
-                <p>Setup language for qr codes here</p>
-                <select [(ngModel)]="selectedQRLanguage">
+                <p class="text">{{ "QRCodeLanguagePreferenceTitle" | translate}}</p>
+                <div class="qr-inputs">
+                    <select [(ngModel)]="selectedQRLanguage">
                     <option *ngFor="let item of availableLanguages" [ngValue]="item.value">{{item.name}}</option>
                 </select>
-                <button (click)="saveQRCodeLanguage()">Save</button>
+                    <button class="btn btn-qr-lang" (click)="saveQRCodeLanguage()">Save</button>
+                </div>
             </div>
         </div>
         <my-footer></my-footer>

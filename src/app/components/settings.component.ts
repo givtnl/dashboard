@@ -56,7 +56,12 @@ export class SettingsComponent implements OnInit {
 		this.loadTerms();
 		this.currentCollectGroup = userService.CurrentCollectGroup;
 		this.loadConnectWithGivt();
-
+		var en = this.availableLanguages.filter(x=>x.value == "en")[0]
+		var nl  = this.availableLanguages.filter(x=>x.value == "nl")[0]
+		en.name = this.translateService.instant("LanguageEN")
+		nl.name = this.translateService.instant("LanguageNL")
+		this.availableLanguages = [en, nl]
+		console.log(this.availableLanguages)
 	}
 
 	private loadTerms() {

@@ -21,7 +21,8 @@
     align-items: center;
 }
 
-.settings-list-item:hover, .settings-list-item-active {
+.settings-list-item:hover,
+.settings-list-item-active {
     background: #8B86AB;
 }
 
@@ -61,7 +62,7 @@
     padding: 5px 12px;
     margin-right: 5px;
     border-radius: 20px;
-    color:white;
+    color: white;
     cursor: pointer;
 }
 
@@ -93,9 +94,14 @@
     color: white;
     box-sizing: border-box;
     font-family: Avenir_Light;
-    cursor:pointer;padding: 20px;display: flex;align-items: center;justify-content: space-between;
+    cursor: pointer;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     background-color: #4D98CF;
 }
+
 .go-back:hover {
     background-color: #246AB1;
 }
@@ -104,7 +110,7 @@
     display: none;
 }
 
-@media only screen and (max-width : 480px) {
+@media only screen and (max-width: 480px) {
     .only-show-on-mobile {
         display: flex;
     }
@@ -135,9 +141,11 @@
     cursor: default;
     padding-right: 0 !important;
 }
+
 .namespace-right {
     float: right;
 }
+
 .copy-ns-icon {
     cursor: pointer;
     margin: 0 10px 0 10px;
@@ -149,6 +157,18 @@
     border: none;
     font-size: 16px;
 }
+
 .deeplink-span {
     margin: 20px auto;
+}
+
+.qr-inputs {
+    display: flex;
+    justify-content: center;
+}
+
+.btn.btn-qr-lang {
+    background: #41c98e;
+    padding: 6px 12px;
+    border-radius: 4px;
 }
