@@ -21,6 +21,7 @@ import { isNullOrUndefined } from "util";
 	styleUrls: ['../css/qrcode.component.css']
 })
 export class QRCodeComponent implements OnInit {
+	private userLanguage = "NL";
 
 	constructor(private translateService: TranslateService, private apiService: ApiClientService, private dataService: DataService, private datePipe: ISODatePipe, private router: Router, private http: Http, private userService: UserService) {
 
@@ -43,16 +44,9 @@ export class QRCodeComponent implements OnInit {
 	phonenumber = ""
 	comments = ""
 	downloadQr(value: string) {
-		this.apiService.getData(`v2/organisations/${this.userService.CurrentCollectGroup.OrgId}/collectgroups/${this.userService.CurrentCollectGroup.GUID}/collectionmediums/${value}/export/nl`)
-			.then(resp => {
-				//download qr zip
-				var blob = this.b64toBlob(resp.Base64Result, "application/zip", 512);
-				var blobUrl = URL.createObjectURL(blob);
-				var button = document.getElementById("hiddenQrButton");
-				button.setAttribute("href", blobUrl);
-				button.setAttribute("download", "QrCode")
-				button.click();
-				window.URL.revokeObjectURL(blobUrl);
+		this.apiService.getData(`v2/organisations/${this.userService.CurrentCollectGroup.OrgId}/collectgroups/${this.userService.CurrentCollectGroup.GUID}/collectionmediums/${value}/export/${this.userLanguage.toLowerCase()}`)
+			.then(response => {
+				this.downloadZip(response.Base64Result)
 			})
 	}
 	b64toBlob(b64Data, contentType, sliceSize) {
@@ -126,12 +120,21 @@ export class QRCodeComponent implements OnInit {
 	async submit() {
 		var body = { commands: [] }
 		body.commands = this.fieldArray.map(x => { return { allocationName: x } });
-		console.log(body);
-		await this.apiService.postData(`v2/organisations/${this.userService.CurrentCollectGroup.OrgId}/collectgroups/${this.userService.CurrentCollectGroup.GUID}/collectionmediums`, body)
+		await this.apiService.postData(`v2/organisations/${this.userService.CurrentCollectGroup.OrgId}/collectgroups/${this.userService.CurrentCollectGroup.GUID}/collectionmediums/${this.userLanguage.toLowerCase()}/batch`, body)
 			.then(response => {
-				console.log(response);
+				this.downloadZip(response.Base)
 			})
 	}
+
+	downloadZip(response: string) {
+		var blob = this.b64toBlob(response, "application/zip", 512);
+		var blobUrl = URL.createObjectURL(blob);
+		var button = document.getElementById("hiddenQrButton");
+		button.setAttribute("href", blobUrl);
+		button.setAttribute("download", "QrCode")
+		button.click();
+		window.URL.revokeObjectURL(blobUrl);
+	} 
 
 	flowGeneric() {
 		this.GenericQR = true
