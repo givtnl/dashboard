@@ -247,6 +247,6 @@
     "QRCodeREQ_List_Title": "QR-Codes",
     "QRCode": "QR-Code",
     "QRCodes": "QR-Codes",
-    "QRCodeREQ_List_Info": "Dit zijn de reeds bestaande QR-codes. Je kan ze opnieuw downloaden door op het icoontje te klikken naast de naam.",
+    "QRCodeREQ_List_Info": "Dit zijn de reeds bestaande QR-codes. Je kan ze opnieuw downloaden door op het icoontje te klikken naast de naam. Indien je de taal van de QR codes wil wijzigen, kan je dit doen bij 'Voorkeuren' in het menu.",
     "QRCodeREQ_StartFlow": "Vraag een nieuwe QR-code aan"
 }
