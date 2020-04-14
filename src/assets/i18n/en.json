@@ -250,5 +250,7 @@
     "QRCodeREQ_List_Info": "These are the pre-existing QR codes. You can download them again by clicking on the icon next to the name. If you wish to change the language of the QR codes, you can do this via the 'Preferences' item in the menu.",
     "QRCodeREQ_StartFlow": "Request a new QR code",
     "QRCodeLanguagePreference": "Language of the QR-codes",
-    "QRCodeLanguagePreferenceTitle": "Here you can select the language for the QR-codes."
+    "QRCodeLanguagePreferenceTitle": "Here you can select the language for the QR-codes.",
+    "LanguageEN": "English",
+    "LanguageNL": "Dutch"
 }
