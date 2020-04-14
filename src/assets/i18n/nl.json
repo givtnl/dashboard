@@ -211,9 +211,9 @@
     "QRCodeREQ_4_subtext-order": "Overzicht van de QR-codes:",
     "QRCodeREQ_3_subtitle": "Stel hier de collectedoelen in",
     "QRCodeREQ_4_comments": "Opmerkingen?",
-    "QRCodeREQ_5_title": "Verzonden",
+    "QRCodeREQ_5_title": "Aanvraag ontvangen",
     "QRCodeREQ_5_subtitle": "Bedankt!",
-    "QRCodeREQ_5_subtext": "Wij sturen je zo snel mogelijk een mail met de gevraagde QR-codes. Gezien de huidige omstandigheden geven wij hier veel voorrang aan om jullie zo snel mogelijk van dienst te zijn.",
+    "QRCodeREQ_5_subtext": "We hebben je aanvraag goed ontvangen. Het zip bestand met je QR-code(s) erin word nu gedownload.",
     "QRCodeREQ_warning_novalidemail": "Wil je aub een geldig e-mailadres opgeven? Dan kunnen wij je de gevraagde QR-code(s) sturen.",
     "QRCodeREQ_generic": "Algemene QR-code",
     "QRCodeREQ_3_addgoal": "Doel toevoegen",
@@ -244,7 +244,9 @@
     "Total": "Totaal",
     "Text_Today": "Vandaag",
     "Text_Today_Givers": "Gevers vandaag",
-    "QRCodeREQ_List_Title": "Lijst met QR codes voor {0}",
+    "QRCodeREQ_List_Title": "QR-Codes",
     "QRCode": "QR-Code",
-    "QRCodes": "QR-Codes"
+    "QRCodes": "QR-Codes",
+    "QRCodeREQ_List_Info": "Dit zijn de reeds bestaande QR-codes. Je kan ze opnieuw downloaden door op het icoontje te klikken naast de naam.",
+    "QRCodeREQ_StartFlow": "Vraag een nieuwe QR-code aan"
 }

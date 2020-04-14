@@ -211,9 +211,9 @@
     "QRCodeREQ_4_subtext-order": "Overview of the QR codes:",
     "QRCodeREQ_3_subtitle": "Setup your collection goals",
     "QRCodeREQ_4_comments": "Comments?",
-    "QRCodeREQ_5_title": "Sent",
+    "QRCodeREQ_5_title": "Request received",
     "QRCodeREQ_5_subtitle": "Thanks!",
-    "QRCodeREQ_5_subtext": "We will send you an email with the requested QR codes as soon as possible. Given the current circumstances, we give this a lot of priority to assist you as soon as possible.",
+    "QRCodeREQ_5_subtext": "We have successfully received your request. The zip file with one or more QR codes is being downloaded.",
     "QRCodeREQ_warning_novalidemail": "Please enter a valid e-mail address so that we can send you the requested QR code(s).",
     "QRCodeREQ_generic": "Generic QR code",
     "QRCodeREQ_3_addgoal": "Add goal",
@@ -244,7 +244,9 @@
     "Total": "Total",
     "Text_Today": "Today",
     "Text_Today_Givers": "Givers today",
-    "QRCodeREQ_List_Title": "List with QR codes for {0}",
+    "QRCodeREQ_List_Title": "QR Codes",
     "QRCode": "QR Code",
-    "QRCodes": "QR Codes"
+    "QRCodes": "QR Codes",
+    "QRCodeREQ_List_Info": "These are the pre-existing QR codes. You can download them again by clicking on the icon next to the name.",
+    "QRCodeREQ_StartFlow": "Request a new QR code"
 }
