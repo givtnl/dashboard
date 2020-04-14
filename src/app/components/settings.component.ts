@@ -1,8 +1,9 @@
-import {DataService} from "../services/data.service";
-import {Component, OnInit} from "@angular/core";
-import {LangChangeEvent, TranslateService} from "ng2-translate";
-import {UserService} from "../services/user.service";
-import {HtmlParser} from "@angular/compiler";
+import { DataService } from "../services/data.service";
+import { Component, OnInit, AfterViewInit } from "@angular/core";
+import { LangChangeEvent, TranslateService } from "ng2-translate";
+import { UserService } from "../services/user.service";
+import { isNullOrUndefined } from "util";
+
 
 @Component({
 	selector: "settings",
@@ -15,9 +16,15 @@ export class SettingsComponent implements OnInit {
 	private days = [];
 	public isSettingsDetailVisible = false;
 	public isDeepLinkVisible = false;
+	public isQRCodeSettingVisible = false;
+
 	public currentCollectGroup;
 	requestMediumIdTitle: String;
 	requestMediumIdBody: String;
+
+	private selectedQRLanguage: String;
+	public availableLanguages = [{ value: "en", name: "EN" }, { value: "nl", name: "NL" }]
+
 	requestMediumIdManual: String;
 	get firstDay(): number {
 		return this._firstDay;
@@ -29,9 +36,9 @@ export class SettingsComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		window.scrollTo(0,0);
+		window.scrollTo(0, 0);
 		let localDay = this.dataService.getData("FirstDayOfWeek");
-		if(!isNaN(localDay)) {
+		if (!isNaN(localDay)) {
 			this.firstDay = localDay;
 		}
 
@@ -40,6 +47,9 @@ export class SettingsComponent implements OnInit {
 			this.loadConnectWithGivt();
 		});
 
+		if (!isNullOrUndefined(navigator.language)) {
+			this.selectedQRLanguage = navigator.language.substring(0, 2)
+		}
 	}
 
 	constructor(private dataService: DataService, private translateService: TranslateService, private userService: UserService) {
@@ -60,13 +70,13 @@ export class SettingsComponent implements OnInit {
 		this.days.push(this.translateService.instant("Saturday").toString());
 	}
 
-	private loadConnectWithGivt(){
-        this.requestMediumIdTitle = this.translateService.instant("RequestMediumIdTitle").toString();
-        this.requestMediumIdTitle = this.requestMediumIdTitle.replace("{0}", this.currentCollectGroup.Name);
-        this.requestMediumIdTitle = this.requestMediumIdTitle.replace("{1}", this.currentCollectGroup.Namespace);
-        this.requestMediumIdBody = this.translateService.instant("RequestMediumIdBody");
-        this.requestMediumIdManual = this.translateService.instant("RequestMediumIdManual");
-    }
+	private loadConnectWithGivt() {
+		this.requestMediumIdTitle = this.translateService.instant("RequestMediumIdTitle").toString();
+		this.requestMediumIdTitle = this.requestMediumIdTitle.replace("{0}", this.currentCollectGroup.Name);
+		this.requestMediumIdTitle = this.requestMediumIdTitle.replace("{1}", this.currentCollectGroup.Namespace);
+		this.requestMediumIdBody = this.translateService.instant("RequestMediumIdBody");
+		this.requestMediumIdManual = this.translateService.instant("RequestMediumIdManual");
+	}
 
 	goBack() {
 		window.history.back();
@@ -75,10 +85,13 @@ export class SettingsComponent implements OnInit {
 	goBackToSettings() {
 		this.isSettingsDetailVisible = false;
 	}
-    copyNamespace(){
-        let copyText = document.getElementById("cg-namespace") as HTMLInputElement;
-        copyText.focus();
-        copyText.select();
-        document.execCommand("Copy");
-    }
+	copyNamespace() {
+		let copyText = document.getElementById("cg-namespace") as HTMLInputElement;
+		copyText.focus();
+		copyText.select();
+		document.execCommand("Copy");
+	}
+	saveQRCodeLanguage() {
+		this.dataService.writeData("SelectedQRCodeLanguage", this.selectedQRLanguage, true)
+	}
 }
