@@ -12,6 +12,7 @@ import { forEach } from "@angular/router/src/utils/collection";
 import { forEachChild } from "typescript";
 import { Message } from "@angular/compiler/src/i18n/i18n_ast";
 import { TranslateService } from "../../../node_modules/ng2-translate";
+import { isNullOrUndefined } from "util";
 
 
 @Component({
@@ -19,64 +20,93 @@ import { TranslateService } from "../../../node_modules/ng2-translate";
 	templateUrl: '../html/qrcode.component.html',
 	styleUrls: ['../css/qrcode.component.css']
 })
-export class QRCodeComponent {
+export class QRCodeComponent implements OnInit {
 
-	constructor(private translateService :TranslateService, private apiService: ApiClientService, private dataService: DataService, private datePipe: ISODatePipe, private router: Router, private http: Http, private userService: UserService) {
+	constructor(private translateService: TranslateService, private apiService: ApiClientService, private dataService: DataService, private datePipe: ISODatePipe, private router: Router, private http: Http, private userService: UserService) {
 
+	}
+	ngOnInit(): void {
+		this.apiService.getData(`v2/organisations/${this.userService.CurrentCollectGroup.OrgId}/collectgroups/${this.userService.CurrentCollectGroup.GUID}/collectionmediums`)
+			.then(resp => {
+				this.qrCodes = resp
+			});
 	}
 	public name = ""
 	GenericQR: boolean = false
-	currentQuestionId: number = 1
+	currentQuestionId: number = 0
 	fieldArray: string[] = [""]
 	giftPurposes: string[] = []
 	isEmailValid: boolean = true
 
-
+	qrCodes = []
 	email = this.dataService.getData('UserEmail')
 	phonenumber = ""
 	comments = ""
-	private newAttribute: string = ""
+	downloadQr(value: string) {
+		this.apiService.getData(`v2/organisations/${this.userService.CurrentCollectGroup.OrgId}/collectgroups/${this.userService.CurrentCollectGroup.GUID}/collectionmediums/${value}/export/nl`)
+			.then(resp => {
+				//download qr zip
+				var blob = this.b64toBlob(resp.Base64Result, "application/zip", 512);
+				var blobUrl = URL.createObjectURL(blob);
+				var button = document.getElementById("hiddenQrButton");
+				button.setAttribute("href", blobUrl);
+				button.setAttribute("download", "QrCode")
+				button.click();
+				window.URL.revokeObjectURL(blobUrl);
+			})
+	}
+	b64toBlob(b64Data, contentType, sliceSize) {
+		contentType = contentType || '';
+		sliceSize = sliceSize || 512;
 
-	async showNextQuestion(value: number) {
+		var byteCharacters = atob(b64Data);
+		var byteArrays = [];
+
+		for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+			var slice = byteCharacters.slice(offset, offset + sliceSize);
+
+			var byteNumbers = new Array(slice.length);
+			for (var i = 0; i < slice.length; i++) {
+				byteNumbers[i] = slice.charCodeAt(i);
+			}
+
+			var byteArray = new Uint8Array(byteNumbers);
+
+			byteArrays.push(byteArray);
+		}
+
+		var blob = new Blob(byteArrays, { type: contentType });
+		return blob;
+	}
+	showNextQuestion(value: number) {
 		switch (this.currentQuestionId) {
 			case 2:
-				if(this.fieldArray[0] == null) {
+				if (this.fieldArray[0] == null) {
 					this.fieldArray.push("")
 				}
 				this.currentQuestionId += value
 				break
 			case 3:
-				this.fieldArray = this.fieldArray.filter(element => element.trim() !== "")
+				this.fieldArray = this.fieldArray.filter(element => !isNullOrUndefined(element) && element.trim() !== "")
 
 				this.fieldArray.forEach((element, index) => {
 					this.fieldArray[index] = element.trim()
 				})
 				this.currentQuestionId += value
-				break
-			case 4:
-				this.checkEmail()
-
-				if (this.isEmailValid) {				
-					var submitok = await this.submit()
-					if(submitok==false){
-						this.translateService.get("QRCodeREQ_warning_submitfailed").subscribe((res) => setTimeout(() => {alert(res)}, 200))
-					} else 
-						this.currentQuestionId += value
-				} else
-					this.translateService.get("QRCodeREQ_warning_novalidemail").subscribe((res) => alert(res))				
+				this.submit()
 				break
 			default:
 				this.currentQuestionId += value
 				break
 		}
 	}
-	
+
 	showPreviousQuestion(value: number = 1) {
 		switch (this.currentQuestionId) {
 			case 4:
-				if(this.fieldArray[0] == null) {
+				if (this.fieldArray[0] == null) {
 					this.fieldArray.push("")
-				} 
+				}
 				break
 
 			default:
@@ -94,30 +124,13 @@ export class QRCodeComponent {
 	}
 
 	async submit() {
-
-		var submitSuccessfull = false
-		let body: QRRequestBody = {email: this.email, phoneNumber: this.phonenumber, collectGoals: this.fieldArray, comments: this.comments}
-		let apiUrl = 'v2/collectgroups/' + this.userService.CurrentCollectGroup.GUID + '/qrcodes'
-
-		await this.apiService.postData(apiUrl, body)
-			.then(resp => {
-				if(Number(resp) > 0) {
-					submitSuccessfull = true
-				}
+		var body = { commands: [] }
+		body.commands = this.fieldArray.map(x => { return { allocationName: x } });
+		console.log(body);
+		await this.apiService.postData(`v2/organisations/${this.userService.CurrentCollectGroup.OrgId}/collectgroups/${this.userService.CurrentCollectGroup.GUID}/collectionmediums`, body)
+			.then(response => {
+				console.log(response);
 			})
-			.catch(err => {
-				submitSuccessfull = false
-			})
-		return submitSuccessfull
-	}
-
-	checkEmail() {
-		var emailField = <HTMLInputElement>document.getElementById('email')
-		this.email = emailField.value
-		const regexp = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)
-		this.isEmailValid = regexp.test(this.email)
-
-		return this.isEmailValid
 	}
 
 	flowGeneric() {
