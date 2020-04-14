@@ -21,16 +21,26 @@ import { isNullOrUndefined } from "util";
 	styleUrls: ['../css/qrcode.component.css']
 })
 export class QRCodeComponent implements OnInit {
-	private userLanguage = "NL";
-
+	private selectedLanguage: string;
+	private loading;
 	constructor(private translateService: TranslateService, private apiService: ApiClientService, private dataService: DataService, private datePipe: ISODatePipe, private router: Router, private http: Http, private userService: UserService) {
 
 	}
 	ngOnInit(): void {
+		this.loading = true
 		this.apiService.getData(`v2/organisations/${this.userService.CurrentCollectGroup.OrgId}/collectgroups/${this.userService.CurrentCollectGroup.GUID}/collectionmediums`)
 			.then(resp => {
 				this.qrCodes = resp
+				this.loading = false
 			});
+
+		var savedLanguage = this.dataService.getData("SelectedQRCodeLanguage");
+		if (!isNullOrUndefined(savedLanguage) && savedLanguage.length == 2)
+			this.selectedLanguage = savedLanguage
+		else if (!isNullOrUndefined(navigator.language)) {
+			this.selectedLanguage = navigator.language.substring(0, 2)
+		}
+
 	}
 	public name = ""
 	GenericQR: boolean = false
@@ -43,10 +53,12 @@ export class QRCodeComponent implements OnInit {
 	email = this.dataService.getData('UserEmail')
 	phonenumber = ""
 	comments = ""
-	downloadQr(value: string) {
-		this.apiService.getData(`v2/organisations/${this.userService.CurrentCollectGroup.OrgId}/collectgroups/${this.userService.CurrentCollectGroup.GUID}/collectionmediums/${value}/export/${this.userLanguage.toLowerCase()}`)
+	downloadQr(value: string, name: string) {
+		this.loading = true;
+		this.apiService.getData(`v2/organisations/${this.userService.CurrentCollectGroup.OrgId}/collectgroups/${this.userService.CurrentCollectGroup.GUID}/collectionmediums/${value}/export/${this.selectedLanguage.toLowerCase()}`)
 			.then(response => {
-				this.downloadZip(response.Base64Result)
+				this.loading = false;
+				this.downloadZip(response.Base64Result, 2, name)
 			})
 	}
 	b64toBlob(b64Data, contentType, sliceSize) {
@@ -87,7 +99,7 @@ export class QRCodeComponent implements OnInit {
 					this.fieldArray[index] = element.trim()
 				})
 				this.currentQuestionId += value
-				this.submit()
+				this.submitBatch()
 				break
 			default:
 				this.currentQuestionId += value
@@ -117,30 +129,66 @@ export class QRCodeComponent implements OnInit {
 		return index
 	}
 
-	async submit() {
+	async submitBatch() {
+		this.loading = true;
 		var body = { commands: [] }
 		body.commands = this.fieldArray.map(x => { return { allocationName: x } });
-		await this.apiService.postData(`v2/organisations/${this.userService.CurrentCollectGroup.OrgId}/collectgroups/${this.userService.CurrentCollectGroup.GUID}/collectionmediums/${this.userLanguage.toLowerCase()}/batch`, body)
+		await this.apiService.postData(`v2/organisations/${this.userService.CurrentCollectGroup.OrgId}/collectgroups/${this.userService.CurrentCollectGroup.GUID}/collectionmediums/${this.selectedLanguage.toLowerCase()}/batch`, body)
 			.then(response => {
-				this.downloadZip(response.Base64Result)
-			})
+				if (!isNullOrUndefined(response))
+					this.downloadZip(response.Base64Result, 0);
+				this.loading = false;
+			}).catch((error) => { alert(error); this.loading = false; })
+	}
+	async submitGeneric() {
+		this.loading = true;
+		var body = { AllocationName: null };
+		this.translateService.get("QRCodeREQ_generic").subscribe((res) => body.AllocationName = res)
+		await this.apiService.postData(`v2/organisations/${this.userService.CurrentCollectGroup.OrgId}/collectgroups/${this.userService.CurrentCollectGroup.GUID}/collectionmediums`, body)
+			.then(async response => {
+				var mediumId = response.Result;
+				if (!isNullOrUndefined(mediumId)) {
+					this.apiService.getData(`v2/organisations/${this.userService.CurrentCollectGroup.OrgId}/collectgroups/${this.userService.CurrentCollectGroup.GUID}/collectionmediums/${response}/export/${this.selectedLanguage.toLowerCase()}`)
+						.then(response2 => {
+							if (!isNullOrUndefined(response2))
+								this.downloadZip(response2.Base64Result, 1);
+							this.loading = false;
+						}).catch((error) => { alert(error); this.loading = false; })
+				}
+			}).catch((error) => { alert(error); this.loading = false; })
 	}
 
-	downloadZip(response: string) {
+	downloadZip(response: string, type: number, name: string = null) {
 		var blob = this.b64toBlob(response, "application/zip", 512);
 		var blobUrl = URL.createObjectURL(blob);
 		var button = document.getElementById("hiddenQrButton");
 		button.setAttribute("href", blobUrl);
-		button.setAttribute("download", "QrCode")
+
+		var fileName;
+
+		switch (type) {
+			case 0:
+				fileName = `${this.translateService.instant("QRCodes").toString()} - ${this.userService.CurrentCollectGroup.Name}`
+				break;
+			case 1:
+				fileName = `${this.translateService.instant("QRCode").toString()} - ${this.userService.CurrentCollectGroup.Name} - ${this.translateService.instant("QRCodeREQ_generic").toString()}`
+				break;
+			case 2:
+				fileName = `${this.translateService.instant("QRCode").toString()} - ${this.userService.CurrentCollectGroup.Name} - ${name}`
+				break;
+		}
+
+		button.setAttribute("download", fileName)
 		button.click();
 		window.URL.revokeObjectURL(blobUrl);
-	} 
+	}
 
 	flowGeneric() {
 		this.GenericQR = true
 		var respsonse
 		this.translateService.get("QRCodeREQ_generic").subscribe((res) => respsonse = res)
 		this.fieldArray = [String(respsonse)]
+		this.submitGeneric()
 		this.showNextQuestion(2)
 	}
 
