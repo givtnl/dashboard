@@ -122,7 +122,7 @@ export class QRCodeComponent implements OnInit {
 		body.commands = this.fieldArray.map(x => { return { allocationName: x } });
 		await this.apiService.postData(`v2/organisations/${this.userService.CurrentCollectGroup.OrgId}/collectgroups/${this.userService.CurrentCollectGroup.GUID}/collectionmediums/${this.userLanguage.toLowerCase()}/batch`, body)
 			.then(response => {
-				this.downloadZip(response.Base)
+				this.downloadZip(response.Base64Result)
 			})
 	}
 
