@@ -252,5 +252,6 @@
     "QRCodeLanguagePreference": "Language of the QR-codes",
     "QRCodeLanguagePreferenceTitle": "Here you can select the language for the QR-codes.",
     "LanguageEN": "English",
-    "LanguageNL": "Dutch"
+    "LanguageNL": "Dutch",
+    "Error_Generic": "Oops, something went wrong. Please contact us immediately."
 }
