@@ -3,6 +3,7 @@ import { Component, OnInit, AfterViewInit } from "@angular/core";
 import { LangChangeEvent, TranslateService } from "ng2-translate";
 import { UserService } from "../services/user.service";
 import { isNullOrUndefined } from "util";
+import { LoggingService } from "app/services/logging.service";
 
 
 @Component({
@@ -14,27 +15,29 @@ import { isNullOrUndefined } from "util";
 export class SettingsComponent implements OnInit {
 	private _firstDay: number = 0;
 	private days = [];
+	private selectedQRLanguage: String;
 	public isSettingsDetailVisible = false;
 	public isDeepLinkVisible = false;
 	public isQRCodeSettingVisible = false;
-
 	public currentCollectGroup;
+
 	requestMediumIdTitle: String;
 	requestMediumIdBody: String;
-
-	private selectedQRLanguage: String;
-	public availableLanguages = [{ value: "en", name: "EN" }, { value: "nl", name: "NL" }]
-
 	requestMediumIdManual: String;
-	get firstDay(): number {
-		return this._firstDay;
-	}
 
-	set firstDay(value: number) {
-		this._firstDay = value;
-		this.dataService.writeData("FirstDayOfWeek", value, true);
-	}
 
+	public availableLanguages: any
+
+	constructor(        
+		private loggingService: LoggingService,
+		private dataService: DataService, 
+		private translateService: TranslateService, 
+		private userService: UserService) {
+		this.loadTerms();
+		this.currentCollectGroup = userService.CurrentCollectGroup;
+		this.loadConnectWithGivt();
+		this.loadQRLanguages();
+	}
 	ngOnInit() {
 		window.scrollTo(0, 0);
 		let localDay = this.dataService.getData("FirstDayOfWeek");
@@ -45,6 +48,7 @@ export class SettingsComponent implements OnInit {
 		this.translateService.onLangChange.subscribe((event: LangChangeEvent) => {
 			this.loadTerms();
 			this.loadConnectWithGivt();
+			this.loadQRLanguages();
 		});
 
 		if (!isNullOrUndefined(navigator.language)) {
@@ -52,16 +56,27 @@ export class SettingsComponent implements OnInit {
 		}
 	}
 
-	constructor(private dataService: DataService, private translateService: TranslateService, private userService: UserService) {
-		this.loadTerms();
-		this.currentCollectGroup = userService.CurrentCollectGroup;
-		this.loadConnectWithGivt();
-		var en = this.availableLanguages.filter(x=>x.value == "en")[0]
-		var nl  = this.availableLanguages.filter(x=>x.value == "nl")[0]
-		en.name = this.translateService.instant("LanguageEN")
-		nl.name = this.translateService.instant("LanguageNL")
-		this.availableLanguages = [en, nl]
-		console.log(this.availableLanguages)
+	get firstDay(): number {
+		return this._firstDay;
+	}
+
+	set firstDay(value: number) {
+		this._firstDay = value;
+		this.dataService.writeData("FirstDayOfWeek", value, true);
+	}
+	
+
+	private loadQRLanguages() {
+		this.availableLanguages = [
+			{
+				name: this.translateService.instant("LanguageEN"),
+				value: "en"
+			},
+			{
+				name: this.translateService.instant("LanguageNL"),
+				value: "nl"
+			}
+		]
 	}
 
 	private loadTerms() {
@@ -98,5 +113,8 @@ export class SettingsComponent implements OnInit {
 	}
 	saveQRCodeLanguage() {
 		this.dataService.writeData("SelectedQRCodeLanguage", this.selectedQRLanguage, true)
+		var button = document.getElementById("QRSET")
+		button.classList.add("qr-check-fade");
+		this.loggingService.info(`QR Code language changed to ${this.selectedQRLanguage} for collectgroup: ${this.userService.CurrentCollectGroup.Name}`)
 	}
 }

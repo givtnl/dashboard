@@ -120,7 +120,7 @@
                     <select [(ngModel)]="selectedQRLanguage">
                     <option *ngFor="let item of availableLanguages" [ngValue]="item.value">{{item.name}}</option>
                 </select>
-                    <button class="btn btn-qr-lang" (click)="saveQRCodeLanguage()">Save</button>
+                    <button class="btn btn-qr-lang" (click)="saveQRCodeLanguage()">Save <i id="QRSET"  class='fa fa-check qr-check'></i></button>
                 </div>
             </div>
         </div>
