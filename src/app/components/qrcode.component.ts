@@ -43,7 +43,7 @@ export class QRCodeComponent implements OnInit {
 	email = this.dataService.getData('UserEmail')
 	phonenumber = ""
 	comments = ""
-	
+
 	ngOnInit(): void {
 		this.loading = true
 		this.apiService.getData(`v2/organisations/${this.userService.CurrentCollectGroup.OrgId}/collectgroups/${this.userService.CurrentCollectGroup.GUID}/collectionmediums`)
@@ -183,7 +183,7 @@ export class QRCodeComponent implements OnInit {
 		this.apiService.getData(`v2/organisations/${this.userService.CurrentCollectGroup.OrgId}/collectgroups/${this.userService.CurrentCollectGroup.GUID}/collectionmediums/${value}/export/${this.selectedLanguage.toLowerCase()}`)
 			.then(response => {
 				if (!isNullOrUndefined(response))
-					this.downloadZip("response.Base64Result", 2, name)
+					this.downloadZip(response.Base64Result, 2, name)
 				else
 					this.handleError(`Couldnt get list of qr codes because response was null`)
 			})
