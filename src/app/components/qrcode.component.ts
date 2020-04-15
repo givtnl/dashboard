@@ -13,6 +13,7 @@ import { forEachChild } from "typescript";
 import { Message } from "@angular/compiler/src/i18n/i18n_ast";
 import { TranslateService } from "../../../node_modules/ng2-translate";
 import { isNullOrUndefined } from "util";
+import { LoggingService } from "app/services/logging.service";
 
 
 @Component({
@@ -23,7 +24,12 @@ import { isNullOrUndefined } from "util";
 export class QRCodeComponent implements OnInit {
 	private selectedLanguage: string;
 	private loading;
-	constructor(private translateService: TranslateService, private apiService: ApiClientService, private dataService: DataService, private datePipe: ISODatePipe, private router: Router, private http: Http, private userService: UserService) {
+	constructor(
+		private translateService: TranslateService,
+		private apiService: ApiClientService,
+		private dataService: DataService,
+		private userService: UserService,
+		private logginService: LoggingService) {
 
 	}
 	ngOnInit(): void {
@@ -60,8 +66,10 @@ export class QRCodeComponent implements OnInit {
 		this.loading = true;
 		this.apiService.getData(`v2/organisations/${this.userService.CurrentCollectGroup.OrgId}/collectgroups/${this.userService.CurrentCollectGroup.GUID}/collectionmediums/${value}/export/${this.selectedLanguage.toLowerCase()}`)
 			.then(response => {
-				this.loading = false;
-				this.downloadZip(response.Base64Result, 2, name)
+				if(!isNullOrUndefined(response)) 
+					this.downloadZip(response.Base64Result, 2, name)
+				else
+					this.handleError(`Couldnt get list of qr codes because response was null`)
 			})
 	}
 	b64toBlob(b64Data, contentType, sliceSize) {
@@ -140,8 +148,11 @@ export class QRCodeComponent implements OnInit {
 			.then(response => {
 				if (!isNullOrUndefined(response))
 					this.downloadZip(response.Base64Result, 0);
-				this.loading = false;
-			}).catch((error) => { alert(error); this.loading = false; })
+				else
+					this.handleError(`Batch: couldnt get qr codes bacause response was null or undefined.`)
+			}).catch((error) => {
+				this.handleError(error)
+			})
 	}
 	async submitGeneric() {
 		this.loading = true;
@@ -153,14 +164,25 @@ export class QRCodeComponent implements OnInit {
 				if (!isNullOrUndefined(mediumId)) {
 					this.apiService.getData(`v2/organisations/${this.userService.CurrentCollectGroup.OrgId}/collectgroups/${this.userService.CurrentCollectGroup.GUID}/collectionmediums/${response}/export/${this.selectedLanguage.toLowerCase()}`)
 						.then(response2 => {
-							if (!isNullOrUndefined(response2))
+							if (!isNullOrUndefined(response2)) 
 								this.downloadZip(response2.Base64Result, 1);
-							this.loading = false;
-						}).catch((error) => { alert(error); this.loading = false; })
+							else
+								this.handleError(`Couldnt get QR code from response because response is null or undefined`)
+						}).catch((error) => {
+							this.handleError(error)
+						})
+				} else  {
+					this.handleError(`Couldn't get medium id from response: ${response}`)
 				}
-			}).catch((error) => { alert(error); this.loading = false; })
+			}).catch((error) => {
+				this.handleError(error)
+			})
 	}
-
+	handleError(error) {
+		this.translateService.get("Error_Generic").subscribe((translation) => { alert(translation) })
+		this.logginService.error(`An error occurred in the QR code flow\\n${error}`)
+		this.loading = false;
+	} 
 	downloadZip(response: string, type: number, name: string = null) {
 		var blob = this.b64toBlob(response, "application/zip", 512);
 		var blobUrl = URL.createObjectURL(blob);
@@ -184,6 +206,8 @@ export class QRCodeComponent implements OnInit {
 		button.setAttribute("download", fileName)
 		button.click();
 		window.URL.revokeObjectURL(blobUrl);
+
+		this.loading = false;
 	}
 
 	flowGeneric() {
