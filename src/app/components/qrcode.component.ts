@@ -40,7 +40,10 @@ export class QRCodeComponent implements OnInit {
 		else if (!isNullOrUndefined(navigator.language)) {
 			this.selectedLanguage = navigator.language.substring(0, 2)
 		}
-
+		
+		this.userService.collectGroupChanged.subscribe(() => {
+            this.ngOnInit();
+        });
 	}
 	public name = ""
 	GenericQR: boolean = false
