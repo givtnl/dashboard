@@ -174,7 +174,7 @@ export class QRCodeComponent implements OnInit {
 	}
 	handleError(error) {
 		this.translateService.get("Error_Generic").subscribe((translation) => { alert(translation) })
-		this.logginService.error(`An error occurred in the QR code flow\\n${error}`)
+		this.logginService.error(`An error occurred in the QR code flow - ${error}`)
 		this.loading = false;
 	}
 
