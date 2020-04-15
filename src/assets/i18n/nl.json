@@ -252,5 +252,6 @@
     "QRCodeLanguagePreference": "Taal van de QR codes",
     "QRCodeLanguagePreferenceTitle": "Hier kan je de taal voor de QR codes selecteren.",
     "LanguageEN": "Engels",
-    "LanguageNL": "Nederlands"
+    "LanguageNL": "Nederlands",
+    "Error_Generic": "Oops, er is iets mis gegaan. Gelieve contact met ons op te nemen."
 }
