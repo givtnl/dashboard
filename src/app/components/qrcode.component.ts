@@ -48,15 +48,20 @@ export class QRCodeComponent implements OnInit {
 		this.loading = true
 		this.apiService.getData(`v2/organisations/${this.userService.CurrentCollectGroup.OrgId}/collectgroups/${this.userService.CurrentCollectGroup.GUID}/collectionmediums`)
 			.then(resp => {
+				this.logginService.info("Succesfully fetched qr code list")
 				this.qrCodes = resp
 				this.loading = false
-			});
+			}).catch((error) => this.handleError(error));
 
 		var savedLanguage = this.dataService.getData("SelectedQRCodeLanguage");
-		if (!isNullOrUndefined(savedLanguage) && savedLanguage.length == 2)
+		if (!isNullOrUndefined(savedLanguage) && savedLanguage.length == 2) {
 			this.selectedLanguage = savedLanguage
+			this.logginService.info("Set language in QR component from Local storage")
+		}
 		else if (!isNullOrUndefined(navigator.language)) {
 			this.selectedLanguage = navigator.language.substring(0, 2)
+			this.logginService.info("Set language in QR component from navigator")
+
 		}
 
 		this.userService.collectGroupChanged.subscribe(() => {
@@ -65,6 +70,7 @@ export class QRCodeComponent implements OnInit {
 	}
 
 	async submitBatch() {
+		this.logginService.info("Submitting batch QR Request")
 		this.loading = true;
 		var body = { commands: [] }
 		body.commands = this.fieldArray.map(x => { return { allocationName: x } });
@@ -80,6 +86,8 @@ export class QRCodeComponent implements OnInit {
 	}
 
 	async submitGeneric() {
+		this.logginService.info("Submitting generic QR Request")
+
 		this.loading = true;
 		var body = { AllocationName: null };
 		this.translateService.get("QRCodeREQ_generic").subscribe((res) => body.AllocationName = res)
@@ -127,7 +135,7 @@ export class QRCodeComponent implements OnInit {
 			this.showPreviousQuestion(1)
 		}
 	}
-	
+
 	showNextQuestion(value: number) {
 		switch (this.currentQuestionId) {
 			case 2:
