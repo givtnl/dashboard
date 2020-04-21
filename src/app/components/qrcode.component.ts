@@ -95,7 +95,7 @@ export class QRCodeComponent implements OnInit {
 			.then(async response => {
 				var mediumId = response.Result;
 				if (!isNullOrUndefined(mediumId)) {
-					this.apiService.getData(`v2/organisations/${this.userService.CurrentCollectGroup.OrgId}/collectgroups/${this.userService.CurrentCollectGroup.GUID}/collectionmediums/${response}/export/${this.selectedLanguage.toLowerCase()}`)
+					this.apiService.getData(`v2/organisations/${this.userService.CurrentCollectGroup.OrgId}/collectgroups/${this.userService.CurrentCollectGroup.GUID}/collectionmediums/${mediumId}/export/${this.selectedLanguage.toLowerCase()}`)
 						.then(response2 => {
 							if (!isNullOrUndefined(response2))
 								this.downloadZip(response2.Base64Result, 1);
