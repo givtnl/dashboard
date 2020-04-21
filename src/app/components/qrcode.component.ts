@@ -22,8 +22,8 @@ import { LoggingService } from "app/services/logging.service";
 	styleUrls: ['../css/qrcode.component.css']
 })
 export class QRCodeComponent implements OnInit {
-	private selectedLanguage: string;
-	private loading;
+	public selectedLanguage: string;
+	public loading = false;
 	constructor(
 		private translateService: TranslateService,
 		private apiService: ApiClientService,
@@ -121,6 +121,10 @@ export class QRCodeComponent implements OnInit {
 		this.showNextQuestion(2)
 	}
 
+	saveLanguageAndContinue():void{
+		this.dataService.writeData("SelectedQRCodeLanguage", this.selectedLanguage, true)
+		this.showNextQuestion(1);
+	}
 	flowSpecific() {
 		this.GenericQR = false
 		this.showNextQuestion(1)
