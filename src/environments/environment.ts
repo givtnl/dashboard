@@ -5,5 +5,5 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'http://givt-debug-api.azurewebsites.net/'
+  apiUrl: 'https://givt-debug-api.azurewebsites.net'
 };
