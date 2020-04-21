@@ -425,8 +425,8 @@
 }
 
 .QRCode_ListContainer {
-    overflow: auto;
-    width: 40%;
+    overflow: hidden;
+    width: 70%;
     margin: 0 auto;
 }
 

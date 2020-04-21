@@ -26,7 +26,12 @@
                 <div class="QRCode_ListContainer">
                     <table class="table">
                         <tr *ngFor="let qrCode of qrCodes">
-                            <td>{{qrCode.Name || qrCode.MediumId}}</td>
+                            <td>
+                                <span *ngIf="qrCode.Name && qrCode.Name.length > 0">
+                                    {{qrCode.Name}}</span>
+                                <span *ngIf="!qrCode.Name || qrCode.Name.length === 0">
+                                    {{"QRCodeREQ_2_button_generic" | translate}}
+                                </span></td>
                             <td><a class="request-qr-btn" (click)="downloadQr(qrCode.MediumId, qrCode.Name)"><i
                                         class='fa fa-download'></i>&nbsp;Download</a></td>
                         </tr>
