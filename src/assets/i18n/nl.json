@@ -250,7 +250,7 @@
     "QRCodeREQ_List_Info": "Dit zijn de reeds bestaande QR-codes. Je kan ze opnieuw downloaden door op het icoontje te klikken naast de naam. Indien je de taal van de QR-codes wil wijzigen, kan je dit doen bij 'Voorkeuren' in het menu.",
     "QRCodeREQ_StartFlow": "Vraag een nieuwe QR-code aan",
     "QRCodeLanguagePreference": "Taal van de instructietekst bij de QR-code",
-    "QRCodeLanguagePreferenceTitle": "Hier kan je de taal selecteren van de instructietekst naast de QR-codes.",
+    "QRCodeLanguagePreferenceTitle": "Selecteer de taal van van de promotietekst naast de QR-code die je gaat genereren.",
     "LanguageEN": "Engels",
     "LanguageNL": "Nederlands",
     "Error_Generic": "Oeps, er ging iets mis. Neem aub contact met ons op."
