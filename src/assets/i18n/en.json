@@ -245,13 +245,13 @@
     "Text_Today": "Today",
     "Text_Today_Givers": "Givers today",
     "QRCodeREQ_List_Title": "QR Codes",
-    "QRCode": "QR Code",
-    "QRCodes": "QR Codes",
-    "QRCodeREQ_List_Info": "These are the pre-existing QR codes. You can download them again by clicking on the icon next to the name. If you wish to change the language of the QR codes, you can do this via the 'Preferences' item in the menu.",
+    "QRCode": "QR code",
+    "QRCodes": "QR codes",
+    "QRCodeREQ_List_Info": "These are the pre-existing QR codes. You can download them again by clicking on the icon next to the name. If you wish to change the language of the QR codes, you can do so via the 'Preferences' item in the menu.",
     "QRCodeREQ_StartFlow": "Request a new QR code",
-    "QRCodeLanguagePreference": "Language of the QR-codes",
-    "QRCodeLanguagePreferenceTitle": "Here you can select the language for the QR-codes.",
+    "QRCodeLanguagePreference": "Language of the instruction text for the QR codes",
+    "QRCodeLanguagePreferenceTitle": "Here you can select the language of the instruction text for the QR codes.",
     "LanguageEN": "English",
     "LanguageNL": "Dutch",
-    "Error_Generic": "Oops, something went wrong. Please contact us immediately."
+    "Error_Generic": "Oops, something went wrong. Please contact us."
 }
