@@ -156,7 +156,7 @@ export class CollectsShedulerComponent implements OnInit {
                 .updateAllocation(this.userService.CurrentCollectGroup.GUID, row.value.id, row.value)
                 .pipe(
                     catchError((error: HttpErrorResponse) =>
-                        error.status === 409 ? this.handleConflict(error, row) : this.handleGenericError()
+                        error.status === 409 || error.status === 422 || error.status === 500 ? this.handleConflict(error, row) : this.handleGenericError()
                     )
                 )
                 .subscribe(x =>
