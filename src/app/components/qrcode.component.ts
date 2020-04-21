@@ -12,6 +12,8 @@ import { forEach } from "@angular/router/src/utils/collection";
 import { forEachChild } from "typescript";
 import { Message } from "@angular/compiler/src/i18n/i18n_ast";
 import { TranslateService } from "../../../node_modules/ng2-translate";
+import { isNullOrUndefined } from "util";
+import { LoggingService } from "app/services/logging.service";
 
 
 @Component({
@@ -19,105 +21,95 @@ import { TranslateService } from "../../../node_modules/ng2-translate";
 	templateUrl: '../html/qrcode.component.html',
 	styleUrls: ['../css/qrcode.component.css']
 })
-export class QRCodeComponent {
-
-	constructor(private translateService :TranslateService, private apiService: ApiClientService, private dataService: DataService, private datePipe: ISODatePipe, private router: Router, private http: Http, private userService: UserService) {
+export class QRCodeComponent implements OnInit {
+	private selectedLanguage: string;
+	private loading;
+	constructor(
+		private translateService: TranslateService,
+		private apiService: ApiClientService,
+		private dataService: DataService,
+		private userService: UserService,
+		private logginService: LoggingService) {
 
 	}
 	public name = ""
 	GenericQR: boolean = false
-	currentQuestionId: number = 1
+	currentQuestionId: number = 0
 	fieldArray: string[] = [""]
 	giftPurposes: string[] = []
 	isEmailValid: boolean = true
 
-
+	qrCodes = []
 	email = this.dataService.getData('UserEmail')
 	phonenumber = ""
 	comments = ""
-	private newAttribute: string = ""
 
-	async showNextQuestion(value: number) {
-		switch (this.currentQuestionId) {
-			case 2:
-				if(this.fieldArray[0] == null) {
-					this.fieldArray.push("")
-				}
-				this.currentQuestionId += value
-				break
-			case 3:
-				this.fieldArray = this.fieldArray.filter(element => element.trim() !== "")
-
-				this.fieldArray.forEach((element, index) => {
-					this.fieldArray[index] = element.trim()
-				})
-				this.currentQuestionId += value
-				break
-			case 4:
-				this.checkEmail()
-
-				if (this.isEmailValid) {				
-					var submitok = await this.submit()
-					if(submitok==false){
-						this.translateService.get("QRCodeREQ_warning_submitfailed").subscribe((res) => setTimeout(() => {alert(res)}, 200))
-					} else 
-						this.currentQuestionId += value
-				} else
-					this.translateService.get("QRCodeREQ_warning_novalidemail").subscribe((res) => alert(res))				
-				break
-			default:
-				this.currentQuestionId += value
-				break
-		}
-	}
-	
-	showPreviousQuestion(value: number = 1) {
-		switch (this.currentQuestionId) {
-			case 4:
-				if(this.fieldArray[0] == null) {
-					this.fieldArray.push("")
-				} 
-				break
-
-			default:
-				break
-		}
-		this.currentQuestionId -= value
-	}
-
-	deleteFieldValue(index) {
-		this.fieldArray.splice(index, 1)
-	}
-
-	trackByFn(index: any, item: any) {
-		return index
-	}
-
-	async submit() {
-
-		var submitSuccessfull = false
-		let body: QRRequestBody = {email: this.email, phoneNumber: this.phonenumber, collectGoals: this.fieldArray, comments: this.comments}
-		let apiUrl = 'v2/collectgroups/' + this.userService.CurrentCollectGroup.GUID + '/qrcodes'
-
-		await this.apiService.postData(apiUrl, body)
+	ngOnInit(): void {
+		this.loading = true
+		this.apiService.getData(`v2/organisations/${this.userService.CurrentCollectGroup.OrgId}/collectgroups/${this.userService.CurrentCollectGroup.GUID}/collectionmediums`)
 			.then(resp => {
-				if(Number(resp) > 0) {
-					submitSuccessfull = true
-				}
-			})
-			.catch(err => {
-				submitSuccessfull = false
-			})
-		return submitSuccessfull
+				this.logginService.info("Succesfully fetched qr code list")
+				this.qrCodes = resp
+				this.loading = false
+			}).catch((error) => this.handleError(error));
+
+		var savedLanguage = this.dataService.getData("SelectedQRCodeLanguage");
+		if (!isNullOrUndefined(savedLanguage) && savedLanguage.length == 2) {
+			this.selectedLanguage = savedLanguage
+			this.logginService.info("Set language in QR component from Local storage")
+		}
+		else if (!isNullOrUndefined(navigator.language)) {
+			this.selectedLanguage = navigator.language.substring(0, 2)
+			this.logginService.info("Set language in QR component from navigator")
+
+		}
+
+		this.userService.collectGroupChanged.subscribe(() => {
+			this.ngOnInit();
+		});
 	}
 
-	checkEmail() {
-		var emailField = <HTMLInputElement>document.getElementById('email')
-		this.email = emailField.value
-		const regexp = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)
-		this.isEmailValid = regexp.test(this.email)
+	async submitBatch() {
+		this.logginService.info("Submitting batch QR Request")
+		this.loading = true;
+		var body = { commands: [] }
+		body.commands = this.fieldArray.map(x => { return { allocationName: x } });
+		await this.apiService.postData(`v2/organisations/${this.userService.CurrentCollectGroup.OrgId}/collectgroups/${this.userService.CurrentCollectGroup.GUID}/collectionmediums/${this.selectedLanguage.toLowerCase()}/batch`, body)
+			.then(response => {
+				if (!isNullOrUndefined(response))
+					this.downloadZip(response.Base64Result, 0);
+				else
+					this.handleError(`Batch: couldnt get qr codes bacause response was null or undefined.`)
+			}).catch((error) => {
+				this.handleError(error)
+			})
+	}
 
-		return this.isEmailValid
+	async submitGeneric() {
+		this.logginService.info("Submitting generic QR Request")
+
+		this.loading = true;
+		var body = { AllocationName: null };
+		this.translateService.get("QRCodeREQ_generic").subscribe((res) => body.AllocationName = res)
+		await this.apiService.postData(`v2/organisations/${this.userService.CurrentCollectGroup.OrgId}/collectgroups/${this.userService.CurrentCollectGroup.GUID}/collectionmediums`, body)
+			.then(async response => {
+				var mediumId = response.Result;
+				if (!isNullOrUndefined(mediumId)) {
+					this.apiService.getData(`v2/organisations/${this.userService.CurrentCollectGroup.OrgId}/collectgroups/${this.userService.CurrentCollectGroup.GUID}/collectionmediums/${response}/export/${this.selectedLanguage.toLowerCase()}`)
+						.then(response2 => {
+							if (!isNullOrUndefined(response2))
+								this.downloadZip(response2.Base64Result, 1);
+							else
+								this.handleError(`Couldnt get QR code from response because response is null or undefined`)
+						}).catch((error) => {
+							this.handleError(error)
+						})
+				} else {
+					this.handleError(`Couldn't get medium id from response: ${response}`)
+				}
+			}).catch((error) => {
+				this.handleError(error)
+			})
 	}
 
 	flowGeneric() {
@@ -125,6 +117,7 @@ export class QRCodeComponent {
 		var respsonse
 		this.translateService.get("QRCodeREQ_generic").subscribe((res) => respsonse = res)
 		this.fieldArray = [String(respsonse)]
+		this.submitGeneric()
 		this.showNextQuestion(2)
 	}
 
@@ -141,6 +134,121 @@ export class QRCodeComponent {
 		else {
 			this.showPreviousQuestion(1)
 		}
+	}
+
+	showNextQuestion(value: number) {
+		switch (this.currentQuestionId) {
+			case 2:
+				if (this.fieldArray[0] == null) {
+					this.fieldArray.push("")
+				}
+				this.currentQuestionId += value
+				break
+			case 3:
+				this.fieldArray = this.fieldArray.filter(element => !isNullOrUndefined(element) && element.trim() !== "")
+
+				this.fieldArray.forEach((element, index) => {
+					this.fieldArray[index] = element.trim()
+				})
+				this.currentQuestionId += value
+				this.submitBatch()
+				break
+			default:
+				this.currentQuestionId += value
+				break
+		}
+	}
+
+	showPreviousQuestion(value: number = 1) {
+		switch (this.currentQuestionId) {
+			case 4:
+				if (this.fieldArray[0] == null) {
+					this.fieldArray.push("")
+				}
+				break
+
+			default:
+				break
+		}
+		this.currentQuestionId -= value
+	}
+
+	deleteFieldValue(index) {
+		this.fieldArray.splice(index, 1)
+	}
+
+	trackByFn(index: any, item: any) {
+		return index
+	}
+	handleError(error) {
+		this.translateService.get("Error_Generic").subscribe((translation) => { alert(translation) })
+		this.logginService.error(`An error occurred in the QR code flow - ${error}`)
+		this.loading = false;
+	}
+
+	downloadQr(value: string, name: string) {
+		this.loading = true;
+		this.apiService.getData(`v2/organisations/${this.userService.CurrentCollectGroup.OrgId}/collectgroups/${this.userService.CurrentCollectGroup.GUID}/collectionmediums/${value}/export/${this.selectedLanguage.toLowerCase()}`)
+			.then(response => {
+				if (!isNullOrUndefined(response))
+					this.downloadZip(response.Base64Result, 2, name)
+				else
+					this.handleError(`Couldnt get list of qr codes because response was null`)
+			})
+	}
+
+	downloadZip(response: string, type: number, name: string = null) {
+		try {
+			var blob = this.b64toBlob(response, "application/zip", 512);
+			var blobUrl = URL.createObjectURL(blob);
+			var button = document.getElementById("hiddenQrButton");
+			button.setAttribute("href", blobUrl);
+
+			var fileName;
+
+			switch (type) {
+				case 0:
+					fileName = `${this.translateService.instant("QRCodes").toString()} - ${this.userService.CurrentCollectGroup.Name}`
+					break;
+				case 1:
+					fileName = `${this.translateService.instant("QRCode").toString()} - ${this.userService.CurrentCollectGroup.Name} - ${this.translateService.instant("QRCodeREQ_generic").toString()}`
+					break;
+				case 2:
+					fileName = `${this.translateService.instant("QRCode").toString()} - ${this.userService.CurrentCollectGroup.Name} - ${name}`
+					break;
+			}
+
+			button.setAttribute("download", fileName)
+			button.click();
+			window.URL.revokeObjectURL(blobUrl);
+		} catch (error) {
+			this.handleError(error)
+		}
+
+		this.loading = false;
+	}
+	b64toBlob(b64Data, contentType, sliceSize) {
+		contentType = contentType || '';
+		sliceSize = sliceSize || 512;
+
+		var byteCharacters = atob(b64Data);
+		var byteArrays = [];
+
+		for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+			var slice = byteCharacters.slice(offset, offset + sliceSize);
+
+			var byteNumbers = new Array(slice.length);
+			for (var i = 0; i < slice.length; i++) {
+				byteNumbers[i] = slice.charCodeAt(i);
+			}
+
+			var byteArray = new Uint8Array(byteNumbers);
+
+			byteArrays.push(byteArray);
+		}
+
+		var blob = new Blob(byteArrays, { type: contentType });
+		return blob;
 	}
 }
 

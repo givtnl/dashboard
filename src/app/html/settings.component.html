@@ -22,7 +22,7 @@
                 </div>
 
                 <ul class="settings-list">
-                    <li [class.settings-list-item-active]="isSettingsDetailVisible" class="settings-list-item" (click)="isSettingsDetailVisible = true; isDeepLinkVisible = false;">
+                    <li [class.settings-list-item-active]="isSettingsDetailVisible" class="settings-list-item" (click)="isSettingsDetailVisible = true; isDeepLinkVisible = false; isQRCodeSettingVisible = false;">
                         <span>
                             {{ "FirstDayOfWeek" | translate }}
                         </span>
@@ -39,9 +39,26 @@
                             </svg>
                         </span>
                     </li>
-                    <li [class.settings-list-item-active]="isDeepLinkVisible" class="settings-list-item" (click)="isDeepLinkVisible = true; isSettingsDetailVisible = false">
+                    <li [class.settings-list-item-active]="isDeepLinkVisible" class="settings-list-item" (click)="isDeepLinkVisible = true; isSettingsDetailVisible = false; isQRCodeSettingVisible = false;">
                         <span>
                             {{ "GivtWithGivtPreferenceTitle" | translate }}
+                        </span>
+                        <span style="display: flex;">
+                            <svg width="11px" height="19px" viewBox="0 0 11 19" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                                <!-- Generator: Sketch 50 (54983) - http://www.bohemiancoding.com/sketch -->
+                                <desc>Created with Sketch.</desc>
+                                <defs></defs>
+                                <g id="Settings-page-dashboard" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                    <g id="Vertical-menu1" transform="translate(-541.000000, -114.000000)" stroke="#FFFFFF">
+                                        <polyline id="left-back" transform="translate(546.707112, 123.348553) scale(-1, 1) translate(-546.707112, -123.348553) " points="551.414223 114 542 123.414223 551.282884 132.697107"></polyline>
+                                    </g>
+                                </g>
+                            </svg>
+                        </span>
+                    </li>
+                    <li [class.settings-list-item-active]="isQRCodeSettingVisible" class="settings-list-item" (click)="isQRCodeSettingVisible = true; isSettingsDetailVisible = false; isDeepLinkVisible = false;">
+                        <span>
+                            {{ "QRCodeLanguagePreference" | translate }}
                         </span>
                         <span style="display: flex;">
                             <svg width="11px" height="19px" viewBox="0 0 11 19" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -59,7 +76,7 @@
                 </ul>
             </div>
             <div *ngIf="isSettingsDetailVisible" (click)="goBackToSettings()" class="only-show-on-mobile go-back" style="">
-                    <span style="display: flex;transform: scaleX(-1);">
+                <span style="display: flex;transform: scaleX(-1);">
                     <svg width="11px" height="19px" viewBox="0 0 11 19" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                         <!-- Generator: Sketch 50 (54983) - http://www.bohemiancoding.com/sketch -->
                         <desc>Created with Sketch.</desc>
@@ -73,7 +90,7 @@
                 </span>
                 <p style="margin:0;">{{ "BackToSettings" | translate }}</p>
             </div>
-            <div class="setting" *ngIf="!isSettingsDetailVisible && !isDeepLinkVisible" [class.settings-pane-hidden]="!isSettingsDetailVisible || !isDeepLinkVisible">
+            <div class="setting" *ngIf="!isSettingsDetailVisible && !isDeepLinkVisible && !isQRCodeSettingVisible" [class.settings-pane-hidden]="!isSettingsDetailVisible || !isDeepLinkVisible || !isQRCodeSettingVisible">
                 <p class="text">{{ "SelectPreferenceFromList" | translate }}</p>
             </div>
             <div class="setting" *ngIf="isSettingsDetailVisible" [class.settings-pane-hidden]="!isSettingsDetailVisible">
@@ -97,10 +114,16 @@
                 <p class="text" [innerHTML]="requestMediumIdManual">
                 </p>
             </div>
+            <div class="setting" *ngIf="isQRCodeSettingVisible" [class.settings-pane-hidden]="!isQRCodeSettingVisible">
+                <p class="text">{{ "QRCodeLanguagePreferenceTitle" | translate}}</p>
+                <div class="qr-inputs">
+                    <select [(ngModel)]="selectedQRLanguage">
+                    <option *ngFor="let item of availableLanguages" [ngValue]="item.value">{{item.name}}</option>
+                </select>
+                    <button class="btn btn-qr-lang" (click)="saveQRCodeLanguage()">Save <i id="QRSET"  class='fa fa-check qr-check'></i></button>
+                </div>
+            </div>
         </div>
         <my-footer></my-footer>
     </div>
 </div>
-
-
-
