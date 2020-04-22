@@ -81,7 +81,7 @@ export class QRCodeComponent implements OnInit {
 		await this.apiService.postData(`v2/organisations/${this.userService.CurrentCollectGroup.OrgId}/collectgroups/${this.userService.CurrentCollectGroup.GUID}/collectionmediums/${this.selectedLanguage.toLowerCase()}/batch`, body)
 			.then(response => {
 				if (!isNullOrUndefined(response))
-					this.downloadZip(response.Base64Result, 0);
+					this.downloadZip(response.Base64Result, "");
 				else
 					this.handleError(`Batch: couldnt get qr codes bacause response was null or undefined.`)
 			}).catch((error) => {
@@ -101,7 +101,7 @@ export class QRCodeComponent implements OnInit {
 					this.apiService.getData(`v2/organisations/${this.userService.CurrentCollectGroup.OrgId}/collectgroups/${this.userService.CurrentCollectGroup.GUID}/collectionmediums/${mediumId}/export/${this.selectedLanguage.toLowerCase()}`)
 						.then(response2 => {
 							if (!isNullOrUndefined(response2))
-								this.downloadZip(response2.Base64Result, 1);
+								this.downloadZip(response2.Base64Result)
 							else
 								this.handleError(`Couldnt get QR code from response because response is null or undefined`)
 						}).catch((error) => {
@@ -198,33 +198,27 @@ export class QRCodeComponent implements OnInit {
 		this.apiService.getData(`v2/organisations/${this.userService.CurrentCollectGroup.OrgId}/collectgroups/${this.userService.CurrentCollectGroup.GUID}/collectionmediums/${value}/export/${this.selectedLanguage.toLowerCase()}`)
 			.then(response => {
 				if (!isNullOrUndefined(response))
-					this.downloadZip(response.Base64Result, 2, name)
+					this.downloadZip(response.Base64Result, name)
 				else
 					this.handleError(`Couldnt get list of qr codes because response was null`)
 			})
 	}
 
-	downloadZip(response: string, type: number, name: string = null) {
+	downloadZip(response: string, name: string = null) {
 		try {
 			var blob = this.b64toBlob(response, "application/zip", 512);
 			var blobUrl = URL.createObjectURL(blob);
 			var button = document.getElementById("hiddenQrButton");
 			button.setAttribute("href", blobUrl);
 
-			var fileName;
-
-			switch (type) {
-				case 0:
-					fileName = `${this.translateService.instant("QRCodes").toString()} - ${this.userService.CurrentCollectGroup.Name}`
-					break;
-				case 1:
-					fileName = `${this.translateService.instant("QRCode").toString()} - ${this.userService.CurrentCollectGroup.Name} - ${this.translateService.instant("QRCodeREQ_generic").toString()}`
-					break;
-				case 2:
-					fileName = `${this.translateService.instant("QRCode").toString()} - ${this.userService.CurrentCollectGroup.Name} - ${name}`
-					break;
+			if(name == null)
+				name = ` - ${this.translateService.instant("QRCodeREQ_generic").toString()}`
+			else if(name != "") {
+				name = ` - ${name}`
 			}
-
+			
+			var fileName = `${this.translateService.instant("QRCodes").toString()} - ${this.userService.CurrentCollectGroup.Name}${name}`
+				
 			button.setAttribute("download", fileName)
 			button.click();
 			window.URL.revokeObjectURL(blobUrl);
