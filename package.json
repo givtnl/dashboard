@@ -1,6 +1,6 @@
 {
     "name": "givtplatform",
-    "version": "1.28.10",
+    "version": "1.29.0",
     "license": "MIT",
     "scripts": {
         "ng": "ng",
