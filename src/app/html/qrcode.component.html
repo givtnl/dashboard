@@ -20,26 +20,37 @@
                         <h2>{{"QRCodeREQ_List_Title" | translate}}</h2>
                     </div>
                 </div>
-                <div class="QRCodeListInfo">
+                <div class="QRCodeListInfo text">
                     <p>{{"QRCodeREQ_List_Info" | translate }}</p>
                 </div>
                 <div class="QRCode_ListContainer">
                     <table class="table">
                         <tr *ngFor="let qrCode of qrCodes">
-                            <td>
+                            <td style="width: 70% !important;">
                                 <span *ngIf="qrCode.Name && qrCode.Name.length > 0">
                                     {{qrCode.Name}}</span>
                                 <span *ngIf="!qrCode.Name || qrCode.Name.length === 0">
                                     {{"QRCodeREQ_2_button_generic" | translate}}
                                 </span></td>
-                            <td><a class="request-qr-btn" (click)="downloadQr(qrCode.MediumId, qrCode.Name)"><i
+                            <td>
+                                <a class="request-qr-btn" (click)="downloadQr(qrCode.MediumId, qrCode.Name)"><i
                                         class='fa fa-download'></i>&nbsp;Download</a></td>
                         </tr>
                     </table>
                 </div>
                 <div class="QRCode_Buttons">
+                    <p class="text">{{ "QRCodeLanguagePreferenceTitle" | translate}}</p>
+                    <div class="qr-inputs">
+                        <select [(ngModel)]="selectedLanguage">
+                            <option [ngValue]="'NL'">{{"LanguageNL" | translate}}</option>
+                            <option [ngValue]="'EN'">{{"LanguageEN" | translate}}</option>
+                        </select>
+
+                    </div>
+                </div>
+                <div class="QRCode_Buttons">
                     <button class="btn btn-green"
-                        (click)="showNextQuestion(1)">{{"QRCodeREQ_StartFlow" | translate}}</button>
+                        (click)="saveLanguageAndContinue()">{{"QRCodeREQ_StartFlow" | translate}}</button>
                 </div>
             </div>
             <div class="QRCode QRCode1" *ngIf="currentQuestionId == 1" id="question-1">
@@ -65,7 +76,7 @@
                         <p class="subtitle">{{"QRCodeREQ_1_subtitle-button" | translate}}</p>
                     </div>
                 </div>
-                <div class="QRCode_Buttons">
+                <!-- <div class="QRCode_Buttons">
                     <p class="text">{{ "QRCodeLanguagePreferenceTitle" | translate}}</p>
                     <div class="qr-inputs">
                         <select [(ngModel)]="selectedLanguage">
@@ -74,10 +85,10 @@
                         </select>
 
                     </div>
-                </div>
+                </div> -->
                 <div class="QRCode_Buttons">
                     <button class="btn btn-green"
-                        (click)="saveLanguageAndContinue()">{{"QRCodeREQ_nextbutton" | translate}}</button>
+                        (click)="showNextQuestion(1)">{{"QRCodeREQ_nextbutton" | translate}}</button>
                 </div>
             </div>
 
@@ -129,8 +140,8 @@
 
                         <table>
                             <tr *ngFor="let field of fieldArray; let i = index; trackBy:trackByFn">
-                                <td>
-                                    <input class="textbox" type="text" name="{{field}}"
+                                <td style="padding:0px;">
+                                    <input class="form-control textbox" style="margin-bottom:10px;" type="text" name="{{field}}"
                                         [attr.placeholder]="'QRCodeREQ_3_placeholder' | translate"
                                         [(ngModel)]="fieldArray[i]" />
                                 </td>
@@ -138,7 +149,7 @@
                                         class="far fa-trash-alt"></i></td>
                             </tr>
                             <tr class="add-row">
-                                <td class="add-row-td" (click)="fieldArray.push(newAttribute)">
+                                <td class="add-row-td text" (click)="fieldArray.push(newAttribute)">
                                     <i class="fas fa-plus-circle"></i> {{"QRCodeREQ_3_addgoal" | translate}}
                                 </td>
                             </tr>

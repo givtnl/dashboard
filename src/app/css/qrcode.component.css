@@ -425,9 +425,14 @@
 }
 
 .QRCode_ListContainer {
-    overflow: hidden;
-    width: 70%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    width: 100%;
     margin: 0 auto;
+}
+
+.QRCode_ListContainer td{
+    text-align: center;
 }
 
 .request-qr-btn {

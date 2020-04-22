@@ -54,6 +54,10 @@ export class QRCodeComponent implements OnInit {
 			}).catch((error) => this.handleError(error));
 
 		var savedLanguage = this.dataService.getData("SelectedQRCodeLanguage");
+		if (!savedLanguage || savedLanguage.length === 0){
+			var currentCollectGroupCountry = this.userService.CurrentCollectGroup.Country;
+			savedLanguage = (currentCollectGroupCountry === "NL" || currentCollectGroupCountry == "BE") ? "NL":"EN";
+		}
 		if (!isNullOrUndefined(savedLanguage) && savedLanguage.length == 2) {
 			this.selectedLanguage = savedLanguage
 			this.logginService.info("Set language in QR component from Local storage")
