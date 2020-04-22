@@ -207,7 +207,7 @@
     "QRCodeREQ_4_placeholder-phone": "Phonenumber",
     "QRCodeREQ_4_placeholder-Opmerkingen": "Remarks",
     "QRCodeREQ_4_sendbutton": "Send",
-    "QRCodeREQ_1_subtitle-button": "Go through 3 easy steps to get your free QR code in your mailbox",
+    "QRCodeREQ_1_subtitle-button": "Go through 3 easy steps to download a Givt QR code that people can scan with the Givt app.",
     "QRCodeREQ_4_subtext-order": "Overview of the QR codes:",
     "QRCodeREQ_3_subtitle": "Setup your collection goals",
     "QRCodeREQ_4_comments": "Comments?",
@@ -253,5 +253,6 @@
     "QRCodeLanguagePreferenceTitle": "Select the language of the promotional text included with the QR code you will download.",
     "LanguageEN": "English",
     "LanguageNL": "Dutch",
-    "Error_Generic": "Oops, something went wrong. Please contact us."
+    "Error_Generic": "Oops, something went wrong. Please contact us.",
+    "QRCode_OopsForgotSomething": "Whoops, did you forgot to enter a name for the QR code?"
 }
