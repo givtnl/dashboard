@@ -207,7 +207,7 @@
     "QRCodeREQ_4_placeholder-phone": "Telefoon",
     "QRCodeREQ_4_placeholder-Opmerkingen": "Opmerkingen",
     "QRCodeREQ_4_sendbutton": "Verstuur",
-    "QRCodeREQ_1_subtitle-button": "Doorloop een drietal eenvoudige stappen om een gratis QR-code in je mailbox te ontvangen.",
+    "QRCodeREQ_1_subtitle-button": "Doorloop enkele eenvoudige stappen om een gratis Givt QR-code te downloaden dat gevers kunnen scannen met de Givt app.",
     "QRCodeREQ_4_subtext-order": "Overzicht van de QR-codes:",
     "QRCodeREQ_3_subtitle": "Stel hier de collectedoelen in",
     "QRCodeREQ_4_comments": "Opmerkingen?",
@@ -253,5 +253,6 @@
     "QRCodeLanguagePreferenceTitle": "Selecteer de taal van de promotie-tekst naast de QR-code die je gaat downloaden.",
     "LanguageEN": "Engels",
     "LanguageNL": "Nederlands",
-    "Error_Generic": "Oeps, er ging iets mis. Neem aub contact met ons op."
+    "Error_Generic": "Oeps, er ging iets mis. Neem aub contact met ons op.",
+    "QRCode_OopsForgotSomething": "Oops, ben je vergeten een naam te geven aan de QR-code?"
 }
