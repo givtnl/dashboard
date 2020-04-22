@@ -247,10 +247,10 @@
     "QRCodeREQ_List_Title": "QR Codes",
     "QRCode": "QR code",
     "QRCodes": "QR codes",
-    "QRCodeREQ_List_Info": "These are the pre-existing QR codes. You can download them again by clicking on the icon next to the name. If you wish to change the language of the QR codes, you can do so via the 'Preferences' item in the menu.",
+    "QRCodeREQ_List_Info": "These are the pre-existing QR codes. You can download them again by clicking on the icon next to the name.",
     "QRCodeREQ_StartFlow": "Request a new QR code",
     "QRCodeLanguagePreference": "Language of the promotional text for the QR codes",
-    "QRCodeLanguagePreferenceTitle": "Select the language of the promotional text included with the QR code you will generate or redownload.",
+    "QRCodeLanguagePreferenceTitle": "Select the language of the promotional text included with the QR code you will download.",
     "LanguageEN": "English",
     "LanguageNL": "Dutch",
     "Error_Generic": "Oops, something went wrong. Please contact us."
