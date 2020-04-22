@@ -94,7 +94,6 @@ export class QRCodeComponent implements OnInit {
 
 		this.loading = true;
 		var body = { AllocationName: null };
-		this.translateService.get("QRCodeREQ_generic").subscribe((res) => body.AllocationName = res)
 		await this.apiService.postData(`v2/organisations/${this.userService.CurrentCollectGroup.OrgId}/collectgroups/${this.userService.CurrentCollectGroup.GUID}/collectionmediums`, body)
 			.then(async response => {
 				var mediumId = response.Result;
