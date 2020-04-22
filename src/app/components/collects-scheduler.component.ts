@@ -65,7 +65,7 @@ export class CollectsShedulerComponent implements OnInit {
                     scheduler && scheduler.dtEnd ? this.datePipe.transform(new Date(scheduler.dtEnd), 'yyyy-MM-ddTHH:mm') : null,
                     [Validators.required]
                 ],
-                name: [scheduler ? scheduler.Name : null, [Validators.required, Validators.maxLength(50), Validators.minLength(3)]],
+                name: [scheduler ? scheduler.Name : null, [Validators.required, Validators.maxLength(256), Validators.minLength(1)]],
                 collectId: [scheduler ? scheduler.CollectId : 1, [Validators.required, Validators.min(1), Validators.max(3)]],
                 accountId: [
                     scheduler && scheduler.AccountId ? scheduler.AccountId : (this.bankAccounts.find(a => a.Primary) ? this.bankAccounts.find(a => a.Primary).Id : null) ,
