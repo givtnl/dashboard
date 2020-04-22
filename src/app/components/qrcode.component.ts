@@ -152,13 +152,21 @@ export class QRCodeComponent implements OnInit {
 				this.currentQuestionId += value
 				break
 			case 3:
+
 				this.fieldArray = this.fieldArray.filter(element => !isNullOrUndefined(element) && element.trim() !== "")
 
 				this.fieldArray.forEach((element, index) => {
 					this.fieldArray[index] = element.trim()
 				})
-				this.currentQuestionId += value
-				this.submitBatch()
+				if(this.fieldArray.length > 0) {
+					this.currentQuestionId += value
+					this.submitBatch()
+				} else {
+					console.log(this.fieldArray)
+					this.fieldArray.push("")
+					console.log(this.fieldArray)
+					alert(this.translateService.instant("QRCode_OopsForgotSomething").toString())
+				}
 				break
 			default:
 				this.currentQuestionId += value
