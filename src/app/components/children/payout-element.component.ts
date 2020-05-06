@@ -231,7 +231,8 @@ export class PayoutComponent implements OnInit {
 
     fetchPayoutDetail() {
         this.translate.get('NonAllocatedCollect').subscribe((res: string) => {
-            this.apiClient.getData('Payments/PayoutDetail?payoutID=' + this.childData.Id).then(resp => {
+            const dateTimeOffset = new Date().getTimezoneOffset() * -1;
+            this.apiClient.getData(`Payments/PayoutDetail?payoutID=${this.childData.Id}&dateTimeOffset=${dateTimeOffset}`).then(resp => {
                 let allocsCount: number = resp.Details.length;
                 let stornoDetails = [];
                 let paidDetails = [];
