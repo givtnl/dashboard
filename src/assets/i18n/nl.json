@@ -248,7 +248,7 @@
     "QRCode": "QR-code",
     "QRCodes": "QR-codes",
     "QRCodeREQ_List_Info": "Dit zijn de reeds bestaande QR-codes. Je kan ze opnieuw downloaden door op het icoontje te klikken naast de naam.",
-    "QRCodeREQ_StartFlow": "Vraag een nieuwe QR-code aan",
+    "QRCodeREQ_StartFlow": "Genereer een nieuwe QR-code",
     "QRCodeLanguagePreference": "Taal van de promotie-tekst bij de QR-code",
     "QRCodeLanguagePreferenceTitle": "Selecteer de taal van de promotie-tekst naast de QR-code die je gaat downloaden.",
     "LanguageEN": "Engels",
