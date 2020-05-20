@@ -248,7 +248,7 @@
     "QRCode": "QR code",
     "QRCodes": "QR codes",
     "QRCodeREQ_List_Info": "These are the pre-existing QR codes. You can download them again by clicking on the icon next to the name.",
-    "QRCodeREQ_StartFlow": "Request a new QR code",
+    "QRCodeREQ_StartFlow": "Generate a new QR code",
     "QRCodeLanguagePreference": "Language of the promotional text for the QR codes",
     "QRCodeLanguagePreferenceTitle": "Select the language of the promotional text included with the QR code you will download.",
     "LanguageEN": "English",

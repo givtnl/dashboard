@@ -224,9 +224,9 @@ export class QRCodeComponent implements OnInit {
 			else if(name != "") {
 				name = ` - ${name}`
 			}
-			
-			var fileName = `${this.translateService.instant("QRCodes").toString()} - ${this.userService.CurrentCollectGroup.Name}${name}`
-				
+
+			var fileName = `${this.translateService.instant("QRCodes").toString()} - ${this.userService.CurrentCollectGroup.Name}${name}.zip`
+
 			button.setAttribute("download", fileName)
 			button.click();
 			window.URL.revokeObjectURL(blobUrl);
