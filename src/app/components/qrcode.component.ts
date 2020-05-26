@@ -14,6 +14,7 @@ import { Message } from "@angular/compiler/src/i18n/i18n_ast";
 import { TranslateService } from "../../../node_modules/ng2-translate";
 import { isNullOrUndefined } from "util";
 import { LoggingService } from "app/services/logging.service";
+import { QrCodeType } from "app/models/qr-code-type.enum";
 
 
 @Component({
@@ -54,9 +55,9 @@ export class QRCodeComponent implements OnInit {
 			}).catch((error) => this.handleError(error));
 
 		var savedLanguage = this.dataService.getData("SelectedQRCodeLanguage");
-		if (!savedLanguage || savedLanguage.length === 0){
+		if (!savedLanguage || savedLanguage.length === 0) {
 			var currentCollectGroupCountry = this.userService.CurrentCollectGroup.Country;
-			savedLanguage = (currentCollectGroupCountry === "NL" || currentCollectGroupCountry == "BE") ? "NL":"EN";
+			savedLanguage = (currentCollectGroupCountry === "NL" || currentCollectGroupCountry == "BE") ? "NL" : "EN";
 		}
 		if (!isNullOrUndefined(savedLanguage) && savedLanguage.length == 2) {
 			this.selectedLanguage = savedLanguage
@@ -77,7 +78,7 @@ export class QRCodeComponent implements OnInit {
 		this.logginService.info("Submitting batch QR Request")
 		this.loading = true;
 		var body = { commands: [] }
-		body.commands = this.fieldArray.map(x => { return { allocationName: x } });
+		body.commands = this.fieldArray.map(x => { return { allocationName: x, CollectionMediumType:  QrCodeType.Default } });
 		await this.apiService.postData(`v2/organisations/${this.userService.CurrentCollectGroup.OrgId}/collectgroups/${this.userService.CurrentCollectGroup.GUID}/collectionmediums/${this.selectedLanguage.toLowerCase()}/batch`, body)
 			.then(response => {
 				if (!isNullOrUndefined(response))
@@ -93,7 +94,7 @@ export class QRCodeComponent implements OnInit {
 		this.logginService.info("Submitting generic QR Request")
 
 		this.loading = true;
-		var body = { AllocationName: null };
+		var body = { AllocationName: null, CollectionMediumType: QrCodeType.Default };
 		await this.apiService.postData(`v2/organisations/${this.userService.CurrentCollectGroup.OrgId}/collectgroups/${this.userService.CurrentCollectGroup.GUID}/collectionmediums`, body)
 			.then(async response => {
 				var mediumId = response.Result;
@@ -124,7 +125,7 @@ export class QRCodeComponent implements OnInit {
 		this.showNextQuestion(2)
 	}
 
-	saveLanguageAndContinue():void{
+	saveLanguageAndContinue(): void {
 		this.dataService.writeData("SelectedQRCodeLanguage", this.selectedLanguage, true)
 		this.showNextQuestion(1);
 	}
@@ -158,7 +159,7 @@ export class QRCodeComponent implements OnInit {
 				this.fieldArray.forEach((element, index) => {
 					this.fieldArray[index] = element.trim()
 				})
-				if(this.fieldArray.length > 0) {
+				if (this.fieldArray.length > 0) {
 					this.currentQuestionId += value
 					this.submitBatch()
 				} else {
@@ -219,9 +220,9 @@ export class QRCodeComponent implements OnInit {
 			var button = document.getElementById("hiddenQrButton");
 			button.setAttribute("href", blobUrl);
 
-			if(name == null)
+			if (name == null)
 				name = ` - ${this.translateService.instant("QRCodeREQ_generic").toString()}`
-			else if(name != "") {
+			else if (name != "") {
 				name = ` - ${name}`
 			}
 
