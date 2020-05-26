@@ -77,7 +77,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
                 if (this.ShowLoadingAnimation)
                     this.ShowLoadingAnimation = false;
             });
-        }, 3000);
+        }, 15000);
 
     }
 
