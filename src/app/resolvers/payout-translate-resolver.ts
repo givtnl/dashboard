@@ -12,7 +12,7 @@ export class PayoutTranslateResolver implements Resolve<string> {
         route: ActivatedRouteSnapshot,
         state: RouterStateSnapshot
     ): Observable<any> | Promise<any> | any {
-        const currency = (this.userService.CurrentCollectGroup === "NL" || this.userService.CurrentCollectGroup == "BE") ? "€" : "£";
+        const currency = this.userService.currencySymbol;
         return this.service.get('Payout_NoPayouts', {
             0: currency
         });
