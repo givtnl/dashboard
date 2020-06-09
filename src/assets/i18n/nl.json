@@ -123,7 +123,7 @@
     "DeleteAll": "Verwijderen",
     "AllocationConflict": "Conflict bij toewijzing",
     "FixedPoints": "Vaste punten",
-    "Payout_NoPayouts": "Er zijn nog geen uitbetalingen voor uw organisatie beschikbaar. De eerste uitbetaling kunt u verwachten op de tweede donderdag na de eerste keer dat er gecollecteerd is en nadat de bankrekening is geverifieerd.",
+    "Payout_NoPayouts": "Er zijn nog geen uitbetalingen voor uw organisatie beschikbaar. De eerste uitbetaling kunt u verwachten op de tweede donderdag na de eerste keer dat er gecollecteerd is en nadat de bankrekening is geverifieerd. Om de kosten te beperken wordt er uitbetaald zodra er minimaal {{0}}20 uit te betalen is. Voor de allereerste uitbetaling wordt deze drempel niet toegepast zodat jullie zo snel mogelijk kunnen zien dat wat er gegeven is daadwerkelijk wordt uitbetaald.",
     "Monday": "Maandag",
     "Tuesday": "Dinsdag",
     "Wednesday": "Woensdag",
