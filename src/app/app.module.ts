@@ -43,6 +43,7 @@ import { AcceptHeaderInterceptor } from './interceptors/accept-header.intercepto
 import { PaginatorComponent } from './components/paginator-component';
 import { CollectSchedulerService } from './services/collects-schedulder.service';
 import { GoogleAnalyticsDirective } from './directives/google-analytics-directive';
+import { PayoutTranslateResolver } from './resolvers/payout-translate-resolver';
 (window as any).jQuery = (window as any).$ = jQuery; // This is needed to resolve issue.
 
 export function createTranslateLoader(http: Http) {
@@ -103,6 +104,7 @@ export function createTranslateLoader(http: Http) {
         ApiClientService,
         LoggingService,
         CollectSchedulerService,
+        PayoutTranslateResolver,
         OperationsGuard,
         LoggedInGuard,
         LoginComponentGuard,

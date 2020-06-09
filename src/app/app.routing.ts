@@ -15,6 +15,7 @@ import {SettingsComponent} from "./components/settings.component";
 import {TerminateComponent} from './components/terminate.component';
 import { QRCodeComponent } from './components/qrcode.component';
 import { CollectsShedulerComponent } from './components/collects-scheduler.component';
+import { PayoutTranslateResolver } from './resolvers/payout-translate-resolver';
 
 
 const routes: Routes = [
@@ -22,7 +23,7 @@ const routes: Routes = [
     {path: 'dashboard', component: DashboardComponent, canActivate: [LoggedInGuard]},
     {path: 'login', component: LoginComponent, canActivate: [LoginComponentGuard]},
     {path: 'collects', component: CollectsComponent, canActivate: [LoggedInGuard]},
-    {path: 'payouts', component: PayoutsComponent, canActivate: [LoggedInGuard]},
+    {path: 'payouts',resolve: {translatedDescription: PayoutTranslateResolver}, component: PayoutsComponent, canActivate: [LoggedInGuard]},
     {path: 'assign', component: AssignComponent, canActivate: [LoggedInGuard]},
     {path: 'settings', component: SettingsComponent, canActivate: [LoggedInGuard]},
     {path: 'forgotpassword', component: ForgotPasswordComponent, canActivate: [LoginComponentGuard]},

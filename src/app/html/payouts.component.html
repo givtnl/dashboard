@@ -11,7 +11,7 @@
             </div>
           </div>
         <section class="section-collects" *ngIf="!loading && payouts.length == 0">
-            <p class="text section-collects-nopayments">{{ "Payout_NoPayouts" | translate }}</p>
+            <p class="text section-collects-nopayments">{{route.snapshot.data.translatedDescription}}</p>
             <div class="placeholder-line"></div>
             <div class="placeholder-line"></div>
             <div class="placeholder-line"></div>

@@ -9,6 +9,7 @@ import { UserService } from '../services/user.service';
 import { ISODatePipe } from '../pipes/iso.datepipe';
 import { from } from 'rxjs/observable/from';
 import { delay } from 'rxjs/operators';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
     selector: 'my-collects',
@@ -35,6 +36,7 @@ export class PayoutsComponent implements OnInit {
     questionsGoToManualMessage: string;
 
     constructor(
+        public route: ActivatedRoute,
         private apiService: ApiClientService,
         private dataService: DataService,
         translate: TranslateService,
