@@ -4,6 +4,10 @@
     position: relative;
 }
 
+.font-italic {
+    font-style: italic;
+}
+
 .collection-buttons {
     display: flex;
     align-items: center;
@@ -586,6 +590,10 @@ h3 {
 
 .text-right {
     text-align: right;
+}
+
+.text-center {
+    text-align: center;
 }
 
 .pb-10 {
