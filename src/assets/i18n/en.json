@@ -256,6 +256,6 @@
     "Error_Generic": "Oops, something went wrong. Please contact us.",
     "QRCode_OopsForgotSomething": "Whoops, did you forgot to enter a name for the QR code?",
     "GASDS": "GASDS",
-    "Text_GASDS_InfoButton": "Blablabla",
+    "Text_GASDS_InfoButton": "<b>G</b>ift <b>A</b>id <b>S</b>mall <b>D</b>onations <b>S</b>cheme.<br />\nThe amounts in this column are a calculated grouping of donations that were made of which the donation amount is lower or equal to £30. These donations were not gift aided by the user, so they are eligible for GASDS.<br />\nNote: We do not make these claims for you. This is your responsibility.",
     "Text_GiftAided": "GiftAided"
 }
