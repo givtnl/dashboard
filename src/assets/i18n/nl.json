@@ -256,5 +256,6 @@
     "Error_Generic": "Oeps, er ging iets mis. Neem aub contact met ons op.",
     "QRCode_OopsForgotSomething": "Oops, ben je vergeten een naam te geven aan de QR-code?",
     "GASDS": "GASDS",
-    "Text_GASDS_InfoButton": "Blablabla"
+    "Text_GASDS_InfoButton": "Blablabla",
+    "Text_GiftAided": "GiftAided"
 }
