@@ -256,5 +256,6 @@
     "Error_Generic": "Oops, something went wrong. Please contact us.",
     "QRCode_OopsForgotSomething": "Whoops, did you forgot to enter a name for the QR code?",
     "GASDS": "GASDS",
-    "Text_GASDS_InfoButton": "Blablabla"
+    "Text_GASDS_InfoButton": "Blablabla",
+    "Text_GiftAided": "GiftAided"
 }
