@@ -176,7 +176,6 @@ export class PayoutComponent implements OnInit {
                 x.TotalText = this.displayValue(x.extraGiftAidAmount + x.TotalPaid);
                 x.GiftAidAmountText = this.displayValue(x.extraGiftAidAmount);
                 x.GASDSAmount = this.displayValue(x.GASDSAmount)
-
             }
         }
 
@@ -269,7 +268,7 @@ export class PayoutComponent implements OnInit {
                         detail.Amount = this.displayValue(detail.Amount);
                         detail.GiftAidClaimAmountFromGovernment = this.displayValue(detail.GiftAidClaimAmountFromGovernment);
                         detail.Total = this.displayValue(detail.Total);
-
+                        detail.GASDSClaimAmount = this.displayValue(detail.GASDSClaimAmount)
                         if (detail.Name.includes('_ERRNAC')) {
                             if (detail.Name.includes('1')) detail.Name = res + ' 1';
                             if (detail.Name.includes('2')) detail.Name = res + ' 2';
