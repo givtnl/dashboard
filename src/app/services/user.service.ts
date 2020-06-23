@@ -10,6 +10,9 @@ import { DataService } from "./data.service";
 import { ApiClientService} from "./api-client.service";
 import { EventEmitter, Output } from "@angular/core";
 import { PaymentType } from "../models/paymentType";
+import { Observable } from 'rxjs';
+import { UserDetailModel } from 'app/models/user-detail.model';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable()
 export class UserService {
@@ -19,7 +22,7 @@ export class UserService {
 	//this has to become environment variable in story 2461
     private apiUrl = environment.apiUrl + '/oauth2/token';
 
-    constructor(private dataService: DataService, private apiService: ApiClientService, private http: Http, private router: Router){
+    constructor(private dataService: DataService, private apiService: ApiClientService,private httpClient: HttpClient, private http: Http, private router: Router){
         this.loggedIn = !!dataService.getData("accessToken");
         this.SiteAdmin = dataService.getData("SiteAdmin") == "True";
         this.GivtOperations = dataService.getData("GivtOperations") == "True";
@@ -38,6 +41,14 @@ export class UserService {
 
     get currencySymbol(): string {
         return this.CurrentCollectGroup.PaymentType == PaymentType.BACS ? "£" : "€ ";
+    }
+
+    patchLanguage(userId: string, language: string): Observable<object> {
+        return this.httpClient.patch(`${environment.apiUrl}/api/v2/users/${userId}/language/${language}`, {});
+    }
+
+    getCurrentUser():Observable<UserDetailModel> {
+        return this.httpClient.get<UserDetailModel>(`${environment.apiUrl}/api/v2/users`);
     }
 
     login(username: string, password: string) {
