@@ -95,12 +95,16 @@
                 <th>&nbsp;</th>
                 <th>&nbsp;</th>
                 <td class="text-right py-20" style="padding-bottom: 10px;"><b>{{'TotalCollected'|translate}}</b></td>
-                <td class="py-20 text-right" style="padding-bottom: 10px;"><b>{{'Text_Collected'|translate}}</b></td>
-                <td class="py-20 text-right font-italic" style="padding-bottom: 10px;"><b>{{'GASDS'|translate}} </b>
-                    <i class="fa fa-info-circle" aria-hidden="true"></i>
-                    <span id="GASDS-tooltip" class="green tooltiptext">
-            {{ Text_GASDS_InfoButton }}
-          </span></td>
+                <td class="py-20 text-right" style="padding-bottom: 10px;"><b>{{'Text_GiftAided'|translate}}</b></td>
+                <td class="py-20 text-right" style="padding-bottom: 10px;">
+                    <div class="tooltip">
+                        <b class="font-italic">{{'GASDS'|translate}} </b>
+                        <i class="fa fa-info-circle" aria-hidden="true"></i>
+                        <span class="green tooltiptext gasds-tooltip">
+                            {{'Text_GASDS_InfoButton' | translate}}
+                        </span>
+                    </div>
+                </td>
                 <td class="text-right py-20" style="padding-bottom: 10px;"><b>{{'Total'|translate}}</b></td>
             </tr>
             <ng-container *ngFor="let item of childData.details">
@@ -128,8 +132,8 @@
                     {{"TermCosts" | translate}}</td>
                 <td [class.table-border-right]="giftAid" class="special-last-cell py-20 text-right">- {{childData.TotaalKosten}}
                 </td>
-                <td *ngIf="giftAid" class="special-last-cell py-20 text-right">- {{displayValue(0)}}</td>
-                <td *ngIf="giftAid" class="table-border-right special-last-cell py-20 text-right font-italic">- {{displayValue(0)}}</td>
+                <td *ngIf="giftAid" class="special-last-cell py-20 text-right">N/A</td>
+                <td *ngIf="giftAid" class="table-border-right special-last-cell py-20 text-right font-italic">N/A</td>
                 <td *ngIf="giftAid" class="special-last-cell py-20 text-right">- {{childData.TotaalKosten}}</td>
             </tr>
             <tr style="font-family: Avenir_Black; font-size: 22px;">

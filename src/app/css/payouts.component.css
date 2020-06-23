@@ -85,7 +85,8 @@ h3 {
     background-color: #C0BFCC;
 }
 
-.search-collect:focus, .green-button {
+.search-collect:focus,
+.green-button {
     background-color: #41c98e;
 }
 
@@ -260,7 +261,8 @@ h3 {
     opacity: 0.5;
 }
 
-.withholding-stats .stat-comp .table-stats tr:hover td, .withholding-stats .stat-comp .table-stats .active-row td {
+.withholding-stats .stat-comp .table-stats tr:hover td,
+.withholding-stats .stat-comp .table-stats .active-row td {
     background-color: #e9e8ec;
     font-family: 'Avenir_Heavy';
     cursor: pointer;
@@ -279,7 +281,8 @@ h3 {
     display: block;
 }
 
-.table-stats .row:hover:after, .table-stats .active-row:after {
+.table-stats .row:hover:after,
+.table-stats .active-row:after {
     border-left-color: #e9e8ec;
 }
 
@@ -788,4 +791,9 @@ table.table-stats.gift-aid tr:first-of-type {
 .gift-aid-amount {
     float: right;
     margin-left: 15px;
+}
+
+.gasds-tooltip {
+    top: -6px !important;
+    left: 88px !important;
 }
