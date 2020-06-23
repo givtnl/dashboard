@@ -94,24 +94,14 @@
             <tr *ngIf="giftAid">
                 <th>&nbsp;</th>
                 <th>&nbsp;</th>
-                <th class="text-right"><b>{{'TotalCollected'|translate}}</b></th>
-                <th class="text-center" colspan="2"><b>{{'GiftAid'|translate}}</b></th>
-                <th class="text-center"><b>{{'Total'|translate}}</b></th>
-            </tr>
-            <tr *ngIf="giftAid">
-                <th>&nbsp;</th>
-                <th>&nbsp;</th>
-                <th class="py-20 text-center"><b>&nbsp;</b></th>
-                <th class="py-20 text-center"><b>{{'Text_Collected'|translate}}</b></th>
-                <th class="py-20 text-center font-italic tooltip"><b>{{'GASDS'|translate}} </b>
+                <td class="text-right py-20" style="padding-bottom: 10px;"><b>{{'TotalCollected'|translate}}</b></td>
+                <td class="py-20 text-right" style="padding-bottom: 10px;"><b>{{'Text_Collected'|translate}}</b></td>
+                <td class="py-20 text-right font-italic" style="padding-bottom: 10px;"><b>{{'GASDS'|translate}} </b>
                     <i class="fa fa-info-circle" aria-hidden="true"></i>
                     <span id="GASDS-tooltip" class="green tooltiptext">
             {{ Text_GASDS_InfoButton }}
-          </span></th>
-                <th class="py-20 text-center"><b>&nbsp;</b></th>
-            </tr>
-            <tr *ngIf="giftAid">
-                &nbsp;
+          </span></td>
+                <td class="text-right py-20" style="padding-bottom: 10px;"><b>{{'Total'|translate}}</b></td>
             </tr>
             <ng-container *ngFor="let item of childData.details">
                 <tr style="font-family: Avenir_Medium; font-size: 20px;" [class.red]="item.Status == 0" [class.yellow]="item.Status == 2" *ngIf="item.Amount != 0">
@@ -121,13 +111,13 @@
                     <td class="allocation-title">
                         {{item.Name}}
                     </td>
-                    <td [class.table-border-right]="giftAid" class="py-20 text-center">{{item.Amount}}</td>
-                    <td *ngIf="giftAid" class="py-20 text-center">
+                    <td [class.table-border-right]="giftAid" class="py-20 text-right">{{item.Amount}}</td>
+                    <td *ngIf="giftAid" class="py-20 text-right">
 
                         {{item.GiftAidClaimAmountFromGovernment}}</td>
-                    <td *ngIf="giftAid" class="table-border-right py-20 text-center font-italic">
+                    <td *ngIf="giftAid" class="table-border-right py-20 text-right font-italic">
                         {{item.GASDSClaimAmount}}</td>
-                    <td *ngIf="giftAid" class="py-20 text-center">{{item.Total}}</td>
+                    <td *ngIf="giftAid" class="py-20 text-right">{{item.Total}}</td>
                 </tr>
             </ng-container>
 
@@ -138,16 +128,16 @@
                     {{"TermCosts" | translate}}</td>
                 <td [class.table-border-right]="giftAid" class="special-last-cell py-20 text-right">- {{childData.TotaalKosten}}
                 </td>
-                <td *ngIf="giftAid" class="special-last-cell py-20 text-center">- {{displayValue(0)}}</td>
-                <td *ngIf="giftAid" class="table-border-right special-last-cell py-20 text-center font-italic">-</td>
+                <td *ngIf="giftAid" class="special-last-cell py-20 text-right">- {{displayValue(0)}}</td>
+                <td *ngIf="giftAid" class="table-border-right special-last-cell py-20 text-right font-italic">- {{displayValue(0)}}</td>
                 <td *ngIf="giftAid" class="special-last-cell py-20 text-right">- {{childData.TotaalKosten}}</td>
             </tr>
             <tr style="font-family: Avenir_Black; font-size: 22px;">
                 <td colspan="2" style="text-align:left;">{{"Payout_TotalPayedOut" | translate}}</td>
                 <td style="white-space: nowrap;" [class.table-border-right]="giftAid" class="py-20 text-right">
                     {{childData.TotalPaidText}}</td>
-                <td *ngIf="giftAid" class="py-20 text-center">{{childData.GiftAidAmountText}}</td>
-                <td *ngIf="giftAid" class="table-border-right py-20 text-center font-italic"> {{childData.GASDSAmount}}
+                <td *ngIf="giftAid" class="py-20 text-right ">{{childData.GiftAidAmountText}}</td>
+                <td *ngIf="giftAid" class="table-border-right py-20 text-right  font-italic"> {{childData.GASDSAmount}}
                 </td>
                 <td *ngIf="giftAid" class="py-20 text-right">{{childData.TotalText}}</td>
             </tr>
