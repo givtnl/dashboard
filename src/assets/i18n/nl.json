@@ -9,7 +9,7 @@
     "Text_DidYouKnow": "Wist je dat?",
     "Text_DidYouKnowAnswer": "Kerkgangers het meeste geven aan het einde van de dienst?",
     "Text_Givers": "Aantal gevers",
-    "Text_Collected": "opgehaald",
+    "Text_Collected": "Opgehaald",
     "Text_Given": "gegeven",
     "Text_LastSunday": "Zondag",
     "Text_Logout": "Uitloggen",
@@ -50,7 +50,7 @@
     "Payout_PayoutCosts": "Uitbetalingskosten",
     "Payout_Title": "Uitbetalingen",
     "Payout_OverviewPayouts": "Overzicht van uitbetalingen",
-    "Payout_TotalPayedOut": "Totaal uitbetaald:",
+    "Payout_TotalPayedOut": "Totaal:",
     "Payout_Overview": "Overzicht",
     "Payout_CommittedAmount": "Geïncasseerd bedrag",
     "Payout_Withholdings": "Inhoudingen",
@@ -240,7 +240,7 @@
     "Payout_ExecutionDate": "Betalingsverwerking:",
     "UserNotFoundException": "Dit Givt-account bestaat niet meer.",
     "TotalCollected": "Totaal gecollecteerd",
-    "GiftAidCollected": "Gift Aid verkregen",
+    "GiftAidCollected": "Gift Aid",
     "Total": "Totaal",
     "Text_Today": "Vandaag",
     "Text_Today_Givers": "Gevers vandaag",
@@ -254,5 +254,7 @@
     "LanguageEN": "Engels",
     "LanguageNL": "Nederlands",
     "Error_Generic": "Oeps, er ging iets mis. Neem aub contact met ons op.",
-    "QRCode_OopsForgotSomething": "Oops, ben je vergeten een naam te geven aan de QR-code?"
+    "QRCode_OopsForgotSomething": "Oops, ben je vergeten een naam te geven aan de QR-code?",
+    "GASDS": "GASDS",
+    "Text_GASDS_InfoButton": "Blablabla"
 }
