@@ -46,6 +46,11 @@ export class CollectsShedulerComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.service.getAllActiveAccounts(this.userService.CurrentCollectGroup.GUID)
+        .pipe(catchError((error: HttpErrorResponse) => this.handleGenericError(error)))
+        .subscribe(response => {
+            this.bankAccounts = response
+        });
         this.getRows(this.pageSettings);
     }
 
@@ -120,28 +125,43 @@ export class CollectsShedulerComponent implements OnInit {
     }
     getRows(options: InfrastructurePaginator) {
         this.loading = true;
-        this.service.getAllActiveAccounts(this.userService.CurrentCollectGroup.GUID)
+        this.service
+            .getAll(this.userService.CurrentCollectGroup.GUID, options.currentRowsPerPage, options.currentPage)
+            .pipe(delay(500))
             .pipe(catchError((error: HttpErrorResponse) => this.handleGenericError(error)))
             .subscribe(response => {
-                this.bankAccounts = response
-            }).add(() => {
-                this.service
-                    .getAll(this.userService.CurrentCollectGroup.GUID, options.currentRowsPerPage, options.currentPage)
-                    .pipe(delay(500))
-                    .pipe(catchError((error: HttpErrorResponse) => this.handleGenericError(error)))
-                    .subscribe(response => {
-                        this.currentCollectGroupAllocations = response.Results;
-                        this.currentTotalNumberOfPages = response.TotalNumberOfPages;
-                        this.currentTotalCountOfRows = response.TotalCount;
-                        this.form = this.formBuilder.group({
-                            collects: this.formBuilder.array(
-                                this.currentCollectGroupAllocations
-                                    ? this.currentCollectGroupAllocations.map(x => this.buildSingleForm(x, true))
-                                    : []
-                            )
-                        });
-                    }).add(() => this.loading = false);
-            });
+                this.currentCollectGroupAllocations = response.Results;
+                this.currentTotalNumberOfPages = response.TotalNumberOfPages;
+                this.currentTotalCountOfRows = response.TotalCount;
+                this.form = this.formBuilder.group({
+                    collects: this.formBuilder.array(
+                        this.currentCollectGroupAllocations
+                            ? this.currentCollectGroupAllocations.map(x => this.buildSingleForm(x, true))
+                            : []
+                    )
+                });
+            })
+            .add(() => this.loading = false);
+    }
+
+    public formatAccount(accountId: number):string {
+        const account = this.bankAccounts.find(x=>x.Id === accountId);
+        var string = ""
+        if(account.AccountName) {
+            string += `${account.AccountName}`
+            if(account.Iban) {
+                string += `(...${account.Iban.substr(account.Iban.length - 4)})`
+            } else if(account.AccountNumber) {
+                string += `(...${account.AccountNumber.substr(account.AccountNumber.length - 4)})`
+            }
+        } else {
+            if(account.Iban) {
+                string += `${account.Iban}`
+            } else if(account.AccountNumber) {
+                string += `${account.SortCode}-${account.AccountNumber})`
+            }
+        }
+        return string;
     }
     upload(row: FormGroup) {
         if (row.invalid) {
