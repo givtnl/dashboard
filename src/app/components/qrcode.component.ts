@@ -15,6 +15,7 @@ import { TranslateService } from "../../../node_modules/ng2-translate";
 import { isNullOrUndefined } from "util";
 import { LoggingService } from "app/services/logging.service";
 import { QrCodeType } from "app/models/qr-code-type.enum";
+import { CollectionMediumType } from "app/models/collectionMediumType";
 
 
 @Component({
@@ -47,7 +48,7 @@ export class QRCodeComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.loading = true
-		this.apiService.getData(`v2/organisations/${this.userService.CurrentCollectGroup.OrgId}/collectgroups/${this.userService.CurrentCollectGroup.GUID}/collectionmediums`)
+		this.apiService.getData(`v2/organisations/${this.userService.CurrentCollectGroup.OrgId}/collectgroups/${this.userService.CurrentCollectGroup.GUID}/collectionmediums?collectionMediumTypes=${CollectionMediumType.QrCodeDefault}`)
 			.then(resp => {
 				this.logginService.info("Succesfully fetched qr code list")
 				this.qrCodes = resp
