@@ -9,7 +9,7 @@
     "Text_DidYouKnow": "Did you know?",
     "Text_DidYouKnowAnswer": "That people give more at the end of the service?",
     "Text_Givers": "Givers",
-    "Text_Collected": "collected",
+    "Text_Collected": "Collected",
     "Text_Given": "given",
     "Text_LastSunday": "Sunday",
     "Text_Logout": "Log out",
@@ -50,7 +50,7 @@
     "Payout_PayoutCosts": "Payment costs",
     "Payout_Title": "Payments",
     "Payout_OverviewPayouts": "Overview of payments",
-    "Payout_TotalPayedOut": "Total paid out:",
+    "Payout_TotalPayedOut": "Total:",
     "Payout_Overview": "Overview",
     "Payout_CommittedAmount": "Cashed amount",
     "Payout_Withholdings": "Deductions",
@@ -240,7 +240,7 @@
     "Payout_ExecutionDate": "Payment expected:",
     "UserNotFoundException": "This Givt account no longer exists.",
     "TotalCollected": "Total collected",
-    "GiftAidCollected": "Gift Aid claimed",
+    "GiftAidCollected": "Gift Aid",
     "Total": "Total",
     "Text_Today": "Today",
     "Text_Today_Givers": "Givers today",
@@ -254,5 +254,8 @@
     "LanguageEN": "English",
     "LanguageNL": "Dutch",
     "Error_Generic": "Oops, something went wrong. Please contact us.",
-    "QRCode_OopsForgotSomething": "Whoops, did you forgot to enter a name for the QR code?"
+    "QRCode_OopsForgotSomething": "Whoops, did you forgot to enter a name for the QR code?",
+    "GASDS": "GASDS",
+    "Text_GASDS_InfoButton": "<b>G</b>ift <b>A</b>id <b>S</b>mall <b>D</b>onations <b>S</b>cheme.<br />\nThe amounts in this column are a calculated grouping of donations that were made of which the donation amount is lower or equal to £30. These donations were not gift aided by the user, so they are eligible for GASDS.<br />\nNote: We do not make these claims for you. This is your responsibility.",
+    "Text_GiftAided": "GiftAided"
 }

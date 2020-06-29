@@ -102,6 +102,7 @@ export class PayoutsComponent implements OnInit {
                         })
                     );
                 }
+                
             }
         });
     }
