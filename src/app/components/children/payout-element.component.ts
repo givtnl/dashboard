@@ -258,7 +258,20 @@ export class PayoutComponent implements OnInit {
                             detail.Status = 2;
                         }
                         paidDetails.push(detail);
+                    } else if (detail.GASDSClaimAmount > 0) {
+                        detail.GASDSClaimAmount = this.displayValue(detail.GASDSClaimAmount);
+                        detail.Amount = this.displayValue(0);
+                        detail.GiftAidClaimAmountFromGovernment = this.displayValue(0);
+                        detail.Total = this.displayValue(0);
+                        if (detail.Name.includes('_ERRNAC')) {
+                            if (detail.Name.includes('1')) detail.Name = res + ' 1';
+                            if (detail.Name.includes('2')) detail.Name = res + ' 2';
+                            if (detail.Name.includes('3')) detail.Name = res + ' 3';
+                            detail.Status = 2;
+                        }
+                        paidDetails.push(detail);
                     }
+
                     // STORNO details
                     if (detail.Amount !== 0 && detail.StornoAmount !== 0) {
 
@@ -268,7 +281,7 @@ export class PayoutComponent implements OnInit {
                         detail.Amount = this.displayValue(detail.Amount);
                         detail.GiftAidClaimAmountFromGovernment = this.displayValue(detail.GiftAidClaimAmountFromGovernment);
                         detail.Total = this.displayValue(detail.Total);
-                        detail.GASDSClaimAmount = this.displayValue(detail.GASDSClaimAmount)
+                        detail.GASDSClaimAmount = this.displayValue(detail.GASDSClaimAmount);
                         if (detail.Name.includes('_ERRNAC')) {
                             if (detail.Name.includes('1')) detail.Name = res + ' 1';
                             if (detail.Name.includes('2')) detail.Name = res + ' 2';
