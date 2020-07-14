@@ -51,7 +51,7 @@ export class UserService {
         return this.httpClient.get<UserDetailModel>(`${environment.apiUrl}/api/v2/users`);
     }
 
-    loginHttpCall(body: string, headers: Headers, username: string = null) {
+    loginHttpCall(body: string, headers: Headers) {
         return this.http
             .post(
                 this.apiUrl,
@@ -63,10 +63,7 @@ export class UserService {
                 if (res.json().access_token) {
                     this.loggedIn = true;
                     this.startTimedLogout(res.json().expires_in * 1000);
-                    if (username != null)
-                        this.dataService.writeData("UserEmail", username);
-                    else
-                        this.dataService.writeData("UserEmail", res.json().Email);
+                    this.dataService.writeData("UserEmail", res.json().Email);
                     this.dataService.writeData("accessToken", res.json().access_token);
                     if (res.json().hasOwnProperty("SiteAdmin"))
                         this.dataService.writeData("SiteAdmin", res.json().SiteAdmin);
@@ -135,7 +132,7 @@ export class UserService {
         //set to string
         let body = urlSearchParams.toString();
 
-        return this.loginHttpCall(body, headers, username);
+        return this.loginHttpCall(body, headers);
     }
 
     startTimedLogout(ms) {
