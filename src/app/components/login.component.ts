@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { TranslateService } from "ng2-translate";
 import { UserService } from "../services/user.service";
 import { DataService } from 'app/services/data.service';
-import { Observable } from 'rxjs';
 import { of } from 'rxjs/observable/of';
+
 @Component({
     selector: 'login',
     templateUrl: '../html/login.component.html',
@@ -18,12 +18,19 @@ export class LoginComponent implements OnInit {
     error_message: string;
     ShowLoadingAnimation: boolean = false;
 
-    constructor(private userService: UserService, private router: Router, private translate: TranslateService, private dataService: DataService) {
+    constructor(private userService: UserService, private router: Router, private translate: TranslateService, private dataService: DataService, private activatedRoute: ActivatedRoute) {
         this.passwordHidden = true;
         this.eyeColor = "#BCB9C9";
     }
 
     ngOnInit() {
+        var access_token = this.activatedRoute.snapshot.queryParams.access_token;
+        var refresh_token = this.activatedRoute.snapshot.queryParams.refresh_token;
+        if (access_token !== null && refresh_token !== null) {
+            this.ShowLoadingAnimation = true;
+            this.userService.loginWithRefreshtoken(access_token, refresh_token).then((result) => result ? this.router.navigate(['/dashboard']) : this.ShowLoadingAnimation = false).catch((result) => this.ShowLoadingAnimation = false);
+        }
+
         let is_safari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
         if (is_safari) {
             document.getElementById("pass-eye").addEventListener("mousedown", (event) => {
