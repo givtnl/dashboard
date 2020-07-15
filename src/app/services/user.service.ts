@@ -1,13 +1,13 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Http, Headers, URLSearchParams } from '@angular/http';
 import { CustomQueryEncoderHelper } from '../helpers/customQueryEncoder';
-import {Router} from "@angular/router";
+import { Router } from "@angular/router";
 import 'rxjs/add/operator/toPromise'; //to support toPromise
 import { environment } from '../../environments/environment';
 
 import { User } from '../models/user';
 import { DataService } from "./data.service";
-import { ApiClientService} from "./api-client.service";
+import { ApiClientService } from "./api-client.service";
 import { EventEmitter, Output } from "@angular/core";
 import { PaymentType } from "../models/paymentType";
 import { Observable } from 'rxjs';
@@ -19,10 +19,10 @@ export class UserService {
     @Output() collectGroupChanged: EventEmitter<any> = new EventEmitter();
     @Output() userLoggedOut: EventEmitter<any> = new EventEmitter();
 
-	//this has to become environment variable in story 2461
+    //this has to become environment variable in story 2461
     private apiUrl = environment.apiUrl + '/oauth2/token';
 
-    constructor(private dataService: DataService, private apiService: ApiClientService,private httpClient: HttpClient, private http: Http, private router: Router){
+    constructor(private dataService: DataService, private apiService: ApiClientService, private httpClient: HttpClient, private http: Http, private router: Router) {
         this.loggedIn = !!dataService.getData("accessToken");
         this.SiteAdmin = dataService.getData("SiteAdmin") == "True";
         this.GivtOperations = dataService.getData("GivtOperations") == "True";
@@ -47,26 +47,11 @@ export class UserService {
         return this.httpClient.patch(`${environment.apiUrl}/api/v2/users/${userId}/language/${language}`, {});
     }
 
-    getCurrentUser():Observable<UserDetailModel> {
+    getCurrentUser(): Observable<UserDetailModel> {
         return this.httpClient.get<UserDetailModel>(`${environment.apiUrl}/api/v2/users`);
     }
 
-    login(username: string, password: string) {
-        let d = this.dataService.getData("CurrentCollectGroup");
-        this.CurrentCollectGroup = typeof d != 'undefined' ? JSON.parse(d) : null;
-        //Set the headers
-        let headers = new Headers();
-        headers.append('Content-Type', 'application/x-www-form-urlencoded');
-
-        //set the x-www-form-urlencoded parameters
-        let urlSearchParams = new URLSearchParams('', new CustomQueryEncoderHelper());
-        urlSearchParams.append('grant_type', 'password');
-        urlSearchParams.append('userName', username);
-        urlSearchParams.append('password', password);
-        //set to string
-        let body = urlSearchParams.toString();
-
-        //do the http call
+    loginHttpCall(body: string, headers: Headers) {
         return this.http
             .post(
                 this.apiUrl,
@@ -75,11 +60,11 @@ export class UserService {
             )
             .toPromise()
             .then(res => {
-                if(res.json().access_token){
+                if (res.json().access_token) {
                     this.loggedIn = true;
                     this.startTimedLogout(res.json().expires_in * 1000);
+                    this.dataService.writeData("UserEmail", res.json().Email);
                     this.dataService.writeData("accessToken", res.json().access_token);
-                    this.dataService.writeData("UserEmail", username);
                     if (res.json().hasOwnProperty("SiteAdmin"))
                         this.dataService.writeData("SiteAdmin", res.json().SiteAdmin);
                     this.SiteAdmin = this.dataService.getData("SiteAdmin") == "True";
@@ -97,7 +82,7 @@ export class UserService {
                                 this.CurrentCollectGroup = JSON.parse(this.dataService.getData("CurrentCollectGroup"));
                                 this.CollectGroups = JSON.parse(this.dataService.getData("CollectGroups"));
                                 return true;
-                            }).catch( _ => {
+                            }).catch(_ => {
                                 err => console.log(err);
                                 return false;
                             });
@@ -114,37 +99,73 @@ export class UserService {
             })
     }
 
-    startTimedLogout(ms){
-        setTimeout(()=>{
+    loginWithRefreshtoken(access_token: string, refresh_token: string) {
+        //Set the headers
+        let headers = new Headers();
+        headers.append('authorization', 'Bearer ' + access_token);
+        headers.append('Content-Type', 'application/x-www-form-urlencoded');
+
+        //set the x-www-form-urlencoded parameters
+        let urlSearchParams = new URLSearchParams('', new CustomQueryEncoderHelper());
+        urlSearchParams.append('grant_type', 'refresh_token');
+        urlSearchParams.append('refresh_token', refresh_token);
+
+        //set to string
+        let body = urlSearchParams.toString();
+
+        //do the http call
+        return this.loginHttpCall(body, headers);
+    }
+
+    login(username: string, password: string) {
+        let d = this.dataService.getData("CurrentCollectGroup");
+        this.CurrentCollectGroup = typeof d != 'undefined' ? JSON.parse(d) : null;
+        //Set the headers
+        let headers = new Headers();
+        headers.append('Content-Type', 'application/x-www-form-urlencoded');
+
+        //set the x-www-form-urlencoded parameters
+        let urlSearchParams = new URLSearchParams('', new CustomQueryEncoderHelper());
+        urlSearchParams.append('grant_type', 'password');
+        urlSearchParams.append('userName', username);
+        urlSearchParams.append('password', password);
+        //set to string
+        let body = urlSearchParams.toString();
+
+        return this.loginHttpCall(body, headers);
+    }
+
+    startTimedLogout(ms) {
+        setTimeout(() => {
             this.logout();
             this.router.navigate(['loggedout']);
         }, ms);
     }
 
-    logout(){
+    logout() {
         this.loggedIn = false;
         this.SiteAdmin = false;
         this.dataService.clearAll();
         this.userLoggedOut.emit(null);
     }
 
-    requestNewPass(email){
+    requestNewPass(email) {
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
-        return this.http.post(environment.apiUrl + '/api/Users/ForgotPassword?dashboard=true', "\""+email+"\"", { headers })
+        return this.http.post(environment.apiUrl + '/api/Users/ForgotPassword?dashboard=true', "\"" + email + "\"", { headers })
             .toPromise()
-            .then(res=>{
+            .then(res => {
                 return res;
             });
     }
 
-    saveNewPass(email, token, newPass){
+    saveNewPass(email, token, newPass) {
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
-        var x = {"userID":email, "passwordToken":token,"newPassword":newPass}
+        var x = { "userID": email, "passwordToken": token, "newPassword": newPass }
         return this.http.post(environment.apiUrl + '/api/Users/ResetPassword', x, { headers })
             .toPromise()
-            .then(res=>{
+            .then(res => {
                 return res;
             });
     }

@@ -66,19 +66,24 @@ export class DashboardComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
-        this.fetchAverageGivers();
+        let f0 = this.fetchAverageGivers();
+        let f1 = this.fetchThisMonthGivts();
+        let f2 = this.fetchThisMonthGivers();
+        let f3 = this.fetchLastDayGivts();
+        let f4 = this.fetchTodayGivts();
+        let f5 = this.fetchTodayGivers();
+        Promise.all([f0, f1, f2, f3, f4, f5]).then(() => {
+            if (this.ShowLoadingAnimation)
+                this.ShowLoadingAnimation = false;
+        });
+
         this.continuousData = setInterval(() => {
             let f1 = this.fetchThisMonthGivts();
             let f2 = this.fetchThisMonthGivers();
             let f3 = this.fetchLastDayGivts();
             let f4 = this.fetchTodayGivts();
             let f5 = this.fetchTodayGivers();
-            Promise.all([f1, f2, f3, f4, f5]).then(() => {
-                if (this.ShowLoadingAnimation)
-                    this.ShowLoadingAnimation = false;
-            });
         }, 15000);
-
     }
 
     fetchTodayGivers(): Promise<void> {
@@ -118,7 +123,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
                     this.todaysCard.value = this.currencySymbol + "<span class='fat-emphasis'>" + (this.isSafari ? collectSum.toFixed(2) : collectSum.toLocaleString(navigator.language, { minimumFractionDigits: 2 })) + "</span>";
                     this.translate.get("Text_Today").subscribe(value => { this.todaysCard.title = value; });
                     var donation = "";
-                    this.translate.get("Text_Donation").subscribe(value => { donation = value; });                    
+                    this.translate.get("Text_Donation").subscribe(value => { donation = value; });
                     this.translate.get("Text_Given").subscribe(value => { this.todaysCard.footer = value + " per " + donation; });
                     this.translate.get("Card_Average").subscribe(value => { this.todaysCard.average = value + " " + this.currencySymbol + average.toLocaleString(navigator.language, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) });
                     let cardIsInCards = false;
