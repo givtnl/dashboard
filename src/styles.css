@@ -30,6 +30,7 @@
     font-family: 'Avenir_Medium';
     src: url('./fonts/AvenirLTStd-Medium.otf');
 }
+
 @font-face {
     font-family: 'Roboto';
     font-style: normal;
@@ -117,21 +118,26 @@ h2 {
 my-collects {
     height: 100%;
 }
+
 my-titlebar {
     position: sticky;
     display: block;
     top: 0;
     z-index: 99;
 }
+
 my-footer {
     display: table;
     font-family: 'Avenir_Light';
     width: 100%;
     background: #d5d4dd;
 }
-my-footer p {
-}
+
+my-footer p {}
+
+
 /* loading animation */
+
 .loading-wrapper {
     margin: auto;
     display: flex;
@@ -229,47 +235,40 @@ my-footer p {
         transform: rotate(180deg);
         animation-timing-function: ease-out;
     }
-
     7% {
         opacity: 1;
         transform: rotate(300deg);
         animation-timing-function: linear;
         origin: 0%;
     }
-
     30% {
         opacity: 1;
         transform: rotate(410deg);
         animation-timing-function: ease-in-out;
         origin: 7%;
     }
-
     39% {
         opacity: 1;
         transform: rotate(645deg);
         animation-timing-function: linear;
         origin: 30%;
     }
-
     70% {
         opacity: 1;
         transform: rotate(770deg);
         animation-timing-function: ease-out;
         origin: 39%;
     }
-
     75% {
         opacity: 1;
         transform: rotate(900deg);
         animation-timing-function: ease-out;
         origin: 70%;
     }
-
     76% {
         opacity: 0;
         transform: rotate(900deg);
     }
-
     100% {
         opacity: 0;
         transform: rotate(900deg);
@@ -283,47 +282,40 @@ my-footer p {
         -o-transform: rotate(180deg);
         -o-animation-timing-function: ease-out;
     }
-
     7% {
         opacity: 1;
         -o-transform: rotate(300deg);
         -o-animation-timing-function: linear;
         -o-origin: 0%;
     }
-
     30% {
         opacity: 1;
         -o-transform: rotate(410deg);
         -o-animation-timing-function: ease-in-out;
         -o-origin: 7%;
     }
-
     39% {
         opacity: 1;
         -o-transform: rotate(645deg);
         -o-animation-timing-function: linear;
         -o-origin: 30%;
     }
-
     70% {
         opacity: 1;
         -o-transform: rotate(770deg);
         -o-animation-timing-function: ease-out;
         -o-origin: 39%;
     }
-
     75% {
         opacity: 1;
         -o-transform: rotate(900deg);
         -o-animation-timing-function: ease-out;
         -o-origin: 70%;
     }
-
     76% {
         opacity: 0;
         -o-transform: rotate(900deg);
     }
-
     100% {
         opacity: 0;
         -o-transform: rotate(900deg);
@@ -337,47 +329,40 @@ my-footer p {
         -ms-transform: rotate(180deg);
         -ms-animation-timing-function: ease-out;
     }
-
     7% {
         opacity: 1;
         -ms-transform: rotate(300deg);
         -ms-animation-timing-function: linear;
         -ms-origin: 0%;
     }
-
     30% {
         opacity: 1;
         -ms-transform: rotate(410deg);
         -ms-animation-timing-function: ease-in-out;
         -ms-origin: 7%;
     }
-
     39% {
         opacity: 1;
         -ms-transform: rotate(645deg);
         -ms-animation-timing-function: linear;
         -ms-origin: 30%;
     }
-
     70% {
         opacity: 1;
         -ms-transform: rotate(770deg);
         -ms-animation-timing-function: ease-out;
         -ms-origin: 39%;
     }
-
     75% {
         opacity: 1;
         -ms-transform: rotate(900deg);
         -ms-animation-timing-function: ease-out;
         -ms-origin: 70%;
     }
-
     76% {
         opacity: 0;
         -ms-transform: rotate(900deg);
     }
-
     100% {
         opacity: 0;
         -ms-transform: rotate(900deg);
@@ -391,47 +376,40 @@ my-footer p {
         -webkit-transform: rotate(180deg);
         -webkit-animation-timing-function: ease-out;
     }
-
     7% {
         opacity: 1;
         -webkit-transform: rotate(300deg);
         -webkit-animation-timing-function: linear;
         -webkit-origin: 0%;
     }
-
     30% {
         opacity: 1;
         -webkit-transform: rotate(410deg);
         -webkit-animation-timing-function: ease-in-out;
         -webkit-origin: 7%;
     }
-
     39% {
         opacity: 1;
         -webkit-transform: rotate(645deg);
         -webkit-animation-timing-function: linear;
         -webkit-origin: 30%;
     }
-
     70% {
         opacity: 1;
         -webkit-transform: rotate(770deg);
         -webkit-animation-timing-function: ease-out;
         -webkit-origin: 39%;
     }
-
     75% {
         opacity: 1;
         -webkit-transform: rotate(900deg);
         -webkit-animation-timing-function: ease-out;
         -webkit-origin: 70%;
     }
-
     76% {
         opacity: 0;
         -webkit-transform: rotate(900deg);
     }
-
     100% {
         opacity: 0;
         -webkit-transform: rotate(900deg);
@@ -445,54 +423,49 @@ my-footer p {
         -moz-transform: rotate(180deg);
         -moz-animation-timing-function: ease-out;
     }
-
     7% {
         opacity: 1;
         -moz-transform: rotate(300deg);
         -moz-animation-timing-function: linear;
         -moz-origin: 0%;
     }
-
     30% {
         opacity: 1;
         -moz-transform: rotate(410deg);
         -moz-animation-timing-function: ease-in-out;
         -moz-origin: 7%;
     }
-
     39% {
         opacity: 1;
         -moz-transform: rotate(645deg);
         -moz-animation-timing-function: linear;
         -moz-origin: 30%;
     }
-
     70% {
         opacity: 1;
         -moz-transform: rotate(770deg);
         -moz-animation-timing-function: ease-out;
         -moz-origin: 39%;
     }
-
     75% {
         opacity: 1;
         -moz-transform: rotate(900deg);
         -moz-animation-timing-function: ease-out;
         -moz-origin: 70%;
     }
-
     76% {
         opacity: 0;
         -moz-transform: rotate(900deg);
     }
-
     100% {
         opacity: 0;
         -moz-transform: rotate(900deg);
     }
 }
 
+
 /* PRIME NG STYLES */
+
 p-schedule button {
     background: #1ca96c !important;
 }
@@ -530,8 +503,7 @@ p-schedule button {
 .allocation-mixed {
     width: 90% !important;
     left: 5% !important;
-    background: url(images/check.png) calc(50% - 25%) 50% no-repeat, url(images/question_mark.png) calc(50% + 25%) 50% no-repeat,
-        -webkit-linear-gradient(-22deg, #41c98e 50%, #41c98e 50%, #f17057 50%) center no-repeat;
+    background: url(images/check.png) calc(50% - 25%) 50% no-repeat, url(images/question_mark.png) calc(50% + 25%) 50% no-repeat, -webkit-linear-gradient(-22deg, #41c98e 50%, #41c98e 50%, #f17057 50%) center no-repeat;
 }
 
 .allocation *,
@@ -561,8 +533,7 @@ p-schedule button {
 }
 
 .allocation-mixed:hover {
-    background-image: url(images/check.png), url(images/question_mark.png),
-        -webkit-linear-gradient(-22deg, #1ca96c 50%, #1ca96c 50%, #e6412c 50%) !important;
+    background-image: url(images/check.png), url(images/question_mark.png), -webkit-linear-gradient(-22deg, #1ca96c 50%, #1ca96c 50%, #e6412c 50%) !important;
 }
 
 .fc-scroller {
@@ -615,6 +586,7 @@ p-schedule button {
 .fc-toolbar h2 {
     padding: 5px;
 }
+
 .fc-month-view .ui-widget-content .ui-state-highlight {
     color: white;
     background-color: #5a5387;
@@ -711,4 +683,8 @@ my-navigation {
 
 .action-button:hover {
     opacity: 0.9;
+}
+
+.givt-light-blue {
+    color: #4D98CF;
 }
