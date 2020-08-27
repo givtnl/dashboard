@@ -73,7 +73,7 @@ export class CollectsShedulerComponent implements OnInit {
                 name: [scheduler ? scheduler.Name : null, [Validators.required, Validators.maxLength(256), Validators.minLength(1)]],
                 collectId: [scheduler ? scheduler.CollectId : 1, [Validators.required, Validators.min(1), Validators.max(3)]],
                 accountId: [
-                    scheduler && scheduler.AccountId ? scheduler.AccountId : (this.bankAccounts.find(a => a.Primary) ? this.bankAccounts.find(a => a.Primary).Id : null) ,
+                    scheduler && scheduler.AccountId ? scheduler.AccountId : (this.bankAccounts.length > 1 && this.bankAccounts.find(a => a.Primary) ? this.bankAccounts.find(a => a.Primary).Id : null) ,
                 ],
                 shouldNotShowError: !copyId
             },
