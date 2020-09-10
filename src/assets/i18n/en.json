@@ -90,7 +90,7 @@
     "OverlapError": "An allocation already exists in the same time period. Solve this error by deleting allocations in this time period. After that, try again.",
     "YesImSure": "Yes, I'm sure.",
     "NoNeverMind": "No, I don't want to.",
-    "MultipleOpenAllocationsMessage": "There are still transactions between {0} and {1} that are not allocated to a collection.\nPlease go to the tab 'Allocate' to resolve this issue.",
+    "MultipleOpenAllocationsMessage": "There are still transactions between {0} and {1} that are not allocated to a collection.\nPlease go to the tab 'Allocate' to do this.\nNote: the payment of these donations is not dependent on the allocation, it's just a tool to help you track donations.",
     "From": "From",
     "To": "to",
     "NotYetAllocated": "Not yet allocated",
@@ -177,7 +177,7 @@
         "other": "Cancel allocations"
     },
     "CsvDownload": "Download csv",
-    "SingleOpenAllocationMessage": "There are still transactions on {0} that are not allocated to a collection.\nPlease go to the tab 'Allocate' to resolve this issue.",
+    "SingleOpenAllocationMessage": "There are still transactions on {0} that are not allocated to a collection.\nPlease go to the tab 'Allocate' to resolve this issue.\nNote: the payment of these donations is not dependent on the allocation, it's just a tool to help you track donations.",
     "RequestMediumIdTitle": "The namespace of {0}:\n",
     "RequestMediumIdBody": "Send us an email at <a href='mailto:support@givtapp.net'>support@givtapp.net</a> with the namespace for which you want an integration and request a medium id to connect an app with Givt.",
     "RequestMediumIdManual": "Download the manual for developers <a href='assets/Manual-Deeplink-Givt.zip'>here</a>.",
