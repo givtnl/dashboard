@@ -148,7 +148,7 @@ export class PayoutsComponent implements OnInit {
             }
             csvContent += resp;
 
-            var encodedUri = encodeURI(csvContent);
+            var encodedUri = encodeURI(csvContent.replace('#',''));
             var link = document.createElement('a');
             link.setAttribute('href', encodedUri);
             let beginDate = this.datePipe.transform(new Date(this.dateBegin), 'dd-MM-yyyy');
