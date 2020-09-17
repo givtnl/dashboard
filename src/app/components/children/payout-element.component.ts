@@ -277,6 +277,8 @@ export class PayoutComponent implements OnInit {
 
                         if (isNullOrUndefined(detail.GiftAidClaimAmountFromGovernment))
                             detail.GiftAidClaimAmountFromGovernment = 0.00;
+                        if (!isNullOrUndefined(detail.GiftAidClaimReturnedAmountFromGovernment))
+                            detail.GiftAidClaimAmountFromGovernment = detail.GiftAidClaimAmountFromGovernment - detail.GiftAidClaimReturnedAmountFromGovernment;
                         detail.Total = detail.GiftAidClaimAmountFromGovernment + detail.Amount;
                         detail.Amount = this.displayValue(detail.Amount);
                         detail.GiftAidClaimAmountFromGovernment = this.displayValue(detail.GiftAidClaimAmountFromGovernment);
@@ -295,7 +297,7 @@ export class PayoutComponent implements OnInit {
                 let costDetails = [];
                 this.translate.get('Stornos').subscribe((resStorno: string) => {
                     for (let i = 0; i < allocsCount; i++) {
-                        if (resp.Details[i].StornoAmount == 0) continue;
+                        if (resp.Details[i].StornoAmount == 0 && resp.Details[i].GiftAidClaimReturnedAmountFromGovernment == 0) continue;
                         let copy = JSON.parse(JSON.stringify(resp.Details[i])); //copy object
                         if (copy.Name.includes("_ERRNAC")) {
                             copy.Name = copy.Name.replace("_ERRNAC", res);
@@ -308,7 +310,7 @@ export class PayoutComponent implements OnInit {
                         copy.Total = copy.GiftAidClaimReturnedAmountFromGovernment + resp.Details[i].StornoAmount;
                         copy.GiftAidClaimAmountFromGovernment = '- ' + this.displayValue(copy.GiftAidClaimReturnedAmountFromGovernment);
                         copy.Total = '- ' + this.displayValue(copy.Total);
-
+                        copy.GASDSClaimAmount = this.displayValue(0);
                         copy.Status = 0;
                         costDetails.push(copy);
                     }
