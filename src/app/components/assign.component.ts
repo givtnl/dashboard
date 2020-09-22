@@ -496,15 +496,18 @@ export class AssignComponent implements OnInit {
                     });
                 }
             });
-            this.apiService
-                .postData('v2/Allocations/Allocation', dataAllocations)
-                .then(resp => {
-                    this.reloadEvents();
-                    resolve();
-                })
-                .catch(err => {
-                    reject();
-                });
+            if (dataAllocations.length > 0) { //GIVTPRJ-28286
+                this.apiService
+                    .postData('v2/Allocations/Allocation', dataAllocations)
+                    .then(resp => {
+                        this.reloadEvents();
+                        resolve();
+                    })
+                    .catch(err => {
+                        reject();
+                    });
+            } else
+                reject();
         });
     }
     reloadEvents() {
@@ -741,14 +744,16 @@ export class AssignComponent implements OnInit {
         }
         this.allocateWeekName = '';
         this.filteredUsedTags = [];
-        this.apiService
-            .postData('v2/Allocations/Allocation', dataAllocations)
-            .then(resp => {
-                this.reloadEvents();
-            })
-            .catch(err => {
-                console.log(err);
-            });
+        if (dataAllocations.length > 0) { //GIVTPRJ-28286
+            this.apiService
+                .postData('v2/Allocations/Allocation', dataAllocations)
+                .then(resp => {
+                    this.reloadEvents();
+                })
+                .catch(err => {
+                    console.log(err);
+                });
+        }
     }
     allCollectNameChanging(event) {
         this.filterTags(event);
