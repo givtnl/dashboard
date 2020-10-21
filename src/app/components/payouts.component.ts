@@ -23,10 +23,6 @@ export class PayoutsComponent implements OnInit {
     payouts: Payout[] = [];
     isSafari: boolean;
 
-    transactionCost = 0.08;
-    mandateCost = 0.125;
-    R1Cost = 0.18;
-    R2Cost = 1.2;
     translate: TranslateService;
 
     dateBegin: Date = null;
@@ -102,7 +98,7 @@ export class PayoutsComponent implements OnInit {
                         })
                     );
                 }
-                
+
             }
         });
     }

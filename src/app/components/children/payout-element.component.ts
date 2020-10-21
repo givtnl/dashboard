@@ -134,7 +134,7 @@ export class PayoutComponent implements OnInit {
         let RTransactionT1Cost = 0.0;
 
         if (paymentType === PaymentType.SEPA) {
-            let mandateCost = x.MandateCostCount > 0 ? x.MandateCost / x.MandateCostCount : 0.0;
+            let mandateCost = x.MandateCostCount > 0 ? x.MandateCost / x.MandateCostCount : 0.125;
             this.translate
                 .get('Text_Info_Mandate', {
                     0: x.MandateCostCount,
@@ -146,7 +146,7 @@ export class PayoutComponent implements OnInit {
                 .subscribe((res: string) => {
                     x.Text_Info_Mandate = res;
                 });
-            let RTransactionT2Cost = x.RTransactionT2Count > 0 ? x.RTransactionT2Cost / x.RTransactionT2Count : 1.2;
+            let RTransactionT2Cost = x.RTransactionT2Count > 0 ? x.RTransactionT2Cost / x.RTransactionT2Count : 0;
             this.translate
                 .get('Text_Info_Type2', {
                     0: x.RTransactionT2Count,
@@ -158,11 +158,11 @@ export class PayoutComponent implements OnInit {
                 .subscribe((res: string) => {
                     x.Text_Info_Type2 = res;
                 });
-            RTransactionT1Cost = x.RTransactionT1Count > 0 ? x.RTransactionT1Cost / x.RTransactionT1Count : 0.18;
-            transactionCost = x.TransactionCount > 0 ? x.TransactionCost / x.TransactionCount : 0.8;
+            RTransactionT1Cost = x.RTransactionT1Count > 0 ? x.RTransactionT1Cost / x.RTransactionT1Count : 0;
+            transactionCost = x.TransactionCount > 0 ? x.TransactionCost / x.TransactionCount : 0.6;
 
         } else if (paymentType == PaymentType.BACS) {
-            RTransactionT1Cost = x.RTransactionT1Count > 0 ? x.RTransactionT1Cost / x.RTransactionT1Count : 2.0;
+            RTransactionT1Cost = x.RTransactionT1Count > 0 ? x.RTransactionT1Cost / x.RTransactionT1Count : 0;
             transactionCost = x.TransactionCount > 0 ? x.TransactionCost / x.TransactionCount : 0.14;
 
             if (this.giftAid) {
