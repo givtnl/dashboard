@@ -175,7 +175,8 @@
                 <h3 *ngIf="savedCollects.length == 0">{{"Text_NoSavedCollectes" | translate}}</h3>
 
                 <section class="collects-list" *ngIf="savedCollects.length > 0">
-                    <section *ngFor="let collect of savedCollects | reverse" class="show-collect" (click)="selectCollect(collect)">
+                    <section *ngFor="let collect of savedCollects" class="show-collect"
+                        (click)="selectCollect(collect)">
                         <time>
                             <span class="date">{{collect.Name}}</span>
                             <span *ngIf="collect.BeginDateString == collect.EndDateString" class="time">{{collect.BeginDateString}}</span>
