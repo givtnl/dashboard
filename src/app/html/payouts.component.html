@@ -57,7 +57,7 @@
             </div>
 
         </section>
-        <section *ngFor="let payout of payouts | reverse; let last = last" [ngClass]="{last: last}">
+        <section *ngFor="let payout of payouts; let last = last" [ngClass]="{last: last}">
             <payout [childData]="payout" [loader]="loader"></payout>
         </section>
 
