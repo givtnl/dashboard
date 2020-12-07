@@ -232,8 +232,7 @@ export class PayoutComponent implements OnInit {
 
     fetchPayoutDetail() {
         this.translate.get('NonAllocatedCollect').subscribe((res: string) => {
-            const dateTimeOffset = new Date().getTimezoneOffset() * -1;
-            this.apiClient.getData(`Payments/PayoutDetail?payoutID=${this.childData.Id}&dateTimeOffset=${dateTimeOffset}`).then(resp => {
+            this.apiClient.getData(`Payments/PayoutDetail?payoutID=${this.childData.Id}`).then(resp => {
                 let allocsCount: number = resp.Details.length;
                 let stornoDetails = [];
                 let paidDetails = [];
@@ -335,7 +334,7 @@ export class PayoutComponent implements OnInit {
 
         let apiUrl = 'v2/organisations/' + this.userService.CurrentCollectGroup.OrgId +
             '/collectgroups/' + this.userService.CurrentCollectGroup.GUID +
-            '/payments/' + this.childData.Id + '/export?dateTimeOffset=' + new Date().getTimezoneOffset() * -1;
+            '/payments/' + this.childData.Id + '/export'
         this.apiClient.getData(apiUrl).then(resp => {
             this.loader['show'] = false;
             var csvContent = '';
