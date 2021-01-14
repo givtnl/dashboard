@@ -135,7 +135,7 @@ export class PayoutsComponent implements OnInit {
 
         let apiUrl = 'v2/organisations/' + this.userService.CurrentCollectGroup.OrgId +
             '/collectgroups/' + this.userService.CurrentCollectGroup.GUID +
-            '/payments/export?startDate=' + start + '&endDate=' + end + '&dateTimeOffset=' + new Date().getTimezoneOffset() * -1;
+            '/payments/export?startDate=' + start + '&endDate=' + end;
         this.apiService.getData(apiUrl).then(resp => {
             this.loader['show'] = false;
             var csvContent = '';
