@@ -34,8 +34,8 @@ export class ForgotPasswordComponent  implements OnInit{
   queryParams: any;
   /*  ------  */
 
-  disabled : boolean = true;
-
+  disabled : boolean = false;
+  shouldDisableSaveButton: boolean = true;
   email: string;
   token: string;
 
@@ -106,9 +106,9 @@ export class ForgotPasswordComponent  implements OnInit{
   changePw(value) {
     var regEx = new RegExp(".*[0-9]+.*[A-Z]+.*|.*[A-Z]+.*[0-9]+.*");
     if(regEx.test(value) && value.length > 6 && value.length <= 35) {
-      this.disabled = false
+      this.shouldDisableSaveButton = false
     } else {
-      this.disabled = true
+      this.shouldDisableSaveButton = true
     }
   }
   save(){
