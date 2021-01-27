@@ -1,10 +1,10 @@
 <section class="show-collect center-me">
     <time class="payouts-time-container">
-    <span *ngIf="!childData.PaymentProviderExecutionDate" class="date">{{childData.dtExecuted}}<span
+    <span *ngIf="paymentType == 1" class="date">{{childData.dtExecuted}}<span
         style="font-size: 26px; display: inline;">&nbsp;</span></span>
-    <span *ngIf="childData.PaymentProviderExecutionDate" class="date">{{'Payout_PaidOutDate' | translate}}
+    <span *ngIf="paymentType == 2" class="date">{{'Payout_PaidOutDate' | translate}}
       {{childData.dtExecuted}} <span style="font-size: 26px; display: inline;">&nbsp;</span></span>
-    <span *ngIf="childData.PaymentProviderExecutionDate" class="date">{{'Payout_ExecutionDate' | translate}}
+    <span *ngIf="paymentType == 2" class="date">{{'Payout_ExecutionDate' | translate}}
       {{childData.PaymentProviderExecutionDate}}</span>
     <span *ngIf="showCosts"></span>
   </time>
