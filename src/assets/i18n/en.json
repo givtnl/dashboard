@@ -44,7 +44,7 @@
     "Placeholder_Offering_Name": "Offering name",
     "Text_Info_Total_Stornos": "Total of Refusal costs = {{0}}{{1}}",
     "Text_TotEnMet": "till",
-    "Text_TransactionCost_MoreInfo": "These costs are charged by SlimPay for the signed mandates and for handling the transactions. Signing a mandate costs €0.50. Givt will apply this cost on the first four times the donor uses Givt. This way the costs are evenly divided over the different situations in which Givt is used for donating.",
+    "Text_TransactionCost_MoreInfo": "These costs are charged by SlimPay for the signed mandates and for handling the transactions. Signing a mandate costs € 0.50. Givt will apply this cost on the first four times the donor uses Givt. This way the costs are evenly divided over the different situations in which Givt is used for donating.",
     "Text_GivtServiceFee_MoreInfo": "Givt charges this fee for providing the service.",
     "Text_Stornos_MoreInfo": "Here you can find the fees that are charged by SlimPay for retracting money.\n<br/><br/>\nType 1 means the donor has retracted the money before it was withdrawn from his or her bank account or the transaction was declined by the bank or processor. Type 2 means the donor has retracted the gift after it was already withdrawn from his or her account or the donor's bank cancelled the transaction. In almost every case fees of type 2 will be charged over a payment period which is different than the period in which the donor has given.",
     "Payout_PayoutCosts": "Payment costs",
