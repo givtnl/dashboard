@@ -44,7 +44,7 @@
     "Placeholder_Offering_Name": "Collectenaam",
     "Text_Info_Total_Stornos": "Totaal aan storneringen = {{0}} {{1}}",
     "Text_TotEnMet": "t/m",
-    "Text_TransactionCost_MoreInfo": "Dit zijn de kosten die SlimPay in rekening brengt voor het aangaan van machtigingen door gevers en voor het verwerken van de transacties. De kosten voor een machtiging liggen op 50 cent. Deze verrekent Givt over de eerste vier keer dat de gever Givt gebruikt. Zo worden de kosten eerlijk verdeeld over verschillende situaties waarin er met Givt wordt gegeven.",
+    "Text_TransactionCost_MoreInfo": "Dit zijn de kosten die SlimPay in rekening brengt voor het verwerken van de transacties. Tot voor 14-01-2021 werden hierin ook kosten voor het aangaan van machtigingen door gevers inbegrepen. De kosten voor een machtiging lagen op 50 cent. Givt verrekende deze over de eerste vier keer dat de gever Givt gebruikt. Zo werden de kosten eerlijk verdeeld over verschillende situaties waarin er met Givt wordt gegeven.",
     "Text_GivtServiceFee_MoreInfo": "Dit zijn de kosten die vanuit Givt in rekening worden gebracht voor het verlenen van de service.",
     "Text_Stornos_MoreInfo": "Deze kostenpost bestaat uit de kosten die SlimPay voor storneringen in rekening brengt.\n<br/><br/>\nType 1 betekent dat de gever het bedrag heeft teruggetrokken voordat het is afgeschreven, of dat de transactie is afgewezen door de bank of processor. Type 2 betekent dat de gever de gift heeft teruggetrokken nadat deze al was afgeschreven, of door de bank van de gever is teruggedraaid. Storneringskosten van type 2 worden vrijwel altijd verrekend over een uitbetaalperiode die anders is dan de periode waarin de gift door de gever gedaan is.",
     "Payout_PayoutCosts": "Uitbetalingskosten",
