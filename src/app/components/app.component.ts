@@ -11,7 +11,7 @@ export class AppComponent {
 
   constructor(private translate: TranslateService, private dataService: DataService) {
     //supported languages todo: add languages you wish to support
-    translate.addLangs(["nl","en"]);
+    translate.addLangs(["nl","en","de"]);
 
     let languages = translate.getLangs();
     let browserLanguage = navigator.language.substr(0,2);
