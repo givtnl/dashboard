@@ -182,7 +182,7 @@
     "RequestMediumIdBody": "Send us an email at <a href='mailto:support@givtapp.net'>support@givtapp.net</a> with the namespace for which you want an integration and request a medium id to connect an app with Givt.",
     "RequestMediumIdManual": "Download the manual for developers <a href='assets/Manual-Deeplink-Givt.zip'>here</a>.",
     "GivtWithGivtPreferenceTitle": "Integration with Givt",
-    "Text_TransactionCost_MoreInfo_GB": "These costs are charged by EazyCollect for handling the transactions.",
+    "Text_TransactionCost_MoreInfo_GB": "These costs are charged by Access PaySuite Ltd. (formerly EazyCollect) for handling the transactions.",
     "QRCodeREQ_1_title": "Request a QR code",
     "QRCodeREQ_nav": "QR code",
     "QRCodeREQ_1_subtext": "With the Givt app, you can give easily to a QR code which you can place anywhere.",
