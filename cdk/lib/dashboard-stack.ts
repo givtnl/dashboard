@@ -97,13 +97,10 @@ export class DashboardStack extends cdk.Stack {
                 ],
                 additionalBehaviors: {
                     '/demo/*': {
-                        cachedMethods: CachedMethods.CACHE_GET_HEAD_OPTIONS,
-
                         origin: new S3Origin(webhostingBucket, {
                             originPath: '/demo',
                             originAccessIdentity: cloudFrontOriginAccessIdentity
                         }),
-                        allowedMethods: AllowedMethods.ALLOW_GET_HEAD,
                         compress: true,
                         viewerProtocolPolicy:
                             ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
@@ -111,7 +108,6 @@ export class DashboardStack extends cdk.Stack {
                     }
                 },
                 defaultBehavior: {
-                    allowedMethods: AllowedMethods.ALLOW_GET_HEAD,
                     compress: true,
                     viewerProtocolPolicy:
                         ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
