@@ -12,7 +12,7 @@ jobs:
 
     steps:
       - name: Checkout the code
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2
       - name: Cache node modules
         uses: actions/cache@v1
         with:
@@ -34,6 +34,7 @@ jobs:
           cdk_subcommand: 'deploy'
           cdk_stack: 'dashboard-stack'
           cdk_args: '--require-approval never'
+          working_dir: 'cdk'
           actions_comment: true        
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
