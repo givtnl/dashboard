@@ -85,7 +85,7 @@ export class DashboardStack extends cdk.Stack {
                     },
                 ],
                 domainNames: [
-                    environmentNameParameter.valueAsString?.toLocaleLowerCase() ===
+                    environmentNameParameter.valueAsString?.toLowerCase() ==
                         "development"
                         ? "clouddebug.givtapp.net"
                         : "cloud.givtapp.net",
