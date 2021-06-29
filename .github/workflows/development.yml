@@ -33,6 +33,7 @@ jobs:
           cd cdk
           npm install -g typescript
           npm install -g aws-cdk
+          npm install
           cdk bootstrap
           cdk deploy "*" --parameters DashboardStack:EnvironmentName=development --require-approval never
         env:   
