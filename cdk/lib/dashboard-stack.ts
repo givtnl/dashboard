@@ -26,14 +26,6 @@ import { CfnParameter, Duration } from "@aws-cdk/core";
 export class DashboardStack extends cdk.Stack {
     constructor(scope: cdk.Construct, id: string, props?: cdk.StackProps) {
         super(scope, id, props);
-
-        var environmentNameParameter = new CfnParameter(
-            this,
-            "EnvironmentName",
-            {
-                type: "String"
-            }
-        );
         // The code that defines your stack goes here
         var webhostingBucket = new Bucket(this, "DashboardWebhostingBucket", {
             accessControl: BucketAccessControl.PRIVATE,
@@ -85,7 +77,7 @@ export class DashboardStack extends cdk.Stack {
                     },
                 ],
                 domainNames: [
-                    environmentNameParameter.valueAsString?.toLowerCase() ==
+                    process.env.EnvironmentName?.toLowerCase() ==
                         "development"
                         ? "clouddebug.givtapp.net"
                         : "cloud.givtapp.net",
