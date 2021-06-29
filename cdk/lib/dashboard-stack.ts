@@ -63,7 +63,7 @@ export class DashboardStack extends cdk.Stack {
             handler: 'index.handler',
             functionName:'add-security-headers-function',
             description:'Adds security headers to the responses from S3',
-            code: Code.fromAsset('./lambdas/add-security-headers-lambda.js')
+            code: Code.fromAsset('/lambdas/add-security-headers-lambda')
         });
         this.deploy(isProduction ? 'cloud.givtapp.net' : 'clouddebug.givtapp.net', environmentName, '../dist');
         if (isProduction) {
