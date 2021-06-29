@@ -10,7 +10,7 @@ var disclaimer = document.getElementById("disclaimer");
 
 var lang = navigator.language;
 
-if (quote !== undefined && disclaimer !== undefined) {
+if (quote !== null && disclaimer !== null) {
     if (lang.indexOf("nl") !== -1) {
         quote.innerText = "Een ogenblik geduld alsjeblieft...";
         disclaimer.innerText = "Gelieve een andere browser dan Internet Explorer te gebruiken.";
