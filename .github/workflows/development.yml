@@ -29,7 +29,6 @@ jobs:
           npm i
           npm run build
       - name: Bootstrap and run the CDK
-        uses: youyo/aws-cdk-github-actions@v2
         run: |
           cd cdk
           npm install -g aws-cdk
