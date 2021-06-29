@@ -28,6 +28,15 @@ jobs:
         run: |
           npm i
           npm run build
+      - name: Bootstrap the CDK
+        uses: youyo/aws-cdk-github-actions@v2
+        with:
+          cdk_subcommand: 'bootstrap'
+          working_dir: 'cdk' 
+        env:   
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}          
       - name: Run the CDK
         uses: youyo/aws-cdk-github-actions@v2
         with:
@@ -35,7 +44,6 @@ jobs:
           cdk_stack: 'dashboard-stack'
           cdk_args: '--require-approval never --parameters DashboardStack:EnvironmentName=development'
           working_dir: 'cdk'
-          actions_comment: true     
         env:   
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
