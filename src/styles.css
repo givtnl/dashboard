@@ -38,6 +38,21 @@
     src: url('./fonts/roboto-v15-latin-regular.woff') format('woff');
 }
 
+.givt-intro {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding-top: 200px;
+    box-sizing: border-box;
+}
+
+.givt-intro-inner {
+    width: 100%;
+    justify-content: center;
+    text-align: center
+}
+
 html,
 body,
 .container,
