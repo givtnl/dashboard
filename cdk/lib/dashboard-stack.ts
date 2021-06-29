@@ -30,7 +30,7 @@ export class DashboardStack extends cdk.Stack {
             this,
             "EnvironmentName",
             {
-                type: "STRING",
+                type: "String",
                 default: "development",
             }
         );
