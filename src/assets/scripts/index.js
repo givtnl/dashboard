@@ -1,4 +1,5 @@
 window.dataLayer = window.dataLayer || [];
+
 function gtag() { dataLayer.push(arguments); }
 gtag('js', new Date());
 
@@ -9,12 +10,15 @@ var disclaimer = document.getElementById("disclaimer");
 
 var lang = navigator.language;
 
-if (lang.indexOf("nl") !== -1) {
-    quote.innerText = "Een ogenblik geduld alsjeblieft...";
-    disclaimer.innerText = "Gelieve een andere browser dan Internet Explorer te gebruiken.";
-} else {
-    quote.innerText = "We'll be with you in a second...";
-    disclaimer.innerText = "Please use another browser (e.g. Chrome, FireFox, Safari, ...)"
+if (quote !== undefined && disclaimer !== undefined) {
+    if (lang.indexOf("nl") !== -1) {
+        quote.innerText = "Een ogenblik geduld alsjeblieft...";
+        disclaimer.innerText = "Gelieve een andere browser dan Internet Explorer te gebruiken.";
+    } else {
+        quote.innerText = "We'll be with you in a second...";
+        disclaimer.innerText = "Please use another browser (e.g. Chrome, FireFox, Safari, ...)"
+    }
+
 }
 
 var version = detectIE();
