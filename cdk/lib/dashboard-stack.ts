@@ -55,6 +55,17 @@ export class DashboardStack extends cdk.Stack {
         );
         webhostingBucket.grantRead(cloudFrontOriginAccessIdentity);
 
+        var cachePolicy = new CachePolicy(this, "DashboardCachePolicy", {
+            queryStringBehavior: CacheQueryStringBehavior.all(),
+            cookieBehavior: CacheCookieBehavior.all(),
+            headerBehavior: CacheHeaderBehavior.allowList(
+                "Access-Control-Request-Headers",
+                "Access-Control-Request-Method",
+                "Origin"
+            ),
+            enableAcceptEncodingBrotli: true,
+            enableAcceptEncodingGzip: true,
+        });
         var cloudFrontDistribution = new Distribution(
             this,
             "DashboardCloudFrontDistribution",
@@ -96,17 +107,7 @@ export class DashboardStack extends cdk.Stack {
                         compress: true,
                         viewerProtocolPolicy:
                             ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
-                        cachePolicy: new CachePolicy(this, "DashboardCachePolicy", {
-                            queryStringBehavior: CacheQueryStringBehavior.all(),
-                            cookieBehavior: CacheCookieBehavior.all(),
-                            headerBehavior: CacheHeaderBehavior.allowList(
-                                "Access-Control-Request-Headers",
-                                "Access-Control-Request-Method",
-                                "Origin"
-                            ),
-                            enableAcceptEncodingBrotli: true,
-                            enableAcceptEncodingGzip: true,
-                        })
+                        cachePolicy: cachePolicy
                     }
                 },
                 defaultBehavior: {
@@ -114,17 +115,7 @@ export class DashboardStack extends cdk.Stack {
                     compress: true,
                     viewerProtocolPolicy:
                         ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
-                    cachePolicy: new CachePolicy(this, "DashboardCachePolicy", {
-                        queryStringBehavior: CacheQueryStringBehavior.all(),
-                        cookieBehavior: CacheCookieBehavior.all(),
-                        headerBehavior: CacheHeaderBehavior.allowList(
-                            "Access-Control-Request-Headers",
-                            "Access-Control-Request-Method",
-                            "Origin"
-                        ),
-                        enableAcceptEncodingBrotli: true,
-                        enableAcceptEncodingGzip: true,
-                    }),
+                    cachePolicy: cachePolicy,
                     origin: new S3Origin(webhostingBucket, {
                         originAccessIdentity: cloudFrontOriginAccessIdentity,
                     }),
