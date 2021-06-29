@@ -22,14 +22,16 @@ if (quote !== null && disclaimer !== null) {
 }
 
 var version = detectIE();
-
-if (version === false) {
-    document.getElementById('ie-disclaimer').setAttribute("style", "display: none;");
-} else if (version >= 12) {
-    document.getElementById('ie-disclaimer').setAttribute("style", "display: none;");
-} else {
-    document.getElementById('ie-disclaimer').setAttribute("style", "display: block; font: 18px Verdana, sans-serif;");
+if (document.getElementById('ie-disclaimer') !== null) {
+    if (version === false) {
+        document.getElementById('ie-disclaimer').setAttribute("style", "display: none;");
+    } else if (version >= 12) {
+        document.getElementById('ie-disclaimer').setAttribute("style", "display: none;");
+    } else {
+        document.getElementById('ie-disclaimer').setAttribute("style", "display: block; font: 18px Verdana, sans-serif;");
+    }
 }
+
 
 function detectIE() {
     var ua = window.navigator.userAgent;
