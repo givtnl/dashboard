@@ -78,14 +78,14 @@ export class DashboardStack extends cdk.Stack {
                         responsePagePath: "/index.html",
                     },
                     {
-                        httpStatus: 404,
+                        httpStatus: 403,
                         responseHttpStatus: 200,
                         responsePagePath: "/index.html",
                     },
                 ],
                 domainNames: [
                     environmentNameParameter.valueAsString?.toLocaleLowerCase() ===
-                    "development"
+                        "development"
                         ? "clouddebug.givtapp.net"
                         : "cloud.givtapp.net",
                 ],
