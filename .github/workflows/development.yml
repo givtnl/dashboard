@@ -33,7 +33,7 @@ jobs:
         with:
           cdk_subcommand: 'deploy'
           cdk_stack: 'dashboard-stack'
-          cdk_args: '--require-approval never --parameters EnvironmentName=development'
+          cdk_args: '--require-approval never --parameters DashboardStack:EnvironmentName=development'
           working_dir: 'cdk'
           actions_comment: true     
         env:   
