@@ -2,6 +2,7 @@ import { Certificate } from "@aws-cdk/aws-certificatemanager";
 import {
     AllowedMethods,
     CacheCookieBehavior,
+    CachedMethods,
     CacheHeaderBehavior,
     CachePolicy,
     CacheQueryStringBehavior,
@@ -83,6 +84,31 @@ export class DashboardStack extends cdk.Stack {
                         ? "clouddebug.givtapp.net"
                         : "cloud.givtapp.net",
                 ],
+                additionalBehaviors: {
+                    '/demo/*': {
+                        cachedMethods: CachedMethods.CACHE_GET_HEAD_OPTIONS,
+
+                        origin: new S3Origin(webhostingBucket, {
+                            originPath: '/demo',
+                            originAccessIdentity: cloudFrontOriginAccessIdentity
+                        }),
+                        allowedMethods: AllowedMethods.ALLOW_GET_HEAD,
+                        compress: true,
+                        viewerProtocolPolicy:
+                            ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
+                        cachePolicy: new CachePolicy(this, "DashboardCachePolicy", {
+                            queryStringBehavior: CacheQueryStringBehavior.all(),
+                            cookieBehavior: CacheCookieBehavior.all(),
+                            headerBehavior: CacheHeaderBehavior.allowList(
+                                "Access-Control-Request-Headers",
+                                "Access-Control-Request-Method",
+                                "Origin"
+                            ),
+                            enableAcceptEncodingBrotli: true,
+                            enableAcceptEncodingGzip: true,
+                        })
+                    }
+                },
                 defaultBehavior: {
                     allowedMethods: AllowedMethods.ALLOW_GET_HEAD,
                     compress: true,
@@ -112,6 +138,15 @@ export class DashboardStack extends cdk.Stack {
             storageClass: StorageClass.ONEZONE_IA,
             distribution: cloudFrontDistribution,
             sources: [Source.asset('../dist')]
+        });
+
+        new BucketDeployment(this, "StaticDemoWebsiteDeployment", {
+            cacheControl: [CacheControl.maxAge(Duration.days(31))],
+            destinationBucket: webhostingBucket,
+            storageClass: StorageClass.ONEZONE_IA,
+            distribution: cloudFrontDistribution,
+            destinationKeyPrefix: 'demo/',
+            sources: [Source.asset('../dist-demo')]
         });
     }
 }
