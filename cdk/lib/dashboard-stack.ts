@@ -71,6 +71,7 @@ export class DashboardStack extends cdk.Stack {
                 comment:
                     "The dashboard cloudfront distribution which will serve the dashboard version one to our users",
                 httpVersion: HttpVersion.HTTP2,
+                certificate: certificate,
                 errorResponses: [
                     {
                         httpStatus: 404,
