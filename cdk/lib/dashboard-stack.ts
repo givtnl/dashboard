@@ -18,9 +18,10 @@ import {
     BucketAccessControl,
     BucketEncryption,
 } from "@aws-cdk/aws-s3";
+import { BucketDeployment, CacheControl, Source, StorageClass } from '@aws-cdk/aws-s3-deployment'
 import { StringParameter } from "@aws-cdk/aws-ssm";
 import * as cdk from "@aws-cdk/core";
-import { CfnParameter } from "@aws-cdk/core";
+import { CfnParameter, Duration } from "@aws-cdk/core";
 
 export class DashboardStack extends cdk.Stack {
     constructor(scope: cdk.Construct, id: string, props?: cdk.StackProps) {
@@ -30,8 +31,7 @@ export class DashboardStack extends cdk.Stack {
             this,
             "EnvironmentName",
             {
-                type: "String",
-                default: "development",
+                type: "String"
             }
         );
         // The code that defines your stack goes here
@@ -112,5 +112,13 @@ export class DashboardStack extends cdk.Stack {
                 },
             }
         );
+
+        new BucketDeployment(this, "StaticWebsiteDeployment", {
+            cacheControl: [CacheControl.maxAge(Duration.days(31))],
+            destinationBucket: webhostingBucket,
+            storageClass: StorageClass.ONEZONE_IA,
+            distribution: cloudFrontDistribution,
+            sources: [Source.asset('../dist')]
+        });
     }
 }
