@@ -31,6 +31,7 @@ jobs:
       - name: Bootstrap and run the CDK
         run: |
           cd cdk
+          npm install -g typescript
           npm install -g aws-cdk
           cdk bootstrap
           cdk deploy "*" --parameters DashboardStack:EnvironmentName=development --require-approval never
