@@ -66,10 +66,6 @@ export class DashboardStack extends cdk.Stack {
             code: Code.fromAsset('./lambdas/add-security-headers-lambda')
         });
         this.deploy(isProduction ? 'cloud.givtapp.net' : 'clouddebug.givtapp.net', environmentName, '../dist');
-        if (isProduction) {
-            // deploy the demo environment
-            this.deploy('demo.givtapp.net', 'demo', '../dist-demo');
-        }
     }
 
     private deploy(domainName: string, environmentName: string, folderToDeploy: string): void {
