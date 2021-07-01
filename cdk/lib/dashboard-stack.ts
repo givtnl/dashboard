@@ -61,7 +61,7 @@ export class DashboardStack extends cdk.Stack {
         this.securityHeadersFunction = new EdgeFunction(this, 'MyFunction', {
             runtime: Runtime.NODEJS_12_X,
             handler: 'index.handler',
-            functionName:'add-security-headers-function',
+            functionName:`add-security-headers-function-${environmentName}`,
             description:'Adds security headers to the responses from S3',
             code: Code.fromAsset('./lambdas/add-security-headers-lambda')
         });
