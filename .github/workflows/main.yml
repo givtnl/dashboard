@@ -27,6 +27,7 @@ jobs:
       - name: npm install and npm run build
         run: |
           npm i
+          npm install -g @angular/cli
           ng build --prod
           ng build -op dist-demo --bh /demo/
       - name: Bootstrap and run the CDK
