@@ -29,7 +29,7 @@ jobs:
           npm i
           npm install -g @angular/cli
           ng build --prod
-          ng build -op dist-demo --bh /demo/
+          ng build -op dist-demo
       - name: Bootstrap and run the CDK
         run: |
           cd cdk
