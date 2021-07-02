@@ -150,7 +150,7 @@ export class DashboardStack extends cdk.Stack {
             prune: false,
             distribution: cloudFrontDistribution,
             sources: [
-                Source.asset('../public/apple-app-site')
+                Source.asset('../apple-app-site')
             ]
         });
     }
