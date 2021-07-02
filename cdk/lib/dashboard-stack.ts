@@ -134,7 +134,10 @@ export class DashboardStack extends cdk.Stack {
             destinationBucket: webhostingBucket,
             storageClass: StorageClass.ONEZONE_IA,
             distribution: cloudFrontDistribution,
-            sources: [Source.asset(folderToDeploy)]
+            sources: [
+                Source.asset(folderToDeploy),
+                Source.asset('../public')
+            ]
         });
     }
 }
