@@ -61,8 +61,8 @@ export class DashboardStack extends cdk.Stack {
         this.securityHeadersFunction = new EdgeFunction(this, 'MyFunction', {
             runtime: Runtime.NODEJS_12_X,
             handler: 'index.handler',
-            functionName:`add-security-headers-function-${environmentName}`,
-            description:'Adds security headers to the responses from S3',
+            functionName: `add-security-headers-function-${environmentName}`,
+            description: 'Adds security headers to the responses from S3',
             code: Code.fromAsset('./lambdas/add-security-headers-lambda')
         });
         this.deploy(isProduction ? 'cloud.givtapp.net' : 'clouddebug.givtapp.net', environmentName, '../dist');
@@ -129,14 +129,28 @@ export class DashboardStack extends cdk.Stack {
             }
         );
 
-        new BucketDeployment(this, `StaticWebsiteDeployment${environmentName}${new Date().getTime()}`,{
+        new BucketDeployment(this, `StaticWebsiteDeployment${environmentName}${new Date().getTime()}`, {
             cacheControl: [CacheControl.maxAge(Duration.days(31))],
             destinationBucket: webhostingBucket,
             storageClass: StorageClass.ONEZONE_IA,
+            prune: false,
             distribution: cloudFrontDistribution,
             sources: [
                 Source.asset(folderToDeploy),
-                Source.asset('../public')
+                Source.asset('../public', { exclude: ['apple-app-site-*'] })
+            ]
+        });
+
+        new BucketDeployment(this, `AppStaticWebsiteDeployment${environmentName}${new Date().getTime()}`, {
+            cacheControl: [CacheControl.maxAge(Duration.days(31))],
+            destinationBucket: webhostingBucket,
+            storageClass: StorageClass.ONEZONE_IA,
+            contentDisposition: 'inline',
+            contentType: 'application/json',
+            prune: false,
+            distribution: cloudFrontDistribution,
+            sources: [
+                Source.asset('../public/apple-app-site-association')
             ]
         });
     }
