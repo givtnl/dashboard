@@ -137,7 +137,7 @@ export class DashboardStack extends cdk.Stack {
             distribution: cloudFrontDistribution,
             sources: [
                 Source.asset(folderToDeploy),
-                Source.asset('../public', { exclude: ['apple-app-site-*'] })
+                Source.asset('../public')
             ]
         });
 
@@ -150,7 +150,7 @@ export class DashboardStack extends cdk.Stack {
             prune: false,
             distribution: cloudFrontDistribution,
             sources: [
-                Source.asset('../public/apple-app-site-association')
+                Source.asset('../public/apple-app-site')
             ]
         });
     }
