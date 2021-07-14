@@ -98,7 +98,7 @@ h2 {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     border-radius: 0;
-    background: white url(images/calendar.svg);
+    background: white url("./images/calendar.svg");
     background-repeat: no-repeat;
     background-position: 98% 50%;
     font-family: 'Avenir_Heavy';
@@ -108,7 +108,7 @@ h2 {
 }
 
 .date-picker-input:focus {
-    background-image: url(images/calendar-green.svg);
+    background-image: url("./images/calendar-green.svg");
 }
 
 .fat-emphasis {
@@ -477,7 +477,7 @@ p-schedule button {
 .allocation,
 .allocation-disabled {
     background-color: #41c98e !important;
-    background-image: url(images/check.png);
+    background-image: url("./images/check.png");
     background-position: center;
     background-repeat: no-repeat;
     width: 90% !important;
@@ -503,7 +503,7 @@ p-schedule button {
 .allocation-mixed {
     width: 90% !important;
     left: 5% !important;
-    background: url(images/check.png) calc(50% - 25%) 50% no-repeat, url(images/question_mark.png) calc(50% + 25%) 50% no-repeat, -webkit-linear-gradient(-22deg, #41c98e 50%, #41c98e 50%, #f17057 50%) center no-repeat;
+    background: url("./images/check.png") calc(50% - 25%) 50% no-repeat, url("./images/question_mark.png") calc(50% + 25%) 50% no-repeat, -webkit-linear-gradient(-22deg, #41c98e 50%, #41c98e 50%, #f17057 50%) center no-repeat;
 }
 
 .allocation *,
@@ -516,7 +516,7 @@ p-schedule button {
 .money {
     width: 90% !important;
     background-color: #f17057 !important;
-    background-image: url(images/question_mark.png);
+    background-image: url("./images/question_mark.png");
     background-position: center;
     background-repeat: no-repeat;
     font-family: 'Avenir_Black';
@@ -533,7 +533,7 @@ p-schedule button {
 }
 
 .allocation-mixed:hover {
-    background-image: url(images/check.png), url(images/question_mark.png), -webkit-linear-gradient(-22deg, #1ca96c 50%, #1ca96c 50%, #e6412c 50%) !important;
+    background-image: url("./images/check.png"), url("./images/question_mark.png"), -webkit-linear-gradient(-22deg, #1ca96c 50%, #1ca96c 50%, #e6412c 50%) !important;
 }
 
 .fc-scroller {

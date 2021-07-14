@@ -61,8 +61,8 @@ export class PayoutComponent implements OnInit {
             this.moreInfoStornos = res;
         });
         if (this.paymentType === PaymentType.BACS) {
-            this.moreInfoToolTip = this.moreInfoToolTip.replace('SlimPay', 'EazyCollect');
-            this.moreInfoStornos = this.moreInfoStornos.replace('SlimPay', 'EazyCollect');
+            this.moreInfoToolTip = this.moreInfoToolTip.replace('SlimPay', 'Access PaySuite');
+            this.moreInfoStornos = this.moreInfoStornos.replace('SlimPay', 'Access PaySuite');
         } else {
             console.log('Undefined payment type');
         }
