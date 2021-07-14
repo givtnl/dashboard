@@ -1,185 +1,61 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-  <base href="/">
-  <title>Givt dashboard</title>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <base href="/">
+    <title>Givt dashboard</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
-    <style>
-    .loader {
-      position: relative;
-      margin: 0 auto;
-      width: 100px;
-    }
-    .loader:before {
-      content: '';
-      display: block;
-      padding-top: 100%;
-    }
-    .circular {
-      animation: rotate 2s linear infinite;
-      height: 100%;
-      transform-origin: center center;
-      width: 100%;
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      margin: auto;
-    }
+    <link rel="stylesheet" href="/assets/styles/index.css" />
 
-    .path {
-      stroke-dasharray: 1, 200;
-      stroke-dashoffset: 0;
-      animation: dash 1.5s ease-in-out infinite, color 6s ease-in-out infinite;
-      stroke-linecap: round;
-    }
-
-    @keyframes rotate {
-      100% {
-        transform: rotate(360deg);
-      }
-    }
-
-    @keyframes dash {
-      0% {
-        stroke-dasharray: 1, 200;
-        stroke-dashoffset: 0;
-      }
-      50% {
-        stroke-dasharray: 89, 200;
-        stroke-dashoffset: -35px;
-      }
-      100% {
-        stroke-dasharray: 89, 200;
-        stroke-dashoffset: -124px;
-      }
-    }
-
-    @keyframes color {
-      100%,
-      0% {
-        stroke: #1DA96C;
-      }
-      40% {
-        stroke: #4D98CF;
-      }
-      66% {
-        stroke: #B91A24;
-      }
-      80% {
-        stroke: #F4BF63;
-      }
-    }
-    .ie-disclaimer {
-      display: none;
-      text-align: center;
-      border-radius: 5px;
-      width: 40%;
-      margin: 0 auto;
-      padding: 10px;
-      color: #721c24;
-      background-color: #f8d7da;
-      border-color: #f5c6cb;
-    }
-    .ie-disclaimer p {
-      font: 18px Verdana, sans-serif;
-    }
-
-  </style>
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-114097637-2"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-114097637-2');
-</script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-114097637-2"></script>
+    <script type="text/javascript" src="/assets/scripts/index.js"></script>
 
 </head>
 
 <body>
 
-<div id="ie-disclaimer" class="ie-disclaimer">
-  <p id="disclaimer">Please use another browser (e.g. Chrome, FireFox, Safari, ...)</p>
-</div>
-<app-root>
-  <div style="width: 100%; display: flex; justify-content: center; flex-direction: column; padding-top:200px; box-sizing: border-box;">
-    <div style="width: 100%; justify-content: center; text-align: center">
-      <svg width="300px" viewBox="654 217 135 53" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-        <g id="Group" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(654.000000, 217.000000)">
-          <rect id="Rectangle-1-Copy-2" fill="#41C98E" x="48.7696335" y="0" width="55.8376963" height="7.92119565"></rect>
-          <path d="M33.9267016,25.2038043 L44.5287958,25.2038043 L44.5287958,42.8091174 C39.6357755,48.3548784 33.5677321,51.1277174 24.91085,51.1277174 C17.665416,51.1277174 10.7888043,47.7562679 6.33537253,42.8091165 C1.88194075,37.861965 3.14732715e-16,31.3320422 0,25.3472285 C3.1121944e-16,19.3624148 2.13300314,12.533203 7.14364416,7.5611413 C12.1542852,2.58907964 17.865371,0 24.946136,0 C32.026901,0 38.1783704,2.36647462 44.5287958,7.5611413 L37.576866,15.7889457 C36.8296594,14.7828875 32.9532899,10.0815217 25.4450262,10.0815217 C21.8783809,10.0815217 18.2103674,11.3745765 15.3404228,14.2669777 C12.4704782,17.159379 10.6840603,20.6142076 10.6840603,25.3472278 C10.6840603,30.080248 12.4723009,33.9613176 15.1326604,36.5585261 C17.7930199,39.1557345 21.5855464,41.016317 24.6285618,41.0163156 C28.6829444,41.0163138 31.6151826,40.2752983 33.9267016,38.8858696 L33.9267016,25.2038043 Z" id="Path-Copy" fill="#2E2957"></path>
-          <polygon id="Path-Copy-2" fill="#2E2957" points="59.3717277 51.1277174 48.7696335 51.1277174 48.7696335 12.2418478 59.3717277 12.2418478"></polygon>
-          <path d="M119.451286,20.1630435 L119.451286,36.7255435 C119.451286,36.7255435 119.986395,41.7162815 124.752333,41.7663043 C127.096877,41.7909124 128.639767,40.1993295 129.235154,39.3683174 C129.701529,40.1993295 134.94546,44.5097849 134.94546,44.5097849 C132.152575,48.1120864 127.290001,50.9475144 122.342034,51.1277174 C118.495492,51.2678069 115.347945,49.8632256 112.731258,47.334204 C110.11457,44.8051824 108.806246,41.3588223 108.849191,36.7255435 L108.849191,0 L119.451286,0 L119.451286,12.2418478 L128.639767,12.2418478 L128.639767,20.1630435 L119.451286,20.1630435 Z" id="Path-Copy-4" fill="#2E2957"></path>
-          <polygon id="Givt" fill="#2E2957" points="79.091623 51.1277174 64.0366492 12.2418478 75.6282733 12.2418478 84.5340314 36.7255435 94.0052356 12.2418478 105.031414 12.2418478 89.9764398 51.1277174"></polygon>
-        </g>
-      </svg>
+    <div id="ie-disclaimer" class="ie-disclaimer">
+        <p id="disclaimer">Please use another browser (e.g. Chrome, FireFox, Safari, ...)</p>
     </div>
-    <div class="loader" style="margin-top: 100px">
-      <svg class="circular" viewBox="25 25 50 50">
-        <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="5" stroke-miterlimit="10"/>
-      </svg>
-    </div>
-    <p style="width:100%; font-family:Arial, sans-serif; font-weight: lighter;font-size:18px; text-align:center; color:#2e2e2e" id="quote">We'll be with you in a second...</p>
-  </div>
+    <app-root>
+        <div class="givt-intro">
+            <div class="givt-intro-inner">
+                <svg width="300px" viewBox="654 217 135 53" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <g id="Group" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"
+            transform="translate(654.000000, 217.000000)">
+            <rect id="Rectangle-1-Copy-2" fill="#41C98E" x="48.7696335" y="0" width="55.8376963" height="7.92119565">
+            </rect>
+            <path
+              d="M33.9267016,25.2038043 L44.5287958,25.2038043 L44.5287958,42.8091174 C39.6357755,48.3548784 33.5677321,51.1277174 24.91085,51.1277174 C17.665416,51.1277174 10.7888043,47.7562679 6.33537253,42.8091165 C1.88194075,37.861965 3.14732715e-16,31.3320422 0,25.3472285 C3.1121944e-16,19.3624148 2.13300314,12.533203 7.14364416,7.5611413 C12.1542852,2.58907964 17.865371,0 24.946136,0 C32.026901,0 38.1783704,2.36647462 44.5287958,7.5611413 L37.576866,15.7889457 C36.8296594,14.7828875 32.9532899,10.0815217 25.4450262,10.0815217 C21.8783809,10.0815217 18.2103674,11.3745765 15.3404228,14.2669777 C12.4704782,17.159379 10.6840603,20.6142076 10.6840603,25.3472278 C10.6840603,30.080248 12.4723009,33.9613176 15.1326604,36.5585261 C17.7930199,39.1557345 21.5855464,41.016317 24.6285618,41.0163156 C28.6829444,41.0163138 31.6151826,40.2752983 33.9267016,38.8858696 L33.9267016,25.2038043 Z"
+              id="Path-Copy" fill="#2E2957"></path>
+            <polygon id="Path-Copy-2" fill="#2E2957"
+              points="59.3717277 51.1277174 48.7696335 51.1277174 48.7696335 12.2418478 59.3717277 12.2418478">
+            </polygon>
+            <path
+              d="M119.451286,20.1630435 L119.451286,36.7255435 C119.451286,36.7255435 119.986395,41.7162815 124.752333,41.7663043 C127.096877,41.7909124 128.639767,40.1993295 129.235154,39.3683174 C129.701529,40.1993295 134.94546,44.5097849 134.94546,44.5097849 C132.152575,48.1120864 127.290001,50.9475144 122.342034,51.1277174 C118.495492,51.2678069 115.347945,49.8632256 112.731258,47.334204 C110.11457,44.8051824 108.806246,41.3588223 108.849191,36.7255435 L108.849191,0 L119.451286,0 L119.451286,12.2418478 L128.639767,12.2418478 L128.639767,20.1630435 L119.451286,20.1630435 Z"
+              id="Path-Copy-4" fill="#2E2957"></path>
+            <polygon id="Givt" fill="#2E2957"
+              points="79.091623 51.1277174 64.0366492 12.2418478 75.6282733 12.2418478 84.5340314 36.7255435 94.0052356 12.2418478 105.031414 12.2418478 89.9764398 51.1277174">
+            </polygon>
+          </g>
+        </svg>
+            </div>
+            <div class="loader margin-top-100">
+                <svg class="circular" viewBox="25 25 50 50">
+          <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="5" stroke-miterlimit="10" />
+        </svg>
+            </div>
+            <p class="loading-intro-text" id="quote">We'll be with you in a second...</p>
+        </div>
 
-</app-root>
-<script>
-  var quote = document.getElementById("quote");
-  var disclaimer = document.getElementById("disclaimer");
+    </app-root>
 
-  var lang = navigator.language;
-
-  if(lang.indexOf("nl") !== -1){
-  	quote.innerText = "Een ogenblik geduld alsjeblieft...";
-  	disclaimer.innerText = "Gelieve een andere browser dan Internet Explorer te gebruiken.";
-  } else {
-    quote.innerText = "We'll be with you in a second...";
-    disclaimer.innerText = "Please use another browser (e.g. Chrome, FireFox, Safari, ...)"
-  }
-</script>
-<script>
-  var version = detectIE();
-
-  if (version === false) {
-    document.getElementById('ie-disclaimer').setAttribute("style","display: none;");
-  } else if (version >= 12) {
-    document.getElementById('ie-disclaimer').setAttribute("style","display: none;");
-  } else {
-    document.getElementById('ie-disclaimer').setAttribute("style","display: block; font: 18px Verdana, sans-serif;");
-  }
-
-  function detectIE() {
-    var ua = window.navigator.userAgent;
-    var msie = ua.indexOf('MSIE ');
-    if (msie > 0) {
-      // IE 10 or older => return version number
-      return parseInt(ua.substring(msie + 5, ua.indexOf('.', msie)), 10);
-    }
-
-    var trident = ua.indexOf('Trident/');
-    if (trident > 0) {
-      // IE 11 => return version number
-      var rv = ua.indexOf('rv:');
-      return parseInt(ua.substring(rv + 3, ua.indexOf('.', rv)), 10);
-    }
-
-    var edge = ua.indexOf('Edge/');
-    if (edge > 0) {
-      // Edge (IE 12+) => return version number
-      return parseInt(ua.substring(edge + 5, ua.indexOf('.', edge)), 10);
-    }
-
-    // other browser
-    return false;
-  }
-</script>
-<script id="googlecharts" type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script id="googlecharts" type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 </body>
+
 </html>
