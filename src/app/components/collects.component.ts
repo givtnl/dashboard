@@ -150,7 +150,7 @@ export class CollectsComponent implements OnInit {
         this.checkAllocations();
         this.fetchSavedCollects();
         this.translate.get('ToProcessExplanation').subscribe((res: string) => {
-            this.toProcessExplanation = this.userService.CurrentCollectGroup.PaymentType === PaymentType.BACS ? res.replace('SlimPay', 'EazyCollect') : res;
+            this.toProcessExplanation = this.userService.CurrentCollectGroup.PaymentType === PaymentType.BACS ? res.replace('SlimPay', 'Access PaySuite') : res;
         });
     }
 

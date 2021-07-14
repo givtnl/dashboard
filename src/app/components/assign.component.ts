@@ -399,7 +399,7 @@ export class AssignComponent implements OnInit {
         }
     }
     checkAllocationsV2() {
-        return new Promise((resolve, reject) => {
+        return new Promise<void>((resolve, reject) => {
             let apiUrl = 'v2/CollectGroup/Buckets';
             if (this.currentViewStart !== null && this.currentViewEnd !== null) {
                 apiUrl += '?dtBegin=' + this.currentViewStart + '&dtEnd=' + this.currentViewEnd;
@@ -480,7 +480,7 @@ export class AssignComponent implements OnInit {
         if (!this.selectedCard || !this.selectedCard.Collects || this.selectedCard.Collects.length === 0) return;
         this.allocLoader['show'] = true;
 
-        return new Promise((resolve, reject) => {
+        return new Promise<void>((resolve, reject) => {
             let dataAllocations = [];
             this.selectedCard.Collects.forEach(collect => {
                 if (collect.allocationName === null || collect.allocationName === undefined || collect.allocationName === '') {
@@ -545,7 +545,7 @@ export class AssignComponent implements OnInit {
         this.errorMessage = msg;
     }
     saveAllocation(title: string, collectId: string, startTime: Date = null, endTime: Date = null) {
-        return new Promise((resolve, reject) => {
+        return new Promise<void>((resolve, reject) => {
             if (title === '') {
                 resolve();
                 return;
@@ -637,7 +637,7 @@ export class AssignComponent implements OnInit {
     }
     updateThisAllocation(id: Number) {
         console.log('Updating allocation...');
-        return new Promise((resolve, reject) => {
+        return new Promise<void>((resolve, reject) => {
             if (id <= 0) {
                 resolve();
                 return;

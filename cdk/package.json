@@ -16,7 +16,7 @@
     "@types/node": "10.17.27",
     "jest": "^26.4.2",
     "ts-jest": "^26.2.0",
-    "aws-cdk": "1.110.1",
+    "aws-cdk": "^1.110.1",
     "ts-node": "^9.0.0",
     "typescript": "~3.9.7"
   },
@@ -28,7 +28,7 @@
     "@aws-cdk/aws-s3": "^1.110.1",
     "@aws-cdk/aws-s3-deployment": "^1.110.1",
     "@aws-cdk/aws-ssm": "^1.110.1",
-    "@aws-cdk/core": "1.110.1",
+    "@aws-cdk/core": "^1.110.1",
     "source-map-support": "^0.5.16"
   }
 }
