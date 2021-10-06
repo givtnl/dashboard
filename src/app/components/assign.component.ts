@@ -4,6 +4,7 @@ import { TranslateService } from 'ng2-translate';
 import { ViewChild, ChangeDetectorRef } from '@angular/core';
 import 'fullcalendar';
 import 'fullcalendar/dist/locale/nl';
+import 'fullcalendar/dist/locale/de';
 import { UserService } from '../services/user.service';
 import { DataService } from '../services/data.service';
 import { AgendaView, moment } from 'fullcalendar';
