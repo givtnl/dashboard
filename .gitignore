@@ -44,3 +44,6 @@ Thumbs.db
 givtplatform.code-workspace
 launch.json 
 deploy.js
+
+**/package-lock.json
+package-lock.json
