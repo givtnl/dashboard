@@ -53,7 +53,7 @@
         <span class="sidebar-title">{{"Menu_Allocate" | translate}}</span>
       </a>
     </li>
-    <li *ngIf="showDashboardItems" routerLinkActive="active-menu-item">
+    <li *ngIf="showDashboardItems && userService && userService.CurrentCollectGroup?.Country !== 'US'" routerLinkActive="active-menu-item">
       <a routerLink="/collects-scheduler">
         <span class="sidebar-icon"><i class="fa fa-calculator"></i></span>
         <span class="sidebar-title">{{"CollectRosterMenu" | translate}}</span>
