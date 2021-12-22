@@ -1,38 +1,20 @@
-import { Certificate, ICertificate } from "@aws-cdk/aws-certificatemanager";
-import {
-    CacheCookieBehavior,
-    CacheHeaderBehavior,
-    CachePolicy,
-    CacheQueryStringBehavior,
-    Distribution,
-    HttpVersion,
-    ICachePolicy,
-    LambdaEdgeEventType,
-    OriginAccessIdentity,
-    PriceClass,
-    ViewerProtocolPolicy,
-} from "@aws-cdk/aws-cloudfront";
-import { S3Origin } from "@aws-cdk/aws-cloudfront-origins";
-import { EdgeFunction } from "@aws-cdk/aws-cloudfront/lib/experimental";
-import { Code, Runtime } from "@aws-cdk/aws-lambda";
-import {
-    BlockPublicAccess,
-    Bucket,
-    BucketAccessControl,
-    BucketEncryption,
-} from "@aws-cdk/aws-s3";
-import { BucketDeployment, CacheControl, Source, StorageClass } from '@aws-cdk/aws-s3-deployment'
-import { StringParameter } from "@aws-cdk/aws-ssm";
-import * as cdk from "@aws-cdk/core";
-import { Duration } from "@aws-cdk/core";
+import * as cdk from 'aws-cdk-lib';
+import { Duration } from 'aws-cdk-lib';
+import { ICertificate, Certificate } from 'aws-cdk-lib/aws-certificatemanager';
+import { ICachePolicy, CachePolicy, CacheQueryStringBehavior, CacheCookieBehavior, CacheHeaderBehavior, OriginAccessIdentity, Distribution, PriceClass, HttpVersion, LambdaEdgeEventType, ViewerProtocolPolicy, ResponseHeadersPolicy } from 'aws-cdk-lib/aws-cloudfront';
+import { S3Origin } from 'aws-cdk-lib/aws-cloudfront-origins';
+import { CacheControl } from 'aws-cdk-lib/aws-codepipeline-actions';
+import { Bucket, BucketAccessControl, BlockPublicAccess, BucketEncryption } from 'aws-cdk-lib/aws-s3';
+import { BucketDeployment, Source, StorageClass } from 'aws-cdk-lib/aws-s3-deployment';
+import { StringParameter } from 'aws-cdk-lib/aws-ssm';
+import { Construct } from 'constructs';
 
 export class DashboardStack extends cdk.Stack {
 
     public certificate: ICertificate;
     public cachePolicy: ICachePolicy;
-    public securityHeadersFunction: EdgeFunction;
 
-    constructor(scope: cdk.Construct, id: string, props?: cdk.StackProps) {
+    constructor(scope: Construct, id: string, props?: cdk.StackProps) {
         super(scope, id, props);
 
         var environmentName = process.env?.EnvironmentName ?? 'development';
@@ -57,13 +39,6 @@ export class DashboardStack extends cdk.Stack {
             ),
             enableAcceptEncodingBrotli: true,
             enableAcceptEncodingGzip: true,
-        });
-        this.securityHeadersFunction = new EdgeFunction(this, 'MyFunction', {
-            runtime: Runtime.NODEJS_12_X,
-            handler: 'index.handler',
-            functionName: `add-security-headers-function-${environmentName}`,
-            description: 'Adds security headers to the responses from S3',
-            code: Code.fromAsset('./lambdas/add-security-headers-lambda')
         });
         this.deploy(isProduction ? 'cloud.givtapp.net' : 'clouddebug.givtapp.net', environmentName, '../dist');
     }
@@ -114,10 +89,7 @@ export class DashboardStack extends cdk.Stack {
                 ],
                 domainNames: [domainName],
                 defaultBehavior: {
-                    edgeLambdas: [{
-                        eventType: LambdaEdgeEventType.ORIGIN_RESPONSE,
-                        functionVersion: this.securityHeadersFunction.currentVersion
-                    }],
+                    responseHeadersPolicy: ResponseHeadersPolicy.CORS_ALLOW_ALL_ORIGINS_WITH_PREFLIGHT_AND_SECURITY_HEADERS,
                     compress: true,
                     viewerProtocolPolicy:
                         ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
