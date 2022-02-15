@@ -100,7 +100,7 @@
                                     </div>
                                 </div>
                             </td>
-                            <td class="csv-cell">
+                            <td class="csv-cell" *ngIf="userService && userService.CurrentCollectGroup?.Country !== 'US'">
                                 <div class="upload-csv">
                                     <input type="file" style="display:none;" (change)="fileChange($event)"
                                         id="inputfile" accept=".csv" />
