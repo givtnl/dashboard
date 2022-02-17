@@ -247,7 +247,7 @@
     "QRCodeREQ_List_Title": "QR-Codes",
     "QRCode": "QR-code",
     "QRCodes": "QR-codes",
-    "QRCodeREQ_List_Info": "Dit zijn de reeds bestaande QR-codes. Je kan ze opnieuw downloaden door op het icoontje te klikken naast de naam.",
+    "QRCodeREQ_List_Info": "Dit zijn de reeds bestaande QR-codes. Je kan ze opnieuw downloaden met de download-knop naast de naam. Met de knop ernaast wordt de QR-code inactief gemaakt en uit de lijst gehaald.",
     "QRCodeREQ_StartFlow": "Genereer een nieuwe QR-code",
     "QRCodeLanguagePreference": "Taal van de promotie-tekst bij de QR-code",
     "QRCodeLanguagePreferenceTitle": "Selecteer de taal van de promotie-tekst naast de QR-code die je gaat downloaden.",
@@ -258,5 +258,9 @@
     "GASDS": "GASDS",
     "Text_GASDS_InfoButton": "<p><b>G</b>ift <b>A</b>id <b>S</b>mall <b>D</b>onations <b>S</b>cheme.</p>\n<p>The amounts in this column are a calculated grouping of donations that were made of which the donation amount is lower or equal to £30. These donations were not gift aided by the user, so they are eligible for GASDS.</p>\n<p>Note: We do not make these claims for you. This is your responsibility.</p>",
     "Text_GiftAided": "GiftAided",
-    "LanguageDE": "Duits"
+    "LanguageDE": "Duits",
+    "QRCodeREQ_Disable_Title": "Deactiveer QR-code",
+    "QRCodeREQ_Disable_Info": "Door op \"Deactiveer\" te klikken wordt de QR-code gedeactiveerd. Als iemand nog aan deze QR-code geeft zal hij hierover een melding krijgen in de app en voorgesteld worden om te geven aan het algemene doel.",
+    "QRCodeREQ_Disable_Confirm": "Deactiveer",
+    "QRCodeREQ_Disable_Cancel": "Annuleer"
 }
