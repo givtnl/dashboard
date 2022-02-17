@@ -207,7 +207,7 @@
     "QRCodeREQ_4_placeholder-phone": "Telefonnummer",
     "QRCodeREQ_4_placeholder-Opmerkingen": "Bemerkungen",
     "QRCodeREQ_4_sendbutton": "Senden",
-    "QRCodeREQ_1_subtitle-button": "Führe drei einfache Schritte aus, um einen Givt-QR-Code herunterzuladen, den Benutzer mithilfe der Givt-App scannen können.",
+    "QRCodeREQ_1_subtitle-button": "Klick dich durch die nächste 3 Schritten um ein QR-Code fürs Spenden zu generieren.",
     "QRCodeREQ_4_subtext-order": "Übersicht der QR-Codes:",
     "QRCodeREQ_3_subtitle": "Richte deine Spendenziele ein",
     "QRCodeREQ_4_comments": "Bemerkungen?",
@@ -258,5 +258,9 @@
     "GASDS": "GASDS",
     "Text_GASDS_InfoButton": "<b>G</b>ift <b>A</b>id <b>S</b>mall <b>D</b>onations <b>S</b>cheme.<br />\nThe amounts in this column are a calculated grouping of donations that were made of which the donation amount is lower or equal to £30. These donations were not gift aided by the user, so they are eligible for GASDS.<br />\nNote: We do not make these claims for you. This is your responsibility.",
     "Text_GiftAided": "GiftAided",
-    "LanguageDE": "Deutsch"
+    "LanguageDE": "Deutsch",
+    "QRCodeREQ_Disable_Title": "QR-code deaktivieren",
+    "QRCodeREQ_Disable_Info": "Der QR-Code wird deaktiviert, wenn du auf \"Deaktivieren\" klickst. Wenn jemand mit einem deaktivierten QR-Code spendet, erhalten sie eine Nachricht in der App, die besagt, dass er deaktiviert ist, und sie erhalten die Möglichkeit, Ihre Kirche oder der Organisation im Allgemeinen eine Spende zu ergreifen.",
+    "QRCodeREQ_Disable_Confirm": "Deaktivieren",
+    "QRCodeREQ_Disable_Cancel": "Abbrechen"
 }
