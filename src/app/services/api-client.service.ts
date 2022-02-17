@@ -140,4 +140,31 @@ export class ApiClientService {
                 }
             });
     }
+
+    putData(path: string, body: any) {
+        if(!this.dataService.getData("accessToken")){
+            return;
+        }
+        let json = JSON.stringify(body);
+
+        let headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        headers.append('authorization', 'Bearer '+ this.dataService.getData("accessToken"));
+        if (this.dataService.getData("CurrentCollectGroup"))
+            headers.append('CollectGroupId', JSON.parse(this.dataService.getData("CurrentCollectGroup")).GUID);
+
+        //do the http call
+        return this.http
+            .put(this.apiUrl + encodeURI(path),json, {headers}).toPromise().then(res => {
+                try {
+                    return res.json();
+                } catch (e) {
+                    return res["_body"];
+                }
+            }).catch(err =>  {
+                if(err.status === 403 || err.status === 401){
+                    this.router.navigate(['unauthorized']);
+                }
+            });
+    }
 }

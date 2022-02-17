@@ -14,6 +14,20 @@
                     </svg>
                 </div>
             </div>
+            <div class="QRCode QRCode_Delete" *ngIf="currentQuestionId == -1" id="confirm">
+                <div class="QRCode_Titlebar">
+                    <div class="QRCode_Titlebar_middle">
+                        <h2>{{"QRCodeREQ_Disable_Title" | translate}}</h2>
+                    </div>
+                </div>
+                <div class="QRCodeListInfo text">
+                    <p>{{"QRCodeREQ_Disable_Info" | translate}}</p>
+                </div>
+                <div class="QRCode_Buttons">
+                    <button class="btn btn-green" (click)="deleteQrcode()">{{"QRCodeREQ_Disable_Confirm" | translate}}</button>
+                    <button class="btn btn-blue" (click)="cancelDelete()">{{"QRCodeREQ_Disable_Cancel" | translate}}</button>
+                </div>
+            </div>
             <div class="QRCode" *ngIf="currentQuestionId == 0" id="question-1">
                 <div class="QRCode_Titlebar">
                     <div class="QRCode_Titlebar_middle">
@@ -34,7 +48,11 @@
                                 </span></td>
                             <td>
                                 <a class="request-qr-btn" (click)="downloadQr(qrCode.MediumId, qrCode.Name)"><i
-                                        class='fa fa-download'></i>&nbsp;Download</a></td>
+                                        class='fa fa-download'></i></a>
+                                <a class="request-qr-del givt-background-orange" (click)="showModalForDelete(qrCode)">
+                                    <i class='fas fa-times'></i>
+                                </a>
+                            </td>
                         </tr>
                     </table>
                 </div>

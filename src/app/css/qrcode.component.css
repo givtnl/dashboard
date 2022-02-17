@@ -217,6 +217,23 @@
     margin-bottom: 10px;
 }
 
+/* --------------------------------------------- Delete ---------------------------------------------- */
+
+.request-qr-del {
+    color: white; padding: 5px 10px; border-radius: 4px; margin-left: 5px;
+}
+
+.QRCode_Delete {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.QRCode_Delete .QRCode_Buttons {
+    margin-top: unset;
+}
 
 /* --------------------------------------------- Buttons --------------------------------------------- */
 
