@@ -41,12 +41,6 @@
         <span class="sidebar-title">{{"Menu_Collectes" | translate}}</span>
       </a>
     </li>
-    <li *ngIf="showDashboardItems && userService && userService.CurrentCollectGroup?.Country !== 'US'" routerLinkActive="active-menu-item">
-      <a routerLink="/payouts">
-        <span class="sidebar-icon"><i class="fa fa-calculator"></i></span>
-        <span class="sidebar-title">{{"Payout_Title" | translate}}</span>
-      </a>
-    </li>
     <li *ngIf="showDashboardItems" routerLinkActive="active-menu-item">
       <a routerLink="/assign">
         <span class="sidebar-icon"><i class="far fa-calendar-check"></i></span>
