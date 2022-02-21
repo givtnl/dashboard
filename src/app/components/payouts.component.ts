@@ -54,9 +54,6 @@ export class PayoutsComponent implements OnInit {
             this.dateBegin = new Date(Number(this.dataService.getData('payoutDateBegin')) * 1000);
             this.dateEnd = new Date(Number(this.dataService.getData('payoutDateEnd')) * 1000);
         }
-        this.translate.get('QuestionsProccessingTransactionsAndPayouts').subscribe(value => {
-            this.questionsGoToManualMessage = value;
-        });
     }
 
     checkAllocations() {

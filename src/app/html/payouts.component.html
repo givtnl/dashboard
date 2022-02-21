@@ -54,8 +54,8 @@
               <img *ngIf="userService && userService.CurrentCollectGroup.Country === 'US'" class="alert-image-us" src="/images/support.png" alt="Contact support" />
               <img *ngIf="userService && userService.CurrentCollectGroup.Country !== 'US'" src="/images/support.png" alt="Contact support" />
 
-              <span *ngIf="userService && userService.CurrentCollectGroup.Country === 'US'" class="text section-collects-nopayments">{{ questionsGoToManualMessage.substr(104) }}</span>
-              <span *ngIf="userService && userService.CurrentCollectGroup.Country !== 'US'" class="text section-collects-nopayments">{{ questionsGoToManualMessage }}</span>
+              <span *ngIf="userService && userService.CurrentCollectGroup.Country === 'US'" class="text section-collects-nopayments">{{ "QuestionsProccessingTransactionsAndPayoutsUS" | translate }}</span>
+              <span *ngIf="userService && userService.CurrentCollectGroup.Country !== 'US'" class="text section-collects-nopayments">{{ "QuestionsProccessingTransactionsAndPayouts" | translate }}</span>
             </div>
 
         </section>
