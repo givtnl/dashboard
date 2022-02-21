@@ -34,6 +34,7 @@ export class PayoutComponent implements OnInit {
     @Input() childData: any;
     @Input() loader: object;
     name: string = '';
+    paymentTypeEnum = PaymentType;
     paymentType: PaymentType = PaymentType.Undefined;
     giftAid: boolean = false;
 
@@ -53,7 +54,15 @@ export class PayoutComponent implements OnInit {
         this.name = 'Testen';
         this.paymentType = this.userService.CurrentCollectGroup.PaymentType;
         this.translate
-            .get(this.paymentType === PaymentType.SEPA ? 'Text_TransactionCost_MoreInfo' : 'Text_TransactionCost_MoreInfo_GB')
+            .get((() => {
+                switch (this.paymentType) {
+                    case PaymentType.SEPA: return 'Text_TransactionCost_MoreInfo';
+                    case PaymentType.BACS: return 'Text_TransactionCost_MoreInfo_GB';
+                    case PaymentType.CreditCard:
+                    default:
+                        return 'These costs are charged by WePay for handling the transactions.';
+                } 
+            })())
             .subscribe((res: string) => {
                 this.moreInfoToolTip = res;
             });
@@ -61,7 +70,6 @@ export class PayoutComponent implements OnInit {
             this.moreInfoStornos = res;
         });
         if (this.paymentType === PaymentType.BACS) {
-            this.moreInfoToolTip = this.moreInfoToolTip.replace('SlimPay', 'Access PaySuite');
             this.moreInfoStornos = this.moreInfoStornos.replace('SlimPay', 'Access PaySuite');
         } else {
             console.log('Undefined payment type');
@@ -177,6 +185,8 @@ export class PayoutComponent implements OnInit {
                 x.GiftAidAmountText = this.displayValue(x.extraGiftAidAmount);
                 x.GASDSAmount = this.displayValue(x.GASDSAmount)
             }
+        } else if (paymentType == PaymentType.CreditCard) {
+            transactionCost = x.TransactionCount > 0 ? x.TransactionCost / x.TransactionCount : 0.15;
         }
 
         this.translate

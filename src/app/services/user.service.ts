@@ -40,7 +40,13 @@ export class UserService {
     user: User = new User();
 
     get currencySymbol(): string {
-        return this.CurrentCollectGroup.PaymentType == PaymentType.BACS ? "£" : "€ ";
+        switch (this.CurrentCollectGroup.PaymentType) {
+            case PaymentType.BACS: return "£";
+            case PaymentType.CreditCard: return "$";
+            case PaymentType.SEPA:
+            default:
+                return "€";
+        }
     }
 
     patchLanguage(userId: string, language: string): Observable<object> {

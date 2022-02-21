@@ -1,10 +1,10 @@
 <section class="show-collect center-me">
     <time class="payouts-time-container">
-    <span *ngIf="paymentType == 1" class="date">{{childData.dtExecuted}}<span
+    <span *ngIf="paymentType == paymentTypeEnum.SEPA || paymentType == paymentTypeEnum.CreditCard" class="date">{{childData.dtExecuted}}<span
         style="font-size: 26px; display: inline;">&nbsp;</span></span>
-    <span *ngIf="paymentType == 2" class="date">{{'Payout_PaidOutDate' | translate}}
+    <span *ngIf="paymentType == paymentTypeEnum.BACS" class="date">{{'Payout_PaidOutDate' | translate}}
       {{childData.dtExecuted}} <span style="font-size: 26px; display: inline;">&nbsp;</span></span>
-    <span *ngIf="paymentType == 2" class="date">{{'Payout_ExecutionDate' | translate}}
+    <span *ngIf="paymentType == paymentTypeEnum.BACS" class="date">{{'Payout_ExecutionDate' | translate}}
       {{childData.PaymentProviderExecutionDate}}</span>
     <span *ngIf="showCosts"></span>
   </time>
@@ -123,9 +123,9 @@
             </ng-container>
 
             <tr class="collect__table__footer" style="font-size: 18px;font-family: Avenir_Medium">
-                <td *ngIf="paymentType == 1" colspan="2" style="text-align:left;" class="special-last-cell">
+                <td *ngIf="paymentType == paymentTypeEnum.SEPA" colspan="2" style="text-align:left;" class="special-last-cell">
                     {{"TermCosts" | translate}} ({{"INCL_BTW" | translate}})</td>
-                <td *ngIf="paymentType == 2" colspan="2" style="text-align:left;" class="special-last-cell">
+                <td *ngIf="paymentType == paymentTypeEnum.BACS" colspan="2" style="text-align:left;" class="special-last-cell">
                     {{"TermCosts" | translate}}</td>
                 <td [class.table-border-right]="giftAid" class="special-last-cell py-20 text-right">- {{childData.TotaalKosten}}</td>
                 <td *ngIf="giftAid" class="table-border-right special-last-cell py-20 text-right">- {{displayValue(0)}}</td>
@@ -201,7 +201,7 @@
             </div>
             <div class="stat-calc alt-stat" *ngIf="1 == childData.activeRow">
                 <table>
-                    <tr *ngIf="paymentType === 1 && childData.MandateCostCount != 0">
+                    <tr *ngIf="paymentType == paymentTypeEnum.SEPA && childData.MandateCostCount != 0">
                         <td>{{ "Text_Transaction_Fee_Mandate" | translate}}</td>
                         <td class="column-spacing-30"></td>
                         <td>{{childData.Mandaatkosten}}</td>
@@ -232,7 +232,7 @@
                         <td class="column-spacing-40"></td>
                         <td></td>
                     </tr>
-                    <tr *ngIf="paymentType === 1">
+                    <tr *ngIf="paymentType == paymentTypeEnum.SEPA">
                         <td class="heavy">{{ "BTW_EXCL" | translate }}</td>
                         <td class="column-spacing-30"></td>
                         <td class="heavy">{{childData.T_Total_Excl}}</td>
@@ -240,7 +240,7 @@
                         <td class="more-info tooltip">
                         </td>
                     </tr>
-                    <tr *ngIf="paymentType === 1" class="border-bottom">
+                    <tr *ngIf="paymentType == paymentTypeEnum.SEPA" class="border-bottom">
                         <td class="heavy">{{"BTW_PERCENT" | translate}}</td>
                         <td class="column-spacing-30"></td>
                         <td class="heavy">{{childData.T_BTW}} </td>
@@ -249,8 +249,8 @@
                         </td>
                     </tr>
                     <tr>
-                        <td *ngIf="paymentType === 1" class="heavy total">{{"BTW_INCL" | translate}}</td>
-                        <td *ngIf="paymentType === 2" class="heavy total">Total</td>
+                        <td *ngIf="paymentType == paymentTypeEnum.SEPA" class="heavy total">{{"BTW_INCL" | translate}}</td>
+                        <td *ngIf="paymentType == paymentTypeEnum.BACS" class="heavy total">Total</td>
                         <td class="column-spacing-30"></td>
                         <td class="heavy total">{{childData.T_Total_Incl}}</td>
                         <td class="column-spacing-40"></td>
@@ -266,21 +266,21 @@
             <div class="stat-calc" *ngIf="2 == childData.activeRow">
                 <table>
                     <tr>
-                        <td *ngIf="paymentType === 1">{{"Text_Deduction_Type1" | translate}}</td>
-                        <td *ngIf="paymentType === 2">Storno fee</td>
+                        <td *ngIf="paymentType == paymentTypeEnum.SEPA">{{"Text_Deduction_Type1" | translate}}</td>
+                        <td *ngIf="paymentType == paymentTypeEnum.BACS">Storno fee</td>
                         <td class="column-spacing-30"></td>
                         <td>{{childData.StorneringsKostenT1}}</td>
                         <td class="column-spacing-40"></td>
                         <td>{{childData.Text_Info_Type1}}</td>
                     </tr>
-                    <tr *ngIf="paymentType === 1" class="border-bottom">
+                    <tr *ngIf="paymentType == paymentTypeEnum.SEPA" class="border-bottom">
                         <td>{{"Text_Deduction_Type2" | translate}}</td>
                         <td class="column-spacing-30"></td>
                         <td>{{childData.StorneringsKostenT2}}</td>
                         <td class="column-spacing-40"></td>
                         <td class="big-cell">{{childData.Text_Info_Type2}}</td>
                     </tr>
-                    <tr *ngIf="paymentType === 1">
+                    <tr *ngIf="paymentType == paymentTypeEnum.SEPA">
                         <td class="heavy">{{ "BTW_EXCL" | translate }}</td>
                         <td class="column-spacing-30"></td>
                         <td class="heavy">{{childData.SK_Total_Excl}}</td>
@@ -288,7 +288,7 @@
                         <td class="more-info tooltip">
                         </td>
                     </tr>
-                    <tr *ngIf="paymentType === 1" class="border-bottom">
+                    <tr *ngIf="paymentType == paymentTypeEnum.SEPA" class="border-bottom">
                         <td class="heavy">{{"BTW_PERCENT" | translate}}</td>
                         <td class="column-spacing-30"></td>
                         <td class="heavy">{{childData.SK_BTW}}</td>
@@ -297,8 +297,8 @@
                         </td>
                     </tr>
                     <tr>
-                        <td *ngIf="paymentType === 1" class="heavy total">{{"BTW_INCL" | translate}}</td>
-                        <td *ngIf="paymentType === 2" class="heavy total">Total</td>
+                        <td *ngIf="paymentType == paymentTypeEnum.SEPA" class="heavy total">{{"BTW_INCL" | translate}}</td>
+                        <td *ngIf="paymentType == paymentTypeEnum.BACS" class="heavy total">Total</td>
                         <td class="column-spacing-30"></td>
                         <td class="heavy total">{{childData.SK_Total_Incl}}</td>
                         <td class="column-spacing-40"></td>
@@ -312,7 +312,7 @@
 
             <div class="stat-calc" *ngIf="3 == childData.activeRow">
                 <table>
-                    <tr *ngIf="paymentType === 1">
+                    <tr *ngIf="paymentType == paymentTypeEnum.SEPA">
                         <td class="heavy">{{ "BTW_EXCL" | translate }}</td>
                         <td class="column-spacing-30"></td>
                         <td class="heavy">{{childData.G_Total_Excl}}</td>
@@ -320,7 +320,7 @@
                         <td class="more-info tooltip">
                         </td>
                     </tr>
-                    <tr *ngIf="paymentType === 1" class="border-bottom">
+                    <tr *ngIf="paymentType == paymentTypeEnum.SEPA" class="border-bottom">
                         <td class="heavy">{{"BTW_PERCENT" | translate}}</td>
                         <td class="column-spacing-30"></td>
                         <td class="heavy">{{childData.G_BTW}}</td>
@@ -329,8 +329,8 @@
                         </td>
                     </tr>
                     <tr>
-                        <td *ngIf="paymentType === 1" class="heavy total">{{"BTW_INCL" | translate}}</td>
-                        <td *ngIf="paymentType === 2" class="heavy total">Total</td>
+                        <td *ngIf="paymentType == paymentTypeEnum.SEPA" class="heavy total">{{"BTW_INCL" | translate}}</td>
+                        <td *ngIf="paymentType == paymentTypeEnum.BACS" class="heavy total">Total</td>
                         <td class="column-spacing-30"></td>
                         <td class="heavy total">{{childData.G_Total_Incl}}</td>
                         <td class="column-spacing-40"></td>
@@ -342,7 +342,7 @@
                     </tr>
                 </table>
             </div>
-            <div class="stat-calc" *ngIf="4 == childData.activeRow">
+            <div class="stat-calc" *ngIf="paymentType != paymentTypeEnum.CreditCard && 4 == childData.activeRow">
                 <table>
                     <tr>
                         <td class="heavy total">{{"Text_Fee_Total" | translate}}</td>
@@ -351,7 +351,7 @@
                         <td class="column-spacing-40"></td>
                         <td>{{ childData.RTransactionT1Count + childData.RTransactionT2Count}} {{"Stornos" | translate}}</td>
                     </tr>
-                    <tr [ngClass]="{'no-bottom-border' : paymentType === 2}">
+                    <tr [ngClass]="{'no-bottom-border' : paymentType == paymentTypeEnum.BACS}">
                         <td></td>
                         <td class="column-spacing-30"></td>
                         <td></td>
