@@ -82,7 +82,7 @@
     "All": "Alle",
     "Collection": "Spende",
     "BrowserMessage": "Wir empfehlen Mozilla Firefox für die beste Nutzererfahrung.",
-    "DownloadNow": "Jetzt downloaden",
+    "DownloadNow": "Jetzt herunterladen",
     "Menu_Allocate": "Zuweisen",
     "TitleAllocate": "Ordne deine Spenden zu",
     "AddNameToCollect": "Definiere das Spendenziel",
@@ -176,7 +176,7 @@
         "one": "Zuweisung löschen",
         "other": "Zuweisungen löschen"
     },
-    "CsvDownload": "Download",
+    "CsvDownload": "CSV Herunterladen",
     "SingleOpenAllocationMessage": "Es gibt noch Spenden {0}, die keiner Spendenziele zugeordnet sind.\nGehe im Seitenmenü auf \"Zuweisen\", um dieses Problem zu beheben.\nHinweis: Die Auszahlung dieser Spenden hängt nicht von der Zuweisung ab, sondern ist nur ein Hilfsmittel, um Spenden besser verfolgen zu können.",
     "RequestMediumIdTitle": "Der Namespace von {0}:",
     "RequestMediumIdBody": "Sende uns eine E-Mail an <a href='mailto:support@givtapp.net'> support@givtapp.net </a> mit dem Namespace, für den eine Integration gewünscht wird und fordern Sie eine mittlere ID an, um eine App mit Givt verbinden zu können.",
@@ -247,7 +247,7 @@
     "QRCodeREQ_List_Title": "QR-Codes",
     "QRCode": "QR-Code",
     "QRCodes": "QR-Codes",
-    "QRCodeREQ_List_Info": "Hier siehst du eine Übersicht von deinen bereits vorhandenen QR-Codes. Du kannst die QR-Codes jederzeit erneut herunterladen, indem du auf \"Download\" klickst.\n\nErstelle jederzeit neue QR-Codes mit vordefinierten Ziele. Diese Spendenziele werden unter \"Zuweisen\" im Tab \"Vordefinierte Ziele\" hinterlegt.",
+    "QRCodeREQ_List_Info": "Hier siehst du eine Übersicht von deinen bereits vorhandenen QR-Codes. Du kannst die QR-Codes jederzeit erneut herunterladen, indem du auf \"Herunterladen\" klickst.\n\nAußerdem kannst du jederzeit die bestehende QR-Codes deaktivieren, indem du auf \"deaktivieren\" klickst.\n\nErstelle jederzeit neue QR-Codes mit vordefinierten Ziele. Diese Spendenziele werden unter \"Zuweisen\" im Tab \"Vordefinierte Ziele\" hinterlegt.",
     "QRCodeREQ_StartFlow": "Neuen QR-Code generieren",
     "QRCodeLanguagePreference": "Sprache des Werbetextes für die QR-Codes",
     "QRCodeLanguagePreferenceTitle": "Wähle die Sprache des Werbetextes aus, der im QR-Code enthalten ist, den du herunterladen möchtest.",
@@ -260,7 +260,8 @@
     "Text_GiftAided": "GiftAided",
     "LanguageDE": "Deutsch",
     "QRCodeREQ_Disable_Title": "QR-code deaktivieren",
-    "QRCodeREQ_Disable_Info": "Der QR-Code wird deaktiviert, wenn du auf \"Deaktivieren\" klickst. Wenn jemand mit einem deaktivierten QR-Code spendet, erhalten sie eine Nachricht in der App, die besagt, dass er deaktiviert ist, und sie erhalten die Möglichkeit, Ihre Kirche oder der Organisation im Allgemeinen eine Spende zu ergreifen.",
+    "QRCodeREQ_Disable_Info": "Der QR-Code wird deaktiviert, wenn du auf \"Deaktivieren\" klickst. Wenn jemand mit einem deaktivierten QR-Code spendet, erhalten der Spender eine Nachricht in der App, die besagt, dass der QR-Code deaktiviert ist. Der Spender spendet dann allgemein an deine Organisation.",
     "QRCodeREQ_Disable_Confirm": "Deaktivieren",
-    "QRCodeREQ_Disable_Cancel": "Abbrechen"
+    "QRCodeREQ_Disable_Cancel": "Abbrechen",
+    "QuestionsProccessingTransactionsAndPayoutsUS": "Hier findest du eine Übersicht der bisherige Auszahlungen. Du findest keine Lösung? Zögere bitte nicht uns zu kontaktieren. Wir helfen gerne weiter."
 }
