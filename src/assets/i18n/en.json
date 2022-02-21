@@ -262,5 +262,6 @@
     "QRCodeREQ_Disable_Title": "Disable QR code",
     "QRCodeREQ_Disable_Info": "The QR-code will be disabled when you click \"Disable\". If someone donates to a disabled QR code, they will receive a message in the app saying that it is disabled and they will get the possibility to make a donation to your church or organisation in general.",
     "QRCodeREQ_Disable_Confirm": "Disable",
-    "QRCodeREQ_Disable_Cancel": "Cancel"
+    "QRCodeREQ_Disable_Cancel": "Cancel",
+    "QuestionsProccessingTransactionsAndPayoutsUS": "Can't figure it out? Do not hesitate to give us a call, we’d love to help."
 }

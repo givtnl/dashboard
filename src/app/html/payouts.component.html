@@ -51,9 +51,11 @@
             <hr class="collect-hr" />
             <div id='info-div' class='global-alert-wrapper wrapper-green'>
               <div class="global-alert"></div>
-              <img src="/images/support.png" alt="Contact support" />
-              
-              <span class="text section-collects-nopayments">{{ questionsGoToManualMessage }}</span>
+              <img *ngIf="userService && userService.CurrentCollectGroup.Country === 'US'" class="alert-image-us" src="/images/support.png" alt="Contact support" />
+              <img *ngIf="userService && userService.CurrentCollectGroup.Country !== 'US'" src="/images/support.png" alt="Contact support" />
+
+              <span *ngIf="userService && userService.CurrentCollectGroup.Country === 'US'" class="text section-collects-nopayments">{{ questionsGoToManualMessage.substr(104) }}</span>
+              <span *ngIf="userService && userService.CurrentCollectGroup.Country !== 'US'" class="text section-collects-nopayments">{{ questionsGoToManualMessage }}</span>
             </div>
 
         </section>
