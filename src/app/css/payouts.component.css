@@ -756,6 +756,11 @@ h3 {
     height: 44px;
 }
 
+.alert-image-us {
+    position: relative;
+    bottom: 7px;
+}
+
 .wrapper-green {
     background: #d4edda;
     border-color: #c3e6cb;

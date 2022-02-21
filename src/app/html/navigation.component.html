@@ -78,7 +78,7 @@
             <span class="sidebar-icon"><i class="fa fa-book"></i></span>
             <span class="sidebar-title">{{ "Manual" | translate }}</span>
           </a>
-          <a *ngIf="translate.currentLang != 'nl'" target="_blank" href="https://givt.co.uk/manual">
+          <a *ngIf="translate.currentLang != 'nl' && userService && userService.CurrentCollectGroup?.Country !== 'US'" target="_blank" href="https://givt.co.uk/manual">
             <span class="sidebar-icon"><i class="fa fa-book"></i></span>
             <span class="sidebar-title">{{ "Manual" | translate }}</span>
           </a>
