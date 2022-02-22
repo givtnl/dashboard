@@ -250,7 +250,7 @@
                     </tr>
                     <tr>
                         <td *ngIf="paymentType == paymentTypeEnum.SEPA" class="heavy total">{{"BTW_INCL" | translate}}</td>
-                        <td *ngIf="paymentType == paymentTypeEnum.BACS" class="heavy total">Total</td>
+                        <td *ngIf="paymentType == paymentTypeEnum.BACS || paymentType == paymentTypeEnum.CreditCard" class="heavy total">Total</td>
                         <td class="column-spacing-30"></td>
                         <td class="heavy total">{{childData.T_Total_Incl}}</td>
                         <td class="column-spacing-40"></td>
@@ -265,7 +265,7 @@
 
             <div class="stat-calc" *ngIf="2 == childData.activeRow">
                 <table>
-                    <tr>
+                    <tr *ngIf="paymentType == paymentTypeEnum.SEPA || paymentType == paymentTypeEnum.BACS">
                         <td *ngIf="paymentType == paymentTypeEnum.SEPA">{{"Text_Deduction_Type1" | translate}}</td>
                         <td *ngIf="paymentType == paymentTypeEnum.BACS">Storno fee</td>
                         <td class="column-spacing-30"></td>
@@ -298,7 +298,7 @@
                     </tr>
                     <tr>
                         <td *ngIf="paymentType == paymentTypeEnum.SEPA" class="heavy total">{{"BTW_INCL" | translate}}</td>
-                        <td *ngIf="paymentType == paymentTypeEnum.BACS" class="heavy total">Total</td>
+                        <td *ngIf="paymentType == paymentTypeEnum.BACS || paymentType == paymentTypeEnum.CreditCard" class="heavy total">Total</td>
                         <td class="column-spacing-30"></td>
                         <td class="heavy total">{{childData.SK_Total_Incl}}</td>
                         <td class="column-spacing-40"></td>
@@ -330,7 +330,7 @@
                     </tr>
                     <tr>
                         <td *ngIf="paymentType == paymentTypeEnum.SEPA" class="heavy total">{{"BTW_INCL" | translate}}</td>
-                        <td *ngIf="paymentType == paymentTypeEnum.BACS" class="heavy total">Total</td>
+                        <td *ngIf="paymentType == paymentTypeEnum.BACS || paymentType == paymentTypeEnum.CreditCard" class="heavy total">Total</td>
                         <td class="column-spacing-30"></td>
                         <td class="heavy total">{{childData.G_Total_Incl}}</td>
                         <td class="column-spacing-40"></td>
