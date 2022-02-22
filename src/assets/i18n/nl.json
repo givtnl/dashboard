@@ -263,5 +263,6 @@
     "QRCodeREQ_Disable_Info": "Door op \"Deactiveer\" te klikken wordt de QR-code gedeactiveerd. Als iemand nog aan deze QR-code geeft zal hij hierover een melding krijgen in de app en voorgesteld worden om te geven aan het algemene doel.",
     "QRCodeREQ_Disable_Confirm": "Deactiveer",
     "QRCodeREQ_Disable_Cancel": "Annuleer",
-    "QuestionsProccessingTransactionsAndPayoutsUS": "Heb je verder nog vragen over de uitbetalingen? Mocht je er niet uitkomen, bel ons dan gerust even op."
+    "QuestionsProccessingTransactionsAndPayoutsUS": "Heb je verder nog vragen over de uitbetalingen? Mocht je er niet uitkomen, bel ons dan gerust even op.",
+    "Text_TransactionCost_MoreInfo_US": "This is the fixed part of the transaction fee which we use to pay the payment provider (WePay)."
 }
