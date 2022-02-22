@@ -125,7 +125,7 @@
             <tr class="collect__table__footer" style="font-size: 18px;font-family: Avenir_Medium">
                 <td *ngIf="paymentType == paymentTypeEnum.SEPA" colspan="2" style="text-align:left;" class="special-last-cell">
                     {{"TermCosts" | translate}} ({{"INCL_BTW" | translate}})</td>
-                <td *ngIf="paymentType == paymentTypeEnum.BACS" colspan="2" style="text-align:left;" class="special-last-cell">
+                <td *ngIf="paymentType == paymentTypeEnum.BACS || paymentType == paymentTypeEnum.CreditCard" colspan="2" style="text-align:left;" class="special-last-cell">
                     {{"TermCosts" | translate}}</td>
                 <td [class.table-border-right]="giftAid" class="special-last-cell py-20 text-right">- {{childData.TotaalKosten}}</td>
                 <td *ngIf="giftAid" class="table-border-right special-last-cell py-20 text-right">- {{displayValue(0)}}</td>
