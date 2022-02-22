@@ -220,6 +220,7 @@
 /* --------------------------------------------- Delete ---------------------------------------------- */
 
 .request-qr-del {
+    cursor: pointer;
     color: white; padding: 5px 10px; border-radius: 4px; margin-left: 5px;
 }
 
