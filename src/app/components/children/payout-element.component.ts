@@ -60,8 +60,8 @@ export class PayoutComponent implements OnInit {
                     case PaymentType.BACS: return 'Text_TransactionCost_MoreInfo_GB';
                     case PaymentType.CreditCard:
                     default:
-                        return 'These costs are charged by WePay for handling the transactions.';
-                } 
+                        return 'Text_TransactionCost_MoreInfo_US';
+                }
             })())
             .subscribe((res: string) => {
                 this.moreInfoToolTip = res;
