@@ -264,5 +264,6 @@
     "QRCodeREQ_Disable_Confirm": "Disable",
     "QRCodeREQ_Disable_Cancel": "Cancel",
     "QuestionsProccessingTransactionsAndPayoutsUS": "Can't figure it out? Do not hesitate to give us a call, we’d love to help.",
-    "Text_TransactionCost_MoreInfo_US": "This is the fixed part of the transaction fee which we use to pay the payment provider (WePay)."
+    "Text_TransactionCost_MoreInfo_US": "This is the fixed part of the transaction fee which we use to pay the payment provider (WePay).",
+    "RequestMediumIdBodyUS": "Send us an email at <a href='mailto:support@givt.app'>support@givt.app</a> with the namespace for which you want an integration and request a medium id to connect an app with Givt."
 }
