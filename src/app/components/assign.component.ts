@@ -54,6 +54,8 @@ export class AssignComponent implements OnInit {
     isLoading = false;
     hasOpenAllocation = false;
 
+    userService: UserService;
+
     selectedAllocationDates = [];
     allocLoader: object = { show: false };
 
@@ -66,11 +68,12 @@ export class AssignComponent implements OnInit {
         private datePipe: ISODatePipe,
         private cd: ChangeDetectorRef,
         private apiService: ApiClientService,
-        private userService: UserService,
+        userService: UserService,
         private dataService: DataService
     ) {
         this.isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
 
+        this.userService = userService;
         document.onkeydown = function(evt) {
             evt = evt || window.event;
             if (this.isDialogOpen && evt.keyCode === 27) {
