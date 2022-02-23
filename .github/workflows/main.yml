@@ -34,9 +34,10 @@ jobs:
         run: |
           cd cdk
           npm install -g typescript
+          npm install -g aws-cdk
           npm install
-          ./node_modules/aws-cdk/bin/cdk bootstrap
-          ./node_modules/aws-cdk/bin/cdk deploy "*" --require-approval never          
+          cdk bootstrap
+          cdk deploy "*" --require-approval never          
         env:   
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID_PRODUCTION }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY_PRODUCTION }}
