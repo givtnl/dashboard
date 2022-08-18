@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { environment } from '../../environments/environment';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { CreateAllocationCommand } from 'app/models/collect-scheduler/create-allocation.command';
 import { Observable } from 'rxjs';
@@ -8,11 +7,18 @@ import { UpdateAllocationCommand } from 'app/models/collect-scheduler/update-all
 import { AllocationListModel } from 'app/models/collect-scheduler/allocation-list.model';
 import { BankAccountModel } from 'app/models/collect-scheduler/bank-account.model';
 
+import { getApiUrl } from './helpers/api-url.helper';
+
+
 @Injectable()
 export class CollectSchedulerService {
-    private apiUrl = environment.apiUrl + '/api/collectgroups/';
+    private apiUrl:string;
+    private apiV2Url:string;
 
-    constructor(private http: HttpClient) {}
+    constructor(private http: HttpClient) {
+        this.apiUrl = getApiUrl() + '/api/collectgroups/';
+        this.apiV2Url = getApiUrl() + '/api/v2/collectgroups/';
+    }
 
     public getAll(collectGroupId: string, pageSize: number, pageNumber: number): Observable<Array<AllocationListModel>> {
         var queryParams = new HttpParams();
@@ -50,7 +56,7 @@ export class CollectSchedulerService {
     }
 
     public getAllActiveAccounts(collectGroupId: string) : Observable<Array<BankAccountModel>> {
-        return this.http.get<Array<BankAccountModel>>(`${environment.apiUrl}/api/v2/collectgroups/${collectGroupId}/organisation/accounts`)
+        return this.http.get<Array<BankAccountModel>>(`${this.apiV2Url}${collectGroupId}/organisation/accounts`)
             .map(bankAccounts => bankAccounts.filter(bankAccount => bankAccount.Active));
     }
 }

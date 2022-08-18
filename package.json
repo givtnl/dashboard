@@ -1,6 +1,6 @@
 {
     "name": "givtplatform",
-    "version": "1.31.6",
+    "version": "1.32.0",
     "license": "MIT",
     "scripts": {
         "ng": "ng",
@@ -42,19 +42,19 @@
         "zone.js": "^0.8.4"
     },
     "devDependencies": {
-        "@angular/cli": "1.4.7",
+        "@angular-devkit/core": "0.6.8",
+        "@angular/cli": "1.6.0",
         "@angular/compiler-cli": "^4.1.2",
         "@types/jasmine": "2.5.38",
         "@types/jquery": "^2.0.40",
         "@types/moment": "^2.13.0",
         "@types/node": "~6.0.60",
         "codelyzer": "~2.0.0",
-        "ftp-deploy": "^2.1.2",
         "jasmine-core": "~2.5.2",
         "jasmine-spec-reporter": "~3.2.0",
-        "karma": "~1.4.1",
+        "karma": "~2.0.0",
         "karma-chrome-launcher": "~2.1.1",
-        "karma-cli": "~1.0.1",
+        "karma-cli": "~2.0.0",
         "karma-coverage-istanbul-reporter": "^0.2.0",
         "karma-jasmine": "~1.1.0",
         "karma-jasmine-html-reporter": "^0.2.2",

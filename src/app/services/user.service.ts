@@ -3,8 +3,6 @@ import { Http, Headers, URLSearchParams } from '@angular/http';
 import { CustomQueryEncoderHelper } from '../helpers/customQueryEncoder';
 import { Router } from "@angular/router";
 import 'rxjs/add/operator/toPromise'; //to support toPromise
-import { environment } from '../../environments/environment';
-
 import { User } from '../models/user';
 import { DataService } from "./data.service";
 import { ApiClientService } from "./api-client.service";
@@ -13,16 +11,20 @@ import { PaymentType } from "../models/paymentType";
 import { Observable } from 'rxjs';
 import { UserDetailModel } from 'app/models/user-detail.model';
 import { HttpClient } from '@angular/common/http';
+import { getApiUrl } from './helpers/api-url.helper';
+
 
 @Injectable()
 export class UserService {
     @Output() collectGroupChanged: EventEmitter<any> = new EventEmitter();
     @Output() userLoggedOut: EventEmitter<any> = new EventEmitter();
 
-    //this has to become environment variable in story 2461
-    private apiUrl = environment.apiUrl + '/oauth2/token';
+    private apiLoginiUrl:string;
+    private apiUrl:string;
 
     constructor(private dataService: DataService, private apiService: ApiClientService, private httpClient: HttpClient, private http: Http, private router: Router) {
+        this.apiLoginiUrl = getApiUrl() + '/oauth2/token';
+        this.apiUrl = getApiUrl();
         this.loggedIn = !!dataService.getData("accessToken");
         this.SiteAdmin = dataService.getData("SiteAdmin") == "True";
         this.GivtOperations = dataService.getData("GivtOperations") == "True";
@@ -50,17 +52,17 @@ export class UserService {
     }
 
     patchLanguage(userId: string, language: string): Observable<object> {
-        return this.httpClient.patch(`${environment.apiUrl}/api/v2/users/${userId}/language/${language}`, {});
+        return this.httpClient.patch(`${this.apiUrl}/api/v2/users/${userId}/language/${language}`, {});
     }
 
     getCurrentUser(): Observable<UserDetailModel> {
-        return this.httpClient.get<UserDetailModel>(`${environment.apiUrl}/api/v2/users`);
+        return this.httpClient.get<UserDetailModel>(`${this.apiUrl}/api/v2/users`);
     }
 
     loginHttpCall(body: string, headers: Headers) {
         return this.http
             .post(
-                this.apiUrl,
+                this.apiLoginiUrl,
                 body,
                 { headers }
             )
@@ -158,7 +160,7 @@ export class UserService {
     requestNewPass(email) {
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
-        return this.http.post(environment.apiUrl + '/api/Users/ForgotPassword?dashboard=true', "\"" + email + "\"", { headers })
+        return this.http.post(this.apiUrl + '/api/Users/ForgotPassword?dashboard=true', "\"" + email + "\"", { headers })
             .toPromise()
             .then(res => {
                 return res;
@@ -169,7 +171,7 @@ export class UserService {
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
         var x = { "userID": email, "passwordToken": token, "newPassword": newPass }
-        return this.http.post(environment.apiUrl + '/api/Users/ResetPassword', x, { headers })
+        return this.http.post(this.apiUrl + '/api/Users/ResetPassword', x, { headers })
             .toPromise()
             .then(res => {
                 return res;

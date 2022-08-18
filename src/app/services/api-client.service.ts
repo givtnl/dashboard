@@ -1,21 +1,21 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers} from '@angular/http';
 
-import { environment } from '../../environments/environment';
-
 import 'rxjs/add/operator/toPromise';
 import {Router} from "@angular/router";
 import {DataService} from "./data.service";
 import {reject} from "q";
 
+import { getApiUrl } from './helpers/api-url.helper';
+
 @Injectable()
 export class ApiClientService {
-    //this has to become environment variable in story 2461
-    private apiUrl = environment.apiUrl + '/api/';
+    private apiUrl: string;
     dataService: DataService;
 
     constructor(private http: Http, private router: Router, dataService: DataService){
         this.dataService = dataService;
+        this.apiUrl = getApiUrl() + '/api/';
     }
 
     delete(path: string){
