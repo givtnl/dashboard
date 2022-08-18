@@ -1,0 +1,50 @@
+name: Build and Deploy dashboard (cloud.givt)
+on: 
+  push:
+    branches: [main, develop]
+  pull_request:
+env:
+  IS_MAIN_BRANCH: ${{ endsWith(github.ref, '/main')}}
+  IS_DEV_BRANCH: ${{ endsWith(github.ref, '/develop')}}
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [14.x]
+
+    steps:
+      - name: Checkout the code
+        uses: actions/checkout@v2
+      - name: Cache node modules
+        uses: actions/cache@v1
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+      - name: Node ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: npm install and npm run build
+        run: |
+          npm i
+          npm run ng build -- ${{ env.IS_MAIN_BRANCH == 'true' && '--prod' || ''}}
+      - name: Bootstrap and run the CDK
+        if: env.IS_MAIN_BRANCH == 'true' || env.IS_DEV_BRANCH == 'true'
+        run: |
+          cd cdk
+          npm install -g typescript
+          npm install -g aws-cdk
+          npm install
+          cdk bootstrap
+          cdk deploy "*" --require-approval never
+
+        env:   
+          AWS_ACCESS_KEY_ID: ${{ env.IS_MAIN_BRANCH == 'true' && secrets.AWS_ACCESS_KEY_ID_PRODUCTION || secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ env.IS_MAIN_BRANCH == 'true' && secrets.AWS_SECRET_ACCESS_KEY_PRODUCTION || secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
+          CDK_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
+          region: ${{ secrets.AWS_DEFAULT_REGION }}
+          EnvironmentName: ${{ env.IS_MAIN_BRANCH == 'true' && 'production' || 'development' }}
