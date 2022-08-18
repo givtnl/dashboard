@@ -4,6 +4,7 @@ import { TranslateService } from "ng2-translate";
 import { UserService } from "../services/user.service";
 import { DataService } from 'app/services/data.service';
 import { of } from 'rxjs/observable/of';
+import 'rxjs/add/operator/switchMap';
 
 @Component({
     selector: 'login',
