@@ -40,10 +40,12 @@ export class DashboardStack extends cdk.Stack {
             enableAcceptEncodingBrotli: true,
             enableAcceptEncodingGzip: true,
         });
-        this.deploy(isProduction ? 'cloud.givtapp.net' : 'clouddebug.givtapp.net', environmentName, '../dist');
+        this.deploy(isProduction ? ['cloud.givtapp.net', 'cloud.givt.app'] : ['clouddebug.givtapp.net', 'clouddebug.givt.app'],
+        environmentName,
+        '../dist');
     }
 
-    private deploy(domainName: string, environmentName: string, folderToDeploy: string): void {
+    private deploy(domainNames: string[], environmentName: string, folderToDeploy: string): void {
         // The code that defines your stack goes here
         var webhostingBucket = new Bucket(this, `DashboardWebhostingBucket${environmentName}`, {
             accessControl: BucketAccessControl.PRIVATE,
@@ -87,7 +89,7 @@ export class DashboardStack extends cdk.Stack {
                         responsePagePath: "/index.html",
                     },
                 ],
-                domainNames: [domainName],
+                domainNames: domainNames,
                 defaultBehavior: {
                     responseHeadersPolicy: ResponseHeadersPolicy.CORS_ALLOW_ALL_ORIGINS_WITH_PREFLIGHT_AND_SECURITY_HEADERS,
                     compress: true,

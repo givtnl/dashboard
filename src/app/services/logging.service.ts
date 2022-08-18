@@ -3,7 +3,6 @@ import { environment } from "environments/environment";
 import { DataService } from "./data.service";
 import * as pkg from '../../../package.json';
 import { Http, Headers } from "@angular/http";
-import { ApiClientService } from "./api-client.service";
 
 @Injectable()
 export class LoggingService {
