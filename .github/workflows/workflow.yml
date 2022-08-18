@@ -35,7 +35,6 @@ jobs:
         if: env.IS_MAIN_BRANCH == 'true' || env.IS_DEV_BRANCH == 'true'
         run: |
           cd cdk
-          npm install -g typescript
           npm install
           ./node_modules/aws-cdk/bin/cdk bootstrap
           ./node_modules/aws-cdk/bin/cdk deploy "*" --require-approval never
