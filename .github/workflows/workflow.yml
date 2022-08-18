@@ -31,7 +31,6 @@ jobs:
         run: |
           npm i
           npm run ng build -- ${{ env.IS_MAIN_BRANCH == 'true' && '--prod' || ''}}
-          npm run ng build -- -op dist-demo
       - name: Bootstrap and run the CDK
         if: env.IS_MAIN_BRANCH == 'true' || env.IS_DEV_BRANCH == 'true'
         run: |
