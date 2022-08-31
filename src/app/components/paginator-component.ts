@@ -9,7 +9,7 @@ import { tap } from "rxjs/operators";
 @Component({
   selector: 'my-paginator',
   templateUrl: '../html/paginator.component.html',
-  styleUrls: ['../css/paginator.component.scss']
+  styleUrls: ['../css/paginator.component.css']
 })
 
 export class PaginatorComponent implements OnInit {

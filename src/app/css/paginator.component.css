@@ -1,0 +1,16 @@
+div.givt-paginator {
+  display: inline-flex;
+}
+div.givt-paginator div.page-up, div.givt-paginator div.page-down {
+  cursor: pointer;
+  margin: 0 10px;
+}
+div.givt-paginator div.page-up i, div.givt-paginator div.page-down i {
+  margin-right: 10px;
+}
+div.givt-paginator div.page-down {
+  margin-left: 20px;
+}
+div.givt-paginator div.select-items select {
+  margin-right: 10px;
+}
