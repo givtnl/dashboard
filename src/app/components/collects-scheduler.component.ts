@@ -18,7 +18,7 @@ import { CreateAllocationCommand } from 'app/models/collect-scheduler/create-all
 @Component({
     selector: 'app-csveditor',
     templateUrl: '../html/collects-scheduler.component.html',
-    styleUrls: ['../css/collects-scheduler.component.scss']
+    styleUrls: ['../css/collects-scheduler.component.css']
 })
 export class CollectsShedulerComponent implements OnInit {
     public form: FormGroup;

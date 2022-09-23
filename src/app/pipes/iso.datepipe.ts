@@ -15,8 +15,10 @@ export class ISODatePipe extends DatePipe implements PipeTransform {
 
     getLocalTimeZoneISOString() : string {
         let value = new Date();
-        let tzhours = value.getTimezoneOffset()/60*-1;
+        let tzhours = value.getTimezoneOffset() / 60 * -1;
+        let negative = tzhours < 0;
+        tzhours = Math.abs(tzhours);
         let tzminutes = (value.getTimezoneOffset() % 60) * -1;
-        return sprintf("%s%02i:%02i", tzhours > 0 ? "+" : "-", tzhours, tzminutes);
+        return sprintf("%s%02i:%02i", negative ? "-" : "+", tzhours, tzminutes);
     }
 }

@@ -1,0 +1,153 @@
+.roster-form .roster-controls {
+    display: flex;
+    justify-content: flex-end;
+    height: 40px;
+    margin-top: 20px;
+  }
+  .roster-form .roster-controls button {
+    padding-left: 20px;
+    padding-right: 25px;
+    background-color: #2E2957;
+    color: white;
+    border-radius: 4px;
+  }
+  .roster-form .roster-controls button i {
+    margin-right: 16px;
+  }
+  .roster-form .roster-name {
+    display: flex;
+    flex: 1;
+    min-height: 1px;
+    padding-right: 15px;
+    padding-left: 15px;
+  }
+  .roster-form .roster-control {
+    display: flex;
+    justify-content: flex-end;
+  }
+  .roster-form .roster-control button {
+    width: auto;
+  }
+  .roster-form .roster-title {
+    margin-top: 40px;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  .roster-form .roster-title h2 {
+    align-self: center;
+    justify-content: center;
+  }
+  .roster-form .roster-body .roster-header {
+    height: 30px;
+    background: #41C98E;
+    color: white;
+    font-family: Avenir_Medium;
+    display: flex;
+    padding: 0;
+    margin: 0;
+    border: 1px solid #2E2957;
+    border-radius: 4px 4px 0 0;
+  }
+  .roster-form .roster-body .roster-header div {
+    text-align: left;
+    align-self: center;
+    border-right: 1px solid #2E2957;
+  }
+  .roster-form .roster-body .roster-header :last-child {
+    border-right: none;
+  }
+  .roster-form .roster-body .roster-container {
+    max-height: 70vh;
+    overflow: auto;
+    border: 1px solid #2E2957;
+    border-radius: 0 0 4px 4px;
+    border-top: none;
+    color: #2E2957;
+  }
+  .roster-form .roster-body .roster-container .ng-invalid {
+    color: red !important;
+  }
+  .roster-form .roster-body .roster-container .roster-row {
+    height: 30px;
+    display: flex;
+    margin: 0;
+    padding: 0;
+    font-family: Avenir_Light;
+    border-bottom: 1px solid lightgray;
+  }
+  .roster-form .roster-body .roster-container .roster-row input {
+    height: 30px;
+    background: none;
+    border: none;
+    border-right: 1px solid #2E2957;
+  }
+  .roster-form .roster-body .roster-container .roster-row .custom-select {
+    line-height: 1.5;
+    font-family: Avenir;
+    vertical-align: middle;
+    outline: 0px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+  }
+  .roster-form .roster-body .roster-container .roster-row .custom-select-sm {
+    height: 30px;
+    padding-top: 0.375rem;
+    padding-bottom: 0.375rem;
+    background-color: initial;
+    border: none;
+    border-radius: 0px;
+    border-right: 1px solid #2E2957;
+  }
+  .roster-form .roster-body .roster-container .roster-row .row-control {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: stretch;
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .roster-form .roster-body .roster-container .roster-row .row-control .row .row-control-sub {
+    display: flex;
+    justify-content: center;
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .roster-form .roster-body .roster-container .roster-row .row-control .row i {
+    cursor: pointer;
+    align-self: center;
+  }
+  .roster-form .roster-body .roster-container .roster-row .row-control .row :nth-child(1) i {
+    color: #41C98E;
+  }
+  .roster-form .roster-body .roster-container .roster-row .row-control .row :nth-child(2) i {
+    color: #2E2957;
+  }
+  .roster-form .roster-body .roster-container .roster-row .row-control .row :nth-child(3) i {
+    color: #b91a2b;
+  }
+  .roster-form .roster-body .roster-container .roster-row:last-of-type {
+    border: none;
+  }
+  .roster-form .roster-body .roster-container .roster-row:last-of-type .custom-select {
+    outline: 0px;
+  }
+  .roster-form .roster-body .roster-container .roster-row:last-of-type .custom-select-sm {
+    border-bottom: none;
+  }
+  .roster-form .roster-body .roster-container .roster-row:hover {
+    background: lightgrey;
+  }
+  .roster-form .roster-body .roster-container .roster-row:hover select {
+    background: lightgrey;
+  }
+  .roster-form .roster-footer {
+    margin-top: 20px;
+    font: 16px "Avenir_Light";
+    color: red;
+  }
+  .roster-form .roster-controls a {
+    text-decoration: none;
+    font: 20px "Avenir_Black";
+    color: #2E2957;
+  }
