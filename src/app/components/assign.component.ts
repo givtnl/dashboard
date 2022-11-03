@@ -105,10 +105,11 @@ export class AssignComponent implements OnInit {
         this.options['viewRender'] = function(view, element) {
             this.agendaView = view;
             this.isMonthView = view['type'] === 'month';
-            let start = new Date(view.start['_d'].toISOString());
-            let end = new Date(view.end['_d'].toISOString());
-            this.currentViewStart = this.datePipe.toISODateUTC(new Date(start.getFullYear(), start.getMonth(), start.getDate(), 0, 0, 0));
-            this.currentViewEnd = this.datePipe.toISODateUTC(new Date(end.getFullYear(), end.getMonth(), end.getDate(), 0, 0, 0));
+            // the calendar view assumes local date/time (no TimeZone info), 
+            // so toISOString() returns something like "2022-10-30T00:00:00.000Z" which is incorrect (assumes no time zone = Zulu)
+            // To correct this, we need to chop off the Z or other TZ indicator
+            this.currentViewStart = this.localDateTimeWithoutTZToISOString(view.start['_d']);
+            this.currentViewEnd = this.localDateTimeWithoutTZToISOString(view.end['_d']);            
             this.events.length = 0;
             this.cd.detectChanges();
             this.checkAllocationsV2();
@@ -126,7 +127,6 @@ export class AssignComponent implements OnInit {
         this.options['eventClick'] = function(event, jsEvent, view) {
             let fullcalendar = jQuery(this.calendar['el']['nativeElement'].children[0]);
             fullcalendar.fullCalendar('unselect');
-            let currentDate = new Date();
             this.openBucket(event);
             if (this.oldJsEvent !== undefined) {
                 this.oldJsEvent.target.style.boxShadow = '0px 0px 15px transparent';
@@ -154,13 +154,18 @@ export class AssignComponent implements OnInit {
         this.options['selectable'] = true;
         this.options['scrollTime'] = '08:00:00';
         this.options['select'] = function(start, end, jsEvent, view, resource) {
-            let currentDate = new Date();
             this.createBucketWithRange(start['_d'], end['_d']);
         }.bind(this);
 
         this.apiService.getData('Allocations/AllocationTags').then(data => {
             this.usedTags = data;
         });
+    }
+    localDateTimeWithoutTZToISOString(dtWithoutTZ: any): string {
+        let dtstring = dtWithoutTZ.toISOString();
+        // chop off TimeZone indicator. We should get a "Z" only, but check to be a bit more robust for not-so-conforming browsers
+        dtstring = dtstring.slice(-1) == "Z" ? dtstring.slice(0, -1) : dtstring.slice(0, 19);
+        return this.datePipe.toISODateUTC(new Date(dtstring));
     }
     get allowSave(): Boolean {
         let retVal = false;
