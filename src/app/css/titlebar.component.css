@@ -39,13 +39,14 @@
 }
 
 .nav-title-dropdown {
-  background: #E3E2E7;
-  display: inline-block;
-  position: absolute;
-  z-index: 1000;
-  min-width: 180px;
-
-}
+    background: #E3E2E7;
+    display: inline-block;
+    position: absolute;
+    z-index: 1000;
+    min-width: 180px;
+    max-height: 90vh;
+    overflow-y:scroll;
+  }
 .nav-title-dropdown ul {
   list-style: none;
   font-family: "Avenir_Heavy";
