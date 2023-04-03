@@ -39,7 +39,7 @@
                             </svg>
                         </span>
                     </li>
-                    <li [class.settings-list-item-active]="isDeepLinkVisible" class="settings-list-item" (click)="isDeepLinkVisible = true; isSettingsDetailVisible = false; isQRCodeSettingVisible = false;">
+                    <li [class.settings-list-item-active]="isDeepLinkVisible" class="settings-list-item" [hidden]="currentCollectGroup.Country == 'US'" (click)="isDeepLinkVisible = true; isSettingsDetailVisible = false; isQRCodeSettingVisible = false;">
                         <span>
                             {{ "GivtWithGivtPreferenceTitle" | translate }}
                         </span>
