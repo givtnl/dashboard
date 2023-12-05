@@ -783,7 +783,7 @@ export class AssignComponent implements OnInit {
                         this.csvFileName = res;
                         alloc.errorMsg = res;
                     });
-                    this.loggingService.error(`${alloc.errorMsg} on line: ${i + 1}`);
+                    this.loggingService.info(`${alloc.errorMsg} on line: ${i + 1}`);
                     continue;
                 }
             }
