@@ -2,22 +2,11 @@
 import { Component, OnInit } from "@angular/core";
 import { ApiClientService } from "../services/api-client.service";
 import { DataService } from "../services/data.service";
-import { ISODatePipe } from "../pipes/iso.datepipe";
 import { UserService } from "../services/user.service";
-import { THIS_EXPR } from "@angular/compiler/src/output/output_ast";
-import { Router } from '@angular/router';
-import { Http, Headers, URLSearchParams } from '@angular/http';
-import { TimeoutError } from "rxjs";
-import { sendRequest } from "selenium-webdriver/http";
-import { forEach } from "@angular/router/src/utils/collection";
-import { forEachChild } from "typescript";
-import { Message } from "@angular/compiler/src/i18n/i18n_ast";
-import { TranslateService } from "../../../node_modules/ng2-translate";
-import { isNullOrUndefined } from "util";
-import { LoggingService } from "app/services/logging.service";
-import { QrCodeType } from "app/models/qr-code-type.enum";
-import { CollectionMediumType } from "app/models/collectionMediumType";
-
+import { TranslateService } from "@ngx-translate/core";
+import { LoggingService } from "../services/logging.service";
+import { QrCodeType } from "../models/qr-code-type.enum";
+import { CollectionMediumType } from "../models/collectionMediumType";
 
 @Component({
 	selector: 'qr-code',
@@ -64,11 +53,11 @@ export class QRCodeComponent implements OnInit {
 			let currentCollectGroupCountry = this.userService.CurrentCollectGroup.Country;
 			savedLanguage = (currentCollectGroupCountry === "NL" || currentCollectGroupCountry == "BE") ? "NL" : "EN";
 		}
-		if (!isNullOrUndefined(savedLanguage) && savedLanguage.length == 2) {
+		if (!this.isNullOrUndefined(savedLanguage) && savedLanguage.length == 2) {
 			this.selectedLanguage = savedLanguage;
 			this.logginService.info("Set language in QR component from Local storage");
 		}
-		else if (!isNullOrUndefined(navigator.language)) {
+		else if (!this.isNullOrUndefined(navigator.language)) {
 			this.selectedLanguage = navigator.language.substring(0, 2);
 			this.logginService.info("Set language in QR component from navigator");
 
@@ -86,7 +75,7 @@ export class QRCodeComponent implements OnInit {
 		body.commands = this.fieldArray.map(x => { return { allocationName: x, CollectionMediumType:  QrCodeType.Default }; });
 		await this.apiService.postData(`v2/organisations/${this.userService.CurrentCollectGroup.OrgId}/collectgroups/${this.userService.CurrentCollectGroup.GUID}/collectionmediums/${this.selectedLanguage.toLowerCase()}/batch`, body)
 			.then(response => {
-				if (!isNullOrUndefined(response))
+				if (!this.isNullOrUndefined(response))
 					this.downloadZip(response.Base64Result, "");
 				else
 					this.handleError(`Batch: couldnt get qr codes bacause response was null or undefined.`);
@@ -103,10 +92,10 @@ export class QRCodeComponent implements OnInit {
 		await this.apiService.postData(`v2/organisations/${this.userService.CurrentCollectGroup.OrgId}/collectgroups/${this.userService.CurrentCollectGroup.GUID}/collectionmediums`, body)
 			.then(async response => {
 				let mediumId = response.Result;
-				if (!isNullOrUndefined(mediumId)) {
+				if (!this.isNullOrUndefined(mediumId)) {
 					this.apiService.getData(`v2/organisations/${this.userService.CurrentCollectGroup.OrgId}/collectgroups/${this.userService.CurrentCollectGroup.GUID}/collectionmediums/${mediumId}/export/${this.selectedLanguage.toLowerCase()}`)
 						.then(response2 => {
-							if (!isNullOrUndefined(response2))
+							if (!this.isNullOrUndefined(response2))
 								this.downloadZip(response2.Base64Result);
 							else
 								this.handleError(`Couldnt get QR code from response because response is null or undefined`);
@@ -136,7 +125,7 @@ export class QRCodeComponent implements OnInit {
         let body = { MediumId: this.qrCodeToDelete.MediumId, Active: false };
         this.apiService.putData(`v2/organisations/${this.userService.CurrentCollectGroup.OrgId}/collectgroups/${this.userService.CurrentCollectGroup.GUID}/collectionmediums`, body)
             .then(response => {
-                if (!isNullOrUndefined(response)) {
+                if (!this.isNullOrUndefined(response)) {
                     this.qrCodes = this.qrCodes.filter((code) => {return code.MediumId !== this.qrCodeToDelete.MediumId;});
                     this.qrCodeToDelete = null;
                     this.loading = false;
@@ -185,7 +174,7 @@ export class QRCodeComponent implements OnInit {
 				break;
 			case 3:
 
-				this.fieldArray = this.fieldArray.filter(element => !isNullOrUndefined(element) && element.trim() !== "");
+				this.fieldArray = this.fieldArray.filter(element => !this.isNullOrUndefined(element) && element.trim() !== "");
 
 				this.fieldArray.forEach((element, index) => {
 					this.fieldArray[index] = element.trim();
@@ -237,7 +226,7 @@ export class QRCodeComponent implements OnInit {
 		this.loading = true;
 		this.apiService.getData(`v2/organisations/${this.userService.CurrentCollectGroup.OrgId}/collectgroups/${this.userService.CurrentCollectGroup.GUID}/collectionmediums/${value}/export/${this.selectedLanguage.toLowerCase()}`)
 			.then(response => {
-				if (!isNullOrUndefined(response))
+				if (!this.isNullOrUndefined(response))
 					this.downloadZip(response.Base64Result, name);
 				else
 					this.handleError(`Couldnt get list of qr codes because response was null`);
@@ -290,6 +279,10 @@ export class QRCodeComponent implements OnInit {
 
 		let blob = new Blob(byteArrays, { type: contentType });
 		return blob;
+	}
+
+	isNullOrUndefined(value: any): boolean {
+		return value === undefined || value === null;
 	}
 }
 

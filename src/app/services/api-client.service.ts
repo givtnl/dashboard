@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers} from '@angular/http';
 
 import 'rxjs/add/operator/toPromise';
 import {Router} from "@angular/router";
@@ -7,19 +6,20 @@ import {DataService} from "./data.service";
 import {reject} from "q";
 
 import { getApiUrl } from './helpers/api-url.helper';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable()
 export class ApiClientService {
     private apiUrl: string;
     dataService: DataService;
 
-    constructor(private http: Http, private router: Router, dataService: DataService){
+    constructor(private http: HttpClient, private router: Router, dataService: DataService){
         this.dataService = dataService;
         this.apiUrl = getApiUrl() + '/api/';
     }
 
     delete(path: string){
-        let headers = new Headers();
+        let headers = new HttpHeaders();
         if(this.dataService.getData("accessToken")){
             headers.append('authorization', 'Bearer '+ this.dataService.getData("accessToken"));
         }
@@ -47,7 +47,7 @@ export class ApiClientService {
         let json = JSON.stringify(body);
 
         //Set the headers
-        let headers = new Headers();
+        let headers = new HttpHeaders();
         headers.append('Content-Type', 'application/json');
         headers.append('authorization', 'Bearer '+ this.dataService.getData("accessToken"));
         if (this.dataService.getData("CurrentCollectGroup"))
@@ -62,7 +62,7 @@ export class ApiClientService {
             .toPromise()
             .then(res => {
                 try {
-                    return res.json();
+                    return res;
                 } catch (e) {
                     return res["_body"];
                 }
@@ -86,7 +86,7 @@ export class ApiClientService {
      // let json = JSON.stringify(body);
 
       //Set the headers
-      let headers = new Headers();
+      let headers = new HttpHeaders();
       headers.append('Content-Type', 'application/json');
       headers.append('authorization', 'Bearer '+ this.dataService.getData("accessToken"));
       if (this.dataService.getData("CurrentCollectGroup"))
@@ -115,7 +115,7 @@ export class ApiClientService {
         if(!this.dataService.getData("accessToken")){
             return;
         }
-        let headers = new Headers();
+        let headers = new HttpHeaders();
         headers.append('Content-Type', 'application/json');
         headers.append('authorization', 'Bearer '+ this.dataService.getData("accessToken"));
         if (this.dataService.getData("CurrentCollectGroup"))
@@ -130,7 +130,7 @@ export class ApiClientService {
             .toPromise()
             .then(res => {
                 try {
-                    return res.json();
+                    return res;
                 } catch (e) {
                     return res["_body"];
                 }
@@ -147,7 +147,7 @@ export class ApiClientService {
         }
         let json = JSON.stringify(body);
 
-        let headers = new Headers();
+        let headers = new HttpHeaders();
         headers.append('Content-Type', 'application/json');
         headers.append('authorization', 'Bearer '+ this.dataService.getData("accessToken"));
         if (this.dataService.getData("CurrentCollectGroup"))
@@ -157,7 +157,7 @@ export class ApiClientService {
         return this.http
             .put(this.apiUrl + encodeURI(path),json, {headers}).toPromise().then(res => {
                 try {
-                    return res.json();
+                    return res;
                 } catch (e) {
                     return res["_body"];
                 }

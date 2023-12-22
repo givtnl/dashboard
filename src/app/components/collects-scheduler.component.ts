@@ -1,19 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormArray, ValidatorFn } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
-import { UserService } from 'app/services/user.service';
-import { isNullOrUndefined } from 'util';
+import { UserService } from '../services/user.service';
 import { distinctUntilChanged, debounceTime, catchError, delay } from 'rxjs/operators';
-import { InfrastructurePaginator } from 'app/models/infrastructure-paginator';
-import { CollectSchedulerService } from 'app/services/collects-schedulder.service';
+import { InfrastructurePaginator } from '../models/infrastructure-paginator';
+import { CollectSchedulerService } from '../services/collects-schedulder.service';
 import { Observable } from 'rxjs';
-import { ISODatePipe } from 'app/pipes/iso.datepipe';
-import { LoggingService } from 'app/services/logging.service';
-import { compareRows } from 'app/models/collect-scheduler/row-comparer.function';
-import { GreaterThanDateValidator, DateTimeMinutesAllowedValidator } from 'app/validators/allocation.validators';
-import { BankAccountModel } from 'app/models/collect-scheduler/bank-account.model';
-import { UpdateAllocationCommand } from 'app/models/collect-scheduler/update-allocation.command';
-import { CreateAllocationCommand } from 'app/models/collect-scheduler/create-allocation.command';
+import { ISODatePipe } from '../pipes/iso.datepipe';
+import { LoggingService } from '../services/logging.service';
+import { compareRows } from '../models/collect-scheduler/row-comparer.function';
+import { GreaterThanDateValidator } from '../validators/allocation.validators';
+import { BankAccountModel } from '../models/collect-scheduler/bank-account.model';
+import { UpdateAllocationCommand } from '../models/collect-scheduler/update-allocation.command';
+import { CreateAllocationCommand } from '../models/collect-scheduler/create-allocation.command';
 
 @Component({
     selector: 'app-csveditor',
@@ -198,9 +197,9 @@ export class CollectsShedulerComponent implements OnInit {
                 )
                 .subscribe(x => {
                     this.loggingService.info(
-                        `Allocation with id '${x.Id}' was created for CollectGroup: ${this.userService.CurrentCollectGroup.Name}`
+                        `Allocation with id '${x.id}' was created for CollectGroup: ${this.userService.CurrentCollectGroup.Name}`
                     );
-                    row.patchValue({ id: x.Id, shouldNotShowError: false });
+                    row.patchValue({ id: x.id, shouldNotShowError: false });
             });
         }
     }

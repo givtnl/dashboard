@@ -1,17 +1,15 @@
 import { Component, OnInit, ViewEncapsulation, ElementRef } from '@angular/core';
-import { ApiClientService } from 'app/services/api-client.service';
-import { TranslateService } from 'ng2-translate';
+import { ApiClientService } from '../services/api-client.service';
+import { TranslateService } from '@ngx-translate/core';
 import { ViewChild, ChangeDetectorRef } from '@angular/core';
 import 'fullcalendar';
 import 'fullcalendar/dist/locale/nl';
 import 'fullcalendar/dist/locale/de';
 import { UserService } from '../services/user.service';
 import { DataService } from '../services/data.service';
-import { AgendaView, moment } from 'fullcalendar';
 import { ISODatePipe } from '../pipes/iso.datepipe';
-import { LoggingService, LogLevel } from 'app/services/logging.service';
-import { CollectSchedulerService } from 'app/services/collects-schedulder.service';
-import { switchMap } from 'rxjs/operator/switchMap';
+import { LoggingService } from '../services/logging.service';
+import { CollectSchedulerService } from '../services/collects-schedulder.service';
 import { tap } from 'rxjs/operators';
 
 @Component({
@@ -42,7 +40,7 @@ export class AssignComponent implements OnInit {
     openedMobileEventId = -1;
     private firstDay = 0;
     isAssignInputFieldVisisble = false;
-    agendaView: AgendaView;
+    // agendaView: AgendaView;
     selectedCard: BucketCard;
     cardIsSingleDay = true;
     csvFile: File;
@@ -74,7 +72,7 @@ export class AssignComponent implements OnInit {
         this.isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
 
         this.userService = userService;
-        document.onkeydown = function(evt) {
+        document.onkeydown = function (evt) {
             evt = evt || window.event;
             if (this.isDialogOpen && evt.keyCode === 27) {
                 this.closeDialog();
@@ -102,30 +100,30 @@ export class AssignComponent implements OnInit {
             center: 'title',
             right: 'agendaWeek,agendaDay'
         };
-        this.options['viewRender'] = function(view, element) {
+        this.options['viewRender'] = function (view, element) {
             this.agendaView = view;
             this.isMonthView = view['type'] === 'month';
             // the calendar view assumes local date/time (no TimeZone info), 
             // so toISOString() returns something like "2022-10-30T00:00:00.000Z" which is incorrect (assumes no time zone = Zulu)
             // To correct this, we need to chop off the Z or other TZ indicator
             this.currentViewStart = this.localDateTimeWithoutTZToISOString(view.start['_d']);
-            this.currentViewEnd = this.localDateTimeWithoutTZToISOString(view.end['_d']);            
+            this.currentViewEnd = this.localDateTimeWithoutTZToISOString(view.end['_d']);
             this.events.length = 0;
             this.cd.detectChanges();
             this.checkAllocationsV2();
         }.bind(this);
-        this.options['eventAfterRender'] = function(event, element, view) {
+        this.options['eventAfterRender'] = function (event, element, view) {
             this.eventAfterRender(event, element, view);
         }.bind(this);
-        this.options['eventRender'] = function(event, element, view) {
+        this.options['eventRender'] = function (event, element, view) {
             this.eventRender(this, event, element, view);
         }.bind(this);
-        this.options['eventAfterAllRender'] = function(view) {
+        this.options['eventAfterAllRender'] = function (view) {
             // this.filteredEvents();
         }.bind(this);
         this.options['contentHeight'] = 'auto';
-        this.options['eventClick'] = function(event, jsEvent, view) {
-            let fullcalendar = jQuery(this.calendar['el']['nativeElement'].children[0]);
+        this.options['eventClick'] = function (event, jsEvent, view) {
+            let fullcalendar = jQuery(this.calendar['el']['nativeElement'].children[0]) as any;
             fullcalendar.fullCalendar('unselect');
             this.openBucket(event);
             if (this.oldJsEvent !== undefined) {
@@ -153,7 +151,7 @@ export class AssignComponent implements OnInit {
         this.options['unselectAuto'] = false;
         this.options['selectable'] = true;
         this.options['scrollTime'] = '08:00:00';
-        this.options['select'] = function(start, end, jsEvent, view, resource) {
+        this.options['select'] = function (start, end, jsEvent, view, resource) {
             this.createBucketWithRange(start['_d'], end['_d']);
         }.bind(this);
 
@@ -199,8 +197,8 @@ export class AssignComponent implements OnInit {
     }
     createBucketWithRange(start: Date, end: Date) {
         let bigEvent = new MyEvent();
-        bigEvent.start = new moment(start);
-        bigEvent.end = new moment(end);
+        // bigEvent.start = new moment(start);
+        // bigEvent.end = new moment(end);
         let countOfTransactions = this.events
             .filter(tx => {
                 return new Date(tx.start) >= start && new Date(tx.end) <= end;
@@ -270,8 +268,8 @@ export class AssignComponent implements OnInit {
         let fixedTransactions =
             event.transactions != undefined
                 ? event.transactions.filter(tx => {
-                      return tx.CollectId === null;
-                  })
+                    return tx.CollectId === null;
+                })
                 : [];
 
         let fixedNames = new Set(fixedTransactions.map(tx => tx.AllocationName));
@@ -383,8 +381,8 @@ export class AssignComponent implements OnInit {
         for (let i = 0; i < buckets.length; i++) {
             let event = new MyEvent();
             event.id = i;
-            event.start = new moment(new Date(buckets[i].dtBegin));
-            event.end = new moment(new Date(buckets[i].dtEnd));
+            // event.start = new moment(new Date(buckets[i].dtBegin));
+            // event.end = new moment(new Date(buckets[i].dtEnd));
             event.transactions = buckets[i].Transactions;
             switch (buckets[i].bucketType) {
                 case BucketType.Allocated:
@@ -435,18 +433,18 @@ export class AssignComponent implements OnInit {
         this.openedMobileEventId = -1;
         this.selectedCard = null;
         this.isDialogOpen = false;
-        let nativeElement = jQuery(this.calendar['el']['nativeElement'].children[0]);
+        let nativeElement = jQuery(this.calendar['el']['nativeElement'].children[0]) as any;
         nativeElement.fullCalendar('prev');
     }
     nextPeriod() {
         this.openedMobileEventId = -1;
         this.selectedCard = null;
         this.isDialogOpen = false;
-        let nativeElement = jQuery(this.calendar['el']['nativeElement'].children[0]);
+        let nativeElement = jQuery(this.calendar['el']['nativeElement'].children[0]) as any;
         nativeElement.fullCalendar('next');
     }
     closeDialog() {
-        jQuery(this.calendar['el']['nativeElement'].children[0]).fullCalendar('unselect');
+        (jQuery(this.calendar['el']['nativeElement'].children[0]) as any).fullCalendar('unselect');
         this.allocLoader['show'] = false;
         this.selectedCard = null;
         this.selectedAllocationDates = null;
@@ -460,7 +458,7 @@ export class AssignComponent implements OnInit {
     filterTags(typed) {
         this.filteredUsedTags = [];
         let regex = new RegExp(typed, 'i');
-        this.usedTags.forEach(function(value) {
+        this.usedTags.forEach(function (value) {
             if (value.search(regex) !== -1 && this.filteredUsedTags.length < 10 && value.trim() !== '') {
                 let hlight = "<span class='autocomplete'>" + value.match(regex)[0] + '</span>';
                 this.filteredUsedTags.push(value.replace(regex, hlight));
@@ -576,7 +574,7 @@ export class AssignComponent implements OnInit {
                         this.toggleError(true, 'Je zit met een overlapping');
                     }
                     if (
-                        !this.usedTags.some(function(element) {
+                        !this.usedTags.some(function (element) {
                             if (element.toLowerCase() === title.toLowerCase()) return true;
                         })
                     ) {
@@ -592,21 +590,21 @@ export class AssignComponent implements OnInit {
     }
     changedTimePicker(e, changed) {
         if (changed == this.selectedCard.dtBegin && this.selectedCard.dtBegin > this.selectedCard.dtEnd) {
-            this.selectedCard.dtEnd = moment(this.selectedCard.dtBegin)
-                .add(30, 'm')
-                .toDate();
+            // this.selectedCard.dtEnd = moment(this.selectedCard.dtBegin)
+            //     .add(30, 'm')
+            //     .toDate();
         } else if (this.selectedCard.dtEnd < this.selectedCard.dtBegin) {
-            this.selectedCard.dtBegin = moment(this.selectedCard.dtEnd)
-                .subtract(30, 'm')
-                .toDate();
+            // this.selectedCard.dtBegin = moment(this.selectedCard.dtEnd)
+            //     .subtract(30, 'm')
+            //     .toDate();
         }
 
         //update selection
-        let fullcalendar = jQuery(this.calendar['el']['nativeElement'].children[0]);
+        let fullcalendar = jQuery(this.calendar['el']['nativeElement'].children[0]) as any;
         fullcalendar.fullCalendar('select', this.selectedCard.dtBegin, this.selectedCard.dtEnd);
 
         // check if dates changed and allow save
-        if(this.selectedAllocationDates[0] != this.selectedCard.dtBegin || this.selectedAllocationDates[1] != this.selectedCard.dtEnd) {
+        if (this.selectedAllocationDates[0] != this.selectedCard.dtBegin || this.selectedAllocationDates[1] != this.selectedCard.dtEnd) {
             this.selectedCard.hasChangedDates = true
         }
 
@@ -644,37 +642,13 @@ export class AssignComponent implements OnInit {
                 }
             });
     }
-    updateThisAllocation(id: Number) {
-        console.log('Updating allocation...');
-        return new Promise<void>((resolve, reject) => {
-            if (id <= 0) {
-                resolve();
-                return;
-            }
-            this.apiService
-                .deleteData('Allocations/Allocation/Update?Id=' + id)
-                .then(resp => {
-                    if (resp.status !== 200) {
-                        console.log('Response code: 200;');
-                        return;
-                    } else {
-                        resolve(resp);
-                        console.log(resp);
-                    }
-                })
-                .catch(err => {
-                    console.log(err);
-                    reject();
-                });
-        });
-    }
-    eventAfterRender(event: any, element: any, view: any) {}
+    eventAfterRender(event: any, element: any, view: any) { }
     eventRender(that: any, event: any, element: any, view: any) {
         element[0].innerText = event.title;
 
         element[0].addEventListener(
             'mouseover',
-            function(ev) {
+            function (ev) {
                 let div = document.createElement('div');
                 div.innerHTML = '<span>' + this.ts.instant('ClickToViewMoreInformation') + '</span>';
                 div.className = 'balloon';
@@ -689,7 +663,7 @@ export class AssignComponent implements OnInit {
         );
         element[0].addEventListener(
             'mouseleave',
-            function() {
+            function () {
                 let b = document.getElementsByClassName('balloon');
                 while (b.length > 0) {
                     b[0].remove();

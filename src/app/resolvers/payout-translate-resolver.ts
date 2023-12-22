@@ -1,8 +1,8 @@
-import { TranslateService } from "ng2-translate";
+import { TranslateService } from "@ngx-translate/core";
 import { Injectable } from "@angular/core";
 import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from "@angular/router";
 import { Observable } from "rxjs";
-import { UserService } from "app/services/user.service";
+import { UserService } from "../services/user.service";
 
 @Injectable()
 export class PayoutTranslateResolver implements Resolve<string> {

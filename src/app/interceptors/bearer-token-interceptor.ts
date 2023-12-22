@@ -1,7 +1,7 @@
 
 
 import { Observable } from "rxjs";
-import { DataService } from "app/services/data.service";
+import { DataService } from "../services/data.service";
 import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 

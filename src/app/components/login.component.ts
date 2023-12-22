@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { TranslateService } from "ng2-translate";
+import { TranslateService } from "@ngx-translate/core";
 import { UserService } from "../services/user.service";
-import { DataService } from 'app/services/data.service';
+import { DataService } from '../services/data.service';
 import { of } from 'rxjs/observable/of';
 import 'rxjs/add/operator/switchMap';
 

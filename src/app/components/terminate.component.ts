@@ -1,14 +1,14 @@
 import { OnInit, Component } from "../../../node_modules/@angular/core";
-import { TranslateService } from "../../../node_modules/ng2-translate";
+import { TranslateService } from "@ngx-translate/core";
 import { DataService } from "../services/data.service";
-import {Router, ActivatedRoute} from '@angular/router';
+import { ActivatedRoute} from '@angular/router';
 import { ApiClientService } from "../services/api-client.service";
 
 @Component({
-    selector: 'terminate',
+    selector: 'terminate-component',
     templateUrl: '../html/terminate.component.html',
     styleUrls: ['../css/terminate.component.css']
-})
+  })
 export class TerminateComponent implements OnInit {
     TerminateState = TerminateState;
     terminateState: TerminateState = TerminateState.Undecided;

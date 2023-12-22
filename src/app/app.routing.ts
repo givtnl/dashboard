@@ -10,7 +10,7 @@ import {PayoutsComponent} from "./components/payouts.component";
 import {AssignComponent} from "./components/assign.component";
 import {ForgotPasswordComponent} from "./components/forgotpassword.component";
 import {UnAuthorizeComponent} from "./components/unauthorized.component";
-import {LoggedOutComponent} from 'app/components/loggedout.component';
+import {LoggedOutComponent} from './components/loggedout.component';
 import {SettingsComponent} from "./components/settings.component";
 import {TerminateComponent} from './components/terminate.component';
 import { QRCodeComponent } from './components/qrcode.component';

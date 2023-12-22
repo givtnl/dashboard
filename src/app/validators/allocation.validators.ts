@@ -1,5 +1,4 @@
-import { FormGroup, ValidatorFn, FormControl, AbstractControl } from '@angular/forms';
-import { isNullOrUndefined } from 'util';
+import { FormGroup, ValidatorFn, AbstractControl } from '@angular/forms';
 
 export function GreaterThanDateValidator(formGroup: FormGroup): ValidatorFn {
     var retVal = null;
@@ -7,7 +6,7 @@ export function GreaterThanDateValidator(formGroup: FormGroup): ValidatorFn {
     const start: Date = formGroup.value.dtBegin;
     const end: Date = formGroup.value.dtEnd;
 
-    if (!isNullOrUndefined(start) && !isNullOrUndefined(end) && start >= end) {
+    if (start !== undefined && start !== null && end !== undefined && end !== null && start >= end) {
         retVal = {
             invalidDate: true
         };
@@ -18,7 +17,7 @@ export function GreaterThanDateValidator(formGroup: FormGroup): ValidatorFn {
 
 export function DateTimeMinutesAllowedValidator(allowedMinutes: number[]): ValidatorFn {
     return (control: AbstractControl): { [key: string]: any } | null => {
-        if (!isNullOrUndefined(control.value)) {
+        if (control.value !== undefined && control.value !== null) {
             const enteredDate: Date = new Date(control.value);
             const enteredMinutes = enteredDate.getMinutes();
             const hasValidInput = allowedMinutes && !allowedMinutes.some(allowedMinute => allowedMinute === enteredMinutes);

@@ -1,5 +1,5 @@
 import { Directive, HostListener, Input } from '@angular/core';
-import { UserService } from 'app/services/user.service';
+import { UserService } from '../services/user.service';
 // declare ga as a function to set and sent the events
 declare let gtag: Function;
 

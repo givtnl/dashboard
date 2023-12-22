@@ -1,0 +1,1 @@
+{"ast":null,"code":"// String.prototype.format = (str: string, ...args: string[]) => str.replace(/{{(\\d+)}}/g, (match, index) => args[index] || '')","map":null,"metadata":{},"sourceType":"script","externalDependencies":[]}

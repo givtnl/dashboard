@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
-import { ApiClientService } from "app/services/api-client.service";
-import { TranslateService } from "ng2-translate";
-import { CalendarModule } from "primeng/primeng";
+import { ApiClientService } from "../services/api-client.service";
+import { TranslateService } from "@ngx-translate/core";
+import { CalendarModule } from "primeng/calendar";
 import { Collection } from "../models/collection";
 import { DataService } from "../services/data.service";
 import { UserService } from "../services/user.service";
@@ -287,7 +287,7 @@ export class CollectsComponent implements OnInit {
 
             })
             .catch(err => console.log(err));
-        setTimeout(this.fetchSavedCollects(), 1000);
+        setTimeout(() => this.fetchSavedCollects(), 1000);
     }
 
     deleteCollect(id: number) {

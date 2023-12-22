@@ -1,9 +1,8 @@
-import {DataService} from "../services/data.service";
-import {Component, OnInit, AfterViewInit} from "@angular/core";
-import {LangChangeEvent, TranslateService} from "ng2-translate";
-import {UserService} from "../services/user.service";
-import {isNullOrUndefined} from "util";
-import {LoggingService} from "app/services/logging.service";
+import { DataService } from "../services/data.service";
+import { Component, OnInit } from "@angular/core";
+import { LangChangeEvent, TranslateService } from "@ngx-translate/core";
+import { UserService } from "../services/user.service";
+import { LoggingService } from "../services/logging.service";
 
 
 @Component({
@@ -11,11 +10,10 @@ import {LoggingService} from "app/services/logging.service";
     templateUrl: '../html/settings.component.html',
     styleUrls: ['../css/settings.component.css'],
 })
-
 export class SettingsComponent implements OnInit {
-    private _firstDay: number = 0;
-    private days = [];
-    private selectedQRLanguage: String;
+    protected _firstDay: number = 0;
+    protected days = [];
+    protected selectedQRLanguage: String;
     public isSettingsDetailVisible = false;
     public isDeepLinkVisible = false;
     public isQRCodeSettingVisible = false;
@@ -52,7 +50,7 @@ export class SettingsComponent implements OnInit {
             this.loadQRLanguages();
         });
 
-        if (!isNullOrUndefined(navigator.language)) {
+        if (navigator.language !== undefined && navigator.language !== null) {
             this.selectedQRLanguage = navigator.language.substring(0, 2)
         }
     }

@@ -1,11 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ApiClientService } from '../../services/api-client.service';
-import { TranslateService } from 'ng2-translate';
+import { TranslateService } from '@ngx-translate/core';
 import { ViewEncapsulation } from '@angular/core';
 import { UserService } from '../../services/user.service';
 import { ISODatePipe } from '../../pipes/iso.datepipe';
 import { PaymentType } from '../../models/paymentType';
-import { isNullOrUndefined } from 'util';
 
 @Component({
     selector: 'payout',
@@ -86,7 +85,7 @@ export class PayoutComponent implements OnInit {
         x.BeginDate = this.datePipe.transform(new Date(this.childData.BeginDate), 'd MMMM y');
         x.EndDate = this.datePipe.transform(new Date(this.childData.EndDate), 'd MMMM y');
         x.dtExecuted = this.datePipe.transform(new Date(this.childData.dtExecuted), 'd MMMM y');
-        if (!isNullOrUndefined(x.PaymentProviderExecutionDate))
+        if (!this.isNullOrUndefined(x.PaymentProviderExecutionDate))
             x.PaymentProviderExecutionDate = this.datePipe.transform(new Date(this.childData.PaymentProviderExecutionDate), 'd MMMM y');
 
         paymentType === PaymentType.SEPA ? (x.Mandaatkosten = x.MandateCost) : (x.Mandaatkosten = 0);
@@ -175,7 +174,7 @@ export class PayoutComponent implements OnInit {
 
             if (this.giftAid) {
                 // extra amount through giftaid
-                x.extraGiftAidAmount = isNullOrUndefined(x.GiftAidAmountPayedByGovernment) ? 0 : x.GiftAidAmountPayedByGovernment;
+                x.extraGiftAidAmount = this.isNullOrUndefined(x.GiftAidAmountPayedByGovernment) ? 0 : x.GiftAidAmountPayedByGovernment;
                 x.extraGiftAidedByGovernment = this.displayValue(x.GiftAidAmountPayedByGovernment)
                 // gift aided more info
                 this.translate.get('GiftAidPayoutMoreInfo').subscribe((res: string) => {
@@ -216,6 +215,9 @@ export class PayoutComponent implements OnInit {
 
         x.activeRow = 1;
     }
+    isNullOrUndefined(value: any) {
+        return value === undefined || value === null;
+    }
 
     openPayout() {
         this.childData.hiddenAllocations = true;
@@ -253,7 +255,7 @@ export class PayoutComponent implements OnInit {
                     detail.Status = 1;
                     // PAID details
                     if ((detail.Amount !== 0 || detail.GiftAidClaimAmount !== 0) && detail.StornoAmount == 0) {
-                        if (isNullOrUndefined(detail.GiftAidClaimAmountFromGovernment))
+                        if (this.isNullOrUndefined(detail.GiftAidClaimAmountFromGovernment))
                             detail.GiftAidClaimAmountFromGovernment  = 0.00;
                         detail.Total = detail.GiftAidClaimAmountFromGovernment + detail.Amount;
                         detail.Amount = this.displayValue(detail.Amount);
@@ -284,9 +286,9 @@ export class PayoutComponent implements OnInit {
                     // STORNO details
                     if (detail.Amount !== 0 && detail.StornoAmount !== 0) {
 
-                        if (isNullOrUndefined(detail.GiftAidClaimAmountFromGovernment))
+                        if (this.isNullOrUndefined(detail.GiftAidClaimAmountFromGovernment))
                             detail.GiftAidClaimAmountFromGovernment = 0.00;
-                        if (!isNullOrUndefined(detail.GiftAidClaimReturnedAmountFromGovernment))
+                        if (!this.isNullOrUndefined(detail.GiftAidClaimReturnedAmountFromGovernment))
                             detail.GiftAidClaimAmountFromGovernment = detail.GiftAidClaimAmountFromGovernment - detail.GiftAidClaimReturnedAmountFromGovernment;
                         detail.Total = detail.GiftAidClaimAmountFromGovernment + detail.Amount;
                         detail.Amount = this.displayValue(detail.Amount);
@@ -314,7 +316,7 @@ export class PayoutComponent implements OnInit {
 
                         copy.Name += ': ' + resStorno;
                         copy.Amount = '- ' + this.displayValue(resp.Details[i].StornoAmount);
-                        if (isNullOrUndefined(copy.GiftAidClaimReturnedAmountFromGovernment))
+                        if (this.isNullOrUndefined(copy.GiftAidClaimReturnedAmountFromGovernment))
                             copy.GiftAidClaimReturnedAmountFromGovernment = 0.00;
                         copy.Total = copy.GiftAidClaimReturnedAmountFromGovernment + resp.Details[i].StornoAmount;
                         copy.GiftAidClaimAmountFromGovernment = '- ' + this.displayValue(copy.GiftAidClaimReturnedAmountFromGovernment);
@@ -362,10 +364,10 @@ export class PayoutComponent implements OnInit {
             link.setAttribute('download', fileName);
             document.body.appendChild(link); // Required for FF
 
-            if (window.navigator.msSaveOrOpenBlob && navigator.userAgent.match(/Edge/g)) {
+            if ((window.navigator as any).msSaveOrOpenBlob && navigator.userAgent.match(/Edge/g)) {
                 // for IE and Edge
                 var csvData = new Blob([resp], { type: 'text/csv;charset=utf-8;' });
-                window.navigator.msSaveBlob(csvData, fileName);
+                (window.navigator as any).msSaveBlob(csvData, fileName);
             } else {
                 link.click(); // This will download the data file named "my_data.csv".
             }

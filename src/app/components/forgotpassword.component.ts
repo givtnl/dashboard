@@ -5,9 +5,9 @@
  * @param params.app
  */
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
-import { UserService } from 'app/services/user.service';
+import { UserService } from '../services/user.service';
 import {Router, ActivatedRoute} from '@angular/router';
-import {TranslateService} from 'ng2-translate';
+import {TranslateService} from '@ngx-translate/core';
 
 declare var params: any;
 
@@ -85,7 +85,7 @@ export class ForgotPasswordComponent  implements OnInit{
     this.userService.requestNewPass(this.userName)
       .then(resp => {
         this.disabled = false;
-        if(resp.ok == true)
+        if(resp['ok'] == true)
         {
           this.resetNav();
           this.email_sent = true;
@@ -118,7 +118,7 @@ export class ForgotPasswordComponent  implements OnInit{
       .then(res => {
         this.disabled = false;
         this.resetNav();
-        if(res.ok)
+        if(res['ok'])
         {
           this.saved = true;
         }else{

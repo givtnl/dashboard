@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
-import { CreateAllocationCommand } from 'app/models/collect-scheduler/create-allocation.command';
+import { CreateAllocationCommand } from '../models/collect-scheduler/create-allocation.command';
 import { Observable } from 'rxjs';
-import { AllocationDetailModel } from 'app/models/collect-scheduler/allocation-detail.model';
-import { UpdateAllocationCommand } from 'app/models/collect-scheduler/update-allocation.command';
-import { AllocationListModel } from 'app/models/collect-scheduler/allocation-list.model';
-import { BankAccountModel } from 'app/models/collect-scheduler/bank-account.model';
+import { AllocationDetailModel } from '../models/collect-scheduler/allocation-detail.model';
+import { UpdateAllocationCommand } from '../models/collect-scheduler/update-allocation.command';
+import { AllocationListModel } from '../models/collect-scheduler/allocation-list.model';
+import { BankAccountModel } from '../models/collect-scheduler/bank-account.model';
 
 import { getApiUrl } from './helpers/api-url.helper';
-
+import 'rxjs/add/operator/map'
 
 @Injectable()
 export class CollectSchedulerService {

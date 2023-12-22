@@ -1,8 +1,8 @@
 import { Component, OnInit, isDevMode } from '@angular/core';
 
-import { ApiClientService } from 'app/services/api-client.service';
+import { ApiClientService } from '../services/api-client.service';
 import { Payout } from '../models/payout';
-import { TranslateService } from 'ng2-translate';
+import { TranslateService } from '@ngx-translate/core';
 import { ViewEncapsulation } from '@angular/core';
 import { DataService } from '../services/data.service';
 import { UserService } from '../services/user.service';
@@ -37,7 +37,7 @@ export class PayoutsComponent implements OnInit {
         private dataService: DataService,
         translate: TranslateService,
         private datePipe: ISODatePipe,
-        private userService: UserService
+        protected userService: UserService
     ) {
         this.isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
         this.translate = translate;
@@ -151,10 +151,10 @@ export class PayoutsComponent implements OnInit {
             link.setAttribute('download', fileName);
             document.body.appendChild(link); // Required for FF
 
-            if (window.navigator.msSaveOrOpenBlob && navigator.userAgent.match(/Edge/g)) {
+            if ((window.navigator as any).msSaveOrOpenBlob && navigator.userAgent.match(/Edge/g)) {
                 // for IE and Edge
                 var csvData = new Blob([resp], { type: 'text/csv;charset=utf-8;' });
-                window.navigator.msSaveBlob(csvData, fileName);
+                (window.navigator as any).msSaveBlob(csvData, fileName);
             } else {
                 link.click(); // This will download the data file named "my_data.csv".
             }

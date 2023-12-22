@@ -1,6 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers, URLSearchParams } from '@angular/http';
-import { CustomQueryEncoderHelper } from '../helpers/customQueryEncoder';
 import { Router } from "@angular/router";
 import 'rxjs/add/operator/toPromise'; //to support toPromise
 import { User } from '../models/user';
@@ -9,9 +7,9 @@ import { ApiClientService } from "./api-client.service";
 import { EventEmitter, Output } from "@angular/core";
 import { PaymentType } from "../models/paymentType";
 import { Observable } from 'rxjs';
-import { UserDetailModel } from 'app/models/user-detail.model';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { getApiUrl } from './helpers/api-url.helper';
+import { UserDetailModel } from '../models/user-detail.model';
 
 
 @Injectable()
@@ -22,7 +20,7 @@ export class UserService {
     private apiLoginiUrl:string;
     private apiUrl:string;
 
-    constructor(private dataService: DataService, private apiService: ApiClientService, private httpClient: HttpClient, private http: Http, private router: Router) {
+    constructor(private dataService: DataService, private apiService: ApiClientService, private http: HttpClient, private router: Router) {
         this.apiLoginiUrl = getApiUrl() + '/oauth2/token';
         this.apiUrl = getApiUrl();
         this.loggedIn = !!dataService.getData("accessToken");
@@ -52,14 +50,14 @@ export class UserService {
     }
 
     patchLanguage(userId: string, language: string): Observable<object> {
-        return this.httpClient.patch(`${this.apiUrl}/api/v2/users/${userId}/language/${language}`, {});
+        return this.http.patch(`${this.apiUrl}/api/v2/users/${userId}/language/${language}`, {});
     }
 
     getCurrentUser(): Observable<UserDetailModel> {
-        return this.httpClient.get<UserDetailModel>(`${this.apiUrl}/api/v2/users`);
+        return this.http.get<UserDetailModel>(`${this.apiUrl}/api/v2/users`);
     }
 
-    loginHttpCall(body: string, headers: Headers) {
+    loginHttpCall(body: string, headers: HttpHeaders) {
         return this.http
             .post(
                 this.apiLoginiUrl,
@@ -68,20 +66,20 @@ export class UserService {
             )
             .toPromise()
             .then(res => {
-                if (res.json().access_token) {
+                if (res['access_token']) {
                     this.loggedIn = true;
-                    this.startTimedLogout(res.json().expires_in * 1000);
-                    this.dataService.writeData("UserEmail", res.json().Email);
-                    this.dataService.writeData("accessToken", res.json().access_token);
-                    if (res.json().hasOwnProperty("SiteAdmin"))
-                        this.dataService.writeData("SiteAdmin", res.json().SiteAdmin);
+                    this.startTimedLogout(res['expires_in'] * 1000);
+                    this.dataService.writeData("UserEmail", res['Email']);
+                    this.dataService.writeData("accessToken", res['access_token']);
+                    if (res.hasOwnProperty("SiteAdmin"))
+                        this.dataService.writeData("SiteAdmin", res['SiteAdmin']);
                     this.SiteAdmin = this.dataService.getData("SiteAdmin") == "True";
 
-                    if (res.json().hasOwnProperty("GivtOperations"))
-                        this.dataService.writeData("GivtOperations", res.json().GivtOperations);
+                    if (res.hasOwnProperty("GivtOperations"))
+                        this.dataService.writeData("GivtOperations", res['GivtOperations']);
                     this.GivtOperations = this.dataService.getData("GivtOperations") == "True";
 
-                    if (res.json().hasOwnProperty("CollectGroupAdmin")) {
+                    if (res.hasOwnProperty("CollectGroupAdmin")) {
                         return this.apiService.getData('CollectGroupView/CollectGroup')
                             .then(res => {
                                 this.dataService.writeData("CollectGroups", JSON.stringify(res));
@@ -109,12 +107,12 @@ export class UserService {
 
     loginWithRefreshtoken(access_token: string, refresh_token: string) {
         //Set the headers
-        let headers = new Headers();
+        let headers = new HttpHeaders();
         headers.append('authorization', 'Bearer ' + access_token);
         headers.append('Content-Type', 'application/x-www-form-urlencoded');
 
         //set the x-www-form-urlencoded parameters
-        let urlSearchParams = new URLSearchParams('', new CustomQueryEncoderHelper());
+        let urlSearchParams = new URLSearchParams('');
         urlSearchParams.append('grant_type', 'refresh_token');
         urlSearchParams.append('refresh_token', refresh_token);
 
@@ -129,11 +127,11 @@ export class UserService {
         let d = this.dataService.getData("CurrentCollectGroup");
         this.CurrentCollectGroup = typeof d != 'undefined' ? JSON.parse(d) : null;
         //Set the headers
-        let headers = new Headers();
+        let headers = new HttpHeaders();
         headers.append('Content-Type', 'application/x-www-form-urlencoded');
 
         //set the x-www-form-urlencoded parameters
-        let urlSearchParams = new URLSearchParams('', new CustomQueryEncoderHelper());
+        let urlSearchParams = new URLSearchParams('');
         urlSearchParams.append('grant_type', 'password');
         urlSearchParams.append('userName', username);
         urlSearchParams.append('password', password);
@@ -158,7 +156,7 @@ export class UserService {
     }
 
     requestNewPass(email) {
-        let headers = new Headers();
+        let headers = new HttpHeaders();
         headers.append('Content-Type', 'application/json');
         return this.http.post(this.apiUrl + '/api/Users/ForgotPassword?dashboard=true', "\"" + email + "\"", { headers })
             .toPromise()
@@ -168,7 +166,7 @@ export class UserService {
     }
 
     saveNewPass(email, token, newPass) {
-        let headers = new Headers();
+        let headers = new HttpHeaders();
         headers.append('Content-Type', 'application/json');
         var x = { "userID": email, "passwordToken": token, "newPassword": newPass }
         return this.http.post(this.apiUrl + '/api/Users/ResetPassword', x, { headers })

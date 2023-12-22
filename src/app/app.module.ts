@@ -1,13 +1,13 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, LOCALE_ID } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpModule, Http } from '@angular/http';
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
+import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { AppComponent } from './components/app.component';
-import { LoginComponent } from 'app/components/login.component';
+import { LoginComponent } from './components/login.component';
 import { AppRoutingModule } from './app.routing';
-import { TranslateModule, TranslateLoader, TranslateStaticLoader } from 'ng2-translate';
+import { TranslateModule, TranslateLoader, MissingTranslationHandler } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { DataService } from './services/data.service';
 import { UserService } from './services/user.service';
 import { ApiClientService } from './services/api-client.service';
@@ -29,14 +29,18 @@ import { AssignComponent } from './components/assign.component';
 import { PayoutComponent } from './components/children/payout-element.component';
 import { FooterComponent } from './components/footer.component';
 import { AlertComponent } from './components/alert.component';
-import { ChartsModule } from 'ng2-charts';
+import { NgChartsModule } from 'ng2-charts';
+import { FullCalendarModule } from '@fullcalendar/angular';
 
 import * as jQuery from 'jquery';
-import { AutoCompleteModule, ScheduleModule, DialogModule, CalendarModule, DropdownModule } from 'primeng/primeng';
-import { LoggedOutComponent } from 'app/components/loggedout.component';
+import { AutoCompleteModule } from 'primeng/autocomplete';
+// import { ScheduleModule } from 'primeng';
+import { DialogModule } from 'primeng/dialog';
+import { CalendarModule } from 'primeng/calendar';
+import { DropdownModule } from 'primeng/dropdown';
+import { LoggedOutComponent } from './components/loggedout.component';
 import { ISODatePipe } from './pipes/iso.datepipe';
 import { SettingsComponent } from './components/settings.component';
-import { TerminateComponent } from './components/terminate.component';
 import { QRCodeComponent } from './components/qrcode.component';
 import { BearerTokenInterceptor } from './interceptors/bearer-token-interceptor';
 import { AcceptHeaderInterceptor } from './interceptors/accept-header.interceptor';
@@ -44,11 +48,9 @@ import { PaginatorComponent } from './components/paginator-component';
 import { CollectSchedulerService } from './services/collects-schedulder.service';
 import { GoogleAnalyticsDirective } from './directives/google-analytics-directive';
 import { PayoutTranslateResolver } from './resolvers/payout-translate-resolver';
-(window as any).jQuery = (window as any).$ = jQuery; // This is needed to resolve issue.
+import { MissingFileTranslationsHandler } from './services/missing-file-translations.service';
 
-export function createTranslateLoader(http: Http) {
-    return new TranslateStaticLoader(http, './assets/i18n', '.json');
-}
+(window as any).jQuery = (window as any).$ = jQuery; // This is needed to resolve issue.
 
 @NgModule({
     declarations: [
@@ -71,32 +73,31 @@ export function createTranslateLoader(http: Http) {
         LoggedOutComponent,
         SettingsComponent,
         QRCodeComponent,
-        TerminateComponent,
         GoogleAnalyticsDirective,
         PaginatorComponent
     ],
     imports: [
         AutoCompleteModule,
-        ChartsModule,
+        NgChartsModule,
         DialogModule,
         DropdownModule,
         FormsModule,
-        ScheduleModule,
+        // ScheduleModule,
         CalendarModule,
         BrowserModule,
         BrowserAnimationsModule,
         FormsModule,
-        HttpModule,
         HttpClientModule,
         AppRoutingModule,
-        ScheduleModule,
-        ReactiveFormsModule,
-        TranslateModule.forRoot({
+        FullCalendarModule,
+        TranslateModule.forChild({
+          missingTranslationHandler: { provide: MissingTranslationHandler, useClass: MissingFileTranslationsHandler },
+          loader: {
             provide: TranslateLoader,
-            useFactory: createTranslateLoader,
-            deps: [Http]
-        }),
-        CalendarModule
+            useFactory: httpClient => new TranslateHttpLoader(httpClient),
+            deps: [HttpClient]
+          }
+        })
     ],
     providers: [
         DataService,

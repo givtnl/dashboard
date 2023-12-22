@@ -1,9 +1,9 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
-import { UserService } from 'app/services/user.service';
+import { Component, OnInit } from '@angular/core';
+import { UserService } from '../services/user.service';
 import {Router} from "@angular/router";
 import {ApiClientService} from "../services/api-client.service";
 import {DataService} from "../services/data.service";
-import {TranslateService} from "ng2-translate";
+import {TranslateService} from "@ngx-translate/core";
 import * as pkg from '../../../package.json';
 import { environment } from '../../environments/environment';
 

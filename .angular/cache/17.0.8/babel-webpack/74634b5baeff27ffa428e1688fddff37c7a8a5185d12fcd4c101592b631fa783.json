@@ -1,0 +1,1 @@
+{"ast":null,"code":"/**\n * Created by lenniestockman on 18/01/18.\n */\nexport class visualCollection {\n  constructor(numberOfusers = 0, totalAmount = 0) {\n    this.numberOfUsers = numberOfusers;\n    this.totalAmount = totalAmount;\n  }\n}","map":null,"metadata":{},"sourceType":"module","externalDependencies":[]}

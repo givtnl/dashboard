@@ -1,18 +1,18 @@
 import { Injectable } from "@angular/core";
-import { environment } from "environments/environment";
 import { DataService } from "./data.service";
 import * as pkg from '../../../package.json';
-import { Http, Headers } from "@angular/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { environment } from "src/environments/environment";
 
 @Injectable()
 export class LoggingService {
     private logitUrl = "https://api.logit.io/v2"
 
-    constructor(private dataService: DataService, private http: Http) {
+    constructor(private dataService: DataService, private http: HttpClient) {
         
     }
     private log(level: LogLevel, message: string){
-        let headers = new Headers();
+        let headers = new HttpHeaders();
         headers.append('ApiKey', environment.logstashApiKey);
         headers.append('Content-Type', 'application/json')
         

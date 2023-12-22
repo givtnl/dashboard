@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
 import {Router} from "@angular/router";
-import {TranslateService} from "ng2-translate";
 import {UserService} from "../services/user.service";
 
 
