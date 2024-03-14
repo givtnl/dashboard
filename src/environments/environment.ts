@@ -5,9 +5,9 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'https://givt-debug-api.azurewebsites.net',
-  apiUrlEU: 'https://givt-debug-api.azurewebsites.net',
-  apiUrlUS: 'https://givt-debug-api-us.azurewebsites.net',
+  apiUrl: 'https://dev-backend.givtapp.net',
+  apiUrlEU: 'https://dev-backend.givtapp.net',
+  apiUrlUS: 'https://dev-backend.givt.app',
   logstashApiKey: '73b6d8f0-132f-45ff-a8cf-6654ffee1922',
   logstashTag: 'GivtDashboard.Debug'  
 };
