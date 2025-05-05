@@ -9,5 +9,5 @@ export const environment = {
   apiUrlEU: 'https://dev-backend.givtapp.net',
   apiUrlUS: 'https://dev-backend.givt.app',
   logstashApiKey: '73b6d8f0-132f-45ff-a8cf-6654ffee1922',
-  logstashTag: 'GivtDashboard.Debug'  
+  logstashTag: 'GivtDashboard.Debug',
 };
