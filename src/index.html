@@ -16,6 +16,33 @@
   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-114097637-2"></script>
   <script type="text/javascript" src="/assets/scripts/index.js"></script>
 
+  <script>
+    // Set the Amplitude API key based on the environment
+    var amplitudeApiKey = (function() {
+      // This will be replaced at build time by Angular's environment system
+      // Default to dev key for local/dev
+      if (window.location.hostname === 'localhost') {
+        return '2c49fa11a8da53e17b4df93c05fd5e7b';
+      }
+      if (window.location.hostname === 'dashboard.givtapp.net') {
+        return 'faaf26c7aea924ffa2892d7e4071ea8d';
+      }
+      // fallback to dev
+      return '2c49fa11a8da53e17b4df93c05fd5e7b';
+    })();
+    var amplitudeScript = document.createElement('script');
+    amplitudeScript.src = 'https://cdn.amplitude.com/script/' + amplitudeApiKey + '.js';
+    amplitudeScript.onload = function() {
+      if (window.amplitude && window.amplitude.init) {
+        window.amplitude.init(amplitudeApiKey, {
+          fetchRemoteConfig: true,
+          autocapture: true
+        });
+      }
+    };
+    document.head.appendChild(amplitudeScript);
+  </script>
+
 </head>
 
 <body>
