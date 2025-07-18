@@ -44,9 +44,9 @@
     "Placeholder_Offering_Name": "Offering name",
     "Text_Info_Total_Stornos": "Total of Refusal costs = {{0}}{{1}}",
     "Text_TotEnMet": "till",
-    "Text_TransactionCost_MoreInfo": "These costs are charged by SlimPay for the signed mandates and for handling the transactions. Signing a mandate costs € 0.50. Givt will apply this cost on the first four times the donor uses Givt. This way the costs are evenly divided over the different situations in which Givt is used for donating.",
+    "Text_TransactionCost_MoreInfo": "These are the fees Better World Payments charges for processing transactions. Regular donations in the Givt app incur a transaction fee of €0.07 per donor per day. Donations made via iDEAL incur a transaction fee of €0.35 per donation.",
     "Text_GivtServiceFee_MoreInfo": "Givt charges this fee for providing the service.",
-    "Text_Stornos_MoreInfo": "Here you can find the fees that are charged by SlimPay for retracting money.\n<br/><br/>\nType 1 means the donor has retracted the money before it was withdrawn from his or her bank account or the transaction was declined by the bank or processor. Type 2 means the donor has retracted the gift after it was already withdrawn from his or her account or the donor's bank cancelled the transaction. In almost every case fees of type 2 will be charged over a payment period which is different than the period in which the donor has given.",
+    "Text_Stornos_MoreInfo": "Here you can find the fees that are charged by Better World Payments for retracting money.\n<br/><br/>\nType 1 means the donor has retracted the money before it was withdrawn from his or her bank account or the transaction was declined by the bank or processor. Type 2 means the donor has retracted the gift after it was already withdrawn from his or her account or the donor's bank cancelled the transaction. In almost every case fees of type 2 will be charged over a payment period which is different than the period in which the donor has given.",
     "Payout_PayoutCosts": "Payment costs",
     "Payout_Title": "Payments",
     "Payout_OverviewPayouts": "Overview of payments",
@@ -109,8 +109,8 @@
     "Processed": "Processed",
     "CancelledByUser": "Cancelled by user",
     "CancelledByBank": "Refused by bank",
-    "LegendExplanation": "In process: donations yet to be processed by SlimPay.\nProcessed: donations that will be paid out with the next payment.\nRefused by the bank: donations that were refused by the bank. E.g. when there's not enough provision on the bank account.\nCancelled by the giver: donations that were cancelled by the user after being processed.",
-    "ToProcessExplanation": "Donations are yet to be processed by SlimPay. Take a look in the manual for more info.",
+    "LegendExplanation": "In process: donations yet to be processed by Better World Payments.\nProcessed: donations that will be paid out with the next payment.\nRefused by the bank: donations that were refused by the bank. E.g. when there's not enough provision on the bank account.\nCancelled by the giver: donations that were cancelled by the user after being processed.",
+    "ToProcessExplanation": "Donations are yet to be processed by Better World Payments. Take a look in the manual for more info.",
     "ProcessedExplanation": "Donations are processed and will be paid out with the next payment.",
     "CancelByUserExplanation": "Refusals by the user.",
     "CancelByBankExplanation": "Refusals by the bank.",
@@ -168,18 +168,14 @@
     "Example": "Example",
     "RemoveAllocation": "Remove this allocation",
     "RemoveAllocationConfirm": "Are you sure you want to delete this allocation?",
-    "SaveAllocation": {
-        "one": "Save allocation",
-        "other": "Save allocations"
-    },
-    "CancelAllocation": {
-        "one": "Cancel allocation",
-        "other": "Cancel allocations"
-    },
+    "SaveAllocation_one": "Save allocation",
+    "SaveAllocation_other": "Save allocations",
+    "CancelAllocation_one": "Cancel allocation",
+    "CancelAllocation_other": "Cancel allocations",
     "CsvDownload": "Download csv",
     "SingleOpenAllocationMessage": "There are still transactions on {0} that are not allocated to a collection.\nPlease go to the tab 'Allocate' to resolve this issue.\nNote: the payment of these donations is not dependent on the allocation, it's just a tool to help you track donations.",
     "RequestMediumIdTitle": "The namespace of {0}:\n",
-    "RequestMediumIdBody": "Send us an email at <a href='mailto:support@givtapp.net'>support@givtapp.net</a> with the namespace for which you want an integration and request a medium id to connect an app with Givt.",
+    "RequestMediumIdBody": "Send us an e-mail at <a href='mailto:support@givtapp.net'>support@givtapp.net</a> with the namespace for which you want an integration and request a medium id to connect an app with Givt.",
     "RequestMediumIdManual": "Download the manual for developers <a href='assets/Manual-Deeplink-Givt.zip'>here</a>.",
     "GivtWithGivtPreferenceTitle": "Integration with Givt",
     "Text_TransactionCost_MoreInfo_GB": "These costs are charged by Access PaySuite Ltd. (formerly EazyCollect) for handling the transactions.",
@@ -264,6 +260,6 @@
     "QRCodeREQ_Disable_Confirm": "Disable",
     "QRCodeREQ_Disable_Cancel": "Cancel",
     "QuestionsProccessingTransactionsAndPayoutsUS": "Can't figure it out? Do not hesitate to give us a call, we’d love to help.",
-    "Text_TransactionCost_MoreInfo_US": "This is the fixed part of the transaction fee which we use to pay the payment provider (WePay).",
-    "RequestMediumIdBodyUS": "Send us an email at <a href='mailto:support@givt.app'>support@givt.app</a> with the namespace for which you want an integration and request a medium id to connect an app with Givt."
+    "Text_TransactionCost_MoreInfo_US": "This is the fixed part of the transaction fee which we use to pay the payment provider (Stripe).",
+    "RequestMediumIdBodyUS": "Send us an e-mail at <a href='mailto:support@givt.app'>support@givt.app</a> with the namespace for which you want an integration and request a medium id to connect an app with Givt."
 }
